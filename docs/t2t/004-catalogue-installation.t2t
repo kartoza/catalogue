@@ -163,6 +163,8 @@ To install django, django authentication etc into our virtual environment do:
 
 ```
 pip install -r sac_catalogue/REQUIREMENTS.txt
+# we used a forked django-extensions with fixes for 1.3 support
+pip install git+git://github.com/bendavis78/django-extensions.git
 ```
 
 Then make sure the appropriate settings from djangodblog in settings.py.templ are 
@@ -482,6 +484,22 @@ grant select on vw_usercart to readonly;
 grant select on visit to readonly;
 grant select on sensor to readonly;
 \q
+```
+
+=== Postgresql 9.1 Issue ===
+
+If you are working against 9.1 you may get an error like:
+
+```
+ERROR:  invalid byte sequence for encoding "UTF8": 0x00
+```
+
+When importing cadastrals. To resolve this see the patch directory 
+for a patch which can be applied like this:
+
+```
+cd /opt/python/lib/python2.7/site-packages/
+patch -p0 < ../../../../sac_catalogue/patches/postgis-adapter.patch
 ```
 
 

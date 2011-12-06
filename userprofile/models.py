@@ -17,6 +17,9 @@ import os.path
 
 AVATAR_SIZES = (128, 96, 64, 48, 32, 24, 16)
 
+from south.modelsinspector import add_introspection_rules
+add_introspection_rules([], ["^userprofile\.countries\.CountryField"])
+
 class BaseProfile(models.Model):
     """
     User profile model

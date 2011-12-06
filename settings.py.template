@@ -188,6 +188,7 @@ INSTALLED_APPS = (
     'catalogue',
     'acscatalogue',
     'shapes',
+    'south',
     'django_extensions',
     'userprofile',
     'debug_toolbar'
