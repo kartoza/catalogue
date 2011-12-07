@@ -138,7 +138,7 @@ def update_related_field(obj, value, field):
 
     """
     # Collect all related objects.
-    collected_objs = CollectedObjects()
+    collected_objs = Collector()
     obj._collect_sub_objects(collected_objs)
     classes = collected_objs.keys()
     # Bulk update the objects for performance

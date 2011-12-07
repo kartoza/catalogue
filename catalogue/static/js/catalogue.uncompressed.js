@@ -3,7 +3,7 @@
 // @output_file_name catalogue.js
 // ==/ClosureCompiler==
 
-/* Compress this file to catalogue.js using google's closure compiler at
+/** Compress this file to catalogue.js using google's closure compiler at
   http://closure-compiler.appspot.com/home */
 
 
@@ -20,11 +20,11 @@ OpenLayers.Renderer.VML.prototype.initialize = function(containerID) {
     OpenLayers.Renderer.Elements.prototype.initialize.apply(this, arguments);
 }
 
-/* ------------------------------------------------------
+/** ------------------------------------------------------
  *  Global variables
  *  ------------------------------------------------------ */
 
-/* Setup the style for our scene footprints layer and enable
+/** Setup the style for our scene footprints layer and enable
  * zIndexing so that we can raise the selected on above the others
  * see http://openlayers.org/dev/examples/ordering.html */
 
@@ -55,7 +55,7 @@ var mVectorLayer = null;
 var mMap = null;
 var mLastSelectedRecordId = null;
 
-/*--------------------------------------------------------
+/**--------------------------------------------------------
  * Things to run on any page first load that uses this lib
  -------------------------------------------------------- */
 $(document).ready(function()
@@ -67,10 +67,10 @@ $(document).ready(function()
 });
 
 
-/*--------------------------------------------------------
+/**--------------------------------------------------------
  * Global functions
  -------------------------------------------------------- */
-/* Globally implemented wait overlays */
+/** Globally implemented wait overlays */
 
 function unblock()
 {
@@ -108,7 +108,7 @@ function getLayerByName( theName )
     return false;
   }
 }
-/* ------------------------------------------------------
+/** ------------------------------------------------------
  * OpenLayers WKT manipulators
  * -------------------------------------------------------- */
 function readWKT(wkt)
@@ -150,7 +150,7 @@ function modifyWKT(event)
   writeWKT(event.feature.geometry);
 }
 
-/* ------------------------------------------------------
+/** ------------------------------------------------------
  * Other OpenLayers Helpers
  * -------------------------------------------------------- */
 // Add Select control
@@ -178,7 +178,7 @@ function enableNavigation()
   mMap.getControlsByClass('OpenLayers.Control.Navigation')[0].activate();
 }
 
-/*
+/**
  * Populates mMapControls with appropriate editing controls for layer type
  * @note Since we are putting the controls into a panel outside the map,
  * we need to explicitly define the styles for the icons etc.
@@ -212,7 +212,7 @@ function zebraTables()
   $("table tr:odd").addClass("odd");
 }
 
- /*
+ /**
  * Things to do on initial page load...
  *
  */
@@ -379,7 +379,7 @@ function getFeatureByProductId( theProductId )
   return -1; //not found
 }
 
-/*
+/**
  * Load a paginated search result page into the table
  */
 function revealTable()
@@ -500,7 +500,7 @@ function setupBaseMap()
   mMap.addControl(new OpenLayers.Control.LayerSwitcher());
 }
 
-/*
+/**
  * @param theLayers and array of layers that should be added to the map
  */
 function setupSearchMap( theLayers )
@@ -538,7 +538,7 @@ function setupSearchMap( theLayers )
   mVectorLayer.events.on({"featureadded" : addWKT});
   // Then add optional behavior controls
 
-  /*
+  /**
   // disable editing or drawing by default on searchMap
   if (myWKT){
     enableEditing();
@@ -551,7 +551,7 @@ function setupSearchMap( theLayers )
 
 }
 
-/*
+/**
  * @param theLayers an array of layers that should be added to the map
  */
 function setupTaskingMap( theLayers )
@@ -598,7 +598,7 @@ function setupTaskingMap( theLayers )
   }
 }
 
-/*--------------------------
+/**--------------------------
  * Functions relating to clicking on scenes in the map to
  * highlight them.
  * -------------------------- */
@@ -629,7 +629,7 @@ function setupSceneSelector( theLayer )
 }
 
 
-/*---------------------------------
+/**---------------------------------
  * General mapping functions
  * --------------------------------*/
 
@@ -649,7 +649,7 @@ function clearFeatures()
 
 function setupSearchFeatureInfo()
 {
-  /* Get feature info for wms queries  */
+  /** Get feature info for wms queries  */
   var info = new OpenLayers.Control.WMSGetFeatureInfo(
   {
     url: 'http://196.35.94.243/cgi-bin/mapserv?map=SEARCHES',
@@ -750,7 +750,7 @@ function setupMapHelpDialog()
   }));
 }
 
-/* Show a pop up dialog with metadata.
+/** Show a pop up dialog with metadata.
  * @see setupMetadataDialog
  * @note also used from withing image preview panel */
 function showMetadata( theRecordId )
@@ -778,7 +778,7 @@ function setupMetadataDialog( )
 }
 
 
-/* Mark all scenes as selected no and
+/** Mark all scenes as selected no and
  * give them all an equal zIndex.
  * see http://openlayers.org/dev/examples/ordering.html */
 function resetSceneZIndices( )
@@ -813,7 +813,7 @@ function getFeatureIndexByRecordId( theRecordId )
   return -1; //not found
 }
 
-/* Highlight a record on the map and load its preview in
+/** Highlight a record on the map and load its preview in
  * the preview panel
  * @param theRecordId - id of the record to hightlight (not the product_id)
  * @param theZoomFlag - whether to zoom to the record on the map
@@ -842,7 +842,7 @@ function hightlightRecord( theRecordId, theZoomFlag )
   myLayer.redraw();
 }
 
-/* Setup a callback so that when a mini preview icon is
+/** Setup a callback so that when a mini preview icon is
  * clicked, the corresponding scene is highlighted on teh map
  * and loaded in the preview accordion panel. */
 function setupMiniIconClickCallback()
@@ -854,7 +854,7 @@ function setupMiniIconClickCallback()
   }));
 }
 
-/* Setup a callback so that when a search result table row is
+/** Setup a callback so that when a search result table row is
  * clicked, the corresponding scene is highlighted on the map
  * and loaded in the preview accordion panel. */
 function setupRowClickCallback()
@@ -892,7 +892,7 @@ function addOrderClicked()
   return false;
 }
 
-/** Load some content into the #content div.
+/*** Load some content into the #content div.
  * Uses ajax to load it and blocks the ui while loading
  */
 function loadContent( theUrl )
@@ -907,7 +907,7 @@ function loadSummaryTable(theId)
 }
 
 
-/* Transform an openlayers bounds object such that
+/** Transform an openlayers bounds object such that
  * it matches the CRS of the map
  * @param a bounds object (assumed to be in EPSG:4326)
  * @return a new bounds object projected into the map CRS
@@ -920,7 +920,7 @@ function transformBounds(theBounds)
   myBounds.transform(myCRS, toCRS);
   return myBounds;
 }
-/* transform an openlayers geometry object such that
+/** transform an openlayers geometry object such that
  * it matches the CRS of the map
  * @param a geometry object (assumed to be in EPSG:4326 CRS)
  * @return a new geometry object projected into the map CRS
@@ -933,7 +933,7 @@ function transformGeometry(theGeometry)
   myGeometry.transform(myCRS,toCRS);
   return myGeometry;
 }
-/* Reverse transform an openlayers geometry object such that
+/** Reverse transform an openlayers geometry object such that
  * it matches the CRS 4326
  * @param a geometry object (assumed to be in map CRS)
  * @return a new geometry object projected into the EPSG:4326 CRS
@@ -946,7 +946,7 @@ function reverseTransformGeometry(theGeometry)
   return myGeometry;
 }
 
-/* Transform an openlayers point object such that
+/** Transform an openlayers point object such that
  * it matches the CRS of the map
  * @param a point object (assumed to be in EPSG:4326)
  * @return a new point object projected into the map CRS
@@ -959,7 +959,7 @@ function transformPoint(thePoint)
   myPoint = myPoint.transform(myCRS, myDestCRS);
   return myPoint;
 }
-/* Transform an openlayers point object such that
+/** Transform an openlayers point object such that
  * it matches the 4326 CRS
  * @param a point object (assumed to be in EPSG:900913)
  * @return a new point object projected into the 4326 CRS
