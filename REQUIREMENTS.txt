@@ -26,3 +26,5 @@ pysqlite==2.6.3
 reportlab==2.5
 sorl-thumbnail==3.2.5
 wsgiref==0.1.2
+coverage
+django-coverage
