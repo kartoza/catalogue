@@ -1,6 +1,6 @@
 """
-SANSA-EO Catalogue - search_inclinationangle - test correctness of
-    search results for inclinationangle
+SANSA-EO Catalogue - search_geometricaccuracy - test correctness of
+    search results for geometric accuracy -(spatial resolution)
 
 Contact : lkleyn@sansa.org.za
 
@@ -23,21 +23,24 @@ from catalogue.views.searcher import Searcher
 from catalogue.models import Search
 
 
-class SearchIncliantionAngle_Test(SearchTestCase):
+class SearchGeometricAccuracy_Test(SearchTestCase):
     """
-    Tests Search Inclination Angle
+    Tests Search Geometric Accuracy
     """
 
-    def test_InclinationAngleRange(self):
+    def test_GeometricAccuracy(self):
         """
-        Test inclination angle range:
-            - 0-90 (positive) (search 10)
-            - -90-0 (negative) (search 11)
-            - -10-10 (normal) (search 12)
+        Test geometric accuracy:
+        -   0 - '<= 1m' (search 13),
+        -   1 - '1m - 2m' (search 14),
+        -   2 - '2m - 6m' (search 15),
+        -   3 - '6m - 20m' (search 16),
+        -   4 - '20m - 35m' (search 17),
+        -   5 - '35m - 60m' (search 18),
         """
-        myTestSearches = [10, 11, 12]
+        myTestSearches = [13, 14, 15, 16, 17, 18]
         #we need to bound results
-        myExpectedResults = [(15, 30), (15, 30), (15, 25)]
+        myExpectedResults = [1, 1, 1, 1, 1, 1]
 
         for idx, searchPK in enumerate(myTestSearches):
             mySearch = Search.objects.get(pk=searchPK)
@@ -51,7 +54,6 @@ class SearchIncliantionAngle_Test(SearchTestCase):
             #create Searcher object
             mySearcher = Searcher(request, mySearch.guid)
             mySearcher.search()
-            assert mySearcher.mQuerySet.count() >= myExpectedResults[idx][0] and \
-            mySearcher.mQuerySet.count() <= myExpectedResults[idx][1], \
+            assert mySearcher.mQuerySet.count() == myExpectedResults[idx], \
             simpleMessage(mySearcher.mQuerySet.count(), myExpectedResults[idx],
                 message='For search pk %s expected:' % searchPK)
