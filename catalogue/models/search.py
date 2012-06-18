@@ -221,12 +221,8 @@ class Search(models.Model):
     cloud_mean = models.IntegerField(
         null=True,
         blank=True,
-        default=5,
         verbose_name="Max Clouds",
-        choices=CLOUD_COVER_CHOICES,
-        help_text='Select the maximum cloud cover when searching for images. \
-          Note that not all sensors support cloud cover filtering.'
-        , max_length=1)
+        max_length=3)
     acquisition_mode  = models.ForeignKey(AcquisitionMode, blank=True, null=True, help_text='Choose the acquisition mode.') #e.g. M X T J etc
     license_type = models.IntegerField(choices=License.LICENSE_TYPE_CHOICES, blank=True, null=True, help_text='Choose a license type.')
     band_count = models.IntegerField(choices=BAND_COUNT_CHOICES, blank=True, null=True, help_text='Select the spectral resolution.')

@@ -140,6 +140,9 @@ class AdvancedSearchForm(forms.ModelForm):
     j_frame_row = IntegersCSVIntervalsField(required=False, help_text='Insert the frame row as a list of comma separated values or ranges (e.g. : "10,20,30" or "20-40")')
     # exclude PRODUCT_SEARCH_GENERIC from Search.PRODUCT_SEARCH_TYPES
     search_type = forms.ChoiceField(choices=Search.PRODUCT_SEARCH_TYPES[1:], required=False)
+    cloud_mean = forms.IntegerField(min_value=0, max_value=100, initial=0,
+        help_text='Select the maximum cloud cover (range 0-100) when searching \
+        for images. Note that not all sensors support cloud cover filtering.')
 
     class Meta:
         model = Search
