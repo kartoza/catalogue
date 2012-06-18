@@ -28,12 +28,17 @@ class SearchBandCount_Test(SearchTestCase):
     Tests Search Band Count
     """
 
-    def test_Panchromatic_bandcount(self):
+    def test_Search_bandcount(self):
         """
-        Test Panchromatic band count, range 0-2
+        Test band count searches:
+        - Panchromatic band count, range 0-2 (search 5)
+        - Truecolor band count, range 3 (search 6)
+        - Multispectral band count, range 4-8 (search 7)
+        - Superspectral band count, range 9-40 (search 8)
+        - Hyperspectral band count, range 41-1000 (search 9)
         """
-        myTestSearches = [5]
-        myExpectedResults = [8]
+        myTestSearches = [5, 6, 7, 8, 9]
+        myExpectedResults = [8, 50, 15, 1, 1]
 
         for idx, searchPK in enumerate(myTestSearches):
             mySearch = Search.objects.get(pk=searchPK)
@@ -51,99 +56,3 @@ class SearchBandCount_Test(SearchTestCase):
             assert mySearcher.mQuerySet.count() >= myExpectedResults[idx], \
             simpleMessage(mySearcher.mQuerySet.count(), myExpectedResults[idx],
                 message='For search pk %s expected more then:' % searchPK)
-
-    def test_Truecolor_bandcount(self):
-        """
-        Test Truecolor band count, range 3
-        """
-        myTestSearches = [6]
-        myExpectedResults = [50]
-
-        for idx, searchPK in enumerate(myTestSearches):
-            mySearch = Search.objects.get(pk=searchPK)
-
-            #create a fake request object
-            request = self.factory.get(
-                '/searchresult/%s' % mySearch.guid)
-            #assign user to request (usually done by middleware)
-            request.user = self.user
-
-            #create Searcher object
-            mySearcher = Searcher(request, mySearch.guid)
-            mySearcher.search()
-
-            assert mySearcher.mQuerySet.count() >= myExpectedResults[idx], \
-            simpleMessage(mySearcher.mQuerySet.count(), myExpectedResults[idx],
-                message='For search pk %s expected more then:' % searchPK)
-
-    def test_Multispectral_bandcount(self):
-        """
-        Test Multispectral band count, range 4-8
-        """
-        myTestSearches = [7]
-        myExpectedResults = [15]
-
-        for idx, searchPK in enumerate(myTestSearches):
-            mySearch = Search.objects.get(pk=searchPK)
-
-            #create a fake request object
-            request = self.factory.get(
-                '/searchresult/%s' % mySearch.guid)
-            #assign user to request (usually done by middleware)
-            request.user = self.user
-
-            #create Searcher object
-            mySearcher = Searcher(request, mySearch.guid)
-            mySearcher.search()
-
-            assert mySearcher.mQuerySet.count() >= myExpectedResults[idx], \
-            simpleMessage(mySearcher.mQuerySet.count(), myExpectedResults[idx],
-                message='For search pk %s expected more then:' % searchPK)
-
-    def test_Superspectral_bandcount(self):
-        """
-        Test Superspectral band count, range 9-40
-        """
-        myTestSearches = [8]
-        myExpectedResults = [1]
-
-        for idx, searchPK in enumerate(myTestSearches):
-            mySearch = Search.objects.get(pk=searchPK)
-
-            #create a fake request object
-            request = self.factory.get(
-                '/searchresult/%s' % mySearch.guid)
-            #assign user to request (usually done by middleware)
-            request.user = self.user
-
-            #create Searcher object
-            mySearcher = Searcher(request, mySearch.guid)
-            mySearcher.search()
-
-            assert mySearcher.mQuerySet.count() == myExpectedResults[idx], \
-            simpleMessage(mySearcher.mQuerySet.count(), myExpectedResults[idx],
-                message='For search pk %s:' % searchPK)
-
-    def test_Hyperspectral_bandcount(self):
-        """
-        Test Hyperspectral band count, range 41-1000
-        """
-        myTestSearches = [9]
-        myExpectedResults = [1]
-
-        for idx, searchPK in enumerate(myTestSearches):
-            mySearch = Search.objects.get(pk=searchPK)
-
-            #create a fake request object
-            request = self.factory.get(
-                '/searchresult/%s' % mySearch.guid)
-            #assign user to request (usually done by middleware)
-            request.user = self.user
-
-            #create Searcher object
-            mySearcher = Searcher(request, mySearch.guid)
-            mySearcher.search()
-
-            assert mySearcher.mQuerySet.count() == myExpectedResults[idx], \
-            simpleMessage(mySearcher.mQuerySet.count(), myExpectedResults[idx],
-                message='For search pk %s:' % searchPK)
