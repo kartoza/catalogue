@@ -13,6 +13,7 @@ from simpleTest import SimpleTest
 from license_model import LicenseCRUD_Test
 from featurereaders_return import FeatureReaders_Test
 from searcher_object import SearcherObject_Test
+from search_bandcount import SearchBandCount_Test
 
 #this is only required for doctests
 __test__ = {
