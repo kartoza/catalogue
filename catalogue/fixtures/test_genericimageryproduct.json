@@ -1120,5 +1120,71 @@
             "geometric_resolution": 10.0,
             "band_count": 123
         }
+    },
+    {
+        "pk": 3471100,
+        "model": "catalogue.genericimageryproduct",
+        "fields": {
+            "radiometric_resolution": 16,
+            "geometric_resolution_y": 10.0,
+            "geometric_resolution_x": 10.0,
+            "geometric_resolution": 10.0,
+            "band_count": 3
+        }
+    },
+    {
+        "pk": 3471101,
+        "model": "catalogue.genericimageryproduct",
+        "fields": {
+            "radiometric_resolution": 16,
+            "geometric_resolution_y": 10.0,
+            "geometric_resolution_x": 10.0,
+            "geometric_resolution": 10.0,
+            "band_count": 3
+        }
+    },
+    {
+        "pk": 3471102,
+        "model": "catalogue.genericimageryproduct",
+        "fields": {
+            "radiometric_resolution": 16,
+            "geometric_resolution_y": 10.0,
+            "geometric_resolution_x": 10.0,
+            "geometric_resolution": 10.0,
+            "band_count": 3
+        }
+    },
+    {
+        "pk": 3471103,
+        "model": "catalogue.genericimageryproduct",
+        "fields": {
+            "radiometric_resolution": 16,
+            "geometric_resolution_y": 10.0,
+            "geometric_resolution_x": 10.0,
+            "geometric_resolution": 10.0,
+            "band_count": 3
+        }
+    },
+    {
+        "pk": 3471104,
+        "model": "catalogue.genericimageryproduct",
+        "fields": {
+            "radiometric_resolution": 16,
+            "geometric_resolution_y": 10.0,
+            "geometric_resolution_x": 10.0,
+            "geometric_resolution": 10.0,
+            "band_count": 3
+        }
+    },
+    {
+        "pk": 3471105,
+        "model": "catalogue.genericimageryproduct",
+        "fields": {
+            "radiometric_resolution": 16,
+            "geometric_resolution_y": 10.0,
+            "geometric_resolution_x": 10.0,
+            "geometric_resolution": 10.0,
+            "band_count": 3
+        }
     }
 ]

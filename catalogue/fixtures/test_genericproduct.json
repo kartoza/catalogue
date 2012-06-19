@@ -2038,5 +2038,125 @@
             "processing_level": 152,
             "product_id": "S5-_HRG_J--_S5C2_0118_00_0401_00_110503_084709_1B--_ORBIT-998"
         }
+    },
+    {
+        "pk": 3471100,
+        "model": "catalogue.genericproduct",
+        "fields": {
+            "product_date": "2011-05-03 08:47:09",
+            "spatial_coverage": "POLYGON ((20.6103000000000520 -25.6961999999999762, 20.7474000000000274 -25.1685999999999979, 21.3298000000000343 -25.2914999999999850, 21.1953000000000316 -25.8193999999999733, 20.6103000000000520 -25.6961999999999762))",
+            "projection": 89,
+            "license": 1,
+            "original_product_id": "51184011105030847092J",
+            "local_storage_path": null,
+            "creating_software": 1,
+            "remote_thumbnail_url": "http://sirius.spotimage.fr/url/catalogue.aspx?ID=-1&ACTION=Scenes%3AgetQuicklook&CODEA21=51184011105030847092J&SEGMENT=6672889&SAT=0",
+            "product_revision": null,
+            "owner": 4,
+            "metadata": "A21=51184011105030847092J\nSC_NUM=33366836\nSEG_NUM=6672889\nSATEL=5\nANG_INC=1.083436\nANG_ACQ=1.0\nDATE_ACQ=03/05/2011\nMONTH_ACQ=05\nTIME_ACQ=08:47:09\nCLOUD_QUOT=AAAAAAAA\nCLOUD_PER=0.0\nSNOW_QUOT=00000000\nLAT_CEN=-25.49\nLON_CEN=20.9705\nLAT_UP_L=-25.16\nLON_UP_L=20.7474\nLAT_UP_R=-25.29\nLON_UP_R=21.3298\nLAT_LO_L=-25.69\nLON_LO_L=20.6103\nLAT_LO_R=-25.81\nLON_LO_R=21.1953\nRESOL=10.0\nMODE=COLOR\nTYPE=J\nURL_QL=http://sirius.spotimage.fr/url/catalogue.aspx?ID=-1&ACTION=Scenes%3AgetQuicklook&CODEA21=51184011105030847092J&SEGMENT=6672889&SAT=0",
+            "quality": 1,
+            "processing_level": 152,
+            "product_id": "S5-_HRG_J--_S5C2_0118_00_0401_00_110503_084709_1B--_ORBIT-100"
+        }
+    },
+    {
+        "pk": 3471101,
+        "model": "catalogue.genericproduct",
+        "fields": {
+            "product_date": "2011-05-03 08:47:09",
+            "spatial_coverage": "POLYGON ((20.6103000000000520 -25.6961999999999762, 20.7474000000000274 -25.1685999999999979, 21.3298000000000343 -25.2914999999999850, 21.1953000000000316 -25.8193999999999733, 20.6103000000000520 -25.6961999999999762))",
+            "projection": 89,
+            "license": 1,
+            "original_product_id": "51184011105030847092J",
+            "local_storage_path": null,
+            "creating_software": 1,
+            "remote_thumbnail_url": "http://sirius.spotimage.fr/url/catalogue.aspx?ID=-1&ACTION=Scenes%3AgetQuicklook&CODEA21=51184011105030847092J&SEGMENT=6672889&SAT=0",
+            "product_revision": null,
+            "owner": 4,
+            "metadata": "A21=51184011105030847092J\nSC_NUM=33366836\nSEG_NUM=6672889\nSATEL=5\nANG_INC=1.083436\nANG_ACQ=1.0\nDATE_ACQ=03/05/2011\nMONTH_ACQ=05\nTIME_ACQ=08:47:09\nCLOUD_QUOT=AAAAAAAA\nCLOUD_PER=0.0\nSNOW_QUOT=00000000\nLAT_CEN=-25.49\nLON_CEN=20.9705\nLAT_UP_L=-25.16\nLON_UP_L=20.7474\nLAT_UP_R=-25.29\nLON_UP_R=21.3298\nLAT_LO_L=-25.69\nLON_LO_L=20.6103\nLAT_LO_R=-25.81\nLON_LO_R=21.1953\nRESOL=10.0\nMODE=COLOR\nTYPE=J\nURL_QL=http://sirius.spotimage.fr/url/catalogue.aspx?ID=-1&ACTION=Scenes%3AgetQuicklook&CODEA21=51184011105030847092J&SEGMENT=6672889&SAT=0",
+            "quality": 1,
+            "processing_level": 152,
+            "product_id": "S5-_HRG_J--_S5C2_0118_00_0401_00_110503_084709_1B--_ORBIT-101"
+        }
+    },
+    {
+        "pk": 3471102,
+        "model": "catalogue.genericproduct",
+        "fields": {
+            "product_date": "2011-05-03 08:47:09",
+            "spatial_coverage": "POLYGON ((20.6103000000000520 -25.6961999999999762, 20.7474000000000274 -25.1685999999999979, 21.3298000000000343 -25.2914999999999850, 21.1953000000000316 -25.8193999999999733, 20.6103000000000520 -25.6961999999999762))",
+            "projection": 89,
+            "license": 1,
+            "original_product_id": "51184011105030847092J",
+            "local_storage_path": null,
+            "creating_software": 1,
+            "remote_thumbnail_url": "http://sirius.spotimage.fr/url/catalogue.aspx?ID=-1&ACTION=Scenes%3AgetQuicklook&CODEA21=51184011105030847092J&SEGMENT=6672889&SAT=0",
+            "product_revision": null,
+            "owner": 4,
+            "metadata": "A21=51184011105030847092J\nSC_NUM=33366836\nSEG_NUM=6672889\nSATEL=5\nANG_INC=1.083436\nANG_ACQ=1.0\nDATE_ACQ=03/05/2011\nMONTH_ACQ=05\nTIME_ACQ=08:47:09\nCLOUD_QUOT=AAAAAAAA\nCLOUD_PER=0.0\nSNOW_QUOT=00000000\nLAT_CEN=-25.49\nLON_CEN=20.9705\nLAT_UP_L=-25.16\nLON_UP_L=20.7474\nLAT_UP_R=-25.29\nLON_UP_R=21.3298\nLAT_LO_L=-25.69\nLON_LO_L=20.6103\nLAT_LO_R=-25.81\nLON_LO_R=21.1953\nRESOL=10.0\nMODE=COLOR\nTYPE=J\nURL_QL=http://sirius.spotimage.fr/url/catalogue.aspx?ID=-1&ACTION=Scenes%3AgetQuicklook&CODEA21=51184011105030847092J&SEGMENT=6672889&SAT=0",
+            "quality": 1,
+            "processing_level": 152,
+            "product_id": "S5-_HRG_J--_S5C2_0118_00_0401_00_110503_084709_1B--_ORBIT-102"
+        }
+    },
+    {
+        "pk": 3471103,
+        "model": "catalogue.genericproduct",
+        "fields": {
+            "product_date": "2011-05-03 08:47:09",
+            "spatial_coverage": "POLYGON ((20.6103000000000520 -25.6961999999999762, 20.7474000000000274 -25.1685999999999979, 21.3298000000000343 -25.2914999999999850, 21.1953000000000316 -25.8193999999999733, 20.6103000000000520 -25.6961999999999762))",
+            "projection": 89,
+            "license": 1,
+            "original_product_id": "51184011105030847092J",
+            "local_storage_path": null,
+            "creating_software": 1,
+            "remote_thumbnail_url": "http://sirius.spotimage.fr/url/catalogue.aspx?ID=-1&ACTION=Scenes%3AgetQuicklook&CODEA21=51184011105030847092J&SEGMENT=6672889&SAT=0",
+            "product_revision": null,
+            "owner": 4,
+            "metadata": "A21=51184011105030847092J\nSC_NUM=33366836\nSEG_NUM=6672889\nSATEL=5\nANG_INC=1.083436\nANG_ACQ=1.0\nDATE_ACQ=03/05/2011\nMONTH_ACQ=05\nTIME_ACQ=08:47:09\nCLOUD_QUOT=AAAAAAAA\nCLOUD_PER=0.0\nSNOW_QUOT=00000000\nLAT_CEN=-25.49\nLON_CEN=20.9705\nLAT_UP_L=-25.16\nLON_UP_L=20.7474\nLAT_UP_R=-25.29\nLON_UP_R=21.3298\nLAT_LO_L=-25.69\nLON_LO_L=20.6103\nLAT_LO_R=-25.81\nLON_LO_R=21.1953\nRESOL=10.0\nMODE=COLOR\nTYPE=J\nURL_QL=http://sirius.spotimage.fr/url/catalogue.aspx?ID=-1&ACTION=Scenes%3AgetQuicklook&CODEA21=51184011105030847092J&SEGMENT=6672889&SAT=0",
+            "quality": 1,
+            "processing_level": 152,
+            "product_id": "S5-_HRG_J--_S5C2_0118_00_0401_00_110503_084709_1B--_ORBIT-103"
+        }
+    },
+    {
+        "pk": 3471104,
+        "model": "catalogue.genericproduct",
+        "fields": {
+            "product_date": "2011-05-03 08:47:09",
+            "spatial_coverage": "POLYGON ((20.6103000000000520 -25.6961999999999762, 20.7474000000000274 -25.1685999999999979, 21.3298000000000343 -25.2914999999999850, 21.1953000000000316 -25.8193999999999733, 20.6103000000000520 -25.6961999999999762))",
+            "projection": 89,
+            "license": 1,
+            "original_product_id": "51184011105030847092J",
+            "local_storage_path": null,
+            "creating_software": 1,
+            "remote_thumbnail_url": "http://sirius.spotimage.fr/url/catalogue.aspx?ID=-1&ACTION=Scenes%3AgetQuicklook&CODEA21=51184011105030847092J&SEGMENT=6672889&SAT=0",
+            "product_revision": null,
+            "owner": 4,
+            "metadata": "A21=51184011105030847092J\nSC_NUM=33366836\nSEG_NUM=6672889\nSATEL=5\nANG_INC=1.083436\nANG_ACQ=1.0\nDATE_ACQ=03/05/2011\nMONTH_ACQ=05\nTIME_ACQ=08:47:09\nCLOUD_QUOT=AAAAAAAA\nCLOUD_PER=0.0\nSNOW_QUOT=00000000\nLAT_CEN=-25.49\nLON_CEN=20.9705\nLAT_UP_L=-25.16\nLON_UP_L=20.7474\nLAT_UP_R=-25.29\nLON_UP_R=21.3298\nLAT_LO_L=-25.69\nLON_LO_L=20.6103\nLAT_LO_R=-25.81\nLON_LO_R=21.1953\nRESOL=10.0\nMODE=COLOR\nTYPE=J\nURL_QL=http://sirius.spotimage.fr/url/catalogue.aspx?ID=-1&ACTION=Scenes%3AgetQuicklook&CODEA21=51184011105030847092J&SEGMENT=6672889&SAT=0",
+            "quality": 1,
+            "processing_level": 152,
+            "product_id": "S5-_HRG_J--_S5C2_0118_00_0401_00_110503_084709_1B--_ORBIT-104"
+        }
+    },
+    {
+        "pk": 3471105,
+        "model": "catalogue.genericproduct",
+        "fields": {
+            "product_date": "2011-05-03 08:47:09",
+            "spatial_coverage": "POLYGON ((20.6103000000000520 -25.6961999999999762, 20.7474000000000274 -25.1685999999999979, 21.3298000000000343 -25.2914999999999850, 21.1953000000000316 -25.8193999999999733, 20.6103000000000520 -25.6961999999999762))",
+            "projection": 89,
+            "license": 1,
+            "original_product_id": "51184011105030847092J",
+            "local_storage_path": null,
+            "creating_software": 1,
+            "remote_thumbnail_url": "http://sirius.spotimage.fr/url/catalogue.aspx?ID=-1&ACTION=Scenes%3AgetQuicklook&CODEA21=51184011105030847092J&SEGMENT=6672889&SAT=0",
+            "product_revision": null,
+            "owner": 4,
+            "metadata": "A21=51184011105030847092J\nSC_NUM=33366836\nSEG_NUM=6672889\nSATEL=5\nANG_INC=1.083436\nANG_ACQ=1.0\nDATE_ACQ=03/05/2011\nMONTH_ACQ=05\nTIME_ACQ=08:47:09\nCLOUD_QUOT=AAAAAAAA\nCLOUD_PER=0.0\nSNOW_QUOT=00000000\nLAT_CEN=-25.49\nLON_CEN=20.9705\nLAT_UP_L=-25.16\nLON_UP_L=20.7474\nLAT_UP_R=-25.29\nLON_UP_R=21.3298\nLAT_LO_L=-25.69\nLON_LO_L=20.6103\nLAT_LO_R=-25.81\nLON_LO_R=21.1953\nRESOL=10.0\nMODE=COLOR\nTYPE=J\nURL_QL=http://sirius.spotimage.fr/url/catalogue.aspx?ID=-1&ACTION=Scenes%3AgetQuicklook&CODEA21=51184011105030847092J&SEGMENT=6672889&SAT=0",
+            "quality": 1,
+            "processing_level": 152,
+            "product_id": "S5-_HRG_J--_S5C2_0118_00_0401_00_110503_084709_1B--_ORBIT-105"
+        }
     }
 ]

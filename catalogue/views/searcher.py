@@ -260,14 +260,32 @@ class Searcher:
             if self.mSearch.search_type == Search.PRODUCT_SEARCH_OPTICAL:
                 logging.info('OpticalProduct advanced search activated')
                 if self.mSearch.use_cloud_cover and self.mSearch.cloud_mean:
-                    self.mCloudQuery = Q( cloud_cover__lte=self.mSearch.cloud_mean ) | Q( cloud_cover__isnull=True )
-                    self.mQuerySet = self.mQuerySet.filter( self.mCloudQuery )
+                    self.mCloudQuery = Q(cloud_cover__lte=self.mSearch.cloud_mean) | Q(cloud_cover__isnull=True)
+                    self.mQuerySet = self.mQuerySet.filter(self.mCloudQuery)
                     self.mMessages.append(self.meanCloudString())
-                if self.mSearch.sensor_inclination_angle_start and self.mSearch.sensor_inclination_angle_end:
-                    assert (self.mSearch.sensor_inclination_angle_start < self.mSearch.sensor_inclination_angle_end) or not (self.mSearch.sensor_inclination_angle_start or self.mSearch.sensor_inclination_angle_end), "Search sensor_inclination_angle_start is not < sensor_inclination_angle_end"
-                    self.mSensorInclinationAngleQuery = Q(sensor_inclination_angle__range = (self.mSearch.sensor_inclination_angle_start, self.mSearch.sensor_inclination_angle_end))
-                    self.mQuerySet = self.mQuerySet.filter( self.mSensorInclinationAngleQuery )
-                    self.mMessages.append('sensor inclination angle between <b>%s and %s</b>' % (self.mSearch.sensor_inclination_angle_start, self.mSearch.sensor_inclination_angle_end))
+
+                if self.mSearch.sensor_inclination_angle_start is not None and\
+                    self.mSearch.sensor_inclination_angle_end is not None:
+                    assert (self.mSearch.sensor_inclination_angle_start < \
+                        self.mSearch.sensor_inclination_angle_end) or \
+                        not (self.mSearch.sensor_inclination_angle_start or \
+                        self.mSearch.sensor_inclination_angle_end), \
+                        "Search sensor_inclination_angle_start is not < \
+                        sensor_inclination_angle_end"
+
+                    self.mSensorInclinationAngleQuery = Q(
+                        sensor_inclination_angle__range=(
+                            self.mSearch.sensor_inclination_angle_start,
+                            self.mSearch.sensor_inclination_angle_end)
+                        )
+                    self.mQuerySet = self.mQuerySet.filter(
+                        self.mSensorInclinationAngleQuery
+                        )
+                    self.mMessages.append('sensor inclination angle between <b>\
+                        %s and %s</b>' % (
+                            self.mSearch.sensor_inclination_angle_start,
+                            self.mSearch.sensor_inclination_angle_end)
+                        )
 
             ##
             # geospatial only

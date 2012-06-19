@@ -79,5 +79,122 @@
             "start_date": "1900-01-01",
             "end_date": "2100-12-31"
         }
+    },
+    {
+        "pk": 10,
+        "model": "catalogue.searchdaterange",
+        "fields": {
+            "search": 10,
+            "start_date": "1900-01-01",
+            "end_date": "2100-12-31"
+        }
+    },
+    {
+        "pk": 11,
+        "model": "catalogue.searchdaterange",
+        "fields": {
+            "search": 11,
+            "start_date": "1900-01-01",
+            "end_date": "2100-12-31"
+        }
+    },
+    {
+        "pk": 12,
+        "model": "catalogue.searchdaterange",
+        "fields": {
+            "search": 12,
+            "start_date": "1900-01-01",
+            "end_date": "2100-12-31"
+        }
+    },
+    {
+        "pk": 13,
+        "model": "catalogue.searchdaterange",
+        "fields": {
+            "search": 13,
+            "start_date": "1900-01-01",
+            "end_date": "2100-12-31"
+        }
+    },
+    {
+        "pk": 14,
+        "model": "catalogue.searchdaterange",
+        "fields": {
+            "search": 14,
+            "start_date": "1900-01-01",
+            "end_date": "2100-12-31"
+        }
+    },
+    {
+        "pk": 15,
+        "model": "catalogue.searchdaterange",
+        "fields": {
+            "search": 15,
+            "start_date": "1900-01-01",
+            "end_date": "2100-12-31"
+        }
+    },
+    {
+        "pk": 16,
+        "model": "catalogue.searchdaterange",
+        "fields": {
+            "search": 16,
+            "start_date": "1900-01-01",
+            "end_date": "2100-12-31"
+        }
+    },
+    {
+        "pk": 17,
+        "model": "catalogue.searchdaterange",
+        "fields": {
+            "search": 17,
+            "start_date": "1900-01-01",
+            "end_date": "2100-12-31"
+        }
+    },
+    {
+        "pk": 18,
+        "model": "catalogue.searchdaterange",
+        "fields": {
+            "search": 18,
+            "start_date": "1900-01-01",
+            "end_date": "2100-12-31"
+        }
+    },
+    {
+        "pk": 19,
+        "model": "catalogue.searchdaterange",
+        "fields": {
+            "search": 19,
+            "start_date": "1900-01-01",
+            "end_date": "2100-12-31"
+        }
+    },
+    {
+        "pk": 20,
+        "model": "catalogue.searchdaterange",
+        "fields": {
+            "search": 20,
+            "start_date": "1900-01-01",
+            "end_date": "2100-12-31"
+        }
+    },
+    {
+        "pk": 21,
+        "model": "catalogue.searchdaterange",
+        "fields": {
+            "search": 21,
+            "start_date": "1900-01-01",
+            "end_date": "2100-12-31"
+        }
+    },
+    {
+        "pk": 22,
+        "model": "catalogue.searchdaterange",
+        "fields": {
+            "search": 22,
+            "start_date": "1900-01-01",
+            "end_date": "2100-12-31"
+        }
     }
 ]

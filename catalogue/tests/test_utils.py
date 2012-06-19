@@ -34,6 +34,7 @@ def simpleMessage(theResult, theExpectedResult, message=''):
 #
 # IMPORTANT: this is built-in class in Django 1.3
 # https://docs.djangoproject.com/en/dev/topics/testing/#the-request-factory
+# Take extra care on Django UPGRADE
 #
 class RequestFactory(Client):
     """
@@ -70,3 +71,35 @@ class RequestFactory(Client):
         environ.update(self.defaults)
         environ.update(request)
         return WSGIRequest(environ)
+
+
+class SearchTestCase(TestCase):
+    """
+    General Search Test Case
+    """
+
+    fixtures = [
+        'test_user.json',
+        'test_mission.json',
+        'test_missionsensor.json',
+        'test_search.json',
+        'test_searchdaterange.json',
+        'test_processinglevel.json',
+        'test_sensortype.json',
+        'test_acquisitionmode.json',
+        'test_genericproduct.json',
+        'test_genericimageryproduct.json',
+        'test_genericsensorproduct.json',
+        'test_opticalproduct.json',
+        'test_radarproduct.json'
+        ]
+
+    def setUp(self):
+        """
+        Set up before each test
+        """
+        self.factory = RequestFactory(enforce_csrf_checks=True)
+        #authenticate
+        self.factory.login(username='timlinux', password='chrisdebug')
+        #get user object
+        self.user = User.objects.get(pk=1)

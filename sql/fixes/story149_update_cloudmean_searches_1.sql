@@ -1,0 +1,13 @@
+BEGIN;
+UPDATE catalogue_search SET cloud_mean = 0 WHERE cloud_mean = 0;
+UPDATE catalogue_search SET cloud_mean = 100 WHERE cloud_mean = 10;
+UPDATE catalogue_search SET cloud_mean = 90 WHERE cloud_mean = 9;
+UPDATE catalogue_search SET cloud_mean = 80 WHERE cloud_mean = 8;
+UPDATE catalogue_search SET cloud_mean = 70 WHERE cloud_mean = 7;
+UPDATE catalogue_search SET cloud_mean = 60 WHERE cloud_mean = 6;
+UPDATE catalogue_search SET cloud_mean = 50 WHERE cloud_mean = 5;
+UPDATE catalogue_search SET cloud_mean = 40 WHERE cloud_mean = 4;
+UPDATE catalogue_search SET cloud_mean = 30 WHERE cloud_mean = 3;
+UPDATE catalogue_search SET cloud_mean = 20 WHERE cloud_mean = 2;
+UPDATE catalogue_search SET cloud_mean = 10 WHERE cloud_mean = 1;
+COMMIT;
