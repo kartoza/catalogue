@@ -16,6 +16,7 @@ from searcher_object import SearcherObject_Test
 from search_bandcount import SearchBandCount_Test
 from search_inclinationangle import SearchIncliantionAngle_Test
 from search_geometricaccuracy import SearchGeometricAccuracy_Test
+from search_cloudcover import SearchCloudCover_Test
 
 #this is only required for doctests
 __test__ = {
