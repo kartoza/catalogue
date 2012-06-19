@@ -1,5 +1,6 @@
 from settings import *
 import os
+import coverage
 
 DATABASES = {
         'default': { #new db that does not mimic acs system
@@ -24,3 +25,25 @@ DATABASES = {
 THUMBS_ROOT = os.path.join(ROOT_PROJECT_FOLDER, 'catalogue', 'tests' ,'thumbs_out')
 # And this is the dir that holds imagery
 IMAGERY_ROOT = os.path.join(ROOT_PROJECT_FOLDER, 'catalogue', 'tests' ,'imagery_mastercopies')
+
+if DEBUG:
+    EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+    # change this to a proper location
+    EMAIL_FILE_PATH = '/tmp/'
+
+#
+# For django coverage support when testing
+#
+# not changed, just shown as an example
+COVERAGE_MODULE_EXCLUDES = [
+        'tests$', 'settings$', '^urls$', 'locale$',
+        '__init__', 'django',
+        'migrations',
+    ]
+
+coverage.use_cache(False)
+for e in COVERAGE_MODULE_EXCLUDES:
+    coverage.exclude(e)
+coverage.start()
+
+TEST_RUNNER = 'django_coverage.coverage_runner.CoverageRunner'

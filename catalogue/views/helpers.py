@@ -3,12 +3,10 @@
 # Initialization, generic and helper methods
 #
 ###########################################################
-import logging
 
 from django.contrib.auth.decorators import login_required
-from django.conf import settings
 from django.shortcuts import render_to_response, get_object_or_404
-from django.http import HttpResponseRedirect,HttpResponse
+from django.http import HttpResponseRedirect, HttpResponse
 
 from catalogue.models import *
 from django.template import RequestContext
@@ -30,16 +28,19 @@ from django.conf import settings
 from django.core.mail import EmailMultiAlternatives, SafeMIMEMultipart
 
 # Read default notification recipients from settings
-CATALOGUE_DEFAULT_NOTIFICATION_RECIPIENTS = getattr(settings, 'CATALOGUE_DEFAULT_NOTIFICATION_RECIPIENTS', False )
+CATALOGUE_DEFAULT_NOTIFICATION_RECIPIENTS = getattr(settings,
+                        'CATALOGUE_DEFAULT_NOTIFICATION_RECIPIENTS', False)
 
 ###########################################################
 #
 # EmailMessage subclass that makes it easy to send multipart/related
 # messages. For example, including text and HTML versions with inline images.
 #
-# courtesy of: http://www.cupcakewithsprinkles.com/html-emails-with-inline-images-in-django/
+# courtesy of: http://www.cupcakewithsprinkles.com/html-emails-with-inline
+#                     -images-in-django/
 #
 ###########################################################
+
 
 class EmailMultiRelated(EmailMultiAlternatives):
     """
@@ -48,10 +49,14 @@ class EmailMultiRelated(EmailMultiAlternatives):
     """
     related_subtype = 'related'
 
-    def __init__(self, subject='', body='', from_email=None, to=None, bcc=None, connection=None, attachments=None, headers=None, alternatives=None):
+    def __init__(self, subject='', body='', from_email=None, to=None, bcc=None,
+                  connection=None, attachments=None, headers=None,
+                   alternatives=None):
         # self.related_ids = []
         self.related_attachments = []
-        return super(EmailMultiRelated, self).__init__(subject, body, from_email, to, bcc, connection, attachments, headers, alternatives)
+        return super(EmailMultiRelated, self).__init__(subject, body,
+                from_email, to, bcc, connection, attachments,
+                headers, alternatives)
 
     def attach_related(self, filename=None, content=None, mimetype=None):
         """
@@ -76,13 +81,15 @@ class EmailMultiRelated(EmailMultiAlternatives):
         self.attach_related(filename, content, mimetype)
 
     def _create_message(self, msg):
-        return self._create_attachments(self._create_related_attachments(self._create_alternatives(msg)))
+        return self._create_attachments(
+            self._create_related_attachments(self._create_alternatives(msg)))
 
     def _create_alternatives(self, msg):
         for i, (content, mimetype) in enumerate(self.alternatives):
             if mimetype == 'text/html':
                 for filename, _, _ in self.related_attachments:
-                    content = re.sub(r'(?<!cid:)%s' % re.escape(filename), 'cid:%s' % filename, content)
+                    content = re.sub(r'(?<!cid:)%s' % re.escape(filename),
+                                     'cid:%s' % filename, content)
                     self.alternatives[i] = (content, mimetype)
 
             return super(EmailMultiRelated, self)._create_alternatives(msg)
@@ -91,7 +98,8 @@ class EmailMultiRelated(EmailMultiAlternatives):
         encoding = self.encoding or settings.DEFAULT_CHARSET
         if self.related_attachments:
             body_msg = msg
-            msg = SafeMIMEMultipart(_subtype=self.related_subtype, encoding=encoding)
+            msg = SafeMIMEMultipart(_subtype=self.related_subtype,
+                                    encoding=encoding)
             if self.body:
                 msg.attach(body_msg)
                 for related in self.related_attachments:
@@ -104,12 +112,14 @@ class EmailMultiRelated(EmailMultiAlternatives):
         object. Adjust headers to use Content-ID where applicable.
         Taken from http://code.djangoproject.com/ticket/4771
         """
-        attachment = super(EmailMultiRelated, self)._create_attachment(filename, content, mimetype)
+        attachment = super(EmailMultiRelated, self)._create_attachment(
+                                                filename, content, mimetype)
         if filename:
             mimetype = attachment['Content-Type']
             del(attachment['Content-Type'])
             del(attachment['Content-Disposition'])
-            attachment.add_header('Content-Disposition', 'inline', filename=filename)
+            attachment.add_header('Content-Disposition', 'inline',
+                                  filename=filename)
             attachment.add_header('Content-Type', mimetype, name=filename)
             attachment.add_header('Content-ID', '<%s>' % filename)
         return attachment
@@ -118,7 +128,8 @@ class EmailMultiRelated(EmailMultiAlternatives):
 ###########################################################
 #
 # Object duplication generic code
-# from: http://github.com/johnboxall/django_usertools/blob/28c1f243a4882da1e63b60d54a86947db4847cf6/helpers.py#L23
+# from: http://github.com/johnboxall/django_usertools/blob/
+#            28c1f243a4882da1e63b60d54a86947db4847cf6/helpers.py#L23
 #
 # This code could be used to duplicate the Search object
 #
@@ -127,15 +138,14 @@ class EmailMultiRelated(EmailMultiAlternatives):
 
 from django.db.models.query import CollectedObjects
 from django.db.models.fields.related import ForeignKey
-from django.forms.models import model_to_dict
 
 
 def update_related_field(obj, value, field):
     """
     Set `field` to `value` for all objects related to `obj`.
     Based on heavily off the delete object code:
-    http://code.djangoproject.com/browser/django/trunk/django/db/models/query.py#L824
-
+    http://code.djangoproject.com/browser/django/trunk/django/db/models
+                    /query.py#L824
     """
     # Collect all related objects.
     collected_objs = CollectedObjects()
@@ -145,8 +155,10 @@ def update_related_field(obj, value, field):
     for cls in classes:
         items = collected_objs[cls].items()
         pk_list = [pk for pk, instance in items]
-        cls._default_manager.filter(id__in=pk_list).update(**{field:value})
+        cls._default_manager.filter(id__in=pk_list).update(**{field: value})
+        del instance
     return obj
+
 
 def duplicate(obj, value=None, field=None, duplicate_order=None):
     """
@@ -184,7 +196,7 @@ def duplicate(obj, value=None, field=None, duplicate_order=None):
         sub_obj = collected_objs[model]
         for pk_val, obj in sub_obj.iteritems():
             for fk in fks:
-                fk_value = getattr(obj, "%s_id" % fk.name)
+                fk_value = getattr(obj, '%s_id' % fk.name)
                 # If this FK has been duplicated then point to the duplicate.
                 if fk_value in collected_objs[fk.rel.to]:
                     dupe_obj = collected_objs[fk.rel.to][fk_value]
@@ -203,6 +215,8 @@ def duplicate(obj, value=None, field=None, duplicate_order=None):
 # Email notification of orders to sac sales staff
 #
 ###########################################################
+
+
 def notifySalesStaff(theUser, theOrderId):
     """ A helper method to notify sales staff who are subscribed to a sensor
        Example usage from the console / doctest:
@@ -210,59 +224,71 @@ def notifySalesStaff(theUser, theOrderId):
        >>> from catalogue.views import *
        >>> myUser = User.objects.get(id=1)
        >>> myUser
-       >>> notifySalesStaff( myUser, 16 )
+       >>> notifySalesStaff(myUser, 16)
 
     """
 
     if not settings.EMAIL_NOTIFICATIONS_ENABLED:
-        logging.info("Email sending disabled, set EMAIL_NOTIFICATIONS_ENABLED in settings")
+        logging.info('Email sending disabled, set EMAIL_NOTIFICATIONS_ENABLED '
+                    'in settings')
         return
-    myOrder = get_object_or_404(Order,id=theOrderId)
-    myRecords = SearchRecord.objects.filter(user=theUser, order=myOrder).select_related()
+    myOrder = get_object_or_404(Order, id=theOrderId)
+    myRecords = SearchRecord.objects.filter(user=theUser,
+                                            order=myOrder).select_related()
     myHistory = OrderStatusHistory.objects.filter(order=myOrder)
 
-    myEmailSubject = 'SAC Order ' + str(myOrder.id) + ' status update (' + myOrder.order_status.name + ')'
+    myEmailSubject = ('SANSA Order ' + str(myOrder.id) + ' status update (' +
+                      myOrder.order_status.name + ')')
 
     # Get a list of staff user's email addresses
-    myMessagesList = [] # we will use mass_mail to prevent users seeing who other recipients are
+    # we will use mass_mail to prevent users seeing who other recipients are
+    myMessagesList = []
 
     myRecipients = set()
     # get the list of recipients
     for myProduct in [s.product for s in myRecords]:
-        myRecipients.update(OrderNotificationRecipients.getUsersForProduct(myProduct))
+        myRecipients.update(
+                    OrderNotificationRecipients.getUsersForProduct(myProduct))
 
     # Add default recipients
     if not myRecipients and CATALOGUE_DEFAULT_NOTIFICATION_RECIPIENTS:
-        logging.info("Sending notice to default recipients : %s" % CATALOGUE_DEFAULT_NOTIFICATION_RECIPIENTS)
+        logging.info('Sending notice to default recipients : %s' %
+                     CATALOGUE_DEFAULT_NOTIFICATION_RECIPIENTS)
         myRecipients.update(list(CATALOGUE_DEFAULT_NOTIFICATION_RECIPIENTS))
 
     for myRecipient in myRecipients:
         #txt email template
-        myEmailMessage_txt = render_to_string( 'mail/order.txt', { 'myOrder': myOrder,
-                                                        'myRecords' : myRecords,
-                                                        'myHistory' : myHistory,
-                                                        'myRecipient': myRecipient,
-                                                        'domain':settings.DOMAIN
-                                                      })
+        myEmailMessage_txt = render_to_string(
+                                'mail/order.txt', {'myOrder': myOrder,
+                                                   'myRecords': myRecords,
+                                                   'myHistory': myHistory,
+                                                   'myRecipient': myRecipient,
+                                                   'domain': settings.DOMAIN
+                                                   })
         #html email template
-        myEmailMessage_html = render_to_string( 'mail/order.html', { 'myOrder': myOrder,
-                                                          'myRecords' : myRecords,
-                                                          'myHistory' : myHistory,
-                                                          'myRecipient': myRecipient,
-                                                          'domain':settings.DOMAIN
-                                                      })
+        myEmailMessage_html = render_to_string(
+                                'mail/order.html', {'myOrder': myOrder,
+                                                    'myRecords': myRecords,
+                                                    'myHistory': myHistory,
+                                                    'myRecipient': myRecipient,
+                                                    'domain': settings.DOMAIN
+                                                   })
         myAddress = myRecipient.email
-        myMsg = EmailMultiRelated(myEmailSubject, myEmailMessage_txt, 'dontreply@' + settings.DOMAIN, [myAddress])
-        logging.info("Sending notice to : %s" % myAddress)
+        myMsg = EmailMultiRelated(myEmailSubject,
+                                  myEmailMessage_txt,
+                                  'dontreply@' + settings.DOMAIN, [myAddress])
+        logging.info('Sending notice to : %s' % myAddress)
 
         #attach alternative payload - html
-        myMsg.attach_alternative(myEmailMessage_html,'text/html')
-        #add required images, as inline attachments, accesed by 'name' in templates
-        myMsg.attach_related_file(os.path.join(settings.MEDIA_ROOT,'images','sac_header_email.jpg'))
+        myMsg.attach_alternative(myEmailMessage_html, 'text/html')
+        # add required images, as inline attachments,
+        # accesed by 'name' in templates
+        myMsg.attach_related_file(os.path.join(settings.MEDIA_ROOT,
+                                        'images', 'sac_header_email.jpg'))
         #add message
         myMessagesList.append(myMsg)
 
-    logging.info("Sending messages: \n%s" % myMessagesList)
+    logging.info('Sending messages: \n%s' % myMessagesList)
     # initiate email connection, and send messages in bulk
     myEmailConnection = mail.get_connection()
     myEmailConnection.send_messages(myMessagesList)
@@ -273,6 +299,8 @@ def notifySalesStaff(theUser, theOrderId):
 # Email notification of tasking requests to sac sales staff
 #
 ###########################################################
+
+
 def notifySalesStaffOfTaskRequest(theUser, theId):
     """ A helper method to notify tasking staff who are subscribed to a sensor
        Example usage from the console / doctest:
@@ -280,53 +308,63 @@ def notifySalesStaffOfTaskRequest(theUser, theId):
        >>> from catalogue.views import *
        >>> myUser = User.objects.get(id=1)
        >>> myUser
-       >>> notifySalesStaffOfTaskRequest( myUser, 11 )"""
+       >>> notifySalesStaffOfTaskRequest(myUser, 11)"""
     if not settings.EMAIL_NOTIFICATIONS_ENABLED:
-        logging.info("Email sending disabled, set EMAIL_NOTIFICATIONS_ENABLED in settings")
+        logging.info('Email sending disabled, set '
+                     'EMAIL_NOTIFICATIONS_ENABLED in settings')
         return
 
-    myTaskingRequest = get_object_or_404(TaskingRequest,id=theId)
+    myTaskingRequest = get_object_or_404(TaskingRequest, id=theId)
     myHistory = OrderStatusHistory.objects.all().filter(order=myTaskingRequest)
 
-    myEmailSubject = 'SAC Tasking Request ' + str(myTaskingRequest.id) + ' status update (' + myTaskingRequest.order_status.name + ')'
+    myEmailSubject = ('SANSA Tasking Request ' + str(myTaskingRequest.id) +
+    ' status update (' + myTaskingRequest.order_status.name + ')')
 
     myMessagesList = []
     # get the list of recipients
-    myTaskingRecipients = OrderNotificationRecipients.objects.filter(sensors=myTaskingRequest.mission_sensor)
+    myTaskingRecipients = OrderNotificationRecipients.objects.filter(
+                                    sensors=myTaskingRequest.mission_sensor)
     myRecipients = set()
     for recepient in myTaskingRecipients:
         myRecipients.add(recepient.user)
 
     # Add default recipients if no recipients
     if not myRecipients and CATALOGUE_DEFAULT_NOTIFICATION_RECIPIENTS:
-        logging.info("Sending notice to default recipients : %s" % CATALOGUE_DEFAULT_NOTIFICATION_RECIPIENTS)
+        logging.info('Sending notice to default recipients : %s' %
+                     CATALOGUE_DEFAULT_NOTIFICATION_RECIPIENTS)
         myRecipients.update(list(CATALOGUE_DEFAULT_NOTIFICATION_RECIPIENTS))
 
     for myRecipient in myRecipients:
         #txt email template
-        myEmailMessage_txt = render_to_string( 'mail/task.txt', { 'myTask': myTaskingRequest,
-                                                        'myHistory' : myHistory,
-                                                        'myRecipient': myRecipient,
-                                                        'domain':settings.DOMAIN
-                                                      })
+        myEmailMessage_txt = render_to_string(
+                                'mail/task.txt', {'myTask': myTaskingRequest,
+                                                  'myHistory': myHistory,
+                                                  'myRecipient': myRecipient,
+                                                  'domain': settings.DOMAIN
+                                                  })
         #html email template
-        myEmailMessage_html = render_to_string( 'mail/task.html', { 'myTask': myTaskingRequest,
-                                                          'myHistory' : myHistory,
-                                                          'myRecipient': myRecipient,
-                                                          'domain':settings.DOMAIN
-                                                      })
+        myEmailMessage_html = render_to_string('mail/task.html', {
+                                                'myTask': myTaskingRequest,
+                                                'myHistory': myHistory,
+                                                'myRecipient': myRecipient,
+                                                'domain': settings.DOMAIN
+                                                })
         myAddress = myRecipient.email
-        myMsg = EmailMultiRelated(myEmailSubject, myEmailMessage_txt, 'dontreply@' + settings.DOMAIN, [myAddress])
-        logging.info("Sending notice to : %s" % myAddress)
+        myMsg = EmailMultiRelated(myEmailSubject,
+                                  myEmailMessage_txt,
+                                  'dontreply@' + settings.DOMAIN, [myAddress])
+        logging.info('Sending notice to : %s' % myAddress)
 
         #attach alternative payload - html
-        myMsg.attach_alternative(myEmailMessage_html,'text/html')
-        #add required images, as inline attachments, accesed by 'name' in templates
-        myMsg.attach_related_file(os.path.join(settings.MEDIA_ROOT,'images','sac_header_email.jpg'))
+        myMsg.attach_alternative(myEmailMessage_html, 'text/html')
+        #add required images, as inline attachments, accessed by
+        # 'name' in templates
+        myMsg.attach_related_file(os.path.join(settings.MEDIA_ROOT,
+                                            'images', 'sac_header_email.jpg'))
         #add message
         myMessagesList.append(myMsg)
 
-    logging.info("Sending messages: \n%s" % myMessagesList)
+    logging.info('Sending messages: \n%s' % myMessagesList)
     # initiate email connection, and send messages in bulk
     myEmailConnection = mail.get_connection()
     myEmailConnection.send_messages(myMessagesList)
@@ -334,16 +372,20 @@ def notifySalesStaffOfTaskRequest(theUser, theId):
 
 """Layer definitions for use in conjunction with open layers"""
 WEB_LAYERS = {
-            # Streets and boundaries for SA base map with an underlay of spot 2010 2m mosaic
+            # Streets and boundaries for SA base map with an
+            # underlay of spot 2010 2m mosaic
             #
             # Uses the degraded 2.5m product in a tile cache
             #
-            # and under that blue marble. Its rendered as a single layer for best quality.
-          'ZaSpot2mMosaic2010TC' : '''var zaSpot2mMosaic2010TC = new OpenLayers.Layer.WMS(
-          "2m Mosaic 2010 TC", "http://''' + settings.WMS_SERVER + '''/cgi-bin/tilecache.cgi?",
+            # and under that blue marble. Its rendered as a single
+            # layer for best quality.
+          'ZaSpot2mMosaic2010TC':
+              """var zaSpot2mMosaic2010TC = new OpenLayers.Layer.WMS(
+              '2m Mosaic 2010 TC', 'http://""" +
+              settings.WMS_SERVER + """/cgi-bin/tilecache.cgi?',
           {
              VERSION: '1.1.1',
-             EXCEPTIONS: "application/vnd.ogc.se_inimage",
+             EXCEPTIONS: 'application/vnd.ogc.se_inimage',
              width: '800',
              //layers: 'Roads',
              layers: 'spot5mosaic2m2010',
@@ -355,17 +397,21 @@ WEB_LAYERS = {
              antialiasing: 'true'
            },
            {isBaseLayer: true});
-           ''',
-            # Streets and boundaries for SA base map with an underlay of spot 2009 2m mosaic
+           """,
+            # Streets and boundaries for SA base map with an underlay
+            # of spot 2009 2m mosaic
             #
             # Uses the degraded 2.5m product in a tile cache
             #
-            # and under that blue marble. Its rendered as a single layer for best quality.
-          'ZaSpot2mMosaic2009TC' : '''var zaSpot2mMosaic2009TC = new OpenLayers.Layer.WMS(
-          "2m Mosaic 2009 TC", "http://''' + settings.WMS_SERVER + '''/cgi-bin/tilecache.cgi?",
+            # and under that blue marble. Its rendered as a single layer
+            # for best quality.
+          'ZaSpot2mMosaic2009TC':
+              """var zaSpot2mMosaic2009TC = new OpenLayers.Layer.WMS(
+              '2m Mosaic 2009 TC', 'http://""" + settings.WMS_SERVER +
+              """/cgi-bin/tilecache.cgi?',
           {
              VERSION: '1.1.1',
-             EXCEPTIONS: "application/vnd.ogc.se_inimage",
+             EXCEPTIONS: 'application/vnd.ogc.se_inimage',
              width: '800',
              //layers: 'Roads',
              layers: 'spot5mosaic2m2009',
@@ -377,17 +423,18 @@ WEB_LAYERS = {
              antialiasing: 'true'
            },
            {isBaseLayer: true});
-           ''',
-            # Streets and boundaries for SA base map with an underlay of spot 2008 mosaic
-            #
-            # Uses the degraded 2m product in a tile cache
-            #
-            # and under that blue marble. Its rendered as a single layer for best quality.
-          'ZaSpot2mMosaic2008TC' : '''var zaSpot2mMosaic2008TC = new OpenLayers.Layer.WMS(
-          "2m Mosaic 2008 TC", "http://''' + settings.WMS_SERVER + '''/cgi-bin/tilecache.cgi?",
+           """,
+            # Streets and boundaries for SA base map with an underlay
+            # of spot 2008 mosaic. Uses the degraded 2m product in a tile cache
+            # and under that blue marble. Its rendered as a single layer for
+            # best quality.
+          'ZaSpot2mMosaic2008TC':
+              """var zaSpot2mMosaic2008TC = new OpenLayers.Layer.WMS(
+              '2m Mosaic 2008 TC', 'http://""" + settings.WMS_SERVER +
+              """/cgi-bin/tilecache.cgi?',
           {
              VERSION: '1.1.1',
-             EXCEPTIONS: "application/vnd.ogc.se_inimage",
+             EXCEPTIONS: 'application/vnd.ogc.se_inimage',
              width: '800',
              //layers: 'Roads',
              layers: 'spot5mosaic2m2008',
@@ -399,17 +446,18 @@ WEB_LAYERS = {
              antialiasing: 'true'
            },
            {isBaseLayer: true});
-           ''',
-            # Streets and boundaries for SA base map with an underlay of spot 2007 mosaic
-            #
-            # Uses the degraded 2m product in a tile cache
-            #
-            # and under that blue marble. Its rendered as a single layer for best quality.
-          'ZaSpot2mMosaic2007TC' : '''var zaSpot2mMosaic2007TC = new OpenLayers.Layer.WMS(
-          "2m Mosaic 2007 TC", "http://''' + settings.WMS_SERVER + '''/cgi-bin/tilecache.cgi?",
+           """,
+            # Streets and boundaries for SA base map with an underlay of spot
+            # 2007 mosaic. Uses the degraded 2m product in a tile cache
+            # and under that blue marble. Its rendered as a single layer
+            # for best quality.
+          'ZaSpot2mMosaic2007TC':
+            """var zaSpot2mMosaic2007TC = new OpenLayers.Layer.WMS(
+            '2m Mosaic 2007 TC', 'http://""" + settings.WMS_SERVER +
+            """/cgi-bin/tilecache.cgi?',
           {
              VERSION: '1.1.1',
-             EXCEPTIONS: "application/vnd.ogc.se_inimage",
+             EXCEPTIONS: 'application/vnd.ogc.se_inimage',
              width: '800',
              //layers: 'Roads',
              layers: 'spot5mosaic2m2007',
@@ -421,14 +469,17 @@ WEB_LAYERS = {
              antialiasing: 'true'
            },
            {isBaseLayer: true});
-           ''',
-            # Streets and boundaries for SA base map with an underlay of spot 2010 mosaic
-            # and under that blue marble. Its rendered as a single layer for best quality.
-            'ZaSpot2mMosaic2010' : '''var zaSpot2mMosaic2010 = new OpenLayers.Layer.WMS(
-          "2m Mosaic 2010", "http://''' + settings.WMS_SERVER + '''/cgi-bin/mapserv?map=ZA_SPOT2010",
+           """,
+            # Streets and boundaries for SA base map with an underlay of spot
+            # 2010 mosaic and under that blue marble. Its rendered as a single
+            # layer for best quality.
+          'ZaSpot2mMosaic2010':
+              """var zaSpot2mMosaic2010 = new OpenLayers.Layer.WMS(
+              '2m Mosaic 2010', 'http://""" + settings.WMS_SERVER +
+              """/cgi-bin/mapserv?map=ZA_SPOT2010',
           {
              VERSION: '1.1.1',
-             EXCEPTIONS: "application/vnd.ogc.se_inimage",
+             EXCEPTIONS: 'application/vnd.ogc.se_inimage',
              width: '800',
              layers: 'Roads',
              srs: 'EPSG:900913',
@@ -439,14 +490,17 @@ WEB_LAYERS = {
              antialiasing: 'true'
            },
            {isBaseLayer: true});
-           ''',
-            # Streets and boundaries for SA base map with an underlay of spot 2009 mosaic
-            # and under that blue marble. Its rendered as a single layer for best quality.
-            'ZaSpot2mMosaic2009' : '''var zaSpot2mMosaic2009 = new OpenLayers.Layer.WMS(
-          "2m Mosaic 2009", "http://''' + settings.WMS_SERVER + '''/cgi-bin/mapserv?map=ZA_SPOT2009",
+           """,
+            # Streets and boundaries for SA base map with an underlay of
+            # spot 2009 mosaic and under that blue marble. Its rendered as a
+            # single layer for best quality.
+            'ZaSpot2mMosaic2009':
+                """var zaSpot2mMosaic2009 = new OpenLayers.Layer.WMS(
+                '2m Mosaic 2009', 'http://""" + settings.WMS_SERVER +
+                """/cgi-bin/mapserv?map=ZA_SPOT2009',
           {
              VERSION: '1.1.1',
-             EXCEPTIONS: "application/vnd.ogc.se_inimage",
+             EXCEPTIONS: 'application/vnd.ogc.se_inimage',
              width: '800',
              layers: 'Roads',
              srs: 'EPSG:900913',
@@ -457,32 +511,38 @@ WEB_LAYERS = {
              antialiasing: 'true'
            },
            {isBaseLayer: true});
-           ''',
-           # Streets and boundaries for SA base map with an underlay of spot 2008 mosaic
-           # and under that blue marble. Its rendered as a single layer for best quality.
-           'ZaSpot2mMosaic2008' : '''var zaSpot2mMosaic2008 = new OpenLayers.Layer.WMS(
-           "2m Mosaic 2008", "http://''' + settings.WMS_SERVER + '''/cgi-bin/mapserv?map=ZA_SPOT2008",
+           """,
+           # Streets and boundaries for SA base map with an underlay of spot
+           # 2008 mosaic and under that blue marble. Its rendered as a single
+           # layer for best quality.
+           'ZaSpot2mMosaic2008':
+               """var zaSpot2mMosaic2008 = new OpenLayers.Layer.WMS(
+               '2m Mosaic 2008', 'http://""" +
+               settings.WMS_SERVER + """/cgi-bin/mapserv?map=ZA_SPOT2008',
            {
               width: '800',
               layers: 'Roads',
               srs: 'EPSG:900913',
               maxResolution: '156543.0339',
               VERSION: '1.1.1',
-              EXCEPTIONS: "application/vnd.ogc.se_inimage",
+              EXCEPTIONS: 'application/vnd.ogc.se_inimage',
               height: '525',
               format: 'image/jpeg',
               transparent: 'false',
               antialiasing: 'true'
             },
             {isBaseLayer: true});
-           ''',
-           # Streets and boundaries for SA base map with an underlay of spot 2007 mosaic
-           # and under that blue marble. Its rendered as a single layer for best quality.
-           'ZaSpot2mMosaic2007' : '''var zaSpot2mMosaic2007 = new OpenLayers.Layer.WMS(
-          "2m Mosaic 2007", "http://''' + settings.WMS_SERVER + '''/cgi-bin/mapserv?map=ZA_SPOT2007",
+           """,
+           # Streets and boundaries for SA base map with an underlay of spot
+           # 2007 mosaic and under that blue marble. Its rendered as a single
+           # layer for best quality.
+           'ZaSpot2mMosaic2007':
+               """var zaSpot2mMosaic2007 = new OpenLayers.Layer.WMS(
+              '2m Mosaic 2007', 'http://""" + settings.WMS_SERVER +
+              """/cgi-bin/mapserv?map=ZA_SPOT2007',
           {
              VERSION: '1.1.1',
-             EXCEPTIONS: "application/vnd.ogc.se_inimage",
+             EXCEPTIONS: 'application/vnd.ogc.se_inimage',
              width: '800',
              layers: 'Roads',
              srs: 'EPSG:900913',
@@ -493,18 +553,18 @@ WEB_LAYERS = {
              antialiasing: 'true'
            },
            {isBaseLayer: true});
-           ''',
-            # Streets and boundaries for SA base map with an underlay of spot 2010 mosaic
-            #
-            # Uses the degraded 10m product in a tile cache
-            #
-            # and under that blue marble. Its rendered as a single layer for best quality.
-            # "ZaRoadsBoundaries", "http://''' + settings.WMS_SERVER + '''/cgi-bin/mapserv?map=ZA_VECTOR",
-          'ZaSpot10mMosaic2010' : '''var zaSpot10mMosaic2010 = new OpenLayers.Layer.WMS(
-          "10m Mosaic 2010 TC", "http://''' + settings.WMS_SERVER + '''/cgi-bin/tilecache.cgi?",
+           """,
+            # Streets and boundaries for SA base map with an underlay of
+            # spot 2010 mosaic. Uses the degraded 10m product in a tile cache
+            # and under that blue marble. Its rendered as a single layer for
+            # best quality.
+          'ZaSpot10mMosaic2010':
+              """var zaSpot10mMosaic2010 = new OpenLayers.Layer.WMS(
+              '10m Mosaic 2010 TC', 'http://""" + settings.WMS_SERVER +
+              """/cgi-bin/tilecache.cgi?',
           {
              VERSION: '1.1.1',
-             EXCEPTIONS: "application/vnd.ogc.se_inimage",
+             EXCEPTIONS: 'application/vnd.ogc.se_inimage',
              width: '800',
              //layers: 'Roads',
              layers: 'spot5mosaic10m2010',
@@ -516,18 +576,19 @@ WEB_LAYERS = {
              antialiasing: 'true'
            },
            {isBaseLayer: true});
-           ''',
-            # Streets and boundaries for SA base map with an underlay of spot 2009 mosaic
+           """,
+            # Streets and boundaries for SA base map with an underlay of spot
+            # 2009 mosaic. Uses the degraded 10m product in a tile cache
             #
-            # Uses the degraded 10m product in a tile cache
-            #
-            # and under that blue marble. Its rendered as a single layer for best quality.
-            # "ZaRoadsBoundaries", "http://''' + settings.WMS_SERVER + '''/cgi-bin/mapserv?map=ZA_VECTOR",
-          'ZaSpot10mMosaic2009' : '''var zaSpot10mMosaic2009 = new OpenLayers.Layer.WMS(
-          "10m Mosaic 2009 TC", "http://''' + settings.WMS_SERVER + '''/cgi-bin/tilecache.cgi?",
+            # and under that blue marble. Its rendered as a single layer for
+            # best quality.
+          'ZaSpot10mMosaic2009':
+              """var zaSpot10mMosaic2009 = new OpenLayers.Layer.WMS(
+              '10m Mosaic 2009 TC', 'http://""" + settings.WMS_SERVER +
+              """/cgi-bin/tilecache.cgi?',
           {
              VERSION: '1.1.1',
-             EXCEPTIONS: "application/vnd.ogc.se_inimage",
+             EXCEPTIONS: 'application/vnd.ogc.se_inimage',
              width: '800',
              //layers: 'Roads',
              layers: 'spot5mosaic10m2009',
@@ -539,18 +600,21 @@ WEB_LAYERS = {
              antialiasing: 'true'
            },
            {isBaseLayer: true});
-           ''',
-            # Streets and boundaries for SA base map with an underlay of spot 2008 mosaic
+           """,
+            # Streets and boundaries for SA base map with an underlay of
+            # spot 2008 mosaic
             #
             # Uses the degraded 10 product in a tile cache
             #
-            # and under that blue marble. Its rendered as a single layer for best quality.
-            # "ZaRoadsBoundaries", "http://''' + settings.WMS_SERVER + '''/cgi-bin/mapserv?map=ZA_VECTOR",
-          'ZaSpot10mMosaic2008' : '''var zaSpot10mMosaic2008 = new OpenLayers.Layer.WMS(
-          "10m Mosaic 2008 TC", "http://''' + settings.WMS_SERVER + '''/cgi-bin/tilecache.cgi?",
+            # and under that blue marble. Its rendered as a single layer for
+            # best quality.
+          'ZaSpot10mMosaic2008':
+              """var zaSpot10mMosaic2008 = new OpenLayers.Layer.WMS(
+              '10m Mosaic 2008 TC', 'http://""" + settings.WMS_SERVER +
+              """/cgi-bin/tilecache.cgi?',
           {
              VERSION: '1.1.1',
-             EXCEPTIONS: "application/vnd.ogc.se_inimage",
+             EXCEPTIONS: 'application/vnd.ogc.se_inimage',
              width: '800',
              //layers: 'Roads',
              layers: 'spot5mosaic10m2008',
@@ -562,18 +626,21 @@ WEB_LAYERS = {
              antialiasing: 'true'
            },
            {isBaseLayer: true});
-           ''',
-            # Streets and boundaries for SA base map with an underlay of spot 2007 mosaic
+           """,
+            # Streets and boundaries for SA base map with an underlay of spot
+            # 2007 mosaic
             #
             # Uses the degraded 10 product in a tile cache
             #
-            # and under that blue marble. Its rendered as a single layer for best quality.
-            # "ZaRoadsBoundaries", "http://''' + settings.WMS_SERVER + '''/cgi-bin/mapserv?map=ZA_VECTOR",
-          'ZaSpot10mMosaic2007' : '''var zaSpot10mMosaic2007 = new OpenLayers.Layer.WMS(
-          "10m Mosaic 2007 TC", "http://''' + settings.WMS_SERVER + '''/cgi-bin/tilecache.cgi?",
+            # and under that blue marble. Its rendered as a single layer for
+            # best quality.
+          'ZaSpot10mMosaic2007':
+              """var zaSpot10mMosaic2007 = new OpenLayers.Layer.WMS(
+              '10m Mosaic 2007 TC', 'http://""" + settings.WMS_SERVER +
+              """/cgi-bin/tilecache.cgi?',
           {
              VERSION: '1.1.1',
-             EXCEPTIONS: "application/vnd.ogc.se_inimage",
+             EXCEPTIONS: 'application/vnd.ogc.se_inimage',
              width: '800',
              //layers: 'Roads',
              layers: 'spot5mosaic10m2007',
@@ -585,25 +652,29 @@ WEB_LAYERS = {
              antialiasing: 'true'
            },
            {isBaseLayer: true});
-           ''',
+           """,
            # Spot5 ZA 2008 10m Mosaic directly from mapserver
-            'ZaSpot5Mosaic2008' : '''var zaSpot5Mosaic2008 = new OpenLayers.Layer.WMS( "SPOT5 10m Mosaic 2008, ZA",
-            "http://''' + settings.WMS_SERVER + '''/cgi-bin/mapserv?map=ZA_SPOT",
+            'ZaSpot5Mosaic2008':
+                """var zaSpot5Mosaic2008 = new OpenLayers.Layer.WMS(
+                'SPOT5 10m Mosaic 2008, ZA',
+                'http://""" + settings.WMS_SERVER +
+                """/cgi-bin/mapserv?map=ZA_SPOT',
             {
               VERSION: '1.1.1',
-              EXCEPTIONS: "application/vnd.ogc.se_inimage",
-              layers: "Spot5_RSA_2008_10m",
+              EXCEPTIONS: 'application/vnd.ogc.se_inimage',
+              layers: 'Spot5_RSA_2008_10m',
               maxResolution: '156543.0339',
             });
             zaSpot5Mosaic2008.setVisibility(false);
-            ''',
+            """,
            #a Vector only version of the above
-           # "ZaRoadsBoundaries", "http://''' + settings.WMS_SERVER + '''/cgi-bin/mapserv?map=ZA_VECTOR",
-          'ZaRoadsBoundaries' : '''var zaRoadsBoundaries = new OpenLayers.Layer.WMS(
-          "SA Vector", "http://''' + settings.WMS_SERVER + '''/cgi-bin/tilecache.cgi?",
+          'ZaRoadsBoundaries':
+               """var zaRoadsBoundaries = new OpenLayers.Layer.WMS(
+               'SA Vector', 'http://""" + settings.WMS_SERVER +
+               """/cgi-bin/tilecache.cgi?',
           {
              VERSION: '1.1.1',
-             EXCEPTIONS: "application/vnd.ogc.se_inimage",
+             EXCEPTIONS: 'application/vnd.ogc.se_inimage',
              width: '800',
              //layers: 'Roads',
              layers: 'za_vector',
@@ -615,14 +686,15 @@ WEB_LAYERS = {
              antialiasing: 'true'
            },
            {isBaseLayer: true});
-           ''',
+           """,
             # Map of all search footprints that have been made.
             # Transparent: true will make a wms layer into an overlay
-            'Searches' : '''var searches = new OpenLayers.Layer.WMS(
-          "Searches", "http://''' + settings.WMS_SERVER + '''/cgi-bin/mapserv?map=SEARCHES",
+            'Searches': """var searches = new OpenLayers.Layer.WMS(
+                'Searches', 'http://""" + settings.WMS_SERVER +
+                """/cgi-bin/mapserv?map=SEARCHES',
           {
              VERSION: '1.1.1',
-             EXCEPTIONS: "application/vnd.ogc.se_inimage",
+             EXCEPTIONS: 'application/vnd.ogc.se_inimage',
              width: '800',
              layers: 'searches',
              srs: 'EPSG:900913',
@@ -632,14 +704,15 @@ WEB_LAYERS = {
              transparent: 'true'
            },
            {isBaseLayer: false});
-           ''',
+           """,
         # Map of site visitors
         # Transparent: true will make a wms layer into an overlay
-        'Visitors' : '''var visitors = new OpenLayers.Layer.WMS(
-          "Visitors", "http://''' + settings.WMS_SERVER + '''/cgi-bin/mapserv?map=VISITORS",
+        'Visitors': """var visitors = new OpenLayers.Layer.WMS(
+          'Visitors', 'http://""" + settings.WMS_SERVER +
+          """/cgi-bin/mapserv?map=VISITORS',
           {
              VERSION: '1.1.1',
-             EXCEPTIONS: "application/vnd.ogc.se_inimage",
+             EXCEPTIONS: 'application/vnd.ogc.se_inimage',
              width: '800',
              layers: 'visitors',
              styles: '',
@@ -650,105 +723,125 @@ WEB_LAYERS = {
              transparent: 'true'
            },
            {isBaseLayer: false}
-        );
-        ''',
+       );
+        """,
         # Nasa Blue marble directly from mapserver
-            'BlueMarble' : '''var BlueMarble = new OpenLayers.Layer.WMS( "BlueMarble",
-            "http://''' + settings.WMS_SERVER + '''/cgi-bin/mapserv?map=WORLD",
+            'BlueMarble':
+            """var BlueMarble = new OpenLayers.Layer.WMS('BlueMarble',
+                'http://""" + settings.WMS_SERVER +
+                """/cgi-bin/mapserv?map=WORLD',
             {
              VERSION: '1.1.1',
-             EXCEPTIONS: "application/vnd.ogc.se_inimage",
-             layers: "BlueMarble",
+             EXCEPTIONS: 'application/vnd.ogc.se_inimage',
+             layers: 'BlueMarble',
              maxResolution: '156543.0339'
             });
             BlueMarble.setVisibility(false);
-            ''',
+            """,
         #
         # Google
         #
-       'GooglePhysical' : '''var gphy = new OpenLayers.Layer.Google(
-           "Google Physical",
+       'GooglePhysical': """var gphy = new OpenLayers.Layer.Google(
+           'Google Physical',
            {type: G_PHYSICAL_MAP}
-           );
-       ''',
+          );
+       """,
         #
         # Google streets
         #
-        'GoogleStreets' : '''var gmap = new OpenLayers.Layer.Google(
-           "Google Streets" // the default
-           );
-        ''',
+        'GoogleStreets': """var gmap = new OpenLayers.Layer.Google(
+           'Google Streets' // the default
+          );
+        """,
         #
         # Google hybrid
         #
-        'GoogleHybrid' : ''' var ghyb = new OpenLayers.Layer.Google(
-           "Google Hybrid",
+        'GoogleHybrid': """ var ghyb = new OpenLayers.Layer.Google(
+           'Google Hybrid',
            {type: G_HYBRID_MAP}
-           );
-        ''',
+          );
+        """,
         #
         # Google Satellite
         #
-        'GoogleSatellite' : '''var gsat = new OpenLayers.Layer.Google(
-           "Google Satellite",
+        'GoogleSatellite': """var gsat = new OpenLayers.Layer.Google(
+           'Google Satellite',
            {type: G_SATELLITE_MAP}
-           );
-        ''',
+          );
+        """,
         #
         # Heatmap - all
         #
-        'Heatmap-total' : '''var heatmap_total = new OpenLayers.Layer.Image(
+        'Heatmap-total': """var heatmap_total = new OpenLayers.Layer.Image(
                 'Heatmap total',
                 '/media/heatmaps/heatmap-total.png',
-                new OpenLayers.Bounds(-20037508.343,-16222639.241,20019734.329,16213801.068),
+                new OpenLayers.Bounds(-20037508.343,
+                                      -16222639.241,
+                                      20019734.329,
+                                      16213801.068),
                 new OpenLayers.Size(1252,1013),
                 {isBaseLayer: true,
                 maxResolution: 156543.0339
                 }
-            );
-        ''',
+           );
+        """,
         #
         # Heatmap - last3month
         #
-        'Heatmap-last3month' : '''var heatmap_last3month = new OpenLayers.Layer.Image(
+        'Heatmap-last3month':
+            """var heatmap_last3month = new OpenLayers.Layer.Image(
                 'Heatmap last 3 months',
                 '/media/heatmaps/heatmap-last3month.png',
-                new OpenLayers.Bounds(-20037508.343,-16222639.241,20019734.329,16213801.068),
+                new OpenLayers.Bounds(-20037508.343,
+                                      -16222639.241,
+                                      20019734.329,
+                                      16213801.068),
                 new OpenLayers.Size(1252,1013),
                 {isBaseLayer: true,
                 maxResolution: 156543.0339
                 }
-            );
-        ''',
+           );
+        """,
         #
         # Heatmap - last month
         #
-        'Heatmap-lastmonth' : '''var heatmap_lastmonth = new OpenLayers.Layer.Image(
+        'Heatmap-lastmonth': 
+            """var heatmap_lastmonth = new OpenLayers.Layer.Image(
                 'Heatmap last month',
                 '/media/heatmaps/heatmap-lastmonth.png',
-                new OpenLayers.Bounds(-20037508.343,-16222639.241,20019734.329,16213801.068),
+                new OpenLayers.Bounds(-20037508.343,
+                                      -16222639.241,
+                                      20019734.329,
+                                      16213801.068),
                 new OpenLayers.Size(1252,1013),
                 {isBaseLayer: true,
                 maxResolution: 156543.0339
                 }
-            );
-        ''',
+           );
+        """,
         #
         # Heatmap - last week
         #
-        'Heatmap-lastweek' : '''var heatmap_lastweek = new OpenLayers.Layer.Image(
+        'Heatmap-lastweek':
+            """var heatmap_lastweek = new OpenLayers.Layer.Image(
                 'Heatmap last week',
                 '/media/heatmaps/heatmap-lastweek.png',
-                new OpenLayers.Bounds(-20037508.343,-16222639.241,20019734.329,16213801.068),
+                new OpenLayers.Bounds(-20037508.343,
+                                      -16222639.241,
+                                      20019734.329,
+                                      16213801.068),
                 new OpenLayers.Size(1252,1013),
                 {isBaseLayer: true,
                 maxResolution: 156543.0339
                 }
-            );
-        ''',
+           );
+        """,
         # Note for this layer to be used you need to regex replace
         # USERNAME with theRequest.user.username
-        'CartLayer' : '''var cartLayer = new OpenLayers.Layer.WMS("Cart", "http://''' + settings.WMS_SERVER + '''/cgi-bin/mapserv?map=''' + settings.CART_LAYER + '''&user=USERNAME",
+        'CartLayer': 
+            """var cartLayer = new OpenLayers.Layer.WMS('Cart', 'http://""" +
+            settings.WMS_SERVER + """/cgi-bin/mapserv?map=""" +
+            settings.CART_LAYER + """&user=USERNAME',
           {
              version: '1.1.1',
              width: '800',
@@ -759,15 +852,16 @@ WEB_LAYERS = {
              transparent: 'true'
            },
            {isBaseLayer: false});
-           ''',
+           """,
         }
 
-mLayerJs = {'VirtualEarth' : '''<script src='http://dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=6.1'></script>
-         ''',
-         'Google' : '''
-          <script src='http://maps.google.com/maps?file=api&amp;v=2&amp;key='{{GOOGLE_MAPS_API_KEY}}'></script>
-          '''}
-
+mLayerJs = {'VirtualEarth':
+            ('<script src="http://dev.virtualearth.net/mapcontrol/mapcontrol.'
+            'ashx?v=6.1"></script>'),
+            'Google':
+            ('<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;'
+            'key="{{GOOGLE_MAPS_API_KEY}}"></script>')
+          }
 
 
 # Note this code is from Tims personal codebase and copyright is retained
@@ -777,18 +871,20 @@ def genericAdd(theRequest,
     theTitle,
     theRedirectPath,
     theOptions
-    ):
+   ):
     myObject = getObject(theFormClass)
     logging.info('Generic add called')
     if theRequest.method == 'POST':
         # create a form instance using reflection
-        # see http://stackoverflow.com/questions/452969/does-python-have-an-equivalent-to-java-class-forname/452981
-        myForm = myObject(theRequest.POST,theRequest.FILES)
-        myOptions =  {
+        # see http://stackoverflow.com/questions/452969/does-python-have-an
+        #         -equivalent-to-java-class-forname/452981
+        myForm = myObject(theRequest.POST, theRequest.FILES)
+        myOptions = {
                 'myForm': myForm,
                 'myTitle': theTitle
               }
-        myOptions.update(theOptions), #shortcut to join two dicts
+        # shortcut to join two dicts
+        myOptions.update(theOptions),
         if myForm.is_valid():
             myObject = myForm.save(commit=False)
             myObject.user = theRequest.user
@@ -802,29 +898,33 @@ def genericAdd(theRequest,
                 context_instance=RequestContext(theRequest))
     else:
         myForm = myObject()
-        myOptions =  {
+        myOptions = {
               'myForm': myForm,
               'myTitle': theTitle
             }
-        myOptions.update(theOptions), #shortcut to join two dicts
+        #shortcut to join two dicts
+        myOptions.update(theOptions),
         logging.info('Add : new object requested')
         return render_to_response('add.html',
             myOptions,
             context_instance=RequestContext(theRequest))
 
-def genericDelete(theRequest,theObject):
+
+def genericDelete(theRequest, theObject):
     if theObject.user != theRequest.user:
-        return ({"myMessage" : "You can only delete an entry that you own!"})
+        return ({'myMessage': 'You can only delete an entry that you own!'})
     else:
         theObject.delete()
-        return ({'myMessage' : "Entry was deleted successfully"})
+        return ({'myMessage': 'Entry was deleted successfully'})
 
-def getObject( theClass ):
+
+def getObject(theClass):
     #Create an object instance using reflection
-    #from http://stackoverflow.com/questions/452969/does-python-have-an-equivalent-to-java-class-forname/452981
+    #from http://stackoverflow.com/questions/452969/does-python-have-an
+    #           -equivalent-to-java-class-forname/452981
     myParts = theClass.split('.')
-    myModule = ".".join(myParts[:-1])
-    myObject = __import__( myModule )
+    myModule = '.'.join(myParts[:-1])
+    myObject = __import__(myModule)
     for myPath in myParts[1:]:
         myObject = getattr(myObject, myPath)
     return myObject
@@ -846,13 +946,17 @@ def isStrategicPartner(theRequest):
 
 
 def standardLayers(theRequest):
-    """Helper methods used to return standard layer defs for the openlayers control
-       Note intended to be published as a view in urls.py
+    """Helper methods used to return standard layer defs for the openlayers
+       control
+       .. note:: intended to be published as a view in urls.py
+
       e.g. usage:
-      myLayersList, myLayerDefinitions, myActiveLayer = standardLayers( theRequest )
+      myLayersList, myLayerDefinitions, myActiveLayer =
+           standardLayers(theRequest)
       where:
         myLayersList will be a string representing a javascript array of layers
-        myLayerDefinitions will be an array of strings each representing javascript / openlayers layer defs
+        myLayerDefinitions will be an array of strings each representing
+            javascript / openlayers layer defs
         myActiveLayer will be the name of the active base map
       """
 
@@ -865,45 +969,56 @@ def standardLayers(theRequest):
     except:
         logging.debug('Profile does not exist')
     if myProfile and myProfile.strategic_partner:
-        myLayerDefinitions = [ WEB_LAYERS['ZaSpot2mMosaic2010TC'],
-                               WEB_LAYERS['ZaSpot2mMosaic2009TC'],
-                               WEB_LAYERS['ZaSpot2mMosaic2008TC'],
-                               WEB_LAYERS['ZaSpot2mMosaic2007TC'],
-                               WEB_LAYERS['ZaSpot10mMosaic2010'],
-                               WEB_LAYERS['ZaSpot10mMosaic2009'],
-                               WEB_LAYERS['ZaSpot10mMosaic2008'],
-                               WEB_LAYERS['ZaSpot10mMosaic2007'],
-                               WEB_LAYERS['ZaRoadsBoundaries'] ]
-        myLayersList = "[ zaSpot2mMosaic2010TC,zaSpot2mMosaic2009TC,zaSpot2mMosaic2008TC,zaSpot2mMosaic2007TC,zaSpot10mMosaic2010,zaSpot10mMosaic2009,zaSpot10mMosaic2008,zaSpot10mMosaic2007,zaRoadsBoundaries ]"
-        myActiveBaseMap =  "zaSpot2mMosaic2010TC"
+        myLayerDefinitions = [WEB_LAYERS['ZaSpot2mMosaic2010TC'],
+                              WEB_LAYERS['ZaSpot2mMosaic2009TC'],
+                              WEB_LAYERS['ZaSpot2mMosaic2008TC'],
+                              WEB_LAYERS['ZaSpot2mMosaic2007TC'],
+                              WEB_LAYERS['ZaSpot10mMosaic2010'],
+                              WEB_LAYERS['ZaSpot10mMosaic2009'],
+                              WEB_LAYERS['ZaSpot10mMosaic2008'],
+                              WEB_LAYERS['ZaSpot10mMosaic2007'],
+                              WEB_LAYERS['ZaRoadsBoundaries']]
+        myLayersList = ('[zaSpot2mMosaic2010TC, zaSpot2mMosaic2009TC,'
+            'zaSpot2mMosaic2008TC, zaSpot2mMosaic2007TC, zaSpot10mMosaic2010,'
+            'zaSpot10mMosaic2009,zaSpot10mMosaic2008,zaSpot10mMosaic2007,'
+            'zaRoadsBoundaries ]')
+        myActiveBaseMap = 'zaSpot2mMosaic2010TC'
     else:
-        myLayerDefinitions = [ WEB_LAYERS['ZaSpot10mMosaic2010'],
+        myLayerDefinitions = [WEB_LAYERS['ZaSpot10mMosaic2010'],
             WEB_LAYERS['ZaSpot10mMosaic2009'],
             WEB_LAYERS['ZaSpot10mMosaic2008'],
             WEB_LAYERS['ZaSpot10mMosaic2007'],
-            WEB_LAYERS['ZaRoadsBoundaries'] ]
-        myLayersList = "[zaSpot10mMosaic2010,zaSpot10mMosaic2009,zaSpot10mMosaic2008,zaSpot10mMosaic2007,zaRoadsBoundaries]"
-        myActiveBaseMap =  "zaSpot10mMosaic2010"
+            WEB_LAYERS['ZaRoadsBoundaries']]
+        myLayersList = ('[zaSpot10mMosaic2010,zaSpot10mMosaic2009,'
+                        'zaSpot10mMosaic2008,zaSpot10mMosaic2007,'
+                        'zaRoadsBoundaries]')
+        myActiveBaseMap = 'zaSpot10mMosaic2010'
     return myLayersList, myLayerDefinitions, myActiveBaseMap
+
 
 def standardLayersWithCart(theRequest):
-    """Helper methods used to return standard layer defs for the openlayers control
-       Note intended to be published as a view in urls.py
-       Note. Appends the cart layer to the list of layers otherwise much the same as standardLayers method
-      e.g. usage:
-      myLayersList, myLayerDefinitions, myActiveLayer = standardLayers( theRequest )
-      where:
+    """Helper methods used to return standard layer defs for the openlayers
+       control
+       .. note:: intended to be published as a view in urls.py
+       Note. Appends the cart layer to the list of layers otherwise much the
+       same as standardLayers method
+       e.g. usage:
+       myLayersList, myLayerDefinitions, myActiveLayer =
+         standardLayers(theRequest)
+       where:
         myLayersList will be a string representing a javascript array of layers
-        myLayerDefinitions will be an array of strings each representing javascript / openlayers layer defs
+        myLayerDefinitions will be an array of strings each representing
+          javascript / openlayers layer defs
         myActiveLayer will be the name of the active base map
       """
-    myLayersList, myLayerDefinitions, myActiveBaseMap = standardLayers( theRequest )
-    myLayersList = myLayersList.replace("]",",cartLayer]");
-    myLayerDefinitions.append( WEB_LAYERS['CartLayer'].replace("USERNAME", theRequest.user.username ) );
+    (myLayersList,
+     myLayerDefinitions, myActiveBaseMap) = standardLayers(theRequest)
+    myLayersList = myLayersList.replace(']',',cartLayer]');
+    myLayerDefinitions.append(WEB_LAYERS['CartLayer'].replace('USERNAME', theRequest.user.username));
     return myLayersList, myLayerDefinitions, myActiveBaseMap
 
 
-def writeThumbToZip( mySearchRecord, myZip ):
+def writeThumbToZip(mySearchRecord, myZip):
     """A helper function to write a thumbnail into a zip file.
     @parameter myRecord - a searchrecord instance
     @parameter myZip - a zip file handle ready to write stuff to
@@ -911,19 +1026,19 @@ def writeThumbToZip( mySearchRecord, myZip ):
     # Try to add thumbnail + wld file, we assume that jpg and wld file have same name
     try:
         myImageFile = mySearchRecord.product.georeferencedThumbnail()
-        myWLDFile = "%s.wld" %  myImageFile
+        myWLDFile = '%s.wld' %  myImageFile
         if os.path.isfile(myImageFile):
             with open(myImageFile,'rb') as myFile:
-                myZip.writestr("%s.jpg" %  mySearchRecord.product.product_id,myFile.read())
-                logging.error("Adding thumbnail image to archive.")
+                myZip.writestr('%s.jpg' %  mySearchRecord.product.product_id,myFile.read())
+                logging.error('Adding thumbnail image to archive.')
         else:
-            logging.info("Thumbnail image not found: %s" % myImageFile)
+            logging.info('Thumbnail image not found: %s' % myImageFile)
         if os.path.isfile(myWLDFile):
             with open(myWLDFile,'rb') as myFile:
-                myZip.writestr("%s.wld" %  mySearchRecord.product.product_id,myFile.read())
-                logging.info("Adding worldfile to archive.")
+                myZip.writestr('%s.wld' %  mySearchRecord.product.product_id,myFile.read())
+                logging.info('Adding worldfile to archive.')
         else:
-            logging.error("World file not found: %s" % myImageFile)
+            logging.error('World file not found: %s' % myImageFile)
     except:
         pass
 
@@ -938,14 +1053,14 @@ def render_to_kmz(theTemplate,theContext,filename):
     """Render a kmz file. If search records are supplied, their georeferenced thumbnails will
     be bundled into the kmz archive."""
     #try to get MAX_METADATA_RECORDS from settings, default to 500
-    myMaxMetadataRecords = getattr(settings, 'MAX_METADATA_RECORDS', 500 )
+    myMaxMetadataRecords = getattr(settings, 'MAX_METADATA_RECORDS', 500)
     myKml = render_to_string(theTemplate,theContext)
     myZipData = StringIO()
     myZip = zipfile.ZipFile(myZipData, 'w', zipfile.ZIP_DEFLATED)
     myZip.writestr('%s.kml' % filename, myKml)
-    if theContext.has_key("mySearchRecords"):
-        for myRecord in theContext["mySearchRecords"][:myMaxMetadataRecords]:
-            writeThumbToZip( myRecord, myZip )
+    if theContext.has_key('mySearchRecords'):
+        for myRecord in theContext['mySearchRecords'][:myMaxMetadataRecords]:
+            writeThumbToZip(myRecord, myZip)
     myZip.close()
     response = HttpResponse()
     response.content = myZipData.getvalue()
@@ -960,18 +1075,18 @@ def downloadISOMetadata(theSearchRecords,theName):
     myZipData = StringIO()
     myZip = zipfile.ZipFile(myZipData,'w', zipfile.ZIP_DEFLATED)
     #try to get MAX_METADATA_RECORDS from settings, default to 500
-    myMaxMetadataRecords = getattr(settings, 'MAX_METADATA_RECORDS', 500 )
+    myMaxMetadataRecords = getattr(settings, 'MAX_METADATA_RECORDS', 500)
     for mySearchRecord in theSearchRecords[:myMaxMetadataRecords]:
         myMetadata = mySearchRecord.product.getXML()
-        logging.info("Adding product XML to ISO Metadata archive.")
+        logging.info('Adding product XML to ISO Metadata archive.')
         myZip.writestr('%s.xml' % mySearchRecord.product.product_id, myMetadata)
-        writeThumbToZip( mySearchRecord, myZip )
+        writeThumbToZip(mySearchRecord, myZip)
 
     myZip.close()
     response.content=myZipData.getvalue()
     myZipData.close()
     #get ORGANISATION_ACRONYM from settings, default to 'SANSA'
-    myOrganisationAcronym = getattr(settings, 'ORGANISATION_ACRONYM', 'SANSA' )
+    myOrganisationAcronym = getattr(settings, 'ORGANISATION_ACRONYM', 'SANSA')
     filename = '%s-%s-Metadata.zip' % (myOrganisationAcronym,theName)
     response['Content-Type']        = 'application/zip'
     response['Content-Disposition'] = 'attachment; filename=%s' % filename
@@ -984,19 +1099,19 @@ def downloadHtmlMetadata(theSearchRecords,theName):
     myZipData = StringIO()
     myZip = zipfile.ZipFile(myZipData,'w', zipfile.ZIP_DEFLATED)
     #try to get MAX_METADATA_RECORDS from settings, default to 500
-    myMaxMetadataRecords = getattr(settings, 'MAX_METADATA_RECORDS', 500 )
+    myMaxMetadataRecords = getattr(settings, 'MAX_METADATA_RECORDS', 500)
     myThumbIsLocalFlag = True # used to tell html renderer not to prepend server path
     for mySearchRecord in theSearchRecords[:myMaxMetadataRecords]:
-        myMetadata = mySearchRecord.product.getConcreteInstance().toHtml( myThumbIsLocalFlag )
-        logging.info("Adding product HTML to HTML Metadata archive.")
+        myMetadata = mySearchRecord.product.getConcreteInstance().toHtml(myThumbIsLocalFlag)
+        logging.info('Adding product HTML to HTML Metadata archive.')
         myZip.writestr('%s.html' % mySearchRecord.product.product_id, myMetadata)
-        writeThumbToZip( mySearchRecord, myZip )
+        writeThumbToZip(mySearchRecord, myZip)
 
     myZip.close()
     response.content=myZipData.getvalue()
     myZipData.close()
     #get ORGANISATION_ACRONYM from settings, default to 'SANSA'
-    myOrganisationAcronym = getattr(settings, 'ORGANISATION_ACRONYM', 'SANSA' )
+    myOrganisationAcronym = getattr(settings, 'ORGANISATION_ACRONYM', 'SANSA')
     filename = '%s-%s-Metadata.zip' % (myOrganisationAcronym,theName)
     response['Content-Type']        = 'application/zip'
     response['Content-Disposition'] = 'attachment; filename=%s' % filename

@@ -13,6 +13,7 @@ from simpleTest import SimpleTest
 from license_model import LicenseCRUD_Test
 from featurereaders_return import FeatureReaders_Test
 from searcher_object import SearcherObject_Test
+from email_notification_test import EmailNotificationTest
 
 #this is only required for doctests
 __test__ = {
