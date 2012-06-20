@@ -1,18 +1,35 @@
-###########################################################
-#
-# Initialization, generic and helper methods
-#
-###########################################################
+"""
+SANSA-EO Catalogue - Initialization, generic and helper methods
+
+Contact : lkleyn@sansa.org.za
+
+.. note:: This program is the property of the South African National Space
+   Agency (SANSA) and may not be redistributed without expresse permission.
+   This program may include code which is the intellectual property of
+   Linfiniti Consulting CC. Linfiniti grants SANSA perpetual, non-transferrable
+   license to use any code contained herein which is the intellectual property
+   of Linfiniti Consulting CC.
+
+"""
+
+__author__ = 'tim@linfiniti.com'
+__version__ = '0.1'
+__date__ = '01/01/2011'
+__copyright__ = 'South African National Space Agency'
 
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render_to_response, get_object_or_404
 from django.http import HttpResponseRedirect, HttpResponse
-
-from catalogue.models import *
+import logging
+from catalogue.models import (Order,
+                              OrderStatusHistory,
+                              OrderNotificationRecipients,
+                              TaskingRequest,
+                              SearchRecord,
+                              )
 from django.template import RequestContext
 # for rendering template to email
 from django.template.loader import render_to_string
-
 # for sending email
 from django.core import mail
 
@@ -208,11 +225,13 @@ def duplicate(obj, value=None, field=None, duplicate_order=None):
             obj.save()
             if root_obj is None:
                 root_obj = obj
+            # unused
+            del pk_val
     return root_obj
 
 ###########################################################
 #
-# Email notification of orders to sac sales staff
+# Email notification of orders to SANSA sales staff
 #
 ###########################################################
 
@@ -296,19 +315,17 @@ def notifySalesStaff(theUser, theOrderId):
 
 ###########################################################
 #
-# Email notification of tasking requests to sac sales staff
+# Email notification of tasking requests to sansa sales staff
 #
 ###########################################################
 
 
-def notifySalesStaffOfTaskRequest(theUser, theId):
+def notifySalesStaffOfTaskRequest(theId):
     """ A helper method to notify tasking staff who are subscribed to a sensor
        Example usage from the console / doctest:
        >>> from catalogue.models import *
        >>> from catalogue.views import *
-       >>> myUser = User.objects.get(id=1)
-       >>> myUser
-       >>> notifySalesStaffOfTaskRequest(myUser, 11)"""
+       >>> notifySalesStaffOfTaskRequest(11)"""
     if not settings.EMAIL_NOTIFICATIONS_ENABLED:
         logging.info('Email sending disabled, set '
                      'EMAIL_NOTIFICATIONS_ENABLED in settings')
@@ -805,7 +822,7 @@ WEB_LAYERS = {
         #
         # Heatmap - last month
         #
-        'Heatmap-lastmonth': 
+        'Heatmap-lastmonth':
             """var heatmap_lastmonth = new OpenLayers.Layer.Image(
                 'Heatmap last month',
                 '/media/heatmaps/heatmap-lastmonth.png',
@@ -838,7 +855,7 @@ WEB_LAYERS = {
         """,
         # Note for this layer to be used you need to regex replace
         # USERNAME with theRequest.user.username
-        'CartLayer': 
+        'CartLayer':
             """var cartLayer = new OpenLayers.Layer.WMS('Cart', 'http://""" +
             settings.WMS_SERVER + """/cgi-bin/mapserv?map=""" +
             settings.CART_LAYER + """&user=USERNAME',
@@ -1013,8 +1030,9 @@ def standardLayersWithCart(theRequest):
       """
     (myLayersList,
      myLayerDefinitions, myActiveBaseMap) = standardLayers(theRequest)
-    myLayersList = myLayersList.replace(']',',cartLayer]');
-    myLayerDefinitions.append(WEB_LAYERS['CartLayer'].replace('USERNAME', theRequest.user.username));
+    myLayersList = myLayersList.replace(']', ',cartLayer]')
+    myLayerDefinitions.append(
+        WEB_LAYERS['CartLayer'].replace('USERNAME', theRequest.user.username))
     return myLayersList, myLayerDefinitions, myActiveBaseMap
 
 
@@ -1023,97 +1041,108 @@ def writeThumbToZip(mySearchRecord, myZip):
     @parameter myRecord - a searchrecord instance
     @parameter myZip - a zip file handle ready to write stuff to
     """
-    # Try to add thumbnail + wld file, we assume that jpg and wld file have same name
+    # Try to add thumbnail + wld file, we assume that jpg and wld
+    # file have same name
     try:
         myImageFile = mySearchRecord.product.georeferencedThumbnail()
-        myWLDFile = '%s.wld' %  myImageFile
+        myWLDFile = '%s.wld' % myImageFile
         if os.path.isfile(myImageFile):
-            with open(myImageFile,'rb') as myFile:
-                myZip.writestr('%s.jpg' %  mySearchRecord.product.product_id,myFile.read())
+            with open(myImageFile, 'rb') as myFile:
+                myZip.writestr('%s.jpg' % mySearchRecord.product.product_id,
+                               myFile.read())
                 logging.error('Adding thumbnail image to archive.')
         else:
             logging.info('Thumbnail image not found: %s' % myImageFile)
         if os.path.isfile(myWLDFile):
-            with open(myWLDFile,'rb') as myFile:
-                myZip.writestr('%s.wld' %  mySearchRecord.product.product_id,myFile.read())
+            with open(myWLDFile, 'rb') as myFile:
+                myZip.writestr('%s.wld' % mySearchRecord.product.product_id,
+                               myFile.read())
                 logging.info('Adding worldfile to archive.')
         else:
             logging.error('World file not found: %s' % myImageFile)
     except:
         pass
 
+
 #render_to_kml helpers
-def render_to_kml(theTemplate,theContext,filename):
-    response = HttpResponse(render_to_string(theTemplate,theContext))
+def render_to_kml(theTemplate, theContext, filename):
+    response = HttpResponse(render_to_string(theTemplate, theContext))
     response['Content-Type'] = 'application/vnd.google-earth.kml+xml'
     response['Content-Disposition'] = 'attachment; filename=%s.kml' % filename
     return response
 
-def render_to_kmz(theTemplate,theContext,filename):
-    """Render a kmz file. If search records are supplied, their georeferenced thumbnails will
-    be bundled into the kmz archive."""
+
+def render_to_kmz(theTemplate, theContext, filename):
+    """Render a kmz file. If search records are supplied, their georeferenced
+    thumbnails will be bundled into the kmz archive."""
     #try to get MAX_METADATA_RECORDS from settings, default to 500
     myMaxMetadataRecords = getattr(settings, 'MAX_METADATA_RECORDS', 500)
-    myKml = render_to_string(theTemplate,theContext)
+    myKml = render_to_string(theTemplate, theContext)
     myZipData = StringIO()
     myZip = zipfile.ZipFile(myZipData, 'w', zipfile.ZIP_DEFLATED)
     myZip.writestr('%s.kml' % filename, myKml)
-    if theContext.has_key('mySearchRecords'):
+    if 'mySearchRecords' in theContext:
         for myRecord in theContext['mySearchRecords'][:myMaxMetadataRecords]:
             writeThumbToZip(myRecord, myZip)
     myZip.close()
     response = HttpResponse()
     response.content = myZipData.getvalue()
-    response['Content-Type']        = 'application/vnd.google-earth.kmz'
+    response['Content-Type'] = 'application/vnd.google-earth.kmz'
     response['Content-Disposition'] = 'attachment; filename=%s.kmz' % filename
-    response['Content-Length']      = str(len(response.content))
+    response['Content-Length'] = str(len(response.content))
     return response
 
-def downloadISOMetadata(theSearchRecords,theName):
+
+def downloadISOMetadata(theSearchRecords, theName):
     """ returns ZIPed XML metadata files for each product """
     response = HttpResponse()
     myZipData = StringIO()
-    myZip = zipfile.ZipFile(myZipData,'w', zipfile.ZIP_DEFLATED)
+    myZip = zipfile.ZipFile(myZipData, 'w', zipfile.ZIP_DEFLATED)
     #try to get MAX_METADATA_RECORDS from settings, default to 500
     myMaxMetadataRecords = getattr(settings, 'MAX_METADATA_RECORDS', 500)
     for mySearchRecord in theSearchRecords[:myMaxMetadataRecords]:
         myMetadata = mySearchRecord.product.getXML()
         logging.info('Adding product XML to ISO Metadata archive.')
-        myZip.writestr('%s.xml' % mySearchRecord.product.product_id, myMetadata)
+        myZip.writestr('%s.xml' % mySearchRecord.product.product_id,
+                       myMetadata)
         writeThumbToZip(mySearchRecord, myZip)
 
     myZip.close()
-    response.content=myZipData.getvalue()
+    response.content = myZipData.getvalue()
     myZipData.close()
     #get ORGANISATION_ACRONYM from settings, default to 'SANSA'
     myOrganisationAcronym = getattr(settings, 'ORGANISATION_ACRONYM', 'SANSA')
-    filename = '%s-%s-Metadata.zip' % (myOrganisationAcronym,theName)
-    response['Content-Type']        = 'application/zip'
+    filename = '%s-%s-Metadata.zip' % (myOrganisationAcronym, theName)
+    response['Content-Type'] = 'application/zip'
     response['Content-Disposition'] = 'attachment; filename=%s' % filename
-    response['Content-Length']      = str(len(response.content))
+    response['Content-Length'] = str(len(response.content))
     return response
 
-def downloadHtmlMetadata(theSearchRecords,theName):
+
+def downloadHtmlMetadata(theSearchRecords, theName):
     """ returns ZIPed html metadata files for each product """
     response = HttpResponse()
     myZipData = StringIO()
-    myZip = zipfile.ZipFile(myZipData,'w', zipfile.ZIP_DEFLATED)
+    myZip = zipfile.ZipFile(myZipData, 'w', zipfile.ZIP_DEFLATED)
     #try to get MAX_METADATA_RECORDS from settings, default to 500
     myMaxMetadataRecords = getattr(settings, 'MAX_METADATA_RECORDS', 500)
-    myThumbIsLocalFlag = True # used to tell html renderer not to prepend server path
+    # used to tell html renderer not to prepend server path
+    myThumbIsLocalFlag = True
     for mySearchRecord in theSearchRecords[:myMaxMetadataRecords]:
-        myMetadata = mySearchRecord.product.getConcreteInstance().toHtml(myThumbIsLocalFlag)
+        myMetadata = mySearchRecord.product.getConcreteInstance().toHtml(
+                                                        myThumbIsLocalFlag)
         logging.info('Adding product HTML to HTML Metadata archive.')
-        myZip.writestr('%s.html' % mySearchRecord.product.product_id, myMetadata)
+        myZip.writestr('%s.html' % mySearchRecord.product.product_id,
+                       myMetadata)
         writeThumbToZip(mySearchRecord, myZip)
 
     myZip.close()
-    response.content=myZipData.getvalue()
+    response.content = myZipData.getvalue()
     myZipData.close()
     #get ORGANISATION_ACRONYM from settings, default to 'SANSA'
     myOrganisationAcronym = getattr(settings, 'ORGANISATION_ACRONYM', 'SANSA')
-    filename = '%s-%s-Metadata.zip' % (myOrganisationAcronym,theName)
-    response['Content-Type']        = 'application/zip'
+    filename = '%s-%s-Metadata.zip' % (myOrganisationAcronym, theName)
+    response['Content-Type'] = 'application/zip'
     response['Content-Disposition'] = 'attachment; filename=%s' % filename
-    response['Content-Length']      = str(len(response.content))
+    response['Content-Length'] = str(len(response.content))
     return response
