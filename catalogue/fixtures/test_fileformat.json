@@ -1,28 +1,28 @@
 [
     {
-        "pk": 1,
-        "model": "catalogue.fileformat",
+        "pk": 1, 
+        "model": "catalogue.fileformat", 
         "fields": {
             "name": "GeoTiff"
         }
-    },
+    }, 
     {
-        "pk": 2,
-        "model": "catalogue.fileformat",
+        "pk": 2, 
+        "model": "catalogue.fileformat", 
         "fields": {
             "name": "ECW - ERMapper Compressed Wavelet"
         }
-    },
+    }, 
     {
-        "pk": 3,
-        "model": "catalogue.fileformat",
+        "pk": 3, 
+        "model": "catalogue.fileformat", 
         "fields": {
             "name": "JP2 - JPEG 2000"
         }
-    },
+    }, 
     {
-        "pk": 4,
-        "model": "catalogue.fileformat",
+        "pk": 4, 
+        "model": "catalogue.fileformat", 
         "fields": {
             "name": "ESRI -ShapeFile (Vector products only)"
         }

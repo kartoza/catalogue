@@ -40,11 +40,17 @@ class EmailNotificationTest(TestCase):
         'test_institution.json',
         'test_license.json',
         'test_projection',
+        'test_quality',
+        'test_creatingsoftware',
         'test_genericproduct.json',
         'test_genericimageryproduct.json',
         'test_genericsensorproduct.json',
         'test_opticalproduct.json',
-        'test_radarproduct.json'
+        'test_radarproduct.json',
+        'test_datum.json',
+        'test_deliverymethod.json',
+        'test_fileformat.json',
+        'test_resamplingmethod.json'
         ]
 
     def setUp(self):
