@@ -526,5 +526,16 @@
             "name": "OrbView-2 (SeaStar)",
             "operator_abbreviation": "OrbView-2"
         }
+    },
+    {
+        "pk": 100,
+        "model": "catalogue.mission",
+        "fields": {
+            "abbreviation": "SSU",
+            "owner": "Unknown",
+            "mission_group": 1,
+            "name": "Super secret unknown mission",
+            "operator_abbreviation": ""
+        }
     }
 ]

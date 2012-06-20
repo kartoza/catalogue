@@ -16,16 +16,24 @@ class MissionGroup( models.Model ):
 
 ###############################################################################
 
-class Mission( models.Model ):
+class Mission(models.Model):
     """Satellite or Mission"""
-    abbreviation = models.CharField( max_length=3, unique=True ) # SAC abbreviation
-    operator_abbreviation = models.CharField( max_length=255, unique=True ) # UI abbreviation
-    name = models.CharField( max_length=255, unique=True )
-    mission_group = models.ForeignKey(MissionGroup) # e.g. S5
-    owner = models.CharField( max_length=255 )
+    abbreviation = models.CharField(max_length=3, unique=True)  # SAC abbreviation
+    operator_abbreviation = models.CharField(max_length=255, unique=True)  # UI abbreviation
+    name = models.CharField(max_length=255, unique=True)
+    mission_group = models.ForeignKey(MissionGroup)  # e.g. S5
+    owner = models.CharField(max_length=255)
+
     class Meta:
-        app_label= 'catalogue'
+        app_label = 'catalogue'
+
     def __unicode__(self):
+        """
+        Return 'operator_abbreviation' as model representation
+
+        - in case 'operator_abbreviation' is an empty string (blank)
+            - return 'abbreviation'
+        """
         if self.operator_abbreviation:
             return "%s" % self.operator_abbreviation
         else:
