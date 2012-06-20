@@ -20,6 +20,7 @@ from processingLevel_model import ProcessingLevelCRUD_Test
 from projection_model import ProjectionCRUD_Test
 from institution_model import InstitutionCRUD_Test
 from quality_model import QualityCRUD_Test
+from creatingSoftware_model import CreatingSoftwareCRUD_Test
 from featurereaders_return import FeatureReaders_Test
 from searcher_object import SearcherObject_Test
 from search_bandcount import SearchBandCount_Test
