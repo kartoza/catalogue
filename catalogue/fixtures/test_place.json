@@ -1,0 +1,11 @@
+[
+    {
+        "pk": 1,
+        "model": "catalogue.place",
+        "fields": {
+            "name": "Sample Place",
+            "place_type": 1,
+            "geometry": "POINT (21.3566000000000145 -27.2013999999999783)"
+        }
+    }
+]
