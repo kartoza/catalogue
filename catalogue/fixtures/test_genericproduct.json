@@ -15,7 +15,7 @@
             "owner": 4,
             "metadata": "A21=11204048606190846322X\nSC_NUM=9460475\nSEG_NUM=8127\nSATEL=1\nANG_INC=2.21492\nANG_ACQ=2.0\nDATE_ACQ=19/06/1986\nMONTH_ACQ=06\nTIME_ACQ=08:46:32\nCLOUD_QUOT=BBBBBBBB\nCLOUD_PER=5.0\nSNOW_QUOT=********\nLAT_CEN=-26.98\nLON_CEN=21.7235\nLAT_UP_L=-26.67\nLON_UP_L=21.4955\nLAT_UP_R=-26.76\nLON_UP_R=22.0914\nLAT_LO_L=-27.2\nLON_LO_L=21.3566\nLAT_LO_R=-27.29\nLON_LO_R=21.9554\nRESOL=20.0\nMODE=COLOR\nTYPE=X\nURL_QL=http://sirius.spotimage.fr/url/catalogue.aspx?ID=-1&ACTION=Scenes%3AgetQuicklook&CODEA21=11204048606190846322X&SEGMENT=8127&SAT=0",
             "quality": 1,
-            "processing_level": 152,
+            "processing_level": 16,
             "product_id": "S1-_HRV_X--_S1C2_0120_00_0404_00_860619_084632_1B--_ORBIT-"
         }
     },
@@ -35,7 +35,7 @@
             "owner": 4,
             "metadata": "A21=11363888704280823292P\nSC_NUM=9205615\nSEG_NUM=43953\nSATEL=1\nANG_INC=24.766\nANG_ACQ=21.0\nDATE_ACQ=28/04/1987\nMONTH_ACQ=04\nTIME_ACQ=08:23:29\nCLOUD_QUOT=BBBBBBBB\nCLOUD_PER=5.0\nSNOW_QUOT=********\nLAT_CEN=-19.01\nLON_CEN=31.6047\nLAT_UP_L=-18.7\nLON_UP_L=31.3336\nLAT_UP_R=-18.8\nLON_UP_R=32.0064\nLAT_LO_L=-19.23\nLON_LO_L=31.2155\nLAT_LO_R=-19.32\nLON_LO_R=31.8906\nRESOL=10.0\nMODE=BW\nTYPE=P\nURL_QL=http://sirius.spotimage.fr/url/catalogue.aspx?ID=-1&ACTION=Scenes%3AgetQuicklook&CODEA21=11363888704280823292P&SEGMENT=43953&SAT=0",
             "quality": 1,
-            "processing_level": 152,
+            "processing_level": 16,
             "product_id": "S1-_HRV_P--_S1C2_0136_00_0388_00_870428_082329_1B--_ORBIT-"
         }
     },
@@ -115,7 +115,7 @@
             "owner": 4,
             "metadata": "A21=20963609110060920061X\nSC_NUM=7514013\nSEG_NUM=264951\nSATEL=2\nANG_INC=-15.819\nANG_ACQ=-14.0\nDATE_ACQ=06/10/1991\nMONTH_ACQ=10\nTIME_ACQ=09:20:06\nCLOUD_QUOT=CBCBCABA\nCLOUD_PER=8.0\nSNOW_QUOT=00000000\nLAT_CEN=-5.009\nLON_CEN=15.0375\nLAT_UP_L=-4.698\nLON_UP_L=14.8104\nLAT_UP_R=-4.789\nLON_UP_R=15.3804\nLAT_LO_L=-5.227\nLON_LO_L=14.6894\nLAT_LO_R=-5.318\nLON_LO_R=15.2598\nRESOL=20.0\nMODE=COLOR\nTYPE=X\nURL_QL=http://sirius.spotimage.fr/url/catalogue.aspx?ID=-1&ACTION=Scenes%3AgetQuicklook&CODEA21=20963609110060920061X&SEGMENT=264951&SAT=0",
             "quality": 1,
-            "processing_level": 152,
+            "processing_level": 16,
             "product_id": "S2-_Xs-_X--_S2C1_0096_00_0360_00_911006_092006_1B--_ORBIT-"
         }
     },
@@ -135,7 +135,7 @@
             "owner": 4,
             "metadata": "A21=11163609206210857181X\nSC_NUM=6496564\nSEG_NUM=350185\nSATEL=1\nANG_INC=26.4796\nANG_ACQ=23.0\nDATE_ACQ=21/06/1992\nMONTH_ACQ=06\nTIME_ACQ=08:57:18\nCLOUD_QUOT=DDDDDDDD\nCLOUD_PER=50.0\nSNOW_QUOT=********\nLAT_CEN=-5.01\nLON_CEN=25.1188\nLAT_UP_L=-4.699\nLON_UP_L=24.8584\nLAT_UP_R=-4.793\nLON_UP_R=25.5095\nLAT_LO_L=-5.229\nLON_LO_L=24.7419\nLAT_LO_R=-5.323\nLON_LO_R=25.3938\nRESOL=20.0\nMODE=COLOR\nTYPE=X\nURL_QL=http://sirius.spotimage.fr/url/catalogue.aspx?ID=-1&ACTION=Scenes%3AgetQuicklook&CODEA21=11163609206210857181X&SEGMENT=350185&SAT=0",
             "quality": 1,
-            "processing_level": 152,
+            "processing_level": 16,
             "product_id": "S1-_HRV_X--_S1C1_0116_00_0360_00_920621_085718_1B--_ORBIT-"
         }
     },
@@ -175,7 +175,7 @@
             "owner": 4,
             "metadata": "A21=11194119208120904132P\nSC_NUM=6542261\nSEG_NUM=346472\nSATEL=1\nANG_INC=31.0522\nANG_ACQ=27.0\nDATE_ACQ=12/08/1992\nMONTH_ACQ=08\nTIME_ACQ=09:04:13\nCLOUD_QUOT=BBBBBCBC\nCLOUD_PER=8.0\nSNOW_QUOT=********\nLAT_CEN=-30.45\nLON_CEN=20.3061\nLAT_UP_L=-30.13\nLON_UP_L=19.9639\nLAT_UP_R=-30.24\nLON_UP_R=20.7904\nLAT_LO_L=-30.66\nLON_LO_L=19.8419\nLAT_LO_R=-30.77\nLON_LO_R=20.6729\nRESOL=10.0\nMODE=BW\nTYPE=P\nURL_QL=http://sirius.spotimage.fr/url/catalogue.aspx?ID=-1&ACTION=Scenes%3AgetQuicklook&CODEA21=11194119208120904132P&SEGMENT=346472&SAT=0",
             "quality": 1,
-            "processing_level": 152,
+            "processing_level": 16,
             "product_id": "S1-_HRV_P--_S1C2_0119_00_0411_00_920812_090413_1B--_ORBIT-"
         }
     },
@@ -215,7 +215,7 @@
             "owner": 4,
             "metadata": "A21=11013889209010916471X\nSC_NUM=6594744\nSEG_NUM=341843\nSATEL=1\nANG_INC=-2.21492\nANG_ACQ=-2.0\nDATE_ACQ=01/09/1992\nMONTH_ACQ=09\nTIME_ACQ=09:16:47\nCLOUD_QUOT=DDDDDDDD\nCLOUD_PER=50.0\nSNOW_QUOT=********\nLAT_CEN=-19.01\nLON_CEN=14.3858\nLAT_UP_L=-18.7\nLON_UP_L=14.1696\nLAT_UP_R=-18.79\nLON_UP_R=14.731\nLAT_LO_L=-19.23\nLON_LO_L=14.0401\nLAT_LO_R=-19.32\nLON_LO_R=14.6034\nRESOL=20.0\nMODE=COLOR\nTYPE=X\nURL_QL=http://sirius.spotimage.fr/url/catalogue.aspx?ID=-1&ACTION=Scenes%3AgetQuicklook&CODEA21=11013889209010916471X&SEGMENT=341843&SAT=0",
             "quality": 1,
-            "processing_level": 152,
+            "processing_level": 16,
             "product_id": "S1-_HRV_X--_S1C1_0101_00_0388_00_920901_091647_1B--_ORBIT-"
         }
     },
@@ -235,7 +235,7 @@
             "owner": 4,
             "metadata": "A21=21693759304110706311X\nSC_NUM=6792310\nSEG_NUM=325922\nSATEL=2\nANG_INC=-2.21492\nANG_ACQ=-2.0\nDATE_ACQ=11/04/1993\nMONTH_ACQ=04\nTIME_ACQ=07:06:31\nCLOUD_QUOT=BCBCBDBD\nCLOUD_PER=19.0\nSNOW_QUOT=********\nLAT_CEN=-12.51\nLON_CEN=49.1127\nLAT_UP_L=-12.21\nLON_UP_L=48.9051\nLAT_UP_R=-12.29\nLON_UP_R=49.4472\nLAT_LO_L=-12.73\nLON_LO_L=48.7812\nLAT_LO_R=-12.82\nLON_LO_R=49.325\nRESOL=20.0\nMODE=COLOR\nTYPE=X\nURL_QL=http://sirius.spotimage.fr/url/catalogue.aspx?ID=-1&ACTION=Scenes%3AgetQuicklook&CODEA21=21693759304110706311X&SEGMENT=325922&SAT=0",
             "quality": 1,
-            "processing_level": 152,
+            "processing_level": 16,
             "product_id": "S2-_Xs-_X--_S2C1_0169_00_0375_00_930411_070631_1B--_ORBIT-"
         }
     },
@@ -295,7 +295,7 @@
             "owner": 4,
             "metadata": "A21=21433899509250757121P\nSC_NUM=5439096\nSEG_NUM=471309\nSATEL=2\nANG_INC=-0.1808\nANG_ACQ=0.0\nDATE_ACQ=25/09/1995\nMONTH_ACQ=09\nTIME_ACQ=07:57:12\nCLOUD_QUOT=DDDDDDDD\nCLOUD_PER=50.0\nSNOW_QUOT=********\nLAT_CEN=-19.51\nLON_CEN=35.0114\nLAT_UP_L=-19.21\nLON_UP_L=34.796\nLAT_UP_R=-19.29\nLON_UP_R=35.3578\nLAT_LO_L=-19.73\nLON_LO_L=34.6673\nLAT_LO_R=-19.82\nLON_LO_R=35.2309\nRESOL=10.0\nMODE=BW\nTYPE=P\nURL_QL=http://sirius.spotimage.fr/url/catalogue.aspx?ID=-1&ACTION=Scenes%3AgetQuicklook&CODEA21=21433899509250757121P&SEGMENT=471309&SAT=0",
             "quality": 1,
-            "processing_level": 152,
+            "processing_level": 16,
             "product_id": "S2-_HRV_P--_S2C1_0143_00_0389_00_950925_075712_1B--_ORBIT-"
         }
     },
@@ -315,7 +315,7 @@
             "owner": 4,
             "metadata": "A21=31363539512040804061P\nSC_NUM=5343254\nSEG_NUM=484294\nSATEL=3\nANG_INC=-6.286\nANG_ACQ=-5.0\nDATE_ACQ=04/12/1995\nMONTH_ACQ=12\nTIME_ACQ=08:04:06\nCLOUD_QUOT=BDBDCCBC\nCLOUD_PER=21.0\nSNOW_QUOT=00000000\nLAT_CEN=-1.503\nLON_CEN=35.5213\nLAT_UP_L=-1.196\nLON_UP_L=35.3123\nLAT_UP_R=-1.279\nLON_UP_R=35.8477\nLAT_LO_L=-1.726\nLON_LO_L=35.1936\nLAT_LO_R=-1.809\nLON_LO_R=35.7292\nRESOL=10.0\nMODE=BW\nTYPE=P\nURL_QL=http://sirius.spotimage.fr/url/catalogue.aspx?ID=-1&ACTION=Scenes%3AgetQuicklook&CODEA21=31363539512040804061P&SEGMENT=484294&SAT=0",
             "quality": 1,
-            "processing_level": 152,
+            "processing_level": 16,
             "product_id": "S3-_HRV_P--_S3C1_0136_00_0353_00_951204_080406_1B--_ORBIT-"
         }
     },
@@ -455,7 +455,7 @@
             "owner": 4,
             "metadata": "A21=41374129806230805012I\nSC_NUM=3759812\nSEG_NUM=692812\nSATEL=4\nANG_INC=-16.823\nANG_ACQ=-14.0\nDATE_ACQ=23/06/1998\nMONTH_ACQ=06\nTIME_ACQ=08:05:01\nCLOUD_QUOT=AAAAAAAA\nCLOUD_PER=0.0\nSNOW_QUOT=00000000\nLAT_CEN=-30.94\nLON_CEN=28.6635\nLAT_UP_L=-30.62\nLON_UP_L=28.4057\nLAT_UP_R=-30.74\nLON_UP_R=29.0754\nLAT_LO_L=-31.15\nLON_LO_L=28.2433\nLAT_LO_R=-31.26\nLON_LO_R=28.9166\nRESOL=20.0\nMODE=COLOR\nTYPE=I\nURL_QL=http://sirius.spotimage.fr/url/catalogue.aspx?ID=-1&ACTION=Scenes%3AgetQuicklook&CODEA21=41374129806230805012I&SEGMENT=692812&SAT=0",
             "quality": 1,
-            "processing_level": 152,
+            "processing_level": 16,
             "product_id": "S4-_VMI_I--_S4C2_0137_00_0412_00_980623_080501_1B--_ORBIT-"
         }
     },
@@ -495,7 +495,7 @@
             "owner": 4,
             "metadata": "A21=41423989907070813231M\nSC_NUM=2506501\nSEG_NUM=907377\nSATEL=4\nANG_INC=23.0122\nANG_ACQ=20.0\nDATE_ACQ=07/07/1999\nMONTH_ACQ=07\nTIME_ACQ=08:13:23\nCLOUD_QUOT=EEEEEEEE\nCLOUD_PER=87.0\nSNOW_QUOT=********\nLAT_CEN=-24.0\nLON_CEN=33.1477\nLAT_UP_L=-23.69\nLON_UP_L=32.8737\nLAT_UP_R=-23.78\nLON_UP_R=33.555\nLAT_LO_L=-24.22\nLON_LO_L=32.7518\nLAT_LO_R=-24.31\nLON_LO_R=33.436\nRESOL=10.0\nMODE=BW\nTYPE=M\nURL_QL=http://sirius.spotimage.fr/url/catalogue.aspx?ID=-1&ACTION=Scenes%3AgetQuicklook&CODEA21=41423989907070813231M&SEGMENT=907377&SAT=0",
             "quality": 1,
-            "processing_level": 152,
+            "processing_level": 16,
             "product_id": "S4-_HIR_M--_S4C1_0142_00_0398_00_990707_081323_1B--_ORBIT-"
         }
     },
@@ -515,7 +515,7 @@
             "owner": 4,
             "metadata": "A21=41443649911090804431I\nSC_NUM=2093212\nSEG_NUM=978444\nSATEL=4\nANG_INC=26.4796\nANG_ACQ=23.0\nDATE_ACQ=09/11/1999\nMONTH_ACQ=11\nTIME_ACQ=08:04:43\nCLOUD_QUOT=EEEEEEEE\nCLOUD_PER=87.0\nSNOW_QUOT=********\nLAT_CEN=-7.012\nLON_CEN=38.3516\nLAT_UP_L=-6.699\nLON_UP_L=38.0877\nLAT_UP_R=-6.797\nLON_UP_R=38.7455\nLAT_LO_L=-7.229\nLON_LO_L=37.9716\nLAT_LO_R=-7.326\nLON_LO_R=38.6303\nRESOL=20.0\nMODE=COLOR\nTYPE=I\nURL_QL=http://sirius.spotimage.fr/url/catalogue.aspx?ID=-1&ACTION=Scenes%3AgetQuicklook&CODEA21=41443649911090804431I&SEGMENT=978444&SAT=0",
             "quality": 1,
-            "processing_level": 152,
+            "processing_level": 16,
             "product_id": "S4-_VMI_I--_S4C1_0144_00_0364_00_991109_080443_1B--_ORBIT-"
         }
     },
@@ -555,7 +555,7 @@
             "owner": 4,
             "metadata": "A21=21513820002130748191P\nSC_NUM=1866113\nSEG_NUM=1018807\nSATEL=2\nANG_INC=14.0886\nANG_ACQ=12.0\nDATE_ACQ=13/02/2000\nMONTH_ACQ=02\nTIME_ACQ=07:48:19\nCLOUD_QUOT=EEEEEEEE\nCLOUD_PER=87.0\nSNOW_QUOT=********\nLAT_CEN=-16.02\nLON_CEN=39.5788\nLAT_UP_L=-15.71\nLON_UP_L=39.3501\nLAT_UP_R=-15.79\nLON_UP_R=39.9341\nLAT_LO_L=-16.24\nLON_LO_L=39.2297\nLAT_LO_R=-16.32\nLON_LO_R=39.8153\nRESOL=10.0\nMODE=BW\nTYPE=P\nURL_QL=http://sirius.spotimage.fr/url/catalogue.aspx?ID=-1&ACTION=Scenes%3AgetQuicklook&CODEA21=21513820002130748191P&SEGMENT=1018807&SAT=0",
             "quality": 1,
-            "processing_level": 152,
+            "processing_level": 1,
             "product_id": "S2-_HRV_P--_S2C1_0151_00_0382_00_000213_074819_1B--_ORBIT-"
         }
     },
@@ -575,7 +575,7 @@
             "owner": 4,
             "metadata": "A21=21493730002280758252X\nSC_NUM=1855334\nSEG_NUM=1020678\nSATEL=2\nANG_INC=28.9459\nANG_ACQ=25.0\nDATE_ACQ=28/02/2000\nMONTH_ACQ=02\nTIME_ACQ=07:58:25\nCLOUD_QUOT=BBBBBBBB\nCLOUD_PER=5.0\nSNOW_QUOT=********\nLAT_CEN=-11.51\nLON_CEN=39.6952\nLAT_UP_L=-11.2\nLON_UP_L=39.4123\nLAT_UP_R=-11.3\nLON_UP_R=40.1085\nLAT_LO_L=-11.73\nLON_LO_L=39.2979\nLAT_LO_R=-11.83\nLON_LO_R=39.9955\nRESOL=20.0\nMODE=COLOR\nTYPE=X\nURL_QL=http://sirius.spotimage.fr/url/catalogue.aspx?ID=-1&ACTION=Scenes%3AgetQuicklook&CODEA21=21493730002280758252X&SEGMENT=1020678&SAT=0",
             "quality": 1,
-            "processing_level": 152,
+            "processing_level": 1,
             "product_id": "S2-_Xs-_X--_S2C2_0149_00_0373_00_000228_075825_1B--_ORBIT-"
         }
     },
@@ -675,7 +675,7 @@
             "owner": 4,
             "metadata": "A21=41113820009080903151I\nSC_NUM=1193182\nSEG_NUM=1128455\nSATEL=4\nANG_INC=5.9235\nANG_ACQ=5.2\nDATE_ACQ=08/09/2000\nMONTH_ACQ=09\nTIME_ACQ=09:03:15\nCLOUD_QUOT=AAAABBBB\nCLOUD_PER=2.0\nSNOW_QUOT=********\nLAT_CEN=-16.01\nLON_CEN=20.0184\nLAT_UP_L=-15.71\nLON_UP_L=19.8029\nLAT_UP_R=-15.79\nLON_UP_R=20.3604\nLAT_LO_L=-16.24\nLON_LO_L=19.6793\nLAT_LO_R=-16.32\nLON_LO_R=20.2383\nRESOL=20.0\nMODE=COLOR\nTYPE=I\nURL_QL=http://sirius.spotimage.fr/url/catalogue.aspx?ID=-1&ACTION=Scenes%3AgetQuicklook&CODEA21=41113820009080903151I&SEGMENT=1128455&SAT=0",
             "quality": 1,
-            "processing_level": 152,
+            "processing_level": 16,
             "product_id": "S4-_VMI_I--_S4C1_0111_00_0382_00_000908_090315_1B--_ORBIT-"
         }
     },
@@ -695,7 +695,7 @@
             "owner": 4,
             "metadata": "A21=41313700009250834071I\nSC_NUM=1176706\nSEG_NUM=1131098\nSATEL=4\nANG_INC=29.9742\nANG_ACQ=26.0\nDATE_ACQ=25/09/2000\nMONTH_ACQ=09\nTIME_ACQ=08:34:07\nCLOUD_QUOT=AAAAAAAA\nCLOUD_PER=0.0\nSNOW_QUOT=********\nLAT_CEN=-10.01\nLON_CEN=31.3736\nLAT_UP_L=-9.702\nLON_UP_L=31.0868\nLAT_UP_R=-9.803\nLON_UP_R=31.792\nLAT_LO_L=-10.23\nLON_LO_L=30.9722\nLAT_LO_R=-10.33\nLON_LO_R=31.6787\nRESOL=20.0\nMODE=COLOR\nTYPE=I\nURL_QL=http://sirius.spotimage.fr/url/catalogue.aspx?ID=-1&ACTION=Scenes%3AgetQuicklook&CODEA21=41313700009250834071I&SEGMENT=1131098&SAT=0",
             "quality": 1,
-            "processing_level": 152,
+            "processing_level": 1,
             "product_id": "S4-_VMI_I--_S4C1_0131_00_0370_00_000925_083407_1B--_ORBIT-"
         }
     },
@@ -735,7 +735,7 @@
             "owner": 4,
             "metadata": "A21=41713780010210653531I\nSC_NUM=1082563\nSEG_NUM=1145882\nSATEL=4\nANG_INC=-15.8194\nANG_ACQ=-14.0\nDATE_ACQ=21/10/2000\nMONTH_ACQ=10\nTIME_ACQ=06:53:53\nCLOUD_QUOT=EEEEEEEE\nCLOUD_PER=87.0\nSNOW_QUOT=********\nLAT_CEN=-14.01\nLON_CEN=49.9912\nLAT_UP_L=-13.7\nLON_UP_L=49.7593\nLAT_UP_R=-13.8\nLON_UP_R=50.3462\nLAT_LO_L=-14.23\nLON_LO_L=49.6306\nLAT_LO_R=-14.33\nLON_LO_R=50.2189\nRESOL=20.0\nMODE=COLOR\nTYPE=I\nURL_QL=http://sirius.spotimage.fr/url/catalogue.aspx?ID=-1&ACTION=Scenes%3AgetQuicklook&CODEA21=41713780010210653531I&SEGMENT=1145882&SAT=0",
             "quality": 1,
-            "processing_level": 152,
+            "processing_level": 1,
             "product_id": "S4-_VMI_I--_S4C1_0171_00_0378_00_001021_065353_1B--_ORBIT-"
         }
     },
@@ -795,7 +795,7 @@
             "owner": 4,
             "metadata": "A21=41404090101300756171I\nSC_NUM=822687\nSEG_NUM=1187833\nSATEL=4\nANG_INC=-17.8736\nANG_ACQ=-15.0\nDATE_ACQ=30/01/2001\nMONTH_ACQ=01\nTIME_ACQ=07:56:17\nCLOUD_QUOT=BCBCCBCB\nCLOUD_PER=11.0\nSNOW_QUOT=********\nLAT_CEN=-29.46\nLON_CEN=30.9297\nLAT_UP_L=-29.14\nLON_UP_L=30.6716\nLAT_UP_R=-29.25\nLON_UP_R=31.3382\nLAT_LO_L=-29.66\nLON_LO_L=30.5126\nLAT_LO_R=-29.78\nLON_LO_R=31.1826\nRESOL=20.0\nMODE=COLOR\nTYPE=I\nURL_QL=http://sirius.spotimage.fr/url/catalogue.aspx?ID=-1&ACTION=Scenes%3AgetQuicklook&CODEA21=41404090101300756171I&SEGMENT=1187833&SAT=0",
             "quality": 1,
-            "processing_level": 152,
+            "processing_level": 16,
             "product_id": "S4-_VMI_I--_S4C1_0140_00_0409_00_010130_075617_1B--_ORBIT-"
         }
     },
@@ -835,7 +835,7 @@
             "owner": 4,
             "metadata": "A21=21243630106140821521P\nSC_NUM=434139\nSEG_NUM=1250607\nSATEL=2\nANG_INC=-19.9333\nANG_ACQ=-17.0\nDATE_ACQ=14/06/2001\nMONTH_ACQ=06\nTIME_ACQ=08:21:52\nCLOUD_QUOT=AAAAAAAA\nCLOUD_PER=0.0\nSNOW_QUOT=********\nLAT_CEN=-6.511\nLON_CEN=28.7718\nLAT_UP_L=-6.199\nLON_UP_L=28.5308\nLAT_UP_R=-6.292\nLON_UP_R=29.128\nLAT_LO_L=-6.728\nLON_LO_L=28.4083\nLAT_LO_R=-6.821\nLON_LO_R=29.0062\nRESOL=10.0\nMODE=BW\nTYPE=P\nURL_QL=http://sirius.spotimage.fr/url/catalogue.aspx?ID=-1&ACTION=Scenes%3AgetQuicklook&CODEA21=21243630106140821521P&SEGMENT=1250607&SAT=0",
             "quality": 1,
-            "processing_level": 152,
+            "processing_level": 16,
             "product_id": "S2-_HRV_P--_S2C1_0124_00_0363_00_010614_082152_1B--_ORBIT-"
         }
     },
@@ -855,7 +855,7 @@
             "owner": 4,
             "metadata": "A21=40873560106290945531I\nSC_NUM=424840\nSEG_NUM=1252977\nSATEL=4\nANG_INC=7.96\nANG_ACQ=7.0\nDATE_ACQ=29/06/2001\nMONTH_ACQ=06\nTIME_ACQ=09:45:53\nCLOUD_QUOT=EEEEDEDD\nCLOUD_PER=73.0\nSNOW_QUOT=00000000\nLAT_CEN=-3.006\nLON_CEN=11.4871\nLAT_UP_L=-2.699\nLON_UP_L=11.2782\nLAT_UP_R=-2.782\nLON_UP_R=11.8181\nLAT_LO_L=-3.229\nLON_LO_L=11.16\nLAT_LO_R=-3.312\nLON_LO_R=11.7003\nRESOL=20.0\nMODE=COLOR\nTYPE=I\nURL_QL=http://sirius.spotimage.fr/url/catalogue.aspx?ID=-1&ACTION=Scenes%3AgetQuicklook&CODEA21=40873560106290945531I&SEGMENT=1252977&SAT=0",
             "quality": 1,
-            "processing_level": 152,
+            "processing_level": 16,
             "product_id": "S4-_VMI_I--_S4C1_0087_00_0356_00_010629_094553_1B--_ORBIT-"
         }
     },
@@ -915,7 +915,7 @@
             "owner": 4,
             "metadata": "A21=21443990110230806351X\nSC_NUM=23172\nSEG_NUM=1323240\nSATEL=2\nANG_INC=18.1936\nANG_ACQ=16.0\nDATE_ACQ=23/10/2001\nMONTH_ACQ=10\nTIME_ACQ=08:06:35\nCLOUD_QUOT=EEEEEEEE\nCLOUD_PER=87.0\nSNOW_QUOT=********\nLAT_CEN=-24.49\nLON_CEN=34.2635\nLAT_UP_L=-24.19\nLON_UP_L=34.0084\nLAT_UP_R=-24.27\nLON_UP_R=34.6524\nLAT_LO_L=-24.71\nLON_LO_L=33.883\nLAT_LO_R=-24.8\nLON_LO_R=34.5298\nRESOL=20.0\nMODE=COLOR\nTYPE=X\nURL_QL=http://sirius.spotimage.fr/url/catalogue.aspx?ID=-1&ACTION=Scenes%3AgetQuicklook&CODEA21=21443990110230806351X&SEGMENT=1323240&SAT=0",
             "quality": 1,
-            "processing_level": 152,
+            "processing_level": 16,
             "product_id": "S2-_Xs-_X--_S2C1_0144_00_0399_00_011023_080635_1B--_ORBIT-"
         }
     },
@@ -1075,7 +1075,7 @@
             "owner": 4,
             "metadata": "A21=41123670206260844002I\nSC_NUM=10399779\nSEG_NUM=2057987\nSATEL=4\nANG_INC=-22.3215\nANG_ACQ=-19.0\nDATE_ACQ=26/06/2002\nMONTH_ACQ=06\nTIME_ACQ=08:44:00\nCLOUD_QUOT=AAAAAAAA\nCLOUD_PER=0.0\nSNOW_QUOT=********\nLAT_CEN=-8.514\nLON_CEN=22.1223\nLAT_UP_L=-8.199\nLON_UP_L=21.8706\nLAT_UP_R=-8.299\nLON_UP_R=22.49\nLAT_LO_L=-8.728\nLON_LO_L=21.7458\nLAT_LO_R=-8.828\nLON_LO_R=22.3661\nRESOL=20.0\nMODE=COLOR\nTYPE=I\nURL_QL=http://sirius.spotimage.fr/url/catalogue.aspx?ID=-1&ACTION=Scenes%3AgetQuicklook&CODEA21=41123670206260844002I&SEGMENT=2057987&SAT=0",
             "quality": 1,
-            "processing_level": 152,
+            "processing_level": 16,
             "product_id": "S4-_VMI_I--_S4C2_0112_00_0367_00_020626_084400_1B--_ORBIT-"
         }
     },
@@ -1115,7 +1115,7 @@
             "owner": 4,
             "metadata": "A21=20983920212200912231P\nSC_NUM=11278910\nSEG_NUM=2205320\nSATEL=2\nANG_INC=-27.5481\nANG_ACQ=-24.0\nDATE_ACQ=20/12/2002\nMONTH_ACQ=12\nTIME_ACQ=09:12:23\nCLOUD_QUOT=EEEEEEEE\nCLOUD_PER=87.0\nSNOW_QUOT=********\nLAT_CEN=-21.01\nLON_CEN=12.3931\nLAT_UP_L=-20.68\nLON_UP_L=12.1043\nLAT_UP_R=-20.8\nLON_UP_R=12.8128\nLAT_LO_L=-21.21\nLON_LO_L=11.9594\nLAT_LO_R=-21.33\nLON_LO_R=12.6703\nRESOL=10.0\nMODE=BW\nTYPE=P\nURL_QL=http://sirius.spotimage.fr/url/catalogue.aspx?ID=-1&ACTION=Scenes%3AgetQuicklook&CODEA21=20983920212200912231P&SEGMENT=2205320&SAT=0",
             "quality": 1,
-            "processing_level": 152,
+            "processing_level": 16,
             "product_id": "S2-_HRV_P--_S2C1_0098_00_0392_00_021220_091223_1B--_ORBIT-"
         }
     },
@@ -1155,7 +1155,7 @@
             "owner": 4,
             "metadata": "A21=51173990302240851371A\nSC_NUM=11441091\nSEG_NUM=2241902\nSATEL=5\nANG_INC=-1.10653\nANG_ACQ=-1.0\nDATE_ACQ=24/02/2003\nMONTH_ACQ=02\nTIME_ACQ=08:51:37\nCLOUD_QUOT=AAAAAAAA\nCLOUD_PER=0.0\nSNOW_QUOT=00000000\nLAT_CEN=-24.49\nLON_CEN=20.9644\nLAT_UP_L=-24.17\nLON_UP_L=20.7437\nLAT_UP_R=-24.29\nLON_UP_R=21.3204\nLAT_LO_L=-24.7\nLON_LO_L=20.6068\nLAT_LO_R=-24.82\nLON_LO_R=21.186\nRESOL=5.0\nMODE=BW\nTYPE=A\nURL_QL=http://sirius.spotimage.fr/url/catalogue.aspx?ID=-1&ACTION=Scenes%3AgetQuicklook&CODEA21=51173990302240851371A&SEGMENT=2241902&SAT=0",
             "quality": 1,
-            "processing_level": 152,
+            "processing_level": 16,
             "product_id": "S5-_HRG_A--_S5C1_0117_00_0399_00_030224_085137_1B--_ORBIT-"
         }
     },
@@ -1195,7 +1195,7 @@
             "owner": 4,
             "metadata": "A21=41713910308060659272I\nSC_NUM=12390799\nSEG_NUM=2436862\nSATEL=4\nANG_INC=-11.3615\nANG_ACQ=-10.0\nDATE_ACQ=06/08/2003\nMONTH_ACQ=08\nTIME_ACQ=06:59:27\nCLOUD_QUOT=EEEEEEEE\nCLOUD_PER=87.0\nSNOW_QUOT=********\nLAT_CEN=-20.51\nLON_CEN=47.9801\nLAT_UP_L=-20.2\nLON_UP_L=47.7522\nLAT_UP_R=-20.29\nLON_UP_R=48.3396\nLAT_LO_L=-20.72\nLON_LO_L=47.6163\nLAT_LO_R=-20.82\nLON_LO_R=48.2057\nRESOL=20.0\nMODE=COLOR\nTYPE=I\nURL_QL=http://sirius.spotimage.fr/url/catalogue.aspx?ID=-1&ACTION=Scenes%3AgetQuicklook&CODEA21=41713910308060659272I&SEGMENT=2436862&SAT=0",
             "quality": 1,
-            "processing_level": 152,
+            "processing_level": 16,
             "product_id": "S4-_VMI_I--_S4C2_0171_00_0391_00_030806_065927_1B--_ORBIT-"
         }
     },
@@ -1215,7 +1215,7 @@
             "owner": 4,
             "metadata": "A21=21353960308080828421X\nSC_NUM=12377216\nSEG_NUM=2434644\nSATEL=2\nANG_INC=27.8738\nANG_ACQ=24.0\nDATE_ACQ=08/08/2003\nMONTH_ACQ=08\nTIME_ACQ=08:28:42\nCLOUD_QUOT=DDDDDDDD\nCLOUD_PER=50.0\nSNOW_QUOT=********\nLAT_CEN=-23.0\nLON_CEN=30.197\nLAT_UP_L=-22.69\nLON_UP_L=29.8993\nLAT_UP_R=-22.78\nLON_UP_R=30.6289\nLAT_LO_L=-23.22\nLON_LO_L=29.7806\nLAT_LO_R=-23.31\nLON_LO_R=30.5133\nRESOL=20.0\nMODE=COLOR\nTYPE=X\nURL_QL=http://sirius.spotimage.fr/url/catalogue.aspx?ID=-1&ACTION=Scenes%3AgetQuicklook&CODEA21=21353960308080828421X&SEGMENT=2434644&SAT=0",
             "quality": 1,
-            "processing_level": 152,
+            "processing_level": 16,
             "product_id": "S2-_Xs-_X--_S2C1_0135_00_0396_00_030808_082842_1B--_ORBIT-"
         }
     },
@@ -1235,7 +1235,7 @@
             "owner": 4,
             "metadata": "A21=41063660308100900481I\nSC_NUM=12390370\nSEG_NUM=2436767\nSATEL=4\nANG_INC=-13.0879\nANG_ACQ=-11.0\nDATE_ACQ=10/08/2003\nMONTH_ACQ=08\nTIME_ACQ=09:00:48\nCLOUD_QUOT=AAAAAAAA\nCLOUD_PER=0.0\nSNOW_QUOT=********\nLAT_CEN=-8.014\nLON_CEN=19.5659\nLAT_UP_L=-7.704\nLON_UP_L=19.3442\nLAT_UP_R=-7.793\nLON_UP_R=19.9062\nLAT_LO_L=-8.233\nLON_LO_L=19.2215\nLAT_LO_R=-8.323\nLON_LO_R=19.7843\nRESOL=20.0\nMODE=COLOR\nTYPE=I\nURL_QL=http://sirius.spotimage.fr/url/catalogue.aspx?ID=-1&ACTION=Scenes%3AgetQuicklook&CODEA21=41063660308100900481I&SEGMENT=2436767&SAT=0",
             "quality": 1,
-            "processing_level": 152,
+            "processing_level": 16,
             "product_id": "S4-_VMI_I--_S4C1_0106_00_0366_00_030810_090048_1B--_ORBIT-"
         }
     },
@@ -1275,7 +1275,7 @@
             "owner": 4,
             "metadata": "A21=51283450312130826392B\nSC_NUM=12894988\nSEG_NUM=2525924\nSATEL=5\nANG_INC=9.595342\nANG_ACQ=8.5\nDATE_ACQ=13/12/2003\nMONTH_ACQ=12\nTIME_ACQ=08:26:39\nCLOUD_QUOT=AAAACABA\nCLOUD_PER=3.0\nSNOW_QUOT=00000000\nLAT_CEN=2.5052\nLON_CEN=32.412\nLAT_UP_L=2.8312\nLON_UP_L=32.2042\nLAT_UP_R=2.7094\nLON_UP_R=32.7422\nLAT_LO_L=2.3001\nLON_LO_L=32.0853\nLAT_LO_R=2.1784\nLON_LO_R=32.6232\nRESOL=5.0\nMODE=BW\nTYPE=B\nURL_QL=http://sirius.spotimage.fr/url/catalogue.aspx?ID=-1&ACTION=Scenes%3AgetQuicklook&CODEA21=51283450312130826392B&SEGMENT=2525924&SAT=0",
             "quality": 1,
-            "processing_level": 152,
+            "processing_level": 16,
             "product_id": "S5-_HRG_B--_S5C2_0128_00_0345_00_031213_082639_1B--_ORBIT-"
         }
     },
@@ -1515,7 +1515,7 @@
             "owner": 4,
             "metadata": "A21=21163900502080847441X\nSC_NUM=16093759\nSEG_NUM=3137294\nSATEL=2\nANG_INC=1.85327\nANG_ACQ=1.6\nDATE_ACQ=08/02/2005\nMONTH_ACQ=02\nTIME_ACQ=08:47:44\nCLOUD_QUOT=AAAAAAAA\nCLOUD_PER=0.0\nSNOW_QUOT=********\nLAT_CEN=-20.01\nLON_CEN=21.4846\nLAT_UP_L=-19.7\nLON_UP_L=21.2673\nLAT_UP_R=-19.79\nLON_UP_R=21.8316\nLAT_LO_L=-20.23\nLON_LO_L=21.1387\nLAT_LO_R=-20.32\nLON_LO_R=21.705\nRESOL=20.0\nMODE=COLOR\nTYPE=X\nURL_QL=http://sirius.spotimage.fr/url/catalogue.aspx?ID=-1&ACTION=Scenes%3AgetQuicklook&CODEA21=21163900502080847441X&SEGMENT=3137294&SAT=0",
             "quality": 1,
-            "processing_level": 152,
+            "processing_level": 16,
             "product_id": "S2-_Xs-_X--_S2C1_0116_00_0390_00_050208_084744_1B--_ORBIT-"
         }
     },
@@ -1555,7 +1555,7 @@
             "owner": 4,
             "metadata": "A21=41463540503030738541I\nSC_NUM=16058520\nSEG_NUM=3130526\nSATEL=4\nANG_INC=-21.9994\nANG_ACQ=-19.0\nDATE_ACQ=03/03/2005\nMONTH_ACQ=03\nTIME_ACQ=07:38:54\nCLOUD_QUOT=EEEDEDED\nCLOUD_PER=73.0\nSNOW_QUOT=00000000\nLAT_CEN=-2.004\nLON_CEN=40.2497\nLAT_UP_L=-1.69\nLON_UP_L=39.9992\nLAT_UP_R=-1.786\nLON_UP_R=40.6106\nLAT_LO_L=-2.22\nLON_LO_L=39.8794\nLAT_LO_R=-2.316\nLON_LO_R=40.4909\nRESOL=20.0\nMODE=COLOR\nTYPE=I\nURL_QL=http://sirius.spotimage.fr/url/catalogue.aspx?ID=-1&ACTION=Scenes%3AgetQuicklook&CODEA21=41463540503030738541I&SEGMENT=3130526&SAT=0",
             "quality": 1,
-            "processing_level": 152,
+            "processing_level": 16,
             "product_id": "S4-_VMI_I--_S4C1_0146_00_0354_00_050303_073854_1B--_ORBIT-"
         }
     },
@@ -1675,7 +1675,7 @@
             "owner": 4,
             "metadata": "A21=41113940509170916532M\nSC_NUM=18416370\nSEG_NUM=3606293\nSATEL=4\nANG_INC=27.5481\nANG_ACQ=24.0\nDATE_ACQ=17/09/2005\nMONTH_ACQ=09\nTIME_ACQ=09:16:53\nCLOUD_QUOT=AAAAAAAA\nCLOUD_PER=0.0\nSNOW_QUOT=********\nLAT_CEN=-22.0\nLON_CEN=18.6705\nLAT_UP_L=-21.69\nLON_UP_L=18.377\nLAT_UP_R=-21.79\nLON_UP_R=19.0971\nLAT_LO_L=-22.22\nLON_LO_L=18.2591\nLAT_LO_R=-22.32\nLON_LO_R=18.982\nRESOL=10.0\nMODE=BW\nTYPE=M\nURL_QL=http://sirius.spotimage.fr/url/catalogue.aspx?ID=-1&ACTION=Scenes%3AgetQuicklook&CODEA21=41113940509170916532M&SEGMENT=3606293&SAT=0",
             "quality": 1,
-            "processing_level": 152,
+            "processing_level": 16,
             "product_id": "S4-_HIR_M--_S4C2_0111_00_0394_00_050917_091653_1B--_ORBIT-"
         }
     },
@@ -1735,7 +1735,7 @@
             "owner": 4,
             "metadata": "A21=21123730512010857441P\nSC_NUM=18963464\nSEG_NUM=3714973\nSATEL=2\nANG_INC=1.17522\nANG_ACQ=1.0\nDATE_ACQ=01/12/2005\nMONTH_ACQ=12\nTIME_ACQ=08:57:44\nCLOUD_QUOT=EEEEEEEE\nCLOUD_PER=87.0\nSNOW_QUOT=********\nLAT_CEN=-11.45\nLON_CEN=21.4257\nLAT_UP_L=-11.21\nLON_UP_L=21.202\nLAT_UP_R=-11.29\nLON_UP_R=21.7424\nLAT_LO_L=-11.61\nLON_LO_L=21.1102\nLAT_LO_R=-11.69\nLON_LO_R=21.6514\nRESOL=10.0\nMODE=BW\nTYPE=P\nURL_QL=http://sirius.spotimage.fr/url/catalogue.aspx?ID=-1&ACTION=Scenes%3AgetQuicklook&CODEA21=21123730512010857441P&SEGMENT=3714973&SAT=0",
             "quality": 1,
-            "processing_level": 152,
+            "processing_level": 16,
             "product_id": "S2-_HRV_P--_S2C1_0112_00_0373_00_051201_085744_1B--_ORBIT-"
         }
     },
@@ -1995,7 +1995,7 @@
             "owner": 4,
             "metadata": "A21=51184011105030847092J\nSC_NUM=33366836\nSEG_NUM=6672889\nSATEL=5\nANG_INC=1.083436\nANG_ACQ=1.0\nDATE_ACQ=03/05/2011\nMONTH_ACQ=05\nTIME_ACQ=08:47:09\nCLOUD_QUOT=AAAAAAAA\nCLOUD_PER=0.0\nSNOW_QUOT=00000000\nLAT_CEN=-25.49\nLON_CEN=20.9705\nLAT_UP_L=-25.16\nLON_UP_L=20.7474\nLAT_UP_R=-25.29\nLON_UP_R=21.3298\nLAT_LO_L=-25.69\nLON_LO_L=20.6103\nLAT_LO_R=-25.81\nLON_LO_R=21.1953\nRESOL=10.0\nMODE=COLOR\nTYPE=J\nURL_QL=http://sirius.spotimage.fr/url/catalogue.aspx?ID=-1&ACTION=Scenes%3AgetQuicklook&CODEA21=51184011105030847092J&SEGMENT=6672889&SAT=0",
             "quality": 1,
-            "processing_level": 152,
+            "processing_level": 16,
             "product_id": "S5-_HRG_J--_S5C2_0118_00_0401_00_110503_084709_1B--_ORBIT-"
         }
     },
@@ -2015,7 +2015,7 @@
             "owner": 4,
             "metadata": "A21=51184011105030847092J\nSC_NUM=33366836\nSEG_NUM=6672889\nSATEL=5\nANG_INC=1.083436\nANG_ACQ=1.0\nDATE_ACQ=03/05/2011\nMONTH_ACQ=05\nTIME_ACQ=08:47:09\nCLOUD_QUOT=AAAAAAAA\nCLOUD_PER=0.0\nSNOW_QUOT=00000000\nLAT_CEN=-25.49\nLON_CEN=20.9705\nLAT_UP_L=-25.16\nLON_UP_L=20.7474\nLAT_UP_R=-25.29\nLON_UP_R=21.3298\nLAT_LO_L=-25.69\nLON_LO_L=20.6103\nLAT_LO_R=-25.81\nLON_LO_R=21.1953\nRESOL=10.0\nMODE=COLOR\nTYPE=J\nURL_QL=http://sirius.spotimage.fr/url/catalogue.aspx?ID=-1&ACTION=Scenes%3AgetQuicklook&CODEA21=51184011105030847092J&SEGMENT=6672889&SAT=0",
             "quality": 1,
-            "processing_level": 152,
+            "processing_level": 16,
             "product_id": "S5-_HRG_J--_S5C2_0118_00_0401_00_110503_084709_1B--_ORBIT-999"
         }
     },
@@ -2035,7 +2035,7 @@
             "owner": 4,
             "metadata": "A21=51184011105030847092J\nSC_NUM=33366836\nSEG_NUM=6672889\nSATEL=5\nANG_INC=1.083436\nANG_ACQ=1.0\nDATE_ACQ=03/05/2011\nMONTH_ACQ=05\nTIME_ACQ=08:47:09\nCLOUD_QUOT=AAAAAAAA\nCLOUD_PER=0.0\nSNOW_QUOT=00000000\nLAT_CEN=-25.49\nLON_CEN=20.9705\nLAT_UP_L=-25.16\nLON_UP_L=20.7474\nLAT_UP_R=-25.29\nLON_UP_R=21.3298\nLAT_LO_L=-25.69\nLON_LO_L=20.6103\nLAT_LO_R=-25.81\nLON_LO_R=21.1953\nRESOL=10.0\nMODE=COLOR\nTYPE=J\nURL_QL=http://sirius.spotimage.fr/url/catalogue.aspx?ID=-1&ACTION=Scenes%3AgetQuicklook&CODEA21=51184011105030847092J&SEGMENT=6672889&SAT=0",
             "quality": 1,
-            "processing_level": 152,
+            "processing_level": 16,
             "product_id": "S5-_HRG_J--_S5C2_0118_00_0401_00_110503_084709_1B--_ORBIT-998"
         }
     },
@@ -2055,7 +2055,7 @@
             "owner": 4,
             "metadata": "A21=51184011105030847092J\nSC_NUM=33366836\nSEG_NUM=6672889\nSATEL=5\nANG_INC=1.083436\nANG_ACQ=1.0\nDATE_ACQ=03/05/2011\nMONTH_ACQ=05\nTIME_ACQ=08:47:09\nCLOUD_QUOT=AAAAAAAA\nCLOUD_PER=0.0\nSNOW_QUOT=00000000\nLAT_CEN=-25.49\nLON_CEN=20.9705\nLAT_UP_L=-25.16\nLON_UP_L=20.7474\nLAT_UP_R=-25.29\nLON_UP_R=21.3298\nLAT_LO_L=-25.69\nLON_LO_L=20.6103\nLAT_LO_R=-25.81\nLON_LO_R=21.1953\nRESOL=10.0\nMODE=COLOR\nTYPE=J\nURL_QL=http://sirius.spotimage.fr/url/catalogue.aspx?ID=-1&ACTION=Scenes%3AgetQuicklook&CODEA21=51184011105030847092J&SEGMENT=6672889&SAT=0",
             "quality": 1,
-            "processing_level": 152,
+            "processing_level": 16,
             "product_id": "S5-_HRG_J--_S5C2_0118_00_0401_00_110503_084709_1B--_ORBIT-100"
         }
     },
@@ -2075,7 +2075,7 @@
             "owner": 4,
             "metadata": "A21=51184011105030847092J\nSC_NUM=33366836\nSEG_NUM=6672889\nSATEL=5\nANG_INC=1.083436\nANG_ACQ=1.0\nDATE_ACQ=03/05/2011\nMONTH_ACQ=05\nTIME_ACQ=08:47:09\nCLOUD_QUOT=AAAAAAAA\nCLOUD_PER=0.0\nSNOW_QUOT=00000000\nLAT_CEN=-25.49\nLON_CEN=20.9705\nLAT_UP_L=-25.16\nLON_UP_L=20.7474\nLAT_UP_R=-25.29\nLON_UP_R=21.3298\nLAT_LO_L=-25.69\nLON_LO_L=20.6103\nLAT_LO_R=-25.81\nLON_LO_R=21.1953\nRESOL=10.0\nMODE=COLOR\nTYPE=J\nURL_QL=http://sirius.spotimage.fr/url/catalogue.aspx?ID=-1&ACTION=Scenes%3AgetQuicklook&CODEA21=51184011105030847092J&SEGMENT=6672889&SAT=0",
             "quality": 1,
-            "processing_level": 152,
+            "processing_level": 16,
             "product_id": "S5-_HRG_J--_S5C2_0118_00_0401_00_110503_084709_1B--_ORBIT-101"
         }
     },
@@ -2095,7 +2095,7 @@
             "owner": 4,
             "metadata": "A21=51184011105030847092J\nSC_NUM=33366836\nSEG_NUM=6672889\nSATEL=5\nANG_INC=1.083436\nANG_ACQ=1.0\nDATE_ACQ=03/05/2011\nMONTH_ACQ=05\nTIME_ACQ=08:47:09\nCLOUD_QUOT=AAAAAAAA\nCLOUD_PER=0.0\nSNOW_QUOT=00000000\nLAT_CEN=-25.49\nLON_CEN=20.9705\nLAT_UP_L=-25.16\nLON_UP_L=20.7474\nLAT_UP_R=-25.29\nLON_UP_R=21.3298\nLAT_LO_L=-25.69\nLON_LO_L=20.6103\nLAT_LO_R=-25.81\nLON_LO_R=21.1953\nRESOL=10.0\nMODE=COLOR\nTYPE=J\nURL_QL=http://sirius.spotimage.fr/url/catalogue.aspx?ID=-1&ACTION=Scenes%3AgetQuicklook&CODEA21=51184011105030847092J&SEGMENT=6672889&SAT=0",
             "quality": 1,
-            "processing_level": 152,
+            "processing_level": 16,
             "product_id": "S5-_HRG_J--_S5C2_0118_00_0401_00_110503_084709_1B--_ORBIT-102"
         }
     },
@@ -2115,7 +2115,7 @@
             "owner": 4,
             "metadata": "A21=51184011105030847092J\nSC_NUM=33366836\nSEG_NUM=6672889\nSATEL=5\nANG_INC=1.083436\nANG_ACQ=1.0\nDATE_ACQ=03/05/2011\nMONTH_ACQ=05\nTIME_ACQ=08:47:09\nCLOUD_QUOT=AAAAAAAA\nCLOUD_PER=0.0\nSNOW_QUOT=00000000\nLAT_CEN=-25.49\nLON_CEN=20.9705\nLAT_UP_L=-25.16\nLON_UP_L=20.7474\nLAT_UP_R=-25.29\nLON_UP_R=21.3298\nLAT_LO_L=-25.69\nLON_LO_L=20.6103\nLAT_LO_R=-25.81\nLON_LO_R=21.1953\nRESOL=10.0\nMODE=COLOR\nTYPE=J\nURL_QL=http://sirius.spotimage.fr/url/catalogue.aspx?ID=-1&ACTION=Scenes%3AgetQuicklook&CODEA21=51184011105030847092J&SEGMENT=6672889&SAT=0",
             "quality": 1,
-            "processing_level": 152,
+            "processing_level": 16,
             "product_id": "S5-_HRG_J--_S5C2_0118_00_0401_00_110503_084709_1B--_ORBIT-103"
         }
     },
@@ -2135,7 +2135,7 @@
             "owner": 4,
             "metadata": "A21=51184011105030847092J\nSC_NUM=33366836\nSEG_NUM=6672889\nSATEL=5\nANG_INC=1.083436\nANG_ACQ=1.0\nDATE_ACQ=03/05/2011\nMONTH_ACQ=05\nTIME_ACQ=08:47:09\nCLOUD_QUOT=AAAAAAAA\nCLOUD_PER=0.0\nSNOW_QUOT=00000000\nLAT_CEN=-25.49\nLON_CEN=20.9705\nLAT_UP_L=-25.16\nLON_UP_L=20.7474\nLAT_UP_R=-25.29\nLON_UP_R=21.3298\nLAT_LO_L=-25.69\nLON_LO_L=20.6103\nLAT_LO_R=-25.81\nLON_LO_R=21.1953\nRESOL=10.0\nMODE=COLOR\nTYPE=J\nURL_QL=http://sirius.spotimage.fr/url/catalogue.aspx?ID=-1&ACTION=Scenes%3AgetQuicklook&CODEA21=51184011105030847092J&SEGMENT=6672889&SAT=0",
             "quality": 1,
-            "processing_level": 152,
+            "processing_level": 16,
             "product_id": "S5-_HRG_J--_S5C2_0118_00_0401_00_110503_084709_1B--_ORBIT-104"
         }
     },
@@ -2155,7 +2155,7 @@
             "owner": 4,
             "metadata": "A21=51184011105030847092J\nSC_NUM=33366836\nSEG_NUM=6672889\nSATEL=5\nANG_INC=1.083436\nANG_ACQ=1.0\nDATE_ACQ=03/05/2011\nMONTH_ACQ=05\nTIME_ACQ=08:47:09\nCLOUD_QUOT=AAAAAAAA\nCLOUD_PER=0.0\nSNOW_QUOT=00000000\nLAT_CEN=-25.49\nLON_CEN=20.9705\nLAT_UP_L=-25.16\nLON_UP_L=20.7474\nLAT_UP_R=-25.29\nLON_UP_R=21.3298\nLAT_LO_L=-25.69\nLON_LO_L=20.6103\nLAT_LO_R=-25.81\nLON_LO_R=21.1953\nRESOL=10.0\nMODE=COLOR\nTYPE=J\nURL_QL=http://sirius.spotimage.fr/url/catalogue.aspx?ID=-1&ACTION=Scenes%3AgetQuicklook&CODEA21=51184011105030847092J&SEGMENT=6672889&SAT=0",
             "quality": 1,
-            "processing_level": 152,
+            "processing_level": 16,
             "product_id": "S5-_HRG_J--_S5C2_0118_00_0401_00_110503_084709_1B--_ORBIT-105"
         }
     }
