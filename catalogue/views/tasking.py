@@ -192,15 +192,15 @@ def addTaskingRequest( theRequest ):
             logging.debug("Tasking Request saved")
             logging.info('Tasking request : data is valid')
             # Now add the cart contents to the order
-            notifySalesStaffOfTaskRequest(theRequest.user,myObject.id)
+            notifySalesStaffOfTaskRequest(myObject.id)
             return HttpResponseRedirect(myRedirectPath + str(myObject.id))
         else:
             logging.info('Add Tasking Request : form is NOT valid')
             return render_to_response("addPage.html",
                 myOptions,
                 context_instance=RequestContext(theRequest))
-    else: # new order
-        myTaskingForm = TaskingRequestForm( )
+    else:  # new order
+        myTaskingForm = TaskingRequestForm()
         myTaskingDeliveryDetailsForm = TaskingRequestDeliveryDetailForm()
         myOptions =  {
               'myTaskingForm': myTaskingForm,

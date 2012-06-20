@@ -347,7 +347,7 @@ def updateOrderHistory(theRequest):
     if theRequest.user.is_staff:
         myForm = OrderStatusHistoryForm()
     if TaskingRequest.objects.filter(id=myOrderId):
-        notifySalesStaffOfTaskRequest(myOrder.user,myOrderId)
+        notifySalesStaffOfTaskRequest(myOrderId)
     else:
         notifySalesStaff(myOrder.user,myOrderId)
     return render_to_response(myTemplatePath,
