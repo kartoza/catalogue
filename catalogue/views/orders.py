@@ -110,7 +110,7 @@ def listOrders(theRequest):
 
 @login_required
 @renderWithContext('orderMonthlyReport.html')
-def orderMonthlyReport( theRequest, theyear, themonth):
+def orderMonthlyReport(theRequest, theyear, themonth):
     #construct date object
     if not(theyear and themonth):
         myDate=datetime.date.today()
@@ -142,9 +142,9 @@ def downloadOrder(theRequest,theId):
     myOrder = get_object_or_404(Order,id=theId)
 
     if theRequest.GET.has_key('shp'):
-        myResponder = ShpResponder( myOrder )
+        myResponder = ShpResponder(myOrder)
         myResponder.file_name = u'products_for_order_%s' % myOrder.id
-        return  myResponder.write_order_products( myOrder.searchrecord_set.all() )
+        return  myResponder.write_order_products(myOrder.searchrecord_set.all())
     elif theRequest.GET.has_key('kml'):
         return render_to_kml("kml/searchRecords.kml", {
               'mySearchRecords' : myOrder.searchrecord_set.all(),
@@ -170,9 +170,9 @@ def downloadClipGeometry(theRequest,theId):
     myOrder = get_object_or_404(Order,id=theId)
 
     if theRequest.GET.has_key('shp'):
-        myResponder = ShpResponder( myOrder )
+        myResponder = ShpResponder(myOrder)
         myResponder.file_name = u'clip_geometry_order_%s' % myOrder.id
-        return  myResponder.write_delivery_details( myOrder )
+        return  myResponder.write_delivery_details(myOrder)
     elif theRequest.GET.has_key('kml'):
         return render_to_kml("kml/clipGeometry.kml", {'order' : myOrder,'external_site_url':settings.DOMAIN, 'transparentStyle':True},u'clip_geometry_order_%s' % myOrder.id)
     elif theRequest.GET.has_key('kmz'):
@@ -267,14 +267,14 @@ def coverageForOrder(theOrder, theSearchRecords):
                 myUnion = myGeometry
             else:
                 # This can be done faster using cascaded union but needs geos 3.1
-                myUnion = myUnion.union( myGeometry )
+                myUnion = myUnion.union(myGeometry)
         if myUnion:
             myCentroid = myUnion.centroid
-            myZones = utmZoneFromLatLon( myCentroid.x , myCentroid.y)
+            myZones = utmZoneFromLatLon(myCentroid.x , myCentroid.y)
         if len(myZones) > 0:
             myZone = myZones[0] #use the first match
             logging.debug("Utm zones: %s" % myZones)
-            logging.debug("Before geom xform to %s: %s" % ( myZone[0], myUnion ) )
+            logging.debug("Before geom xform to %s: %s" % (myZone[0], myUnion))
             myTransform = CoordTransform(SpatialReference(4326),SpatialReference(myZone[0]))
             myUnion.transform(myTransform)
             logging.debug("After geom xform: %s" % myUnion)
@@ -288,11 +288,11 @@ def coverageForOrder(theOrder, theSearchRecords):
             if not myUnion:
                 myClip = theOrder.delivery_detail.geometry
             else:
-                myClip = myUnion.intersection( theOrder.delivery_detail.geometry )
+                myClip = myUnion.intersection(theOrder.delivery_detail.geometry)
             myCoverage[ "IntersectedArea" ] = myClip.area
             myCentroid = myClip.centroid
             # Calculate the zone independently as centroid may differ from product union
-            myZones = utmZoneFromLatLon( myCentroid.x , myCentroid.y)
+            myZones = utmZoneFromLatLon(myCentroid.x , myCentroid.y)
             if len(myZones) > 0:
                 myZone = myZones[0]
                 if not myZone:
@@ -370,26 +370,35 @@ def updateOrderHistory(theRequest):
 
 @renderWithContext("deliveryDetailForm.html")
 @login_required
-def createDeliveryDetailForm( theRequest, theref_id):
-    myDeliveryDetailForm = ProductDeliveryDetailForm(initial={'ref_id':theref_id},prefix='%i' % int(theref_id))
+def createDeliveryDetailForm(theRequest, theref_id):
+    myDeliveryDetailForm = ProductDeliveryDetailForm(
+                    initial={'ref_id':theref_id},prefix='%i' % int(theref_id))
     return dict(myDeliveryDetailForm=myDeliveryDetailForm)
 
 @renderWithContext("deliveryDetail.html")
 @login_required
-def showDeliveryDetail( theRequest, theref_id):
+def showDeliveryDetail(theRequest, theref_id):
     myDeliveryDetail = DeliveryDetail.objects.filter(pk__exact=theref_id).get()
     return dict(myDeliveryDetail=myDeliveryDetail)
 
+
 @requireProfile('addorder')
 @login_required
-def addOrder( theRequest ):
+def addOrder(theRequest):
     logging.debug("Order called")
     myTitle = 'Create a new order'
     myRedirectPath = '/vieworder/'
     logging.info("Preparing order for user " + str(theRequest.user))
     myRecords = None
-    myLayersList, myLayerDefinitions, myActiveBaseMap = standardLayers( theRequest )
-    myCartLayer = '''var myCartLayer = new OpenLayers.Layer.WMS("Cart", "http://''' + settings.WMS_SERVER + '''/cgi-bin/mapserv?map=''' + settings.CART_LAYER + '''&user=''' + str(theRequest.user.username) + '''",
+    (myLayersList,
+     myLayerDefinitions, myActiveBaseMap) = standardLayers(theRequest)
+    myCartLayer = ('var myCartLayer = new OpenLayers.Layer.WMS('
+                   '"Cart", "http://'
+                    + settings.WMS_SERVER +
+                    '/cgi-bin/mapserv?map='
+                    + settings.CART_LAYER +
+                    '&user='
+                    + str(theRequest.user.username) + '''",
             {
                version: '1.1.1',
                layers: 'Cart',
@@ -398,26 +407,30 @@ def addOrder( theRequest ):
                transparent: 'true'
              },
              {isBaseLayer: false, singleTile:true});
-             '''
+             ''')
 
-    myLayersList=myLayersList[:-1]+', myCartLayer ]' #UGLY hack for adding Cart layer
+    # UGLY hack for adding Cart layer
+    myLayersList = myLayersList[:-1] + ', myCartLayer ]'
     myLayerDefinitions.append(myCartLayer)
 
     if str(theRequest.user) == "AnonymousUser":
         logging.debug("User is anonymous")
         logging.info("Anonymous users can't have items in their cart")
-        myMessage = "If you want to order something, you need to create an account and log in first."
-        return HttpResponse( myMessage )
+        myMessage = ('If you want to order something, you need to'
+                     ' create an account and log in first.')
+        return HttpResponse(myMessage)
     else:
         logging.debug("User NOT anonymous")
-        myRecords = SearchRecord.objects.all().filter(user=theRequest.user).filter(order__isnull=True)
+        myRecords = SearchRecord.objects.all().filter(
+                            user=theRequest.user).filter(order__isnull=True)
         if myRecords.count() < 1:
             logging.debug("Cart has no records")
             logging.info("User has no items in their cart")
-            return HttpResponseRedirect( "/emptyCartHelp/" )
+            return HttpResponseRedirect("/emptyCartHelp/")
         else:
             logging.debug("Cart has records")
-            logging.info("Cart contains : " + str(myRecords.count()) + " items")
+            logging.info("Cart contains : " +
+                         str(myRecords.count()) + " items")
     myExtraOptions = {
       # Possible flags for the record template
       # myShowSensorFlag
@@ -429,60 +442,79 @@ def addOrder( theRequest ):
       # myShowPreviewFlag
       # myShowDeliveryDetailsFlag
       # myShowDeliveryDetailsFormFlag
-      'myShowSensorFlag' : False,
-      'myShowSceneIdFlag' : True,
+      'myShowSensorFlag': False,
+      'myShowSceneIdFlag': True,
       'myShowDateFlag': False,
       'myShowRemoveIconFlag': True,
-      'myShowRowFlag' : False,
-      'myShowPathFlag' : False,
-      'myShowCloudCoverFlag' : True,
-      'myShowMetdataFlag' : False,
-      'myShowCartFlag' : False, #used when you need to add an item to the cart only
-      'myShowCartContentsFlag' : True, #used when you need to add an item to the cart only
-      'myShowPreviewFlag' : False,
+      'myShowRowFlag': False,
+      'myShowPathFlag': False,
+      'myShowCloudCoverFlag': True,
+      'myShowMetdataFlag': False,
+       # used when you need to add an item to the cart only
+      'myShowCartFlag': False,
+       # used when you need to add an item to the cart only
+      'myShowCartContentsFlag': True,
+      'myShowPreviewFlag': False,
       'myShowDeliveryDetailsFlag': False,
       'myShowDeliveryDetailsFormFlag': True,
-      'myCartTitle' : 'Order Product List',
-      'myRecords' : myRecords,
-      'myBaseTemplate' : "emptytemplate.html", #propogated into the cart template
-      'mySubmitLabel' : "Submit Order",
-      'myMessage' : " <div>Please specify any details for your order requirements below. If you need specific processing steps taken on individual images, please use the notes area below to provide detailed instructions. If you would like the product(s) to be clipped and masked to a specific geographic region, you can digitise that region using the map above, or the geometry input field below.</div>",
-      'myLayerDefinitions' : myLayerDefinitions,
-      'myLayersList' : myLayersList,
-      'myActiveBaseMap' : myActiveBaseMap
-
+      'myCartTitle': 'Order Product List',
+      'myRecords': myRecords,
+       # propogated into the cart template
+      'myBaseTemplate': "emptytemplate.html",
+      'mySubmitLabel': "Submit Order",
+      'myMessage': (' <div>Please specify any details for your order'
+                    ' requirements below. If you need specific processing'
+                    ' steps taken on individual images, please use the notes'
+                    ' area below to provide detailed instructions. If you'
+                    ' would like the product(s) to be clipped and masked'
+                    ' to a specific geographic region, you can digitise'
+                    ' that region using the map above, or the geometry'
+                    ' input field below.</div>'),
+      'myLayerDefinitions': myLayerDefinitions,
+      'myLayersList': myLayersList,
+      'myActiveBaseMap': myActiveBaseMap
       }
     logging.info('Add Order called')
     if theRequest.method == 'POST':
         logging.debug("Order posted")
 
-        myOrderForm = OrderForm( theRequest.POST,theRequest.FILES )
-        myDeliveryDetailForm = DeliveryDetailForm( myRecords,theRequest.POST,theRequest.FILES)
+        myOrderForm = OrderForm(theRequest.POST, theRequest.FILES)
+        myDeliveryDetailForm = DeliveryDetailForm(
+                                myRecords, theRequest.POST, theRequest.FILES)
 
-        #get ref_ids of product details forms, if any, and generate forms for validation
-        myProductForms = [ProductDeliveryDetailForm(theRequest.POST,prefix='%i' % int(myref)) for myref in myDeliveryDetailForm.data.get('ref_id').split(',') if len(myref)>0]
+        # get ref_ids of product details forms, if any,
+        # and generate forms for validation
+        myProductForms = [ProductDeliveryDetailForm(theRequest.POST,
+                            prefix='%i' % int(myref))
+                           for myref in myDeliveryDetailForm.data.get(
+                                'ref_id').split(',') if len(myref) > 0]
 
-        myOptions =  {
+        myOptions = {
                 'myOrderForm': myOrderForm,
                 'myDeliveryDetailForm': myDeliveryDetailForm,
                 'myTitle': myTitle,
-                'mySubmitLabel' : "Submit Order",
+                'mySubmitLabel': "Submit Order",
               }
-        myOptions.update(myExtraOptions) #shortcut to join two dicts
-        if myOrderForm.is_valid() and myDeliveryDetailForm.is_valid() and all([form.is_valid() for form in myProductForms]):
+        # shortcut to join two dicts
+        myOptions.update(myExtraOptions)
+        if (myOrderForm.is_valid() and myDeliveryDetailForm.is_valid()
+            and all([form.is_valid() for form in myProductForms])):
             logging.debug("Order valid")
 
             myDeliveryDetailObject = myDeliveryDetailForm.save(commit=False)
             myDeliveryDetailObject.user = theRequest.user
             #check if user uploaded file and try to extract geometry
             try:
-                myGeometry = getGeometryFromUploadedFile( theRequest, myDeliveryDetailForm, 'geometry_file' )
+                myGeometry = getGeometryFromUploadedFile(theRequest,
+                                        myDeliveryDetailForm, 'geometry_file')
                 if myGeometry:
                     myDeliveryDetailObject.geometry = myGeometry
                 else:
-                    logging.info("Failed to set search area from uploaded geometry file")
+                    logging.info('Failed to set search area'
+                                 ' from uploaded geometry file')
             except:
-                logging.info("An error occurred trying to set search area from uploaded geometry file")
+                logging.info('An error occurred trying to set'
+                             ' search area from uploaded geometry file')
             myDeliveryDetailObject.user = theRequest.user
             myDeliveryDetailObject.save()
             #save order
@@ -493,46 +525,53 @@ def addOrder( theRequest ):
             logging.debug("Order saved")
 
             #save all of the subforms
-            myDeliveryDetailsProducts={}
+            myDeliveryDetailsProducts = {}
             for mySubDeliveryForm in myProductForms:
-                mySubData=mySubDeliveryForm.save(commit=False)
-                mySubData.user=theRequest.user
+                mySubData = mySubDeliveryForm.save(commit=False)
+                mySubData.user = theRequest.user
                 mySubData.save()
-                #temporary store reference to deliverydetails with search record ID as a key
-                myDeliveryDetailsProducts[int(mySubDeliveryForm.cleaned_data.get('ref_id'))]=mySubData
+                # temporary store reference to deliverydetails
+                # with search record ID as a key
+                myDeliveryDetailsProducts[
+                        int(mySubDeliveryForm.cleaned_data.get('ref_id'))
+                    ] = mySubData
             #update serachrecords
             for myRecord in myRecords:
                 #check if this record has sepcific DeliveryDetails
-                if myDeliveryDetailsProducts.has_key(myRecord.id):
-                    myRecord.delivery_detail=myDeliveryDetailsProducts[myRecord.id]
-                myRecord.order=myObject
+                if myRecord.id in myDeliveryDetailsProducts:
+                    myRecord.delivery_detail = myDeliveryDetailsProducts[
+                                                                myRecord.id
+                                                            ]
+                myRecord.order = myObject
                 myRecord.save()
 
             logging.info('Add Order : data is valid')
 
             logging.debug("Search records added")
             #return HttpResponse("Done")
-            notifySalesStaff(theRequest.user,myObject.id)
+            notifySalesStaff(theRequest.user, myObject.id)
             return HttpResponseRedirect(myRedirectPath + str(myObject.id))
         else:
             logging.info('Add Order: form is NOT valid')
             return render_to_response("addPage.html",
                 myOptions,
                 context_instance=RequestContext(theRequest))
-    else: # new order
-        myOrderForm = OrderForm( )
+    else:  # new order
+        myOrderForm = OrderForm()
         myDeliveryDetailForm = DeliveryDetailForm(myRecords)
-        myOptions =  {
+        myOptions = {
           'myOrderForm': myOrderForm,
           'myDeliveryDetailForm': myDeliveryDetailForm,
           'myTitle': myTitle,
-          'mySubmitLabel' : "Submit Order",
+          'mySubmitLabel': "Submit Order",
             }
-        myOptions.update(myExtraOptions), #shortcut to join two dicts
-        logging.info( 'Add Order: new object requested' )
+        # shortcut to join two dicts
+        myOptions.update(myExtraOptions),
+        logging.info('Add Order: new object requested')
         return render_to_response("addPage.html",
             myOptions,
             context_instance=RequestContext(theRequest))
+
 
 @login_required
 #renderWithContext is explained in renderWith.py
