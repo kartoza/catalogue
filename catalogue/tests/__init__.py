@@ -13,6 +13,7 @@ from simpleTest import SimpleTest
 from license_model import LicenseCRUD_Test
 from missionGroup_model import MissionGroupCRUD_Test
 from mission_model import MissionCRUD_Test
+from missionsensor_model import MissionSensorCRUD_Test
 from featurereaders_return import FeatureReaders_Test
 from searcher_object import SearcherObject_Test
 from search_bandcount import SearchBandCount_Test

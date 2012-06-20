@@ -69,7 +69,7 @@ class MissionGroupCRUD_Test(TestCase):
 
     def test_missionGroup_update(self):
         """
-        Tests License model update
+        Tests MissionGroup model update
         """
         myModelPK = 1
         myModel = MissionGroup.objects.get(pk=myModelPK)

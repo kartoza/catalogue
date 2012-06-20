@@ -992,5 +992,19 @@
             "has_data": false,
             "is_taskable": true
         }
+    },
+    {
+        "pk": 100,
+        "model": "catalogue.missionsensor",
+        "fields": {
+            "is_radar": true,
+            "name": "",
+            "description": "No description",
+            "mission": 100,
+            "abbreviation": "UMS",
+            "operator_abbreviation": "UMS-SSU-1",
+            "has_data": false,
+            "is_taskable": true
+        }
     }
 ]
