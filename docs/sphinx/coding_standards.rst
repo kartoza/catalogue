@@ -18,6 +18,34 @@ Please observe the following coding standards when working on the codebase:
   `pep8 <http://www.python.org/dev/peps/pep-0008>`_ and
   using the command line tool pep8 (or :samp:`make pep8`) to enforce this
 * `Python documentation guide <http://www.python.org/dev/peps/pep-0257>`_
+* Line continuation should be done using brackets not slashes e.g.::
+  
+   myString = ('Very long'
+              'string)
+   
+   not:
+   
+   myString = 'Very long' \
+              'string'
+
+* Use single blank lines to separate logic in a function e.g::
+   
+   foo = 1
+   bar = 2
+   
+   result = foo * bar
+
+* Place comments above the relevant line not at the end of it as far as
+  far as possible::
+   
+   # Collect all data from input port
+   myData = some.obscure.function()
+
+Standard headers and documentation
+----------------------------------
+
+We aim to produce self documenting code.
+
 * Each source file should include a standard header containing copyright,
   authorship and version metadata as shown in the exampled below.
 
@@ -60,9 +88,34 @@ Please observe the following coding standards when working on the codebase:
   Raises:
       no exceptions explicitly raised.
   """
+* String literals should be enclosed in single quotes :samp:`'foo'` and not 
+  `"foo"`
+* Docstrings should be enclosed in three double quotes :samp:`"""`
+
+Import management
+-----------------
+
+* Explicit imports: Wildcard imports are not allowed - they make it difficult
+  to follow application logic. Rather one of the following two schemes should
+  be followed::
+   
+   from foo impor (bar,
+                   alpha,
+                   beta)
+   
+   or
+   
+   import foo
+   myAlpha = foo.alpha
+
+  The first form is preferred.
 
 * Unused imports: Unused imports are not allowed. They should either be
   commented out or removed from the source code.
+
+Variables
+---------
+
 * Unused variables: Unused variables are not allowed. They should either
   be commented out or removed from the source code.
 * Variable abbreviation: Variable acronyms are not allowed. e.g. mxincrval
@@ -75,22 +128,36 @@ Please observe the following coding standards when working on the codebase:
     e.g. :samp:`theSensorName`
   * Variables with method/function scope: camel case, prefixed with 'my', no 
     abbreviations e.g. :samp:`myCounter`
-* Exceptions: In some cases these rules can be broken in particular the use of 
+* Naming Exceptions: In some cases these rules can be broken in particular the use of 
   python conventions such as 'self','kwargs' etc. Also using the acronym 'Id' for
   identifier is acceptible.
 * File naming: files and directories (modules and packages in python parlance)
   should be lower case, underscore separated, no abbreviations e.g. 
   :samp:`test_utilities.py`
-* Code verbosity: prefer verbose code to condensed but hard to understand code.
+
+Legal stuff
+-----------
+
 * Code provenance: never mix code into the code base that is not licensed under
   e.g. BSD or similar completely public domain license. If you need to include GPL
-  or more restrictive licesed code, it should be included as it's own module with
+  or more restrictive licensed code, it should be included as it's own module with
   appropriate license information in the header.
 * Undocumented API's: Do not use undocumented API's from libraries (e.g. django)
-* Unit test: 
-  * No code should added without an accompanying unit test.
-  * No code should be modified without (if needed) a new unit test.
-  * No code should be committed to master or live branches without all tests passing.
+
+Unit testing and quality control
+--------------------------------
+ 
+* No code should added without an accompanying unit test.
+* No code should be modified without (if needed) a new unit test.
+* No code should be committed to master or live branches without all tests passing.
+* Code parsimony: Less code is better than more code (i.e. don't keep unused
+  code laying about in the code base because you think it may be useful one
+  day).
+* Code verbosity: Prefer verbose code to condensed but hard to understand code.
+
 * Leaving things better than you found them: if you work on a method / function
   and it doesn't already comply with these conventions, it is required that you
-  refactor it so that every function after being touched
+  refactor it so that every function after being touched does comply with these
+  rules.
+
+
