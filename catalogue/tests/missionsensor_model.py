@@ -80,7 +80,8 @@ class MissionSensorCRUD_Test(TestCase):
         #check if data is correct
         for key, val in myExpectedModelData.items():
             self.assertEqual(myModel.__dict__.get(key), val,
-                simpleMessage(val, myModel.__dict__.get(key)))
+                simpleMessage(val, myModel.__dict__.get(key),
+                    message='For key "%s"' % key))
 
     def test_missionsensor_update(self):
         """
@@ -99,13 +100,14 @@ class MissionSensorCRUD_Test(TestCase):
             'is_taskable': True
         }
 
-        myModel = MissionSensor(**myNewModelData)
+        myModel.__dict__.update(myNewModelData)
         myModel.save()
 
         #check if updated
         for key, val in myNewModelData.items():
             self.assertEqual(myModel.__dict__.get(key), val,
-                simpleMessage(val, myModel.__dict__.get(key)))
+                simpleMessage(val, myModel.__dict__.get(key),
+                    message='For key "%s"' % key))
 
     def test_missionsensor_delete(self):
         """
@@ -128,6 +130,8 @@ class MissionSensorCRUD_Test(TestCase):
         myModelPKs = [1, 100]
         myExpResults = [u'NOAA-14:Advanced Very High Resolution Radiometer NOAA', u':UMS']
 
-        for idx, missionPK in enumerate(myModelPKs):
-            myModel = MissionSensor.objects.get(pk=missionPK)
-            self.assertEqual(myModel.__unicode__(), myExpResults[idx])
+        for idx, PK in enumerate(myModelPKs):
+            myModel = MissionSensor.objects.get(pk=PK)
+            self.assertEqual(myModel.__unicode__(), myExpResults[idx],
+                simpleMessage(myModel.__unicode__(), myExpResults[idx],
+                    message='Model PK %s repr:' % PK))

@@ -1,5 +1,5 @@
 """
-SANSA-EO Catalogue - mission_model - implements basic CRUD unittests
+SANSA-EO Catalogue - missionsensor_model - implements basic CRUD unittests
 
 Contact : lkleyn@sansa.org.za
 
@@ -19,16 +19,18 @@ __copyright__ = 'South African National Space Agency'
 
 from django.test import TestCase
 from catalogue.tests.test_utils import simpleMessage
-from catalogue.models import Mission
+from catalogue.models import SensorType
 
 
-class MissionCRUD_Test(TestCase):
+class SensorTypeCRUD_Test(TestCase):
     """
     Tests models.
     """
     fixtures = [
         'test_missiongroup.json',
         'test_mission.json',
+        'test_missionsensor.json',
+        'test_sensortype.json',
         ]
 
     def setUp(self):
@@ -37,19 +39,18 @@ class MissionCRUD_Test(TestCase):
         """
         pass
 
-    def test_mission_create(self):
+    def test_sensortype_create(self):
         """
-        Tests Mission model creation
+        Tests SensorType model creation
         """
-        myMissionData = {
-            'abbreviation': 'MIT',
-            'owner': 'Unknown',
-            'mission_group_id': 1,
-            'name': 'Mission Name Unknown Test',
-            'operator_abbreviation': 'UNK-1'
+        mySensorTypeData = {
+            'abbreviation': 'NONE',
+            'mission_sensor_id': 100,
+            'name': 'Unknown sensor type',
+            'operator_abbreviation': 'NONE'
         }
 
-        myModel = Mission(**myMissionData)
+        myModel = SensorType(**mySensorTypeData)
         myModel.save()
 
         #check if PK exists
@@ -57,38 +58,35 @@ class MissionCRUD_Test(TestCase):
             simpleMessage(myModel.pk, 'not None',
                 message='Model PK should NOT equal None'))
 
-    def test_mission_read(self):
+    def test_sensortype_read(self):
         """
-        Tests Mission model read
+        Tests SensorType model read
         """
-        myModelPK = 1
+        myModelPK = 2
         myExpectedModelData = {
-            'abbreviation': 'N14',
-            'owner': 'NOAA',
-            'mission_group_id': 1,
-            'name': 'National Oceanic and Atmospheric Administration Satellite\
- 14',
-            'operator_abbreviation': 'NOAA-14'
+            'abbreviation': 'AMI',
+            'mission_sensor_id': 2,
+            'name': 'AMI',
+            'operator_abbreviation': 'AMI'
         }
-        myModel = Mission.objects.get(pk=myModelPK)
+        myModel = SensorType.objects.get(pk=myModelPK)
         #check if data is correct
         for key, val in myExpectedModelData.items():
             self.assertEqual(myModel.__dict__.get(key), val,
                 simpleMessage(val, myModel.__dict__.get(key),
                     message='For key "%s"' % key))
 
-    def test_mission_update(self):
+    def test_sensortype_update(self):
         """
-        Tests Mission model update
+        Tests SensorType model update
         """
         myModelPK = 1
-        myModel = Mission.objects.get(pk=myModelPK)
+        myModel = SensorType.objects.get(pk=myModelPK)
         myNewModelData = {
-            'abbreviation': 'MIT',
-            'owner': 'Unknown',
-            'mission_group_id': 1,
-            'name': 'Mission Name Unknown Test',
-            'operator_abbreviation': 'UNK-1'
+            'abbreviation': 'NONE',
+            'mission_sensor_id': 100,
+            'name': 'Unknown sensor type',
+            'operator_abbreviation': 'NONE'
         }
 
         myModel.__dict__.update(myNewModelData)
@@ -98,14 +96,14 @@ class MissionCRUD_Test(TestCase):
         for key, val in myNewModelData.items():
             self.assertEqual(myModel.__dict__.get(key), val,
                 simpleMessage(val, myModel.__dict__.get(key),
-                    message='For key "%s"' % key))
+                message='For key "%s"' % key))
 
-    def test_mission_delete(self):
+    def test_sensortype_delete(self):
         """
-        Tests Mission model delete
+        Tests SensorType model delete
         """
         myModelPK = 1
-        myModel = Mission.objects.get(pk=myModelPK)
+        myModel = SensorType.objects.get(pk=myModelPK)
 
         myModel.delete()
 
@@ -114,16 +112,16 @@ class MissionCRUD_Test(TestCase):
             simpleMessage(myModel.pk, None,
             message='Model PK should equal None'))
 
-    def test_mission_repr(self):
+    def test_sensortype_repr(self):
         """
-        Tests Mission model representation
+        Tests MissionSensor model representation
         """
-        myModelPKs = [1, 100]
-        myExpResults = [u'NOAA-14', u'SSU']
+        myModelPKs = [1, 2]
+        myExpResults = [u'AVHRR-3:Advanced Very High Resolution Radiometer',
+            u'AMI-1:AMI']
 
         for idx, PK in enumerate(myModelPKs):
-            myModel = Mission.objects.get(pk=PK)
+            myModel = SensorType.objects.get(pk=PK)
             self.assertEqual(myModel.__unicode__(), myExpResults[idx],
                 simpleMessage(myModel.__unicode__(), myExpResults[idx],
                     message='Model PK %s repr:' % PK))
-

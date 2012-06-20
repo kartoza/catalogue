@@ -65,7 +65,8 @@ class MissionGroupCRUD_Test(TestCase):
         #check if data is correct
         for key, val in myExpectedModelData.items():
             self.assertEqual(myModel.__dict__.get(key), val,
-                simpleMessage(val, myModel.__dict__.get(key)))
+                simpleMessage(val, myModel.__dict__.get(key),
+                    message='For key "%s"' % key))
 
     def test_missionGroup_update(self):
         """
@@ -77,13 +78,14 @@ class MissionGroupCRUD_Test(TestCase):
             'name': 'Test mission group'
         }
 
-        myModel = MissionGroup(**myNewModelData)
+        myModel.__dict__.update(myNewModelData)
         myModel.save()
 
         #check if updated
         for key, val in myNewModelData.items():
             self.assertEqual(myModel.__dict__.get(key), val,
-                simpleMessage(val, myModel.__dict__.get(key)))
+                simpleMessage(val, myModel.__dict__.get(key),
+                    message='For key "%s"' % key))
 
     def test_missionGroup_delete(self):
         """

@@ -68,7 +68,8 @@ class LicenseCRUD_Test(TestCase):
         #check if data is correct
         for key, val in myExpectedLicenseData.items():
             self.assertEqual(myLicense.__dict__.get(key), val,
-                simpleMessage(val, myLicense.__dict__.get(key)))
+                simpleMessage(val, myLicense.__dict__.get(key),
+                    message='For key "%s"' % key))
 
     def test_license_update(self):
         """
@@ -82,7 +83,7 @@ class LicenseCRUD_Test(TestCase):
             'details': 'This is a test licence'
         }
 
-        myLicense = License(**myNewLicenseData)
+        myLicense.__dict__.update(myNewLicenseData)
         myLicense.save()
 
         #check if updated
