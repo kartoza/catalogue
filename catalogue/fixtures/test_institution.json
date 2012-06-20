@@ -20,5 +20,27 @@
             "name": "Rapideye AG",
             "post_code": ""
         }
+    },
+    {
+        "pk": 7,
+        "model": "catalogue.institution",
+        "fields": {
+            "address1": "",
+            "address2": "",
+            "address3": "",
+            "name": "USGS",
+            "post_code": ""
+        }
+    },
+    {
+        "pk": 6,
+        "model": "catalogue.institution",
+        "fields": {
+            "address1": "",
+            "address2": "",
+            "address3": "",
+            "name": "ERS",
+            "post_code": ""
+        }
     }
 ]
