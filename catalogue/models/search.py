@@ -166,20 +166,6 @@ class Search(models.Model):
       (PRODUCT_SEARCH_IMAGERY,    'Generic imagery product search'),
     )
 
-    # Tim added to use a simple domain list for cloud cover
-    CLOUD_COVER_CHOICES = (
-      (0, '0 - No cloud present'),
-      (1, '1 - '),
-      (2, '2 - '),
-      (3, '3 - '),
-      (4, '4 - 50% Cloud cover'),
-      (5, '5 - '),
-      (6, '6 - '),
-      (7, '7 - '),
-      (8, '8 - '),
-      (9, '9 - 100% Cloud cover'),
-    )
-
     search_type = models.IntegerField('Search type', default=1, choices=PRODUCT_SEARCH_TYPES, db_index=True)
     user = models.ForeignKey(User)
     keywords = models.CharField('Keywords', max_length=255, blank=True)
