@@ -206,11 +206,11 @@ class Searcher:
                     self.mSensorTypeQuery = Q(acquisition_mode__sensor_type = self.mSearch.sensor_type)
                     self.mQuerySet = self.mQuerySet.filter( self.mSensorTypeQuery )
                 # Check for none since it can be 0
-                if self.mSearch.geometric_accuracy_mean is not None:
+                if self.mSearch.spatial_resolution is not None:
                     # ABP: this needs special handling to map from classes to floats
-                    self.mMessages.append('geometric accuracy mean between <b>%sm and %sm</b>' % Search.ACCURACY_MEAN_RANGE.get(self.mSearch.geometric_accuracy_mean))
-                    self.mGeometryAccuracyMeanQuery = Q(geometric_accuracy_mean__range = Search.ACCURACY_MEAN_RANGE.get(self.mSearch.geometric_accuracy_mean))
-                    self.mQuerySet = self.mQuerySet.filter( self.mGeometryAccuracyMeanQuery )
+                    self.mMessages.append('spatial resolution between <b>%sm and %sm</b>' % Search.SPATIAL_RESOLUTION_RANGE.get(self.mSearch.spatial_resolution))
+                    self.mSpatialResolutionQuery = Q(spatial_resolution__range=Search.SPATIAL_RESOLUTION_RANGE.get(self.mSearch.spatial_resolution))
+                    self.mQuerySet = self.mQuerySet.filter(self.mSpatialResolutionQuery)
                 # Check for none since it can be 0
                 if self.mSearch.band_count is not None:
                     #get bandcount range

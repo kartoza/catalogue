@@ -397,20 +397,20 @@
         <!-- second row in image details -->
         <div class="span-10 adv_search_all adv_fld">
             <div class="span-5">
-            <img id="{{myForm.geometric_accuracy_mean.html_name}}Button"
+            <img id="{{myForm.spatial_resolution.html_name}}Button"
                 src="/media/images/info_16.png"
                 style="cursor: pointer;"
                 alt="Click for help"
                 />
-            {{ myForm.geometric_accuracy_mean.label_tag}}
+            {{ myForm.spatial_resolution.label_tag}}
             </div>
             <div class="span-5 last">
-              {{ myForm.geometric_accuracy_mean }}
+              {{ myForm.spatial_resolution }}
             </div>
-            {% if myForm.geometric_accuracy_mean.errors %}
+            {% if myForm.spatial_resolution.errors %}
             <div class="span-5 last">
                 <p><span class="ui-icon ui-icon-alert"></span>
-                <strong>Alert:</strong> {{ myForm.geometric_accuracy_mean.errors }} </p>
+                <strong>Alert:</strong> {{ myForm.spatial_resolution.errors }} </p>
             </div>
             {% endif %}
         </div>

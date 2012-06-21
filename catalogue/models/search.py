@@ -99,8 +99,8 @@ class Search(models.Model):
     """
     Stores search results
     """
-    # ABP: added to store geometric_accuracy_mean ranges
-    # Values for geometric_accuracy_mean
+    # ABP: added to store spatial_resolution ranges
+    # Values for spatial_resolution
     SPATIAL_RESOLUTION_0 = 0
     SPATIAL_RESOLUTION_1 = 1
     SPATIAL_RESOLUTION_2 = 2
@@ -313,7 +313,7 @@ certain cloud cover, enable this.')
             self.j_frame_row is not None,
             self.use_cloud_cover == True,
             self.acquisition_mode is not None,
-            self.geometric_accuracy_mean is not None,
+            self.spatial_resolution is not None,
             self.band_count is not None,
             self.sensor_inclination_angle_start is not None,
             self.sensor_inclination_angle_end is not None,
