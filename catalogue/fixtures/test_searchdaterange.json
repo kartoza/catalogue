@@ -196,5 +196,41 @@
             "start_date": "1900-01-01",
             "end_date": "2100-12-31"
         }
+    },
+    {
+        "pk": 23,
+        "model": "catalogue.searchdaterange",
+        "fields": {
+            "search": 23,
+            "start_date": "1900-01-01",
+            "end_date": "2100-12-31"
+        }
+    },
+    {
+        "pk": 24,
+        "model": "catalogue.searchdaterange",
+        "fields": {
+            "search": 24,
+            "start_date": "1900-01-01",
+            "end_date": "2100-12-31"
+        }
+    },
+    {
+        "pk": 25,
+        "model": "catalogue.searchdaterange",
+        "fields": {
+            "search": 25,
+            "start_date": "1900-01-01",
+            "end_date": "2100-12-31"
+        }
+    },
+    {
+        "pk": 26,
+        "model": "catalogue.searchdaterange",
+        "fields": {
+            "search": 26,
+            "start_date": "1900-01-01",
+            "end_date": "2100-12-31"
+        }
     }
 ]

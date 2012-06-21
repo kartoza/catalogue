@@ -31,6 +31,7 @@ from search_bandcount import SearchBandCount_Test
 from search_inclinationangle import SearchIncliantionAngle_Test
 from search_geometricaccuracy import SearchGeometricAccuracy_Test
 from search_cloudcover import SearchCloudCover_Test
+from search_rowpath import SearchRowPath_Test
 from email_notification_test import EmailNotificationTest
 from integerCSVIntervalsField_return import IntegersCSVIntervalsField_Test
 
