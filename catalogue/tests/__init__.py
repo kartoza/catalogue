@@ -32,6 +32,7 @@ from search_inclinationangle import SearchIncliantionAngle_Test
 from search_geometricaccuracy import SearchGeometricAccuracy_Test
 from search_cloudcover import SearchCloudCover_Test
 from email_notification_test import EmailNotificationTest
+from integerCSVIntervalsField_return import IntegersCSVIntervalsField_Test
 
 #this is only required for doctests
 __test__ = {
