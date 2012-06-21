@@ -237,9 +237,9 @@ class Searcher:
                         self.mMessages.append('Row: <b>%s</b>' % self.mSearch.j_frame_row)
                         for _j in IntegersCSVIntervalsField.to_tuple(self.mSearch.j_frame_row):
                             if len(_j) == 2:
-                                self.mJFrameRowQuery = self.mJFrameRowQuery | Q(path__range=(_j[0], _j[1]))
+                                self.mJFrameRowQuery = self.mJFrameRowQuery | Q(row__range=(_j[0], _j[1]))
                             else:
-                                self.mJFrameRowQuery = self.mJFrameRowQuery | Q(path=_j[0])
+                                self.mJFrameRowQuery = self.mJFrameRowQuery | Q(row=_j[0])
                         self.mQuerySet = self.mQuerySet.filter( self.mJFrameRowQuery )
                 else:
                     logging.info( 'path row filtering is DISABLED' )
