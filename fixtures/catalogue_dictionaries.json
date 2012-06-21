@@ -11,7 +11,7 @@
     "model": "catalogue.acquisitionmode", 
     "fields": {
       "name": "Horizontal Horizontal Vertical Vertical Polarisation", 
-      "geometric_resolution": 0, 
+      "spatial_resolution": 0, 
       "is_grayscale": false, 
       "band_count": 1, 
       "abbreviation": "HHVV", 
@@ -24,7 +24,7 @@
     "model": "catalogue.acquisitionmode", 
     "fields": {
       "name": "Multispectral", 
-      "geometric_resolution": 0, 
+      "spatial_resolution": 0, 
       "is_grayscale": false, 
       "band_count": 0, 
       "abbreviation": "MS", 
@@ -37,7 +37,7 @@
     "model": "catalogue.acquisitionmode", 
     "fields": {
       "name": "Multispectral and Thermal", 
-      "geometric_resolution": 0, 
+      "spatial_resolution": 0, 
       "is_grayscale": false, 
       "band_count": 0, 
       "abbreviation": "HRT", 
@@ -50,7 +50,7 @@
     "model": "catalogue.acquisitionmode", 
     "fields": {
       "name": "X", 
-      "geometric_resolution": 0, 
+      "spatial_resolution": 0, 
       "is_grayscale": false, 
       "band_count": 0, 
       "abbreviation": "X", 
@@ -63,7 +63,7 @@
     "model": "catalogue.acquisitionmode", 
     "fields": {
       "name": "I", 
-      "geometric_resolution": 0, 
+      "spatial_resolution": 0, 
       "is_grayscale": false, 
       "band_count": 0, 
       "abbreviation": "I", 
@@ -76,7 +76,7 @@
     "model": "catalogue.acquisitionmode", 
     "fields": {
       "name": "M", 
-      "geometric_resolution": 0, 
+      "spatial_resolution": 0, 
       "is_grayscale": false, 
       "band_count": 0, 
       "abbreviation": "M", 
@@ -89,7 +89,7 @@
     "model": "catalogue.acquisitionmode", 
     "fields": {
       "name": "P", 
-      "geometric_resolution": 0, 
+      "spatial_resolution": 0, 
       "is_grayscale": false, 
       "band_count": 0, 
       "abbreviation": "P", 
@@ -102,7 +102,7 @@
     "model": "catalogue.acquisitionmode", 
     "fields": {
       "name": "Multispectral", 
-      "geometric_resolution": 0, 
+      "spatial_resolution": 0, 
       "is_grayscale": false, 
       "band_count": 0, 
       "abbreviation": "J", 
@@ -115,7 +115,7 @@
     "model": "catalogue.acquisitionmode", 
     "fields": {
       "name": "Panchromatic", 
-      "geometric_resolution": 0, 
+      "spatial_resolution": 0, 
       "is_grayscale": false, 
       "band_count": 0, 
       "abbreviation": "B", 
@@ -128,7 +128,7 @@
     "model": "catalogue.acquisitionmode", 
     "fields": {
       "name": "Panchromatic", 
-      "geometric_resolution": 0, 
+      "spatial_resolution": 0, 
       "is_grayscale": false, 
       "band_count": 0, 
       "abbreviation": "A", 
@@ -141,7 +141,7 @@
     "model": "catalogue.acquisitionmode", 
     "fields": {
       "name": "3BG", 
-      "geometric_resolution": 0, 
+      "spatial_resolution": 0, 
       "is_grayscale": false, 
       "band_count": 0, 
       "abbreviation": "3BG", 
@@ -154,7 +154,7 @@
     "model": "catalogue.acquisitionmode", 
     "fields": {
       "name": "5BF", 
-      "geometric_resolution": 0, 
+      "spatial_resolution": 0, 
       "is_grayscale": false, 
       "band_count": 0, 
       "abbreviation": "5BF", 
@@ -167,7 +167,7 @@
     "model": "catalogue.acquisitionmode", 
     "fields": {
       "name": "3BP", 
-      "geometric_resolution": 0, 
+      "spatial_resolution": 0, 
       "is_grayscale": false, 
       "band_count": 0, 
       "abbreviation": "3BP", 
@@ -180,7 +180,7 @@
     "model": "catalogue.acquisitionmode", 
     "fields": {
       "name": "HR", 
-      "geometric_resolution": 0, 
+      "spatial_resolution": 0, 
       "is_grayscale": false, 
       "band_count": 0, 
       "abbreviation": "HR", 
@@ -193,7 +193,7 @@
     "model": "catalogue.acquisitionmode", 
     "fields": {
       "name": "", 
-      "geometric_resolution": 0, 
+      "spatial_resolution": 0, 
       "is_grayscale": false, 
       "band_count": 1, 
       "abbreviation": "PB", 
@@ -206,7 +206,7 @@
     "model": "catalogue.acquisitionmode", 
     "fields": {
       "name": "Vertical Vertical Polarisation", 
-      "geometric_resolution": 0, 
+      "spatial_resolution": 0, 
       "is_grayscale": false, 
       "band_count": 0, 
       "abbreviation": "VV", 
@@ -219,7 +219,7 @@
     "model": "catalogue.acquisitionmode", 
     "fields": {
       "name": "Forward Motion Compensation 4", 
-      "geometric_resolution": 0, 
+      "spatial_resolution": 0, 
       "is_grayscale": false, 
       "band_count": 0, 
       "abbreviation": "FMC4", 
@@ -232,7 +232,7 @@
     "model": "catalogue.acquisitionmode", 
     "fields": {
       "name": "Vertical Vertical Polarisation", 
-      "geometric_resolution": 0, 
+      "spatial_resolution": 0, 
       "is_grayscale": false, 
       "band_count": 1, 
       "abbreviation": "VV", 
@@ -245,7 +245,7 @@
     "model": "catalogue.acquisitionmode", 
     "fields": {
       "name": "Horizontal Horizontal Polarisation", 
-      "geometric_resolution": 0, 
+      "spatial_resolution": 0, 
       "is_grayscale": false, 
       "band_count": 1, 
       "abbreviation": "HH", 
@@ -258,7 +258,7 @@
     "model": "catalogue.acquisitionmode", 
     "fields": {
       "name": "Horizontal Horizontal Vertical Vertical Polarisation", 
-      "geometric_resolution": 0, 
+      "spatial_resolution": 0, 
       "is_grayscale": false, 
       "band_count": 1, 
       "abbreviation": "HHVV", 
@@ -271,7 +271,7 @@
     "model": "catalogue.acquisitionmode", 
     "fields": {
       "name": "Horizontal Horizontal Polarisation", 
-      "geometric_resolution": 0, 
+      "spatial_resolution": 0, 
       "is_grayscale": false, 
       "band_count": 1, 
       "abbreviation": "HH", 
@@ -284,7 +284,7 @@
     "model": "catalogue.acquisitionmode", 
     "fields": {
       "name": "Horizontal Horizontal Vertical Vertical Polarisation", 
-      "geometric_resolution": 0, 
+      "spatial_resolution": 0, 
       "is_grayscale": false, 
       "band_count": 1, 
       "abbreviation": "HHVV", 
@@ -297,7 +297,7 @@
     "model": "catalogue.acquisitionmode", 
     "fields": {
       "name": "Vertical Vertical Polarisation", 
-      "geometric_resolution": 0, 
+      "spatial_resolution": 0, 
       "is_grayscale": false, 
       "band_count": 1, 
       "abbreviation": "VV", 
@@ -310,7 +310,7 @@
     "model": "catalogue.acquisitionmode", 
     "fields": {
       "name": "Horizontal Horizontal Polarisation", 
-      "geometric_resolution": 0, 
+      "spatial_resolution": 0, 
       "is_grayscale": false, 
       "band_count": 1, 
       "abbreviation": "HH", 
@@ -323,7 +323,7 @@
     "model": "catalogue.acquisitionmode", 
     "fields": {
       "name": "Horizontal Horizontal Polarisation", 
-      "geometric_resolution": 0, 
+      "spatial_resolution": 0, 
       "is_grayscale": false, 
       "band_count": 1, 
       "abbreviation": "HH", 
@@ -336,7 +336,7 @@
     "model": "catalogue.acquisitionmode", 
     "fields": {
       "name": "Vertical Vertical Vertical Horizontal Polarisation", 
-      "geometric_resolution": 0, 
+      "spatial_resolution": 0, 
       "is_grayscale": false, 
       "band_count": 1, 
       "abbreviation": "VVVH", 
@@ -349,7 +349,7 @@
     "model": "catalogue.acquisitionmode", 
     "fields": {
       "name": "Vertical Vertical Polarisation", 
-      "geometric_resolution": 0, 
+      "spatial_resolution": 0, 
       "is_grayscale": false, 
       "band_count": 1, 
       "abbreviation": "VV", 
@@ -362,7 +362,7 @@
     "model": "catalogue.acquisitionmode", 
     "fields": {
       "name": "Horizontal Horizontal Horizontal Vertical Polarisation", 
-      "geometric_resolution": 0, 
+      "spatial_resolution": 0, 
       "is_grayscale": false, 
       "band_count": 1, 
       "abbreviation": "HHHV", 
@@ -375,7 +375,7 @@
     "model": "catalogue.acquisitionmode", 
     "fields": {
       "name": "Vertical Vertical Polarisation", 
-      "geometric_resolution": 0, 
+      "spatial_resolution": 0, 
       "is_grayscale": false, 
       "band_count": 1, 
       "abbreviation": "VV", 

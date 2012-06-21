@@ -89,7 +89,6 @@ class SearchRecord(models.Model):
         pass
 
 
-
 ###############################################################################
 #
 # Every search a user does we will keep a record of
@@ -102,36 +101,36 @@ class Search(models.Model):
     """
     # ABP: added to store geometric_accuracy_mean ranges
     # Values for geometric_accuracy_mean
-    ACCURACY_MEAN_0       = 0
-    ACCURACY_MEAN_1       = 1
-    ACCURACY_MEAN_2       = 2
-    ACCURACY_MEAN_3       = 3
-    ACCURACY_MEAN_4       = 4
-    ACCURACY_MEAN_5       = 5
+    SPATIAL_RESOLUTION_0 = 0
+    SPATIAL_RESOLUTION_1 = 1
+    SPATIAL_RESOLUTION_2 = 2
+    SPATIAL_RESOLUTION_3 = 3
+    SPATIAL_RESOLUTION_4 = 4
+    SPATIAL_RESOLUTION_5 = 5
 
-    ACCURACY_MEAN_OPTIONS = (
-      (ACCURACY_MEAN_0,   '<= 1m'),
-      (ACCURACY_MEAN_1,   '1m - 2m'),
-      (ACCURACY_MEAN_2,   '2m - 6m'),
-      (ACCURACY_MEAN_3,   '6m - 20m'),
-      (ACCURACY_MEAN_4,   '20m - 35m'),
-      (ACCURACY_MEAN_5,   '35m - 60m'),
+    SPATIAL_RESOLUTION_OPTIONS = (
+      (SPATIAL_RESOLUTION_0,   '<= 1m'),
+      (SPATIAL_RESOLUTION_1,   '1m - 2m'),
+      (SPATIAL_RESOLUTION_2,   '2m - 6m'),
+      (SPATIAL_RESOLUTION_3,   '6m - 20m'),
+      (SPATIAL_RESOLUTION_4,   '20m - 35m'),
+      (SPATIAL_RESOLUTION_5,   '35m - 60m'),
     )
 
-    ACCURACY_MEAN_RANGE = {
-      ACCURACY_MEAN_0:   (0.0, 1.0),
-      ACCURACY_MEAN_1:   (1.0, 2.0),
-      ACCURACY_MEAN_2:   (2.0, 6.0),
-      ACCURACY_MEAN_3:   (6.0, 20.0),
-      ACCURACY_MEAN_4:   (20.0, 35.0),
-      ACCURACY_MEAN_5:   (35.0, 60.0),
+    SPATIAL_RESOLUTION_RANGE = {
+      SPATIAL_RESOLUTION_0:   (0.0, 1.0),
+      SPATIAL_RESOLUTION_1:   (1.0, 2.0),
+      SPATIAL_RESOLUTION_2:   (2.0, 6.0),
+      SPATIAL_RESOLUTION_3:   (6.0, 20.0),
+      SPATIAL_RESOLUTION_4:   (20.0, 35.0),
+      SPATIAL_RESOLUTION_5:   (35.0, 60.0),
     }
     # ABP: added to store bands
-    BAND_COUNT_PANCHROMATIC       = 0
-    BAND_COUNT_TRUECOLOR          = 1
-    BAND_COUNT_MULTISPECTRAL      = 2
-    BAND_COUNT_SUPERSPECTRAL      = 3
-    BAND_COUNT_HYPERSPECTRAL      = 4
+    BAND_COUNT_PANCHROMATIC = 0
+    BAND_COUNT_TRUECOLOR = 1
+    BAND_COUNT_MULTISPECTRAL = 2
+    BAND_COUNT_SUPERSPECTRAL = 3
+    BAND_COUNT_HYPERSPECTRAL = 4
 
     BAND_COUNT_CHOICES = (
       (BAND_COUNT_PANCHROMATIC,   'Panchromatic'),
@@ -151,11 +150,11 @@ class Search(models.Model):
 
     # ABP: added to store which product to search
     # Values for the search_type parameter
-    PRODUCT_SEARCH_GENERIC        = 0  # default in case of blank/null/0 = simple search
-    PRODUCT_SEARCH_OPTICAL        = 1
-    PRODUCT_SEARCH_RADAR          = 2
-    PRODUCT_SEARCH_GEOSPATIAL     = 3
-    PRODUCT_SEARCH_IMAGERY        = 4
+    PRODUCT_SEARCH_GENERIC = 0  # default in case of blank/null/0 = simple search
+    PRODUCT_SEARCH_OPTICAL = 1
+    PRODUCT_SEARCH_RADAR = 2
+    PRODUCT_SEARCH_GEOSPATIAL = 3
+    PRODUCT_SEARCH_IMAGERY = 4
 
     PRODUCT_SEARCH_TYPES = (
       (PRODUCT_SEARCH_GENERIC,    'Generic product search'),
@@ -166,86 +165,108 @@ class Search(models.Model):
       (PRODUCT_SEARCH_IMAGERY,    'Generic imagery product search'),
     )
 
-    search_type = models.IntegerField('Search type', default=1, choices=PRODUCT_SEARCH_TYPES, db_index=True)
+    search_type = models.IntegerField('Search type', default=1,
+        choices=PRODUCT_SEARCH_TYPES, db_index=True)
     user = models.ForeignKey(User)
     keywords = models.CharField('Keywords', max_length=255, blank=True)
     # foreign keys require the first arg to the be the relation name
     # so we explicitly have to use verbose_name for the user friendly name
-    sensors = models.ManyToManyField(MissionSensor, verbose_name='Sensors', null=True, blank=True,
-        help_text='Choosing one or more sensor is required. Use ctrl-click to select more than one.')
+    sensors = models.ManyToManyField(MissionSensor, verbose_name='Sensors',
+        null=True, blank=True, help_text='Choosing one or more sensor is \
+required. Use ctrl-click to select more than one.')
     geometry = models.PolygonField(srid=4326, null=True, blank=True,
-        help_text='Digitising an area of interest is not required but is recommended.')
+        help_text='Digitising an area of interest is not required but is \
+recommended.')
     k_orbit_path = models.CharField(
         max_length=255,
         blank=True,
         null=True,
-        help_text='Path (K) value. If specified here, geometry will be ignored. Must be a value between 1 and 233. Can also be specified as a comma separated list of values or a range. Will be ignored if sensor type does not include J/K metadata.')
+        help_text='Path (K) value. If specified here, geometry will be ignored. \
+Must be a value between 1 and 233. Can also be specified as a comma separated \
+list of values or a range. Will be ignored if sensor type does not include J/K \
+metadata.')
     j_frame_row = models.CharField(
         max_length=255,
         blank=True,
         null=True,
-        help_text='Row (J) value. If specified here, geometry will be ignored. Must be a value between 1 and 248. Can also be specified as a comma separated list of values or a range. Will be ignored if sensor type does not include J/K metadata.')
+        help_text='Row (J) value. If specified here, geometry will be ignored. \
+Must be a value between 1 and 248. Can also be specified as a comma separated \
+list of values or a range. Will be ignored if sensor type does not include J/K \
+metadata.')
 
     # let the user upload shp to define their search box
     # uploaded files will end up in media/uploads/2008/10/12 for example
     #geometry_file = models.FileField(null=True,blank=True,upload_to="uploads/%Y/%m/%d")
-    ip_position = models.PointField(srid=4326,null=True, blank=True)
-    search_date = models.DateTimeField('Search Date', auto_now=True, auto_now_add=True,
+    ip_position = models.PointField(srid=4326, null=True, blank=True)
+    search_date = models.DateTimeField('Search Date', auto_now=True,
+        auto_now_add=True,
         help_text="When the search was made - not shown to users")
     # e.g. 16fd2706-8baf-433b-82eb-8c7fada847da
     guid = models.CharField(max_length=40, unique=True)
     deleted = models.NullBooleanField('Deleted?',
         blank=True,
         null=True,
-        default = True,
+        default=True,
         help_text='Mark this search as deleted so the user doesn not see it')
     use_cloud_cover = models.BooleanField('Use cloud cover?',
         blank=False,
         null=False,
-        default = False,
-        help_text='If you want to limit searches to optical products with a certain cloud cover, enable this.')
+        default=False,
+        help_text='If you want to limit searches to optical products with a \
+certain cloud cover, enable this.')
     cloud_mean = models.IntegerField(
         null=True,
         blank=True,
         verbose_name="Max Clouds",
         max_length=3)
-    acquisition_mode  = models.ForeignKey(AcquisitionMode, blank=True, null=True, help_text='Choose the acquisition mode.') #e.g. M X T J etc
-    license_type = models.IntegerField(choices=License.LICENSE_TYPE_CHOICES, blank=True, null=True, help_text='Choose a license type.')
-    band_count = models.IntegerField(choices=BAND_COUNT_CHOICES, blank=True, null=True, help_text='Select the spectral resolution.')
-    geometric_accuracy_mean = models.IntegerField(null=True, blank=True, verbose_name='Spatial resolution', choices=ACCURACY_MEAN_OPTIONS, help_text='Select mean spatial resolution class.')
+    acquisition_mode = models.ForeignKey(AcquisitionMode, blank=True, null=True,
+    help_text='Choose the acquisition mode.')  # e.g. M X T J etc
+    license_type = models.IntegerField(choices=License.LICENSE_TYPE_CHOICES,
+        blank=True, null=True, help_text='Choose a license type.')
+    band_count = models.IntegerField(choices=BAND_COUNT_CHOICES, blank=True,
+        null=True, help_text='Select the spectral resolution.')
+    spatial_resolution = models.IntegerField(null=True, blank=True,
+        verbose_name='Spatial resolution', choices=SPATIAL_RESOLUTION_OPTIONS,
+        help_text='Select mean spatial resolution class.')
     # sensor_inclination_angle: range
-    sensor_inclination_angle_start = models.FloatField(null=True, blank=True, help_text='Select sensor inclination angle start.')
-    sensor_inclination_angle_end = models.FloatField(null=True, blank=True, help_text='Select sensor inclination angle end.')
-    mission = models.ForeignKey( Mission, null=True, blank=True, help_text='Select satellite mission.') # e.g. S5
-    sensor_type = models.ForeignKey( SensorType, null=True, blank=True, related_name = 'search_sensor_type') #e.g. CAM1
-    processing_level = models.ManyToManyField( ProcessingLevel, null=True, blank=True, help_text='Select one or more processing level.')
-    polarising_mode = models.CharField(max_length=1, choices=RadarProduct.POLARISING_MODE_CHOICES, null=True, blank=True )
+    sensor_inclination_angle_start = models.FloatField(null=True, blank=True,
+        help_text='Select sensor inclination angle start.')
+    sensor_inclination_angle_end = models.FloatField(null=True, blank=True,
+        help_text='Select sensor inclination angle end.')
+    mission = models.ForeignKey(Mission, null=True, blank=True,
+    help_text='Select satellite mission.')  # e.g. S5
+    sensor_type = models.ForeignKey(SensorType, null=True, blank=True,
+    related_name='search_sensor_type')  # e.g. CAM1
+    processing_level = models.ManyToManyField(ProcessingLevel, null=True,
+        blank=True, help_text='Select one or more processing level.')
+    polarising_mode = models.CharField(max_length=1,
+        choices=RadarProduct.POLARISING_MODE_CHOICES, null=True, blank=True)
     record_count = models.IntegerField(blank=True, null=True, editable=False)
     # Use the geo manager to handle geometry
     objects = models.GeoManager()
 
     class Meta:
-        app_label= 'catalogue'
+        app_label = 'catalogue'
         verbose_name = 'Search'
         verbose_name_plural = 'Searches'
         ordering = ('search_date',)
 
     def save(self):
         #makes a random globally unique id
-        if not self.guid or self.guid=='null':
+        if not self.guid or self.guid == 'null':
             self.guid = str(uuid.uuid4())
         super(Search, self).save()
 
     def __unicode__(self):
         return "%s Guid: %s User: %s" % (self.search_date, self.guid, self.user)
 
-    def customSQL( self, sql_string, qkeys, args=None ):
+    def customSQL(self, sql_string, qkeys, args=None):
         from django.db import connection
         cursor = connection.cursor()
         #args MUST be parsed in case of SQL injection attempt
         #execute() does this automatically for us
         if args:
-            cursor.execute(sql_string,args)
+            cursor.execute(sql_string, args)
         else:
             cursor.execute(sql_string)
         rows = cursor.fetchall()
@@ -254,11 +275,10 @@ class Search(models.Model):
             i = 0
             cur_row = {}
             for key in qkeys:
-                cur_row[ key ] = row[ i ]
-                i = i+1
-            fdicts.append( cur_row )
+                cur_row[key] = row[i]
+                i = i + 1
+            fdicts.append(cur_row)
         return fdicts
-
 
     @staticmethod
     def getDictionaryMap(parm):
@@ -278,7 +298,6 @@ class Search(models.Model):
         if parm == 'mission':
             return 'acquisition_mode__sensor_type__mission_sensor__mission'
         return parm
-
 
     @property
     def isAdvanced(self):
@@ -305,7 +324,7 @@ class Search(models.Model):
         #if any of myAdvParameterTestList is True, return True
         return any(myAdvParameterTestList)
 
-    def sensorsAsString( self ):
+    def sensorsAsString(self):
         myList = self.sensors.values_list('operator_abbreviation', flat=True)
         myString = ", ".join(myList)
         return myString
@@ -328,7 +347,7 @@ class Search(models.Model):
             if len(r) == 1:
                 choices.append(r[0])
             else:
-                choices.extend(range(r[0], r[1]+1))
+                choices.extend(range(r[0], r[1] + 1))
         choices.sort()
         return choices
 
@@ -341,7 +360,7 @@ class Search(models.Model):
             if len(r) == 1:
                 choices.append(r[0])
             else:
-                choices.extend(range(r[0], r[1]+1))
+                choices.extend(range(r[0], r[1] + 1))
         choices.sort()
         return choices
 

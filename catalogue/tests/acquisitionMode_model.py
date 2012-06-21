@@ -46,7 +46,7 @@ class AcquisitionModeCRUD_Test(TestCase):
         """
         myNewModelData = {
             'name': 'ZeroSpectral',
-            'geometric_resolution': 1000,
+            'spatial_resolution': 1000,
             'is_grayscale': False,
             'band_count': 231,
             'abbreviation': 'ZS',
@@ -69,7 +69,7 @@ class AcquisitionModeCRUD_Test(TestCase):
         myModelPK = 1
         myExpectedModelData = {
             'name': 'Multispectral',
-            'geometric_resolution': 0,
+            'spatial_resolution': 0,
             'is_grayscale': False,
             'band_count': 0,
             'abbreviation': 'MS',
@@ -91,7 +91,7 @@ class AcquisitionModeCRUD_Test(TestCase):
         myModel = AcquisitionMode.objects.get(pk=myModelPK)
         myNewModelData = {
             'name': 'ZeroSpectral',
-            'geometric_resolution': 1000,
+            'spatial_resolution': 1000,
             'is_grayscale': False,
             'band_count': 231,
             'abbreviation': 'ZS',

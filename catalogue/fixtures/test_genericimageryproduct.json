@@ -4,9 +4,9 @@
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 16,
-            "geometric_resolution_y": 20.0,
-            "geometric_resolution_x": 20.0,
-            "geometric_resolution": 20.0,
+            "spatial_resolution_y": 20.0,
+            "spatial_resolution_x": 20.0,
+            "spatial_resolution": 20.0,
             "band_count": 3
         }
     },
@@ -15,9 +15,9 @@
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 16,
-            "geometric_resolution_y": 10.0,
-            "geometric_resolution_x": 10.0,
-            "geometric_resolution": 10.0,
+            "spatial_resolution_y": 10.0,
+            "spatial_resolution_x": 10.0,
+            "spatial_resolution": 10.0,
             "band_count": 1
         }
     },
@@ -26,9 +26,9 @@
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 0,
-            "geometric_resolution_y": 60.0,
-            "geometric_resolution_x": 60.0,
-            "geometric_resolution": 60.0,
+            "spatial_resolution_y": 60.0,
+            "spatial_resolution_x": 60.0,
+            "spatial_resolution": 60.0,
             "band_count": 4
         }
     },
@@ -37,9 +37,9 @@
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 0,
-            "geometric_resolution_y": 20.0,
-            "geometric_resolution_x": 20.0,
-            "geometric_resolution": 20.0,
+            "spatial_resolution_y": 20.0,
+            "spatial_resolution_x": 20.0,
+            "spatial_resolution": 20.0,
             "band_count": 3
         }
     },
@@ -48,9 +48,9 @@
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 0,
-            "geometric_resolution_y": 30.0,
-            "geometric_resolution_x": 30.0,
-            "geometric_resolution": 30.0,
+            "spatial_resolution_y": 30.0,
+            "spatial_resolution_x": 30.0,
+            "spatial_resolution": 30.0,
             "band_count": 7
         }
     },
@@ -59,9 +59,9 @@
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 16,
-            "geometric_resolution_y": 20.0,
-            "geometric_resolution_x": 20.0,
-            "geometric_resolution": 20.0,
+            "spatial_resolution_y": 20.0,
+            "spatial_resolution_x": 20.0,
+            "spatial_resolution": 20.0,
             "band_count": 3
         }
     },
@@ -70,9 +70,9 @@
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 16,
-            "geometric_resolution_y": 20.0,
-            "geometric_resolution_x": 20.0,
-            "geometric_resolution": 20.0,
+            "spatial_resolution_y": 20.0,
+            "spatial_resolution_x": 20.0,
+            "spatial_resolution": 20.0,
             "band_count": 3
         }
     },
@@ -81,9 +81,9 @@
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 0,
-            "geometric_resolution_y": 20.0,
-            "geometric_resolution_x": 20.0,
-            "geometric_resolution": 20.0,
+            "spatial_resolution_y": 20.0,
+            "spatial_resolution_x": 20.0,
+            "spatial_resolution": 20.0,
             "band_count": 3
         }
     },
@@ -92,9 +92,9 @@
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 16,
-            "geometric_resolution_y": 10.0,
-            "geometric_resolution_x": 10.0,
-            "geometric_resolution": 10.0,
+            "spatial_resolution_y": 10.0,
+            "spatial_resolution_x": 10.0,
+            "spatial_resolution": 10.0,
             "band_count": 1
         }
     },
@@ -103,9 +103,9 @@
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 0,
-            "geometric_resolution_y": 20.0,
-            "geometric_resolution_x": 20.0,
-            "geometric_resolution": 20.0,
+            "spatial_resolution_y": 20.0,
+            "spatial_resolution_x": 20.0,
+            "spatial_resolution": 20.0,
             "band_count": 3
         }
     },
@@ -114,9 +114,9 @@
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 16,
-            "geometric_resolution_y": 20.0,
-            "geometric_resolution_x": 20.0,
-            "geometric_resolution": 20.0,
+            "spatial_resolution_y": 20.0,
+            "spatial_resolution_x": 20.0,
+            "spatial_resolution": 20.0,
             "band_count": 3
         }
     },
@@ -125,9 +125,9 @@
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 16,
-            "geometric_resolution_y": 20.0,
-            "geometric_resolution_x": 20.0,
-            "geometric_resolution": 20.0,
+            "spatial_resolution_y": 20.0,
+            "spatial_resolution_x": 20.0,
+            "spatial_resolution": 20.0,
             "band_count": 3
         }
     },
@@ -136,9 +136,9 @@
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 0,
-            "geometric_resolution_y": 20.0,
-            "geometric_resolution_x": 20.0,
-            "geometric_resolution": 20.0,
+            "spatial_resolution_y": 20.0,
+            "spatial_resolution_x": 20.0,
+            "spatial_resolution": 20.0,
             "band_count": 3
         }
     },
@@ -147,9 +147,9 @@
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 0,
-            "geometric_resolution_y": 20.0,
-            "geometric_resolution_x": 20.0,
-            "geometric_resolution": 20.0,
+            "spatial_resolution_y": 20.0,
+            "spatial_resolution_x": 20.0,
+            "spatial_resolution": 20.0,
             "band_count": 3
         }
     },
@@ -158,9 +158,9 @@
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 16,
-            "geometric_resolution_y": 10.0,
-            "geometric_resolution_x": 10.0,
-            "geometric_resolution": 10.0,
+            "spatial_resolution_y": 10.0,
+            "spatial_resolution_x": 10.0,
+            "spatial_resolution": 10.0,
             "band_count": 1
         }
     },
@@ -169,9 +169,9 @@
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 16,
-            "geometric_resolution_y": 10.0,
-            "geometric_resolution_x": 10.0,
-            "geometric_resolution": 10.0,
+            "spatial_resolution_y": 10.0,
+            "spatial_resolution_x": 10.0,
+            "spatial_resolution": 10.0,
             "band_count": 1
         }
     },
@@ -180,9 +180,9 @@
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 0,
-            "geometric_resolution_y": 3000.0,
-            "geometric_resolution_x": 3000.0,
-            "geometric_resolution": 3000.0,
+            "spatial_resolution_y": 3000.0,
+            "spatial_resolution_x": 3000.0,
+            "spatial_resolution": 3000.0,
             "band_count": 1
         }
     },
@@ -191,9 +191,9 @@
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 0,
-            "geometric_resolution_y": 30.0,
-            "geometric_resolution_x": 30.0,
-            "geometric_resolution": 30.0,
+            "spatial_resolution_y": 30.0,
+            "spatial_resolution_x": 30.0,
+            "spatial_resolution": 30.0,
             "band_count": 7
         }
     },
@@ -202,9 +202,9 @@
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 0,
-            "geometric_resolution_y": 20.0,
-            "geometric_resolution_x": 20.0,
-            "geometric_resolution": 20.0,
+            "spatial_resolution_y": 20.0,
+            "spatial_resolution_x": 20.0,
+            "spatial_resolution": 20.0,
             "band_count": 3
         }
     },
@@ -213,9 +213,9 @@
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 0,
-            "geometric_resolution_y": 20.0,
-            "geometric_resolution_x": 20.0,
-            "geometric_resolution": 20.0,
+            "spatial_resolution_y": 20.0,
+            "spatial_resolution_x": 20.0,
+            "spatial_resolution": 20.0,
             "band_count": 3
         }
     },
@@ -224,9 +224,9 @@
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 0,
-            "geometric_resolution_y": 30.0,
-            "geometric_resolution_x": 30.0,
-            "geometric_resolution": 30.0,
+            "spatial_resolution_y": 30.0,
+            "spatial_resolution_x": 30.0,
+            "spatial_resolution": 30.0,
             "band_count": 7
         }
     },
@@ -235,9 +235,9 @@
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 0,
-            "geometric_resolution_y": 20.0,
-            "geometric_resolution_x": 20.0,
-            "geometric_resolution": 20.0,
+            "spatial_resolution_y": 20.0,
+            "spatial_resolution_x": 20.0,
+            "spatial_resolution": 20.0,
             "band_count": 3
         }
     },
@@ -246,9 +246,9 @@
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 16,
-            "geometric_resolution_y": 20.0,
-            "geometric_resolution_x": 20.0,
-            "geometric_resolution": 20.0,
+            "spatial_resolution_y": 20.0,
+            "spatial_resolution_x": 20.0,
+            "spatial_resolution": 20.0,
             "band_count": 4
         }
     },
@@ -257,9 +257,9 @@
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 0,
-            "geometric_resolution_y": 20.0,
-            "geometric_resolution_x": 20.0,
-            "geometric_resolution": 20.0,
+            "spatial_resolution_y": 20.0,
+            "spatial_resolution_x": 20.0,
+            "spatial_resolution": 20.0,
             "band_count": 3
         }
     },
@@ -268,9 +268,9 @@
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 16,
-            "geometric_resolution_y": 10.0,
-            "geometric_resolution_x": 10.0,
-            "geometric_resolution": 10.0,
+            "spatial_resolution_y": 10.0,
+            "spatial_resolution_x": 10.0,
+            "spatial_resolution": 10.0,
             "band_count": 4
         }
     },
@@ -279,9 +279,9 @@
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 16,
-            "geometric_resolution_y": 20.0,
-            "geometric_resolution_x": 20.0,
-            "geometric_resolution": 20.0,
+            "spatial_resolution_y": 20.0,
+            "spatial_resolution_x": 20.0,
+            "spatial_resolution": 20.0,
             "band_count": 4
         }
     },
@@ -290,9 +290,9 @@
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 0,
-            "geometric_resolution_y": 20.0,
-            "geometric_resolution_x": 20.0,
-            "geometric_resolution": 20.0,
+            "spatial_resolution_y": 20.0,
+            "spatial_resolution_x": 20.0,
+            "spatial_resolution": 20.0,
             "band_count": 3
         }
     },
@@ -301,9 +301,9 @@
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 16,
-            "geometric_resolution_y": 10.0,
-            "geometric_resolution_x": 10.0,
-            "geometric_resolution": 10.0,
+            "spatial_resolution_y": 10.0,
+            "spatial_resolution_x": 10.0,
+            "spatial_resolution": 10.0,
             "band_count": 1
         }
     },
@@ -312,9 +312,9 @@
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 16,
-            "geometric_resolution_y": 20.0,
-            "geometric_resolution_x": 20.0,
-            "geometric_resolution": 20.0,
+            "spatial_resolution_y": 20.0,
+            "spatial_resolution_x": 20.0,
+            "spatial_resolution": 20.0,
             "band_count": 3
         }
     },
@@ -323,9 +323,9 @@
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 0,
-            "geometric_resolution_y": 20.0,
-            "geometric_resolution_x": 20.0,
-            "geometric_resolution": 20.0,
+            "spatial_resolution_y": 20.0,
+            "spatial_resolution_x": 20.0,
+            "spatial_resolution": 20.0,
             "band_count": 3
         }
     },
@@ -334,9 +334,9 @@
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 0,
-            "geometric_resolution_y": 20.0,
-            "geometric_resolution_x": 20.0,
-            "geometric_resolution": 20.0,
+            "spatial_resolution_y": 20.0,
+            "spatial_resolution_x": 20.0,
+            "spatial_resolution": 20.0,
             "band_count": 3
         }
     },
@@ -345,9 +345,9 @@
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 0,
-            "geometric_resolution_y": 20.0,
-            "geometric_resolution_x": 20.0,
-            "geometric_resolution": 20.0,
+            "spatial_resolution_y": 20.0,
+            "spatial_resolution_x": 20.0,
+            "spatial_resolution": 20.0,
             "band_count": 3
         }
     },
@@ -356,9 +356,9 @@
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 0,
-            "geometric_resolution_y": 30.0,
-            "geometric_resolution_x": 30.0,
-            "geometric_resolution": 30.0,
+            "spatial_resolution_y": 30.0,
+            "spatial_resolution_x": 30.0,
+            "spatial_resolution": 30.0,
             "band_count": 7
         }
     },
@@ -367,9 +367,9 @@
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 16,
-            "geometric_resolution_y": 20.0,
-            "geometric_resolution_x": 20.0,
-            "geometric_resolution": 20.0,
+            "spatial_resolution_y": 20.0,
+            "spatial_resolution_x": 20.0,
+            "spatial_resolution": 20.0,
             "band_count": 4
         }
     },
@@ -378,9 +378,9 @@
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 16,
-            "geometric_resolution_y": 20.0,
-            "geometric_resolution_x": 20.0,
-            "geometric_resolution": 20.0,
+            "spatial_resolution_y": 20.0,
+            "spatial_resolution_x": 20.0,
+            "spatial_resolution": 20.0,
             "band_count": 4
         }
     },
@@ -389,9 +389,9 @@
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 0,
-            "geometric_resolution_y": 20.0,
-            "geometric_resolution_x": 20.0,
-            "geometric_resolution": 20.0,
+            "spatial_resolution_y": 20.0,
+            "spatial_resolution_x": 20.0,
+            "spatial_resolution": 20.0,
             "band_count": 3
         }
     },
@@ -400,9 +400,9 @@
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 16,
-            "geometric_resolution_y": 20.0,
-            "geometric_resolution_x": 20.0,
-            "geometric_resolution": 20.0,
+            "spatial_resolution_y": 20.0,
+            "spatial_resolution_x": 20.0,
+            "spatial_resolution": 20.0,
             "band_count": 4
         }
     },
@@ -411,9 +411,9 @@
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 0,
-            "geometric_resolution_y": 30.0,
-            "geometric_resolution_x": 30.0,
-            "geometric_resolution": 30.0,
+            "spatial_resolution_y": 30.0,
+            "spatial_resolution_x": 30.0,
+            "spatial_resolution": 30.0,
             "band_count": 7
         }
     },
@@ -422,9 +422,9 @@
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 0,
-            "geometric_resolution_y": 30.0,
-            "geometric_resolution_x": 30.0,
-            "geometric_resolution": 30.0,
+            "spatial_resolution_y": 30.0,
+            "spatial_resolution_x": 30.0,
+            "spatial_resolution": 30.0,
             "band_count": 7
         }
     },
@@ -433,9 +433,9 @@
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 16,
-            "geometric_resolution_y": 20.0,
-            "geometric_resolution_x": 20.0,
-            "geometric_resolution": 20.0,
+            "spatial_resolution_y": 20.0,
+            "spatial_resolution_x": 20.0,
+            "spatial_resolution": 20.0,
             "band_count": 4
         }
     },
@@ -444,9 +444,9 @@
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 0,
-            "geometric_resolution_y": 20.0,
-            "geometric_resolution_x": 20.0,
-            "geometric_resolution": 20.0,
+            "spatial_resolution_y": 20.0,
+            "spatial_resolution_x": 20.0,
+            "spatial_resolution": 20.0,
             "band_count": 3
         }
     },
@@ -455,9 +455,9 @@
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 16,
-            "geometric_resolution_y": 10.0,
-            "geometric_resolution_x": 10.0,
-            "geometric_resolution": 10.0,
+            "spatial_resolution_y": 10.0,
+            "spatial_resolution_x": 10.0,
+            "spatial_resolution": 10.0,
             "band_count": 1
         }
     },
@@ -466,9 +466,9 @@
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 16,
-            "geometric_resolution_y": 20.0,
-            "geometric_resolution_x": 20.0,
-            "geometric_resolution": 20.0,
+            "spatial_resolution_y": 20.0,
+            "spatial_resolution_x": 20.0,
+            "spatial_resolution": 20.0,
             "band_count": 4
         }
     },
@@ -477,9 +477,9 @@
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 0,
-            "geometric_resolution_y": 20.0,
-            "geometric_resolution_x": 20.0,
-            "geometric_resolution": 20.0,
+            "spatial_resolution_y": 20.0,
+            "spatial_resolution_x": 20.0,
+            "spatial_resolution": 20.0,
             "band_count": 3
         }
     },
@@ -488,9 +488,9 @@
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 0,
-            "geometric_resolution_y": 20.0,
-            "geometric_resolution_x": 20.0,
-            "geometric_resolution": 20.0,
+            "spatial_resolution_y": 20.0,
+            "spatial_resolution_x": 20.0,
+            "spatial_resolution": 20.0,
             "band_count": 3
         }
     },
@@ -499,9 +499,9 @@
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 16,
-            "geometric_resolution_y": 20.0,
-            "geometric_resolution_x": 20.0,
-            "geometric_resolution": 20.0,
+            "spatial_resolution_y": 20.0,
+            "spatial_resolution_x": 20.0,
+            "spatial_resolution": 20.0,
             "band_count": 3
         }
     },
@@ -510,9 +510,9 @@
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 0,
-            "geometric_resolution_y": 20.0,
-            "geometric_resolution_x": 20.0,
-            "geometric_resolution": 20.0,
+            "spatial_resolution_y": 20.0,
+            "spatial_resolution_x": 20.0,
+            "spatial_resolution": 20.0,
             "band_count": 3
         }
     },
@@ -521,9 +521,9 @@
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 0,
-            "geometric_resolution_y": 20.0,
-            "geometric_resolution_x": 20.0,
-            "geometric_resolution": 20.0,
+            "spatial_resolution_y": 20.0,
+            "spatial_resolution_x": 20.0,
+            "spatial_resolution": 20.0,
             "band_count": 3
         }
     },
@@ -532,9 +532,9 @@
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 0,
-            "geometric_resolution_y": 20.0,
-            "geometric_resolution_x": 20.0,
-            "geometric_resolution": 20.0,
+            "spatial_resolution_y": 20.0,
+            "spatial_resolution_x": 20.0,
+            "spatial_resolution": 20.0,
             "band_count": 3
         }
     },
@@ -543,9 +543,9 @@
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 0,
-            "geometric_resolution_y": 20.0,
-            "geometric_resolution_x": 20.0,
-            "geometric_resolution": 20.0,
+            "spatial_resolution_y": 20.0,
+            "spatial_resolution_x": 20.0,
+            "spatial_resolution": 20.0,
             "band_count": 3
         }
     },
@@ -554,9 +554,9 @@
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 0,
-            "geometric_resolution_y": 3000.0,
-            "geometric_resolution_x": 3000.0,
-            "geometric_resolution": 3000.0,
+            "spatial_resolution_y": 3000.0,
+            "spatial_resolution_x": 3000.0,
+            "spatial_resolution": 3000.0,
             "band_count": 1
         }
     },
@@ -565,9 +565,9 @@
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 0,
-            "geometric_resolution_y": 3000.0,
-            "geometric_resolution_x": 3000.0,
-            "geometric_resolution": 3000.0,
+            "spatial_resolution_y": 3000.0,
+            "spatial_resolution_x": 3000.0,
+            "spatial_resolution": 3000.0,
             "band_count": 1
         }
     },
@@ -576,9 +576,9 @@
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 0,
-            "geometric_resolution_y": 3000.0,
-            "geometric_resolution_x": 3000.0,
-            "geometric_resolution": 3000.0,
+            "spatial_resolution_y": 3000.0,
+            "spatial_resolution_x": 3000.0,
+            "spatial_resolution": 3000.0,
             "band_count": 1
         }
     },
@@ -587,9 +587,9 @@
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 16,
-            "geometric_resolution_y": 20.0,
-            "geometric_resolution_x": 20.0,
-            "geometric_resolution": 20.0,
+            "spatial_resolution_y": 20.0,
+            "spatial_resolution_x": 20.0,
+            "spatial_resolution": 20.0,
             "band_count": 4
         }
     },
@@ -598,9 +598,9 @@
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 0,
-            "geometric_resolution_y": 15.0,
-            "geometric_resolution_x": 15.0,
-            "geometric_resolution": 15.0,
+            "spatial_resolution_y": 15.0,
+            "spatial_resolution_x": 15.0,
+            "spatial_resolution": 15.0,
             "band_count": 8
         }
     },
@@ -609,9 +609,9 @@
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 16,
-            "geometric_resolution_y": 10.0,
-            "geometric_resolution_x": 10.0,
-            "geometric_resolution": 10.0,
+            "spatial_resolution_y": 10.0,
+            "spatial_resolution_x": 10.0,
+            "spatial_resolution": 10.0,
             "band_count": 1
         }
     },
@@ -620,9 +620,9 @@
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 0,
-            "geometric_resolution_y": 20.0,
-            "geometric_resolution_x": 20.0,
-            "geometric_resolution": 20.0,
+            "spatial_resolution_y": 20.0,
+            "spatial_resolution_x": 20.0,
+            "spatial_resolution": 20.0,
             "band_count": 3
         }
     },
@@ -631,9 +631,9 @@
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 16,
-            "geometric_resolution_y": 5.0,
-            "geometric_resolution_x": 5.0,
-            "geometric_resolution": 5.0,
+            "spatial_resolution_y": 5.0,
+            "spatial_resolution_x": 5.0,
+            "spatial_resolution": 5.0,
             "band_count": 1
         }
     },
@@ -642,9 +642,9 @@
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 0,
-            "geometric_resolution_y": 20.0,
-            "geometric_resolution_x": 20.0,
-            "geometric_resolution": 20.0,
+            "spatial_resolution_y": 20.0,
+            "spatial_resolution_x": 20.0,
+            "spatial_resolution": 20.0,
             "band_count": 3
         }
     },
@@ -653,9 +653,9 @@
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 16,
-            "geometric_resolution_y": 20.0,
-            "geometric_resolution_x": 20.0,
-            "geometric_resolution": 20.0,
+            "spatial_resolution_y": 20.0,
+            "spatial_resolution_x": 20.0,
+            "spatial_resolution": 20.0,
             "band_count": 4
         }
     },
@@ -664,9 +664,9 @@
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 16,
-            "geometric_resolution_y": 20.0,
-            "geometric_resolution_x": 20.0,
-            "geometric_resolution": 20.0,
+            "spatial_resolution_y": 20.0,
+            "spatial_resolution_x": 20.0,
+            "spatial_resolution": 20.0,
             "band_count": 3
         }
     },
@@ -675,9 +675,9 @@
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 16,
-            "geometric_resolution_y": 20.0,
-            "geometric_resolution_x": 20.0,
-            "geometric_resolution": 20.0,
+            "spatial_resolution_y": 20.0,
+            "spatial_resolution_x": 20.0,
+            "spatial_resolution": 20.0,
             "band_count": 4
         }
     },
@@ -686,9 +686,9 @@
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 0,
-            "geometric_resolution_y": 20.0,
-            "geometric_resolution_x": 20.0,
-            "geometric_resolution": 20.0,
+            "spatial_resolution_y": 20.0,
+            "spatial_resolution_x": 20.0,
+            "spatial_resolution": 20.0,
             "band_count": 3
         }
     },
@@ -697,9 +697,9 @@
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 16,
-            "geometric_resolution_y": 5.0,
-            "geometric_resolution_x": 5.0,
-            "geometric_resolution": 5.0,
+            "spatial_resolution_y": 5.0,
+            "spatial_resolution_x": 5.0,
+            "spatial_resolution": 5.0,
             "band_count": 1
         }
     },
@@ -708,9 +708,9 @@
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 0,
-            "geometric_resolution_y": 20.0,
-            "geometric_resolution_x": 20.0,
-            "geometric_resolution": 20.0,
+            "spatial_resolution_y": 20.0,
+            "spatial_resolution_x": 20.0,
+            "spatial_resolution": 20.0,
             "band_count": 3
         }
     },
@@ -719,9 +719,9 @@
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 0,
-            "geometric_resolution_y": 20.0,
-            "geometric_resolution_x": 20.0,
-            "geometric_resolution": 20.0,
+            "spatial_resolution_y": 20.0,
+            "spatial_resolution_x": 20.0,
+            "spatial_resolution": 20.0,
             "band_count": 3
         }
     },
@@ -730,9 +730,9 @@
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 0,
-            "geometric_resolution_y": 20.0,
-            "geometric_resolution_x": 20.0,
-            "geometric_resolution": 20.0,
+            "spatial_resolution_y": 20.0,
+            "spatial_resolution_x": 20.0,
+            "spatial_resolution": 20.0,
             "band_count": 3
         }
     },
@@ -741,9 +741,9 @@
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 0,
-            "geometric_resolution_y": 20.0,
-            "geometric_resolution_x": 20.0,
-            "geometric_resolution": 20.0,
+            "spatial_resolution_y": 20.0,
+            "spatial_resolution_x": 20.0,
+            "spatial_resolution": 20.0,
             "band_count": 3
         }
     },
@@ -752,9 +752,9 @@
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 0,
-            "geometric_resolution_y": 20.0,
-            "geometric_resolution_x": 20.0,
-            "geometric_resolution": 20.0,
+            "spatial_resolution_y": 20.0,
+            "spatial_resolution_x": 20.0,
+            "spatial_resolution": 20.0,
             "band_count": 3
         }
     },
@@ -763,9 +763,9 @@
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 0,
-            "geometric_resolution_y": 20.0,
-            "geometric_resolution_x": 20.0,
-            "geometric_resolution": 20.0,
+            "spatial_resolution_y": 20.0,
+            "spatial_resolution_x": 20.0,
+            "spatial_resolution": 20.0,
             "band_count": 3
         }
     },
@@ -774,9 +774,9 @@
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 0,
-            "geometric_resolution_y": 20.0,
-            "geometric_resolution_x": 20.0,
-            "geometric_resolution": 20.0,
+            "spatial_resolution_y": 20.0,
+            "spatial_resolution_x": 20.0,
+            "spatial_resolution": 20.0,
             "band_count": 3
         }
     },
@@ -785,9 +785,9 @@
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 0,
-            "geometric_resolution_y": 20.0,
-            "geometric_resolution_x": 20.0,
-            "geometric_resolution": 20.0,
+            "spatial_resolution_y": 20.0,
+            "spatial_resolution_x": 20.0,
+            "spatial_resolution": 20.0,
             "band_count": 3
         }
     },
@@ -796,9 +796,9 @@
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 0,
-            "geometric_resolution_y": 20.0,
-            "geometric_resolution_x": 20.0,
-            "geometric_resolution": 20.0,
+            "spatial_resolution_y": 20.0,
+            "spatial_resolution_x": 20.0,
+            "spatial_resolution": 20.0,
             "band_count": 3
         }
     },
@@ -807,9 +807,9 @@
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 0,
-            "geometric_resolution_y": 20.0,
-            "geometric_resolution_x": 20.0,
-            "geometric_resolution": 20.0,
+            "spatial_resolution_y": 20.0,
+            "spatial_resolution_x": 20.0,
+            "spatial_resolution": 20.0,
             "band_count": 3
         }
     },
@@ -818,9 +818,9 @@
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 0,
-            "geometric_resolution_y": 20.0,
-            "geometric_resolution_x": 20.0,
-            "geometric_resolution": 20.0,
+            "spatial_resolution_y": 20.0,
+            "spatial_resolution_x": 20.0,
+            "spatial_resolution": 20.0,
             "band_count": 3
         }
     },
@@ -829,9 +829,9 @@
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 16,
-            "geometric_resolution_y": 20.0,
-            "geometric_resolution_x": 20.0,
-            "geometric_resolution": 20.0,
+            "spatial_resolution_y": 20.0,
+            "spatial_resolution_x": 20.0,
+            "spatial_resolution": 20.0,
             "band_count": 3
         }
     },
@@ -840,9 +840,9 @@
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 0,
-            "geometric_resolution_y": 20.0,
-            "geometric_resolution_x": 20.0,
-            "geometric_resolution": 20.0,
+            "spatial_resolution_y": 20.0,
+            "spatial_resolution_x": 20.0,
+            "spatial_resolution": 20.0,
             "band_count": 3
         }
     },
@@ -851,9 +851,9 @@
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 16,
-            "geometric_resolution_y": 20.0,
-            "geometric_resolution_x": 20.0,
-            "geometric_resolution": 20.0,
+            "spatial_resolution_y": 20.0,
+            "spatial_resolution_x": 20.0,
+            "spatial_resolution": 20.0,
             "band_count": 4
         }
     },
@@ -862,9 +862,9 @@
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 0,
-            "geometric_resolution_y": 20.0,
-            "geometric_resolution_x": 20.0,
-            "geometric_resolution": 20.0,
+            "spatial_resolution_y": 20.0,
+            "spatial_resolution_x": 20.0,
+            "spatial_resolution": 20.0,
             "band_count": 3
         }
     },
@@ -873,9 +873,9 @@
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 0,
-            "geometric_resolution_y": 20.0,
-            "geometric_resolution_x": 20.0,
-            "geometric_resolution": 20.0,
+            "spatial_resolution_y": 20.0,
+            "spatial_resolution_x": 20.0,
+            "spatial_resolution": 20.0,
             "band_count": 3
         }
     },
@@ -884,9 +884,9 @@
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 0,
-            "geometric_resolution_y": 20.0,
-            "geometric_resolution_x": 20.0,
-            "geometric_resolution": 20.0,
+            "spatial_resolution_y": 20.0,
+            "spatial_resolution_x": 20.0,
+            "spatial_resolution": 20.0,
             "band_count": 3
         }
     },
@@ -895,9 +895,9 @@
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 0,
-            "geometric_resolution_y": 20.0,
-            "geometric_resolution_x": 20.0,
-            "geometric_resolution": 20.0,
+            "spatial_resolution_y": 20.0,
+            "spatial_resolution_x": 20.0,
+            "spatial_resolution": 20.0,
             "band_count": 3
         }
     },
@@ -906,9 +906,9 @@
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 0,
-            "geometric_resolution_y": 20.0,
-            "geometric_resolution_x": 20.0,
-            "geometric_resolution": 20.0,
+            "spatial_resolution_y": 20.0,
+            "spatial_resolution_x": 20.0,
+            "spatial_resolution": 20.0,
             "band_count": 3
         }
     },
@@ -917,9 +917,9 @@
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 16,
-            "geometric_resolution_y": 10.0,
-            "geometric_resolution_x": 10.0,
-            "geometric_resolution": 10.0,
+            "spatial_resolution_y": 10.0,
+            "spatial_resolution_x": 10.0,
+            "spatial_resolution": 10.0,
             "band_count": 4
         }
     },
@@ -928,9 +928,9 @@
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 0,
-            "geometric_resolution_y": 20.0,
-            "geometric_resolution_x": 20.0,
-            "geometric_resolution": 20.0,
+            "spatial_resolution_y": 20.0,
+            "spatial_resolution_x": 20.0,
+            "spatial_resolution": 20.0,
             "band_count": 3
         }
     },
@@ -939,9 +939,9 @@
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 0,
-            "geometric_resolution_y": 20.0,
-            "geometric_resolution_x": 20.0,
-            "geometric_resolution": 20.0,
+            "spatial_resolution_y": 20.0,
+            "spatial_resolution_x": 20.0,
+            "spatial_resolution": 20.0,
             "band_count": 3
         }
     },
@@ -950,9 +950,9 @@
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 16,
-            "geometric_resolution_y": 10.0,
-            "geometric_resolution_x": 10.0,
-            "geometric_resolution": 10.0,
+            "spatial_resolution_y": 10.0,
+            "spatial_resolution_x": 10.0,
+            "spatial_resolution": 10.0,
             "band_count": 1
         }
     },
@@ -961,9 +961,9 @@
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 0,
-            "geometric_resolution_y": 20.0,
-            "geometric_resolution_x": 20.0,
-            "geometric_resolution": 20.0,
+            "spatial_resolution_y": 20.0,
+            "spatial_resolution_x": 20.0,
+            "spatial_resolution": 20.0,
             "band_count": 3
         }
     },
@@ -972,9 +972,9 @@
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 0,
-            "geometric_resolution_y": 20.0,
-            "geometric_resolution_x": 20.0,
-            "geometric_resolution": 20.0,
+            "spatial_resolution_y": 20.0,
+            "spatial_resolution_x": 20.0,
+            "spatial_resolution": 20.0,
             "band_count": 3
         }
     },
@@ -983,9 +983,9 @@
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 0,
-            "geometric_resolution_y": 20.0,
-            "geometric_resolution_x": 20.0,
-            "geometric_resolution": 20.0,
+            "spatial_resolution_y": 20.0,
+            "spatial_resolution_x": 20.0,
+            "spatial_resolution": 20.0,
             "band_count": 3
         }
     },
@@ -994,9 +994,9 @@
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 0,
-            "geometric_resolution_y": 20.0,
-            "geometric_resolution_x": 20.0,
-            "geometric_resolution": 20.0,
+            "spatial_resolution_y": 20.0,
+            "spatial_resolution_x": 20.0,
+            "spatial_resolution": 20.0,
             "band_count": 3
         }
     },
@@ -1005,9 +1005,9 @@
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 0,
-            "geometric_resolution_y": 20.0,
-            "geometric_resolution_x": 20.0,
-            "geometric_resolution": 20.0,
+            "spatial_resolution_y": 20.0,
+            "spatial_resolution_x": 20.0,
+            "spatial_resolution": 20.0,
             "band_count": 3
         }
     },
@@ -1016,9 +1016,9 @@
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 0,
-            "geometric_resolution_y": 20.0,
-            "geometric_resolution_x": 20.0,
-            "geometric_resolution": 20.0,
+            "spatial_resolution_y": 20.0,
+            "spatial_resolution_x": 20.0,
+            "spatial_resolution": 20.0,
             "band_count": 3
         }
     },
@@ -1027,9 +1027,9 @@
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 0,
-            "geometric_resolution_y": 20.0,
-            "geometric_resolution_x": 20.0,
-            "geometric_resolution": 20.0,
+            "spatial_resolution_y": 20.0,
+            "spatial_resolution_x": 20.0,
+            "spatial_resolution": 20.0,
             "band_count": 3
         }
     },
@@ -1038,9 +1038,9 @@
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 0,
-            "geometric_resolution_y": 30.0,
-            "geometric_resolution_x": 30.0,
-            "geometric_resolution": 30.0,
+            "spatial_resolution_y": 30.0,
+            "spatial_resolution_x": 30.0,
+            "spatial_resolution": 30.0,
             "band_count": 7
         }
     },
@@ -1049,9 +1049,9 @@
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 0,
-            "geometric_resolution_y": 3000.0,
-            "geometric_resolution_x": 3000.0,
-            "geometric_resolution": 3000.0,
+            "spatial_resolution_y": 3000.0,
+            "spatial_resolution_x": 3000.0,
+            "spatial_resolution": 3000.0,
             "band_count": 1
         }
     },
@@ -1060,9 +1060,9 @@
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 0,
-            "geometric_resolution_y": 20.0,
-            "geometric_resolution_x": 20.0,
-            "geometric_resolution": 20.0,
+            "spatial_resolution_y": 20.0,
+            "spatial_resolution_x": 20.0,
+            "spatial_resolution": 20.0,
             "band_count": 3
         }
     },
@@ -1071,9 +1071,9 @@
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 0,
-            "geometric_resolution_y": 30.0,
-            "geometric_resolution_x": 30.0,
-            "geometric_resolution": 30.0,
+            "spatial_resolution_y": 30.0,
+            "spatial_resolution_x": 30.0,
+            "spatial_resolution": 30.0,
             "band_count": 7
         }
     },
@@ -1082,9 +1082,9 @@
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 0,
-            "geometric_resolution_y": 20.0,
-            "geometric_resolution_x": 20.0,
-            "geometric_resolution": 20.0,
+            "spatial_resolution_y": 20.0,
+            "spatial_resolution_x": 20.0,
+            "spatial_resolution": 20.0,
             "band_count": 3
         }
     },
@@ -1093,9 +1093,9 @@
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 16,
-            "geometric_resolution_y": 10.0,
-            "geometric_resolution_x": 10.0,
-            "geometric_resolution": 10.0,
+            "spatial_resolution_y": 10.0,
+            "spatial_resolution_x": 10.0,
+            "spatial_resolution": 10.0,
             "band_count": 4
         }
     },
@@ -1104,9 +1104,9 @@
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 16,
-            "geometric_resolution_y": 10.0,
-            "geometric_resolution_x": 10.0,
-            "geometric_resolution": 10.0,
+            "spatial_resolution_y": 10.0,
+            "spatial_resolution_x": 10.0,
+            "spatial_resolution": 10.0,
             "band_count": 35
         }
     },
@@ -1115,9 +1115,9 @@
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 16,
-            "geometric_resolution_y": 10.0,
-            "geometric_resolution_x": 10.0,
-            "geometric_resolution": 10.0,
+            "spatial_resolution_y": 10.0,
+            "spatial_resolution_x": 10.0,
+            "spatial_resolution": 10.0,
             "band_count": 123
         }
     },
@@ -1126,9 +1126,9 @@
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 16,
-            "geometric_resolution_y": 10.0,
-            "geometric_resolution_x": 10.0,
-            "geometric_resolution": 10.0,
+            "spatial_resolution_y": 10.0,
+            "spatial_resolution_x": 10.0,
+            "spatial_resolution": 10.0,
             "band_count": 3
         }
     },
@@ -1137,9 +1137,9 @@
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 16,
-            "geometric_resolution_y": 10.0,
-            "geometric_resolution_x": 10.0,
-            "geometric_resolution": 10.0,
+            "spatial_resolution_y": 10.0,
+            "spatial_resolution_x": 10.0,
+            "spatial_resolution": 10.0,
             "band_count": 3
         }
     },
@@ -1148,9 +1148,9 @@
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 16,
-            "geometric_resolution_y": 10.0,
-            "geometric_resolution_x": 10.0,
-            "geometric_resolution": 10.0,
+            "spatial_resolution_y": 10.0,
+            "spatial_resolution_x": 10.0,
+            "spatial_resolution": 10.0,
             "band_count": 3
         }
     },
@@ -1159,9 +1159,9 @@
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 16,
-            "geometric_resolution_y": 10.0,
-            "geometric_resolution_x": 10.0,
-            "geometric_resolution": 10.0,
+            "spatial_resolution_y": 10.0,
+            "spatial_resolution_x": 10.0,
+            "spatial_resolution": 10.0,
             "band_count": 3
         }
     },
@@ -1170,9 +1170,9 @@
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 16,
-            "geometric_resolution_y": 10.0,
-            "geometric_resolution_x": 10.0,
-            "geometric_resolution": 10.0,
+            "spatial_resolution_y": 10.0,
+            "spatial_resolution_x": 10.0,
+            "spatial_resolution": 10.0,
             "band_count": 3
         }
     },
@@ -1181,9 +1181,9 @@
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 16,
-            "geometric_resolution_y": 10.0,
-            "geometric_resolution_x": 10.0,
-            "geometric_resolution": 10.0,
+            "spatial_resolution_y": 10.0,
+            "spatial_resolution_x": 10.0,
+            "spatial_resolution": 10.0,
             "band_count": 3
         }
     }

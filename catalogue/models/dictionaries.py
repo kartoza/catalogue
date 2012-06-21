@@ -90,24 +90,29 @@ class SensorType( models.Model ):
 
 ###############################################################################
 
-class AcquisitionMode( models.Model ):
+
+class AcquisitionMode(models.Model):
     """Acquisition mode / camera number e.g. CAM1
        @note: Moved notes below and above from SensorType class to here on 2 June 2010
               as they were mixed up
        @todo refactor resoltion, band count is grayscale up to type
     """
-    sensor_type = models.ForeignKey(SensorType ) #e.g. M
-    abbreviation = models.CharField( max_length="4")
-    name = models.CharField( max_length="255" )
-    geometric_resolution = models.IntegerField(help_text="Geometric resolution in m")
+    sensor_type = models.ForeignKey(SensorType)  # e.g. M
+    abbreviation = models.CharField(max_length="4")
+    name = models.CharField(max_length="255")
+    spatial_resolution = models.IntegerField(
+        help_text="Spatial resolution in m")
     band_count = models.IntegerField()
     is_grayscale = models.BooleanField(default=False)
-    operator_abbreviation = models.CharField( max_length=255 ) # UI abbreviation
+    operator_abbreviation = models.CharField(max_length=255)  # UI abbreviation
+
     class Meta:
-        app_label= 'catalogue'
+        app_label = 'catalogue'
         unique_together = ('sensor_type', 'abbreviation')
+
     def __unicode__(self):
-        return "%s:%s" % (self.sensor_type.mission_sensor.operator_abbreviation, self.name)
+        return "%s:%s" % (self.sensor_type.mission_sensor.operator_abbreviation,
+            self.name)
 
 
 ###############################################################################

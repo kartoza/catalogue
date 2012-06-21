@@ -197,6 +197,7 @@ class GenericProduct( node_factory('catalogue.ProductLink', base_model = models.
         app_label= 'catalogue'
         abstract = False
         ordering = ('product_date',)
+        #db_table = 'sample_genericproduct'
 
     def __unicode__( self ):
         if self.product_id:
@@ -668,23 +669,29 @@ class ProductLink (edge_factory('catalogue.GenericProduct', concrete = False, ba
 
 ###############################################################################
 
-class GenericImageryProduct( GenericProduct ):
+class GenericImageryProduct(GenericProduct):
     """
     Generic Imagery product, it is always a composite aggregated products
-    see: signals, to set geometric_resolution defaults and average
+    see: signals, to set spatial_resolution defaults and average
     """
-    geometric_resolution                = models.FloatField( help_text="Geometric resolution in m")
-    geometric_resolution_x              = models.FloatField( help_text="Geometric resolution in m (x direction)")
-    geometric_resolution_y              = models.FloatField( help_text="Geometric resolution in m (y direction)")
-    radiometric_resolution              = models.IntegerField( help_text="Bit depth of image e.g. 16bit")
-    band_count                          = models.IntegerField( help_text="Number of spectral bands in product")
+    spatial_resolution = models.FloatField(
+        help_text="Spatial resolution in m")
+    spatial_resolution_x = models.FloatField(
+        help_text="Spatial resolution in m (x direction)")
+    spatial_resolution_y = models.FloatField(
+        help_text="Spatial resolution in m (y direction)")
+    radiometric_resolution = models.IntegerField(
+        help_text="Bit depth of image e.g. 16bit")
+    band_count = models.IntegerField(
+        help_text="Number of spectral bands in product")
 
     # We need a flag to tell if this Product class can have instances (if it is not abstract)
-    concrete              = True
-    objects               = models.GeoManager()
+    concrete = True
+    objects = models.GeoManager()
 
     class Meta:
-        app_label= 'catalogue'
+        app_label = 'catalogue'
+        #db_table = 'sample_genericimageryproduct'
 
     def getAbstract(self):
         """
@@ -692,7 +699,6 @@ class GenericImageryProduct( GenericProduct ):
         TODO: implement
         """
         return ''
-
 
     def getMetadataDict(self):
         """
@@ -761,6 +767,7 @@ class GenericSensorProduct( GenericImageryProduct ):
         """
         app_label= 'catalogue'
         abstract = False
+        #db_table = 'sample_genericsensorproduct'
 
     def _productDirectory( self ):
         """Returns the path (relative to whatever parent dir it is in) for the
@@ -957,7 +964,9 @@ class GenericSensorProduct( GenericImageryProduct ):
             mission = Mission.objects.get_or_create(abbreviation=parts[0], defaults={'name': parts[0], 'mission_group':MissionGroup.objects.all()[0]})[0]
             mission_sensor = MissionSensor.objects.get_or_create(abbreviation=parts[1], mission=mission)[0]
             sensor_type = SensorType.objects.get_or_create(abbreviation=parts[2], mission_sensor=mission_sensor)[0]
-            self.acquisition_mode = AcquisitionMode.objects.get_or_create(abbreviation=parts[3], sensor_type=sensor_type, defaults={'geometric_resolution':0, 'band_count':1})[0]
+            self.acquisition_mode = AcquisitionMode.objects.get_or_create(
+                abbreviation=parts[3], sensor_type=sensor_type,
+                defaults={'spatial_resolution': 0, 'band_count': 1})[0]
 
         try:
             self.projection = Projection.objects.get(name=parts[11][:6])
@@ -1019,6 +1028,7 @@ class OpticalProduct( GenericSensorProduct ):
 
     class Meta:
         app_label= 'catalogue'
+        #db_table = 'sample_opticalproduct'
 
     def getMetadataDict(self):
         """
@@ -1103,6 +1113,7 @@ class RadarProduct( GenericSensorProduct ):
 
     class Meta:
         app_label= 'catalogue'
+        #db_table = 'sample_radarproduct'
 
     def productDirectory( self ):
         """
