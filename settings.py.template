@@ -1,68 +1,79 @@
 import os
-from catalogue.getIpAddress import *
+#from catalogue.getIpAddress import *
 #from catalogue.middleware.prettify import PrettifyMiddleware
-from catalogue.middleware.stripwhitespace import StripWhitespaceMiddleware
-
-
+#from catalogue.middleware.stripwhitespace import StripWhitespaceMiddleware
+import coverage
 
 ROOT_PROJECT_FOLDER = os.path.dirname(__file__)
-MEDIA_ROOT = os.path.join(ROOT_PROJECT_FOLDER,'media')
-# used in various places including kml generator
-DOMAIN = "XXXX.sansa.org.za"
+# external site URL, used in KML data generation and elsewhere
+# No terminating slash
+EXTERNAL_SITE_URL = 'http://catalogue.localhost'
 # Added by Tim - url that holds directories of thumbnails...
-THUMBS_ROOT = os.path.join(ROOT_PROJECT_FOLDER,'thumbs_out')
-# Dir where image rectified thumbs from acs are placed see catalogue/informix.py
+THUMBS_ROOT = os.path.join(ROOT_PROJECT_FOLDER, 'thumbs_out')
+# Dir where image rectified thumbs from acs are put - see catalogue/informix.py
 # This var is used by catalogue/models/products.py
 # Note products in that folder are named after their original_product_id
-ACS_THUMBS_ROOT = "/mnt/cataloguestorage/thumbnail_processing/3_scenes_referenced"
+ACS_THUMBS_ROOT = ("/mnt/cataloguestorage/thumbnail_processing/"
+                   "3_scenes_referenced")
 # And this is the dir that holds imagery
-IMAGERY_ROOT = os.path.join(ROOT_PROJECT_FOLDER,'imagery_mastercopies')
-# And this is the public visible url that imagery should be accessed from (include trailing /)
-IMAGERY_URL_ROOT = "http://" + DOMAIN + "/imagery/"
+IMAGERY_ROOT = os.path.join(ROOT_PROJECT_FOLDER, 'imagery_mastercopies')
+# And this is the public visible url that imagery should be
+# accessed from (include trailing /)
+IMAGERY_URL_ROOT = EXTERNAL_SITE_URL + "/imagery/"
 
-GEOS_LIBRARY_PATH='/usr/lib/libgeos_c.so.1'
-GEOIP_LIBRARY_PATH='/usr/lib/libGeoIP.so.1'
+#GEOS_LIBRARY_PATH='/usr/lib/libgeos_c.so.1'
+#GEOIP_LIBRARY_PATH='/usr/lib/libGeoIP.so.1'
 # if you are using django > 1.1 and have gdal <= 1.5
 # you will need to install gdal >= 1.6 and explicitly set the
 # path to this library as shown below:
 #GDAL_LIBRARY_PATH='/usr/local/lib/libgdal.so'
-GDAL_LIBRARY_PATH='/usr/lib/libgdal1.7.0.so'
+#GDAL_LIBRARY_PATH='/usr/local/lib/libgdal.so'
+# Next added so we can use google maps as backdrop
+# for http://localhost/
+# for http://146.64.55.209/
+
+GOOGLE_MAPS_API_KEY = ('ABQIAAAA8cCuOnTBhHkat_fIf7DyzRSoLoX8ngwj'
+                    'qeRS0hbsGp4TNHRYhRSYcObtx3JYax-0DMXOuo9qhVWpsg')
+# for olwidget
+GOOGLE_API_KEY = GOOGLE_MAPS_API_KEY
 
 # This is the path to MaxMinds Datasets, can be relative or absolute
 GEOIP_PATH = os.path.join(ROOT_PROJECT_FOLDER, 'geoip_data')
 
-# Set to false if you want jquery to be loaded on clients from google mirrors rather
-LOCAL_JQUERY=True
+# Set to false if you want jquery to be loaded
+# on clients from google mirrors rather
+LOCAL_JQUERY = True
+
+
+#OLWIDGET_MEDIA_URL = "/media/olwidget/"
 
 # Set to false to temporarily disable ip lat long logging - useful for then sac
 # internet connection is in super tortoise mode
 USE_GEOIP = False
 # this is the public domain name or IP address of this django instance.
-# get ip address logic provided in catalogue.getIpAddress
-HOST = get_ip_address('eth0')
+# get ip address logic provided in utils.py
+#HOST = get_ip_address('eth0')
 #HOST = get_ip_address('eth1')
 #HOST = '146.64.55.220'
-#HOST = '192.168.1.1'
+HOST = '192.168.1.1'
+# used in various places including kml generator
+DOMAIN = "catalogue.locahost"
 
 # See: http://www.djangobook.com/en/1.0/chapter12/#cn222
 AUTH_PROFILE_MODULE = 'catalogue.SacUserProfile'
 
 # Standard page size for pagination
-PAGE_SIZE=20
+PAGE_SIZE = 20
 
-WMS_SERVER="maps.sansa.org.za"
-CART_LAYER="CART"
-
-#add trailing slash to urls
-APPEND_SLASH=True
-
+WMS_SERVER = "maps.sansa.org.za"
+CART_LAYER = "CART_TEST"
 
 # This is for shapefile uploading using dane springmeyer's django-shapes lib
 SHP_UPLOAD_DIR = '/tmp/'
 
-# Set to true if you want staff members to receive email notification when orders
-# are received and changed
-EMAIL_NOTIFICATIONS_ENABLED=False
+# Set to true if you want staff members to receive email notification
+# when orders are received and changed
+EMAIL_NOTIFICATIONS_ENABLED = True
 
 # Django settings for sac_catalogue project.
 
@@ -73,25 +84,26 @@ ADMINS = (
 
 MANAGERS = ADMINS
 DATABASES = {
-        'default': { #new db that does not mimic acs system
-         'ENGINE' : 'postgresql_psycopg2', # 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-         'NAME' : 'sac',             # Or path to database file if using sqlite3.
-         'USER' : 'xxxxxx',             # Not used with sqlite3.
-         'PASSWORD' : 'xxxxxx',         # Not used with sqlite2.
-         'HOST' : '',             # Set to empty string for localhost. Not used with sqlite3.
-         'PORT' : '5432',             # Set to empty string for default. Not used with sqlite3.
-         'TEST_NAME' : 'sac-unittest',            # Name to be used for unit testing db
+        'default': {  # new db that does not mimic acs system
+         'ENGINE': 'postgresql_psycopg2',
+         'NAME' : 'sac',
+         #'NAME': 'sac-unittest',
+         'USER': 'foo',
+         'PASSWORD': 'foo',
+         'HOST': '',
+         'PORT': '5432',
+         'TEST_NAME': 'sac-unittest',
          },
-        'acs': {  #legacy acs port to django
-         'ENGINE' : 'postgresql_psycopg2', # 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-         'NAME' : 'acs',             # Or path to database file if using sqlite3.
-         'USER' : 'xxxxx',             # Not used with sqlite3.
-         'PASSWORD' : 'xxxxx',         # Not used with sqlite2.
-         'HOST' : '',             # Set to empty string for localhost. Not used with sqlite3.
-         'PORT' : '5432',             # Set to empty string for default. Not used with sqlite3.
+        'acs': {  # legacy acs port to django
+         'ENGINE': 'postgresql_psycopg2',
+         'NAME': 'acs',
+         'USER': 'foo',
+         'PASSWORD': 'foo',
+         'HOST': '',
+         'PORT': '5432',
          }
         }
-DATABASE_ROUTERS = [ 'catalogue.dbrouter.CatalogueRouter', ]
+DATABASE_ROUTERS = ['catalogue.dbrouter.CatalogueRouter']
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -110,15 +122,45 @@ SITE_ID = 1
 # to load the internationalization machinery.
 USE_I18N = False
 
+# Absolute filesystem path to the directory that will hold user-uploaded files.
+# Example: "/home/media/media.lawrence.com/media/"
+MEDIA_ROOT = os.path.join(ROOT_PROJECT_FOLDER, 'media')
+
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
-# trailing slash if there is a path component (optional in other cases).
-# Examples: "http://media.lawrence.com", "http://example.com/media/"
+# trailing slash.
+# Examples: "http://media.lawrence.com/media/", "http://example.com/media/"
 MEDIA_URL = '/media/'
 
-# URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
-# trailing slash.
-# Examples: "http://foo.com/media/", "/media/".
-ADMIN_MEDIA_PREFIX = '/admin_media/'
+# Absolute path to the directory static files should be collected to.
+# Don't put anything in this directory yourself; store your static files
+# in apps' "static/" subdirectories and in STATICFILES_DIRS.
+# Example: "/home/media/media.lawrence.com/static/"
+STATIC_ROOT = os.path.join(ROOT_PROJECT_FOLDER, 'static')
+
+# URL prefix for static files.
+# Example: "http://media.lawrence.com/static/"
+STATIC_URL = '/static/'
+
+# URL prefix for admin static files -- CSS, JavaScript and images.
+# Make sure to use a trailing slash.
+# Examples: "http://foo.com/static/admin/", "/static/admin/".
+ADMIN_MEDIA_PREFIX = '/static/admin/'
+
+# Additional locations of static files
+STATICFILES_DIRS = (
+    # Put strings here, like "/home/html/static" or "C:/www/django/static".
+    # Always use forward slashes, even on Windows.
+    # Don't forget to use absolute paths, not relative paths.
+    os.path.join(ROOT_PROJECT_FOLDER, 'project_static_files'),
+)
+
+# List of finder classes that know how to find static files in
+# various locations.
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'django.contrib.staticfiles.finders.DefaultStorageFinder',
+)
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = 'c(x1$mngg*&#re1shf2r3(j&1&rl528_ubo2#x_)ljabk2*cly'
@@ -140,18 +182,18 @@ MIDDLEWARE_CLASSES = (
     #'catalogue.middleware.prettify.PrettifyMiddleware',
     'catalogue.middleware.stripwhitespace.StripWhitespaceMiddleware',
     # Added by Tim for advanced loggin options
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
+    #'debug_toolbar.middleware.DebugToolbarMiddleware',
 )
 
 # Added by Tim - tells django which clients may
 # receive debug messages...
-INTERNAL_IPS = ('127.0.0.1','196.35.94.7')
+INTERNAL_IPS = ('127.0.0.1', '196.35.94.7')
 # Also added for logging disabled for prod machine
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 # Disabled for prod machine
-LOGGING_OUTPUT_ENABLED=DEBUG
-LOGGING_LOG_SQL=DEBUG
+LOGGING_OUTPUT_ENABLED = DEBUG
+LOGGING_LOG_SQL = DEBUG
 
 # Also install pygments for pretty sql debug printing:
 # sudo apt-get install python-pygments
@@ -159,7 +201,8 @@ LOGGING_LOG_SQL=DEBUG
 ROOT_URLCONF = 'urls'
 
 TEMPLATE_DIRS = (
-    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
+    # Put strings here, like "/home/html/django_templates" or
+    #"C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
     os.path.join(ROOT_PROJECT_FOLDER, 'templates'),
@@ -184,13 +227,14 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.admin',
     'django.contrib.gis',
+    #'south',
     'registration',
     'catalogue',
-    'acscatalogue',
+    #'acscatalogue',
     'shapes',
     'django_extensions',
     'userprofile',
-    'debug_toolbar'
+    #'debug_toolbar'
 )
 
 # Added by Tim for in db logging of exceptions
@@ -202,11 +246,6 @@ DBLOG_CATCH_404_ERRORS = True
 ACCOUNT_ACTIVATION_DAYS = 2
 EMAIL_HOST = 'localhost'
 DEFAULT_FROM_EMAIL = 'noreply@catalogue.sac.co.za'
-#
-# Added by Tim for testing email functions - disable on prod server
-# it will write all emails to files so you can inspect what is being sent off
-#EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
-#EMAIL_FILE_PATH = '/tmp/app-messages' # change this to a proper location
 
 #where to take the user after they logged in
 LOGIN_REDIRECT_URL = '/'
@@ -217,24 +256,47 @@ I18N_URLS = False
 DEFAULT_AVATAR = os.path.join(MEDIA_ROOT, 'generic.jpg')
 AVATAR_WEBSEARCH = False
 
-# PLace where thumbs from ACS catalogue are extracted into a flat firectory tree
+# PLace where thumbs from ACS catalogue are extracted into a flat dir tree
 ACS_CATALOGUE_SCENES_PATH = ""
 
-CATALOGUE_ISO_METADATA_XML_TEMPLATE = os.path.join(ROOT_PROJECT_FOLDER,'resources/PackageTemplate/Metadata/ISOMetadata/ISOMetadata_template.xml')
+CATALOGUE_ISO_METADATA_XML_TEMPLATE = os.path.join(ROOT_PROJECT_FOLDER, (
+                   'resources/PackageTemplate/Metadata/'
+                  'ISOMetadata/ISOMetadata_template.xml'))
 
 #limit the number of returned metadata records
-MAX_METADATA_RECORDS=500
+MAX_METADATA_RECORDS = 500
 
 #define organisation acronym, used in filenaming schemes
-ORGANISATION_ACRONYM="SANSA"
+ORGANISATION_ACRONYM = "SANSA"
 
-#For MISR import - see manual
-MISR_ROOT="/mnt/cataloguestorage2/filedrop/MISR"
+# For debugging on dev server - comment out on prod server
+import logging
+LOG_FILENAME = 'catalogue.log'
+logging.basicConfig(filename=LOG_FILENAME, level=logging.DEBUG)
+logging.debug('This message should go to the log file')
 
-# For RapidEye import
-CATALOGUE_RAPIDEYE_USERNAME=''
-CATALOGUE_RAPIDEYE_PASSWORD=''
-CATALOGUE_RAPIDEYE_BASE_URL='https://delivery.rapideye.de/catalogue/'
+SOUTH_MIGRATION_MODULES = {
+  'acs': 'ignore',
+}
 
-#for terrasar-x import
-CATALOGUE_TERRASAR_SHP_ZIP_URL = 'http://terrasar-x-archive.infoterra.de/archive/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=archive:archive&outputFormat=SHAPE-ZIP'
+if DEBUG:
+    EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+    # change this to a proper location
+    EMAIL_FILE_PATH = '/tmp/'
+
+#
+# For django coverage support when testing
+#
+# not changed, just shown as an example
+COVERAGE_MODULE_EXCLUDES = [
+        'tests$', 'settings$', '^urls$', 'locale$',
+        '__init__', 'django',
+        'migrations',
+    ]
+
+coverage.use_cache(False)
+for e in COVERAGE_MODULE_EXCLUDES:
+    coverage.exclude(e)
+coverage.start()
+
+TEST_RUNNER = 'django_coverage.coverage_runner.CoverageRunner'
