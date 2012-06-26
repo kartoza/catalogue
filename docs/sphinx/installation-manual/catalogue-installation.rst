@@ -256,7 +256,7 @@ then our PIL is missing jpg (and probably png support). To fix it do::
    tar xfz Imaging-1.1.7.tar.gz
    cd Imaging-1.1.7
 
-Now edit setup.py to set these::
+Now edit setup.py to set these (for 64 bit)::
    
    TCL_ROOT = "/usr/lib/x86_64-linux-gnu/", "/usr/include"
    JPEG_ROOT = "/usr/lib/x86_64-linux-gnu/", "/usr/include"
@@ -264,7 +264,15 @@ Now edit setup.py to set these::
    TIFF_ROOT = "/usr/lib/x86_64-linux-gnu/", "/usr/include"
    FREETYPE_ROOT = "/usr/lib/x86_64-linux-gnu/", "/usr/include"
 
-.. note:: Above assumes 64bit arch
+
+Now edit setup.py to set these (for 32 bit)::
+   
+   TCL_ROOT = "/usr/lib/i386-linux-gnu/", "/usr/include"
+   JPEG_ROOT = "/usr/lib/i386-linux-gnu/", "/usr/include"
+   ZLIB_ROOT = "/usr/lib/i386-linux-gnu/", "/usr/include"
+   TIFF_ROOT = "/usr/lib/i386-linux-gnu/", "/usr/include"
+   FREETYPE_ROOT = "/usr/lib/i386-linux-gnu/", "/usr/include"
+
 
 Test if your configs work::
    
@@ -279,52 +287,38 @@ The build report should show::
    *** LITTLECMS support not available
 
 Now build pil::
-
+   
    python setup.py install
 
 Further info on django registration
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-You may also want to read this:
-
-http://devdoodles.wordpress.com/2009/02/16/user-authentication-with-django-registration/
-
+You may also want to read this `article on <http://devdoodles.wordpress.com/2009/02/16/user-authentication-with-django-registration/>`_
 if you want more info on how the registration stuff works.  
   
-*Note:* that you need to log in to the admin area of the site and change the
-domain name in the sites table from something other than 'example.com',
-otherwise the registration middleware will send the reminder with an incorrect
-url.
+.. note:: You need to log in to the admin area of the site and change the
+   domain name in the sites table from something other than 'example.com',
+   otherwise the registration middleware will send the reminder with an incorrect
+   url.
 
 
+Settings configuration
+^^^^^^^^^^^^^^^^^^^^^^
 
-
-Source code Check out
-^^^^^^^^^^^^^^^^^^^^^
-
-Check out this folder using 
-
-```
-git clone orasac1:sac_catalogue.git sac_catalogue
-cd sac_catalogue
-````````````````
-
-Copy settings.py.template to settings.py and then 
+Copy :file:`settings.py.template` to :file:`settings.py` and then 
 modify settings.py as needed (probably you just need to set 
 the eth adapter and db connection settings).
 
 Database setup
 ^^^^^^^^^^^^^^
 
-Create the database using:
-
-```
-createlang plpgsql template1
-psql template1 < /usr/share/postgresql-8.3-postgis/lwpostgis.sql
-psql template1 < /usr/share/postgresql-8.3-postgis/spatial_ref_sys.sql
-createdb sac
-createdb acs
-````````````
+Create the database using::
+   
+   createlang plpgsql template1
+   psql template1 < /usr/share/postgresql-8.3-postgis/lwpostgis.sql
+   psql template1 < /usr/share/postgresql-8.3-postgis/spatial_ref_sys.sql
+   createdb sac
+   createdb acs
 
 For an empty database:
 ^^^^^^^^^^^^^^^^^^^^^^
@@ -354,49 +348,41 @@ Nightly backups are made on lion at:
 /mnt/cataloguestorage1/backups/YEAR/MONTH/DAY/
 ``````````````````````````````````````````````
 
-To restore the backup do:
+To restore the backup do::
+   
+   pg_restore sac_postgis_30August2010.dmp | psql sac
+   pg_restore acs_postgis_30August2010.dmp | psql acs
 
-```
-pg_restore sac_postgis_30August2010.dmp | psql sac
-pg_restore acs_postgis_30August2010.dmp | psql acs
-
-```
 
 Setup apache (mod  python way)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-**Note:** This will be deprecated in favour of mod_wsgi (see next section)
+.. warning:: This will be deprecated in favour of mod_wsgi
+    (see next section)
 
 Make sure you have mod_expires and mod_deflate installed.
 
 The assumption is that you are using name based virtual hosts and that the 
-catalogue will run at the root of such a virtual host. Add to you apache site config:
+catalogue will run at the root of such a virtual host. Add to you apache site
+config::
 
-```
-cd apache
-cp apache-site-modpy.templ catlogue-modpy
-`````````````````````````````````````````
+   cd apache
+   cp apache-site-modpy.templ catlogue-modpy
 
+Modify as appropriate your closed catalogue-modpy file the source tree then
+link it to apache.::
+   
+   sudo ln -s catlogue-modpy /etc/apache2/sites-available/catalogue-modpy
 
-Modify as appropriate your closed catalogue-modpy file the source tree then link
-it to apache.
+Also do::
+   
+   sudo apt-get install libapache2-mod-python
 
-``````````````````````````````````````````````````````````````````````
-sudo ln -s catlogue-modpy /etc/apache2/sites-available/catalogue-modpy
-``````````````````````````````````````````````````````````````````````
+Now deploy the site::
+   
+   sudo a2ensite catalogue-modpy
+   sudo /etc/init.d/apache reload
 
-Also do:
-
-``````````````````````````````````````````
-sudo apt-get install libapache2-mod-python
-``````````````````````````````````````````
-
-Now deploy the site:
-
-```
-sudo a2ensite catalogue-modpy
-sudo /etc/init.d/apache reload
-``````````````````````````````
 
 Setup apache (mod_wsgi way)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
