@@ -1,6 +1,6 @@
 """
-SANSA-EO Catalogue - search_geometricaccuracy - test correctness of
-    search results for geometric accuracy -(spatial resolution)
+SANSA-EO Catalogue - search_spatialresolution - test correctness of
+    search results for spatial resolution
 
 Contact : lkleyn@sansa.org.za
 
@@ -15,7 +15,7 @@ Contact : lkleyn@sansa.org.za
 
 __author__ = 'dodobasic@gmail.com'
 __version__ = '0.1'
-__date__ = '18/06/2012'
+__date__ = '26/06/2012'
 __copyright__ = 'South African National Space Agency'
 
 from catalogue.tests.test_utils import simpleMessage, SearchTestCase
@@ -23,14 +23,14 @@ from catalogue.views.searcher import Searcher
 from catalogue.models import Search
 
 
-class SearchGeometricAccuracy_Test(SearchTestCase):
+class SearchSpatialResolution_Test(SearchTestCase):
     """
-    Tests Search Geometric Accuracy
+    Tests Search spatial resolution
     """
 
-    def test_GeometricAccuracy(self):
+    def test_SpatialResolution(self):
         """
-        Test geometric accuracy:
+        Test spatial resolution:
         -   0 - '<= 1m' (search 13),
         -   1 - '1m - 2m' (search 14),
         -   2 - '2m - 6m' (search 15),
@@ -40,7 +40,7 @@ class SearchGeometricAccuracy_Test(SearchTestCase):
         """
         myTestSearches = [13, 14, 15, 16, 17, 18]
         #we need to bound results
-        myExpectedResults = [1, 1, 1, 1, 1, 1]
+        myExpectedResults = [1, 2, 4, 87, 81, 2]
 
         for idx, searchPK in enumerate(myTestSearches):
             mySearch = Search.objects.get(pk=searchPK)
@@ -54,6 +54,6 @@ class SearchGeometricAccuracy_Test(SearchTestCase):
             #create Searcher object
             mySearcher = Searcher(request, mySearch.guid)
             mySearcher.search()
-            assert mySearcher.mQuerySet.count() == myExpectedResults[idx], \
+            assert mySearcher.mQuerySet.count() >= myExpectedResults[idx], \
             simpleMessage(mySearcher.mQuerySet.count(), myExpectedResults[idx],
-                message='For search pk %s expected:' % searchPK)
+                message='For search pk %s expected more then:' % searchPK)

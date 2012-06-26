@@ -29,7 +29,7 @@ from featurereaders_return import FeatureReaders_Test
 from searcher_object import SearcherObject_Test
 from search_bandcount import SearchBandCount_Test
 from search_inclinationangle import SearchIncliantionAngle_Test
-from search_geometricaccuracy import SearchGeometricAccuracy_Test
+from search_spatialresolution import SearchSpatialResolution_Test
 from search_cloudcover import SearchCloudCover_Test
 from search_rowpath import SearchRowPath_Test
 from email_notification_test import EmailNotificationTest

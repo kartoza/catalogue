@@ -1126,9 +1126,9 @@
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 16,
-            "spatial_resolution_y": 10.0,
-            "spatial_resolution_x": 10.0,
-            "spatial_resolution": 10.0,
+            "spatial_resolution_y": 1.0,
+            "spatial_resolution_x": 1.0,
+            "spatial_resolution": 1.0,
             "band_count": 3
         }
     },
@@ -1137,9 +1137,9 @@
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 16,
-            "spatial_resolution_y": 10.0,
-            "spatial_resolution_x": 10.0,
-            "spatial_resolution": 10.0,
+            "spatial_resolution_y": 2.0,
+            "spatial_resolution_x": 2.0,
+            "spatial_resolution": 2.0,
             "band_count": 3
         }
     },
@@ -1148,9 +1148,9 @@
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 16,
-            "spatial_resolution_y": 10.0,
-            "spatial_resolution_x": 10.0,
-            "spatial_resolution": 10.0,
+            "spatial_resolution_y": 5.0,
+            "spatial_resolution_x": 5.0,
+            "spatial_resolution": 5.0,
             "band_count": 3
         }
     },
@@ -1170,9 +1170,9 @@
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 16,
-            "spatial_resolution_y": 10.0,
-            "spatial_resolution_x": 10.0,
-            "spatial_resolution": 10.0,
+            "spatial_resolution_y": 30.0,
+            "spatial_resolution_x": 30.0,
+            "spatial_resolution": 30.0,
             "band_count": 3
         }
     },
@@ -1181,9 +1181,9 @@
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 16,
-            "spatial_resolution_y": 10.0,
-            "spatial_resolution_x": 10.0,
-            "spatial_resolution": 10.0,
+            "spatial_resolution_y": 50.0,
+            "spatial_resolution_x": 50.0,
+            "spatial_resolution": 50.0,
             "band_count": 3
         }
     }
