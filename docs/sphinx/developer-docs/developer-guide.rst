@@ -285,10 +285,10 @@ System logic and rules
 Computation of geometric_accuracy_mean
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The geometric accuracy of a product is calculated as the mean of its
-geometric_resolution_x, geometric_resolution_y.
+The spatial resolution of a product is calculated as the mean of its
+spatial_resolution_x, spatial_resolution_y.
 
-The values for geometric_resolution_x, geometric_resolution_y will vary per
+The values for spatial_resolution_x, spatial_resolution_y will vary per
 sensor and per mode. According to the following table:
 
 (SAC to provide required detail here).

@@ -443,9 +443,9 @@ Imagery product Properties
 .........................................
 
 A GenericImageryProduct extends the generic product model with these properties:
-- geometric_resolution
-- geometric_resolution_x
-- geometric_resolution_y
+- spatial_resolution
+- spatial_resolution_x
+- spatial_resolution_y
 -
 
 Imagery Product Aggregation Rules
@@ -794,19 +794,19 @@ the same time).
 
 
 --------------------------------------------
-**Note:** The geometric resolution and band count columns in this table need to
+**Note:** The spatial resolution and band count columns in this table need to
 be populated by Wolfgang.
 
 **Logic Rules:** The additional columns in the acquisition mode are used to
 provide implicit values for products if they are created without implicit
 values. In particular:
 
-+ The geometric resolution will be used to populate the GenericSensorProduct
-  fields of geometric_resolution, geometric_resolution_x and
-  geometric_resolution_y. This is implemented by first populating the
-  geometric_resolution field (NULL) when assigning acquisition mode, and then
-  assigning the same value to both geometric_resolution_x and
-  geometric_resolution_y.
++ The spatial resolution will be used to populate the GenericSensorProduct
+  fields of spatial_resolution, spatial_resolution_x and
+  spatial_resolution_y. This is implemented by first populating the
+  spatial_resolution field (NULL) when assigning acquisition mode, and then
+  assigning the same value to both spatial_resolution_x and
+  spatial_resolution_y.
 + The band_count in acquisition mode will be assigned to the
   GenericSensorProduct.band_count (formerly called spectral_resolution) if NULL
   at the moment of assignment.

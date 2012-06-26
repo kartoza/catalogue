@@ -32,7 +32,7 @@
  85   sensor_type = models.ForeignKey(SensorType ) #e.g. CAM1
   86   abbreviation = models.CharField( max_length="4")
  87   name = models.CharField( max_length="255" )
- 88   geometric_resolution = models.IntegerField(help_text="Geometric resolution in m")
+ 88   spatial_resolution = models.IntegerField(help_text="Spatial resolution in m")
  89   band_count = models.IntegerField()
  90   is_grayscale = models.BooleanField(default=False)
  91   operator_abbreviation = models.CharField( max_length=255 ) # UI abbreviation

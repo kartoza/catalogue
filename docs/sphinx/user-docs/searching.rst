@@ -137,14 +137,14 @@ with NULL sensor_viewing_angle will be assumed to be excluded when filtering by
 sensor viewing angle. If either the min or max value is unpopulated, this will
 be ignored in the search.
 
-**Geometric accuracy** is used to filter products based on image pixel size. On a
+**Spatial resolution** is used to filter products based on image pixel size. On a
 technical note, the pixel size is determined by checking the
-GenericImageryProduct::geometric_resolution (which is an inherited property of
+GenericImageryProduct::spatial_resolution (which is an inherited property of
 optical product). The reason this is used rather than the
-AcquisitionMode::geometric_resolution is that the product may have been
+AcquisitionMode::spatial_resolution is that the product may have been
 resampled during processing so (with the exception of level 1A products), the
 resolution may not correspond to the acquisition mode any more. For ease of
-use, geometric accuracy is grouped as shown in the table below, and the user
+use, spatial resolution is grouped as shown in the table below, and the user
 may select a single entry from this list.
 
 || Class | Value Range |
@@ -166,7 +166,7 @@ user to select a single band range. These are:
 | Superspectral (9-40) | 9 to 40 bands |
 | Hyperspectral (>40) | more than 40 bands |
 
-Technical note: As with geometric accuracy, the number of bands used for filtering is taken
+Technical note: As with spatial resolution, the number of bands used for filtering is taken
 from  GenericImageryProduct::band_count rather than AcquisitionMode::band_count.
 
 
