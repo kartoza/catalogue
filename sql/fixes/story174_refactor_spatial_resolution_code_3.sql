@@ -1,5 +1,5 @@
 BEGIN;
 ALTER TABLE catalogue_genericimageryproduct RENAME geometric_resolution TO spatial_resolution;
-ALTER TABLE catalogue_genericimageryproduct_x RENAME geometric_resolution TO spatial_resolution_x;
-ALTER TABLE catalogue_genericimageryproduct_y RENAME geometric_resolution TO spatial_resolution_y;
+ALTER TABLE catalogue_genericimageryproduct RENAME geometric_resolution_x TO spatial_resolution_x;
+ALTER TABLE catalogue_genericimageryproduct RENAME geometric_resolution_y TO spatial_resolution_y;
 COMMIT;
