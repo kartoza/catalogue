@@ -25,6 +25,7 @@ from topic_model import TopicCRUD_Test
 from placeType_model import PlaceTypeCRUD_Test
 from place_model import PlaceCRUD_Test
 from unit_model import UnitCRUD_Test
+from genericproduct_model import GenericProductCRUD_Test
 from featurereaders_return import FeatureReaders_Test
 from searcher_object import SearcherObject_Test
 from search_bandcount import SearchBandCount_Test
