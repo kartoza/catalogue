@@ -212,3 +212,33 @@ class GenericSensorProductCRUD_Test(TestCase):
             self.assertEqual(myRes, myExpResults[idx],
                 simpleMessage(myRes, myExpResults[idx],
                     message='Model PK %s getMetadataDict:' % PK))
+
+    def test_genericSensorproduct_productDirectory(self):
+        """
+        Tests GenericSensorProduct model _productDirectory method
+        """
+        myModelPKs = [1960810, 1001218]
+        myExpResults = ['S1/3Ba/1987/4/28',
+         'S1/2A/1992/7/3']
+
+        for idx, PK in enumerate(myModelPKs):
+            myModel = GenericSensorProduct.objects.get(pk=PK)
+            myRes = myModel._productDirectory()
+            self.assertEqual(myRes, myExpResults[idx],
+                simpleMessage(myRes, myExpResults[idx],
+                    message='Model PK %s _productDirectory:' % PK))
+
+    def test_genericSensorproduct_thumbnailDirectory(self):
+        """
+        Tests GenericSensorProduct model _thumbnailDirectory method
+        """
+        myModelPKs = [1960810, 1001218]
+        myExpResults = ['S1/1987/4/28',
+         'S1/1992/7/3']
+
+        for idx, PK in enumerate(myModelPKs):
+            myModel = GenericSensorProduct.objects.get(pk=PK)
+            myRes = myModel._thumbnailDirectory()
+            self.assertEqual(myRes, myExpResults[idx],
+                simpleMessage(myRes, myExpResults[idx],
+                    message='Model PK %s _thumbnailDirectory:' % PK))
