@@ -320,6 +320,18 @@ Create the database using::
    createdb sac
    createdb acs
 
+.. warning:: There is a known bug with django 1.2 and postgresql 9.1, 
+   which requires that you make the following alteration to your postgresql.conf
+   configuration::
+      
+      ###########################
+      #Added by Tim
+      ###########################
+      #see https://code.djangoproject.com/ticket/16778
+      standard_conforming_strings = off
+
+
+
 For an empty database:
 ^^^^^^^^^^^^^^^^^^^^^^
 
@@ -391,55 +403,42 @@ The assumption is that you are using name based virtual hosts and that the
 catalogue will run at the root of such a virtual host. Add to you apache site config:
 
 Modify as appropriate a copy of the apache-site-wsgi.templ file found in the apache 
-dir in the source tree then link it to apache.
+dir in the source tree then link it to apache::
+   
+   cd apache
+   cp apache-site-wsgi.templ catlogue-wsgi
 
+Now create a symlink::
+   
+   sudo ln -s catlogue-wsgi /etc/apache2/sites-available/catalogue-wsgi
 
-```
-cd apache
-cp apache-site-wsgi.templ catlogue-wsgi
-```````````````````````````````````````
-Now create a symlink:
+Also do::
+   
+   sudo apt-get install libapache2-mod-wsgi
 
-````````````````````````````````````````````````````````````````````
-sudo ln -s catlogue-wsgi /etc/apache2/sites-available/catalogue-wsgi
-````````````````````````````````````````````````````````````````````
+Now deploy the site::
 
-Also do:
-
-````````````````````````````````````````
-sudo apt-get install libapache2-mod-wsgi
-````````````````````````````````````````
-
-Now deploy the site:
-
-```
-sudo a2ensite catalogue-wsgi
-sudo /etc/init.d/apache reload
-``````````````````````````````
-
+   sudo a2ensite catalogue-wsgi
+   sudo /etc/init.d/apache reload
 
 Copy over the ribbon
 ^^^^^^^^^^^^^^^^^^^^
 
 There is a ribbon image that displays in the top left corner of the site that
 is used to convey version numbers etc. Since this may vary from deployment to
-deployment, you should copy over an appropriate ribbon e.g.:
+deployment, you should copy over an appropriate ribbon e.g.::
+   
+   cp media/images/ribbon_template.png media/images/ribbon.png
 
-```````````````````````````````````````````````````````````
-cp media/images/ribbon_template.png media/images/ribbon.png
-```````````````````````````````````````````````````````````
 
 Install GEOIP data
 ^^^^^^^^^^^^^^^^^^
 
 GeoIP is used to resolve IP addresses to Lon/Lat. This directory needs the
-GeoIP lite dataset in it:
-
-```
-cd geoip_data
-wget http://www.maxmind.com/download/geoip/database/GeoLiteCity.dat.gz
-gunzip GeoLiteCity.dat.gz`
-``````````````````````````
+GeoIP lite dataset in it::
+   cd geoip_data
+   wget http://www.maxmind.com/download/geoip/database/GeoLiteCity.dat.gz
+   gunzip GeoLiteCity.dat.gz`
 
 Check settings.py!
 ^^^^^^^^^^^^^^^^^^
@@ -453,50 +452,41 @@ Install proxy.cgi - note this will be deprecated
 Some parts of this site use cross site XHttpRequests. This is not allowed in
 the spec (to prevent cross site scripting attacks) so to get around this you
 need to install a proxy cgi on the django hosting server *if the mapserver
-instance is on a different physical server*.
-
-```
-cd /usr/lib/cgi-bin
-sudo wget -O proxy.cgi \
-http://trac.openlayers.org/browser/trunk/openlayers/examples/proxy.cgi?format=raw
-sudo chmod +x /usr/lib/cgi-bin/proxy.cgi
-````````````````````````````````````````
+instance is on a different physical server*::
+   
+   cd /usr/lib/cgi-bin
+   sudo wget -O proxy.cgi \
+   http://trac.openlayers.org/browser/trunk/openlayers/examples/proxy.cgi?format=raw
+   sudo chmod +x /usr/lib/cgi-bin/proxy.cgi
 
 Once you have installed the proxy.cgi you need to configure it to tell it the 
 list of allowed servers it can proxy for. This is to prevent it becoming 
 an open relay on the internet. Edit /usr/lib/cgi-bin/proxy/cgi and change 
-line 18 to look like this:
+line 18 to look like this::
 
-``````````````````````````````````````````
-allowedHosts = [ '196.35.94.243','lion', ]
-``````````````````````````````````````````
+   allowedHosts = [ '196.35.94.243','lion', ]
 
-I also changed line 32 to look like this:
+I also changed line 32 to look like this::
+   
+   url = fs.getvalue('url', "http://196.35.94.243")
 
-````````````````````````````````````````````````
-url = fs.getvalue('url', "http://196.35.94.243")
-````````````````````````````````````````````````
 
-so that the default proxy url is our wms server.
-
-See http://faq.openlayers.org/proxyhost/all/ for more info...
+so that the default proxy url is our wms server. See 
+http://faq.openlayers.org/proxyhost/all/ for more info...
 
 
 Creating branches
 ^^^^^^^^^^^^^^^^^
 
-**Note:** This section uses svn commands and should be updated to use git
-equivalents.
+.. note:: This section uses svn commands and should be updated to use git
+   equivalents.
 
 When the code gets stabilised to a certain point you should create a branch 
 to mark that stable code base and then deploy it on the live server. To 
-create the branch do e.g.:
+create the branch do e.g.::
 
-```
-svn cp https://196.35.94.196/svn/trunk/sac_catalogue \
-https://196.35.94.196/svn/branches/catalogue_v1_beta3
-`````````````````````````````````````````````````````
-
+   svn cp https://196.35.94.196/svn/trunk/sac_catalogue \
+   https://196.35.94.196/svn/branches/catalogue_v1_beta3
 
 Where:
 **v1** = version 1
@@ -516,25 +506,22 @@ Creation of the ReadOnly db user
 
 This should be done on the database server i.e. elephant
 
-This user is required for mapserver access to some of the tables.
-
-```
-sudo su - postgres
-createuser -S -D -R -l -P -E -e readonly
-exit
-psql sac
-grant select on vw_usercart to readonly;
-grant select on visit to readonly;
-grant select on sensor to readonly;
-\q
-``
-
+This user is required for mapserver access to some of the tables::
+   
+   sudo su - postgres
+   createuser -S -D -R -l -P -E -e readonly
+   exit
+   psql sac
+   grant select on vw_usercart to readonly;
+   grant select on visit to readonly;
+   grant select on sensor to readonly;
+   \q
 
 Optimal database configuration
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 To support the large number of recs tweak
-/etc/postgresql/8.3/main/postgresql.conf
+:file:`/etc/postgresql/8.3/main/postgresql.conf`
 
 ```
 # Changed by Tim as the sac db required more
