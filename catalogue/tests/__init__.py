@@ -30,6 +30,7 @@ from genericimageryproduct_model import GenericImageryProductCRUD_Test
 from genericsensorproduct_model import GenericSensorProductCRUD_Test
 from opticalproduct_model import OpticalProductCRUD_Test
 from radarproduct_model import RadarProductCRUD_Test
+from geospatialproduct_model import GeospatialProductCRUD_Test
 from featurereaders_return import FeatureReaders_Test
 from searcher_object import SearcherObject_Test
 from search_bandcount import SearchBandCount_Test

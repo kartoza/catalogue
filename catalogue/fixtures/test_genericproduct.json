@@ -2158,5 +2158,25 @@
             "processing_level": 16,
             "product_id": "S5-_HRG_J--_S5C2_0118_00_0401_00_110503_084709_1B--_ORBIT-105"
         }
+    },
+    {
+        "pk": 54000001,
+        "model": "catalogue.genericproduct",
+        "fields": {
+            "product_date": "2111-01-01 12:00:00",
+            "spatial_coverage": "POLYGON ((21.3566000000000145 -27.2013999999999783, 21.4955000000000496 -26.6752999999999929, 22.0914000000000215 -26.7661999999999978, 21.9554000000000542 -27.2926999999999964, 21.3566000000000145 -27.2013999999999783))",
+            "projection": 89,
+            "license": 1,
+            "original_product_id": "11204048606190846322X",
+            "local_storage_path": null,
+            "creating_software": 1,
+            "remote_thumbnail_url": "",
+            "product_revision": null,
+            "owner": 1,
+            "metadata": "",
+            "quality": 1,
+            "processing_level": 16,
+            "product_id": "S1-_HRV_X--_S1C2_0120_00_0404_00_110101_084632_1B--_ORBIT-"
+        }
     }
 ]

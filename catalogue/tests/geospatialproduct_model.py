@@ -1,5 +1,5 @@
 """
-SANSA-EO Catalogue - radarproduct_model - implements basic CRUD unittests
+SANSA-EO Catalogue - geospatialproduct_model - implements basic CRUD unittests
 
 Contact : lkleyn@sansa.org.za
 
@@ -19,10 +19,10 @@ __copyright__ = 'South African National Space Agency'
 
 from django.test import TestCase
 from catalogue.tests.test_utils import simpleMessage
-from catalogue.models import RadarProduct
+from catalogue.models import GeospatialProduct
+from datetime import datetime
 
-
-class RadarProductCRUD_Test(TestCase):
+class GeospatialProductCRUD_Test(TestCase):
     """
     Tests models.
     """
@@ -36,10 +36,11 @@ class RadarProductCRUD_Test(TestCase):
         'test_quality.json',
         'test_projection.json',
         'test_institution.json',
+        'test_topic.json',
+        'test_placetype.json',
+        'test_place.json',
         'test_genericproduct.json',
-        'test_genericimageryproduct.json',
-        'test_genericsensorproduct.json',
-        'test_radarproduct.json'
+        'test_geospatialproduct.json'
         ]
 
     def setUp(self):
@@ -48,9 +49,9 @@ class RadarProductCRUD_Test(TestCase):
         """
         pass
 
-    def test_RadarProduct_create(self):
+    def test_GeospatialProduct_create(self):
         """
-        Tests RadarProduct model creation
+        Tests GeospatialProduct model creation
 
         As this is sub classed model, we need to include 'parent' model
         attributes. Django will handle parent model creation automatically
@@ -72,87 +73,67 @@ class RadarProductCRUD_Test(TestCase):
             'quality_id': 1,
             'processing_level_id': 16,
             'product_id': 'S1-_HRV_X--_S1C2_0120_00_0404_00_000101_084632_1B--_ORBIT-',
-            'radiometric_resolution': 16,
-            'spatial_resolution_y': 1.0,
-            'spatial_resolution_x': 1.0,
-            'spatial_resolution': 1.0,
-            'band_count': 3,
-            'product_acquisition_end': None,
-            'acquisition_mode_id': 87,
-            'path_offset': 0,
-            'orbit_number': None,
-            'radiometric_signal_to_noise_ratio': None,
-            'geometric_accuracy_mean': None,
-            'spectral_accuracy': None,
-            'geometric_accuracy_2sigma': None,
-            'radiometric_percentage_error': None,
-            'row_offset': 0,
-            'online_storage_medium_id': None,
-            'geometric_accuracy_1sigma': None,
-            'offline_storage_medium_id': None,
-            'path': 120,
-            'product_acquisition_start': '2100-01-01 12:05:00',
-            'row': 404,
             #specific model attributes
-            'imaging_mode': None,
-            'polarising_list': None,
-            'azimuth_range_resolution': None,
-            'look_direction': 'L',
-            'calibration': None,
-            'slant_range_resolution': None,
-            'orbit_direction': 'A',
-            'polarising_mode': 'S',
-            'incidence_angle': None,
-            'antenna_receive_configuration': 'V'
+            'name': 'Sample geospatialproduct',
+            'description': 'Sample description',
+            'processing_notes': None,
+            'equivalent_scale': None,
+            'data_type': None,
+            'temporal_extent_start': '2100-01-01 12:00:00',
+            'temporal_extent_end': None,
+            'place_type_id': 1,
+            'place_id': 1,
+            'primary_topic_id': 1
         }
-        myModel = RadarProduct(**myNewData)
+        myModel = GeospatialProduct(**myNewData)
         myModel.save()
         #check if PK exists
         self.assertTrue(myModel.pk != None,
             simpleMessage(myModel.pk, 'not None',
                 message='Model PK should NOT equal None'))
 
-    def test_RadarProduct_read(self):
+    def test_GeospatialProduct_read(self):
         """
-        Tests RadarProduct model read
+        Tests GeospatialProduct model read
         """
-        myModelPK = 6541
+        myModelPK = 54000001
         myExpectedModelData = {
-            'imaging_mode': None,
-            'polarising_list': None,
-            'azimuth_range_resolution': None,
-            'look_direction': None,
-            'calibration': None,
-            'slant_range_resolution': None,
-            'orbit_direction': None,
-            'polarising_mode': None,
-            'incidence_angle': None,
-            'antenna_receive_configuration': None
+            'name': 'Sample geospatialproduct',
+            'description': 'Sample description',
+            'processing_notes': None,
+            'equivalent_scale': None,
+            'data_type': None,
+            'temporal_extent_start': datetime.strptime('2100-01-01 12:00:00', '%Y-%m-%d %H:%M:%S'),
+            'temporal_extent_end': None,
+            'place_type_id': 1,
+            'place_id': 1,
+            'primary_topic_id': 1
         }
-        myModel = RadarProduct.objects.get(pk=myModelPK)
+        #import ipdb;ipdb.set_trace()
+        myModel = GeospatialProduct.objects.get(pk=myModelPK)
         #check if data is correct
         for key, val in myExpectedModelData.items():
             self.assertEqual(myModel.__dict__.get(key), val,
                 simpleMessage(myModel.__dict__.get(key), val,
                     message='For key "%s"' % key))
 
-    def test_RadarProduct_update(self):
+    def test_GeospatialProduct_update(self):
         """
-        Tests RadarProduct model update
+        Tests GeospatialProduct model update
         """
-        myModelPK = 6541
-        myModel = RadarProduct.objects.get(pk=myModelPK)
+        myModelPK = 54000001
+        myModel = GeospatialProduct.objects.get(pk=myModelPK)
         myNewModelData = {
-            'imaging_mode': None,
-            'polarising_list': None,
-            'azimuth_range_resolution': None,
-            'look_direction': 'L',
-            'calibration': None,
-            'slant_range_resolution': None,
-            'orbit_direction': 'A',
-            'polarising_mode': 'S',
-            'incidence_angle': None,
-            'antenna_receive_configuration': 'V'
+            'name': 'New sample geospatialproduct',
+            'description': 'New sample description',
+            'processing_notes': None,
+            'equivalent_scale': None,
+            'data_type': None,
+            'temporal_extent_start': '2100-01-01 12:00:01',
+            'temporal_extent_end': None,
+            'place_type_id': 1,
+            'place_id': 1,
+            'primary_topic_id': 1
         }
 
         myModel.__dict__.update(myNewModelData)
@@ -164,15 +145,15 @@ class RadarProductCRUD_Test(TestCase):
                 simpleMessage(myModel.__dict__.get(key), val,
                 message='For key "%s"' % key))
 
-    def test_RadarProduct_delete(self):
+    def test_GeospatialProduct_delete(self):
         """
-        Tests RadarProduct model delete
+        Tests GeospatialProduct model delete
 
         This test FAILS because current application doesn't support
         cascade delete on inherited models - Story #227
         """
-        myModelPK = 6541
-        myModel = RadarProduct.objects.get(pk=myModelPK)
+        myModelPK = 54000001
+        myModel = GeospatialProduct.objects.get(pk=myModelPK)
 
         myModel.delete()
 

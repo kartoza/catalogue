@@ -1,0 +1,18 @@
+[
+    {
+        "pk": 54000001,
+        "model": "catalogue.geospatialproduct",
+        "fields": {
+            "name": "Sample geospatialproduct",
+            "description": "Sample description",
+            "processing_notes": null,
+            "equivalent_scale": null,
+            "data_type": null,
+            "temporal_extent_start": "2100-01-01 12:00:00",
+            "temporal_extent_end": null,
+            "place_type": 1,
+            "place": 1,
+            "primary_topic": 1
+        }
+    }
+]
