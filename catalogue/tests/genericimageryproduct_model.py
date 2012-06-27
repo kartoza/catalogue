@@ -20,7 +20,6 @@ __copyright__ = 'South African National Space Agency'
 from django.test import TestCase
 from catalogue.tests.test_utils import simpleMessage
 from catalogue.models import GenericImageryProduct
-from datetime import datetime
 
 
 class GenericImageryProductCRUD_Test(TestCase):
@@ -158,7 +157,6 @@ class GenericImageryProductCRUD_Test(TestCase):
         myModelPKs = [1960810, 2143443, 1001218]
         myExpResults = [{}, {}, {}]
 
-        #import ipdb;ipdb.set_trace()
         for idx, PK in enumerate(myModelPKs):
             myModel = GenericImageryProduct.objects.get(pk=PK)
             myRes = myModel.getMetadataDict()
