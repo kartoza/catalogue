@@ -1,5 +1,5 @@
 Catalogue Schema : Products
-------------------------------------------
+---------------------------
 
 The working unit of the catalogue is a product. A product can be any of a range
 of different type of geodata:
@@ -28,7 +28,7 @@ In this chapter we delve into the various subtypes of product and explain the
 operational rules governing each type.
 
 Generic Products
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^
 
 **Synopsis:** Abstract Base Class for all products.
 
@@ -41,7 +41,7 @@ data dictionaries (as described in the next section) are used to ensure data
 consistency for properties relating to a product.
 
 Generic Product Properties
-.........................................
+..........................
 
 The following properties are defined for generic products:
 
@@ -81,10 +81,10 @@ create the product. //see:// dictionaries section below.
 ```
 sac=# select local_storage_path from catalogue_genericproduct where local_storage_path is not null limit 5;
 local_storage_path
---------------------------------------------------------------------------------------
+------------------
 ZA2/1Ab/2010/5/31/ZA2_MSS_R3B_FMC4_080E_57_026N_47_100531_033947_L1Ab_ORBIT-.tif.bz2
 ZA2/1Ab/2010/3/31/ZA2_MSS_R3B_FMC4_176E_47_039S_35_100331_204030_L1Ab_ORBIT-.tif.bz2
-```
+````````````````````````````````````````````````````````````````````````````````````
 The path is relative to the IMAGERY_ROOT defined in settings.py and is in the form:
 
 ''mission/processing level/yyyy/m/d/product_id.<file extension>.bz2''
@@ -94,7 +94,7 @@ or
 ''mission/processing level/yyyy/m/d/product_id.<file extension>.tar.bz2'' (for multifile products)
 
 Product ID Naming Scheme
-.........................................
+........................
 
 All generic products can be identified by a 'nearly unique' product id. The
 product id seeks to normalise the naming conventions used by different
@@ -119,7 +119,7 @@ identifcation scheme will be used for GeoSpatial products.
 
 
 Dictionaries
-.........................................
+............
 
 Generic product properties that are used repeatedly are described using foreign
 key joins to various dictionary tables. These can be visualised in the
@@ -130,7 +130,7 @@ following diagram:
 These dictionaries are described in details in the sub-sections that follow.
 
 Institution
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^
 
 The institution (linked to the **GenericProduct** table on the owner field)
 indicates the organisation from which the product can be obtained.
@@ -149,7 +149,7 @@ and all new products are assigned to this institution:
 
 
 Processing Level
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^
 
 Products may have been processed by software to improve the product. For
 example, a level 1a product is a 'raw' image with no georeferencing, format
@@ -161,9 +161,9 @@ variance) and so on.
 
 Processing levels are expressed as a four letter code e.g.:
 
-```
+````
 L1Aa
-```
+````
 
 This code can be deconstructed as:
 
@@ -229,8 +229,8 @@ The following processing levels are listed in the database.
 **Note:** These should be updated to include a proper description with each in
 a new description col. TS
 
-Projection 
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Projection
+^^^^^^^^^^
 
 The projection (or more accurately the coordinate reference system (CRS)) model
 contains a dictionary of CRS identifiers and human readable names. The
@@ -255,7 +255,7 @@ the EPSG code. For reference, an extract of the entries is provided in the table
 **Constraints:** EPSG Code must be unique.
 
 Quality
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^
 
 The quality is intended to provide a well defined dictionary of terms for
 qualitative assessment of products. Different product vendors use different
@@ -280,7 +280,7 @@ strategy for populating existing and new records with an appropriate quality
 indicator.
 
 Creating Software
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^
 
 It is useful in understanding a dataset to know which software package was used
 to create it. At time of writing this document, only two software packages are
@@ -300,7 +300,7 @@ as needed.
 products should have this applied?
 
 License
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^
 
 Each product should have a license associated with it. The license will detail
 any restrictions on redistribution or useage that applies for the product.
@@ -365,13 +365,20 @@ license applied.
 
 **Note:** Wolfgang - does it make sense to have an 'any' license?
 
+
+.. warning :: GenericProducts are the base class of other specialised
+   product types. There is no cascade deletion implementation currently,
+   meaning if you delete for example an OpticalProduct, the underlying
+   GenericProduct will continue to exist.
+
+
 %----------------------------------------------------------
 %----------------------------------------------------------
 %------------------ Generic Imagery Product  ---------------------
 %----------------------------------------------------------
 %----------------------------------------------------------
 Generic Imagery Products
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^
 
 **Synopsis:** Base Class for //imagery// products.
 
@@ -387,7 +394,7 @@ original images used to create this record (and those backpointers will be to
 Sensor based product records).
 
 Product ID Naming Scheme
-.........................................
+........................
 
 Generic imagery products do not have an associated Mission, Sensor, Sensor Type
 or Acquisition Mode, and thus the naming system differers from final (having no
@@ -440,7 +447,7 @@ The following key can be used to decode the above:
 | MT_yymmdd_yymmdd | multi-temporal time span: start date to end date     |
 
 Imagery product Properties
-.........................................
+..........................
 
 A GenericImageryProduct extends the generic product model with these properties:
 - spatial_resolution
@@ -449,7 +456,7 @@ A GenericImageryProduct extends the generic product model with these properties:
 -
 
 Imagery Product Aggregation Rules
-.........................................
+.................................
 
 In the DAG (Directed Acyclical Graph) that maps relationships between products
 and their downstream constituent products, ImageryProducts can be made of:
@@ -468,12 +475,12 @@ include itself in any leaf node.
 or more other products).
 
 Dictionaries
-.........................................
+............
 
 No additional dictionaries are introduced with this class.
 
 Generic Sensor based products
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 **Synopsis:** Base Class for //Sensor// products.
 
@@ -484,7 +491,7 @@ Generic sensor product is an Abstract Base Class that all other sensor based
 products inherit from. It inherits from Generic Imagery product.
 
 Product ID Naming Scheme
-.........................................
+........................
 
 The following scheme is used for assigning product id's for sensor based products:
 
@@ -535,13 +542,13 @@ be assigned as per the illustration below:
 [img/centroid_based_row_path.png]
 
 Generic Sensor Product Aggregation Rules
-.........................................
+........................................
 
 Since this is an abstract class it may not be a node in a product aggregation tree.
 
 
 Sensor Product Dictionaries
-.........................................
+...........................
 
 Several domain lists are implemented for sensor based products. These can be
 visualised in the following diagram:
@@ -554,7 +561,7 @@ the text below.
 
 
 Mission
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^
 
 A mission is the name for the particular space vechicle on board of which one
 or more sensors are deployed. The catalogue hosts metadata entry for a number
@@ -594,7 +601,7 @@ The mission abbreviation, operator_abbreviation and name must be unique.
 **Constraints:** Name and abbreviation must be unique_together. Name must be unique.
 
 Mission Sensors
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^
 
 On board each space vehicle receiving EO data will be one or more sensors.
 Although the sensor may be nominally the same between two different missions
@@ -651,7 +658,7 @@ entities and their related mission - as illustrated here:
 +----------------+                +---------+
 | Mission Sensor |>---------------| Mission |
 +----------------+                +---------+
-```
+`````````````````````````````````````````````
 
 
 **Relationship in plain english:** Each mission can have one or more mission
@@ -674,7 +681,7 @@ Above assumes the pre-existance of a mission 'ERS'.
 
 
 Sensor Types
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^
 
 The sensor type describes a mission sensor. 'High end' satellites may use a
 custom sensor type with its own specific properties. 'Cheaper' satellites may
@@ -719,14 +726,14 @@ entities and their related mission - as illustrated here:
 +-------------+                +----------------+
 | Sensor Type |>---------------| Mission Sensor |
 +-------------+                +----------------+
-```
+`````````````````````````````````````````````````
 
 **Relationship in plain english:** Each mission sensor can have one or more sensor
 types associated with it. Each sensor type shall be associated to only one sensor.``
 
 
 Acquisition Modes
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^
 
 Each sensor can operate in one or more modes. Thus there the list of
 acquisition modes should include at least one entry per sensor type. Where such
@@ -780,7 +787,7 @@ entities and their related mission - as illustrated here:
 +------------------+                +----------------+
 | Acquisition Mode |>---------------|   Sensor Type  |
 +------------------+                +----------------+
-```
+``````````````````````````````````````````````````````
 
 **Relationship in plain english:** Each sensor type can have one or more
 acquisition mode associated with it. Each acquisition mode shall be associated
@@ -813,7 +820,7 @@ values. In particular:
 +
 
 Mission Group
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^
 
 The mission group model will be an addition to the schema that will allow
 virtual groupings of mission sensors. In simple search and other places
@@ -824,7 +831,7 @@ missions (satellites) to search on e.g. all Landsat missions.
 +------------------+                +----------------+
 | Mission          |>---------------| Mission Group  |
 +------------------+                +----------------+
-```
+``````````````````````````````````````````````````````
 
 **Relationship in plain english:** Each mission group  can have one or more
 missions associated with it. Each mission shall be associated to only one
@@ -837,7 +844,7 @@ When a new mission is added, it should always be assigned to an existing
 mission group (with the mission group being created first if needed).
 
 Notes on the proposed schema changes
-.........................................
+....................................
 
 The proposed schema change will bring about the following advantages:
 
@@ -862,7 +869,7 @@ a sub class GenericImageryProduct.
 
 
 Resolving the metadata to explicit records
-.........................................
+..........................................
 
 The input metadata we receive will be ambiguous for acquisition mode, sensor
 type, mission sensor. It is only with the presence of a mission abbreviation
@@ -897,7 +904,7 @@ In cases where the entries for these dictionary terms do not exist, new records 
 
 
 Optical products
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^
 
 **Synopsis:** Imagery where each pixel represents the reflectance value of
 light waves reflected from a remote target within a given segment of the light
@@ -921,7 +928,7 @@ Optical products are end nodes in the product heirarchy - they do not have any
 further specialisations.
 
 Optical Product Properties
-.........................................
+..........................
 
 The optical product model introduces a number of properies in addition to those
 inherited from the GenericSensorProduct base class.
@@ -939,13 +946,13 @@ inherited from the GenericSensorProduct base class.
  -
 
 Product ID Naming Scheme
-.........................................
+........................
 
 The naming of optical products follows the rules from its base class,
 GenericSensorProduct.
 
 Optical Product Aggregation Rules
-.........................................
+.................................
 
 In the DAG (Directed Acyclical Graph) that maps relationships between products
 and their downstream constituent products, **OpticalProducts** may **not**
@@ -958,7 +965,7 @@ new image should be modelled as a **GenericImageryProduct**.
 
 
 Radar Products
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^
 
 **Synopsis:** Imagery where each pixel represents the reflectance value of
 radio waves reflected from a remote target.
@@ -967,7 +974,7 @@ radio waves reflected from a remote target.
 
 
 Radar Product Aggregation Rules
-.........................................
+...............................
 
 In the DAG (Directed Acyclical Graph) that maps relationships between products
 and their downstream constituent products, **RadarlProducts** may **not** be
@@ -978,12 +985,12 @@ image, the new image should be modelled as a **GenericImageryProduct**.
 
 
 Product ID Naming Scheme
-.........................................
+........................
 
 Follows the same scheme as defined in OpticalProduct documentation.
 
 Optical Product Properties
-.........................................
+..........................
 
 The radar product model introduces a number of properies in addition to those
 inherited from the GenericSensorProduct base class. These properties are not
@@ -1007,7 +1014,7 @@ shared with optical products.
 %----------------------------------------------------------
 %----------------------------------------------------------
 Geospatial Products
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^
 
 **Synopsis:** Level 4 products derived from imagery or by direct earth
 measurement (e.g. by conducting a survey with GPS).
@@ -1020,7 +1027,7 @@ abstract representations of features of the earths surface - as opposed to
 Imagery Products which are some form of obervation of the earth service.
 
 Geospatial Product Properties
-.........................................
+.............................
 
 All geospatial products share the following properties:
 
@@ -1090,7 +1097,7 @@ standard. e.g.
     </gmd:extent>
   </gmd:EX_TemporalExtent>
 </gmd:temporalElement>
-```
+``````````````````````
 
 **Note:** The GenericSensorProduct includes
 GenericSensorProduct::product_acquisition_start and
@@ -1115,7 +1122,7 @@ region will be reflected in an EX_GeographicDescription element. e.g.
   <xs:attributeGroup ref="gco:ObjectReference"/>
   <xs:attribute ref="gco:nilReason"/>
 </xs:complexType
-```
+````````````````
 
 **Note:** that although the ISO19139 specification allows a sequence (i.e. multiple
 geography description elements), our schema only accommodates a single
@@ -1126,7 +1133,7 @@ writing a simple python tool.
 
 
 **Note**: Future work package, not in spec:
-```
+```````````````````````````````````````````
 In order to auto-assign place types 1-6 (see dictionaries section
 below), the closest place of that type to the centroid of the dataset will be
 used. If no region type and region are specified at point of ingestion, the
@@ -1135,7 +1142,7 @@ product shall use default values of 'Local area - nearest named place'
 the named place that is nearest to the centroid of the product geometry (based
 on geonames dataset lodged in the **place** dictionary), unless they have been
 manually assigned.
-```
+``````````````````
 
 **Primary topic** is the main categorisation for this dataset. Additional tags can
 be assigned to the dataset via the tags field (see below). The topic will be
@@ -1147,7 +1154,7 @@ Example tags might be: landcover, roads, trig beacons etc.
 **Note for Alessandro:** use one of the django tagging apps for this.
 
 Product ID Naming Scheme
-.........................................
+........................
 
 The following scheme will be used when allocating product ID's to GeoSpatial products:
 
@@ -1164,9 +1171,9 @@ The following scheme will be used when allocating product ID's to GeoSpatial pro
 All id text elements will be converted to upper case. This a sample GeoSpatial
 product ID may look like this:
 
-```
+````````````````````````````````````````````````````
 ORD_LANDUSE---_VL_ZA--------_110101_110211_L4Ab_4326
-```
+````````````````````````````````````````````````````
 
 The order is of the id elements is designed so that when listing products using
 e.g. the unix '''ls''' command they naturally appear grouped thematically, then
@@ -1174,19 +1181,19 @@ by data type and then by place.
 
 
 Geospatial Product Aggregation Rules
-.........................................
+....................................
 
 Geospatial products may be aggregates. That is their lineage may reflect
 derivation from one or more other products.
 
 Geospatial Product Dictionaries
-.........................................
+...............................
 
 The following dictionaries are implemented to support the creation of
 geospatial products.
 
 Place Type
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^
 
 A place type can be one of:
 
@@ -1204,7 +1211,7 @@ Administering the place types list is not an end-user activity and should be
 done in consultation with developers.
 
 Place
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^
 
 For places, a dictionary based on GeoNames provides a near-exhaustive list of
 local areas and towns. The geonames table will be augmented on an adhoc manner
@@ -1231,7 +1238,7 @@ The place model looks like this:
 %----------------------------------------------------------
 
 Ordinal Products
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^
 
 **Synopsis:** Vector and Raster products where data are grouped into discrete classes.
 
@@ -1249,7 +1256,7 @@ equivalent_scale, temporal_extent_start and temporal_extent_end). Thematic
 accuracy for a product is described by adding the fields
 
 Ordinal Product Properties
-.........................................
+..........................
 
 
 For ordinal products we define thematic accuracy by means of the following fields:
@@ -1285,25 +1292,25 @@ The **[kappa score http://en.wikipedia.org/wiki/Cohen's_kappa]** is a
 It is represented as a single, non-compulsory real number.
 
 Product ID Naming Scheme
-.........................................
+........................
 
 The product ID for Ordinal products is described in the GeospatialProduct model
 description. Ordinal products are prefixed with the string 'ORD'.
 
 Ordinal Product Aggregation Rules
-.........................................
+.................................
 
 Ordingal products may be part of aggregations and their lineage may include
 aggregations.
 
 Ordinal Product Dictionaries
-.........................................
+............................
 
 No additional dictionaries are introduced by the ordinal product model.
 
 
 Continuous Products
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^
 
 **Synopsis:** Vector and Raster products where data are //not// grouped into
 discrete classes, but rather along a continuous value range.
@@ -1311,7 +1318,7 @@ discrete classes, but rather along a continuous value range.
 **Concrete or Abstract:** Concrete
 
 Continuous Product Properties
-.........................................
+.............................
 
 For Continuous data there are three additional fields:
 
@@ -1332,19 +1339,19 @@ required.
 
 
 Product ID Naming Scheme
-.........................................
+........................
 
 The product ID for Ordinal products is described in the GeospatialProduct model
 description. Continuous products are prefixed with the string 'CON'.
 
 Continuous Product Aggregation Rules
-.........................................
+....................................
 
 Continuous products may be part of aggregations and their lineage may include
 aggregations.
 
 Continuous Product Dictionaries
-.........................................
+...............................
 
 Unit - a look up table storing measurement units:
 
