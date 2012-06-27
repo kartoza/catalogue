@@ -8,7 +8,7 @@ import os4eo_command_test
 import misr_command_test
 import terrasar_command_test
 
-# #import unittest classes
+#import unittest classes
 from simpleTest import SimpleTest
 from license_model import LicenseCRUD_Test
 from missionGroup_model import MissionGroupCRUD_Test
@@ -31,6 +31,7 @@ from genericsensorproduct_model import GenericSensorProductCRUD_Test
 from opticalproduct_model import OpticalProductCRUD_Test
 from radarproduct_model import RadarProductCRUD_Test
 from geospatialproduct_model import GeospatialProductCRUD_Test
+from ordinalproduct_model import OrdinalProductCRUD_Test
 from featurereaders_return import FeatureReaders_Test
 from searcher_object import SearcherObject_Test
 from search_bandcount import SearchBandCount_Test

@@ -1,0 +1,11 @@
+[
+    {
+        "pk": 55000001,
+        "model": "catalogue.ordinalproduct",
+        "fields": {
+            "class_count": 3,
+            "confusion_matrix": "1,2,3,4,5",
+            "kappa_score": null
+        }
+    }
+]
