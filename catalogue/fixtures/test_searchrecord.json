@@ -1,0 +1,15 @@
+[
+    {
+        "pk": 1,
+        "model": "catalogue.searchrecord",
+        "fields": {
+            "user": 1,
+            "order": 1,
+            "product": 1960810,
+            "delivery_detail": null,
+            "internal_order_id": null,
+            "download_path": "",
+            "product_ready": false
+        }
+    }
+]

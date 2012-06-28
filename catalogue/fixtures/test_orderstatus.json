@@ -1,0 +1,58 @@
+[
+    {
+        "pk": 1,
+        "model": "catalogue.orderstatus",
+        "fields": {
+            "name": "Placed"
+        }
+    },
+    {
+        "pk": 2,
+        "model": "catalogue.orderstatus",
+        "fields": {
+            "name": "In production"
+        }
+    },
+    {
+        "pk": 3,
+        "model": "catalogue.orderstatus",
+        "fields": {
+            "name": "Completed"
+        }
+    },
+    {
+        "pk": 4,
+        "model": "catalogue.orderstatus",
+        "fields": {
+            "name": "Cancelled"
+        }
+    },
+    {
+        "pk": 5,
+        "model": "catalogue.orderstatus",
+        "fields": {
+            "name": "Awaiting info from client"
+        }
+    },
+    {
+        "pk": 6,
+        "model": "catalogue.orderstatus",
+        "fields": {
+            "name": "Awaiting imagery from provider"
+        }
+    },
+    {
+        "pk": 7,
+        "model": "catalogue.orderstatus",
+        "fields": {
+            "name": "Ready for download"
+        }
+    },
+    {
+        "pk": 8,
+        "model": "catalogue.orderstatus",
+        "fields": {
+            "name": "Reopened due to issues"
+        }
+    }
+]
