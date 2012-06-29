@@ -375,6 +375,7 @@ def createDeliveryDetailForm(theRequest, theref_id):
                     initial={'ref_id':theref_id},prefix='%i' % int(theref_id))
     return dict(myDeliveryDetailForm=myDeliveryDetailForm)
 
+
 @renderWithContext("deliveryDetail.html")
 @login_required
 def showDeliveryDetail(theRequest, theref_id):

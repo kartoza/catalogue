@@ -583,12 +583,12 @@ def getFeatureInfo(theRequest,
 def index(theRequest):
     myMissions = Mission.objects.all()
     #render_to_response is done by the renderWithContext decorator
-    myProfile = None
-    return ( {
-          'myPartnerFlag' : isStrategicPartner(theRequest),
-          'myMissions' : myMissions,
+    return ({
+          'myPartnerFlag': isStrategicPartner(theRequest),
+          'myMissions': myMissions,
         }
       )
+
 
 #renderWithContext is explained in renderWith.py
 @renderWithContext('video.html')
