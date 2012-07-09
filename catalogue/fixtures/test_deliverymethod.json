@@ -1,28 +1,28 @@
 [
     {
-        "pk": 1, 
-        "model": "catalogue.deliverymethod", 
+        "pk": 1,
+        "model": "catalogue.deliverymethod",
         "fields": {
             "name": "Courier + External Hard Disk"
         }
-    }, 
+    },
     {
-        "pk": 2, 
-        "model": "catalogue.deliverymethod", 
+        "pk": 2,
+        "model": "catalogue.deliverymethod",
         "fields": {
             "name": "Download via FTP or HTTP"
         }
-    }, 
+    },
     {
-        "pk": 3, 
-        "model": "catalogue.deliverymethod", 
+        "pk": 3,
+        "model": "catalogue.deliverymethod",
         "fields": {
             "name": "DVD(s)"
         }
-    }, 
+    },
     {
-        "pk": 4, 
-        "model": "catalogue.deliverymethod", 
+        "pk": 4,
+        "model": "catalogue.deliverymethod",
         "fields": {
             "name": "Other (please specify in notes)"
         }

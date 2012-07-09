@@ -40,6 +40,8 @@ from clip_model import ClipCRUD_Test
 from datum_model import DatumCRUD_Test
 from resamplingmethod_model import ResamplingMethodCRUD_Test
 from fileformat_model import FileFormatCRUD_Test
+from orderstatus_model import OrderStatusCRUD_Test
+from deliverymethod_model import DeliveryMethodCRUD_Test
 from featurereaders_return import FeatureReaders_Test
 from searcher_object import SearcherObject_Test
 from search_bandcount import SearchBandCount_Test
