@@ -1,14 +1,14 @@
 [
     {
-        "pk": 1, 
-        "model": "catalogue.resamplingmethod", 
+        "pk": 1,
+        "model": "catalogue.resamplingmethod",
         "fields": {
             "name": "Nearest Neighbour"
         }
-    }, 
+    },
     {
-        "pk": 2, 
-        "model": "catalogue.resamplingmethod", 
+        "pk": 2,
+        "model": "catalogue.resamplingmethod",
         "fields": {
             "name": "Cubic convolution"
         }
