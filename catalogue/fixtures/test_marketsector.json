@@ -1,56 +1,56 @@
 [
     {
-        "pk": 1, 
-        "model": "catalogue.marketsector", 
+        "pk": 1,
+        "model": "catalogue.marketsector",
         "fields": {
             "name": "Decline to say"
         }
-    }, 
+    },
     {
-        "pk": 2, 
-        "model": "catalogue.marketsector", 
+        "pk": 2,
+        "model": "catalogue.marketsector",
         "fields": {
             "name": "Government"
         }
-    }, 
+    },
     {
-        "pk": 3, 
-        "model": "catalogue.marketsector", 
+        "pk": 3,
+        "model": "catalogue.marketsector",
         "fields": {
             "name": "Academic - Staff Research"
         }
-    }, 
+    },
     {
-        "pk": 4, 
-        "model": "catalogue.marketsector", 
+        "pk": 4,
+        "model": "catalogue.marketsector",
         "fields": {
             "name": "Academic - Student Research"
         }
-    }, 
+    },
     {
-        "pk": 5, 
-        "model": "catalogue.marketsector", 
+        "pk": 5,
+        "model": "catalogue.marketsector",
         "fields": {
             "name": "Commercial"
         }
-    }, 
+    },
     {
-        "pk": 6, 
-        "model": "catalogue.marketsector", 
+        "pk": 6,
+        "model": "catalogue.marketsector",
         "fields": {
             "name": "Non profit organisation"
         }
-    }, 
+    },
     {
-        "pk": 7, 
-        "model": "catalogue.marketsector", 
+        "pk": 7,
+        "model": "catalogue.marketsector",
         "fields": {
             "name": "Private Individual"
         }
-    }, 
+    },
     {
-        "pk": 8, 
-        "model": "catalogue.marketsector", 
+        "pk": 8,
+        "model": "catalogue.marketsector",
         "fields": {
             "name": "Other"
         }
