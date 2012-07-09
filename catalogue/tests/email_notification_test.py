@@ -41,6 +41,12 @@ class EmailNotificationTest(TestCase):
         'test_license.json',
         'test_projection',
         'test_quality',
+        'test_orderstatus.json',
+        'test_order.json',
+        'test_searchrecord.json',
+        'test_sacuserprofile.json',
+        'test_orderstatus.json',
+        'test_marketsector.json',
         'test_creatingsoftware',
         'test_genericproduct.json',
         'test_genericimageryproduct.json',
@@ -61,5 +67,8 @@ class EmailNotificationTest(TestCase):
 
     def test_StaffNotifications(self):
         #myUser = User.objects.get(id=1)
+        #/addtocart/2277404/?xhr
+        #/addtocart/2531895/?xhr
+        #/addtocart/2604814/?xhr
         myOrderId = Order.objects.all()[0].id
         notifySalesStaff(myOrderId)
