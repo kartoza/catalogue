@@ -35,6 +35,15 @@ from ordinalproduct_model import OrdinalProductCRUD_Test
 from continuousproduct_model import ContinuousProductCRUD_Test
 from searchrecord_model import SearchRecordCRUD_Test
 from search_model import SearchCRUD_Test
+from searchdaterange_model import SearchDateRangeCRUD_Test
+from clip_model import ClipCRUD_Test
+from datum_model import DatumCRUD_Test
+from resamplingmethod_model import ResamplingMethodCRUD_Test
+from fileformat_model import FileFormatCRUD_Test
+from orderstatus_model import OrderStatusCRUD_Test
+from deliverymethod_model import DeliveryMethodCRUD_Test
+from deliverydetail_model import DeliveryDetailCRUD_Test
+from marketsector_model import MarketSectorCRUD_Test
 from featurereaders_return import FeatureReaders_Test
 from searcher_object import SearcherObject_Test
 from search_bandcount import SearchBandCount_Test
