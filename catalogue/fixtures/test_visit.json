@@ -1,0 +1,14 @@
+[
+    {
+        "pk": 1,
+        "model": "catalogue.visit",
+        "fields": {
+            "city": "Unknown city",
+            "country": "Unknown conutry",
+            "ip_address": "10.10.10.10",
+            "ip_position": "POINT(28.2294006347656 -25.7068996429443)",
+            "visit_date": "2010-11-10 10:23:37",
+            "user": 1
+        }
+    }
+]
