@@ -1,4 +1,4 @@
-'''
+"""
 SANSA-EO Catalogue - OrderNotificationRecipients_model - implements basic CRUD unittests
 
 Contact : lkleyn@sansa.org.za
@@ -10,7 +10,7 @@ Contact : lkleyn@sansa.org.za
    license to use any code contained herein which is the intellectual property
    of Linfiniti Consulting CC.
 
-'''
+"""
 
 __author__ = 'dodobasic@gmail.com'
 __version__ = '0.1'
@@ -23,9 +23,9 @@ from catalogue.models import OrderNotificationRecipients
 
 
 class OrderNotificationRecipientsCRUD_Test(TestCase):
-    '''
+    """
     Tests models.
-    '''
+    """
     fixtures = [
         'test_user.json',
         'test_missionsensor.json',
@@ -33,15 +33,15 @@ class OrderNotificationRecipientsCRUD_Test(TestCase):
         ]
 
     def setUp(self):
-        '''
+        """
         Sets up before each test
-        '''
+        """
         pass
 
     def test_OrderNotificationRecipients_create(self):
-        '''
+        """
         Tests OrderNotificationRecipients model creation
-        '''
+        """
         myNewData = {
             'user_id': 1
         }
@@ -71,9 +71,9 @@ class OrderNotificationRecipientsCRUD_Test(TestCase):
                     message='Model M2M field "%s" count:' % field))
 
     def test_OrderNotificationRecipients_read(self):
-        '''
+        """
         Tests OrderNotificationRecipients model read
-        '''
+        """
         myModelPK = 1
         myExpectedModelData = {
             'user_id': 1
@@ -100,9 +100,9 @@ class OrderNotificationRecipientsCRUD_Test(TestCase):
                     message='For field "%s"' % field))
 
     def test_OrderNotificationRecipients_update(self):
-        '''
+        """
         Tests OrderNotificationRecipients model update
-        '''
+        """
         myModelPK = 1
         myModel = OrderNotificationRecipients.objects.get(pk=myModelPK)
         myNewModelData = {
@@ -119,9 +119,9 @@ class OrderNotificationRecipientsCRUD_Test(TestCase):
                 message='For key %s' % key))
 
     def test_OrderNotificationRecipients_delete(self):
-        '''
+        """
         Tests OrderNotificationRecipients model delete
-        '''
+        """
         myModelPK = 1
         myModel = OrderNotificationRecipients.objects.get(pk=myModelPK)
 
