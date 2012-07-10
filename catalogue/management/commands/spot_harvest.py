@@ -345,8 +345,8 @@ class Command(BaseCommand):
                       'original_product_id': package.get('A21'),
                       'solar_zenith_angle': solar_zenith_angle,
                       'solar_azimuth_angle': solar_azimuth_angle,
-                      'geometric_resolution_x': package.get('RESOL'),
-                      'geometric_resolution_y': package.get('RESOL'),
+                      'spatial_resolution_x': package.get('RESOL'),
+                      'spatial_resolution_y': package.get('RESOL'),
                     }
                     verblog(data, 2)
 
