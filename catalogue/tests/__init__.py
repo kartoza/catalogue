@@ -46,6 +46,7 @@ from deliverydetail_model import DeliveryDetailCRUD_Test
 from marketsector_model import MarketSectorCRUD_Test
 from order_model import OrderCRUD_Test
 from orderstatushistory_model import OrderStatusHistoryCRUD_Test
+from taskingrequest_model import TaskingRequestCRUD_Test
 from featurereaders_return import FeatureReaders_Test
 from searcher_object import SearcherObject_Test
 from search_bandcount import SearchBandCount_Test

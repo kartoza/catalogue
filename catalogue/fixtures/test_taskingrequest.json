@@ -1,0 +1,10 @@
+[
+    {
+        "pk": 1,
+        "model": "catalogue.taskingrequest",
+        "fields": {
+            "target_date": "2010-11-10 10:23:37",
+            "mission_sensor": 1
+        }
+    }
+]
