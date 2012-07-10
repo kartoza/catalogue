@@ -59,6 +59,8 @@ from integerCSVIntervalsField_return import IntegersCSVIntervalsField_Test
 from visit_model import VisitCRUD_Test
 from sacuserprofile_model import SacUserProfileCRUD_Test
 from ordernotificationrecipients_model import OrderNotificationRecipientsCRUD_Test
+from sacuserprofile_model import SacUserProfileCRUD_Test
+from utmzonecalc_module import utmZoneFromLatLon_Test
 
 #this is only required for doctests
 __test__ = {
