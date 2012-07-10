@@ -57,7 +57,7 @@ from search_rowpath import SearchRowPath_Test
 from email_notification_test import EmailNotificationTest
 from integerCSVIntervalsField_return import IntegersCSVIntervalsField_Test
 from visit_model import VisitCRUD_Test
-
+from sacuserprofile_model import SacUserProfileCRUD_Test
 #this is only required for doctests
 __test__ = {
   #'simple_tests' : simple_tests,
