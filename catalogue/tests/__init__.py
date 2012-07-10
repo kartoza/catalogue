@@ -8,7 +8,7 @@ import os4eo_command_test
 import misr_command_test
 import terrasar_command_test
 
-# #import unittest classes
+#import unittest classes
 from simpleTest import SimpleTest
 from license_model import LicenseCRUD_Test
 from missionGroup_model import MissionGroupCRUD_Test
@@ -30,6 +30,23 @@ from genericimageryproduct_model import GenericImageryProductCRUD_Test
 from genericsensorproduct_model import GenericSensorProductCRUD_Test
 from opticalproduct_model import OpticalProductCRUD_Test
 from radarproduct_model import RadarProductCRUD_Test
+from geospatialproduct_model import GeospatialProductCRUD_Test
+from ordinalproduct_model import OrdinalProductCRUD_Test
+from continuousproduct_model import ContinuousProductCRUD_Test
+from searchrecord_model import SearchRecordCRUD_Test
+from search_model import SearchCRUD_Test
+from searchdaterange_model import SearchDateRangeCRUD_Test
+from clip_model import ClipCRUD_Test
+from datum_model import DatumCRUD_Test
+from resamplingmethod_model import ResamplingMethodCRUD_Test
+from fileformat_model import FileFormatCRUD_Test
+from orderstatus_model import OrderStatusCRUD_Test
+from deliverymethod_model import DeliveryMethodCRUD_Test
+from deliverydetail_model import DeliveryDetailCRUD_Test
+from marketsector_model import MarketSectorCRUD_Test
+from order_model import OrderCRUD_Test
+from orderstatushistory_model import OrderStatusHistoryCRUD_Test
+from taskingrequest_model import TaskingRequestCRUD_Test
 from featurereaders_return import FeatureReaders_Test
 from searcher_object import SearcherObject_Test
 from search_bandcount import SearchBandCount_Test
@@ -39,6 +56,11 @@ from search_cloudcover import SearchCloudCover_Test
 from search_rowpath import SearchRowPath_Test
 from email_notification_test import EmailNotificationTest
 from integerCSVIntervalsField_return import IntegersCSVIntervalsField_Test
+from visit_model import VisitCRUD_Test
+from sacuserprofile_model import SacUserProfileCRUD_Test
+from ordernotificationrecipients_model import OrderNotificationRecipientsCRUD_Test
+from sacuserprofile_model import SacUserProfileCRUD_Test
+from utmzonecalc_module import utmZoneFromLatLon_Test
 
 #this is only required for doctests
 __test__ = {

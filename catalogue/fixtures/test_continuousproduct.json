@@ -1,0 +1,11 @@
+[
+    {
+        "pk": 56000001,
+        "model": "catalogue.continuousproduct",
+        "fields": {
+            "range_min": 0.1,
+            "range_max": 99.9,
+            "unit": 1
+        }
+    }
+]

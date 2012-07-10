@@ -1,0 +1,26 @@
+[
+    {
+        "pk": 1,
+        "model": "catalogue.sacuserprofile",
+        "fields": {
+            "about": "",
+            "post_code": "123",
+            "surname": "Sutton",
+            "strategic_partner": false,
+            "firstname": "Tim",
+            "url": "",
+            "country": null,
+            "address2": "kjkj",
+            "address3": "",
+            "address4": "",
+            "longitude": null,
+            "contact_no": "123123",
+            "latitude": null,
+            "location": "",
+            "address1": "12321 kjk",
+            "date": "2012-07-09 14:14:08",
+            "organisation": "None",
+            "user": 1
+        }
+    }
+]

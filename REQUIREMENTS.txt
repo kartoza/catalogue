@@ -1,6 +1,6 @@
 Django==1.2.1
-#GDAL==1.7.1
-#InformixDB==2.5
+GDAL==1.7.1
+InformixDB==2.5
 Jinja2==2.5.5
 PIL==1.1.7
 Pygments==1.4
@@ -14,7 +14,7 @@ django-registration==0.7
 docutils==0.7
 ## FIXME: could not find svn URL in dependency_links for this package:
 elementsoap==0.6-20071224
-gdata==2.0.11
+gdata==2.0.17
 html5lib==0.90
 lxml==2.3
 mercurial==1.8.1
@@ -29,3 +29,4 @@ wsgiref==0.1.2
 coverage
 django-coverage
 DateUtils
+mercurial==1.8.3
