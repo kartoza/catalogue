@@ -264,6 +264,7 @@ def dataSummaryTable(theRequest):
         myTotal += myResult.id__count
     return ({"myResultSet": myResultSet, "myTotal" : myTotal})
 
+
 @staff_member_required
 #renderWithContext is explained in renderWith.py
 @renderWithContext('sensorSummaryTable.html')
@@ -275,13 +276,13 @@ def sensorSummaryTable(theRequest, theSensorId):
     # Note: don't use len() to count recs - its very inefficient
     #       use count() rather
     #
-    mySensor = get_object_or_404(MissionSensor,id=theSensorId)
+    mySensor = get_object_or_404(MissionSensor, id=theSensorId)
     myTaskingSensorCount = TaskingRequest.objects.filter(mission_sensor=mySensor).count()
     myTaskingTotalCount = TaskingRequest.objects.count()
     mySearchCount = Search.objects.all().count()
     mySearchForSensorCount = Search.objects.filter(sensors=mySensor).count()
     myProductForSensorCount = None
-    if ( mySensor.is_radar ):
+    if (mySensor.is_radar):
         myProductForSensorCount = RadarProduct.objects.filter(acquisition_mode__sensor_type__mission_sensor=mySensor).count()
     else:
         myProductForSensorCount = OpticalProduct.objects.filter(acquisition_mode__sensor_type__mission_sensor=mySensor).count()
@@ -289,14 +290,7 @@ def sensorSummaryTable(theRequest, theSensorId):
 
     myRecords = SearchRecord.objects.filter(user__isnull=False).filter(order__isnull=False)
     myProductOrdersTotalCount = myRecords.count()
-    myProductOrdersForSensorCount = 0
-    for myRecord in myRecords:
-        try:
-            myProduct = myRecord.product
-            if (myProduct.genericimageryproduct.genericsensorproduct.acquisition_mode.sensor_type.mission_sensor == mySensor):
-                myProductOrdersForSensorCount += 1
-        except:
-            pass
+    myProductOrdersForSensorCount = SearchRecord.objects.filter(user__isnull=False).filter(order__isnull=False).filter(product__genericimageryproduct__genericsensorproduct__acquisition_mode__sensor_type__mission_sensor__exact=mySensor).count()
 
     myResults = {}
     myResults["Tasking requests for this sensor"] = myTaskingSensorCount
@@ -307,7 +301,7 @@ def sensorSummaryTable(theRequest, theSensorId):
     myResults["Total ordered products for all sensors"] = myProductOrdersTotalCount
     myResults["Total products for this sensor"] = myProductForSensorCount
     myResults["Total products for all sensors"] = myProductTotalCount
-    return ({ "myResults": myResults, "mySensor" : mySensor})
+    return ({"myResults": myResults, "mySensor": mySensor})
 
 @staff_member_required
 #renderWithContext is explained in renderWith.py
