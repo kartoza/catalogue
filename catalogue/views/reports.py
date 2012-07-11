@@ -8,6 +8,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
 from django.template import RequestContext
 from django.forms.util import ErrorList
+#for sorted dictionaries, useful when rendering templates
+from django.utils.datastructures import SortedDict
 
 # for aggregate queries
 from django.db.models import Count, Min, Max #for aggregate queries
@@ -292,7 +294,7 @@ def sensorSummaryTable(theRequest, theSensorId):
     myProductOrdersTotalCount = myRecords.count()
     myProductOrdersForSensorCount = SearchRecord.objects.filter(user__isnull=False).filter(order__isnull=False).filter(product__genericimageryproduct__genericsensorproduct__acquisition_mode__sensor_type__mission_sensor__exact=mySensor).count()
 
-    myResults = {}
+    myResults = SortedDict()
     myResults["Tasking requests for this sensor"] = myTaskingSensorCount
     myResults["Tasking requests all sensors"] = myTaskingTotalCount
     myResults["Searches for this sensor"] = mySearchForSensorCount
