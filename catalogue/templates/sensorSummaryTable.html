@@ -17,6 +17,30 @@
     {% endfor %}
   </tbody>
 </table>
+<p>
+  <h3>Yearly catalogue product overview for {{mySensor.name}}</h3>
+<table >
+  <thead>
+  </thead>
+  <tbody>
+    <tr>
+      {% for myData in mySensorYearyStats %}
+      <th>
+          {{ myData.year }}
+      </th>
+      {% endfor %}
+    </tr>
+    <tr>
+      {% for myData in mySensorYearyStats %}
+      <td>
+          {{ myData.count }}
+      </td>
+      {% endfor %}
+    </tr>
+  </tbody>
+</table>
+</p>
+
 <p>Please note:</p>
 <ul>
   <li>These results are for 'all time'.</li>

@@ -303,7 +303,31 @@ def sensorSummaryTable(theRequest, theSensorId):
     myResults["Total ordered products for all sensors"] = myProductOrdersTotalCount
     myResults["Total products for this sensor"] = myProductForSensorCount
     myResults["Total products for all sensors"] = myProductTotalCount
-    return ({"myResults": myResults, "mySensor": mySensor})
+
+    mySensorYearlyStats = Search().customSQL("""
+    SELECT count(*) as count,extract(YEAR from catalogue_genericproduct.product_date)::int as year
+    FROM
+      public.catalogue_genericproduct,
+      public.catalogue_genericimageryproduct,
+      public.catalogue_genericsensorproduct,
+      public.catalogue_acquisitionmode,
+      public.catalogue_sensortype,
+      public.catalogue_missionsensor
+    WHERE
+      catalogue_genericproduct.id = catalogue_genericimageryproduct.genericproduct_ptr_id AND
+      catalogue_genericimageryproduct.genericproduct_ptr_id = catalogue_genericsensorproduct.genericimageryproduct_ptr_id AND
+      catalogue_genericsensorproduct.acquisition_mode_id = catalogue_acquisitionmode.id AND
+      catalogue_acquisitionmode.sensor_type_id = catalogue_sensortype.id AND
+      catalogue_sensortype.mission_sensor_id = catalogue_missionsensor.id
+      AND catalogue_missionsensor.id = %(sensor_id)s
+    GROUP BY extract(YEAR from catalogue_genericproduct.product_date)
+    -- order by year ASC, month ASC
+    ORDER BY year ASC;""",
+    ['count', 'year'],
+    {'sensor_id': mySensor.pk})
+
+    return ({"myResults": myResults, "mySensor": mySensor,
+        "mySensorYearyStats": mySensorYearlyStats})
 
 @staff_member_required
 #renderWithContext is explained in renderWith.py
