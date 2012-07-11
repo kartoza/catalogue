@@ -23,20 +23,22 @@
   <thead>
   </thead>
   <tbody>
+    {% for myDataPage in mySensorYearyStats %}
     <tr>
-      {% for myData in mySensorYearyStats %}
+      {% for myData in myDataPage %}
       <th>
           {{ myData.year }}
       </th>
       {% endfor %}
     </tr>
     <tr>
-      {% for myData in mySensorYearyStats %}
+      {% for myData in myDataPage %}
       <td>
           {{ myData.count }}
       </td>
       {% endfor %}
     </tr>
+    {% endfor %}
   </tbody>
 </table>
 </p>

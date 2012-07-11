@@ -30,6 +30,24 @@ import traceback
 # for date handling
 import datetime
 
+
+# in case you need to slice ResultSet (paginate) for display
+def sliceForDisplay(myList, pageSize=10):
+    """
+    Useful when in need to slice large list (ResultSet) into 'pages'
+    which can then be handled separately in template
+
+    Example:
+    * myL = [1,1,1,1,2,2,2,2]
+    * list(sliceForDisplay(myL, 4))
+    * [[1, 1, 1, 1], [2, 2, 2, 2]]
+    """
+    #calculate number of rows
+    myNumRows = (len(myList) / pageSize) + 1
+    for x in xrange(myNumRows):
+        yield myList[x * pageSize:x * pageSize + pageSize]
+
+
 @staff_member_required
 #renderWithContext is explained in renderWith.py
 @renderWithContext('visitorReport.html')
@@ -326,8 +344,20 @@ def sensorSummaryTable(theRequest, theSensorId):
     ['count', 'year'],
     {'sensor_id': mySensor.pk})
 
-    return ({"myResults": myResults, "mySensor": mySensor,
-        "mySensorYearyStats": mySensorYearlyStats})
+    #define beginning year for yearly product summary
+    myStartYear = 1981
+    myCurrentYear = datetime.date.today().year
+    # create a list of 'empty' records
+    mySensorYearlyStatsAll = [{'year': myYear, 'count':0} for myYear in range(myStartYear, myCurrentYear + 1)]
+
+    # update records, replace with actual data
+    for idx, myTmpYear in enumerate(mySensorYearlyStatsAll):
+        for myDataYear in mySensorYearlyStats:
+            if myDataYear.get('year') == myTmpYear.get('year'):
+                mySensorYearlyStatsAll[idx] = myDataYear
+
+    return ({'myResults': myResults, 'mySensor': mySensor,
+        'mySensorYearyStats': sliceForDisplay(mySensorYearlyStatsAll)})
 
 @staff_member_required
 #renderWithContext is explained in renderWith.py
