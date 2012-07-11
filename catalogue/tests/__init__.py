@@ -61,6 +61,7 @@ from sacuserprofile_model import SacUserProfileCRUD_Test
 from ordernotificationrecipients_model import OrderNotificationRecipientsCRUD_Test
 from sacuserprofile_model import SacUserProfileCRUD_Test
 from utmzonecalc_module import utmZoneFromLatLon_Test
+from rangetag_templatetag import RangeTag_Test
 
 #this is only required for doctests
 __test__ = {
