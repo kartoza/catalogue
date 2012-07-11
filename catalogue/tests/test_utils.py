@@ -24,11 +24,17 @@ from django.test import TestCase
 from catalogue.models import User
 
 
-def simpleMessage(theResult, theExpectedResult, message=''):
-    """Format simple assert message"""
+def simpleMessage(theResult, theExpectedResult, message='', enclose_in=''):
+    """Format simple assert message
 
-    return '%s\nGot: %s \nExpected: %s ' % (message, theResult,
-        theExpectedResult)
+    Params:
+        message - specify more expressive message
+        enclose_in - character/text to enclose output with, helpful with strings,
+            i.e. theString -> #theString#"""
+
+    return '%(message)s\nGot: %(enclose_in)s%(result)s%(enclose_in)s \n\
+Expected: %(enclose_in)s%(expectedResult)s%(enclose_in)s ' % {'message': message,
+    'result': theResult, 'expectedResult': theExpectedResult, 'enclose_in': enclose_in}
 
 
 #
