@@ -37,7 +37,7 @@ class IntegersCSVIntervalsField(forms.RegexField):
         for value in IntegersCSVIntervalsField.to_tuple(values):
             if len(value) == 2:
                 if not value[1] > value[0]:
-                    raise ValidationError, 'The range values are not correct: %d %d' % value
+                    raise forms.ValidationError, 'The range values are not correct: %d %d' % value
 
 
 class NoValidationChoiceField(forms.ChoiceField):
