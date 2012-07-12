@@ -14,13 +14,18 @@ Contact : lkleyn@sansa.org.za
 """
 
 __author__ = 'dodobasic@gmail.com'
-__version__ = '0.1'
-__date__ = '19/06/2012'
+__version__ = '0.2'
+__date__ = '12/07/2012'
 __copyright__ = 'South African National Space Agency'
 
 from django.test import TestCase
 from catalogue.tests.test_utils import simpleMessage
 from catalogue.fields import IntegersCSVIntervalsField
+from django import forms
+
+
+class IntegersCSVIntervalsForm(forms.Form):
+    integerfield = IntegersCSVIntervalsField()
 
 
 class IntegersCSVIntervalsField_Test(TestCase):
@@ -72,3 +77,32 @@ class IntegersCSVIntervalsField_Test(TestCase):
             myResult = myField.to_tuple(testVal)
             self.assertEqual(myResult, myExpResults[idx],
                 simpleMessage(myResult, myExpResults[idx]))
+
+    def test_formValidation_true(self):
+        """
+        Tests validation of IntegersCSVIntervalsField input successes
+        """
+        #test searches pk
+        myTestValues = [{'integerfield': '1-2'}, {'integerfield': '1,2,4-10'},
+        {'integerfield': '1-5, 0, 6-10'}]
+
+        for myTestVal in myTestValues:
+            myForm = IntegersCSVIntervalsForm(myTestVal)
+
+            myRes = myForm.is_valid()
+            myExpRes = True
+            self.assertEqual(myRes, myExpRes, simpleMessage(myRes, myExpRes))
+
+    def test_formValidation_false(self):
+        """
+        Tests validation of IntegersCSVIntervalsField input
+        """
+        #test searches pk
+        myTestValues = [{'integerfield': '10-4'}, {'integerfield': '99-0'}]
+
+        for myTestVal in myTestValues:
+            myForm = IntegersCSVIntervalsForm(myTestVal)
+
+            myRes = myForm.is_valid()
+            myExpRes = False
+            self.assertEqual(myRes, myExpRes, simpleMessage(myRes, myExpRes))

@@ -64,6 +64,7 @@ from utmzonecalc_module import utmZoneFromLatLon_Test
 from rangetag_templatetag import RangeTag_Test
 from graphtag_templatetag import gPieChart_Test
 from boxtag_templatetag import BoxTag_Test
+
 #this is only required for doctests
 __test__ = {
   #'simple_tests' : simple_tests,
