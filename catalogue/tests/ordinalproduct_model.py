@@ -22,6 +22,7 @@ from catalogue.tests.test_utils import simpleMessage
 from catalogue.models import OrdinalProduct
 from datetime import datetime
 
+
 class OrdinalProductCRUD_Test(TestCase):
     """
     Tests models.

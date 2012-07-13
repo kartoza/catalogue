@@ -719,25 +719,26 @@ class GenericImageryProduct(GenericProduct):
         Returns metadata dictionary
         """
         metadata = dict(
-          product_date            = self.product_date.isoformat(),
-          file_identifier         = self.product_id,
-          vertical_cs             = self.projection.name,
-          processing_level_code   = self.processing_level.abbreviation,
-          md_data_identification  = unicode(self.acquisition_mode),
-          md_product_date         = self.product_date.isoformat(),
-          md_abstract             = self.getAbstract(),
-          bbox_west               = self.spatial_coverage.extent[0],
-          bbox_east               = self.spatial_coverage.extent[2],
-          bbox_north              = self.spatial_coverage.extent[3],
-          bbox_south              = self.spatial_coverage.extent[1],
-          image_quality_code      = self.quality.name,
-          spatial_coverage        = ' '.join(["%s,%s"  % _p for _p in self.spatial_coverage.tuple[0]]),
-          institution_name        = self.owner.name,
-          institution_address     = self.owner.address1,
-          institution_city        = self.owner.address2,
-          institution_region      = '',
-          institution_postcode    = self.owner.post_code,
-          institution_country     = self.owner.address3,
+          product_date=self.product_date.isoformat(),
+          file_identifier=self.product_id,
+          vertical_cs=self.projection.name,
+          processing_level_code=self.processing_level.abbreviation,
+          md_data_identification=unicode(self.acquisition_mode),
+          md_product_date=self.product_date.isoformat(),
+          md_abstract=self.getAbstract(),
+          bbox_west=self.spatial_coverage.extent[0],
+          bbox_east=self.spatial_coverage.extent[2],
+          bbox_north=self.spatial_coverage.extent[3],
+          bbox_south=self.spatial_coverage.extent[1],
+          image_quality_code=self.quality.name,
+          spatial_coverage=' '.join(
+                    ["%s,%s" % _p for _p in self.spatial_coverage.tuple[0]]),
+          institution_name=self.owner.name,
+          institution_address=self.owner.address1,
+          institution_city=self.owner.address2,
+          institution_region='',
+          institution_postcode=self.owner.post_code,
+          institution_country=self.owner.address3,
        )
         return metadata
 
@@ -762,18 +763,22 @@ class GenericSensorProduct(GenericImageryProduct):
     geometric_accuracy_2sigma = models.FloatField(null=True, blank=True)
     radiometric_signal_to_noise_ratio = models.FloatField(null=True, blank=True)
     radiometric_percentage_error = models.FloatField(null=True, blank=True)
-    spectral_accuracy                   = models.FloatField(help_text="Wavelength Deviation", null=True, blank=True)
-    orbit_number                        = models.IntegerField(null=True, blank=True)
-    path                                = models.IntegerField(null=True, blank=True, db_index=True) #K Path Orbit
-    path_offset                         = models.IntegerField(null=True, blank=True, db_index=True)
-    row                                 = models.IntegerField(null=True, blank=True) #J Frame Row
-    row_offset                          = models.IntegerField(null=True, blank=True)
-    offline_storage_medium_id           = models.CharField(max_length=12, help_text="Identifier for the offline tape or other medium on which this scene is stored", null=True, blank=True)
-    online_storage_medium_id            = models.CharField(max_length=36, help_text="DIMS Product Id as defined by Werum e.g. S5_G2_J_MX_200902160841252_FG_001822",null=True, blank=True)
+    spectral_accuracy = models.FloatField(help_text="Wavelength Deviation", null=True, blank=True)
+    orbit_number = models.IntegerField(null=True, blank=True)
+    path = models.IntegerField(null=True, blank=True, db_index=True) #K Path Orbit
+    path_offset = models.IntegerField(null=True, blank=True, db_index=True)
+    row = models.IntegerField(null=True, blank=True) #J Frame Row
+    row_offset = models.IntegerField(null=True, blank=True)
+    offline_storage_medium_id = models.CharField(max_length=12,
+        help_text=("Identifier for the offline tape or other medium on which"
+        "this scene is stored"),
+        null=True,
+        blank=True)
+    online_storage_medium_id = models.CharField(max_length=36, help_text="DIMS Product Id as defined by Werum e.g. S5_G2_J_MX_200902160841252_FG_001822",null=True, blank=True)
 
     # We need a flag to tell if this Product class can have instances (if it is not abstract)
-    concrete              = False
-    objects               = models.GeoManager()
+    concrete = False
+    objects = models.GeoManager()
 
     class Meta:
         """This is not an abstract base class although you should avoid dealing directly with it
@@ -842,10 +847,13 @@ class GenericSensorProduct(GenericImageryProduct):
         myPreviousThumbPath = self.thumbnailDirectory()
         myList = []
         # TODO: deprecate the pad function and use string.ljust(3, '-')
-        myList.append(self.pad(self.acquisition_mode.sensor_type.mission_sensor.mission.abbreviation, 3))
-        myList.append(self.pad(self.acquisition_mode.sensor_type.mission_sensor.abbreviation, 3))
-        myList.append(self.pad(self.acquisition_mode.abbreviation, 4))
-        myList.append(self.pad(self.acquisition_mode.sensor_type.abbreviation, 3))
+        myMode = self.acquisition_mode
+        myList.append(
+            self.pad(myMode.sensor_type.mission_sensor.mission.abbreviation, 3))
+        myList.append(
+            self.pad(myMode.sensor_type.mission_sensor.abbreviation, 3))
+        myList.append(self.pad(myMode.abbreviation, 4))
+        myList.append(self.pad(myMode.sensor_type.abbreviation, 3))
         # TODO: deprecate the zeropad function and use string.ljust(3, '0')
         myList.append(self.zeroPad(str(self.path),4))
         myList.append(self.zeroPad(str(self.path_offset),2))
