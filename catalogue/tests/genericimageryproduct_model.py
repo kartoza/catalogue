@@ -155,11 +155,14 @@ class GenericImageryProductCRUD_Test(TestCase):
         model GenericSensorProduct - Story #228
         """
         myModelPKs = [1960810, 2143443, 1001218]
-        myExpResults = [{}, {}, {}]
+        # myExpResults = [{}, {}, {}]
 
         for idx, PK in enumerate(myModelPKs):
             myModel = GenericImageryProduct.objects.get(pk=PK)
-            myRes = myModel.getMetadataDict()
-            self.assertEqual(myRes, myExpResults[idx],
-                simpleMessage(myRes, myExpResults[idx],
-                    message='Model PK %s getMetadataDict:' % PK))
+
+            self.assertRaises(AttributeError, myModel.getMetadataDict)
+            # myRes = myModel.getMetadataDict()
+
+            # self.assertEqual(myRes, myExpResults[idx],
+            #    simpleMessage(myRes, myExpResults[idx],
+            #        message='Model PK %s getMetadataDict:' % PK))

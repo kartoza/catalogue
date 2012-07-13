@@ -44,57 +44,54 @@ class IntegersCSVIntervalsField_Test(TestCase):
         Tests parsing of single input value
         """
         myTestValues = ('12', '-123', 'blah')
-        myExpectedResultults = ([(12,)], [(123,)], [])
+        myExpResults = ([(12,)], [(123,)], [])
 
         for idx, testVal in enumerate(myTestValues):
             myField = IntegersCSVIntervalsField()
-            myResultult = myField.to_tuple(testVal)
-            self.assertEqual(myResultult, myExpectedResultults[idx],
-                simpleMessage(myResultult, myExpectedResultults[idx]))
+            myResult = myField.to_tuple(testVal)
+            self.assertEqual(myResult, myExpResults[idx],
+                simpleMessage(myResult, myExpResults[idx]))
 
     def test_rangeValueInput(self):
         """
         Tests parsing of ranged input values
         """
         myTestValues = ('42-52', '34- -123', '34--123')
-        myExpectedResultults = ([(42, 52)], [(34,), (123,)], [(34,), (123,)])
+        myExpResults = ([(42, 52)], [(34,), (123,)], [(34,), (123,)])
 
         for idx, testVal in enumerate(myTestValues):
             myField = IntegersCSVIntervalsField()
-            myResultult = myField.to_tuple(testVal)
-            self.assertEqual(myResultult, myExpectedResultults[idx],
-                simpleMessage(myResultult, myExpectedResultults[idx]))
+            myResult = myField.to_tuple(testVal)
+            self.assertEqual(myResult, myExpResults[idx],
+                simpleMessage(myResult, myExpResults[idx]))
 
     def test_mixedValueInput(self):
         """
         Tests parsing of mixed/multiple input values
         """
         myTestValues = ('45-52, 12, 65-98',)
-        myExpectedResultults = ([(45, 52), (12,), (65, 98)],)
+        myExpResults = ([(45, 52), (12,), (65, 98)],)
 
         for idx, testVal in enumerate(myTestValues):
             myField = IntegersCSVIntervalsField()
-            myResultult = myField.to_tuple(testVal)
-            self.assertEqual(myResultult, myExpectedResultults[idx],
-                simpleMessage(myResultult, myExpectedResultults[idx]))
+            myResult = myField.to_tuple(testVal)
+            self.assertEqual(myResult, myExpResults[idx],
+                simpleMessage(myResult, myExpResults[idx]))
 
     def test_formValidation_true(self):
         """
         Tests validation of IntegersCSVIntervalsField input successes
         """
         #test searches pk
-        myTestValues = [{'integerfield': '1-2'},
-                        {'integerfield': '1,2,4-10'},
-                        {'integerfield': '1-5, 0, 6-10'}]
+        myTestValues = [{'integerfield': '1-2'}, {'integerfield': '1,2,4-10'},
+        {'integerfield': '1-5, 0, 6-10'}]
 
         for myTestVal in myTestValues:
             myForm = IntegersCSVIntervalsForm(myTestVal)
 
-            myResult = myForm.is_valid()
-            myExpectedResult = True
-            self.assertEqual(myResult,
-                             myExpectedResult,
-                             simpleMessage(myResult, myExpectedResult))
+            myRes = myForm.is_valid()
+            myExpRes = True
+            self.assertEqual(myRes, myExpRes, simpleMessage(myRes, myExpRes))
 
     def test_formValidation_false(self):
         """
@@ -102,7 +99,7 @@ class IntegersCSVIntervalsField_Test(TestCase):
         """
         #test searches pk
         myTestValues = [{'integerfield': '10-4'},
-                        {'integerfield': '99-0'}]
+                        {'integerfield': '99-1'}]
 
         for myTestVal in myTestValues:
             myForm = IntegersCSVIntervalsForm(myTestVal)
@@ -110,4 +107,5 @@ class IntegersCSVIntervalsField_Test(TestCase):
             myExpectedResult = False
             self.assertEqual(myResult,
                              myExpectedResult,
-                             simpleMessage(myResult, myExpectedResult))
+                             simpleMessage(myResult, myExpectedResult,
+                             message="For testVal %s:" % myTestVal)))
