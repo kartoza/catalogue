@@ -98,11 +98,12 @@ class IntegersCSVIntervalsField_Test(TestCase):
         Tests validation of IntegersCSVIntervalsField input
         """
         #test searches pk
-        myTestValues = [{'integerfield': '10-4'}, {'integerfield': '99-0'}]
+        myTestValues = [{'integerfield': '10-4'}, {'integerfield': '99-1'}]
 
         for myTestVal in myTestValues:
             myForm = IntegersCSVIntervalsForm(myTestVal)
 
             myRes = myForm.is_valid()
             myExpRes = False
-            self.assertEqual(myRes, myExpRes, simpleMessage(myRes, myExpRes))
+            self.assertEqual(myRes, myExpRes, simpleMessage(myRes, myExpRes,
+                message="For testVal %s:" % myTestVal))
