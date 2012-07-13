@@ -210,8 +210,9 @@ class SearchCRUD_Test(TestCase):
         Tests Search model sensorsAsString method
         """
         myModelPKs = [1, 2, 4, 7]
-        myExpResults = ['MSS-1', 'AVHRR-3, TM-4, AMI-1, ETM+, MSS-1, Xi, Xs, Pan, M',
-        'TM-4', '']
+        myExpResults = ['MSS-1',
+                        'AVHRR-3, TM-4, AMI-1, ETM+, MSS-1, Xi, Xs, Pan, M',
+                        'TM-4', '']
 
         for idx, PK in enumerate(myModelPKs):
             myModel = Search.objects.get(pk=PK)
