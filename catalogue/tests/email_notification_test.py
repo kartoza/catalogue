@@ -71,4 +71,4 @@ class EmailNotificationTest(TestCase):
         #/addtocart/2531895/?xhr
         #/addtocart/2604814/?xhr
         myOrderId = Order.objects.all()[0].id
-        notifySalesStaff(myOrderId)
+        notifySalesStaff(self.user, myOrderId)
