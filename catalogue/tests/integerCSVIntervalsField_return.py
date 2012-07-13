@@ -108,4 +108,4 @@ class IntegersCSVIntervalsField_Test(TestCase):
             self.assertEqual(myResult,
                              myExpectedResult,
                              simpleMessage(myResult, myExpectedResult,
-                             message="For testVal %s:" % myTestVal)))
+                             message="For testVal %s:" % myTestVal))
