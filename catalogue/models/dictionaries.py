@@ -100,6 +100,8 @@ class AcquisitionMode(models.Model):
     sensor_type = models.ForeignKey(SensorType)  # e.g. M
     abbreviation = models.CharField(max_length="4")
     name = models.CharField(max_length="255")
+    # TODO: The next three properties must be moved to SensorType based on
+    #       discussions between Linda and Tim 22/07/2012
     spatial_resolution = models.IntegerField(
         help_text="Spatial resolution in m")
     band_count = models.IntegerField()

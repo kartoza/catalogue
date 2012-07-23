@@ -134,9 +134,15 @@ class AdvancedSearchForm(forms.ModelForm):
     polarising_mode = forms.ChoiceField(choices=POLARISING_MODE_CHOICES, required=False)
     geometry = forms.CharField(widget=forms.HiddenInput(), required=False,
         help_text='Digitising an area of interest is not required but is recommended. You can use the help tab in the map area for more information on how to use the map. Draw an area of interest on the map to refine the set of search results to a specific area.')
-    aoi_geometry = AOIGeometryField(widget=forms.TextInput(attrs={'title':"Enter bounding box coordinates separated by comma for West, South, East and North edges i.e. (20,-34,22,-32), or enter single coordinate which defines circle center and radius in kilometers (20,-32,100)"}),required=False)
+    aoi_geometry = AOIGeometryField(widget=forms.TextInput(attrs={
+        'title': "Enter bounding box coordinates separated by comma for West,"
+                 " South, East and North edges i.e. (20,-34,22,-32), "
+                 "or enter single coordinate which defines circle center and radius in kilometers (20,-32,100)"})
+                                    , required=False)
 
-    k_orbit_path = IntegersCSVIntervalsField(required=False, help_text='Insert the orbit path as a list of comma separated values or ranges (e.g. : "10,20,30" or  "20-40")')
+    k_orbit_path = IntegersCSVIntervalsField(required=False,
+                                             help_text='Insert the orbit path' \
+                                                       ' as a list of comma separated values or ranges (e.g. : "10,20,30" or  "20-40")')
     j_frame_row = IntegersCSVIntervalsField(required=False, help_text='Insert the frame row as a list of comma separated values or ranges (e.g. : "10,20,30" or "20-40")')
     # exclude PRODUCT_SEARCH_GENERIC from Search.PRODUCT_SEARCH_TYPES
     search_type = forms.ChoiceField(choices=Search.PRODUCT_SEARCH_TYPES[1:], required=False)

@@ -9,6 +9,7 @@ import misr_command_test
 import terrasar_command_test
 
 #import unittest classes
+from test_spot_ingestor import SpotIngestorTest
 from simpleTest import SimpleTest
 from license_model import LicenseCRUD_Test
 from missionGroup_model import MissionGroupCRUD_Test
