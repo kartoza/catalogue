@@ -1,8 +1,8 @@
 BEGIN;
 UPDATE catalogue_genericimageryproduct SET
-geometric_resolution = 1100,
-geometric_resolution_x = 1100,
-geometric_resolution_y = 1100
+spatial_resolution = 1100,
+spatial_resolution_x = 1100,
+spatial_resolution_y = 1100
 
 FROM (SELECT
   catalogue_genericimageryproduct.genericproduct_ptr_id as aqu_id
