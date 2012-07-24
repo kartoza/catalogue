@@ -25,6 +25,9 @@ from catalogue.models import Institution
 from catalogue.models import GenericProduct
 from catalogue.ingestors import spot
 
+SHAPEFILE_NAME = os.path.join(os.path.dirname( __file__),
+              'sample_files/spot-ingestion/Africa_2012_subset.shp')
+
 class SpotIngestorTest(TestCase):
     """
     Tests Email Notifications (see catalogue.views.helpers)
@@ -71,19 +74,17 @@ class SpotIngestorTest(TestCase):
     def testImportUsingManagementCommand(self):
         """Test that we can ingest spot using the management command"""
         myOwner = Institution.objects.get(id=3)
-        myShapeName = ('/home/web/sac/sac_catalogue/catalogue/tests/'
-                      'sample_files/spot-ingestion/Africa_2012_subset.shp')
         call_command('spot_harvest',
                                 verbosity=2,
-                                shapefile=myShapeName)
+                                shapefile=SHAPEFILE_NAME)
         assert myProduct.owner.name == 'Foobar'
 
     def testImportDirectly(self):
         """Test that we can ingest spot using the ingestor function"""
 
-        myShapeName = os.path.join(os.path.dirname( __file__),
-                      'sample_files/spot-ingestion/Africa_2012_subset.shp')
-        spot.ingest(theShapeFile=myShapeName)
+
+        spot.ingest(theShapeFile=SHAPEFILE_NAME,
+                    theVerbosityLevel=1)
         myProducts = GenericProduct.objects.filter(product_id__contains='S5')
         myList = []
         myFormattedList = ''
@@ -114,7 +115,7 @@ class SpotIngestorTest(TestCase):
 
         #Reingesst and make sure that overridden owner sticks
 
-        spot.ingest(theShapeFile=myShapeName,
+        spot.ingest(theShapeFile=SHAPEFILE_NAME,
                     theOwner='Foobar')
         myProduct = GenericProduct.objects.get(
             product_id=(myExpectedProductId))

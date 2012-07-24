@@ -127,10 +127,6 @@ class Command(BaseCommand):
     @transaction.commit_manually
     def handle(self, *args, **options):
         """ command execution """
-        def verblog(msg, level=1):
-            if verbose >= level:
-                print msg
-
         shapefile             = options.get('shapefile')
         download_thumbs       = options.get('download_thumbs')
         test_only             = options.get('test_only')

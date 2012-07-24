@@ -29,13 +29,6 @@ from catalogue.models import *
 from mercurial import lock, error
 import traceback
 
-# Hardcoded constants
-PROJECTION = 'ORBIT'
-RADIOMETRIC_RESOLUTION = 8
-GEOMETRIC_RESOLUTION = 5
-PRODUCT_ACQUISITION_START_TIME = '0900'
-SOLAR_ZENITH_ANGLE = 0
-SOLAR_AZIMUTH_ANGLE = 0
 
 @transaction.commit_manually
 def ingest(theShapeFile,
@@ -79,26 +72,29 @@ def ingest(theShapeFile,
     Exceptions:
         Any unhandled exceptions will be raised.
     """
+
+    def logMessage(theMessage, theLevel=1):
+        if theVerbosityLevel >= theLevel:
+            print theMessage
+
     print 'Importing with owner: %s' % theOwner
     try:
-        lockfile = lock.lock("/tmp/spot_harvest.lock", timeout=60)
+        lockfile = lock.lock('/tmp/spot_harvest.lock', timeout=60)
     except error.LockHeld:
         # couldn't take the lock
         raise CommandError, 'Could not acquire lock.'
 
     # Hardcoded
-    projection            = PROJECTION
-    radiometric_resolution= RADIOMETRIC_RESOLUTION
-    solar_zenith_angle    = SOLAR_ZENITH_ANGLE
-    solar_azimuth_angle   = SOLAR_AZIMUTH_ANGLE
-
+    myProjection = 'ORBIT'
+    myRadiometricResolution= 8
+    mySolarZenithAngle = 0
+    mySolarAzimuthAngle = 0
 
     myAreaOfInterest  = None
 
-
-    #verblog('Getting verbose (level=%s)... ' % verbose, 2)
+    logMessage('Getting verbose (level=%s)... ' % theVerbosityLevel, 2)
     if theTestOnlyFlag:
-        #verblog('Testing mode activated.', 2)
+        logMessage('Testing mode activated.', 2)
         pass
 
     try:
@@ -115,7 +111,7 @@ def ingest(theShapeFile,
             except Exception, e:
                 raise CommandError('Unable to create the area of interest'
                                     ' polygon: %s.' % e)
-            #verblog('Area of interest filtering activated.', 2)
+            logMessage('Area of interest filtering activated.', 2)
 
         # Get the params
         try:
@@ -142,36 +138,36 @@ def ingest(theShapeFile,
                           'address3': '',
                           'post_code': '', })[0]
         except Institution.DoesNotExist:
-            ##verblog('Institution %s does not exists and '
+            #logMessage('Institution %s does not exists and '
             #         'cannot be created.' % owner, 2)
             raise CommandError, ('Institution %s does not exist and '
                                   'cannot create: aborting' % theOwner)
         try:
             theQuality = Quality.objects.get_or_create(name=theQuality)[0]
         except Quality.DoesNotExist:
-            #verblog('Quality %s does not exists and cannot be creates,
-            # it will be read from metadata.' % quality, 2)
+            logMessage('Quality %s does not exists and cannot be created,'
+                       ' it will be read from metadata.' % theQuality, 2)
             raise CommandError, ('Quality %s does not exists and cannot '
                                  ' be created: aborting' % theQuality)
 
         try:
-            myImportedRecordCount = 0
+            myRecordCount = 0
             myUpdatedRecordCount = 0
             myCreatedRecordCount = 0
-            #verblog('Starting index dowload...', 2)
-            for myPackage in fetch_geometries(
-                theShapeFile, myAreaOfInterest):
+            myDiscardedRecordCount = 0
+            logMessage('Starting index dowload...', 2)
+            for myPackage in fetchGeometries(theShapeFile, myAreaOfInterest):
                 #if imported > 5:
                 #  transaction.commit()
                 #  return
-                if (myImportedRecordCount % 10000 == 0 and
-                    myImportedRecordCount > 0):
-                    print "Products processed : %s " % myImportedRecordCount
-                    print "Products updated : %s " % myUpdatedRecordCount
-                    print "Products imported : %s " % myCreatedRecordCount
+                if (myRecordCount % 10000 == 0 and
+                    myRecordCount > 0):
+                    print 'Products processed : %s ' % myRecordCount
+                    print 'Products updated : %s ' % myUpdatedRecordCount
+                    print 'Products imported : %s ' % myCreatedRecordCount
                     transaction.commit()
-                #verblog("Ingesting %s" % myPackage, 2)
-
+                logMessage('Ingesting %s' % myPackage, 2)
+                myRecordCount += 1
                 # Understanding SPOT a21 scene id:
                 # Concerning the SPOT SCENE products, the name will be
                 # the string 'SCENE ' followed by 'formated A21 code'.
@@ -210,7 +206,7 @@ def ingest(theShapeFile,
                     # owner                 | CNES
                     # operator_abbreviation | SPOT-5
 
-                    myMissionAbbreviation = "SPOT-%s" % myMissionId
+                    myMissionAbbreviation = 'SPOT-%s' % myMissionId
                     mySpotMission = Mission.objects.get(
                         operator_abbreviation = myMissionAbbreviation)
 
@@ -268,8 +264,10 @@ def ingest(theShapeFile,
                     # Some additional rules from Linda to skip unwanted records
                     myColourMode = myPackage.get('MODE')
                     if myType == 'H':
+                        myDiscardedRecordCount += 1
                         continue
                     if myType == 'T' and myColourMode == 'COLOR':
+                        myDiscardedRecordCount += 1
                         continue
 
                     if myType in ['J', 'I']:  # Spot 4 and 5 only
@@ -294,10 +292,9 @@ def ingest(theShapeFile,
                         mission_sensor__in=myMissionSensors).filter(
                         operator_abbreviation = myType)
 
-                    mySensorType = None
                     if myTypes.count() < 1:
-                        #verblog("Autoadding unmatched sensor type: %s" %
-                        #          myType,0)
+                        logMessage('Autoadding unmatched sensor type: %s' %
+                                  myType, 0)
                         mySensorType = SensorType()
                         mySensorType.abbreviation = myType
                         mySensorType.name = myType
@@ -325,13 +322,13 @@ def ingest(theShapeFile,
                         myMode = AcquisitionMode()
                         myMode.sensor_type = mySensorType
                         myMode.abbreviation = str(
-                            mySpotMission.abbreviation) + "C1"
-                        myMode.name = "Camera 1"
+                            mySpotMission.abbreviation) + 'C1'
+                        myMode.name = 'Camera 1'
                         myMode.geometric_resolution = myResolution
                         myMode.band_count = myBandCount
                         myMode.is_grayscale = myGrayScaleFlag
                         myMode.operator_abbreviation = str(
-                            mySpotMission.abbreviation) + "C1"
+                            mySpotMission.abbreviation) + 'C1'
                         myMode.save()
 
                         # Create a new acquisition mode for camera 2 on this
@@ -339,19 +336,19 @@ def ingest(theShapeFile,
                         myMode2 = AcquisitionMode()
                         myMode2.sensor_type = mySensorType
                         myMode2.abbreviation =  str(
-                            mySpotMission.abbreviation) + "C2"
-                        myMode2.name = "Camera 2"
+                            mySpotMission.abbreviation) + 'C2'
+                        myMode2.name = 'Camera 2'
                         myMode.geometric_resolution = myResolution
                         myMode.band_count = myBandCount
                         myMode.is_grayscale = myGrayScaleFlag
                         myMode2.operator_abbreviation = str(
-                            mySpotMission.abbreviation) + "C2"
+                            mySpotMission.abbreviation) + 'C2'
                         myMode2.save()
                     else:
                         mySensorType = myTypes[0]
                     # The mode should be unique for its type so we
                     # chain two filters to get it
-                    myMode = "S%sC%s" % (
+                    myMode = 'S%sC%s' % (
                         myMissionId, myPackage.get('A21')[-2:-1] )
                     acquisition_mode = AcquisitionMode.objects.filter(
                         sensor_type=mySensorType
@@ -360,13 +357,14 @@ def ingest(theShapeFile,
                     #
                     # Following for debugging info only
                     #
-                    #verblog("Detected mission: %s" % mySpotMission ,2)
-                    #verblog("Allowed sensors:",2)
-                    #for mySensor in myMissionSensors:
-                        #verblog(mySensor,2) #.operator_abbreviation
-                    #verblog("Detected sensor type: %s" % mySensorType, 2 )
-                    #verblog("Detected acquisition mode: %s" %
-                    #        acquisition_mode, 2)
+                    logMessage('Detected mission: %s' % mySpotMission, 2)
+                    logMessage('Allowed sensors:', 2)
+                    for mySensor in myMissionSensors:
+                        #.operator_abbreviation
+                        logMessage(mySensor, 2)
+                    logMessage('Detected sensor type: %s' % mySensorType, 2)
+                    logMessage('Detected acquisition mode: %s' %
+                            acquisition_mode, 2)
 
                     #
                     # Debugging output ends
@@ -395,20 +393,20 @@ def ingest(theShapeFile,
                   'YYMMDD': date_parts[2][-2:]+date_parts[1]+date_parts[0],
                   'HHMMSS': time_parts[0]+time_parts[1]+time_parts[2],
                   'LEVL' : theProcessingLevel.ljust(4, '-'),
-                  'PROJTN': projection.ljust(6, '-')
+                  'PROJTN': myProjection.ljust(6, '-')
                 })
                 assert len(myProductId) == 58, ('Wrong len in product_id : %s'
                                                 % myProductId)
 
-                #verblog("Product ID %s" % product_id, 2)
+                logMessage('Product ID %s' % myProductId, 2)
 
                 # Do the ingestion here...
-                data = {
-                  'metadata': '\n'.join(["%s=%s" %
+                myData = {
+                  'metadata': '\n'.join(['%s=%s' %
                             (f,myPackage.get(f)) for f in myPackage.fields]),
                   'spatial_coverage': myPackage.geom.geos,
                   'product_id': myProductId,
-                  'radiometric_resolution': radiometric_resolution,
+                  'radiometric_resolution': myRadiometricResolution,
                   'band_count': myBandCount,
                   # integer percent
                   'cloud_cover': int(myPackage.get('CLOUD_PER')),
@@ -419,25 +417,28 @@ def ingest(theShapeFile,
                   'sensor_inclination_angle': myPackage.get('ANG_INC'),
                   'sensor_viewing_angle': myPackage.get('ANG_ACQ'),
                   'original_product_id': myOriginalProductId,
-                  'solar_zenith_angle': solar_zenith_angle,
-                  'solar_azimuth_angle': solar_azimuth_angle,
+                  'solar_zenith_angle': mySolarZenithAngle,
+                  'solar_azimuth_angle': mySolarAzimuthAngle,
                   'spatial_resolution_x': myPackage.get('RESOL'),
                   'spatial_resolution_y': myPackage.get('RESOL'),
                 }
-                #verblog(data, 2)
+                logMessage(myData, 2)
 
                 # Check if it's already in catalogue:
                 try:
+                    #original_product_id is not necessarily unique
+                    #so we use product_id
                     myProduct = OpticalProduct.objects.get(
-                        original_product_id=myOriginalProductId
+                        product_id=myProductId
                     ).getConcreteInstance()
-                    #verblog('Already in catalogue: updating.', 2)
+                    logMessage(('Already in catalogue: updating %s.'
+                                % myProductId), 2)
                     myNewRecordFlag = False
                     myUpdatedRecordCount += 1
-                    myProduct.__dict__.update(data)
+                    myProduct.__dict__.update(myData)
                 except ObjectDoesNotExist:
-                    myProduct = OpticalProduct(**data)
-                    #verblog('Not in catalogue: creating.', 2)
+                    myProduct = OpticalProduct(**myData)
+                    logMessage('Not in catalogue: creating.', 2)
                     myNewRecordFlag = True
                     myCreatedRecordCount += 1
                     try:
@@ -445,11 +446,11 @@ def ingest(theShapeFile,
                     except Exception, e:
                         raise CommandError('Cannot get all mandatory data '
                         'from product id %s (%s).' % (myProductId, e))
-                #verblog("Saving product and setting thumb", 2)
+                logMessage('Saving product and setting thumb', 2)
                 try:
                     myProduct.save()
                     if theTestOnlyFlag:
-                        #verblog('Testing: image not saved.', 2)
+                        logMessage('Testing: image not saved.', 2)
                         pass
                     else:
                         if myDownloadThumbsFlag:
@@ -464,7 +465,7 @@ def ingest(theShapeFile,
                             # Download original jpeg thumbnail and
                             # creates a thumbnail
                             myDownloadedThumb = os.path.join(myThumbsFolder,
-                                                myProduct.product_id + ".jpg")
+                                                myProduct.product_id + '.jpg')
                             myHandle = open(myDownloadedThumb, 'wb+')
                             myThumbnail = urllib2.urlopen(
                                 myPackage.get('URL_QL'))
@@ -472,7 +473,7 @@ def ingest(theShapeFile,
                             myThumbnail.close()
                             myHandle.close()
                             # Transform and store .wld file
-                            #verblog('Referencing thumb',2)
+                            logMessage('Referencing thumb',2)
                             try:
                                 myProduct.georeferenceThumbnail()
                             except:
@@ -487,40 +488,53 @@ def ingest(theShapeFile,
                                       myPackage.get('URL_QL'))
                                 myProduct.save()
                     if myNewRecordFlag:
-                        #verblog('Product %s imported.' % product_id, 1)
+                        logMessage('Product %s imported.' %
+                                   myRecordCount, 2)
                         pass
                     else:
-                        #verblog('Product %s updated.' % product_id, 1)
+                        logMessage('Product %s updated.' %
+                                   myUpdatedRecordCount, 2)
                         pass
-                    myImportedRecordCount += 1
                 except Exception, e:
                     traceback.print_exc(file=sys.stdout)
                     raise CommandError('Cannot import: %s' % e)
 
-            #verblog("%s packages imported" % imported)
+            logMessage('%s packages imported' % myRecordCount)
 
             if theTestOnlyFlag:
                 transaction.rollback()
-                #verblog("Testing only: transaction rollback.")
+                logMessage('Testing only: transaction rollback.')
             else:
                 transaction.commit()
-                #verblog("Committing transaction.", 2)
+                logMessage('Committing transaction.', 2)
         except Exception, e:
             traceback.print_exc(file=sys.stdout)
             raise CommandError('Uncaught exception (%s): %s' %
                                (e.__class__.__name__, e))
     except Exception, e:
-        #verblog('Rolling back transaction due to exception.')
+        logMessage('Rolling back transaction due to exception.')
         traceback.print_exc(file=sys.stdout)
         if theTestOnlyFlag:
             from django.db import connection
-            #verblog(connection.queries)
+            logMessage(connection.queries)
         transaction.rollback()
-        raise CommandError("%s" % e)
+        raise CommandError('%s' % e)
     finally:
         lockfile.release()
+    mySummary = ('Ingestion Summary:\n'
+                 '-------------------------------------\n'
+                 '%s records reviewed\n'
+                 '%s records imported\n'
+                 '%s records updated\n'
+                 '%s records discarded (H and Colour T)\n'
+                 '-------------------------------------\n' %
+                 (myRecordCount,
+                  myCreatedRecordCount,
+                  myUpdatedRecordCount,
+                  myDiscardedRecordCount))
+    logMessage(mySummary, 0)
 
-def fetch_geometries(theShapefile, theAreaOfInterest):
+def fetchGeometries(theShapefile, theAreaOfInterest):
     """
     Download the index and parses it, returns a generator list of features.
 
@@ -535,10 +549,10 @@ def fetch_geometries(theShapefile, theAreaOfInterest):
         interest if it was specified.:
     """
     try:
-        print( "Opening %s" % theShapefile )
-        data_source = DataSource( theShapefile )
+        print('Opening %s' % theShapefile)
+        data_source = DataSource(theShapefile)
     except Exception, e:
-        raise CommandError("Loading index failed %s" % e)
+        raise CommandError('Loading index failed %s' % e)
 
     for myPolygon in data_source[0]:
         if (not theAreaOfInterest or
