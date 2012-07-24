@@ -97,8 +97,8 @@ urlpatterns = patterns('',
     # Order management and related lookup tables
     #
     (r'^addorder/', addOrder),
-    (r'^deliverydetailform/(?P<theref_id>\d*)/$', createDeliveryDetailForm),
-    (r'^showdeliverydetail/(?P<theref_id>\d*)/$', showDeliveryDetail),
+    (r'^deliverydetailform/(?P<theReferenceId>\d*)/$', createDeliveryDetailForm),
+    (r'^showdeliverydetail/(?P<theReferenceId>\d*)/$', showDeliveryDetail),
     (r'^downloadclipgeometry/(?P<theId>\d*)/$', downloadClipGeometry),
     (r'^downloadordermetadata/(?P<theId>\d*)/$', downloadOrderMetadata),
     (r'^downloadorder/(?P<theId>\d*)/$', downloadOrder),
