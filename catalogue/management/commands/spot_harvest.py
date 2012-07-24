@@ -107,12 +107,12 @@ class Command(BaseCommand):
                          'License'))
         ,
         make_option('--area', '-a', dest='area', action='store',
-                    help='Area of interest, images which are external to this' \
-                         ' area will not be imported (WKT Polygon, SRID=4326)')
+                    help=('Area of interest, images which are external to this'
+                         ' area will not be imported (WKT Polygon, SRID=4326)'))
         ,
         make_option('--quality', '-q', dest='quality', action='store',
-                    help='Quality code (will be created if does not exists). ' \
-                         'Defaults to: Unknown'
+                    help=('Quality code (will be created if does not exists). '
+                         'Defaults to: Unknown')
                     , default='Unknown'),
         # We should use 1A here but we need to write migration
         # logic for all existing records and rename all existing thumnbs

@@ -83,6 +83,22 @@ class SpotIngestorTest(TestCase):
         """Test that we can ingest spot using the ingestor function"""
 
 
+        # Test importing only recs in an area of interest
+        myArea = ('POLYGON('
+                 '(16.206099 -5.592359,'
+                 '16.206099 -6.359587,'
+                 '17.293880 -6.359587,'
+                 '17.293880 -5.592359,'
+                 '16.206099 -5.592359))')
+        print myArea
+        spot.ingest(theShapeFile=SHAPEFILE_NAME,
+                    theVerbosityLevel=1,
+                    theArea=myArea)
+        myProducts = GenericProduct.objects.filter(product_id__contains='S5')
+        assert myProduct.count() == 4
+
+        # Test with a full load of data
+
         spot.ingest(theShapeFile=SHAPEFILE_NAME,
                     theVerbosityLevel=1)
         myProducts = GenericProduct.objects.filter(product_id__contains='S5')

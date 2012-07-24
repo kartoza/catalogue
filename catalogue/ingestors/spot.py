@@ -293,7 +293,7 @@ def ingest(theShapeFile,
                         operator_abbreviation = myType)
 
                     if myTypes.count() < 1:
-                        logMessage('Autoadding unmatched sensor type: %s' %
+                        logMessage('Auto-adding unmatched sensor type: %s' %
                                   myType, 0)
                         mySensorType = SensorType()
                         mySensorType.abbreviation = myType
@@ -550,11 +550,11 @@ def fetchGeometries(theShapefile, theAreaOfInterest):
     """
     try:
         print('Opening %s' % theShapefile)
-        data_source = DataSource(theShapefile)
+        myDataSource = DataSource(theShapefile)
     except Exception, e:
         raise CommandError('Loading index failed %s' % e)
 
-    for myPolygon in data_source[0]:
+    for myPolygon in myDataSource[0]:
         if (not theAreaOfInterest or
            theAreaOfInterest.intersects(myPolygon.geom)):
             yield myPolygon
