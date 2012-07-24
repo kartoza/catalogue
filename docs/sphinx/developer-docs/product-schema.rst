@@ -62,6 +62,10 @@ The following properties are defined for generic products:
 |  remote_thumbnail_url  | models.TextField |
 |  concrete              | False |
 
+
+.. note:: **origin_product_id** is not guaranteed to be unique. For example when
+   ingestion SPOT catalogs A21 may occur twice (once for A and once for T).
+
 **Product Date** is the generalised date for the product. This may be
 equivalent to the product_acquisition_start of sensor based products, the
 mid-point between  product_acquisition_start and  product_acquisition_end for
