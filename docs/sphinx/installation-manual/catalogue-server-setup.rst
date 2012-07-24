@@ -11,11 +11,11 @@ It contains the following key components:
 - an instance of the django catalogue software used
 - IBM informix client sdk software
 - the python informix DB adapter
-- 
+-
 
 In addition the lion server is connected to two 13TB (effective) Fujitsu Siemens storage arrays.
 
-The Server is an IA 64 processor machine installed with ubuntu server 10.04 LTS. This document 
+The Server is an IA 64 processor machine installed with ubuntu server 10.04 LTS. This document
 assumes a basic Ubuntu Server LTS install has already been carried out.
 
 Firewall
@@ -23,11 +23,12 @@ Firewall
 
 The firewall is configured in the following way::
 
-  sudo apt-get install ufw 
+  sudo apt-get install ufw
   sudo ufw allow 8697
   sudo ufw allow 5432
   sudo ufw allow from 127.0.0.1/32 to 0.0.0.0/0 port 25
   sudo ufw allow from 127.0.0.1/32 to 41.74.158.7/32 port 5432
+  sudo ufw allow from 127.0.0.1/32 to 207.97.227.239/32 port 22
   sudo ufw default allow outgoing
   sudo ufw default deny incoming
   sudo ufw status
@@ -35,6 +36,7 @@ The firewall is configured in the following way::
 Where the following ports are allowed:
 
 8697 - ssh, 80 apache, 5432 postgres , 25 outbound mail
+22 to 207.97.227.239 is for github access
 
 Package installations
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -53,7 +55,7 @@ Hardware preparation
 
 As root / sudo edit the /etc/fstab and disable the storage array at boot. To do
 this change this line::
-   
+
    UUID=3bdda6ae-3195-47b0-955e-278b5ed51da5 /data    ext3       auto,nouser,noexec,nosuid,rw        1 2
 
 to look like this::
@@ -99,15 +101,15 @@ Next we had to create a virtual disk - removing the old drives destroys any pre-
 - For **Select Virtual Disk RAID Level** choose 'Raid 5 - Parity RAID, Parity Distributed'
 - Click next to proceed onto disk creation
 - Tick all the drives in the enclosure diagram except for the last
-- Calculate Formatted Virtual Disk Size of Selected Drives - click this button and verify 
-  output is something like that shown below here ```For a RAID Level 5, your selected drives 
+- Calculate Formatted Virtual Disk Size of Selected Drives - click this button and verify
+  output is something like that shown below here ```For a RAID Level 5, your selected drives
   will approximately yield a 15.00 TByte final virtual disk capacity.```
 - For the tickbox **Would you like to add dedicated spare drives for this virtual disk?**, choose Yes
 - Click continue
 - All the drive bays save the last should now be shown in blue.
-- Tick the remaining green bay and then click 'continue' next to the **Add Selected Dedicated Spare 
+- Tick the remaining green bay and then click 'continue' next to the **Add Selected Dedicated Spare
   Drives to "sarmesstorage" and Continue Creating Virtual Disk:** prompt.
-- 
+-
 
 At this stage you will be shown a report that should look something like this::
 
@@ -115,7 +117,7 @@ At this stage you will be shown a report that should look something like this::
   Virtual Disk Name:  sarmesstorage
   RAID Level:     5
   Virtual Disk Size:  201644.88 GBytes
-  Drives Chosen:  
+  Drives Chosen:
   Serial Number   WWN     Size (GBytes)   Encl.Slot
   9VS1J496    5000C50011343DE3    1500.30     0.0
   9VS1E8SL    5000C50011229530    1500.30     0.1
@@ -128,7 +130,7 @@ At this stage you will be shown a report that should look something like this::
   9VS1GZMH    5000C5001130D35D    1500.30     0.8
   9VS1H6A0    5000C50011353891    1500.30     0.9
   9VS1FY6B    5000C500112C210C    1500.30     0.10
-  Dedicated Spare Drives Chosen:  
+  Dedicated Spare Drives Chosen:
   Serial Number   WWN     Size (GBytes)
   9VS1H76L    5000C50011353C6C    1500.30
   Virtual Disk Initialization:    Online
@@ -137,13 +139,13 @@ Now we can proceed to set up partitions ('Volumes') on the virtual disk.::
 
   Configure Volumes for Virtual Disk sarmesstorage
   How Many Volumes    : 1
-  Create Volumes of Equal Size?   
-  Yes  
-  Expose Volumes to All Hosts?    
+  Create Volumes of Equal Size?
+  Yes
+  Expose Volumes to All Hosts?
   No
-  Automatically Assign LUNs?  
+  Automatically Assign LUNs?
   Disabled
-  Would You Like to Name Your Volumes?    
+  Would You Like to Name Your Volumes?
   No
   Advanced Virtual Disk Creation Options  Advanced Options - not used
 
@@ -165,10 +167,10 @@ For the sarmes machine we used the following configuration::
   WWN                 Host Name       LUN     Port 0 Access   Port 1 Access
   10000000C96DABE6    Sarmes1_Port0    0       rw               rw
   10000000C961BB34    Sarmes1_Port1    1       rw               rw
-  All Other Hosts                      None    none             none 
+  All Other Hosts                      None    none             none
 
-**Note** You probably only need to map one WWN / Host / Lun - we think you only need 
-to map Sarmes1_port1 to 10000000C961BB34 but you will need to test experimentally to 
+**Note** You probably only need to map one WWN / Host / Lun - we think you only need
+to map Sarmes1_port1 to 10000000C961BB34 but you will need to test experimentally to
 be sure.
 
 After making these config changes, reboot the sarmes server.
@@ -190,13 +192,13 @@ You should see a new device listed like this::
   sdc: unknown partition table
   sd 1:0:0:0: [sdc] Attached SCSI disk
 
-You can see the drive came up as sdc. It pushes the previous sdc drive down to 
+You can see the drive came up as sdc. It pushes the previous sdc drive down to
 sdd. This is not a problem though since the /etc/fstab uses UUIDs to reference partitions.
 
 
 Next you can verify this using fdisk::
 
-  sudo /sbin/fdisk -l /dev/sdc 
+  sudo /sbin/fdisk -l /dev/sdc
 
   Disk /dev/sdc: 15002.8 GB, 15002850295808 bytes
   255 heads, 63 sectors/track, 1823992 cylinders
@@ -288,17 +290,17 @@ When following the Informix install procedure, do it as root locally on
 the server since I had problems trying to run the sdk setup tool remotely over
 an ssh -X connection.
 
-For specific notes on how to set up the client see the informix specific notes 
+For specific notes on how to set up the client see the informix specific notes
 (003-3-informix_access.t2t).
 
 Nightly database sync
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-We should sync the ACS data to our own catalogue database nightly. When all 
-the prerequisites are installed on the Lion server, the updateInformix.sh script 
-can be used to do this on an ad hoc basis. Automating the process requires 
+We should sync the ACS data to our own catalogue database nightly. When all
+the prerequisites are installed on the Lion server, the updateInformix.sh script
+can be used to do this on an ad hoc basis. Automating the process requires
 creation of a cron job::
-  
+
   crontab -e
 
 
@@ -326,14 +328,14 @@ Now add the following (adjusing paths if needed)::
 Nightly database backups from elephant
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-For prudence sake, a nightly dump is made of the databases on ELEPHANT onto 
+For prudence sake, a nightly dump is made of the databases on ELEPHANT onto
 the LION server ``crontab -e``::
 
   # Job will run 2:05 am each day
   5 2 * * * /home/timlinux/bin/pgbackups
 
 
-The second job described above takes a backup of the gis and catalogue 
+The second job described above takes a backup of the gis and catalogue
 databases on a nightly basis. The pgbackups script looks like this::
 
   #/bin/bash
@@ -345,10 +347,10 @@ databases on a nightly basis. The pgbackups script looks like this::
   cd $YEAR/$MONTH
   tar cfz opt_`date +%d%B%Y`.tar.gz /opt/ /etc/apache
   export PGPASSWORD=pumpkin
-  pg_dump -i -U timlinux -h elephant -Fc -f gis_postgis_`date +%d%B%Y`.dmp -x -O gis 
-  pg_dump -i -U timlinux -h elephant -Fc -f sac_postgis_`date +%d%B%Y`.dmp -x -O sac 
-  pg_dump -i -U timlinux -h elephant -Fc -f acs_postgis_`date +%d%B%Y`.dmp -x -O acs 
-  psql -h elephant -c "vacuum analyze;" sac 
+  pg_dump -i -U timlinux -h elephant -Fc -f gis_postgis_`date +%d%B%Y`.dmp -x -O gis
+  pg_dump -i -U timlinux -h elephant -Fc -f sac_postgis_`date +%d%B%Y`.dmp -x -O sac
+  pg_dump -i -U timlinux -h elephant -Fc -f acs_postgis_`date +%d%B%Y`.dmp -x -O acs
+  psql -h elephant -c "vacuum analyze;" sac
   psql -h elephant -c "vacuum analyze;" sac_test
 
 To restore you do::
@@ -364,7 +366,7 @@ GDAL and Mapserver Setup
 
 Please see the webmapping chapter (600-webmapping.t2t) for notes on the setup process for GDAL
 
-**Note:** When installing gdal from source and you want the python bindings installed into your 
+**Note:** When installing gdal from source and you want the python bindings installed into your
 python virtual env, make sure to activate the virtual environment begore building gdal so that
 its bindings are placed in the v.env site packages dir.
 
@@ -375,7 +377,7 @@ There are specific notes for the catalogue application in the developer guide. T
 configuration for default (/etc/apache2/sites-available/default) is as listed below.::
   NameVirtualHost *
   <VirtualHost *>
-    ServerAdmin tim@linfiniti.com 
+    ServerAdmin tim@linfiniti.com
     ServerName maps.sansa.org.za
     DocumentRoot /var/www/
     <Directory /var/www/>
@@ -462,8 +464,8 @@ configuration for default (/etc/apache2/sites-available/default) is as listed be
 
   </VirtualHost>
 
-This creates various share points through the file system. You should 
-evaluate the file and check that each of the share points listed is 
+This creates various share points through the file system. You should
+evaluate the file and check that each of the share points listed is
 indeed present and with the appropriate permissions in the file system.
 
 
@@ -591,7 +593,7 @@ part of the filesystem when installed.
 /mnt/cataloguestorage
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-This is the first of two ~13TB storage arrays connected to the server. In this 
+This is the first of two ~13TB storage arrays connected to the server. In this
 storage system, all of the thumbnailas, online remote sensing dataset, backups
 and data that is being processed are stored.::
 

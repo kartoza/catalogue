@@ -84,24 +84,44 @@ class Command(BaseCommand):
     help = "Imports RapidEye packages into the SAC catalogue"
     option_list = BaseCommand.option_list + (
         make_option('--file', '-f', dest='shapefile', action='store',
-            help='Shapefile containing spot coverage data.', default=False),
-        make_option('--download-thumbs', '-d', dest='download_thumbs', action='store',
-            help='Whether thumbnails should be fetched to. If not fetched now they will be fetched on demand as needed.', default=False),
+                    help='Shapefile containing spot coverage data.',
+                    default=False),
+        make_option('--download-thumbs', '-d', dest='download_thumbs',
+                    action='store',
+                    help='Whether thumbnails should be fetched to. If not '
+                         'fetched now they will be fetched on demand as needed.'
+                    , default=False),
         make_option('--test_only', '-t', dest='test_only', action='store_true',
-            help='Just test, nothing will be written into the DB.', default=False),
+                    help='Just test, nothing will be written into the DB.',
+                    default=False),
         make_option('--owner', '-o', dest='owner', action='store',
-            help='Name of the Institution package owner. Defaults to: Rapideye AG.', default='Rapideye AG'),
-        make_option('--creating_software', '-s', dest='creating_software', action='store',
-            help='Name of the creating software. Defaults to: Unknown.', default='Unknown'),
-        make_option('--license', '-l', dest='license', action='store', default='SAC Commercial License',
-            help='Name of the license. Defaults to: SAC Commercial License'),
+                    help=('Name of the Institution package owner. '
+                          'Defaults to: Astrium.'), default='Astrium'),
+        make_option('--creating_software', '-s',
+                    dest='creating_software', action='store',
+                    help='Name of the creating software. Defaults to: TS5.',
+                    default='TS5'),
+        make_option('--license', '-l', dest='license', action='store',
+                    default='SANSA Commercial License',
+                    help=('Name of the license. Defaults to: SAC Commercial '
+                         'License'))
+        ,
         make_option('--area', '-a', dest='area', action='store',
-            help='Area of interest, images which are external to this area will not be imported (WKT Polygon, SRID=4326)'),
+                    help='Area of interest, images which are external to this' \
+                         ' area will not be imported (WKT Polygon, SRID=4326)')
+        ,
         make_option('--quality', '-q', dest='quality', action='store',
-            help='Quality code (will be created if does not exists). Defaults to: Unknown', default='Unknown'),
-        make_option('--processing_level', '-r', dest='processing_level', action='store',
-            help='Processing level code (will be created if does not exists). Defaults to: 1B', default='1B'),
-    )
+                    help='Quality code (will be created if does not exists). ' \
+                         'Defaults to: Unknown'
+                    , default='Unknown'),
+        # We should use 1A here but we need to write migration
+        # logic for all existing records and rename all existing thumnbs
+        make_option('--processing_level', '-r', dest='processing_level',
+                    action='store',
+                    help=(
+                    'Processing level code (will be created if does not exists).'
+                    'Defaults to: 1B'), default='1B'),
+        )
 
 
     @transaction.commit_manually
@@ -122,14 +142,14 @@ class Command(BaseCommand):
         quality               = options.get('quality')
         processing_level      = options.get('processing_level')
 
-        spot.ingest(shapefile,
-                    download_thumbs,
-                    test_only,
-                    verbose,
-                    license,
-                    owner,
-                    software,
-                    area,
-                    quality,
-                    processing_level
+        spot.ingest(theShapeFile=shapefile,
+                    myDownloadThumbsFlag=download_thumbs,
+                    theTestOnlyFlag=test_only,
+                    theVerbosityLevel=verbose,
+                    theLicense=license,
+                    theOwner=owner,
+                    theSoftware=software,
+                    theArea=area,
+                    theQuality=quality,
+                    theProcessingLevel=processing_level
         )
