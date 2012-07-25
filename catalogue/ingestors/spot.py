@@ -260,7 +260,7 @@ def ingest(theShapeFile,
                     elif myMissionId == 5:
                             myAbbreviation = 'HRG-5'
 
-                    myMissionSensor = MissionSensor.get(
+                    myMissionSensor = MissionSensor.objects.get(
                         operator_abbreviation=myAbbreviation)
 
                     #sac=# select * from catalogue_sensortype where
