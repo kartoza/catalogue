@@ -322,7 +322,7 @@ def notifySalesStaff(theUser, theOrderId):
 ###########################################################
 
 
-def notifySalesStaffOfTaskRequest(theId):
+def notifySalesStaffOfTaskRequest(theUser, theId):
     """ A helper method to notify tasking staff who are subscribed to a sensor
        Example usage from the console / doctest:
        >>> from catalogue.models import *
@@ -344,6 +344,7 @@ def notifySalesStaffOfTaskRequest(theId):
     myTaskingRecipients = OrderNotificationRecipients.objects.filter(
                                     sensors=myTaskingRequest.mission_sensor)
     myRecipients = set()
+    myRecipients.update([theUser])
     for recepient in myTaskingRecipients:
         myRecipients.add(recepient.user)
 
