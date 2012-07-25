@@ -102,7 +102,7 @@ class AcquisitionMode(models.Model):
     name = models.CharField(max_length="255")
     # TODO: The next three properties must be moved to SensorType based on
     #       discussions between Linda and Tim 22/07/2012
-    spatial_resolution = models.IntegerField(
+    spatial_resolution = models.FloatField(
         help_text="Spatial resolution in m")
     band_count = models.IntegerField()
     is_grayscale = models.BooleanField(default=False)
