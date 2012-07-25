@@ -326,7 +326,7 @@ def ingest(theShapeFile,
 
 
 
-                        mySensorType.mission_sensor = myMissionSensors[0]
+                        mySensorType.mission_sensor = myMissionSensor
                         mySensorType.save()
 
                         # Make sure we have acquisition modes for lookup later
@@ -372,10 +372,8 @@ def ingest(theShapeFile,
                     # Following for debugging info only
                     #
                     logMessage('Detected mission: %s' % mySpotMission, 2)
-                    logMessage('Allowed sensors:', 2)
-                    for mySensor in myMissionSensors:
-                        #.operator_abbreviation
-                        logMessage(mySensor, 2)
+                    logMessage('Allowed sensor:', 2)
+                    logMessage(myMissionSensor, 2)
                     logMessage('Detected sensor type: %s' % mySensorType, 2)
                     logMessage('Detected acquisition mode: %s' %
                             acquisition_mode, 2)
