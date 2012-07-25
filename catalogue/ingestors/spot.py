@@ -244,8 +244,24 @@ def ingest(theShapeFile,
                     #is_radar              | f
                     #operator_abbreviation | Vegetation-5
 
-                    myMissionSensors = MissionSensor.objects.filter(
-                        mission=mySpotMission)
+                    # Some of the above are not being used so we do a more
+                    # explicit filter using get....
+                    myAbbreviation=None
+                    # If it is a spot 1,2 or three assume the sensor type
+                    # is HRV-1 or HRV-2 or HRV-3.
+                    if myMissionId in [1, 2, 3]:
+                        myAbbreviation = 'HRV-%s' % myMissionId
+                    # If it is a spot 4 image then assume the sensor type
+                    # is HIR
+                    elif myMissionId == 4:
+                        myAbbreviation = 'HRVIR-4'
+                    # If it is a spot 5 image then assume the sensor type
+                    # is a HRG
+                    elif myMissionId == 5:
+                            myAbbreviation = 'HRG-5'
+
+                    myMissionSensor = MissionSensor.get(
+                        operator_abbreviation=myAbbreviation)
 
                     #sac=# select * from catalogue_sensortype where
                     # mission_sensor_id in (10, 26, 27) and
@@ -259,27 +275,31 @@ def ingest(theShapeFile,
 
 
                     # work out the sensor type
-                    myType = myPackage.get('TYPE')
+                    myImportFileSensorType = myPackage.get('TYPE')
 
                     # Some additional rules from Linda to skip unwanted records
                     myColourMode = myPackage.get('MODE')
-                    if myType == 'H':
+                    if myImportFileSensorType == 'H':
                         myDiscardedRecordCount += 1
                         continue
-                    if myType == 'T' and myColourMode == 'COLOR':
+                    if (myImportFileSensorType == 'T' and
+                        myColourMode == 'COLOR'):
                         myDiscardedRecordCount += 1
                         continue
-
-                    if myType in ['J', 'I']:  # Spot 4 and 5 only
+                    # Spot 4 and 5 only
+                    if myImportFileSensorType in ['J', 'I']:
                         myBandCount = 4
                         myGrayScaleFlag = False
-                    elif myType in ['M', 'A', 'B', 'T']: # Spot 4 and 5 only
+                    # Spot 4 and 5 only
+                    elif myImportFileSensorType in ['M', 'A', 'B', 'T']:
                         myBandCount = 1
                         myGrayScaleFlag = True
-                    elif myType in ['X']:  # Spot 1,2 or 3 only
+                    # Spot 1,2 or 3 only
+                    elif myImportFileSensorType in ['X']:
                         myBandCount = 3
                         myGrayScaleFlag = False
-                    elif myType in ['P']:
+                    # Spot 1,2 or 3 only
+                    elif myImportFileSensorType in ['P']:
                         myBandCount = 1
                         myGrayScaleFlag = True
                     else:
@@ -289,28 +309,22 @@ def ingest(theShapeFile,
                     # The type abbreviation should be unique for its sensor
                     # so we chain two filters to get it
                     myTypes = SensorType.objects.filter(
-                        mission_sensor__in=myMissionSensors).filter(
-                        operator_abbreviation = myType)
+                        mission_sensor=myMissionSensor).filter(
+                        operator_abbreviation = myImportFileSensorType)
+
 
                     if myTypes.count() < 1:
                         logMessage('Auto-adding unmatched sensor type: %s' %
-                                  myType, 0)
+                                  myImportFileSensorType, 0)
                         mySensorType = SensorType()
-                        mySensorType.abbreviation = myType
-                        mySensorType.name = myType
-                        mySensorType.operator_abbreviation = myType
+                        mySensorType.abbreviation = myImportFileSensorType
+                        mySensorType.name = myImportFileSensorType
+                        mySensorType.operator_abbreviation = \
+                                myImportFileSensorType
                         # Assume the first sensor for the mission -
                         # may need manual correction afterwards
 
-                        # TODO:
-                        # If it is a spot 1,2 or three assume the sensor type
-                        # is HRV-1 or HRV-2 or HRV-3.
 
-                        # If it is a spot 4 image then assume the sensor type
-                        # is HIR
-
-                        # If it is a spot 5 image then assume the sensor type
-                        # is a HRG
 
                         mySensorType.mission_sensor = myMissionSensors[0]
                         mySensorType.save()
