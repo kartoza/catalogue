@@ -23,7 +23,7 @@ from django.core.management.base import CommandError
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import transaction
-from django.contrib.gis.gdal.geometries import Polygon
+from django.contrib.gis.gdal import OGRGeometry
 from django.contrib.gis.gdal import DataSource
 from catalogue.models import *
 from mercurial import lock, error
@@ -101,7 +101,7 @@ def ingest(theShapeFile,
         # Validate area_of_interest
         if theArea is not None:
             try:
-                myAreaOfInterest = Polygon(theArea)
+                myAreaOfInterest = OGRGeometry(theArea)
                 if not myAreaOfInterest.area:
                     raise CommandError('Unable to create the area of interest'
                                         ' polygon: invalid polygon.')
@@ -111,7 +111,7 @@ def ingest(theShapeFile,
             except Exception, e:
                 raise CommandError('Unable to create the area of interest'
                                     ' polygon: %s.' % e)
-            logMessage('Area of interest filtering activated.', 2)
+            logMessage('Area of interest filtering activated.', 1)
 
         # Get the params
         try:
@@ -314,8 +314,10 @@ def ingest(theShapeFile,
 
 
                     if myTypes.count() < 1:
-                        logMessage('Auto-adding unmatched sensor type: %s' %
-                                  myImportFileSensorType, 0)
+                        logMessage(('Auto-adding unmatched sensor type: %s'
+                                    '\nMission sensor was: %s') % (
+                                  myImportFileSensorType,
+                                  myMissionSensor), 0)
                         mySensorType = SensorType()
                         mySensorType.abbreviation = myImportFileSensorType
                         mySensorType.name = myImportFileSensorType
@@ -338,7 +340,7 @@ def ingest(theShapeFile,
                         myMode.abbreviation = str(
                             mySpotMission.abbreviation) + 'C1'
                         myMode.name = 'Camera 1'
-                        myMode.geometric_resolution = myResolution
+                        myMode.spatial_resolution = myResolution
                         myMode.band_count = myBandCount
                         myMode.is_grayscale = myGrayScaleFlag
                         myMode.operator_abbreviation = str(
@@ -352,7 +354,7 @@ def ingest(theShapeFile,
                         myMode2.abbreviation =  str(
                             mySpotMission.abbreviation) + 'C2'
                         myMode2.name = 'Camera 2'
-                        myMode.geometric_resolution = myResolution
+                        myMode.spatial_resolution = myResolution
                         myMode.band_count = myBandCount
                         myMode.is_grayscale = myGrayScaleFlag
                         myMode2.operator_abbreviation = str(

@@ -95,7 +95,7 @@ class SpotIngestorTest(TestCase):
                     theVerbosityLevel=1,
                     theArea=myArea)
         myProducts = GenericProduct.objects.filter(product_id__contains='S5')
-        assert myProduct.count() == 4
+        self.assertEqual(myProducts.count(), 4)
 
         # Test with a full load of data
 
