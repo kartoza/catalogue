@@ -264,6 +264,8 @@ def notifySalesStaff(theUser, theOrderId):
     myMessagesList = []
 
     myRecipients = set()
+    myRecipients.update([theUser])
+    logging.info('User recipient added: %s' % str(myRecipients))
     # get the list of recipients
     for myProduct in [s.product for s in myRecords]:
         myRecipients.update(
@@ -932,7 +934,7 @@ def genericDelete(theRequest, theObject):
         return ({'myMessage': 'You can only delete an entry that you own!'})
     else:
         theObject.delete()
-        return ({'myMessage': 'Entry was deleted successfully'})
+        return {'myMessage': 'Entry was deleted successfully'}
 
 
 def getObject(theClass):
