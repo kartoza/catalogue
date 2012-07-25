@@ -192,7 +192,7 @@ def addTaskingRequest( theRequest ):
             logging.debug("Tasking Request saved")
             logging.info('Tasking request : data is valid')
             # Now add the cart contents to the order
-            notifySalesStaffOfTaskRequest(myObject.id)
+            notifySalesStaffOfTaskRequest(myObject.user, myObject.id)
             return HttpResponseRedirect(myRedirectPath + str(myObject.id))
         else:
             logging.info('Add Tasking Request : form is NOT valid')
