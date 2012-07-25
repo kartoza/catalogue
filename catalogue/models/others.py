@@ -113,9 +113,18 @@ class OrderNotificationRecipients(models.Model):
     individuals
     """
     user = models.ForeignKey(User)
-    sensors = models.ManyToManyField(MissionSensor, verbose_name='Sensors', null=True, blank=True,
-        help_text='Please choose one or more sensor. Use ctrl-click to select more than one.')
-    classes = models.ManyToManyField(ContentType, null=True, blank=True, verbose_name='Product classes', help_text='Please subscribe to one ore more product class. Use ctrl-click to select more than one.')
+    sensors = models.ManyToManyField(MissionSensor,
+                                     verbose_name='Sensors',
+                                     null=True, blank=True,
+        help_text=('Please choose one or more sensor. Use ctrl-click'
+                   'to select more than one.'))
+    classes = models.ManyToManyField(ContentType,
+                         null=True,
+                         blank=True,
+                         verbose_name='Product classes',
+                         help_text=('Please subscribe to one or more product'
+                                    'class. Use ctrl-click to select more'
+                                    'than one.'))
 
     def __unicode(self):
         return str(self.user.name)

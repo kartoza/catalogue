@@ -55,7 +55,7 @@ from search_inclinationangle import SearchIncliantionAngle_Test
 from search_spatialresolution import SearchSpatialResolution_Test
 from search_cloudcover import SearchCloudCover_Test
 from search_rowpath import SearchRowPath_Test
-from email_notification_test import EmailNotificationTest
+from email_notification_test import EmailNotificationTest, EmailTest
 from integerCSVIntervalsField_return import IntegersCSVIntervalsField_Test
 from visit_model import VisitCRUD_Test
 from sacuserprofile_model import SacUserProfileCRUD_Test

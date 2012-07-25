@@ -28,7 +28,12 @@ python manage.py testserver \
   catalogue/fixtures/test_marketsector.json\
   catalogue/fixtures/test_deliverymethod.json\
   catalogue/fixtures/test_fileformat.json\
-  catalogue/fixtures/test_resamplingmethod.json
+  catalogue/fixtures/test_resamplingmethod.json\
+  catalogue/fixtures/test_taskingrequest.json\
+  catalogue/fixtures/test_ordernotificationrecipients.json
+  
+  #catalogue/fixtures/test_contenttypes.json\
+
 
 dropdb 'sac-testbed'
 psql -c 'alter database "sac-unittest" rename to "sac-testbed"' template1

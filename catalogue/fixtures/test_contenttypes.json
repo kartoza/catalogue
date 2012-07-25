@@ -1,0 +1,74 @@
+[
+    {
+        "pk": 54,
+        "model": "contenttypes.contenttype",
+        "fields": {
+            "model": "continuousproduct",
+            "name": "continuous product",
+            "app_label": "catalogue"
+        }
+    },
+    {
+        "pk": 50,
+        "model": "contenttypes.contenttype",
+        "fields": {
+            "model": "genericimageryproduct",
+            "name": "generic imagery product",
+            "app_label": "catalogue"
+        }
+    },
+    {
+        "pk": 20,
+        "model": "contenttypes.contenttype",
+        "fields": {
+            "model": "genericproduct",
+            "name": "generic product",
+            "app_label": "catalogue"
+        }
+    },
+    {
+        "pk": 51,
+        "model": "contenttypes.contenttype",
+        "fields": {
+            "model": "genericsensorproduct",
+            "name": "generic sensor product",
+            "app_label": "catalogue"
+        }
+    },
+    {
+        "pk": 52,
+        "model": "contenttypes.contenttype",
+        "fields": {
+            "model": "geospatialproduct",
+            "name": "geospatial product",
+            "app_label": "catalogue"
+        }
+    },
+    {
+        "pk": 21,
+        "model": "contenttypes.contenttype",
+        "fields": {
+            "model": "opticalproduct",
+            "name": "optical product",
+            "app_label": "catalogue"
+        }
+    },
+    {
+        "pk": 53,
+        "model": "contenttypes.contenttype",
+        "fields": {
+            "model": "ordinalproduct",
+            "name": "ordinal product",
+            "app_label": "catalogue"
+        }
+    },
+    {
+        "pk": 22,
+        "model": "contenttypes.contenttype",
+        "fields": {
+            "model": "radarproduct",
+            "name": "radar product",
+            "app_label": "catalogue"
+        }
+    }
+]
