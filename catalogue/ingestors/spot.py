@@ -574,6 +574,8 @@ def fetchFeatures(theShapefile, theAreaOfInterest):
         raise CommandError('Loading index failed %s' % e)
 
     for myPolygon in myDataSource[0]:
-        if (not theAreaOfInterest or
-           theAreaOfInterest.intersects(myPolygon.geom)):
+        if theAreaOfInterest is None:
             yield myPolygon
+        else:
+           if  theAreaOfInterest.intersects(myPolygon.geom):
+                yield myPolygon

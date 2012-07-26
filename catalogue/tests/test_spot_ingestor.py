@@ -75,11 +75,10 @@ class SpotIngestorTest(TestCase):
 
     def testImportUsingManagementCommand(self):
         """Test that we can ingest spot using the management command"""
-        myOwner = Institution.objects.get(id=3)
         call_command('spot_harvest',
                                 verbosity=2,
                                 shapefile=SHAPEFILE_NAME)
-        assert myProduct.owner.name == 'Foobar'
+
 
     def testImportDirectly(self):
         """Test that we can ingest spot using the ingestor function"""
@@ -125,6 +124,8 @@ class SpotIngestorTest(TestCase):
             product_id=(myExpectedProductId))
         assert myProduct.owner.name == 'Foobar'
 
+    def testAreaFiltering(self):
+        """Test that AOI filtering works"""
         #
         # Test importing only recs in an area of interest
         #
@@ -135,11 +136,12 @@ class SpotIngestorTest(TestCase):
                  '17.293880 -5.592359,'
                  '16.206099 -5.592359))')
         print myArea
+        myProductCount = GenericProduct.objects.count()
         spot.ingest(theShapeFile=SHAPEFILE_NAME,
                     theVerbosityLevel=1,
                     theArea=myArea)
-        myProducts = GenericProduct.objects.filter(product_id__contains='S5')
-        self.assertEqual(myProducts.count(), 4)
+        myNewProductCount = GenericProduct.objects.count()
+        self.assertEqual(myProductCount+4, myNewProductCount)
 
     def testAcquisitionCreation(self):
         """Test that acquisistion modes are made on demand"""
