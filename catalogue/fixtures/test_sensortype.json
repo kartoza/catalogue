@@ -206,7 +206,7 @@
             "abbreviation": "XS",
             "mission_sensor": 22,
             "name": "Visual, NearInfrared,",
-            "operator_abbreviation": "Xs"
+            "operator_abbreviation": "X"
         }
     },
     {
@@ -1834,7 +1834,7 @@
         "model": "catalogue.sensortype",
         "fields": {
             "abbreviation": "I",
-            "mission_sensor": 25,
+            "mission_sensor": 24,
             "name": "I",
             "operator_abbreviation": "I"
         }

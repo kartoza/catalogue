@@ -21,8 +21,10 @@ __copyright__ = 'South African National Space Agency'
 import os
 from django.test import TestCase
 from django.core.management import call_command
-from catalogue.models import Institution
-from catalogue.models import GenericProduct
+from catalogue.models import (Institution,
+                              GenericProduct,
+                              AcquisitionMode,
+                              SensorType)
 from catalogue.ingestors import spot
 
 SHAPEFILE_NAME = os.path.join(os.path.dirname( __file__),
@@ -82,23 +84,9 @@ class SpotIngestorTest(TestCase):
     def testImportDirectly(self):
         """Test that we can ingest spot using the ingestor function"""
 
-
-        # Test importing only recs in an area of interest
-        myArea = ('POLYGON('
-                 '(16.206099 -5.592359,'
-                 '16.206099 -6.359587,'
-                 '17.293880 -6.359587,'
-                 '17.293880 -5.592359,'
-                 '16.206099 -5.592359))')
-        print myArea
-        spot.ingest(theShapeFile=SHAPEFILE_NAME,
-                    theVerbosityLevel=1,
-                    theArea=myArea)
-        myProducts = GenericProduct.objects.filter(product_id__contains='S5')
-        self.assertEqual(myProducts.count(), 4)
-
+        #
         # Test with a full load of data
-
+        #
         spot.ingest(theShapeFile=SHAPEFILE_NAME,
                     theVerbosityLevel=1)
         myProducts = GenericProduct.objects.filter(product_id__contains='S5')
@@ -137,6 +125,43 @@ class SpotIngestorTest(TestCase):
             product_id=(myExpectedProductId))
         assert myProduct.owner.name == 'Foobar'
 
+        #
+        # Test importing only recs in an area of interest
+        #
+        myArea = ('POLYGON('
+                 '(16.206099 -5.592359,'
+                 '16.206099 -6.359587,'
+                 '17.293880 -6.359587,'
+                 '17.293880 -5.592359,'
+                 '16.206099 -5.592359))')
+        print myArea
+        spot.ingest(theShapeFile=SHAPEFILE_NAME,
+                    theVerbosityLevel=1,
+                    theArea=myArea)
+        myProducts = GenericProduct.objects.filter(product_id__contains='S5')
+        self.assertEqual(myProducts.count(), 4)
+
+    def testAcquisitionCreation(self):
+        """Test that acquisistion modes are made on demand"""
+        #
+        # Test importing only recs in an area of interest
+        #
+        myAcquisitionMode = AcquisitionMode.objects.get(id=22)
+        myAcquisitionMode.delete()
+        myAcquisitionMode = AcquisitionMode.objects.get(id=23)
+        myAcquisitionMode.delete()
+        mySensorType = SensorType.objects.get(id=29)
+        mySensorType.delete()
+        mySensorTypeCount = SensorType.objects.all().count()
+        myAcquisitionModeCount = AcquisitionMode.objects.all().count()
+        spot.ingest(theShapeFile=SHAPEFILE_NAME,
+                    theVerbosityLevel=1)
+        myNewSensorTypeCount = SensorType.objects.all().count()
+        myNewAcquisitionModeCount = AcquisitionMode.objects.all().count()
+        #there should be one more than before
+        self.assertEqual(mySensorTypeCount + 1, myNewSensorTypeCount)
+        #there should be two more than before
+        self.assertEqual(myAcquisitionModeCount + 2, myNewAcquisitionModeCount)
 
 if __name__ == '__main__':
     unittest.main()

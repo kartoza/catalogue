@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Spot Ingestor Test" type="DjangoTestsConfigurationType" factoryName="Django tests" editBeforeRun="true">
+  <configuration default="false" name="Email Notification Test" type="DjangoTestsConfigurationType" factoryName="Django tests">
     <option name="INTERPRETER_OPTIONS" value="" />
     <option name="PARENT_ENVS" value="true" />
     <envs>
@@ -10,7 +10,7 @@
     <option name="IS_MODULE_SDK" value="false" />
     <module name="sac_catalogue" />
     <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-    <option name="TARGET" value="catalogue.SpotIngestorTest.testAcquisitionCreation" />
+    <option name="TARGET" value="catalogue.EmailNotificationTest" />
     <option name="SETTINGS_FILE" value="" />
     <option name="CUSTOM_SETTINGS" value="false" />
     <RunnerSettings RunnerId="PyDebugRunner" />

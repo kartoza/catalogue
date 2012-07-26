@@ -156,7 +156,7 @@ def ingest(theShapeFile,
             myCreatedRecordCount = 0
             myDiscardedRecordCount = 0
             logMessage('Starting index dowload...', 2)
-            for myPackage in fetchGeometries(theShapeFile, myAreaOfInterest):
+            for myFeature in fetchFeatures(theShapeFile, myAreaOfInterest):
                 #if imported > 5:
                 #  transaction.commit()
                 #  return
@@ -166,7 +166,7 @@ def ingest(theShapeFile,
                     print 'Products updated : %s ' % myUpdatedRecordCount
                     print 'Products imported : %s ' % myCreatedRecordCount
                     transaction.commit()
-                logMessage('Ingesting %s' % myPackage, 2)
+                logMessage('Ingesting %s' % myFeature, 2)
                 myRecordCount += 1
                 # Understanding SPOT a21 scene id:
                 # Concerning the SPOT SCENE products, the name will be
@@ -189,9 +189,9 @@ def ingest(theShapeFile,
                 # catalogue shp dumps so
                 # we dont try to parse everthing from the a21 id
 
-                myOriginalProductId = myPackage.get('A21')
+                myOriginalProductId = myFeature.get('A21')
                 # Gets the mission
-                myMissionId = myPackage.get('SATEL')
+                myMissionId = myFeature.get('SATEL')
                 if not int(myMissionId) in (1,2,3,4,5):
                     raise CommandError('Unknown Spot mission number'
                                        '(should be 1-5) %s.' % myMissionId)
@@ -275,10 +275,9 @@ def ingest(theShapeFile,
 
 
                     # work out the sensor type
-                    myImportFileSensorType = myPackage.get('TYPE')
-
+                    myImportFileSensorType = myFeature.get('TYPE')
                     # Some additional rules from Linda to skip unwanted records
-                    myColourMode = myPackage.get('MODE')
+                    myColourMode = myFeature.get('MODE')
                     if myImportFileSensorType == 'H':
                         myDiscardedRecordCount += 1
                         continue
@@ -303,7 +302,8 @@ def ingest(theShapeFile,
                         myBandCount = 1
                         myGrayScaleFlag = True
                     else:
-                        # not recognised
+                        logMessage('Sensor type %s as per shp not recognised' %
+                                   myImportFileSensorType, 1)
                         continue
 
                     # The type abbreviation should be unique for its sensor
@@ -318,21 +318,20 @@ def ingest(theShapeFile,
                                     '\nMission sensor was: %s') % (
                                   myImportFileSensorType,
                                   myMissionSensor), 0)
+                        # Make a new sensor
                         mySensorType = SensorType()
                         mySensorType.abbreviation = myImportFileSensorType
                         mySensorType.name = myImportFileSensorType
                         mySensorType.operator_abbreviation = \
                                 myImportFileSensorType
-                        # Assume the first sensor for the mission -
-                        # may need manual correction afterwards
-
-
-
                         mySensorType.mission_sensor = myMissionSensor
                         mySensorType.save()
+                        logMessage('New sensor type auto-added: %s' %
+                                    mySensorType, 0)
 
                         # Make sure we have acquisition modes for lookup later
-                        myResolution = myPackage.get('RESOL')
+                        myResolution = myFeature.get('RESOL')
+                        logMessage('Spatial resolution: %s' % myResolution)
                         # Create a new acquisition mode for camera 1 on this
                         # sensortype
                         myMode = AcquisitionMode()
@@ -346,6 +345,8 @@ def ingest(theShapeFile,
                         myMode.operator_abbreviation = str(
                             mySpotMission.abbreviation) + 'C1'
                         myMode.save()
+                        logMessage('New acquistion mode auto-added: %s' %
+                            myMode, 0)
 
                         # Create a new acquisition mode for camera 2 on this
                         # sensortype
@@ -354,19 +355,23 @@ def ingest(theShapeFile,
                         myMode2.abbreviation =  str(
                             mySpotMission.abbreviation) + 'C2'
                         myMode2.name = 'Camera 2'
-                        myMode.spatial_resolution = myResolution
-                        myMode.band_count = myBandCount
-                        myMode.is_grayscale = myGrayScaleFlag
+                        myMode2.spatial_resolution = myResolution
+                        myMode2.band_count = myBandCount
+                        myMode2.is_grayscale = myGrayScaleFlag
                         myMode2.operator_abbreviation = str(
                             mySpotMission.abbreviation) + 'C2'
                         myMode2.save()
+                        logMessage('New acquistion mode auto-added: %s' %
+                            myMode2, 0)
                     else:
                         mySensorType = myTypes[0]
                     # The mode should be unique for its type so we
                     # chain two filters to get it
                     myMode = 'S%sC%s' % (
-                        myMissionId, myPackage.get('A21')[-2:-1] )
-                    acquisition_mode = AcquisitionMode.objects.filter(
+                        myMissionId, myFeature.get('A21')[-2:-1] )
+
+                    #print '%s : %s' % (mySensorType, myMode)
+                    myAcquisitionMode = AcquisitionMode.objects.filter(
                         sensor_type=mySensorType
                     ).filter(
                         operator_abbreviation=myMode)[0]
@@ -378,7 +383,7 @@ def ingest(theShapeFile,
                     logMessage(myMissionSensor, 2)
                     logMessage('Detected sensor type: %s' % mySensorType, 2)
                     logMessage('Detected acquisition mode: %s' %
-                            acquisition_mode, 2)
+                            myAcquisitionMode, 2)
 
                     #
                     # Debugging output ends
@@ -387,9 +392,9 @@ def ingest(theShapeFile,
                     traceback.print_exc(file=sys.stdout)
                     continue
                 # e.g. 20/01/2011
-                date_parts = myPackage.get('DATE_ACQ').split('/')
+                date_parts = myFeature.get('DATE_ACQ').split('/')
                 # e.g. 08:29:01
-                time_parts = myPackage.get('TIME_ACQ').split(':')
+                time_parts = myFeature.get('TIME_ACQ').split(':')
                 # Fills the the product_id
                 #SAT_SEN_TYP_MOD_KKKK_KS_JJJJ_JS_YYMMDD_HHMMSS_LEVL_PROJTN
                 myProductId =(('%(SAT)s_%(SEN)s_%(TYP)s_%(MOD)s_%(KKKK)s_%(KS)'
@@ -399,10 +404,10 @@ def ingest(theShapeFile,
                   'SAT': mySpotMission.abbreviation.ljust(3, '-'),
                   'SEN': mySensorType.mission_sensor.abbreviation.ljust(3, '-'),
                   'TYP': mySensorType.abbreviation.ljust(3, '-'),
-                  'MOD': acquisition_mode.abbreviation.ljust(4, '-'),
-                  'KKKK': myPackage.get('a21')[1:4].rjust(4, '0'),
+                  'MOD': myAcquisitionMode.abbreviation.ljust(4, '-'),
+                  'KKKK': myFeature.get('a21')[1:4].rjust(4, '0'),
                   'KS': '00',
-                  'JJJJ': myPackage.get('a21')[4:7].rjust(4, '0'),
+                  'JJJJ': myFeature.get('a21')[4:7].rjust(4, '0'),
                   'JS': '00',
                   'YYMMDD': date_parts[2][-2:]+date_parts[1]+date_parts[0],
                   'HHMMSS': time_parts[0]+time_parts[1]+time_parts[2],
@@ -417,24 +422,24 @@ def ingest(theShapeFile,
                 # Do the ingestion here...
                 myData = {
                   'metadata': '\n'.join(['%s=%s' %
-                            (f,myPackage.get(f)) for f in myPackage.fields]),
-                  'spatial_coverage': myPackage.geom.geos,
+                            (f,myFeature.get(f)) for f in myFeature.fields]),
+                  'spatial_coverage': myFeature.geom.geos,
                   'product_id': myProductId,
                   'radiometric_resolution': myRadiometricResolution,
                   'band_count': myBandCount,
                   # integer percent
-                  'cloud_cover': int(myPackage.get('CLOUD_PER')),
+                  'cloud_cover': int(myFeature.get('CLOUD_PER')),
                   'owner_id': myOwner.id,
                   'license': theLicense,
                   'creating_software': theSoftware,
                   'quality': theQuality,
-                  'sensor_inclination_angle': myPackage.get('ANG_INC'),
-                  'sensor_viewing_angle': myPackage.get('ANG_ACQ'),
+                  'sensor_inclination_angle': myFeature.get('ANG_INC'),
+                  'sensor_viewing_angle': myFeature.get('ANG_ACQ'),
                   'original_product_id': myOriginalProductId,
                   'solar_zenith_angle': mySolarZenithAngle,
                   'solar_azimuth_angle': mySolarAzimuthAngle,
-                  'spatial_resolution_x': myPackage.get('RESOL'),
-                  'spatial_resolution_y': myPackage.get('RESOL'),
+                  'spatial_resolution_x': myFeature.get('RESOL'),
+                  'spatial_resolution_y': myFeature.get('RESOL'),
                 }
                 logMessage(myData, 2)
 
@@ -482,7 +487,7 @@ def ingest(theShapeFile,
                                                 myProduct.product_id + '.jpg')
                             myHandle = open(myDownloadedThumb, 'wb+')
                             myThumbnail = urllib2.urlopen(
-                                myPackage.get('URL_QL'))
+                                myFeature.get('URL_QL'))
                             myHandle.write(myThumbnail.read())
                             myThumbnail.close()
                             myHandle.close()
@@ -499,7 +504,7 @@ def ingest(theShapeFile,
                             # copy
                             if myNewRecordFlag:
                                 myProduct.remote_thumbnail_url = (
-                                      myPackage.get('URL_QL'))
+                                      myFeature.get('URL_QL'))
                                 myProduct.save()
                     if myNewRecordFlag:
                         logMessage('Product %s imported.' %
@@ -548,9 +553,9 @@ def ingest(theShapeFile,
                   myDiscardedRecordCount))
     logMessage(mySummary, 0)
 
-def fetchGeometries(theShapefile, theAreaOfInterest):
+def fetchFeatures(theShapefile, theAreaOfInterest):
     """
-    Download the index and parses it, returns a generator list of features.
+    Open the index and parses it, returns a generator list of features.
 
     Args:
         theShapefile - (Required) A shapefile downloaded from
