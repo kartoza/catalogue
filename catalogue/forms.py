@@ -169,8 +169,8 @@ class AdvancedSearchForm(forms.ModelForm):
 
         # Do not list empty dictionary items (avoid null searches)
         qs = AcquisitionMode.objects.order_by()
-        self.fields['sensors'].queryset = MissionSensor.objects.filter(pk__in=qs.distinct().values_list('sensor_type__mission_sensor', flat=True))
-        self.fields['mission'].queryset = Mission.objects.filter(pk__in=qs.distinct().values_list('sensor_type__mission_sensor__mission', flat=True))
+        self.fields['sensors'].queryset = MissionSensor.objects.filter(pk__in=qs.distinct().values_list('sensor_type__mission_sensor', flat=True)).filter(has_data=True)
+        self.fields['mission'].queryset = Mission.objects.filter(pk__in=qs.distinct().values_list('sensor_type__mission_sensor__mission', flat=True)).filter(missionsensor__has_data=True)
 
 
     def clean_guid(self):
