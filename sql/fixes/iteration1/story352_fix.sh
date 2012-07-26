@@ -6,7 +6,7 @@ then
   exit $E_BADARGS
 fi
 
-for script in $(ls story349*.sql|sort)
+for script in $(ls story352*.sql|sort)
 do
     echo "Executing script:", $script
     psql -f $script -d $1
