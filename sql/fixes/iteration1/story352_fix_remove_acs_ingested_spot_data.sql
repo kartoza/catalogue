@@ -1,3 +1,4 @@
+BEGIN;
 --
 select count(*) from catalogue_genericproduct where metadata like '%Sensor: Spot 1,2,3 HRV Xs%SegmentCommon%';
 --  We should remove these 287490 records
@@ -41,3 +42,4 @@ select count(*) from catalogue_genericproduct where metadata like '%Sensor: Spot
 -------
 --     0
 --(1 row)
+COMMIT;
