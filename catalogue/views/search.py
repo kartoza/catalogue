@@ -44,7 +44,8 @@ def search(theRequest):
     Perform an attribute and spatial search for imagery
     """
 
-    myLayersList, myLayerDefinitions, myActiveBaseMap = standardLayers( theRequest )
+    myLayersList, myLayerDefinitions, myActiveBaseMap = standardLayers(
+                                                                theRequest)
     logging.debug(("Post vars:" + str(theRequest.POST)))
     logging.info( 'search called')
     if theRequest.method == 'POST':
@@ -303,7 +304,7 @@ def searchResultMap(theRequest, theGuid):
 def searchResultPage(theRequest, theGuid):
     """Does the same as searchResultMap but renders only
     enough html to be inserted into a div"""
-    mySearcher = Searcher(theRequest,theGuid)
+    mySearcher = Searcher(theRequest, theGuid)
     mySearcher.search()
     return(mySearcher.templateData())
 
