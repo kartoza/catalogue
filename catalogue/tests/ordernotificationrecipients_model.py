@@ -88,8 +88,8 @@ class OrderNotificationRecipientsCRUD_Test(TestCase):
 
         #check m2m
         myExpectedModelDataM2M = {
-            'classes': [50, 54],
-            'sensors': [4]
+            'classes': [50, 54, 20, 51, 52, 21, 53, 22],
+            'sensors': [4, 1]
             }
         #add M2M fields
         for field in myExpectedModelDataM2M:
