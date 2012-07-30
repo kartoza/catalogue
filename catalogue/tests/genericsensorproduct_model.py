@@ -197,14 +197,14 @@ class GenericSensorProductCRUD_Test(TestCase):
         'institution_city': u'Gauteng', 'bbox_north': -18.704799999999977, 'institution_name': u'Satellite Applications Centre',
         'institution_country': u'South Africa', 'bbox_west': 31.21550000000002, 'institution_postcode': u'0000',
         'md_data_identification': u'HRV-1:Camera 2', 'bbox_south': -19.328899999999976},
-         {'product_date': '1992-07-03T08:29:48', 'institution_address': u'Hartebeeshoek',
-         'institution_region': '', 'image_quality_code': u'Unknown', 'vertical_cs': u'UTM35S', 'processing_level_code': u'2A',
+         {'product_date': '1992-07-03T08:29:48', 'institution_address': u'Hartebeeshoek', 'institution_region': '',
+         'image_quality_code': u'Unknown', 'vertical_cs': u'UTM35S', 'processing_level_code': u'2A',
          'file_identifier': u'S1-_Pan_P--_CAM2_0126_00_0387_00_920703_082948_L2A-_UTM35S',
          'spatial_coverage': '26.447275,-18.739992 27.00868,-18.826267 27.134314,-18.296593 26.574713,-18.210571 26.447275,-18.739992',
          'bbox_east': 27.134314, 'md_abstract': '', 'md_product_date': '1992-07-03T08:29:48',
          'institution_city': u'Gauteng', 'bbox_north': -18.210571, 'institution_name': u'Satellite Applications Centre',
          'institution_country': u'South Africa', 'bbox_west': 26.447275, 'institution_postcode': u'0000',
-         'md_data_identification': u'Xs:P', 'bbox_south': -18.826267}]
+         'md_data_identification': u'HRV-3:Camera 1', 'bbox_south': -18.826267}]
 
         for idx, PK in enumerate(myModelPKs):
             myModel = GenericSensorProduct.objects.get(pk=PK)
@@ -219,7 +219,7 @@ class GenericSensorProductCRUD_Test(TestCase):
         """
         myModelPKs = [1960810, 1001218]
         myExpResults = ['S1/3Ba/1987/4/28',
-         'S1/2A/1992/7/3']
+         'S3/2A/1992/7/3']
 
         for idx, PK in enumerate(myModelPKs):
             myModel = GenericSensorProduct.objects.get(pk=PK)
@@ -234,7 +234,7 @@ class GenericSensorProductCRUD_Test(TestCase):
         """
         myModelPKs = [1960810, 1001218]
         myExpResults = ['S1/1987/4/28',
-         'S1/1992/7/3']
+         'S3/1992/7/3']
 
         for idx, PK in enumerate(myModelPKs):
             myModel = GenericSensorProduct.objects.get(pk=PK)

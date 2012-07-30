@@ -68,19 +68,19 @@ class MissionSensorCRUD_Test(TestCase):
         myModelPK = 1
         myExpectedModelData = {
             'is_radar': False,
-            'name': 'Advanced Very High Resolution Radiometer NOAA',
-            'description': '',
+            'name': 'NOAA-14 AVHRR',
+            'description': 'Advanced Very High Resolution Radiometer NOAA',
             'mission_id': 1,
             'abbreviation': 'AVH',
             'operator_abbreviation': 'AVHRR-3',
             'has_data': True,
-            'is_taskable': True
+            'is_taskable': False
         }
         myModel = MissionSensor.objects.get(pk=myModelPK)
         #check if data is correct
         for key, val in myExpectedModelData.items():
             self.assertEqual(myModel.__dict__.get(key), val,
-                simpleMessage(val, myModel.__dict__.get(key),
+                simpleMessage(myModel.__dict__.get(key), val,
                     message='For key "%s"' % key))
 
     def test_missionsensor_update(self):
@@ -106,7 +106,7 @@ class MissionSensorCRUD_Test(TestCase):
         #check if updated
         for key, val in myNewModelData.items():
             self.assertEqual(myModel.__dict__.get(key), val,
-                simpleMessage(val, myModel.__dict__.get(key),
+                simpleMessage(myModel.__dict__.get(key), val,
                     message='For key "%s"' % key))
 
     def test_missionsensor_delete(self):
@@ -128,7 +128,7 @@ class MissionSensorCRUD_Test(TestCase):
         Tests MissionSensor model representation
         """
         myModelPKs = [1, 100]
-        myExpResults = [u'NOAA-14:Advanced Very High Resolution Radiometer NOAA', u':UMS']
+        myExpResults = [u'NOAA-14:NOAA-14 AVHRR', u':UMS']
 
         for idx, PK in enumerate(myModelPKs):
             myModel = MissionSensor.objects.get(pk=PK)

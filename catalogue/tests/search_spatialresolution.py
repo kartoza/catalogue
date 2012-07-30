@@ -40,7 +40,7 @@ class SearchSpatialResolution_Test(SearchTestCase):
         """
         myTestSearches = [13, 14, 15, 16, 17, 18]
         #we need to bound results
-        myExpectedResults = [1, 2, 4, 87, 81, 2]
+        myExpectedResults = [1, 2, 4, 69, 81, 2]
 
         for idx, searchPK in enumerate(myTestSearches):
             mySearch = Search.objects.get(pk=searchPK)

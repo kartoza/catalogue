@@ -37,7 +37,7 @@ class SearchIncliantionAngle_Test(SearchTestCase):
         """
         myTestSearches = [10, 11, 12]
         #we need to bound results
-        myExpectedResults = [(15, 30), (15, 30), (15, 25)]
+        myExpectedResults = [(50, 60), (35, 50), (25, 40)]
 
         for idx, searchPK in enumerate(myTestSearches):
             mySearch = Search.objects.get(pk=searchPK)
@@ -54,4 +54,4 @@ class SearchIncliantionAngle_Test(SearchTestCase):
             assert mySearcher.mQuerySet.count() >= myExpectedResults[idx][0] and \
             mySearcher.mQuerySet.count() <= myExpectedResults[idx][1], \
             simpleMessage(mySearcher.mQuerySet.count(), myExpectedResults[idx],
-                message='For search pk %s expected:' % searchPK)
+                message='For search pk %s expected in range:' % searchPK)

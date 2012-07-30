@@ -22,6 +22,7 @@ from catalogue.tests.test_utils import simpleMessage
 from catalogue.models import GenericProduct
 from datetime import datetime
 
+
 class GenericProductCRUD_Test(TestCase):
     """
     Tests models.

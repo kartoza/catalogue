@@ -70,7 +70,7 @@ class SearchRecordCRUD_Test(TestCase):
         myExpectedModelData = {
             'user_id': 1,
             'order_id': 1,
-            'product_id': 2277404,
+            'product_id': 1934163,
             'delivery_detail_id': None,
             'internal_order_id': None,
             'download_path': '',
@@ -128,10 +128,10 @@ class SearchRecordCRUD_Test(TestCase):
         Tests SearchRecord model kmlExtents method
         """
         myModelPKs = [1]
-        myExpResults = ["""<north>-1.1967</north>
-          <south>-1.8094</south>
-          <east>35.8477</east>
-          <west>35.1936</west>"""]
+        myExpResults = ["""<north>-26.6753</north>
+          <south>-27.2927</south>
+          <east>22.0914</east>
+          <west>21.3566</west>"""]
 
         for idx, PK in enumerate(myModelPKs):
             myModel = SearchRecord.objects.get(pk=PK)
