@@ -16,7 +16,7 @@
         }
     },
     {
-        "pk": 11275,
+        "pk": 4456,
         "model": "catalogue.radarproduct",
         "fields": {
             "imaging_mode": null,
@@ -32,7 +32,7 @@
         }
     },
     {
-        "pk": 21414,
+        "pk": 5595,
         "model": "catalogue.radarproduct",
         "fields": {
             "imaging_mode": null,
@@ -48,7 +48,7 @@
         }
     },
     {
-        "pk": 21426,
+        "pk": 7623,
         "model": "catalogue.radarproduct",
         "fields": {
             "imaging_mode": null,
@@ -64,7 +64,23 @@
         }
     },
     {
-        "pk": 16899,
+        "pk": 16231,
+        "model": "catalogue.radarproduct",
+        "fields": {
+            "imaging_mode": null,
+            "polarising_list": null,
+            "azimuth_range_resolution": null,
+            "look_direction": null,
+            "calibration": null,
+            "slant_range_resolution": null,
+            "orbit_direction": null,
+            "polarising_mode": null,
+            "incidence_angle": null,
+            "antenna_receive_configuration": null
+        }
+    },
+    {
+        "pk": 23656,
         "model": "catalogue.radarproduct",
         "fields": {
             "imaging_mode": null,

@@ -1,5 +1,61 @@
 [
     {
+        "pk": 19,
+        "model": "catalogue.processinglevel",
+        "fields": {
+            "abbreviation": "L0",
+            "name": "Data products are unprocessed telemetry data as received from the observing platform excluding communication artifacts introduced by ground system.(Source www.ngdc.noaa.gov)"
+        }
+    },
+    {
+        "pk": 20,
+        "model": "catalogue.processinglevel",
+        "fields": {
+            "abbreviation": "L1A",
+            "name": "Data products are telemetry data that have been extracted but not decommutated from level 0 and formatted into time-sequenced datasets for easier processing. Level 1a formats are NOAA's internal formats and are only used for NOAA processing. They only exi"
+        }
+    },
+    {
+        "pk": 21,
+        "model": "catalogue.processinglevel",
+        "fields": {
+            "abbreviation": "L1B",
+            "name": "Data products are discrete, instrument-specific datasets derived from level 1a containing unprocessed data at full resolution, time-referenced, and annotated with ancillary information including data quality indicators, calibration coefficients and georef"
+        }
+    },
+    {
+        "pk": 22,
+        "model": "catalogue.processinglevel",
+        "fields": {
+            "abbreviation": "L2",
+            "name": "Data products are derived geophysical variables at the same resolution and locations as the level 1 source data. (Source www.ngdc.noaa.gov)"
+        }
+    },
+    {
+        "pk": 23,
+        "model": "catalogue.processinglevel",
+        "fields": {
+            "abbreviation": "L3",
+            "name": "Data products are mapped on uniform space-time grid scales, usually with some completeness and consistency. (Source www.ngdc.noaa.gov)"
+        }
+    },
+    {
+        "pk": 24,
+        "model": "catalogue.processinglevel",
+        "fields": {
+            "abbreviation": "L4A",
+            "name": "Data products are model output or results from analysis of lower level data e.g.variables derived from multiple measurements. (Source www.ngdc.noaa.gov)"
+        }
+    },
+    {
+        "pk": 25,
+        "model": "catalogue.processinglevel",
+        "fields": {
+            "abbreviation": "L1Aa",
+            "name": "Single Look Complex Image. This is pre-processed but retains the data in complex (i.e. phase-preserving) form. The product is single-look (no speckle reduction) and in slant range. Full frame (SLCI) format. (Source Eurimage)"
+        }
+    },
+    {
         "pk": 1,
         "model": "catalogue.processinglevel",
         "fields": {
@@ -85,62 +141,6 @@
         "fields": {
             "abbreviation": "4",
             "name": "Level 4"
-        }
-    },
-    {
-        "pk": 19,
-        "model": "catalogue.processinglevel",
-        "fields": {
-            "abbreviation": "L0",
-            "name": "Data products are unprocessed telemetry data as received from the observing platform excluding communication artifacts introduced by ground system.(Source www.ngdc.noaa.gov)"
-        }
-    },
-    {
-        "pk": 20,
-        "model": "catalogue.processinglevel",
-        "fields": {
-            "abbreviation": "L1A",
-            "name": "Data products are telemetry data that have been extracted but not decommutated from level 0 and formatted into time-sequenced datasets for easier processing. Level 1a formats are NOAA's internal formats and are only used for NOAA processing. They only exi"
-        }
-    },
-    {
-        "pk": 21,
-        "model": "catalogue.processinglevel",
-        "fields": {
-            "abbreviation": "L1B",
-            "name": "Data products are discrete, instrument-specific datasets derived from level 1a containing unprocessed data at full resolution, time-referenced, and annotated with ancillary information including data quality indicators, calibration coefficients and georef"
-        }
-    },
-    {
-        "pk": 22,
-        "model": "catalogue.processinglevel",
-        "fields": {
-            "abbreviation": "L2",
-            "name": "Data products are derived geophysical variables at the same resolution and locations as the level 1 source data. (Source www.ngdc.noaa.gov)"
-        }
-    },
-    {
-        "pk": 23,
-        "model": "catalogue.processinglevel",
-        "fields": {
-            "abbreviation": "L3",
-            "name": "Data products are mapped on uniform space-time grid scales, usually with some completeness and consistency. (Source www.ngdc.noaa.gov)"
-        }
-    },
-    {
-        "pk": 24,
-        "model": "catalogue.processinglevel",
-        "fields": {
-            "abbreviation": "L4A",
-            "name": "Data products are model output or results from analysis of lower level data e.g.variables derived from multiple measurements. (Source www.ngdc.noaa.gov)"
-        }
-    },
-    {
-        "pk": 25,
-        "model": "catalogue.processinglevel",
-        "fields": {
-            "abbreviation": "L1Aa",
-            "name": "Single Look Complex Image. This is pre-processed but retains the data in complex (i.e. phase-preserving) form. The product is single-look (no speckle reduction) and in slant range. Full frame (SLCI) format. (Source Eurimage)"
         }
     },
     {
@@ -1136,7 +1136,7 @@
         }
     },
     {
-        "pk": 150,
+        "pk": 152,
         "model": "catalogue.processinglevel",
         "fields": {
             "abbreviation": "1B",
