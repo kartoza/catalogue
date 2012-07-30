@@ -211,7 +211,7 @@ class SearchCRUD_Test(TestCase):
         """
         myModelPKs = [1, 2, 4, 7]
         myExpResults = ['MSS-1',
-                        'Pan, M, Xi, Xs, MSS-1, AMI-1, ETM+, AVHRR-3',
+                        'AMI-1, AVHRR-3, ETM+, M, MSS-1, Pan, Xi, Xs',
                         'AMI-1', '']
 
         for idx, PK in enumerate(myModelPKs):

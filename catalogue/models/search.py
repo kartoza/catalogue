@@ -326,7 +326,9 @@ certain cloud cover, enable this.')
 
     def sensorsAsString(self):
         myList = self.sensors.values_list('operator_abbreviation', flat=True)
-        myString = ", ".join(myList)
+
+        # sort returned sensor list, required for constant expeted output
+        myString = ", ".join(sorted(myList))
         return myString
 
     def datesAsString(self):
