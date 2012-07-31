@@ -2,15 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4914a05c-a80a-45d2-88ac-5248c1d0b3d9" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/runConfigurations/All_Catalogue_Tests.xml" afterPath="$PROJECT_DIR$/.idea/runConfigurations/All_Catalogue_Tests.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/runConfigurations/Spot_Ingestor_Test.xml" afterPath="$PROJECT_DIR$/.idea/runConfigurations/Spot_Ingestor_Test.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/REQUIREMENTS.txt" afterPath="$PROJECT_DIR$/REQUIREMENTS.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/catalogue/ingestors/spot.py" afterPath="$PROJECT_DIR$/catalogue/ingestors/spot.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/catalogue/templates/index.html" afterPath="$PROJECT_DIR$/catalogue/templates/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/catalogue/tests/graphtag_templatetag.py" afterPath="$PROJECT_DIR$/catalogue/tests/graphtag_templatetag.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/docs/sphinx/api-docs/index.rst" afterPath="$PROJECT_DIR$/docs/sphinx/api-docs/index.rst" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sql/fixes/iteration1/story354_fix_remove_bogus_acquisition_id_spot_products.sql" afterPath="$PROJECT_DIR$/sql/fixes/iteration1/story354_fix_remove_bogus_acquisition_id_spot_products.sql" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/catalogue/tests/test_spot_ingestor.py" afterPath="$PROJECT_DIR$/catalogue/tests/test_spot_ingestor.py" />
     </list>
     <ignored path="sac_catalogue.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -35,7 +28,28 @@
     <favorites_list name="sac_catalogue" />
   </component>
   <component name="FileEditorManager">
-    <leaf />
+    <leaf>
+      <file leaf-file-name="test_spot_ingestor.py" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/catalogue/tests/test_spot_ingestor.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="168" column="19" selection-start="6190" selection-end="6190" vertical-scroll-proportion="0.8522222">
+              <folding>
+                <element signature="e#675#684#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="test_acquisitionmode.json" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/catalogue/fixtures/test_acquisitionmode.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FindManager">
     <FindUsagesManager>
@@ -48,22 +62,22 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/settings.py" />
-        <option value="$PROJECT_DIR$/catalogue/fixtures/test_user.json" />
-        <option value="$PROJECT_DIR$/catalogue/views/orders.py" />
-        <option value="$PROJECT_DIR$/catalogue/views/helpers.py" />
-        <option value="$PROJECT_DIR$/catalogue/tests/__init__.py" />
-        <option value="$PROJECT_DIR$/catalogue/models/others.py" />
-        <option value="$PROJECT_DIR$/catalogue/fixtures/test_ordernotificationrecipients.json" />
-        <option value="$PROJECT_DIR$/catalogue/tests/email_notification_test.py" />
         <option value="$PROJECT_DIR$/catalogue/views/tasking.py" />
         <option value="$PROJECT_DIR$/catalogue/models/dictionaries.py" />
         <option value="$PROJECT_DIR$/catalogue/fixtures/test_sensortype.json" />
-        <option value="$PROJECT_DIR$/catalogue/tests/test_spot_ingestor.py" />
         <option value="$PROJECT_DIR$/catalogue/tests/graphtag_templatetag.py" />
         <option value="$PROJECT_DIR$/spot.txt" />
         <option value="$PROJECT_DIR$/catalogue/templates/index.html" />
         <option value="$PROJECT_DIR$/catalogue/ingestors/spot.py" />
+        <option value="$PROJECT_DIR$/catalogue/tests/taskingrequest_model.py" />
+        <option value="$PROJECT_DIR$/catalogue/tests/opticalproduct_model.py" />
+        <option value="$PROJECT_DIR$/catalogue/tests/geospatialproduct_model.py" />
+        <option value="$PROJECT_DIR$/catalogue/tests/genericsensorproduct_model.py" />
+        <option value="$PROJECT_DIR$/catalogue/tests/genericimageryproduct_model.py" />
+        <option value="$PROJECT_DIR$/catalogue/tests/continuousproduct_model.py" />
+        <option value="$PROJECT_DIR$/catalogue/tests/ordinalproduct_model.py" />
+        <option value="$PROJECT_DIR$/catalogue/tests/radarproduct_model.py" />
+        <option value="$PROJECT_DIR$/catalogue/tests/test_spot_ingestor.py" />
       </list>
     </option>
   </component>
@@ -195,6 +209,24 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sac_catalogue" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sac_catalogue" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="catalogue" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="fixtures" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
     </panes>
@@ -219,7 +251,7 @@
       <PyConsoleSettings />
     </option>
   </component>
-  <component name="RunManager" selected="Django server.sac_catalogue">
+  <component name="RunManager" selected="Django tests.All Catalogue Tests">
     <configuration default="false" name="Default" type="com.intellij.persistence.run.ConsoleRunConfigurationType" factoryName="Query Language Console" temporary="true">
       <option name="VM_PARAMETERS" value="" />
       <option name="USER_CFG_CLASS" />
@@ -404,11 +436,11 @@
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.20757738" sideWeight="0.43365696" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.20757738" sideWeight="0.5587918" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.20757738" sideWeight="0.5587918" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="false" weight="0.399137" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" x="3" y="0" width="1917" height="1058" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32901832" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="false" weight="0.32901832" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" x="1" y="1" width="1919" height="1079" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="true" weight="0.32901832" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" x="1" y="1" width="1919" height="1079" />
       <window_info id="Pomodoro" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="false" weight="0.32901832" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" x="4871" y="398" width="800" height="343" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Database Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32901832" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -495,55 +527,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/settings.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="247" column="0" selection-start="8701" selection-end="8701" vertical-scroll-proportion="5.2436976" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/catalogue/tests/email_notification_test.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="120" column="24" selection-start="4416" selection-end="4416" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="e#651#683#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/catalogue/models/dictionaries.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="104" column="42" selection-start="4262" selection-end="4262" vertical-scroll-proportion="0.51666665" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/catalogue/models/products.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="690" column="42" selection-start="30132" selection-end="30142" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/catalogue/fixtures/test_sensortype.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="268" column="39" selection-start="6939" selection-end="6939" vertical-scroll-proportion="0.4400949" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/catalogue/management/commands/reverse-engineer-product-ids.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="13" selection-start="652" selection-end="797" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/catalogue/tests/graphtag_templatetag.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="51" column="80" selection-start="1592" selection-end="1592" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/catalogue/tests/utmzonecalc_module.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/catalogue/models/search.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/spot.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state line="160" column="64" selection-start="13800" selection-end="13800" vertical-scroll-proportion="0.0" />
@@ -557,15 +540,6 @@
     <entry file="file://$PROJECT_DIR$/catalogue/templates/index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state line="34" column="0" selection-start="2209" selection-end="2209" vertical-scroll-proportion="-21.25" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/catalogue/tests/test_spot_ingestor.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="145" column="38" selection-start="5100" selection-end="5100" vertical-scroll-proportion="0.48747152">
-          <folding>
-            <element signature="e#675#684#0" expanded="true" />
-          </folding>
-        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/catalogue/ingestors/spot.py">
@@ -585,6 +559,78 @@
     <entry file="file://$PROJECT_DIR$/catalogue/templatetags/graphtag.py">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/catalogue/tests/geospatialproduct_model.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="147" column="9" selection-start="5335" selection-end="5335" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/catalogue/tests/continuousproduct_model.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="124" column="9" selection-start="4263" selection-end="4263" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/catalogue/tests/opticalproduct_model.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="188" column="0" selection-start="6817" selection-end="6817" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/catalogue/tests/ordinalproduct_model.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="124" column="9" selection-start="4291" selection-end="4291" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/catalogue/tests/radarproduct_model.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="166" column="9" selection-start="5976" selection-end="5976" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/catalogue/tests/genericimageryproduct_model.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="131" column="9" selection-start="4682" selection-end="4682" vertical-scroll-proportion="0.33258173">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/catalogue/tests/genericsensorproduct_model.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="169" column="9" selection-start="6349" selection-end="6349" vertical-scroll-proportion="0.33258173">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/catalogue/tests/taskingrequest_model.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="106" column="9" selection-start="3311" selection-end="3311" vertical-scroll-proportion="0.53555554">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/catalogue/fixtures/test_acquisitionmode.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/catalogue/tests/test_spot_ingestor.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="168" column="19" selection-start="6190" selection-end="6190" vertical-scroll-proportion="0.8522222">
+          <folding>
+            <element signature="e#675#684#0" expanded="true" />
+          </folding>
+        </state>
       </provider>
     </entry>
   </component>

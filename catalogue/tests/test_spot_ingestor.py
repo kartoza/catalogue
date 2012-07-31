@@ -160,10 +160,10 @@ class SpotIngestorTest(TestCase):
                     theVerbosityLevel=1)
         myNewSensorTypeCount = SensorType.objects.all().count()
         myNewAcquisitionModeCount = AcquisitionMode.objects.all().count()
-        #there should be one more than before
-        self.assertEqual(mySensorTypeCount + 1, myNewSensorTypeCount)
-        #there should be two more than before
-        self.assertEqual(myAcquisitionModeCount + 2, myNewAcquisitionModeCount)
+        #there should be two more than before HRV-2:P and HRV-2:X
+        self.assertEqual(mySensorTypeCount + 2, myNewSensorTypeCount)
+        #there should be four more than before
+        self.assertEqual(myAcquisitionModeCount + 4, myNewAcquisitionModeCount)
 
 if __name__ == '__main__':
     unittest.main()
