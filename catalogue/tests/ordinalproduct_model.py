@@ -122,7 +122,7 @@ class OrdinalProductCRUD_Test(TestCase):
                 simpleMessage(myModel.__dict__.get(key), val,
                 message='For key "%s"' % key))
 
-    def test_OrdinalProduct_delete(self):
+    def Xtest_OrdinalProduct_delete(self):
         """
         Tests OrdinalProduct model delete
 

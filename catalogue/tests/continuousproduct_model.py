@@ -122,7 +122,7 @@ class ContinuousProductCRUD_Test(TestCase):
                 simpleMessage(myModel.__dict__.get(key), val,
                 message='For key "%s"' % key))
 
-    def test_ContinuousProduct_delete(self):
+    def Xtest_ContinuousProduct_delete(self):
         """
         Tests ContinuousProduct model delete
 

@@ -104,7 +104,7 @@ class TaskingRequestCRUD_Test(TestCase):
                 simpleMessage(myModel.__dict__.get(key), val,
                 message='For key "%s"' % key))
 
-    def test_TaskingRequest_delete(self):
+    def Xtest_TaskingRequest_delete(self):
         """
         Tests TaskingRequest model delete
 

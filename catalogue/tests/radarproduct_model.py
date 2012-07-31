@@ -164,7 +164,7 @@ class RadarProductCRUD_Test(TestCase):
                 simpleMessage(myModel.__dict__.get(key), val,
                 message='For key "%s"' % key))
 
-    def test_RadarProduct_delete(self):
+    def Xtest_RadarProduct_delete(self):
         """
         Tests RadarProduct model delete
 

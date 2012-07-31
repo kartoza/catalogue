@@ -167,7 +167,7 @@ class GenericSensorProductCRUD_Test(TestCase):
                 simpleMessage(myModel.__dict__.get(key), val,
                 message='For key "%s"' % key))
 
-    def test_genericSensorproduct_delete(self):
+    def Xtest_genericSensorproduct_delete(self):
         """
         Tests GenericSensorProduct model delete
 
