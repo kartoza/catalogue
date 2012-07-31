@@ -18,6 +18,10 @@ __date__ = '01/01/2011'
 __copyright__ = 'South African National Space Agency'
 
 import os
+import sys
+from mercurial import lock, error
+import traceback
+import urllib2
 
 from django.core.management.base import CommandError
 from django.conf import settings
@@ -25,10 +29,17 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.db import transaction
 from django.contrib.gis.gdal import OGRGeometry
 from django.contrib.gis.gdal import DataSource
-from catalogue.models import *
-from mercurial import lock, error
-import traceback
 
+from catalogue.models import (Quality,
+                              License,
+                              CreatingSoftware,
+                              Institution,
+                              OpticalProduct,
+                              Mission,
+                              MissionSensor,
+                              SensorType,
+                              AcquisitionMode,
+                              )
 
 @transaction.commit_manually
 def ingest(theShapeFile,
