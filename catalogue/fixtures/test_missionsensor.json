@@ -1,926 +1,16 @@
 [
     {
-        "pk": 1,
-        "model": "catalogue.missionsensor",
-        "fields": {
-            "is_radar": false,
-            "name": "Advanced Very High Resolution Radiometer NOAA",
-            "description": "",
-            "mission": 1,
-            "abbreviation": "AVH",
-            "operator_abbreviation": "AVHRR-3",
-            "has_data": true,
-            "is_taskable": true
-        }
-    },
-    {
-        "pk": 2,
-        "model": "catalogue.missionsensor",
-        "fields": {
-            "is_radar": false,
-            "name": "Active Microwave Instrument ERS-1",
-            "description": "",
-            "mission": 9,
-            "abbreviation": "AMI",
-            "operator_abbreviation": "AMI-1",
-            "has_data": true,
-            "is_taskable": true
-        }
-    },
-    {
-        "pk": 3,
-        "model": "catalogue.missionsensor",
-        "fields": {
-            "is_radar": false,
-            "name": "Thematic Mapper Landsat 4",
-            "description": "",
-            "mission": 14,
-            "abbreviation": "TM",
-            "operator_abbreviation": "TM-4",
-            "has_data": true,
-            "is_taskable": true
-        }
-    },
-    {
-        "pk": 16,
-        "model": "catalogue.missionsensor",
-        "fields": {
-            "is_radar": false,
-            "name": "Thematic Mapper Landsat 5",
-            "description": "",
-            "mission": 10,
-            "abbreviation": "TM",
-            "operator_abbreviation": "TM-5",
-            "has_data": false,
-            "is_taskable": true
-        }
-    },
-    {
-        "pk": 4,
-        "model": "catalogue.missionsensor",
-        "fields": {
-            "is_radar": false,
-            "name": "Multi-Spectral-Scanner Landsat 1",
-            "description": "",
-            "mission": 23,
-            "abbreviation": "MSS",
-            "operator_abbreviation": "MSS-1",
-            "has_data": true,
-            "is_taskable": true
-        }
-    },
-    {
-        "pk": 17,
-        "model": "catalogue.missionsensor",
-        "fields": {
-            "is_radar": false,
-            "name": "Multi-Spectral-Scanner Landsat 2",
-            "description": "",
-            "mission": 12,
-            "abbreviation": "MSS",
-            "operator_abbreviation": "MSS-2",
-            "has_data": false,
-            "is_taskable": true
-        }
-    },
-    {
-        "pk": 18,
-        "model": "catalogue.missionsensor",
-        "fields": {
-            "is_radar": false,
-            "name": "Multi-Spectral-Scanner Landsat 3",
-            "description": "",
-            "mission": 13,
-            "abbreviation": "MSS",
-            "operator_abbreviation": "MSS-3",
-            "has_data": false,
-            "is_taskable": true
-        }
-    },
-    {
-        "pk": 19,
-        "model": "catalogue.missionsensor",
-        "fields": {
-            "is_radar": false,
-            "name": "Multi-Spectral-Scanner Landsat 4",
-            "description": "",
-            "mission": 14,
-            "abbreviation": "MSS",
-            "operator_abbreviation": "MSS-4",
-            "has_data": false,
-            "is_taskable": true
-        }
-    },
-    {
-        "pk": 20,
-        "model": "catalogue.missionsensor",
-        "fields": {
-            "is_radar": false,
-            "name": "Multi-Spectral-Scanner Landsat 5",
-            "description": "",
-            "mission": 10,
-            "abbreviation": "MSS",
-            "operator_abbreviation": "MSS-5",
-            "has_data": false,
-            "is_taskable": true
-        }
-    },
-    {
-        "pk": 5,
-        "model": "catalogue.missionsensor",
-        "fields": {
-            "is_radar": false,
-            "name": "Enhanced Thematic Mapper Plus Landsat 7",
-            "description": "",
-            "mission": 11,
-            "abbreviation": "ETM",
-            "operator_abbreviation": "ETM+",
-            "has_data": true,
-            "is_taskable": true
-        }
-    },
-    {
-        "pk": 21,
-        "model": "catalogue.missionsensor",
-        "fields": {
-            "is_radar": false,
-            "name": "Haute Resolution Visible Spot 1",
-            "description": "",
-            "mission": 17,
-            "abbreviation": "HRV",
-            "operator_abbreviation": "HRV-1",
-            "has_data": false,
-            "is_taskable": true
-        }
-    },
-    {
-        "pk": 22,
-        "model": "catalogue.missionsensor",
-        "fields": {
-            "is_radar": false,
-            "name": "Haute Resolution Visible Spot 2",
-            "description": "",
-            "mission": 15,
-            "abbreviation": "HRV",
-            "operator_abbreviation": "HRV-2",
-            "has_data": false,
-            "is_taskable": true
-        }
-    },
-    {
-        "pk": 23,
-        "model": "catalogue.missionsensor",
-        "fields": {
-            "is_radar": false,
-            "name": "Haute Resolution Visible Spot 3",
-            "description": "",
-            "mission": 22,
-            "abbreviation": "HRV",
-            "operator_abbreviation": "HRV-3",
-            "has_data": false,
-            "is_taskable": true
-        }
-    },
-    {
-        "pk": 24,
-        "model": "catalogue.missionsensor",
-        "fields": {
-            "is_radar": false,
-            "name": "High-Resolution Visible and Infrared sensor Spot 4",
-            "description": "",
-            "mission": 16,
-            "abbreviation": "HIR",
-            "operator_abbreviation": "HRVIR-4",
-            "has_data": false,
-            "is_taskable": true
-        }
-    },
-    {
-        "pk": 25,
-        "model": "catalogue.missionsensor",
-        "fields": {
-            "is_radar": false,
-            "name": "Vegetation Monitoring Instrument / Vegetation Spot 4",
-            "description": "",
-            "mission": 16,
-            "abbreviation": "VMI",
-            "operator_abbreviation": "Vegetation-4",
-            "has_data": false,
-            "is_taskable": true
-        }
-    },
-    {
-        "pk": 10,
-        "model": "catalogue.missionsensor",
-        "fields": {
-            "is_radar": false,
-            "name": "High Resolution Geometric Spot 5",
-            "description": "Spot 5 HRG",
-            "mission": 18,
-            "abbreviation": "HRG",
-            "operator_abbreviation": "HRG-5",
-            "has_data": true,
-            "is_taskable": true
-        }
-    },
-    {
-        "pk": 26,
-        "model": "catalogue.missionsensor",
-        "fields": {
-            "is_radar": false,
-            "name": "High Resolution Stereoscopic Spot 5",
-            "description": "",
-            "mission": 18,
-            "abbreviation": "HRS",
-            "operator_abbreviation": "HRS-5",
-            "has_data": false,
-            "is_taskable": true
-        }
-    },
-    {
-        "pk": 27,
-        "model": "catalogue.missionsensor",
-        "fields": {
-            "is_radar": false,
-            "name": "Vegetation Monitoring Instrument / Vegetation Spot 5",
-            "description": "",
-            "mission": 18,
-            "abbreviation": "VMI",
-            "operator_abbreviation": "Vegetation-5",
-            "has_data": false,
-            "is_taskable": true
-        }
-    },
-    {
-        "pk": 28,
-        "model": "catalogue.missionsensor",
-        "fields": {
-            "is_radar": false,
-            "name": "Active Microwave Instrument ERS-1",
-            "description": "",
-            "mission": 8,
-            "abbreviation": "AMI",
-            "operator_abbreviation": "AMI-2",
-            "has_data": false,
-            "is_taskable": true
-        }
-    },
-    {
-        "pk": 29,
-        "model": "catalogue.missionsensor",
-        "fields": {
-            "is_radar": false,
-            "name": "Return Beam Vidicon Camera Landsat 1",
-            "description": "",
-            "mission": 23,
-            "abbreviation": "RBV",
-            "operator_abbreviation": "RBV-1",
-            "has_data": false,
-            "is_taskable": true
-        }
-    },
-    {
-        "pk": 30,
-        "model": "catalogue.missionsensor",
-        "fields": {
-            "is_radar": false,
-            "name": "Return Beam Vidicon Camera Landsat 2",
-            "description": "",
-            "mission": 12,
-            "abbreviation": "RBV",
-            "operator_abbreviation": "RBV-2",
-            "has_data": false,
-            "is_taskable": true
-        }
-    },
-    {
-        "pk": 31,
-        "model": "catalogue.missionsensor",
-        "fields": {
-            "is_radar": false,
-            "name": "Return Beam Vidicon Camera Landsat 3",
-            "description": "",
-            "mission": 13,
-            "abbreviation": "RBV",
-            "operator_abbreviation": "RBV-3",
-            "has_data": false,
-            "is_taskable": true
-        }
-    },
-    {
-        "pk": 14,
-        "model": "catalogue.missionsensor",
-        "fields": {
-            "is_radar": false,
-            "name": "High Resolution CCD Camera CBERS2-B",
-            "description": "",
-            "mission": 20,
-            "abbreviation": "HRC",
-            "operator_abbreviation": "HRCC-2B",
-            "has_data": true,
-            "is_taskable": true
-        }
-    },
-    {
-        "pk": 32,
-        "model": "catalogue.missionsensor",
-        "fields": {
-            "is_radar": false,
-            "name": "High Resolution Panchromatic Camera CBERS 2 B",
-            "description": "",
-            "mission": 20,
-            "abbreviation": "HRP",
-            "operator_abbreviation": "HRPC-2B",
-            "has_data": false,
-            "is_taskable": true
-        }
-    },
-    {
-        "pk": 33,
-        "model": "catalogue.missionsensor",
-        "fields": {
-            "is_radar": false,
-            "name": "Wide-Field Imager CBERS 2 B",
-            "description": "",
-            "mission": 20,
-            "abbreviation": "WFI",
-            "operator_abbreviation": "WFI-2B",
-            "has_data": false,
-            "is_taskable": true
-        }
-    },
-    {
         "pk": 34,
         "model": "catalogue.missionsensor",
         "fields": {
             "is_radar": false,
             "name": "PAL ZA-002",
-            "description": "",
+            "description": "PAL ZA-002",
             "mission": 19,
             "abbreviation": "PAL",
             "operator_abbreviation": "PAL-2",
-            "has_data": false,
-            "is_taskable": true
-        }
-    },
-    {
-        "pk": 13,
-        "model": "catalogue.missionsensor",
-        "fields": {
-            "is_radar": false,
-            "name": "Multispectral Imager ZA-002",
-            "description": "",
-            "mission": 19,
-            "abbreviation": "MSI",
-            "operator_abbreviation": "MSI-2",
-            "has_data": true,
-            "is_taskable": true
-        }
-    },
-    {
-        "pk": 35,
-        "model": "catalogue.missionsensor",
-        "fields": {
-            "is_radar": false,
-            "name": "MUX CBERS 3",
-            "description": "",
-            "mission": 24,
-            "abbreviation": "MUX",
-            "operator_abbreviation": "MUX-3",
-            "has_data": false,
-            "is_taskable": true
-        }
-    },
-    {
-        "pk": 36,
-        "model": "catalogue.missionsensor",
-        "fields": {
-            "is_radar": false,
-            "name": "High Resolution CCD Camera CBERS 3",
-            "description": "",
-            "mission": 24,
-            "abbreviation": "HRC",
-            "operator_abbreviation": "HRCC-3",
-            "has_data": false,
-            "is_taskable": true
-        }
-    },
-    {
-        "pk": 37,
-        "model": "catalogue.missionsensor",
-        "fields": {
-            "is_radar": false,
-            "name": "Infrared Multispectral Scanner CBERS 3",
-            "description": "",
-            "mission": 24,
-            "abbreviation": "IRM",
-            "operator_abbreviation": "IRMSS-3",
-            "has_data": false,
-            "is_taskable": true
-        }
-    },
-    {
-        "pk": 38,
-        "model": "catalogue.missionsensor",
-        "fields": {
-            "is_radar": false,
-            "name": "Advanced Wide-Field Imager CBERS 3",
-            "description": "",
-            "mission": 24,
-            "abbreviation": "AWF",
-            "operator_abbreviation": "AWFI-3",
-            "has_data": false,
-            "is_taskable": true
-        }
-    },
-    {
-        "pk": 15,
-        "model": "catalogue.missionsensor",
-        "fields": {
-            "is_radar": false,
-            "name": "Multispectral Medium Resolution Scanner SAC-C",
-            "description": "",
-            "mission": 21,
-            "abbreviation": "MMR",
-            "operator_abbreviation": "MMRS-C",
-            "has_data": true,
-            "is_taskable": true
-        }
-    },
-    {
-        "pk": 39,
-        "model": "catalogue.missionsensor",
-        "fields": {
-            "is_radar": false,
-            "name": "High-Resolution Technological Camera SAC-C",
-            "description": "",
-            "mission": 21,
-            "abbreviation": "HRT",
-            "operator_abbreviation": "HRTC-C",
-            "has_data": false,
-            "is_taskable": true
-        }
-    },
-    {
-        "pk": 40,
-        "model": "catalogue.missionsensor",
-        "fields": {
-            "is_radar": false,
-            "name": "WorldView-60 camera WorldView 1",
-            "description": "",
-            "mission": 26,
-            "abbreviation": "W60",
-            "operator_abbreviation": "WV60",
-            "has_data": false,
-            "is_taskable": true
-        }
-    },
-    {
-        "pk": 41,
-        "model": "catalogue.missionsensor",
-        "fields": {
-            "is_radar": false,
-            "name": "WorldView-110 camera WorldView 2",
-            "description": "",
-            "mission": 27,
-            "abbreviation": "110",
-            "operator_abbreviation": "WV110",
-            "has_data": false,
-            "is_taskable": true
-        }
-    },
-    {
-        "pk": 42,
-        "model": "catalogue.missionsensor",
-        "fields": {
-            "is_radar": false,
-            "name": "Ball Global Imaging System 2000 QuickBird-2",
-            "description": "",
-            "mission": 25,
-            "abbreviation": "BGI",
-            "operator_abbreviation": "BGIS-2000",
-            "has_data": false,
-            "is_taskable": true
-        }
-    },
-    {
-        "pk": 43,
-        "model": "catalogue.missionsensor",
-        "fields": {
-            "is_radar": false,
-            "name": "Optical Sensor Assembly or recently offered under Kodak Model 1000 Camera System Ikonos-2",
-            "description": "",
-            "mission": 28,
-            "abbreviation": "OSA",
-            "operator_abbreviation": "OSA-2",
-            "has_data": false,
-            "is_taskable": true
-        }
-    },
-    {
-        "pk": 44,
-        "model": "catalogue.missionsensor",
-        "fields": {
-            "is_radar": false,
-            "name": "GeoEye Imaging System GeoEye-1",
-            "description": "",
-            "mission": 29,
-            "abbreviation": "GIS",
-            "operator_abbreviation": "GIS-1",
-            "has_data": false,
-            "is_taskable": true
-        }
-    },
-    {
-        "pk": 47,
-        "model": "catalogue.missionsensor",
-        "fields": {
-            "is_radar": false,
-            "name": "RapidEye Earth Imaging System RapidEye-1",
-            "description": "",
-            "mission": 32,
-            "abbreviation": "REI",
-            "operator_abbreviation": "REIS-1",
-            "has_data": false,
-            "is_taskable": true
-        }
-    },
-    {
-        "pk": 48,
-        "model": "catalogue.missionsensor",
-        "fields": {
-            "is_radar": false,
-            "name": "RapidEye Earth Imaging System RapidEye-2",
-            "description": "",
-            "mission": 33,
-            "abbreviation": "REI",
-            "operator_abbreviation": "REIS-2",
-            "has_data": false,
-            "is_taskable": true
-        }
-    },
-    {
-        "pk": 49,
-        "model": "catalogue.missionsensor",
-        "fields": {
-            "is_radar": false,
-            "name": "RapidEye Earth Imaging System RapidEye-3",
-            "description": "",
-            "mission": 34,
-            "abbreviation": "REI",
-            "operator_abbreviation": "REIS-3",
-            "has_data": false,
-            "is_taskable": true
-        }
-    },
-    {
-        "pk": 50,
-        "model": "catalogue.missionsensor",
-        "fields": {
-            "is_radar": false,
-            "name": "RapidEye Earth Imaging System RapidEye-4",
-            "description": "",
-            "mission": 35,
-            "abbreviation": "REI",
-            "operator_abbreviation": "REIS-4",
-            "has_data": false,
-            "is_taskable": true
-        }
-    },
-    {
-        "pk": 51,
-        "model": "catalogue.missionsensor",
-        "fields": {
-            "is_radar": false,
-            "name": "RapidEye Earth Imaging System RapidEye-5",
-            "description": "",
-            "mission": 36,
-            "abbreviation": "REI",
-            "operator_abbreviation": "REIS-5",
-            "has_data": false,
-            "is_taskable": true
-        }
-    },
-    {
-        "pk": 54,
-        "model": "catalogue.missionsensor",
-        "fields": {
-            "is_radar": false,
-            "name": "Linear Imaging Self-Scanning Sensor-3 IRS-P6",
-            "description": "",
-            "mission": 39,
-            "abbreviation": "LI3",
-            "operator_abbreviation": "LISS-3-IRS-P-6",
-            "has_data": false,
-            "is_taskable": true
-        }
-    },
-    {
-        "pk": 55,
-        "model": "catalogue.missionsensor",
-        "fields": {
-            "is_radar": false,
-            "name": "Linear Imaging Self-Scanning Sensor-4 IRS-P6",
-            "description": "",
-            "mission": 39,
-            "abbreviation": "LI4",
-            "operator_abbreviation": "LISS-4-IRS-P-6",
-            "has_data": false,
-            "is_taskable": true
-        }
-    },
-    {
-        "pk": 56,
-        "model": "catalogue.missionsensor",
-        "fields": {
-            "is_radar": false,
-            "name": "AWiFS Advanced Wide Field Sensor IRS-P6",
-            "description": "",
-            "mission": 39,
-            "abbreviation": "AWF",
-            "operator_abbreviation": "AwiFS-IRS-P-6",
-            "has_data": false,
-            "is_taskable": true
-        }
-    },
-    {
-        "pk": 57,
-        "model": "catalogue.missionsensor",
-        "fields": {
-            "is_radar": false,
-            "name": "Linear Imaging Self-Scanning Sensor-3 ResourceSat-2",
-            "description": "",
-            "mission": 40,
-            "abbreviation": "LI3",
-            "operator_abbreviation": "LISS-3-R-2",
-            "has_data": false,
-            "is_taskable": true
-        }
-    },
-    {
-        "pk": 58,
-        "model": "catalogue.missionsensor",
-        "fields": {
-            "is_radar": false,
-            "name": "Linear Imaging Self-Scanning Sensor-4 ResourceSat-2",
-            "description": "",
-            "mission": 40,
-            "abbreviation": "LI4",
-            "operator_abbreviation": "LISS-4-R-2",
-            "has_data": false,
-            "is_taskable": true
-        }
-    },
-    {
-        "pk": 59,
-        "model": "catalogue.missionsensor",
-        "fields": {
-            "is_radar": false,
-            "name": "AWiFS Advanced Wide Field Sensor ResourceSat-2",
-            "description": "",
-            "mission": 40,
-            "abbreviation": "AWF",
-            "operator_abbreviation": "AwiFS-R-2",
-            "has_data": false,
-            "is_taskable": true
-        }
-    },
-    {
-        "pk": 60,
-        "model": "catalogue.missionsensor",
-        "fields": {
-            "is_radar": false,
-            "name": "Pan-Aft-IRS-P5",
-            "description": "",
-            "mission": 41,
-            "abbreviation": "P-A",
-            "operator_abbreviation": "Pan-Aft-CS1",
-            "has_data": false,
-            "is_taskable": true
-        }
-    },
-    {
-        "pk": 61,
-        "model": "catalogue.missionsensor",
-        "fields": {
-            "is_radar": false,
-            "name": "Pan-Fore-IRS-P5",
-            "description": "",
-            "mission": 41,
-            "abbreviation": "P-F",
-            "operator_abbreviation": "Pan-Fore-CS1",
-            "has_data": false,
-            "is_taskable": true
-        }
-    },
-    {
-        "pk": 62,
-        "model": "catalogue.missionsensor",
-        "fields": {
-            "is_radar": false,
-            "name": "Panchromatic Remote-sensing Instrument for Stereo Mapping ALOS-1",
-            "description": "",
-            "mission": 42,
-            "abbreviation": "PIM",
-            "operator_abbreviation": "PRISM",
-            "has_data": false,
-            "is_taskable": true
-        }
-    },
-    {
-        "pk": 63,
-        "model": "catalogue.missionsensor",
-        "fields": {
-            "is_radar": false,
-            "name": "Advanced Visible and Near-Infrared Radiometer \u2013 2 ALOS-1",
-            "description": "",
-            "mission": 42,
-            "abbreviation": "AV2",
-            "operator_abbreviation": "AVNIR-2",
-            "has_data": false,
-            "is_taskable": true
-        }
-    },
-    {
-        "pk": 64,
-        "model": "catalogue.missionsensor",
-        "fields": {
-            "is_radar": false,
-            "name": "Phased Array L-band Synthetic Aperture Radar-1 ALOS-1",
-            "description": "",
-            "mission": 42,
-            "abbreviation": "PSR",
-            "operator_abbreviation": "PALSAR-1",
-            "has_data": false,
-            "is_taskable": true
-        }
-    },
-    {
-        "pk": 65,
-        "model": "catalogue.missionsensor",
-        "fields": {
-            "is_radar": false,
-            "name": "Phased Array L-band Synthetic Aperture Radar-2 ALOS-2",
-            "description": "",
-            "mission": 43,
-            "abbreviation": "PSR",
-            "operator_abbreviation": "PALSAR-2",
-            "has_data": false,
-            "is_taskable": true
-        }
-    },
-    {
-        "pk": 66,
-        "model": "catalogue.missionsensor",
-        "fields": {
-            "is_radar": false,
-            "name": "Atmospheric Infrared Sounder AQA",
-            "description": "",
-            "mission": 44,
-            "abbreviation": "AIS",
-            "operator_abbreviation": "AIRS",
-            "has_data": false,
-            "is_taskable": true
-        }
-    },
-    {
-        "pk": 67,
-        "model": "catalogue.missionsensor",
-        "fields": {
-            "is_radar": false,
-            "name": "Moderate-Resolution Imaging Spectroradiometer Aqua",
-            "description": "",
-            "mission": 44,
-            "abbreviation": "MYD",
-            "operator_abbreviation": "MODIS-AQA",
-            "has_data": false,
-            "is_taskable": true
-        }
-    },
-    {
-        "pk": 68,
-        "model": "catalogue.missionsensor",
-        "fields": {
-            "is_radar": false,
-            "name": "Advanced Spaceborne Thermal Emission and Reflection Radiometer",
-            "description": "",
-            "mission": 45,
-            "abbreviation": "AST",
-            "operator_abbreviation": "ASTER-TER",
-            "has_data": false,
-            "is_taskable": true
-        }
-    },
-    {
-        "pk": 69,
-        "model": "catalogue.missionsensor",
-        "fields": {
-            "is_radar": false,
-            "name": "Multi-angle Imaging SpectroRadiometer Terra",
-            "description": "",
-            "mission": 45,
-            "abbreviation": "MIS",
-            "operator_abbreviation": "MISR-TER",
-            "has_data": false,
-            "is_taskable": true
-        }
-    },
-    {
-        "pk": 70,
-        "model": "catalogue.missionsensor",
-        "fields": {
-            "is_radar": false,
-            "name": "Moderate-Resolution Imaging Spectroradiometer Terra",
-            "description": "",
-            "mission": 45,
-            "abbreviation": "MOD",
-            "operator_abbreviation": "MODIS-TER",
-            "has_data": false,
-            "is_taskable": true
-        }
-    },
-    {
-        "pk": 71,
-        "model": "catalogue.missionsensor",
-        "fields": {
-            "is_radar": false,
-            "name": "Moderate-Resolution Imaging Spectroradiometer Aqua and Terra",
-            "description": "",
-            "mission": 46,
-            "abbreviation": "MCD",
-            "operator_abbreviation": "MODIS-A-T",
-            "has_data": false,
-            "is_taskable": true
-        }
-    },
-    {
-        "pk": 72,
-        "model": "catalogue.missionsensor",
-        "fields": {
-            "is_radar": false,
-            "name": "Panchromatic Imaging Camera EROS-A",
-            "description": "",
-            "mission": 47,
-            "abbreviation": "PIC",
-            "operator_abbreviation": "PIC-E-A",
-            "has_data": false,
-            "is_taskable": true
-        }
-    },
-    {
-        "pk": 73,
-        "model": "catalogue.missionsensor",
-        "fields": {
-            "is_radar": false,
-            "name": "Sea-Viewing Wide Field-of-View Sensor OrbView-2",
-            "description": "",
-            "mission": 48,
-            "abbreviation": "SWF",
-            "operator_abbreviation": "SeaWiFS-2",
-            "has_data": false,
-            "is_taskable": true
-        }
-    },
-    {
-        "pk": 6,
-        "model": "catalogue.missionsensor",
-        "fields": {
-            "is_radar": false,
-            "name": "Spot 1,2,3 HRV Xs",
-            "description": "",
-            "mission": 17,
-            "abbreviation": "Xs",
-            "operator_abbreviation": "Xs",
-            "has_data": true,
-            "is_taskable": true
-        }
-    },
-    {
-        "pk": 7,
-        "model": "catalogue.missionsensor",
-        "fields": {
-            "is_radar": false,
-            "name": "Spot 4 G,R,NIR,SWIR",
-            "description": "",
-            "mission": 16,
-            "abbreviation": "Xi",
-            "operator_abbreviation": "Xi",
-            "has_data": true,
-            "is_taskable": true
-        }
-    },
-    {
-        "pk": 8,
-        "model": "catalogue.missionsensor",
-        "fields": {
-            "is_radar": false,
-            "name": "Spot 4 Pan",
-            "description": "",
-            "mission": 16,
-            "abbreviation": "M",
-            "operator_abbreviation": "M",
-            "has_data": true,
-            "is_taskable": true
+            "is_taskable": false,
+            "has_data": false
         }
     },
     {
@@ -929,12 +19,26 @@
         "fields": {
             "is_radar": false,
             "name": "Spot 1,2,3 HRV Pan",
-            "description": "",
-            "mission": 17,
+            "description": "Spot 1,2,3 HRV Pan",
+            "mission": 15,
             "abbreviation": "Pan",
             "operator_abbreviation": "Pan",
-            "has_data": true,
-            "is_taskable": true
+            "is_taskable": false,
+            "has_data": false
+        }
+    },
+    {
+        "pk": 8,
+        "model": "catalogue.missionsensor",
+        "fields": {
+            "is_radar": false,
+            "name": "Spot 4 Pan",
+            "description": "Spot 4 Pan",
+            "mission": 16,
+            "abbreviation": "M",
+            "operator_abbreviation": "M",
+            "is_taskable": false,
+            "has_data": false
         }
     },
     {
@@ -947,8 +51,8 @@
             "mission": 30,
             "abbreviation": "SAR",
             "operator_abbreviation": "SAR-TSX1",
-            "has_data": false,
-            "is_taskable": true
+            "is_taskable": false,
+            "has_data": false
         }
     },
     {
@@ -961,8 +65,8 @@
             "mission": 31,
             "abbreviation": "SAR",
             "operator_abbreviation": "SAR-TDX2",
-            "has_data": false,
-            "is_taskable": true
+            "is_taskable": false,
+            "has_data": false
         }
     },
     {
@@ -975,8 +79,8 @@
             "mission": 37,
             "abbreviation": "SAR",
             "operator_abbreviation": "SAR-RS1",
-            "has_data": false,
-            "is_taskable": true
+            "is_taskable": false,
+            "has_data": false
         }
     },
     {
@@ -989,8 +93,890 @@
             "mission": 38,
             "abbreviation": "SAR",
             "operator_abbreviation": "SAR-RS2",
-            "has_data": false,
-            "is_taskable": true
+            "is_taskable": false,
+            "has_data": false
+        }
+    },
+    {
+        "pk": 7,
+        "model": "catalogue.missionsensor",
+        "fields": {
+            "is_radar": false,
+            "name": "Spot 4 G,R,NIR,SWIR",
+            "description": "Spot 4 G,R,NIR,SWIR",
+            "mission": 16,
+            "abbreviation": "Xi",
+            "operator_abbreviation": "Xi",
+            "is_taskable": false,
+            "has_data": false
+        }
+    },
+    {
+        "pk": 6,
+        "model": "catalogue.missionsensor",
+        "fields": {
+            "is_radar": false,
+            "name": "Spot 1,2,3 HRV Xs",
+            "description": "Spot 1,2,3 HRV Xs",
+            "mission": 15,
+            "abbreviation": "Xs",
+            "operator_abbreviation": "Xs",
+            "is_taskable": false,
+            "has_data": false
+        }
+    },
+    {
+        "pk": 39,
+        "model": "catalogue.missionsensor",
+        "fields": {
+            "is_radar": false,
+            "name": "High-Resolution Technological Camera SAC-C",
+            "description": "SAC-C",
+            "mission": 21,
+            "abbreviation": "HRT",
+            "operator_abbreviation": "HRTC-C",
+            "is_taskable": false,
+            "has_data": false
+        }
+    },
+    {
+        "pk": 4,
+        "model": "catalogue.missionsensor",
+        "fields": {
+            "is_radar": false,
+            "name": "Landsat 1 MSS",
+            "description": "Multi-Spectral-Scanner Landsat 1",
+            "mission": 23,
+            "abbreviation": "MSS",
+            "operator_abbreviation": "MSS-1",
+            "is_taskable": false,
+            "has_data": true
+        }
+    },
+    {
+        "pk": 16,
+        "model": "catalogue.missionsensor",
+        "fields": {
+            "is_radar": false,
+            "name": "Landsat 5 TM",
+            "description": "Thematic Mapper Landsat 5",
+            "mission": 10,
+            "abbreviation": "TM",
+            "operator_abbreviation": "TM-5",
+            "is_taskable": false,
+            "has_data": true
+        }
+    },
+    {
+        "pk": 13,
+        "model": "catalogue.missionsensor",
+        "fields": {
+            "is_radar": false,
+            "name": "     SumbandilaSat Multispectral",
+            "description": "Multispectral Imager ZA-002",
+            "mission": 19,
+            "abbreviation": "MSI",
+            "operator_abbreviation": "MSI-2",
+            "is_taskable": false,
+            "has_data": true
+        }
+    },
+    {
+        "pk": 66,
+        "model": "catalogue.missionsensor",
+        "fields": {
+            "is_radar": false,
+            "name": "Atmospheric Infrared Sounder AQA",
+            "description": "",
+            "mission": 44,
+            "abbreviation": "AIS",
+            "operator_abbreviation": "AIRS",
+            "is_taskable": false,
+            "has_data": false
+        }
+    },
+    {
+        "pk": 67,
+        "model": "catalogue.missionsensor",
+        "fields": {
+            "is_radar": false,
+            "name": "Moderate-Resolution Imaging Spectroradiometer Aqua",
+            "description": "",
+            "mission": 44,
+            "abbreviation": "MYD",
+            "operator_abbreviation": "MODIS-AQA",
+            "is_taskable": false,
+            "has_data": false
+        }
+    },
+    {
+        "pk": 68,
+        "model": "catalogue.missionsensor",
+        "fields": {
+            "is_radar": false,
+            "name": "Advanced Spaceborne Thermal Emission and Reflection Radiometer",
+            "description": "",
+            "mission": 45,
+            "abbreviation": "AST",
+            "operator_abbreviation": "ASTER-TER",
+            "is_taskable": false,
+            "has_data": false
+        }
+    },
+    {
+        "pk": 69,
+        "model": "catalogue.missionsensor",
+        "fields": {
+            "is_radar": false,
+            "name": "Multi-angle Imaging SpectroRadiometer Terra",
+            "description": "",
+            "mission": 45,
+            "abbreviation": "MIS",
+            "operator_abbreviation": "MISR-TER",
+            "is_taskable": false,
+            "has_data": false
+        }
+    },
+    {
+        "pk": 70,
+        "model": "catalogue.missionsensor",
+        "fields": {
+            "is_radar": false,
+            "name": "Moderate-Resolution Imaging Spectroradiometer Terra",
+            "description": "",
+            "mission": 45,
+            "abbreviation": "MOD",
+            "operator_abbreviation": "MODIS-TER",
+            "is_taskable": false,
+            "has_data": false
+        }
+    },
+    {
+        "pk": 71,
+        "model": "catalogue.missionsensor",
+        "fields": {
+            "is_radar": false,
+            "name": "Moderate-Resolution Imaging Spectroradiometer Aqua and Terra",
+            "description": "",
+            "mission": 46,
+            "abbreviation": "MCD",
+            "operator_abbreviation": "MODIS-A-T",
+            "is_taskable": false,
+            "has_data": false
+        }
+    },
+    {
+        "pk": 72,
+        "model": "catalogue.missionsensor",
+        "fields": {
+            "is_radar": false,
+            "name": "Panchromatic Imaging Camera EROS-A",
+            "description": "",
+            "mission": 47,
+            "abbreviation": "PIC",
+            "operator_abbreviation": "PIC-E-A",
+            "is_taskable": false,
+            "has_data": false
+        }
+    },
+    {
+        "pk": 73,
+        "model": "catalogue.missionsensor",
+        "fields": {
+            "is_radar": false,
+            "name": "Sea-Viewing Wide Field-of-View Sensor OrbView-2",
+            "description": "",
+            "mission": 48,
+            "abbreviation": "SWF",
+            "operator_abbreviation": "SeaWiFS-2",
+            "is_taskable": false,
+            "has_data": false
+        }
+    },
+    {
+        "pk": 28,
+        "model": "catalogue.missionsensor",
+        "fields": {
+            "is_radar": false,
+            "name": "Active Microwave Instrument ERS-1",
+            "description": "",
+            "mission": 8,
+            "abbreviation": "AMI",
+            "operator_abbreviation": "AMI-2",
+            "is_taskable": false,
+            "has_data": false
+        }
+    },
+    {
+        "pk": 29,
+        "model": "catalogue.missionsensor",
+        "fields": {
+            "is_radar": false,
+            "name": "Return Beam Vidicon Camera Landsat 1",
+            "description": "",
+            "mission": 23,
+            "abbreviation": "RBV",
+            "operator_abbreviation": "RBV-1",
+            "is_taskable": false,
+            "has_data": false
+        }
+    },
+    {
+        "pk": 30,
+        "model": "catalogue.missionsensor",
+        "fields": {
+            "is_radar": false,
+            "name": "Return Beam Vidicon Camera Landsat 2",
+            "description": "",
+            "mission": 12,
+            "abbreviation": "RBV",
+            "operator_abbreviation": "RBV-2",
+            "is_taskable": false,
+            "has_data": false
+        }
+    },
+    {
+        "pk": 31,
+        "model": "catalogue.missionsensor",
+        "fields": {
+            "is_radar": false,
+            "name": "Return Beam Vidicon Camera Landsat 3",
+            "description": "",
+            "mission": 13,
+            "abbreviation": "RBV",
+            "operator_abbreviation": "RBV-3",
+            "is_taskable": false,
+            "has_data": false
+        }
+    },
+    {
+        "pk": 32,
+        "model": "catalogue.missionsensor",
+        "fields": {
+            "is_radar": false,
+            "name": "High Resolution Panchromatic Camera CBERS 2 B",
+            "description": "",
+            "mission": 20,
+            "abbreviation": "HRP",
+            "operator_abbreviation": "HRPC-2B",
+            "is_taskable": false,
+            "has_data": false
+        }
+    },
+    {
+        "pk": 33,
+        "model": "catalogue.missionsensor",
+        "fields": {
+            "is_radar": false,
+            "name": "Wide-Field Imager CBERS 2 B",
+            "description": "",
+            "mission": 20,
+            "abbreviation": "WFI",
+            "operator_abbreviation": "WFI-2B",
+            "is_taskable": false,
+            "has_data": false
+        }
+    },
+    {
+        "pk": 35,
+        "model": "catalogue.missionsensor",
+        "fields": {
+            "is_radar": false,
+            "name": "MUX CBERS 3",
+            "description": "",
+            "mission": 24,
+            "abbreviation": "MUX",
+            "operator_abbreviation": "MUX-3",
+            "is_taskable": false,
+            "has_data": false
+        }
+    },
+    {
+        "pk": 36,
+        "model": "catalogue.missionsensor",
+        "fields": {
+            "is_radar": false,
+            "name": "High Resolution CCD Camera CBERS 3",
+            "description": "",
+            "mission": 24,
+            "abbreviation": "HRC",
+            "operator_abbreviation": "HRCC-3",
+            "is_taskable": false,
+            "has_data": false
+        }
+    },
+    {
+        "pk": 37,
+        "model": "catalogue.missionsensor",
+        "fields": {
+            "is_radar": false,
+            "name": "Infrared Multispectral Scanner CBERS 3",
+            "description": "",
+            "mission": 24,
+            "abbreviation": "IRM",
+            "operator_abbreviation": "IRMSS-3",
+            "is_taskable": false,
+            "has_data": false
+        }
+    },
+    {
+        "pk": 38,
+        "model": "catalogue.missionsensor",
+        "fields": {
+            "is_radar": false,
+            "name": "Advanced Wide-Field Imager CBERS 3",
+            "description": "",
+            "mission": 24,
+            "abbreviation": "AWF",
+            "operator_abbreviation": "AWFI-3",
+            "is_taskable": false,
+            "has_data": false
+        }
+    },
+    {
+        "pk": 40,
+        "model": "catalogue.missionsensor",
+        "fields": {
+            "is_radar": false,
+            "name": "WorldView-60 camera WorldView 1",
+            "description": "",
+            "mission": 26,
+            "abbreviation": "W60",
+            "operator_abbreviation": "WV60",
+            "is_taskable": false,
+            "has_data": false
+        }
+    },
+    {
+        "pk": 41,
+        "model": "catalogue.missionsensor",
+        "fields": {
+            "is_radar": false,
+            "name": "WorldView-110 camera WorldView 2",
+            "description": "",
+            "mission": 27,
+            "abbreviation": "110",
+            "operator_abbreviation": "WV110",
+            "is_taskable": false,
+            "has_data": false
+        }
+    },
+    {
+        "pk": 42,
+        "model": "catalogue.missionsensor",
+        "fields": {
+            "is_radar": false,
+            "name": "Ball Global Imaging System 2000 QuickBird-2",
+            "description": "",
+            "mission": 25,
+            "abbreviation": "BGI",
+            "operator_abbreviation": "BGIS-2000",
+            "is_taskable": false,
+            "has_data": false
+        }
+    },
+    {
+        "pk": 43,
+        "model": "catalogue.missionsensor",
+        "fields": {
+            "is_radar": false,
+            "name": "Optical Sensor Assembly or recently offered under Kodak Model 1000 Camera System Ikonos-2",
+            "description": "",
+            "mission": 28,
+            "abbreviation": "OSA",
+            "operator_abbreviation": "OSA-2",
+            "is_taskable": false,
+            "has_data": false
+        }
+    },
+    {
+        "pk": 44,
+        "model": "catalogue.missionsensor",
+        "fields": {
+            "is_radar": false,
+            "name": "GeoEye Imaging System GeoEye-1",
+            "description": "",
+            "mission": 29,
+            "abbreviation": "GIS",
+            "operator_abbreviation": "GIS-1",
+            "is_taskable": false,
+            "has_data": false
+        }
+    },
+    {
+        "pk": 47,
+        "model": "catalogue.missionsensor",
+        "fields": {
+            "is_radar": false,
+            "name": "RapidEye Earth Imaging System RapidEye-1",
+            "description": "",
+            "mission": 32,
+            "abbreviation": "REI",
+            "operator_abbreviation": "REIS-1",
+            "is_taskable": false,
+            "has_data": false
+        }
+    },
+    {
+        "pk": 48,
+        "model": "catalogue.missionsensor",
+        "fields": {
+            "is_radar": false,
+            "name": "RapidEye Earth Imaging System RapidEye-2",
+            "description": "",
+            "mission": 33,
+            "abbreviation": "REI",
+            "operator_abbreviation": "REIS-2",
+            "is_taskable": false,
+            "has_data": false
+        }
+    },
+    {
+        "pk": 49,
+        "model": "catalogue.missionsensor",
+        "fields": {
+            "is_radar": false,
+            "name": "RapidEye Earth Imaging System RapidEye-3",
+            "description": "",
+            "mission": 34,
+            "abbreviation": "REI",
+            "operator_abbreviation": "REIS-3",
+            "is_taskable": false,
+            "has_data": false
+        }
+    },
+    {
+        "pk": 50,
+        "model": "catalogue.missionsensor",
+        "fields": {
+            "is_radar": false,
+            "name": "RapidEye Earth Imaging System RapidEye-4",
+            "description": "",
+            "mission": 35,
+            "abbreviation": "REI",
+            "operator_abbreviation": "REIS-4",
+            "is_taskable": false,
+            "has_data": false
+        }
+    },
+    {
+        "pk": 51,
+        "model": "catalogue.missionsensor",
+        "fields": {
+            "is_radar": false,
+            "name": "RapidEye Earth Imaging System RapidEye-5",
+            "description": "",
+            "mission": 36,
+            "abbreviation": "REI",
+            "operator_abbreviation": "REIS-5",
+            "is_taskable": false,
+            "has_data": false
+        }
+    },
+    {
+        "pk": 54,
+        "model": "catalogue.missionsensor",
+        "fields": {
+            "is_radar": false,
+            "name": "Linear Imaging Self-Scanning Sensor-3 IRS-P6",
+            "description": "",
+            "mission": 39,
+            "abbreviation": "LI3",
+            "operator_abbreviation": "LISS-3-IRS-P-6",
+            "is_taskable": false,
+            "has_data": false
+        }
+    },
+    {
+        "pk": 55,
+        "model": "catalogue.missionsensor",
+        "fields": {
+            "is_radar": false,
+            "name": "Linear Imaging Self-Scanning Sensor-4 IRS-P6",
+            "description": "",
+            "mission": 39,
+            "abbreviation": "LI4",
+            "operator_abbreviation": "LISS-4-IRS-P-6",
+            "is_taskable": false,
+            "has_data": false
+        }
+    },
+    {
+        "pk": 56,
+        "model": "catalogue.missionsensor",
+        "fields": {
+            "is_radar": false,
+            "name": "AWiFS Advanced Wide Field Sensor IRS-P6",
+            "description": "",
+            "mission": 39,
+            "abbreviation": "AWF",
+            "operator_abbreviation": "AwiFS-IRS-P-6",
+            "is_taskable": false,
+            "has_data": false
+        }
+    },
+    {
+        "pk": 57,
+        "model": "catalogue.missionsensor",
+        "fields": {
+            "is_radar": false,
+            "name": "Linear Imaging Self-Scanning Sensor-3 ResourceSat-2",
+            "description": "",
+            "mission": 40,
+            "abbreviation": "LI3",
+            "operator_abbreviation": "LISS-3-R-2",
+            "is_taskable": false,
+            "has_data": false
+        }
+    },
+    {
+        "pk": 58,
+        "model": "catalogue.missionsensor",
+        "fields": {
+            "is_radar": false,
+            "name": "Linear Imaging Self-Scanning Sensor-4 ResourceSat-2",
+            "description": "",
+            "mission": 40,
+            "abbreviation": "LI4",
+            "operator_abbreviation": "LISS-4-R-2",
+            "is_taskable": false,
+            "has_data": false
+        }
+    },
+    {
+        "pk": 59,
+        "model": "catalogue.missionsensor",
+        "fields": {
+            "is_radar": false,
+            "name": "AWiFS Advanced Wide Field Sensor ResourceSat-2",
+            "description": "",
+            "mission": 40,
+            "abbreviation": "AWF",
+            "operator_abbreviation": "AwiFS-R-2",
+            "is_taskable": false,
+            "has_data": false
+        }
+    },
+    {
+        "pk": 60,
+        "model": "catalogue.missionsensor",
+        "fields": {
+            "is_radar": false,
+            "name": "Pan-Aft-IRS-P5",
+            "description": "",
+            "mission": 41,
+            "abbreviation": "P-A",
+            "operator_abbreviation": "Pan-Aft-CS1",
+            "is_taskable": false,
+            "has_data": false
+        }
+    },
+    {
+        "pk": 61,
+        "model": "catalogue.missionsensor",
+        "fields": {
+            "is_radar": false,
+            "name": "Pan-Fore-IRS-P5",
+            "description": "",
+            "mission": 41,
+            "abbreviation": "P-F",
+            "operator_abbreviation": "Pan-Fore-CS1",
+            "is_taskable": false,
+            "has_data": false
+        }
+    },
+    {
+        "pk": 62,
+        "model": "catalogue.missionsensor",
+        "fields": {
+            "is_radar": false,
+            "name": "Panchromatic Remote-sensing Instrument for Stereo Mapping ALOS-1",
+            "description": "",
+            "mission": 42,
+            "abbreviation": "PIM",
+            "operator_abbreviation": "PRISM",
+            "is_taskable": false,
+            "has_data": false
+        }
+    },
+    {
+        "pk": 63,
+        "model": "catalogue.missionsensor",
+        "fields": {
+            "is_radar": false,
+            "name": "Advanced Visible and Near-Infrared Radiometer \u2013 2 ALOS-1",
+            "description": "",
+            "mission": 42,
+            "abbreviation": "AV2",
+            "operator_abbreviation": "AVNIR-2",
+            "is_taskable": false,
+            "has_data": false
+        }
+    },
+    {
+        "pk": 64,
+        "model": "catalogue.missionsensor",
+        "fields": {
+            "is_radar": false,
+            "name": "Phased Array L-band Synthetic Aperture Radar-1 ALOS-1",
+            "description": "",
+            "mission": 42,
+            "abbreviation": "PSR",
+            "operator_abbreviation": "PALSAR-1",
+            "is_taskable": false,
+            "has_data": false
+        }
+    },
+    {
+        "pk": 65,
+        "model": "catalogue.missionsensor",
+        "fields": {
+            "is_radar": false,
+            "name": "Phased Array L-band Synthetic Aperture Radar-2 ALOS-2",
+            "description": "",
+            "mission": 43,
+            "abbreviation": "PSR",
+            "operator_abbreviation": "PALSAR-2",
+            "is_taskable": false,
+            "has_data": false
+        }
+    },
+    {
+        "pk": 26,
+        "model": "catalogue.missionsensor",
+        "fields": {
+            "is_radar": false,
+            "name": "SPOT 5 HRS Stereo",
+            "description": "High Resolution Stereoscopic Spot 5",
+            "mission": 18,
+            "abbreviation": "HRS",
+            "operator_abbreviation": "HRS-5",
+            "is_taskable": false,
+            "has_data": false
+        }
+    },
+    {
+        "pk": 2,
+        "model": "catalogue.missionsensor",
+        "fields": {
+            "is_radar": true,
+            "name": "Radar ERS-1",
+            "description": "Active Microwave Instrument ERS-1",
+            "mission": 9,
+            "abbreviation": "AMI",
+            "operator_abbreviation": "AMI-1",
+            "is_taskable": false,
+            "has_data": true
+        }
+    },
+    {
+        "pk": 17,
+        "model": "catalogue.missionsensor",
+        "fields": {
+            "is_radar": false,
+            "name": "Landsat 2 MSS",
+            "description": "Multi-Spectral-Scanner Landsat 2",
+            "mission": 12,
+            "abbreviation": "MSS",
+            "operator_abbreviation": "MSS-2",
+            "is_taskable": false,
+            "has_data": true
+        }
+    },
+    {
+        "pk": 18,
+        "model": "catalogue.missionsensor",
+        "fields": {
+            "is_radar": false,
+            "name": "Landsat 3 MSS",
+            "description": "Multi-Spectral-Scanner Landsat 3",
+            "mission": 13,
+            "abbreviation": "MSS",
+            "operator_abbreviation": "MSS-3",
+            "is_taskable": false,
+            "has_data": true
+        }
+    },
+    {
+        "pk": 19,
+        "model": "catalogue.missionsensor",
+        "fields": {
+            "is_radar": false,
+            "name": "Landsat 4 MSS",
+            "description": "Multi-Spectral-Scanner Landsat 4",
+            "mission": 14,
+            "abbreviation": "MSS",
+            "operator_abbreviation": "MSS-4",
+            "is_taskable": false,
+            "has_data": true
+        }
+    },
+    {
+        "pk": 20,
+        "model": "catalogue.missionsensor",
+        "fields": {
+            "is_radar": false,
+            "name": "Landsat 5 MSS",
+            "description": "Multi-Spectral-Scanner Landsat 5",
+            "mission": 10,
+            "abbreviation": "MSS",
+            "operator_abbreviation": "MSS-5",
+            "is_taskable": false,
+            "has_data": true
+        }
+    },
+    {
+        "pk": 5,
+        "model": "catalogue.missionsensor",
+        "fields": {
+            "is_radar": false,
+            "name": "Landsat 7 ETM+",
+            "description": "Enhanced Thematic Mapper Plus Landsat 7",
+            "mission": 11,
+            "abbreviation": "ETM",
+            "operator_abbreviation": "ETM+",
+            "is_taskable": false,
+            "has_data": true
+        }
+    },
+    {
+        "pk": 15,
+        "model": "catalogue.missionsensor",
+        "fields": {
+            "is_radar": false,
+            "name": "SAC-C Multisepectral",
+            "description": "Multispectral Medium Resolution Scanner SAC-C",
+            "mission": 21,
+            "abbreviation": "MMR",
+            "operator_abbreviation": "MMRS-C",
+            "is_taskable": false,
+            "has_data": true
+        }
+    },
+    {
+        "pk": 21,
+        "model": "catalogue.missionsensor",
+        "fields": {
+            "is_radar": false,
+            "name": "SPOT 1 HRV",
+            "description": "Haute Resolution Visible Spot 1",
+            "mission": 17,
+            "abbreviation": "HRV",
+            "operator_abbreviation": "HRV-1",
+            "is_taskable": false,
+            "has_data": true
+        }
+    },
+    {
+        "pk": 22,
+        "model": "catalogue.missionsensor",
+        "fields": {
+            "is_radar": false,
+            "name": "SPOT 2 HRV",
+            "description": "Haute Resolution Visible Spot 2",
+            "mission": 15,
+            "abbreviation": "HRV",
+            "operator_abbreviation": "HRV-2",
+            "is_taskable": false,
+            "has_data": true
+        }
+    },
+    {
+        "pk": 23,
+        "model": "catalogue.missionsensor",
+        "fields": {
+            "is_radar": false,
+            "name": "SPOT 3 HRV",
+            "description": "Haute Resolution Visible Spot 3",
+            "mission": 22,
+            "abbreviation": "HRV",
+            "operator_abbreviation": "HRV-3",
+            "is_taskable": false,
+            "has_data": true
+        }
+    },
+    {
+        "pk": 24,
+        "model": "catalogue.missionsensor",
+        "fields": {
+            "is_radar": false,
+            "name": "SPOT 4 HRVIR",
+            "description": "High-Resolution Visible and Infrared sensor Spot 4",
+            "mission": 16,
+            "abbreviation": "HIR",
+            "operator_abbreviation": "HRVIR-4",
+            "is_taskable": true,
+            "has_data": true
+        }
+    },
+    {
+        "pk": 10,
+        "model": "catalogue.missionsensor",
+        "fields": {
+            "is_radar": false,
+            "name": "SPOT 5 HRG",
+            "description": "High Resolution Geometric Spot 5",
+            "mission": 18,
+            "abbreviation": "HRG",
+            "operator_abbreviation": "HRG-5",
+            "is_taskable": true,
+            "has_data": true
+        }
+    },
+    {
+        "pk": 25,
+        "model": "catalogue.missionsensor",
+        "fields": {
+            "is_radar": false,
+            "name": "VEGETATION-4",
+            "description": "Vegetation Monitoring Instrument / Vegetation Spot 4",
+            "mission": 16,
+            "abbreviation": "VMI",
+            "operator_abbreviation": "Vegetation-4",
+            "is_taskable": false,
+            "has_data": false
+        }
+    },
+    {
+        "pk": 27,
+        "model": "catalogue.missionsensor",
+        "fields": {
+            "is_radar": false,
+            "name": "VEGETATION-5",
+            "description": "Vegetation Monitoring Instrument / Vegetation Spot 5",
+            "mission": 18,
+            "abbreviation": "VMI",
+            "operator_abbreviation": "Vegetation-5",
+            "is_taskable": false,
+            "has_data": false
+        }
+    },
+    {
+        "pk": 1,
+        "model": "catalogue.missionsensor",
+        "fields": {
+            "is_radar": false,
+            "name": "NOAA-14 AVHRR",
+            "description": "Advanced Very High Resolution Radiometer NOAA",
+            "mission": 1,
+            "abbreviation": "AVH",
+            "operator_abbreviation": "AVHRR-3",
+            "is_taskable": false,
+            "has_data": true
+        }
+    },
+    {
+        "pk": 14,
+        "model": "catalogue.missionsensor",
+        "fields": {
+            "is_radar": false,
+            "name": "CBERS-2B HR CCD",
+            "description": "High Resolution CCD Camera CBERS2-B",
+            "mission": 20,
+            "abbreviation": "HRC",
+            "operator_abbreviation": "HRCC-2B",
+            "is_taskable": false,
+            "has_data": true
         }
     },
     {

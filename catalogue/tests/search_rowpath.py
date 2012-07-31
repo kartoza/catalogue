@@ -38,7 +38,7 @@ class SearchRowPath_Test(SearchTestCase):
         """
         myTestSearches = [23, 24, 25, 26]
         #we need to bound results
-        myExpectedResults = [4, 4, 2, 4]
+        myExpectedResults = [1, 3, 0, 2]
 
         for idx, searchPK in enumerate(myTestSearches):
             mySearch = Search.objects.get(pk=searchPK)

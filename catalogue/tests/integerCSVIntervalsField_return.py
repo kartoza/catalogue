@@ -14,13 +14,13 @@ Contact : lkleyn@sansa.org.za
 """
 
 __author__ = 'dodobasic@gmail.com'
-__version__ = '0.2'
-__date__ = '12/07/2012'
+__version__ = '0.3'
+__date__ = '30/07/2012'
 __copyright__ = 'South African National Space Agency'
 
 from django.test import TestCase
 from catalogue.tests.test_utils import simpleMessage
-from catalogue.fields import IntegersCSVIntervalsField
+from catalogue.fields import IntegersCSVIntervalsField, validateIntegerRange
 from django import forms
 
 
@@ -109,3 +109,13 @@ class IntegersCSVIntervalsField_Test(TestCase):
                              myExpectedResult,
                              simpleMessage(myResult, myExpectedResult,
                              message="For testVal %s:" % myTestVal))
+
+    def test_formValidation_Exception(self):
+        """
+        Tests if proper exception is raised on field validation
+        """
+        #test searches pk
+        myTestValues = [(10, 4), (99, 1)]
+
+        for myTestVal in myTestValues:
+            self.assertRaises(forms.ValidationError, validateIntegerRange, myTestVal)

@@ -38,7 +38,7 @@ class SearchBandCount_Test(SearchTestCase):
         - Hyperspectral band count, range 41-1000 (search 9)
         """
         myTestSearches = [5, 6, 7, 8, 9]
-        myExpectedResults = [8, 50, 15, 1, 1]
+        myExpectedResults = [8, 10, 15, 1, 1]
 
         for idx, searchPK in enumerate(myTestSearches):
             mySearch = Search.objects.get(pk=searchPK)

@@ -1,5 +1,16 @@
 [
     {
+        "pk": 6541,
+        "model": "catalogue.genericimageryproduct",
+        "fields": {
+            "radiometric_resolution": 0,
+            "spatial_resolution_y": 3000.0,
+            "spatial_resolution_x": 3000.0,
+            "spatial_resolution": 3000.0,
+            "band_count": 1
+        }
+    },
+    {
         "pk": 1934163,
         "model": "catalogue.genericimageryproduct",
         "fields": {
@@ -19,50 +30,6 @@
             "spatial_resolution_x": 10.0,
             "spatial_resolution": 10.0,
             "band_count": 1
-        }
-    },
-    {
-        "pk": 24159,
-        "model": "catalogue.genericimageryproduct",
-        "fields": {
-            "radiometric_resolution": 0,
-            "spatial_resolution_y": 60.0,
-            "spatial_resolution_x": 60.0,
-            "spatial_resolution": 60.0,
-            "band_count": 4
-        }
-    },
-    {
-        "pk": 181730,
-        "model": "catalogue.genericimageryproduct",
-        "fields": {
-            "radiometric_resolution": 0,
-            "spatial_resolution_y": 20.0,
-            "spatial_resolution_x": 20.0,
-            "spatial_resolution": 20.0,
-            "band_count": 3
-        }
-    },
-    {
-        "pk": 38027,
-        "model": "catalogue.genericimageryproduct",
-        "fields": {
-            "radiometric_resolution": 0,
-            "spatial_resolution_y": 30.0,
-            "spatial_resolution_x": 30.0,
-            "spatial_resolution": 30.0,
-            "band_count": 7
-        }
-    },
-    {
-        "pk": 2110058,
-        "model": "catalogue.genericimageryproduct",
-        "fields": {
-            "radiometric_resolution": 16,
-            "spatial_resolution_y": 20.0,
-            "spatial_resolution_x": 20.0,
-            "spatial_resolution": 20.0,
-            "band_count": 3
         }
     },
     {
@@ -88,1004 +55,1103 @@
         }
     },
     {
-        "pk": 2156885,
+        "pk": 1936623,
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 16,
-            "spatial_resolution_y": 10.0,
+            "band_count": 3,
+            "spatial_resolution_x": 20.0,
+            "spatial_resolution_y": 20.0,
+            "spatial_resolution": 20.0
+        }
+    },
+    {
+        "pk": 90541,
+        "model": "catalogue.genericimageryproduct",
+        "fields": {
+            "radiometric_resolution": 0,
+            "band_count": 4,
+            "spatial_resolution_x": 60.0,
+            "spatial_resolution_y": 60.0,
+            "spatial_resolution": 60.0
+        }
+    },
+    {
+        "pk": 1973483,
+        "model": "catalogue.genericimageryproduct",
+        "fields": {
+            "radiometric_resolution": 16,
+            "band_count": 3,
+            "spatial_resolution_x": 20.0,
+            "spatial_resolution_y": 20.0,
+            "spatial_resolution": 20.0
+        }
+    },
+    {
+        "pk": 1978016,
+        "model": "catalogue.genericimageryproduct",
+        "fields": {
+            "radiometric_resolution": 16,
+            "band_count": 3,
+            "spatial_resolution_x": 20.0,
+            "spatial_resolution_y": 20.0,
+            "spatial_resolution": 20.0
+        }
+    },
+    {
+        "pk": 2014330,
+        "model": "catalogue.genericimageryproduct",
+        "fields": {
+            "radiometric_resolution": 16,
+            "band_count": 1,
             "spatial_resolution_x": 10.0,
-            "spatial_resolution": 10.0,
-            "band_count": 1
-        }
-    },
-    {
-        "pk": 204391,
-        "model": "catalogue.genericimageryproduct",
-        "fields": {
-            "radiometric_resolution": 0,
-            "spatial_resolution_y": 20.0,
-            "spatial_resolution_x": 20.0,
-            "spatial_resolution": 20.0,
-            "band_count": 3
-        }
-    },
-    {
-        "pk": 2162079,
-        "model": "catalogue.genericimageryproduct",
-        "fields": {
-            "radiometric_resolution": 16,
-            "spatial_resolution_y": 20.0,
-            "spatial_resolution_x": 20.0,
-            "spatial_resolution": 20.0,
-            "band_count": 3
-        }
-    },
-    {
-        "pk": 2188374,
-        "model": "catalogue.genericimageryproduct",
-        "fields": {
-            "radiometric_resolution": 16,
-            "spatial_resolution_y": 20.0,
-            "spatial_resolution_x": 20.0,
-            "spatial_resolution": 20.0,
-            "band_count": 3
-        }
-    },
-    {
-        "pk": 1010294,
-        "model": "catalogue.genericimageryproduct",
-        "fields": {
-            "radiometric_resolution": 0,
-            "spatial_resolution_y": 20.0,
-            "spatial_resolution_x": 20.0,
-            "spatial_resolution": 20.0,
-            "band_count": 3
-        }
-    },
-    {
-        "pk": 227714,
-        "model": "catalogue.genericimageryproduct",
-        "fields": {
-            "radiometric_resolution": 0,
-            "spatial_resolution_y": 20.0,
-            "spatial_resolution_x": 20.0,
-            "spatial_resolution": 20.0,
-            "band_count": 3
-        }
-    },
-    {
-        "pk": 2274343,
-        "model": "catalogue.genericimageryproduct",
-        "fields": {
-            "radiometric_resolution": 16,
             "spatial_resolution_y": 10.0,
-            "spatial_resolution_x": 10.0,
-            "spatial_resolution": 10.0,
-            "band_count": 1
+            "spatial_resolution": 10.0
         }
     },
     {
-        "pk": 2277404,
+        "pk": 2220920,
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 16,
-            "spatial_resolution_y": 10.0,
+            "band_count": 1,
             "spatial_resolution_x": 10.0,
-            "spatial_resolution": 10.0,
-            "band_count": 1
+            "spatial_resolution_y": 10.0,
+            "spatial_resolution": 10.0
         }
     },
     {
-        "pk": 6541,
+        "pk": 4456,
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 0,
-            "spatial_resolution_y": 3000.0,
+            "band_count": 1,
             "spatial_resolution_x": 3000.0,
-            "spatial_resolution": 3000.0,
-            "band_count": 1
-        }
-    },
-    {
-        "pk": 66121,
-        "model": "catalogue.genericimageryproduct",
-        "fields": {
-            "radiometric_resolution": 0,
-            "spatial_resolution_y": 30.0,
-            "spatial_resolution_x": 30.0,
-            "spatial_resolution": 30.0,
-            "band_count": 7
-        }
-    },
-    {
-        "pk": 254141,
-        "model": "catalogue.genericimageryproduct",
-        "fields": {
-            "radiometric_resolution": 0,
-            "spatial_resolution_y": 20.0,
-            "spatial_resolution_x": 20.0,
-            "spatial_resolution": 20.0,
-            "band_count": 3
-        }
-    },
-    {
-        "pk": 255327,
-        "model": "catalogue.genericimageryproduct",
-        "fields": {
-            "radiometric_resolution": 0,
-            "spatial_resolution_y": 20.0,
-            "spatial_resolution_x": 20.0,
-            "spatial_resolution": 20.0,
-            "band_count": 3
-        }
-    },
-    {
-        "pk": 142606,
-        "model": "catalogue.genericimageryproduct",
-        "fields": {
-            "radiometric_resolution": 0,
-            "spatial_resolution_y": 30.0,
-            "spatial_resolution_x": 30.0,
-            "spatial_resolution": 30.0,
-            "band_count": 7
-        }
-    },
-    {
-        "pk": 293811,
-        "model": "catalogue.genericimageryproduct",
-        "fields": {
-            "radiometric_resolution": 0,
-            "spatial_resolution_y": 20.0,
-            "spatial_resolution_x": 20.0,
-            "spatial_resolution": 20.0,
-            "band_count": 3
-        }
-    },
-    {
-        "pk": 2431689,
-        "model": "catalogue.genericimageryproduct",
-        "fields": {
-            "radiometric_resolution": 16,
-            "spatial_resolution_y": 20.0,
-            "spatial_resolution_x": 20.0,
-            "spatial_resolution": 20.0,
-            "band_count": 4
-        }
-    },
-    {
-        "pk": 310708,
-        "model": "catalogue.genericimageryproduct",
-        "fields": {
-            "radiometric_resolution": 0,
-            "spatial_resolution_y": 20.0,
-            "spatial_resolution_x": 20.0,
-            "spatial_resolution": 20.0,
-            "band_count": 3
-        }
-    },
-    {
-        "pk": 2531895,
-        "model": "catalogue.genericimageryproduct",
-        "fields": {
-            "radiometric_resolution": 16,
-            "spatial_resolution_y": 10.0,
-            "spatial_resolution_x": 10.0,
-            "spatial_resolution": 10.0,
-            "band_count": 4
-        }
-    },
-    {
-        "pk": 2572582,
-        "model": "catalogue.genericimageryproduct",
-        "fields": {
-            "radiometric_resolution": 16,
-            "spatial_resolution_y": 20.0,
-            "spatial_resolution_x": 20.0,
-            "spatial_resolution": 20.0,
-            "band_count": 4
-        }
-    },
-    {
-        "pk": 376912,
-        "model": "catalogue.genericimageryproduct",
-        "fields": {
-            "radiometric_resolution": 0,
-            "spatial_resolution_y": 20.0,
-            "spatial_resolution_x": 20.0,
-            "spatial_resolution": 20.0,
-            "band_count": 3
-        }
-    },
-    {
-        "pk": 2604814,
-        "model": "catalogue.genericimageryproduct",
-        "fields": {
-            "radiometric_resolution": 16,
-            "spatial_resolution_y": 10.0,
-            "spatial_resolution_x": 10.0,
-            "spatial_resolution": 10.0,
-            "band_count": 1
-        }
-    },
-    {
-        "pk": 2611830,
-        "model": "catalogue.genericimageryproduct",
-        "fields": {
-            "radiometric_resolution": 16,
-            "spatial_resolution_y": 20.0,
-            "spatial_resolution_x": 20.0,
-            "spatial_resolution": 20.0,
-            "band_count": 3
-        }
-    },
-    {
-        "pk": 406085,
-        "model": "catalogue.genericimageryproduct",
-        "fields": {
-            "radiometric_resolution": 0,
-            "spatial_resolution_y": 20.0,
-            "spatial_resolution_x": 20.0,
-            "spatial_resolution": 20.0,
-            "band_count": 3
-        }
-    },
-    {
-        "pk": 429528,
-        "model": "catalogue.genericimageryproduct",
-        "fields": {
-            "radiometric_resolution": 0,
-            "spatial_resolution_y": 20.0,
-            "spatial_resolution_x": 20.0,
-            "spatial_resolution": 20.0,
-            "band_count": 3
-        }
-    },
-    {
-        "pk": 430609,
-        "model": "catalogue.genericimageryproduct",
-        "fields": {
-            "radiometric_resolution": 0,
-            "spatial_resolution_y": 20.0,
-            "spatial_resolution_x": 20.0,
-            "spatial_resolution": 20.0,
-            "band_count": 3
-        }
-    },
-    {
-        "pk": 85142,
-        "model": "catalogue.genericimageryproduct",
-        "fields": {
-            "radiometric_resolution": 0,
-            "spatial_resolution_y": 30.0,
-            "spatial_resolution_x": 30.0,
-            "spatial_resolution": 30.0,
-            "band_count": 7
-        }
-    },
-    {
-        "pk": 2689568,
-        "model": "catalogue.genericimageryproduct",
-        "fields": {
-            "radiometric_resolution": 16,
-            "spatial_resolution_y": 20.0,
-            "spatial_resolution_x": 20.0,
-            "spatial_resolution": 20.0,
-            "band_count": 4
-        }
-    },
-    {
-        "pk": 2696152,
-        "model": "catalogue.genericimageryproduct",
-        "fields": {
-            "radiometric_resolution": 16,
-            "spatial_resolution_y": 20.0,
-            "spatial_resolution_x": 20.0,
-            "spatial_resolution": 20.0,
-            "band_count": 4
-        }
-    },
-    {
-        "pk": 453183,
-        "model": "catalogue.genericimageryproduct",
-        "fields": {
-            "radiometric_resolution": 0,
-            "spatial_resolution_y": 20.0,
-            "spatial_resolution_x": 20.0,
-            "spatial_resolution": 20.0,
-            "band_count": 3
-        }
-    },
-    {
-        "pk": 2705706,
-        "model": "catalogue.genericimageryproduct",
-        "fields": {
-            "radiometric_resolution": 16,
-            "spatial_resolution_y": 20.0,
-            "spatial_resolution_x": 20.0,
-            "spatial_resolution": 20.0,
-            "band_count": 4
-        }
-    },
-    {
-        "pk": 86207,
-        "model": "catalogue.genericimageryproduct",
-        "fields": {
-            "radiometric_resolution": 0,
-            "spatial_resolution_y": 30.0,
-            "spatial_resolution_x": 30.0,
-            "spatial_resolution": 30.0,
-            "band_count": 7
-        }
-    },
-    {
-        "pk": 155046,
-        "model": "catalogue.genericimageryproduct",
-        "fields": {
-            "radiometric_resolution": 0,
-            "spatial_resolution_y": 30.0,
-            "spatial_resolution_x": 30.0,
-            "spatial_resolution": 30.0,
-            "band_count": 7
-        }
-    },
-    {
-        "pk": 2745954,
-        "model": "catalogue.genericimageryproduct",
-        "fields": {
-            "radiometric_resolution": 16,
-            "spatial_resolution_y": 20.0,
-            "spatial_resolution_x": 20.0,
-            "spatial_resolution": 20.0,
-            "band_count": 4
-        }
-    },
-    {
-        "pk": 505665,
-        "model": "catalogue.genericimageryproduct",
-        "fields": {
-            "radiometric_resolution": 0,
-            "spatial_resolution_y": 20.0,
-            "spatial_resolution_x": 20.0,
-            "spatial_resolution": 20.0,
-            "band_count": 3
-        }
-    },
-    {
-        "pk": 2803896,
-        "model": "catalogue.genericimageryproduct",
-        "fields": {
-            "radiometric_resolution": 16,
-            "spatial_resolution_y": 10.0,
-            "spatial_resolution_x": 10.0,
-            "spatial_resolution": 10.0,
-            "band_count": 1
-        }
-    },
-    {
-        "pk": 2811042,
-        "model": "catalogue.genericimageryproduct",
-        "fields": {
-            "radiometric_resolution": 16,
-            "spatial_resolution_y": 20.0,
-            "spatial_resolution_x": 20.0,
-            "spatial_resolution": 20.0,
-            "band_count": 4
-        }
-    },
-    {
-        "pk": 1068358,
-        "model": "catalogue.genericimageryproduct",
-        "fields": {
-            "radiometric_resolution": 0,
-            "spatial_resolution_y": 20.0,
-            "spatial_resolution_x": 20.0,
-            "spatial_resolution": 20.0,
-            "band_count": 3
-        }
-    },
-    {
-        "pk": 538163,
-        "model": "catalogue.genericimageryproduct",
-        "fields": {
-            "radiometric_resolution": 0,
-            "spatial_resolution_y": 20.0,
-            "spatial_resolution_x": 20.0,
-            "spatial_resolution": 20.0,
-            "band_count": 3
-        }
-    },
-    {
-        "pk": 2850254,
-        "model": "catalogue.genericimageryproduct",
-        "fields": {
-            "radiometric_resolution": 16,
-            "spatial_resolution_y": 20.0,
-            "spatial_resolution_x": 20.0,
-            "spatial_resolution": 20.0,
-            "band_count": 3
-        }
-    },
-    {
-        "pk": 1071894,
-        "model": "catalogue.genericimageryproduct",
-        "fields": {
-            "radiometric_resolution": 0,
-            "spatial_resolution_y": 20.0,
-            "spatial_resolution_x": 20.0,
-            "spatial_resolution": 20.0,
-            "band_count": 3
-        }
-    },
-    {
-        "pk": 563017,
-        "model": "catalogue.genericimageryproduct",
-        "fields": {
-            "radiometric_resolution": 0,
-            "spatial_resolution_y": 20.0,
-            "spatial_resolution_x": 20.0,
-            "spatial_resolution": 20.0,
-            "band_count": 3
-        }
-    },
-    {
-        "pk": 1080551,
-        "model": "catalogue.genericimageryproduct",
-        "fields": {
-            "radiometric_resolution": 0,
-            "spatial_resolution_y": 20.0,
-            "spatial_resolution_x": 20.0,
-            "spatial_resolution": 20.0,
-            "band_count": 3
-        }
-    },
-    {
-        "pk": 578355,
-        "model": "catalogue.genericimageryproduct",
-        "fields": {
-            "radiometric_resolution": 0,
-            "spatial_resolution_y": 20.0,
-            "spatial_resolution_x": 20.0,
-            "spatial_resolution": 20.0,
-            "band_count": 3
-        }
-    },
-    {
-        "pk": 11275,
-        "model": "catalogue.genericimageryproduct",
-        "fields": {
-            "radiometric_resolution": 0,
             "spatial_resolution_y": 3000.0,
-            "spatial_resolution_x": 3000.0,
-            "spatial_resolution": 3000.0,
-            "band_count": 1
+            "spatial_resolution": 3000.0
         }
     },
     {
-        "pk": 21414,
-        "model": "catalogue.genericimageryproduct",
-        "fields": {
-            "radiometric_resolution": 0,
-            "spatial_resolution_y": 3000.0,
-            "spatial_resolution_x": 3000.0,
-            "spatial_resolution": 3000.0,
-            "band_count": 1
-        }
-    },
-    {
-        "pk": 21426,
-        "model": "catalogue.genericimageryproduct",
-        "fields": {
-            "radiometric_resolution": 0,
-            "spatial_resolution_y": 3000.0,
-            "spatial_resolution_x": 3000.0,
-            "spatial_resolution": 3000.0,
-            "band_count": 1
-        }
-    },
-    {
-        "pk": 2907607,
+        "pk": 2276798,
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 16,
-            "spatial_resolution_y": 20.0,
-            "spatial_resolution_x": 20.0,
-            "spatial_resolution": 20.0,
-            "band_count": 4
-        }
-    },
-    {
-        "pk": 161819,
-        "model": "catalogue.genericimageryproduct",
-        "fields": {
-            "radiometric_resolution": 0,
-            "spatial_resolution_y": 15.0,
-            "spatial_resolution_x": 15.0,
-            "spatial_resolution": 15.0,
-            "band_count": 8
-        }
-    },
-    {
-        "pk": 2978185,
-        "model": "catalogue.genericimageryproduct",
-        "fields": {
-            "radiometric_resolution": 16,
-            "spatial_resolution_y": 10.0,
+            "band_count": 1,
             "spatial_resolution_x": 10.0,
-            "spatial_resolution": 10.0,
-            "band_count": 1
+            "spatial_resolution_y": 10.0,
+            "spatial_resolution": 10.0
         }
     },
     {
-        "pk": 650172,
+        "pk": 63753,
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 0,
-            "spatial_resolution_y": 20.0,
-            "spatial_resolution_x": 20.0,
-            "spatial_resolution": 20.0,
-            "band_count": 3
+            "band_count": 7,
+            "spatial_resolution_x": 30.0,
+            "spatial_resolution_y": 30.0,
+            "spatial_resolution": 30.0
         }
     },
     {
-        "pk": 3017017,
+        "pk": 5595,
+        "model": "catalogue.genericimageryproduct",
+        "fields": {
+            "radiometric_resolution": 0,
+            "band_count": 1,
+            "spatial_resolution_x": 3000.0,
+            "spatial_resolution_y": 3000.0,
+            "spatial_resolution": 3000.0
+        }
+    },
+    {
+        "pk": 7623,
+        "model": "catalogue.genericimageryproduct",
+        "fields": {
+            "radiometric_resolution": 0,
+            "band_count": 1,
+            "spatial_resolution_x": 3000.0,
+            "spatial_resolution_y": 3000.0,
+            "spatial_resolution": 3000.0
+        }
+    },
+    {
+        "pk": 142087,
+        "model": "catalogue.genericimageryproduct",
+        "fields": {
+            "radiometric_resolution": 0,
+            "band_count": 7,
+            "spatial_resolution_x": 30.0,
+            "spatial_resolution_y": 30.0,
+            "spatial_resolution": 30.0
+        }
+    },
+    {
+        "pk": 143562,
+        "model": "catalogue.genericimageryproduct",
+        "fields": {
+            "radiometric_resolution": 0,
+            "band_count": 7,
+            "spatial_resolution_x": 30.0,
+            "spatial_resolution_y": 30.0,
+            "spatial_resolution": 30.0
+        }
+    },
+    {
+        "pk": 146547,
+        "model": "catalogue.genericimageryproduct",
+        "fields": {
+            "radiometric_resolution": 0,
+            "band_count": 7,
+            "spatial_resolution_x": 30.0,
+            "spatial_resolution_y": 30.0,
+            "spatial_resolution": 30.0
+        }
+    },
+    {
+        "pk": 2462558,
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 16,
-            "spatial_resolution_y": 5.0,
+            "band_count": 1,
+            "spatial_resolution_x": 10.0,
+            "spatial_resolution_y": 10.0,
+            "spatial_resolution": 10.0
+        }
+    },
+    {
+        "pk": 2605352,
+        "model": "catalogue.genericimageryproduct",
+        "fields": {
+            "radiometric_resolution": 16,
+            "band_count": 4,
+            "spatial_resolution_x": 20.0,
+            "spatial_resolution_y": 20.0,
+            "spatial_resolution": 20.0
+        }
+    },
+    {
+        "pk": 2611758,
+        "model": "catalogue.genericimageryproduct",
+        "fields": {
+            "radiometric_resolution": 16,
+            "band_count": 4,
+            "spatial_resolution_x": 20.0,
+            "spatial_resolution_y": 20.0,
+            "spatial_resolution": 20.0
+        }
+    },
+    {
+        "pk": 2681162,
+        "model": "catalogue.genericimageryproduct",
+        "fields": {
+            "radiometric_resolution": 16,
+            "band_count": 4,
+            "spatial_resolution_x": 20.0,
+            "spatial_resolution_y": 20.0,
+            "spatial_resolution": 20.0
+        }
+    },
+    {
+        "pk": 2689917,
+        "model": "catalogue.genericimageryproduct",
+        "fields": {
+            "radiometric_resolution": 16,
+            "band_count": 4,
+            "spatial_resolution_x": 20.0,
+            "spatial_resolution_y": 20.0,
+            "spatial_resolution": 20.0
+        }
+    },
+    {
+        "pk": 2705046,
+        "model": "catalogue.genericimageryproduct",
+        "fields": {
+            "radiometric_resolution": 16,
+            "band_count": 1,
+            "spatial_resolution_x": 10.0,
+            "spatial_resolution_y": 10.0,
+            "spatial_resolution": 10.0
+        }
+    },
+    {
+        "pk": 2806398,
+        "model": "catalogue.genericimageryproduct",
+        "fields": {
+            "radiometric_resolution": 16,
+            "band_count": 4,
+            "spatial_resolution_x": 20.0,
+            "spatial_resolution_y": 20.0,
+            "spatial_resolution": 20.0
+        }
+    },
+    {
+        "pk": 2831285,
+        "model": "catalogue.genericimageryproduct",
+        "fields": {
+            "radiometric_resolution": 16,
+            "band_count": 1,
+            "spatial_resolution_x": 10.0,
+            "spatial_resolution_y": 10.0,
+            "spatial_resolution": 10.0
+        }
+    },
+    {
+        "pk": 2848943,
+        "model": "catalogue.genericimageryproduct",
+        "fields": {
+            "radiometric_resolution": 16,
+            "band_count": 4,
+            "spatial_resolution_x": 20.0,
+            "spatial_resolution_y": 20.0,
+            "spatial_resolution": 20.0
+        }
+    },
+    {
+        "pk": 2858602,
+        "model": "catalogue.genericimageryproduct",
+        "fields": {
+            "radiometric_resolution": 16,
+            "band_count": 1,
+            "spatial_resolution_x": 10.0,
+            "spatial_resolution_y": 10.0,
+            "spatial_resolution": 10.0
+        }
+    },
+    {
+        "pk": 2878471,
+        "model": "catalogue.genericimageryproduct",
+        "fields": {
+            "radiometric_resolution": 16,
+            "band_count": 4,
+            "spatial_resolution_x": 10.0,
+            "spatial_resolution_y": 10.0,
+            "spatial_resolution": 10.0
+        }
+    },
+    {
+        "pk": 2881425,
+        "model": "catalogue.genericimageryproduct",
+        "fields": {
+            "radiometric_resolution": 16,
+            "band_count": 4,
+            "spatial_resolution_x": 20.0,
+            "spatial_resolution_y": 20.0,
+            "spatial_resolution": 20.0
+        }
+    },
+    {
+        "pk": 2889239,
+        "model": "catalogue.genericimageryproduct",
+        "fields": {
+            "radiometric_resolution": 16,
+            "band_count": 1,
+            "spatial_resolution_x": 10.0,
+            "spatial_resolution_y": 10.0,
+            "spatial_resolution": 10.0
+        }
+    },
+    {
+        "pk": 2937682,
+        "model": "catalogue.genericimageryproduct",
+        "fields": {
+            "radiometric_resolution": 16,
+            "band_count": 4,
+            "spatial_resolution_x": 10.0,
+            "spatial_resolution_y": 10.0,
+            "spatial_resolution": 10.0
+        }
+    },
+    {
+        "pk": 2939962,
+        "model": "catalogue.genericimageryproduct",
+        "fields": {
+            "radiometric_resolution": 16,
+            "band_count": 1,
             "spatial_resolution_x": 5.0,
-            "spatial_resolution": 5.0,
-            "band_count": 1
-        }
-    },
-    {
-        "pk": 665347,
-        "model": "catalogue.genericimageryproduct",
-        "fields": {
-            "radiometric_resolution": 0,
-            "spatial_resolution_y": 20.0,
-            "spatial_resolution_x": 20.0,
-            "spatial_resolution": 20.0,
-            "band_count": 3
-        }
-    },
-    {
-        "pk": 3080810,
-        "model": "catalogue.genericimageryproduct",
-        "fields": {
-            "radiometric_resolution": 16,
-            "spatial_resolution_y": 20.0,
-            "spatial_resolution_x": 20.0,
-            "spatial_resolution": 20.0,
-            "band_count": 4
-        }
-    },
-    {
-        "pk": 3081824,
-        "model": "catalogue.genericimageryproduct",
-        "fields": {
-            "radiometric_resolution": 16,
-            "spatial_resolution_y": 20.0,
-            "spatial_resolution_x": 20.0,
-            "spatial_resolution": 20.0,
-            "band_count": 3
-        }
-    },
-    {
-        "pk": 3082843,
-        "model": "catalogue.genericimageryproduct",
-        "fields": {
-            "radiometric_resolution": 16,
-            "spatial_resolution_y": 20.0,
-            "spatial_resolution_x": 20.0,
-            "spatial_resolution": 20.0,
-            "band_count": 4
-        }
-    },
-    {
-        "pk": 712053,
-        "model": "catalogue.genericimageryproduct",
-        "fields": {
-            "radiometric_resolution": 0,
-            "spatial_resolution_y": 20.0,
-            "spatial_resolution_x": 20.0,
-            "spatial_resolution": 20.0,
-            "band_count": 3
-        }
-    },
-    {
-        "pk": 3138985,
-        "model": "catalogue.genericimageryproduct",
-        "fields": {
-            "radiometric_resolution": 16,
             "spatial_resolution_y": 5.0,
+            "spatial_resolution": 5.0
+        }
+    },
+    {
+        "pk": 3004449,
+        "model": "catalogue.genericimageryproduct",
+        "fields": {
+            "radiometric_resolution": 16,
+            "band_count": 4,
+            "spatial_resolution_x": 10.0,
+            "spatial_resolution_y": 10.0,
+            "spatial_resolution": 10.0
+        }
+    },
+    {
+        "pk": 3008576,
+        "model": "catalogue.genericimageryproduct",
+        "fields": {
+            "radiometric_resolution": 16,
+            "band_count": 4,
+            "spatial_resolution_x": 20.0,
+            "spatial_resolution_y": 20.0,
+            "spatial_resolution": 20.0
+        }
+    },
+    {
+        "pk": 3017068,
+        "model": "catalogue.genericimageryproduct",
+        "fields": {
+            "radiometric_resolution": 16,
+            "band_count": 4,
+            "spatial_resolution_x": 20.0,
+            "spatial_resolution_y": 20.0,
+            "spatial_resolution": 20.0
+        }
+    },
+    {
+        "pk": 3024228,
+        "model": "catalogue.genericimageryproduct",
+        "fields": {
+            "radiometric_resolution": 16,
+            "band_count": 1,
+            "spatial_resolution_x": 10.0,
+            "spatial_resolution_y": 10.0,
+            "spatial_resolution": 10.0
+        }
+    },
+    {
+        "pk": 3046380,
+        "model": "catalogue.genericimageryproduct",
+        "fields": {
+            "radiometric_resolution": 16,
+            "band_count": 4,
+            "spatial_resolution_x": 20.0,
+            "spatial_resolution_y": 20.0,
+            "spatial_resolution": 20.0
+        }
+    },
+    {
+        "pk": 4777289,
+        "model": "catalogue.genericimageryproduct",
+        "fields": {
+            "radiometric_resolution": 16,
+            "band_count": 1,
+            "spatial_resolution_x": 2.5,
+            "spatial_resolution_y": 2.5,
+            "spatial_resolution": 2.5
+        }
+    },
+    {
+        "pk": 4626140,
+        "model": "catalogue.genericimageryproduct",
+        "fields": {
+            "radiometric_resolution": 16,
+            "band_count": 1,
+            "spatial_resolution_x": 10.0,
+            "spatial_resolution_y": 10.0,
+            "spatial_resolution": 10.0
+        }
+    },
+    {
+        "pk": 4684200,
+        "model": "catalogue.genericimageryproduct",
+        "fields": {
+            "radiometric_resolution": 16,
+            "band_count": 1,
+            "spatial_resolution_x": 10.0,
+            "spatial_resolution_y": 10.0,
+            "spatial_resolution": 10.0
+        }
+    },
+    {
+        "pk": 4739310,
+        "model": "catalogue.genericimageryproduct",
+        "fields": {
+            "radiometric_resolution": 16,
+            "band_count": 1,
+            "spatial_resolution_x": 10.0,
+            "spatial_resolution_y": 10.0,
+            "spatial_resolution": 10.0
+        }
+    },
+    {
+        "pk": 4745758,
+        "model": "catalogue.genericimageryproduct",
+        "fields": {
+            "radiometric_resolution": 16,
+            "band_count": 1,
+            "spatial_resolution_x": 10.0,
+            "spatial_resolution_y": 10.0,
+            "spatial_resolution": 10.0
+        }
+    },
+    {
+        "pk": 4750646,
+        "model": "catalogue.genericimageryproduct",
+        "fields": {
+            "radiometric_resolution": 16,
+            "band_count": 4,
+            "spatial_resolution_x": 20.0,
+            "spatial_resolution_y": 20.0,
+            "spatial_resolution": 20.0
+        }
+    },
+    {
+        "pk": 4762143,
+        "model": "catalogue.genericimageryproduct",
+        "fields": {
+            "radiometric_resolution": 16,
+            "band_count": 4,
+            "spatial_resolution_x": 10.0,
+            "spatial_resolution_y": 10.0,
+            "spatial_resolution": 10.0
+        }
+    },
+    {
+        "pk": 3176219,
+        "model": "catalogue.genericimageryproduct",
+        "fields": {
+            "radiometric_resolution": 16,
+            "band_count": 4,
+            "spatial_resolution_x": 10.0,
+            "spatial_resolution_y": 10.0,
+            "spatial_resolution": 10.0
+        }
+    },
+    {
+        "pk": 3243116,
+        "model": "catalogue.genericimageryproduct",
+        "fields": {
+            "radiometric_resolution": 16,
+            "band_count": 1,
             "spatial_resolution_x": 5.0,
-            "spatial_resolution": 5.0,
-            "band_count": 1
+            "spatial_resolution_y": 5.0,
+            "spatial_resolution": 5.0
         }
     },
     {
-        "pk": 725040,
-        "model": "catalogue.genericimageryproduct",
-        "fields": {
-            "radiometric_resolution": 0,
-            "spatial_resolution_y": 20.0,
-            "spatial_resolution_x": 20.0,
-            "spatial_resolution": 20.0,
-            "band_count": 3
-        }
-    },
-    {
-        "pk": 732848,
-        "model": "catalogue.genericimageryproduct",
-        "fields": {
-            "radiometric_resolution": 0,
-            "spatial_resolution_y": 20.0,
-            "spatial_resolution_x": 20.0,
-            "spatial_resolution": 20.0,
-            "band_count": 3
-        }
-    },
-    {
-        "pk": 1115519,
-        "model": "catalogue.genericimageryproduct",
-        "fields": {
-            "radiometric_resolution": 0,
-            "spatial_resolution_y": 20.0,
-            "spatial_resolution_x": 20.0,
-            "spatial_resolution": 20.0,
-            "band_count": 3
-        }
-    },
-    {
-        "pk": 772772,
-        "model": "catalogue.genericimageryproduct",
-        "fields": {
-            "radiometric_resolution": 0,
-            "spatial_resolution_y": 20.0,
-            "spatial_resolution_x": 20.0,
-            "spatial_resolution": 20.0,
-            "band_count": 3
-        }
-    },
-    {
-        "pk": 780398,
-        "model": "catalogue.genericimageryproduct",
-        "fields": {
-            "radiometric_resolution": 0,
-            "spatial_resolution_y": 20.0,
-            "spatial_resolution_x": 20.0,
-            "spatial_resolution": 20.0,
-            "band_count": 3
-        }
-    },
-    {
-        "pk": 783415,
-        "model": "catalogue.genericimageryproduct",
-        "fields": {
-            "radiometric_resolution": 0,
-            "spatial_resolution_y": 20.0,
-            "spatial_resolution_x": 20.0,
-            "spatial_resolution": 20.0,
-            "band_count": 3
-        }
-    },
-    {
-        "pk": 791281,
-        "model": "catalogue.genericimageryproduct",
-        "fields": {
-            "radiometric_resolution": 0,
-            "spatial_resolution_y": 20.0,
-            "spatial_resolution_x": 20.0,
-            "spatial_resolution": 20.0,
-            "band_count": 3
-        }
-    },
-    {
-        "pk": 1124220,
-        "model": "catalogue.genericimageryproduct",
-        "fields": {
-            "radiometric_resolution": 0,
-            "spatial_resolution_y": 20.0,
-            "spatial_resolution_x": 20.0,
-            "spatial_resolution": 20.0,
-            "band_count": 3
-        }
-    },
-    {
-        "pk": 1127964,
-        "model": "catalogue.genericimageryproduct",
-        "fields": {
-            "radiometric_resolution": 0,
-            "spatial_resolution_y": 20.0,
-            "spatial_resolution_x": 20.0,
-            "spatial_resolution": 20.0,
-            "band_count": 3
-        }
-    },
-    {
-        "pk": 1128130,
-        "model": "catalogue.genericimageryproduct",
-        "fields": {
-            "radiometric_resolution": 0,
-            "spatial_resolution_y": 20.0,
-            "spatial_resolution_x": 20.0,
-            "spatial_resolution": 20.0,
-            "band_count": 3
-        }
-    },
-    {
-        "pk": 826376,
-        "model": "catalogue.genericimageryproduct",
-        "fields": {
-            "radiometric_resolution": 0,
-            "spatial_resolution_y": 20.0,
-            "spatial_resolution_x": 20.0,
-            "spatial_resolution": 20.0,
-            "band_count": 3
-        }
-    },
-    {
-        "pk": 3192879,
+        "pk": 3267757,
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 16,
-            "spatial_resolution_y": 20.0,
-            "spatial_resolution_x": 20.0,
-            "spatial_resolution": 20.0,
-            "band_count": 3
-        }
-    },
-    {
-        "pk": 847443,
-        "model": "catalogue.genericimageryproduct",
-        "fields": {
-            "radiometric_resolution": 0,
-            "spatial_resolution_y": 20.0,
-            "spatial_resolution_x": 20.0,
-            "spatial_resolution": 20.0,
-            "band_count": 3
-        }
-    },
-    {
-        "pk": 3207945,
-        "model": "catalogue.genericimageryproduct",
-        "fields": {
-            "radiometric_resolution": 16,
-            "spatial_resolution_y": 20.0,
-            "spatial_resolution_x": 20.0,
-            "spatial_resolution": 20.0,
-            "band_count": 4
-        }
-    },
-    {
-        "pk": 850362,
-        "model": "catalogue.genericimageryproduct",
-        "fields": {
-            "radiometric_resolution": 0,
-            "spatial_resolution_y": 20.0,
-            "spatial_resolution_x": 20.0,
-            "spatial_resolution": 20.0,
-            "band_count": 3
-        }
-    },
-    {
-        "pk": 878875,
-        "model": "catalogue.genericimageryproduct",
-        "fields": {
-            "radiometric_resolution": 0,
-            "spatial_resolution_y": 20.0,
-            "spatial_resolution_x": 20.0,
-            "spatial_resolution": 20.0,
-            "band_count": 3
-        }
-    },
-    {
-        "pk": 888985,
-        "model": "catalogue.genericimageryproduct",
-        "fields": {
-            "radiometric_resolution": 0,
-            "spatial_resolution_y": 20.0,
-            "spatial_resolution_x": 20.0,
-            "spatial_resolution": 20.0,
-            "band_count": 3
-        }
-    },
-    {
-        "pk": 889763,
-        "model": "catalogue.genericimageryproduct",
-        "fields": {
-            "radiometric_resolution": 0,
-            "spatial_resolution_y": 20.0,
-            "spatial_resolution_x": 20.0,
-            "spatial_resolution": 20.0,
-            "band_count": 3
-        }
-    },
-    {
-        "pk": 896071,
-        "model": "catalogue.genericimageryproduct",
-        "fields": {
-            "radiometric_resolution": 0,
-            "spatial_resolution_y": 20.0,
-            "spatial_resolution_x": 20.0,
-            "spatial_resolution": 20.0,
-            "band_count": 3
-        }
-    },
-    {
-        "pk": 3328626,
-        "model": "catalogue.genericimageryproduct",
-        "fields": {
-            "radiometric_resolution": 16,
-            "spatial_resolution_y": 10.0,
+            "band_count": 4,
             "spatial_resolution_x": 10.0,
-            "spatial_resolution": 10.0,
-            "band_count": 4
+            "spatial_resolution_y": 10.0,
+            "spatial_resolution": 10.0
         }
     },
     {
-        "pk": 902274,
-        "model": "catalogue.genericimageryproduct",
-        "fields": {
-            "radiometric_resolution": 0,
-            "spatial_resolution_y": 20.0,
-            "spatial_resolution_x": 20.0,
-            "spatial_resolution": 20.0,
-            "band_count": 3
-        }
-    },
-    {
-        "pk": 908060,
-        "model": "catalogue.genericimageryproduct",
-        "fields": {
-            "radiometric_resolution": 0,
-            "spatial_resolution_y": 20.0,
-            "spatial_resolution_x": 20.0,
-            "spatial_resolution": 20.0,
-            "band_count": 3
-        }
-    },
-    {
-        "pk": 3385258,
+        "pk": 3297641,
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 16,
-            "spatial_resolution_y": 10.0,
+            "band_count": 4,
             "spatial_resolution_x": 10.0,
-            "spatial_resolution": 10.0,
-            "band_count": 1
+            "spatial_resolution_y": 10.0,
+            "spatial_resolution": 10.0
         }
     },
     {
-        "pk": 938974,
+        "pk": 3310899,
         "model": "catalogue.genericimageryproduct",
         "fields": {
-            "radiometric_resolution": 0,
-            "spatial_resolution_y": 20.0,
-            "spatial_resolution_x": 20.0,
-            "spatial_resolution": 20.0,
-            "band_count": 3
+            "radiometric_resolution": 16,
+            "band_count": 4,
+            "spatial_resolution_x": 10.0,
+            "spatial_resolution_y": 10.0,
+            "spatial_resolution": 10.0
         }
     },
     {
-        "pk": 947511,
+        "pk": 3424233,
         "model": "catalogue.genericimageryproduct",
         "fields": {
-            "radiometric_resolution": 0,
-            "spatial_resolution_y": 20.0,
-            "spatial_resolution_x": 20.0,
-            "spatial_resolution": 20.0,
-            "band_count": 3
+            "radiometric_resolution": 16,
+            "band_count": 1,
+            "spatial_resolution_x": 2.5,
+            "spatial_resolution_y": 2.5,
+            "spatial_resolution": 2.5
         }
     },
     {
-        "pk": 950320,
+        "pk": 112262,
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 0,
-            "spatial_resolution_y": 20.0,
-            "spatial_resolution_x": 20.0,
-            "spatial_resolution": 20.0,
-            "band_count": 3
-        }
-    },
-    {
-        "pk": 1164361,
-        "model": "catalogue.genericimageryproduct",
-        "fields": {
-            "radiometric_resolution": 0,
-            "spatial_resolution_y": 20.0,
-            "spatial_resolution_x": 20.0,
-            "spatial_resolution": 20.0,
-            "band_count": 3
-        }
-    },
-    {
-        "pk": 993830,
-        "model": "catalogue.genericimageryproduct",
-        "fields": {
-            "radiometric_resolution": 0,
-            "spatial_resolution_y": 20.0,
-            "spatial_resolution_x": 20.0,
-            "spatial_resolution": 20.0,
-            "band_count": 3
-        }
-    },
-    {
-        "pk": 1743758,
-        "model": "catalogue.genericimageryproduct",
-        "fields": {
-            "radiometric_resolution": 0,
-            "spatial_resolution_y": 20.0,
-            "spatial_resolution_x": 20.0,
-            "spatial_resolution": 20.0,
-            "band_count": 3
-        }
-    },
-    {
-        "pk": 1766382,
-        "model": "catalogue.genericimageryproduct",
-        "fields": {
-            "radiometric_resolution": 0,
-            "spatial_resolution_y": 20.0,
-            "spatial_resolution_x": 20.0,
-            "spatial_resolution": 20.0,
-            "band_count": 3
-        }
-    },
-    {
-        "pk": 125380,
-        "model": "catalogue.genericimageryproduct",
-        "fields": {
-            "radiometric_resolution": 0,
-            "spatial_resolution_y": 30.0,
+            "band_count": 7,
             "spatial_resolution_x": 30.0,
-            "spatial_resolution": 30.0,
-            "band_count": 7
+            "spatial_resolution_y": 30.0,
+            "spatial_resolution": 30.0
         }
     },
     {
-        "pk": 16899,
+        "pk": 3505102,
+        "model": "catalogue.genericimageryproduct",
+        "fields": {
+            "radiometric_resolution": 16,
+            "band_count": 4,
+            "spatial_resolution_x": 20.0,
+            "spatial_resolution_y": 20.0,
+            "spatial_resolution": 20.0
+        }
+    },
+    {
+        "pk": 3507418,
+        "model": "catalogue.genericimageryproduct",
+        "fields": {
+            "radiometric_resolution": 16,
+            "band_count": 4,
+            "spatial_resolution_x": 20.0,
+            "spatial_resolution_y": 20.0,
+            "spatial_resolution": 20.0
+        }
+    },
+    {
+        "pk": 3761737,
+        "model": "catalogue.genericimageryproduct",
+        "fields": {
+            "radiometric_resolution": 16,
+            "band_count": 1,
+            "spatial_resolution_x": 2.5,
+            "spatial_resolution_y": 2.5,
+            "spatial_resolution": 2.5
+        }
+    },
+    {
+        "pk": 3513769,
+        "model": "catalogue.genericimageryproduct",
+        "fields": {
+            "radiometric_resolution": 16,
+            "band_count": 1,
+            "spatial_resolution_x": 5.0,
+            "spatial_resolution_y": 5.0,
+            "spatial_resolution": 5.0
+        }
+    },
+    {
+        "pk": 3533343,
+        "model": "catalogue.genericimageryproduct",
+        "fields": {
+            "radiometric_resolution": 16,
+            "band_count": 4,
+            "spatial_resolution_x": 20.0,
+            "spatial_resolution_y": 20.0,
+            "spatial_resolution": 20.0
+        }
+    },
+    {
+        "pk": 3541304,
+        "model": "catalogue.genericimageryproduct",
+        "fields": {
+            "radiometric_resolution": 16,
+            "band_count": 4,
+            "spatial_resolution_x": 10.0,
+            "spatial_resolution_y": 10.0,
+            "spatial_resolution": 10.0
+        }
+    },
+    {
+        "pk": 3563758,
+        "model": "catalogue.genericimageryproduct",
+        "fields": {
+            "radiometric_resolution": 16,
+            "band_count": 4,
+            "spatial_resolution_x": 10.0,
+            "spatial_resolution_y": 10.0,
+            "spatial_resolution": 10.0
+        }
+    },
+    {
+        "pk": 3564074,
+        "model": "catalogue.genericimageryproduct",
+        "fields": {
+            "radiometric_resolution": 16,
+            "band_count": 1,
+            "spatial_resolution_x": 5.0,
+            "spatial_resolution_y": 5.0,
+            "spatial_resolution": 5.0
+        }
+    },
+    {
+        "pk": 3594545,
+        "model": "catalogue.genericimageryproduct",
+        "fields": {
+            "radiometric_resolution": 16,
+            "band_count": 4,
+            "spatial_resolution_x": 20.0,
+            "spatial_resolution_y": 20.0,
+            "spatial_resolution": 20.0
+        }
+    },
+    {
+        "pk": 3601223,
+        "model": "catalogue.genericimageryproduct",
+        "fields": {
+            "radiometric_resolution": 16,
+            "band_count": 4,
+            "spatial_resolution_x": 10.0,
+            "spatial_resolution_y": 10.0,
+            "spatial_resolution": 10.0
+        }
+    },
+    {
+        "pk": 3808924,
+        "model": "catalogue.genericimageryproduct",
+        "fields": {
+            "radiometric_resolution": 16,
+            "band_count": 1,
+            "spatial_resolution_x": 2.5,
+            "spatial_resolution_y": 2.5,
+            "spatial_resolution": 2.5
+        }
+    },
+    {
+        "pk": 3735800,
+        "model": "catalogue.genericimageryproduct",
+        "fields": {
+            "radiometric_resolution": 16,
+            "band_count": 1,
+            "spatial_resolution_x": 5.0,
+            "spatial_resolution_y": 5.0,
+            "spatial_resolution": 5.0
+        }
+    },
+    {
+        "pk": 3821240,
+        "model": "catalogue.genericimageryproduct",
+        "fields": {
+            "radiometric_resolution": 16,
+            "band_count": 4,
+            "spatial_resolution_x": 10.0,
+            "spatial_resolution_y": 10.0,
+            "spatial_resolution": 10.0
+        }
+    },
+    {
+        "pk": 3832700,
+        "model": "catalogue.genericimageryproduct",
+        "fields": {
+            "radiometric_resolution": 16,
+            "band_count": 1,
+            "spatial_resolution_x": 5.0,
+            "spatial_resolution_y": 5.0,
+            "spatial_resolution": 5.0
+        }
+    },
+    {
+        "pk": 3858685,
+        "model": "catalogue.genericimageryproduct",
+        "fields": {
+            "radiometric_resolution": 16,
+            "band_count": 1,
+            "spatial_resolution_x": 10.0,
+            "spatial_resolution_y": 10.0,
+            "spatial_resolution": 10.0
+        }
+    },
+    {
+        "pk": 3885879,
+        "model": "catalogue.genericimageryproduct",
+        "fields": {
+            "radiometric_resolution": 16,
+            "band_count": 4,
+            "spatial_resolution_x": 10.0,
+            "spatial_resolution_y": 10.0,
+            "spatial_resolution": 10.0
+        }
+    },
+    {
+        "pk": 3888180,
+        "model": "catalogue.genericimageryproduct",
+        "fields": {
+            "radiometric_resolution": 16,
+            "band_count": 4,
+            "spatial_resolution_x": 10.0,
+            "spatial_resolution_y": 10.0,
+            "spatial_resolution": 10.0
+        }
+    },
+    {
+        "pk": 3892687,
+        "model": "catalogue.genericimageryproduct",
+        "fields": {
+            "radiometric_resolution": 16,
+            "band_count": 1,
+            "spatial_resolution_x": 10.0,
+            "spatial_resolution_y": 10.0,
+            "spatial_resolution": 10.0
+        }
+    },
+    {
+        "pk": 3896066,
+        "model": "catalogue.genericimageryproduct",
+        "fields": {
+            "radiometric_resolution": 16,
+            "band_count": 1,
+            "spatial_resolution_x": 10.0,
+            "spatial_resolution_y": 10.0,
+            "spatial_resolution": 10.0
+        }
+    },
+    {
+        "pk": 3913062,
+        "model": "catalogue.genericimageryproduct",
+        "fields": {
+            "radiometric_resolution": 16,
+            "band_count": 4,
+            "spatial_resolution_x": 10.0,
+            "spatial_resolution_y": 10.0,
+            "spatial_resolution": 10.0
+        }
+    },
+    {
+        "pk": 3925651,
+        "model": "catalogue.genericimageryproduct",
+        "fields": {
+            "radiometric_resolution": 16,
+            "band_count": 1,
+            "spatial_resolution_x": 5.0,
+            "spatial_resolution_y": 5.0,
+            "spatial_resolution": 5.0
+        }
+    },
+    {
+        "pk": 4069124,
+        "model": "catalogue.genericimageryproduct",
+        "fields": {
+            "radiometric_resolution": 16,
+            "band_count": 1,
+            "spatial_resolution_x": 2.5,
+            "spatial_resolution_y": 2.5,
+            "spatial_resolution": 2.5
+        }
+    },
+    {
+        "pk": 3958317,
+        "model": "catalogue.genericimageryproduct",
+        "fields": {
+            "radiometric_resolution": 16,
+            "band_count": 1,
+            "spatial_resolution_x": 5.0,
+            "spatial_resolution_y": 5.0,
+            "spatial_resolution": 5.0
+        }
+    },
+    {
+        "pk": 3980285,
+        "model": "catalogue.genericimageryproduct",
+        "fields": {
+            "radiometric_resolution": 16,
+            "band_count": 1,
+            "spatial_resolution_x": 10.0,
+            "spatial_resolution_y": 10.0,
+            "spatial_resolution": 10.0
+        }
+    },
+    {
+        "pk": 4002553,
+        "model": "catalogue.genericimageryproduct",
+        "fields": {
+            "radiometric_resolution": 16,
+            "band_count": 1,
+            "spatial_resolution_x": 10.0,
+            "spatial_resolution_y": 10.0,
+            "spatial_resolution": 10.0
+        }
+    },
+    {
+        "pk": 4022313,
+        "model": "catalogue.genericimageryproduct",
+        "fields": {
+            "radiometric_resolution": 16,
+            "band_count": 1,
+            "spatial_resolution_x": 5.0,
+            "spatial_resolution_y": 5.0,
+            "spatial_resolution": 5.0
+        }
+    },
+    {
+        "pk": 4096417,
+        "model": "catalogue.genericimageryproduct",
+        "fields": {
+            "radiometric_resolution": 16,
+            "band_count": 1,
+            "spatial_resolution_x": 5.0,
+            "spatial_resolution_y": 5.0,
+            "spatial_resolution": 5.0
+        }
+    },
+    {
+        "pk": 4110645,
+        "model": "catalogue.genericimageryproduct",
+        "fields": {
+            "radiometric_resolution": 16,
+            "band_count": 1,
+            "spatial_resolution_x": 5.0,
+            "spatial_resolution_y": 5.0,
+            "spatial_resolution": 5.0
+        }
+    },
+    {
+        "pk": 4127848,
+        "model": "catalogue.genericimageryproduct",
+        "fields": {
+            "radiometric_resolution": 16,
+            "band_count": 4,
+            "spatial_resolution_x": 10.0,
+            "spatial_resolution_y": 10.0,
+            "spatial_resolution": 10.0
+        }
+    },
+    {
+        "pk": 4137452,
+        "model": "catalogue.genericimageryproduct",
+        "fields": {
+            "radiometric_resolution": 16,
+            "band_count": 1,
+            "spatial_resolution_x": 5.0,
+            "spatial_resolution_y": 5.0,
+            "spatial_resolution": 5.0
+        }
+    },
+    {
+        "pk": 4145923,
+        "model": "catalogue.genericimageryproduct",
+        "fields": {
+            "radiometric_resolution": 16,
+            "band_count": 1,
+            "spatial_resolution_x": 5.0,
+            "spatial_resolution_y": 5.0,
+            "spatial_resolution": 5.0
+        }
+    },
+    {
+        "pk": 4146972,
+        "model": "catalogue.genericimageryproduct",
+        "fields": {
+            "radiometric_resolution": 16,
+            "band_count": 4,
+            "spatial_resolution_x": 10.0,
+            "spatial_resolution_y": 10.0,
+            "spatial_resolution": 10.0
+        }
+    },
+    {
+        "pk": 16231,
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 0,
-            "spatial_resolution_y": 3000.0,
+            "band_count": 1,
             "spatial_resolution_x": 3000.0,
-            "spatial_resolution": 3000.0,
-            "band_count": 1
+            "spatial_resolution_y": 3000.0,
+            "spatial_resolution": 3000.0
         }
     },
     {
-        "pk": 1828928,
+        "pk": 23656,
         "model": "catalogue.genericimageryproduct",
         "fields": {
             "radiometric_resolution": 0,
-            "spatial_resolution_y": 20.0,
+            "band_count": 1,
+            "spatial_resolution_x": 3000.0,
+            "spatial_resolution_y": 3000.0,
+            "spatial_resolution": 3000.0
+        }
+    },
+    {
+        "pk": 4184678,
+        "model": "catalogue.genericimageryproduct",
+        "fields": {
+            "radiometric_resolution": 16,
+            "band_count": 1,
+            "spatial_resolution_x": 5.0,
+            "spatial_resolution_y": 5.0,
+            "spatial_resolution": 5.0
+        }
+    },
+    {
+        "pk": 4185109,
+        "model": "catalogue.genericimageryproduct",
+        "fields": {
+            "radiometric_resolution": 16,
+            "band_count": 1,
+            "spatial_resolution_x": 5.0,
+            "spatial_resolution_y": 5.0,
+            "spatial_resolution": 5.0
+        }
+    },
+    {
+        "pk": 4266140,
+        "model": "catalogue.genericimageryproduct",
+        "fields": {
+            "radiometric_resolution": 16,
+            "band_count": 4,
+            "spatial_resolution_x": 10.0,
+            "spatial_resolution_y": 10.0,
+            "spatial_resolution": 10.0
+        }
+    },
+    {
+        "pk": 4289438,
+        "model": "catalogue.genericimageryproduct",
+        "fields": {
+            "radiometric_resolution": 16,
+            "band_count": 4,
+            "spatial_resolution_x": 10.0,
+            "spatial_resolution_y": 10.0,
+            "spatial_resolution": 10.0
+        }
+    },
+    {
+        "pk": 4306775,
+        "model": "catalogue.genericimageryproduct",
+        "fields": {
+            "radiometric_resolution": 16,
+            "band_count": 1,
+            "spatial_resolution_x": 5.0,
+            "spatial_resolution_y": 5.0,
+            "spatial_resolution": 5.0
+        }
+    },
+    {
+        "pk": 4327886,
+        "model": "catalogue.genericimageryproduct",
+        "fields": {
+            "radiometric_resolution": 16,
+            "band_count": 4,
+            "spatial_resolution_x": 10.0,
+            "spatial_resolution_y": 10.0,
+            "spatial_resolution": 10.0
+        }
+    },
+    {
+        "pk": 4392972,
+        "model": "catalogue.genericimageryproduct",
+        "fields": {
+            "radiometric_resolution": 16,
+            "band_count": 4,
+            "spatial_resolution_x": 10.0,
+            "spatial_resolution_y": 10.0,
+            "spatial_resolution": 10.0
+        }
+    },
+    {
+        "pk": 4407547,
+        "model": "catalogue.genericimageryproduct",
+        "fields": {
+            "radiometric_resolution": 16,
+            "band_count": 4,
             "spatial_resolution_x": 20.0,
-            "spatial_resolution": 20.0,
-            "band_count": 3
-        }
-    },
-    {
-        "pk": 31736,
-        "model": "catalogue.genericimageryproduct",
-        "fields": {
-            "radiometric_resolution": 0,
-            "spatial_resolution_y": 30.0,
-            "spatial_resolution_x": 30.0,
-            "spatial_resolution": 30.0,
-            "band_count": 7
-        }
-    },
-    {
-        "pk": 1878862,
-        "model": "catalogue.genericimageryproduct",
-        "fields": {
-            "radiometric_resolution": 0,
             "spatial_resolution_y": 20.0,
+            "spatial_resolution": 20.0
+        }
+    },
+    {
+        "pk": 4484793,
+        "model": "catalogue.genericimageryproduct",
+        "fields": {
+            "radiometric_resolution": 16,
+            "band_count": 1,
+            "spatial_resolution_x": 2.5,
+            "spatial_resolution_y": 2.5,
+            "spatial_resolution": 2.5
+        }
+    },
+    {
+        "pk": 4493754,
+        "model": "catalogue.genericimageryproduct",
+        "fields": {
+            "radiometric_resolution": 16,
+            "band_count": 1,
+            "spatial_resolution_x": 2.5,
+            "spatial_resolution_y": 2.5,
+            "spatial_resolution": 2.5
+        }
+    },
+    {
+        "pk": 4445711,
+        "model": "catalogue.genericimageryproduct",
+        "fields": {
+            "radiometric_resolution": 16,
+            "band_count": 4,
             "spatial_resolution_x": 20.0,
-            "spatial_resolution": 20.0,
-            "band_count": 3
+            "spatial_resolution_y": 20.0,
+            "spatial_resolution": 20.0
+        }
+    },
+    {
+        "pk": 4448522,
+        "model": "catalogue.genericimageryproduct",
+        "fields": {
+            "radiometric_resolution": 16,
+            "band_count": 4,
+            "spatial_resolution_x": 20.0,
+            "spatial_resolution_y": 20.0,
+            "spatial_resolution": 20.0
+        }
+    },
+    {
+        "pk": 4465170,
+        "model": "catalogue.genericimageryproduct",
+        "fields": {
+            "radiometric_resolution": 16,
+            "band_count": 4,
+            "spatial_resolution_x": 20.0,
+            "spatial_resolution_y": 20.0,
+            "spatial_resolution": 20.0
+        }
+    },
+    {
+        "pk": 3454087,
+        "model": "catalogue.genericimageryproduct",
+        "fields": {
+            "radiometric_resolution": 16,
+            "band_count": 1,
+            "spatial_resolution_x": 5.0,
+            "spatial_resolution_y": 5.0,
+            "spatial_resolution": 5.0
+        }
+    },
+    {
+        "pk": 4519927,
+        "model": "catalogue.genericimageryproduct",
+        "fields": {
+            "radiometric_resolution": 16,
+            "band_count": 1,
+            "spatial_resolution_x": 5.0,
+            "spatial_resolution_y": 5.0,
+            "spatial_resolution": 5.0
+        }
+    },
+    {
+        "pk": 3467033,
+        "model": "catalogue.genericimageryproduct",
+        "fields": {
+            "radiometric_resolution": 16,
+            "band_count": 4,
+            "spatial_resolution_x": 20.0,
+            "spatial_resolution_y": 20.0,
+            "spatial_resolution": 20.0
+        }
+    },
+    {
+        "pk": 4836084,
+        "model": "catalogue.genericimageryproduct",
+        "fields": {
+            "radiometric_resolution": 16,
+            "band_count": 1,
+            "spatial_resolution_x": 2.5,
+            "spatial_resolution_y": 2.5,
+            "spatial_resolution": 2.5
+        }
+    },
+    {
+        "pk": 4814827,
+        "model": "catalogue.genericimageryproduct",
+        "fields": {
+            "radiometric_resolution": 16,
+            "band_count": 4,
+            "spatial_resolution_x": 10.0,
+            "spatial_resolution_y": 10.0,
+            "spatial_resolution": 10.0
         }
     },
     {

@@ -211,8 +211,8 @@ class SearchCRUD_Test(TestCase):
         """
         myModelPKs = [1, 2, 4, 7]
         myExpResults = ['MSS-1',
-                        'AVHRR-3, TM-4, AMI-1, ETM+, MSS-1, Xi, Xs, Pan, M',
-                        'TM-4', '']
+                        'AMI-1, AVHRR-3, ETM+, M, MSS-1, Pan, Xi, Xs',
+                        'AMI-1', '']
 
         for idx, PK in enumerate(myModelPKs):
             myModel = Search.objects.get(pk=PK)

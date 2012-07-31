@@ -192,23 +192,23 @@ class OpticalProductCRUD_Test(TestCase):
         """
         Tests OpticalProduct model getMetadataDict method
         """
-        myModelPKs = [1960810, 1001218]
-        myExpResults = [{'product_date': '1987-04-28T08:23:29', 'institution_address': u'Hartebeeshoek',
+        myModelPKs = [1934163, 1001218]
+        myExpResults = [{'product_date': '1986-06-19T08:46:32', 'institution_address': u'Hartebeeshoek',
         'institution_region': '', 'image_quality_code': u'Unknown', 'vertical_cs': u'ORBIT', 'processing_level_code': u'3Ba',
-        'cloud_cover_percentage': 5, 'file_identifier': u'S1-_HRV_P--_S1C2_0136_00_0388_00_870428_082329_1B--_ORBIT-',
-        'spatial_coverage': '31.2155,-19.2338 31.3336,-18.7048 32.0064,-18.8 31.8906,-19.3289 31.2155,-19.2338',
-        'bbox_east': 32.00640000000004, 'md_abstract': '', 'md_product_date': '1987-04-28T08:23:29',
-        'institution_city': u'Gauteng', 'bbox_north': -18.704799999999977, 'institution_name': u'Satellite Applications Centre',
-        'institution_country': u'South Africa', 'bbox_west': 31.21550000000002, 'institution_postcode': u'0000',
-        'md_data_identification': u'HRV-1:Camera 2', 'bbox_south': -19.328899999999976},
-         {'product_date': '1992-07-03T08:29:48', 'institution_address': u'Hartebeeshoek',
-         'institution_region': '', 'image_quality_code': u'Unknown', 'vertical_cs': u'UTM35S', 'processing_level_code': u'2A',
-         'cloud_cover_percentage': -1, 'file_identifier': u'S1-_Pan_P--_CAM2_0126_00_0387_00_920703_082948_L2A-_UTM35S',
-         'spatial_coverage': '26.447275,-18.739992 27.00868,-18.826267 27.134314,-18.296593 26.574713,-18.210571 26.447275,-18.739992',
-         'bbox_east': 27.134314, 'md_abstract': '', 'md_product_date': '1992-07-03T08:29:48',
-         'institution_city': u'Gauteng', 'bbox_north': -18.210571, 'institution_name': u'Satellite Applications Centre',
-         'institution_country': u'South Africa', 'bbox_west': 26.447275, 'institution_postcode': u'0000',
-         'md_data_identification': u'Xs:P', 'bbox_south': -18.826267}]
+        'cloud_cover_percentage': 5, 'file_identifier': u'S1-_HRV_X--_S1C2_0120_00_0404_00_860619_084632_1B--_ORBIT-',
+        'spatial_coverage': '21.3566,-27.2014 21.4955,-26.6753 22.0914,-26.7662 21.9554,-27.2927 21.3566,-27.2014',
+        'bbox_east': 22.09140000000002, 'md_abstract': '', 'md_product_date': '1986-06-19T08:46:32',
+        'institution_city': u'Gauteng', 'bbox_north': -26.675299999999993, 'institution_name': u'Satellite Applications Centre',
+        'institution_country': u'South Africa', 'bbox_west': 21.356600000000014, 'institution_postcode': u'0000',
+        'md_data_identification': u'HRV-1:Camera 2', 'bbox_south': -27.292699999999996},
+        {'product_date': '1992-07-03T08:29:48', 'institution_address': u'Hartebeeshoek',
+        'institution_region': '', 'image_quality_code': u'Unknown', 'vertical_cs': u'UTM35S', 'processing_level_code': u'2A',
+        'cloud_cover_percentage': -1, 'file_identifier': u'S1-_Pan_P--_CAM2_0126_00_0387_00_920703_082948_L2A-_UTM35S',
+        'spatial_coverage': '26.447275,-18.739992 27.00868,-18.826267 27.134314,-18.296593 26.574713,-18.210571 26.447275,-18.739992',
+        'bbox_east': 27.134314, 'md_abstract': '', 'md_product_date': '1992-07-03T08:29:48',
+        'institution_city': u'Gauteng', 'bbox_north': -18.210571, 'institution_name': u'Satellite Applications Centre',
+        'institution_country': u'South Africa', 'bbox_west': 26.447275, 'institution_postcode': u'0000',
+        'md_data_identification': u'HRV-3:Camera 1', 'bbox_south': -18.826267}]
 
         for idx, PK in enumerate(myModelPKs):
             myModel = OpticalProduct.objects.get(pk=PK)

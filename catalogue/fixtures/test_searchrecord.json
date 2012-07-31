@@ -30,7 +30,7 @@
         "model": "catalogue.searchrecord",
         "fields": {
             "product_ready": false,
-            "product": 2277404,
+            "product": 1934163,
             "download_path": "",
             "delivery_detail": null,
             "user": 1,

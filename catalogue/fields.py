@@ -6,6 +6,12 @@
 import re
 from django import forms
 
+
+def validateIntegerRange(theValue):
+    if not theValue[1] > theValue[0]:
+        raise forms.ValidationError, 'First value in range (%d) must be lower then second (%d)' % theValue
+
+
 class IntegersCSVIntervalsField(forms.RegexField):
     """
     Accepts ranges: 1-2 3-55, comma separated values and single values
@@ -36,8 +42,7 @@ class IntegersCSVIntervalsField(forms.RegexField):
         super(IntegersCSVIntervalsField, self).validate(values)
         for value in IntegersCSVIntervalsField.to_tuple(values):
             if len(value) == 2:
-                if not value[1] > value[0]:
-                    raise forms.ValidationError, 'First value in range (%d) must be lower then second (%d)' % value
+                validateIntegerRange(value)
 
 
 class NoValidationChoiceField(forms.ChoiceField):

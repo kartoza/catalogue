@@ -28,7 +28,7 @@ class SearchCloudCover_Test(SearchTestCase):
     Tests Search Cloud Cover
     """
 
-    def test_InclinationAngleRange(self):
+    def test_CloudCoverSearch(self):
         """
         Test cloud cover range:
         - with 10% or less - search 19
@@ -38,7 +38,7 @@ class SearchCloudCover_Test(SearchTestCase):
         """
         myTestSearches = [19, 20, 21, 22]
         #we need to bound results
-        myExpectedResults = [50, 60, 70, 100]
+        myExpectedResults = [40, 50, 70, 100]
 
         for idx, searchPK in enumerate(myTestSearches):
             mySearch = Search.objects.get(pk=searchPK)
