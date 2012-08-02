@@ -236,7 +236,8 @@ INSTALLED_APPS = (
     'shapes',
     'django_extensions',
     'userprofile',
-    'django_jenkins',
+    #commented out as needs django >= 1.3
+    #'django_jenkins',
     #'debug_toolbar'
 )
 
