@@ -236,6 +236,7 @@ INSTALLED_APPS = (
     'shapes',
     'django_extensions',
     'userprofile',
+    'django_jenkins',
     #'debug_toolbar'
 )
 
@@ -323,3 +324,21 @@ logging.getLogger().addHandler(SentryHandler())
 logger = logging.getLogger('sentry.errors')
 logger.propagate = False
 logger.addHandler(logging.StreamHandler())
+#
+#
+# For django-jenkins integration
+#
+PROJECT_APPS = (
+    'catalogue',
+)
+JENKINS_TASKS = (
+    'django_jenkins.tasks.with_coverage',
+    'django_jenkins.tasks.run_pylint',
+    'django_jenkins.tasks.django_tests',
+    #'django_jenkins.tasks.run_pep8',
+    # Needs rhino or nodejs
+    #'django_jenkins.tasks.run_jslint',
+    #'django_jenkins.tasks.run_csslint',
+    'django_jenkins.tasks.run_pyflakes',
+    'django_jenkins.tasks.run_sloccount',
+)
