@@ -1,5 +1,5 @@
 Django==1.2.1
-GDAL==1.7.1
+GDAL
 InformixDB==2.5
 Jinja2==2.5.5
 PIL==1.1.7
