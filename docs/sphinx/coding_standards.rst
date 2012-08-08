@@ -21,7 +21,7 @@ Please observe the following coding standards when working on the codebase:
 * Line continuation should be done using brackets not slashes e.g.::
 
    myString = ('Very long'
-              'string)
+              'string')
 
    not:
 
@@ -40,6 +40,34 @@ Please observe the following coding standards when working on the codebase:
 
    # Collect all data from input port
    myData = some.obscure.function()
+ 
+* Don't use 'magic' numbers - your code should provide semantic meaning to the
+  reader. Bad::
+    
+    myResult = foo(12)  # what is 12? 
+  
+  Good::
+    
+    myHouseCount = 12  # ok now it is obvious
+    myResult = foo(theValue=myHouseCount)
+ 
+* Call functions using named arguments. Bad::
+     
+     myResult = foo(myHouseCount)
+     
+  Good::
+     
+     myResult = foo(theValue=myHouseCount)
+
+
+DRY:
+----
+
+* If you use a few lines of code in more than one place, refactor them into
+  their own function.
+* If you use a literal string or expression in more than one place, refactor
+  it into a function or variable.
+  
 
 Standard headers and documentation
 ----------------------------------
@@ -76,18 +104,25 @@ We aim to produce self documenting code.
   output and exceptions as per the example below. Note that ReSTructured Text may
   be used in this docstring to improve readability.
 
-**Example method docstring**::
+  **Example method docstring**::
 
-  """
-  We implement this ourself since we do not inherit QObject.
+  def translate(self, theString):
+      """
+      One line description.
+      
+      Additional notes. 
 
-  Args:
-      theString - (str) string for translation.
-  Returns:
-      Translated version of theString.
-  Raises:
-      no exceptions explicitly raised.
-  """
+      Args:
+          theString str - Required. String for translation.
+      Returns:
+          str - Translated version of theString.
+      Raises:
+          no exceptions explicitly raised.
+      """
+  
+  The arguments should be followed by their type and then an indication of 
+  whether the argument is optional or required.
+  
 * String literals should be enclosed in single quotes :samp:`'foo'` and not
   `"foo"`
 * Docstrings should be enclosed in three double quotes :samp:`"""`
@@ -117,7 +152,8 @@ Variables
 ---------
 
 * Unused variables: Unused variables are not allowed. They should either
-  be commented out or removed from the source code.
+  be commented out or removed from the source code. In some cases where the 
+  above are not possible, use del to clear them .e.g. del fooUnusedVar
 * Variable abbreviation: Variable acronyms are not allowed. e.g. mxincrval
   should be written as maximumIncrementValue.
 * Variable Naming: Variables need to follow the following specific
