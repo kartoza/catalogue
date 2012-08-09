@@ -1,5 +1,5 @@
 """
-SANSA-EO Catalogue - PreSave signals for Catalogue Products
+SANSA-EO Catalogue - Order related models
 
 Contact : lkleyn@sansa.org.za
 
