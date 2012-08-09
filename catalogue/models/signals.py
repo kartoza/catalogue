@@ -62,11 +62,11 @@ def setGenericProductDate(theSender, theInstance, **kwargs):
 # ABP: doesn't work for GenericSensorProduct
 # needs the child (concrete) models :(
 models.signals.pre_save.connect(
-    reciever=setGenericProductDate,
+    setGenericProductDate,
     sender=OpticalProduct)
 
 models.signals.pre_save.connect(
-    reciever=setGenericProductDate,
+    setGenericProductDate,
     sender=RadarProduct)
 
 
@@ -116,13 +116,13 @@ def setGeometricResolution(theSender, theInstance, **kwargs):
 
 # Apply to all GenericImageryProduct and subclasses
 models.signals.pre_save.connect(
-    reciever=setGeometricResolution,
+    setGeometricResolution,
     sender=OpticalProduct)
 
 models.signals.pre_save.connect(
-    reciever=setGeometricResolution,
+    setGeometricResolution,
     sender=RadarProduct)
 
 models.signals.pre_save.connect(
-    reciever=setGeometricResolution,
+    setGeometricResolution,
     sender=GenericImageryProduct)
