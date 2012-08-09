@@ -28,7 +28,7 @@ import datetime
 import logging
 
 
-def setGenericProductDate(theSender, theInstance, **kwargs):
+def setGenericProductDate(sender, instance, **kwargs):
     """
     Sets the product_date based on acquisition date,
     if both start_date and end_date are set, then calculate the avg,
@@ -43,20 +43,20 @@ def setGenericProductDate(theSender, theInstance, **kwargs):
     Exceptions:
         None
     """
-    if theInstance.product_acquisition_end:
-        theInstance.product_date = (
+    if instance.product_acquisition_end:
+        instance.product_date = (
             datetime.datetime.fromordinal(
-                theInstance.product_acquisition_start.toordinal() +
+                instance.product_acquisition_start.toordinal() +
                 (
-                    theInstance.product_acquisition_end -
-                    theInstance.product_acquisition_start
+                    instance.product_acquisition_end -
+                    instance.product_acquisition_start
                 )
                 .days
             )
         )
     else:
-        theInstance.product_date = theInstance.product_acquisition_start
-    logging.info('Pre-save signal activated for %s' % theInstance)
+        instance.product_date = instance.product_acquisition_start
+    logging.info('Pre-save signal activated for %s' % instance)
 
 
 # ABP: doesn't work for GenericSensorProduct
@@ -70,7 +70,7 @@ models.signals.pre_save.connect(
     sender=RadarProduct)
 
 
-def setGeometricResolution(theSender, theInstance, **kwargs):
+def setGeometricResolution(sender, instance, **kwargs):
     """
     Sets default spatial_resolution_x and spatial_resolution_y
     from AcquisitionMode.spatial_resolution
@@ -90,29 +90,29 @@ def setGeometricResolution(theSender, theInstance, **kwargs):
     #only trigger on real model save, do not trigger when importing fixtures
     #https://docs.djangoproject.com/en/1.4/ref/signals/#pre-save
     if not kwargs.get('raw', False):
-        logging.info('Pre-save signal activated for %s' % theInstance)
-        if not theInstance.spatial_resolution_x:
-            theInstance.spatial_resolution_x = (
-                theInstance.acquisition_mode.spatial_resolution)
+        logging.info('Pre-save signal activated for %s' % instance)
+        if not instance.spatial_resolution_x:
+            instance.spatial_resolution_x = (
+                instance.acquisition_mode.spatial_resolution)
             logging.debug('setting spatial_resolution_x to %s' % (
-                theInstance.spatial_resolution_x,)
+                instance.spatial_resolution_x,)
             )
-        if not theInstance.spatial_resolution_y:
-            theInstance.spatial_resolution_y = (
-                theInstance.acquisition_mode.spatial_resolution)
+        if not instance.spatial_resolution_y:
+            instance.spatial_resolution_y = (
+                instance.acquisition_mode.spatial_resolution)
             logging.debug('setting spatial_resolution_y to %s' % (
-                theInstance.spatial_resolution_y,)
+                instance.spatial_resolution_y,)
             )
-        theInstance.spatial_resolution = (
-            theInstance.spatial_resolution_y +
-            theInstance.spatial_resolution_y) / 2.0
+        instance.spatial_resolution = (
+            instance.spatial_resolution_y +
+            instance.spatial_resolution_y) / 2.0
         logging.debug('setting spatial_resolution to %s' % (
-            theInstance.spatial_resolution,)
+            instance.spatial_resolution,)
         )
 
-        if not theInstance.band_count:
-            theInstance.band_count = theInstance.acquisition_mode.band_count
-            logging.debug('setting band_count to %s' % theInstance.band_count)
+        if not instance.band_count:
+            instance.band_count = instance.acquisition_mode.band_count
+            logging.debug('setting band_count to %s' % instance.band_count)
 
 # Apply to all GenericImageryProduct and subclasses
 models.signals.pre_save.connect(
