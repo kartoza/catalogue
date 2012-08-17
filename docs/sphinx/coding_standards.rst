@@ -212,4 +212,7 @@ Unit testing and quality control
   refactor it so that every function after being touched does comply with these
   rules.
 
+* To execute **pylint** tool using project specific pylintrc config file, in
+  ``sac_catalogue`` top level folder run::
 
+    pylint --rcfile=pylintrc_config catalogue/views/others.py
