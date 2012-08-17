@@ -17,13 +17,18 @@ __version__ = '0.1'
 __date__ = '01/01/2011'
 __copyright__ = 'South African National Space Agency'
 
+import logging
+import datetime
+import traceback
 
-from django.http import (Http404,
-                         HttpResponse,
-                         HttpResponseRedirect)
-from django.core.paginator import (Paginator,
-                                   EmptyPage,
-                                   InvalidPage)
+from django.http import (
+    Http404,
+    HttpResponse,
+    HttpResponseRedirect)
+from django.core.paginator import (
+    Paginator,
+    EmptyPage,
+    InvalidPage)
 from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
 from django.shortcuts import get_object_or_404, render_to_response
@@ -32,40 +37,42 @@ from django.contrib.admin.views.decorators import staff_member_required
 from django.conf import settings
 # for aggregate queries
 from django.db.models import Count
-from shapes.views import ShpResponder
-import logging
-import datetime
-import traceback
-from django.contrib.gis.gdal import (SpatialReference,
-                                     CoordTransform)
-# Models and forms for our app
-from catalogue.models import (Order,
-                              OrderStatusHistory,
-                              SearchRecord,
-                              DeliveryDetail,
-                              OrderStatus,
-                              TaskingRequest,
-                              MissionSensor)
 
-from catalogue.forms import (OrderStatusHistoryForm,
-                             ProductDeliveryDetailForm,
-                             DeliveryDetailForm,
-                             OrderForm
-                             )
+from django.contrib.gis.gdal import (
+    SpatialReference,
+    CoordTransform)
+# Models and forms for our app
+from catalogue.models import (
+    Order,
+    OrderStatusHistory,
+    SearchRecord,
+    DeliveryDetail,
+    OrderStatus,
+    TaskingRequest,
+    MissionSensor)
+
+from catalogue.forms import (
+    OrderStatusHistoryForm,
+    ProductDeliveryDetailForm,
+    DeliveryDetailForm,
+    OrderForm)
 # Helper classes
-from helpers import (notifySalesStaff,
-                     notifySalesStaffOfTaskRequest,
-                     standardLayers,
-                     render_to_kml,
-                     render_to_kmz,
-                     downloadISOMetadata,
-                     downloadHtmlMetadata,
-                     )
+from catalogue.views.helpers import (
+    notifySalesStaff,
+    notifySalesStaffOfTaskRequest,
+    standardLayers,
+    render_to_kml,
+    render_to_kmz,
+    downloadISOMetadata,
+    downloadHtmlMetadata,)
 # SHP and KML readers
 from catalogue.featureReaders import getGeometryFromUploadedFile
 from catalogue.utmzonecalc import utmZoneFromLatLon
 from catalogue.profileRequiredDecorator import requireProfile
 from catalogue.renderDecorator import renderWithContext
+
+#other modules
+from shapes.views import ShpResponder
 
 ###########################################################
 #
@@ -79,7 +86,7 @@ from catalogue.renderDecorator import renderWithContext
 def myOrders(theRequest):
     '''Non staff users can only see their own orders listed'''
     myRecords = Order.base_objects.filter(
-                            user=theRequest.user).order_by('-order_date')
+        user=theRequest.user).order_by('-order_date')
     # Paginate the results
     if 'pdf' in theRequest.GET:
         myPageSize = myRecords.count()
@@ -101,9 +108,9 @@ def myOrders(theRequest):
     myUrl = 'myorders'
     #render_to_response is done by the renderWithContext decorator
     return ({
-          'myRecords': myRecords,
-          'myUrl': myUrl
-        })
+        'myRecords': myRecords,
+        'myUrl': myUrl
+    })
 
 
 @login_required
@@ -113,7 +120,7 @@ def listOrders(theRequest):
     if not theRequest.user.is_staff:
         '''Non staff users can only see their own orders listed'''
         myRecords = Order.base_objects.filter(
-                                user=theRequest.user).order_by('-order_date')
+            user=theRequest.user).order_by('-order_date')
     else:
         '''This view is strictly for staff only'''
         # This view uses the NoSubclassManager
@@ -142,10 +149,10 @@ def listOrders(theRequest):
     myUrl = 'listorders'
     #render_to_response is done by the renderWithContext decorator
     return ({
-          'myRecords': myRecords,
-          'myUrl': myUrl,
-          'myCurrentMonth': datetime.date.today()
-      })
+        'myRecords': myRecords,
+        'myUrl': myUrl,
+        'myCurrentMonth': datetime.date.today()
+    })
 
 
 @login_required
@@ -163,27 +170,28 @@ def orderMonthlyReport(theRequest, theyear, themonth):
 
     if not theRequest.user.is_staff:
         '''Non staff users can only see their own orders listed'''
-        myRecords = Order.base_objects.filter(
-                        user=theRequest.user
-                       ).filter(
-                        order_date__month=myDate.month
-                       ).filter(
-                        order_date__year=myDate.year
-                       ).order_by('order_date')
+        myRecords = (Order.base_objects.filter(
+            user=theRequest.user)
+            .filter(
+                order_date__month=myDate.month)
+            .filter(
+                order_date__year=myDate.year)
+            .order_by('order_date'))
     else:
         '''This view is strictly for staff only'''
-        myRecords = Order.base_objects.filter(
-                            order_date__month=myDate.month
-                        ).filter(
-                            order_date__year=myDate.year
-                        ).order_by('order_date')
+        myRecords = (
+            Order.base_objects.filter(
+                order_date__month=myDate.month)
+            .filter(
+                order_date__year=myDate.year)
+            .order_by('order_date'))
 
     return ({
-      'myRecords': myRecords,
-      'myCurrentDate': myDate,
-      'myPrevDate': myDate - datetime.timedelta(days=1),
-      'myNextDate': myDate + datetime.timedelta(days=31)
-      })
+        'myRecords': myRecords,
+        'myCurrentDate': myDate,
+        'myPrevDate': myDate - datetime.timedelta(days=1),
+        'myNextDate': myDate + datetime.timedelta(days=31)
+    })
 
 
 @login_required
@@ -196,22 +204,20 @@ def downloadOrder(theRequest, theId):
         myResponder = ShpResponder(myOrder)
         myResponder.file_name = u'products_for_order_%s' % myOrder.id
         return  myResponder.write_order_products(
-                                            myOrder.searchrecord_set.all())
+            myOrder.searchrecord_set.all())
     elif 'kml' in theRequest:
         return render_to_kml('kml/searchRecords.kml', {
-              'mySearchRecords': myOrder.searchrecord_set.all(),
-              'external_site_url': settings.DOMAIN,
-              'transparentStyle': True
-            },
-            u'products_for_order_%s' % myOrder.id)
+            'mySearchRecords': myOrder.searchrecord_set.all(),
+            'external_site_url': settings.DOMAIN,
+            'transparentStyle': True
+        }, u'products_for_order_%s' % myOrder.id)
     elif 'kmz' in theRequest.GET:
         return render_to_kmz('kml/searchRecords.kml', {
             'mySearchRecords': myOrder.searchrecord_set.all(),
             'external_site_url': settings.DOMAIN,
             'transparentStyle': True,
             'myThumbsFlag': True
-          },
-          u'products_for_order_%s' % myOrder.id)
+        }, u'products_for_order_%s' % myOrder.id)
     else:
         logging.info('Request cannot be proccesed,'
                      ' unsupported download file type')
@@ -229,18 +235,20 @@ def downloadClipGeometry(theRequest, theId):
         myResponder.file_name = u'clip_geometry_order_%s' % myOrder.id
         return  myResponder.write_delivery_details(myOrder)
     elif 'kml' in theRequest.GET:
-        return render_to_kml('kml/clipGeometry.kml', {
-                            'order': myOrder,
-                            'external_site_url': settings.DOMAIN,
-                            'transparentStyle': True},
-                             u'clip_geometry_order_%s' % myOrder.id)
+        return render_to_kml(
+            'kml/clipGeometry.kml', {
+                'order': myOrder,
+                'external_site_url': settings.DOMAIN,
+                'transparentStyle': True
+            }, u'clip_geometry_order_%s' % myOrder.id)
     elif 'kmz' in theRequest.GET:
-        return render_to_kmz('kml/clipGeometry.kml', {
-                            'order': myOrder,
-                            'external_site_url': settings.DOMAIN,
-                            'transparentStyle': True,
-                            'myThumbsFlag': True},
-                             u'clip_geometry_order_%s' % myOrder.id)
+        return render_to_kmz(
+            'kml/clipGeometry.kml', {
+                'order': myOrder,
+                'external_site_url': settings.DOMAIN,
+                'transparentStyle': True,
+                'myThumbsFlag': True
+            }, u'clip_geometry_order_%s' % myOrder.id)
     else:
         logging.info('Request cannot be processed,'
                      ' unsupported download file type')
@@ -254,10 +262,10 @@ def downloadOrderMetadata(theRequest, theId):
     myOrder = get_object_or_404(Order, id=theId)
     if 'html' in theRequest.GET:
         return downloadHtmlMetadata(
-                    myOrder.searchrecord_set.all(), 'Order-%s' % myOrder.id)
+            myOrder.searchrecord_set.all(), 'Order-%s' % myOrder.id)
     else:
         return downloadISOMetadata(
-                    myOrder.searchrecord_set.all(), 'Order-%s' % myOrder.id)
+            myOrder.searchrecord_set.all(), 'Order-%s' % myOrder.id)
 
 
 @login_required
@@ -283,38 +291,37 @@ def viewOrder(theRequest, theId):
     if theRequest.user.is_staff:
         myForm = OrderStatusHistoryForm()
     #render_to_response is done by the renderWithContext decorator
-    return render_to_response(myTemplatePath,
-        {'myOrder': myOrder,
-         'myRecords': myRecords,
-         # Possible flags for the record template
-         # myShowSensorFlag
-         # myShowSceneIdFlag
-         # myShowDateFlag
-         # myCartFlag
-         # myRemoveFlag
-         # myThumbFlag
-         # myShowDeliveryDetailsFlag
-         # myShowDeliveryDetailsFormFlag
-         # myDownloadOrderFlag
-         'myShowSensorFlag': False,
-         'myShowSceneIdFlag': True,
-         'myShowDateFlag': False,
-         # cant remove stuff after order was placed
-         'myRemoveFlag': False,
-         'myThumbFlag': False,
-         'myShowMetdataFlag': False,
-         # used when you need to add an item to the cart only
-         'myCartFlag': False,
-         'myPreviewFlag': False,
-         'myShowDeliveryDetailsFlag': True,
-         'myShowDeliveryDetailsFormFlag': False,
-         'myDownloadOrderFlag': True,
-         'myForm': myForm,
-         'myHistory': myHistory,
-         'myCartTitle': 'Product List',
-         'myCoverage': myCoverage,
-        },
-        context_instance=RequestContext(theRequest))
+    return render_to_response(myTemplatePath, {
+        'myOrder': myOrder,
+        'myRecords': myRecords,
+        # Possible flags for the record template
+        # myShowSensorFlag
+        # myShowSceneIdFlag
+        # myShowDateFlag
+        # myCartFlag
+        # myRemoveFlag
+        # myThumbFlag
+        # myShowDeliveryDetailsFlag
+        # myShowDeliveryDetailsFormFlag
+        # myDownloadOrderFlag
+        'myShowSensorFlag': False,
+        'myShowSceneIdFlag': True,
+        'myShowDateFlag': False,
+        # cant remove stuff after order was placed
+        'myRemoveFlag': False,
+        'myThumbFlag': False,
+        'myShowMetdataFlag': False,
+        # used when you need to add an item to the cart only
+        'myCartFlag': False,
+        'myPreviewFlag': False,
+        'myShowDeliveryDetailsFlag': True,
+        'myShowDeliveryDetailsFormFlag': False,
+        'myDownloadOrderFlag': True,
+        'myForm': myForm,
+        'myHistory': myHistory,
+        'myCartTitle': 'Product List',
+        'myCoverage': myCoverage,
+    }, context_instance=RequestContext(theRequest))
 
 
 def coverageForOrder(theOrder, theSearchRecords):
@@ -354,18 +361,18 @@ def coverageForOrder(theOrder, theSearchRecords):
             logging.debug('After geom xform: %s' % myUnion)
             myCoverage['ProductArea'] = myUnion.area
             myCoverage['CentroidZone'] = (
-                                '%s (EPSG:%s)' % (myZone[1], myZone[0]))
+                '%s (EPSG:%s)' % (myZone[1], myZone[0]))
         else:
             myCoverage['ProductArea'] = 'Error calculating area of products'
             myCoverage['CentroidZone'] = (
-                                'Error calculating centroid of products')
+                'Error calculating centroid of products')
         if theOrder.delivery_detail.geometry:
             myClip = None
             if not myUnion:
                 myClip = theOrder.delivery_detail.geometry
             else:
                 myClip = myUnion.intersection(
-                                            theOrder.delivery_detail.geometry)
+                    theOrder.delivery_detail.geometry)
             myCoverage['IntersectedArea'] = myClip.area
             myCentroid = myClip.centroid
             # Calculate the zone independently as centroid may differ
@@ -375,7 +382,7 @@ def coverageForOrder(theOrder, theSearchRecords):
                 myZone = myZones[0]
                 if not myZone:
                     myCoverage['IntersectedArea'] = (
-                               'Error calculating clip area')
+                        'Error calculating clip area')
                     myCoverage['ClipZone'] = 'Error calculating zone'
                     return myCoverage
                 myTransform = CoordTransform(SpatialReference(4326),
@@ -384,7 +391,7 @@ def coverageForOrder(theOrder, theSearchRecords):
                 #logging.debug('Utm zones: %s' % myZone)
                 myCoverage['IntersectedArea'] = myClip.area
                 myCoverage['ClipZone'] = '%s (EPSG:%s)' % (
-                                                    myZone[1], myZone[0])
+                    myZone[1], myZone[0])
         else:
             myCoverage['IntersectedArea'] = 'Not applicable'
             myCoverage['ClipZone'] = 'Not applicable'
@@ -434,24 +441,23 @@ def updateOrderHistory(theRequest):
         notifySalesStaffOfTaskRequest(myOrder.user, myOrderId)
     else:
         notifySalesStaff(myOrder.user, myOrderId)
-    return render_to_response(myTemplatePath,
-        {'myOrder': myOrder,
-         'myRecords': myRecords,
-         'myShowSensorFlag': True,
-         'myShowSceneIdFlag': True,
-         'myShowDateFlag': True,
-         # cant remove stuff after order was placed
-         'myRemoveFlag': False,
-         'myThumbFlag': False,
-         'myShowMetdataFlag': False,
-         # used when you need to add an item to the cart only
-         'myCartFlag': False,
-         'myPreviewFlag': False,
-         'myForm': myForm,
-         'myHistory': myHistory,
-         'myCartTitle': 'Product List',
-        },
-        context_instance=RequestContext(theRequest))
+    return render_to_response(myTemplatePath, {
+        'myOrder': myOrder,
+        'myRecords': myRecords,
+        'myShowSensorFlag': True,
+        'myShowSceneIdFlag': True,
+        'myShowDateFlag': True,
+        # cant remove stuff after order was placed
+        'myRemoveFlag': False,
+        'myThumbFlag': False,
+        'myShowMetdataFlag': False,
+        # used when you need to add an item to the cart only
+        'myCartFlag': False,
+        'myPreviewFlag': False,
+        'myForm': myForm,
+        'myHistory': myHistory,
+        'myCartTitle': 'Product List',
+    }, context_instance=RequestContext(theRequest))
 
 
 @renderWithContext('deliveryDetailForm.html')
@@ -459,8 +465,7 @@ def updateOrderHistory(theRequest):
 def createDeliveryDetailForm(theRequest, theReferenceId):
     del theRequest
     myDeliveryDetailForm = ProductDeliveryDetailForm(
-                    initial={'ref_id': theReferenceId},
-                    prefix='%i' % int(theReferenceId))
+        initial={'ref_id': theReferenceId}, prefix='%i' % int(theReferenceId))
     return dict(myDeliveryDetailForm=myDeliveryDetailForm)
 
 
@@ -469,7 +474,7 @@ def createDeliveryDetailForm(theRequest, theReferenceId):
 def showDeliveryDetail(theRequest, theReferenceId):
     del theRequest
     myDeliveryDetail = DeliveryDetail.objects.filter(
-                                            pk__exact=theReferenceId).get()
+        pk__exact=theReferenceId).get()
     return dict(myDeliveryDetail=myDeliveryDetail)
 
 
@@ -483,13 +488,13 @@ def addOrder(theRequest):
     myRecords = None
     (myLayersList,
      myLayerDefinitions, myActiveBaseMap) = standardLayers(theRequest)
-    myCartLayer = ('var myCartLayer = new OpenLayers.Layer.WMS('
-                   '"Cart", "http://'
-                    + settings.WMS_SERVER +
-                    '/cgi-bin/mapserv?map='
-                    + settings.CART_LAYER +
-                    '&user='
-                    + str(theRequest.user.username) + ''',
+    myCartLayer = (
+        'var myCartLayer = new OpenLayers.Layer.WMS("Cart", "http://'
+        + settings.WMS_SERVER +
+        '/cgi-bin/mapserv?map='
+        + settings.CART_LAYER +
+        '&user='
+        + str(theRequest.user.username) + ''',
             {
                version: '1.1.1',
                layers: 'Cart',
@@ -513,7 +518,7 @@ def addOrder(theRequest):
     else:
         logging.debug('User NOT anonymous')
         myRecords = SearchRecord.objects.all().filter(
-                            user=theRequest.user).filter(order__isnull=True)
+            user=theRequest.user).filter(order__isnull=True)
         if myRecords.count() < 1:
             logging.debug('Cart has no records')
             logging.info('User has no items in their cart')
@@ -523,81 +528,82 @@ def addOrder(theRequest):
             logging.info('Cart contains : ' +
                          str(myRecords.count()) + ' items')
     myExtraOptions = {
-      # Possible flags for the record template
-      # myShowSensorFlag
-      # myShowIdFlag
-      # myShowSceneIdFlag
-      # myShowDateFlag
-      # myShowCartFlag
-      # myShowRemoveIconFlag
-      # myShowPreviewFlag
-      # myShowDeliveryDetailsFlag
-      # myShowDeliveryDetailsFormFlag
-      'myShowSensorFlag': False,
-      'myShowSceneIdFlag': True,
-      'myShowDateFlag': False,
-      'myShowRemoveIconFlag': True,
-      'myShowRowFlag': False,
-      'myShowPathFlag': False,
-      'myShowCloudCoverFlag': True,
-      'myShowMetdataFlag': False,
-       # used when you need to add an item to the cart only
-      'myShowCartFlag': False,
-       # used when you need to add an item to the cart only
-      'myShowCartContentsFlag': True,
-      'myShowPreviewFlag': False,
-      'myShowDeliveryDetailsFlag': False,
-      'myShowDeliveryDetailsFormFlag': True,
-      'myCartTitle': 'Order Product List',
-      'myRecords': myRecords,
-       # propogated into the cart template
-      'myBaseTemplate': 'emptytemplate.html',
-      'mySubmitLabel': 'Submit Order',
-      'myMessage': (' <div>Please specify any details for your order'
-                    ' requirements below. If you need specific processing'
-                    ' steps taken on individual images, please use the notes'
-                    ' area below to provide detailed instructions. If you'
-                    ' would like the product(s) to be clipped and masked'
-                    ' to a specific geographic region, you can digitise'
-                    ' that region using the map above, or the geometry'
-                    ' input field below.</div>'),
-      'myLayerDefinitions': myLayerDefinitions,
-      'myLayersList': myLayersList,
-      'myActiveBaseMap': myActiveBaseMap
-      }
+        # Possible flags for the record template
+        # myShowSensorFlag
+        # myShowIdFlag
+        # myShowSceneIdFlag
+        # myShowDateFlag
+        # myShowCartFlag
+        # myShowRemoveIconFlag
+        # myShowPreviewFlag
+        # myShowDeliveryDetailsFlag
+        # myShowDeliveryDetailsFormFlag
+        'myShowSensorFlag': False,
+        'myShowSceneIdFlag': True,
+        'myShowDateFlag': False,
+        'myShowRemoveIconFlag': True,
+        'myShowRowFlag': False,
+        'myShowPathFlag': False,
+        'myShowCloudCoverFlag': True,
+        'myShowMetdataFlag': False,
+        # used when you need to add an item to the cart only
+        'myShowCartFlag': False,
+        # used when you need to add an item to the cart only
+        'myShowCartContentsFlag': True,
+        'myShowPreviewFlag': False,
+        'myShowDeliveryDetailsFlag': False,
+        'myShowDeliveryDetailsFormFlag': True,
+        'myCartTitle': 'Order Product List',
+        'myRecords': myRecords,
+        # propogated into the cart template
+        'myBaseTemplate': 'emptytemplate.html',
+        'mySubmitLabel': 'Submit Order',
+        'myMessage': (' <div>Please specify any details for your order'
+                      ' requirements below. If you need specific processing'
+                      ' steps taken on individual images, please use the notes'
+                      ' area below to provide detailed instructions. If you'
+                      ' would like the product(s) to be clipped and masked'
+                      ' to a specific geographic region, you can digitise'
+                      ' that region using the map above, or the geometry'
+                      ' input field below.</div>'),
+        'myLayerDefinitions': myLayerDefinitions,
+        'myLayersList': myLayersList,
+        'myActiveBaseMap': myActiveBaseMap
+    }
     logging.info('Add Order called')
     if theRequest.method == 'POST':
         logging.debug('Order posted')
 
         myOrderForm = OrderForm(theRequest.POST, theRequest.FILES)
         myDeliveryDetailForm = DeliveryDetailForm(
-                                myRecords, theRequest.POST, theRequest.FILES)
+            myRecords, theRequest.POST, theRequest.FILES)
 
         # get ref_ids of product details forms, if any,
         # and generate forms for validation
-        myProductForms = [ProductDeliveryDetailForm(theRequest.POST,
-                            prefix='%i' % int(myref))
-                           for myref in myDeliveryDetailForm.data.get(
-                                'ref_id').split(',') if len(myref) > 0]
+        myProductForms = [
+            ProductDeliveryDetailForm(
+                theRequest.POST, prefix='%i' % int(myref)) for myref in
+            myDeliveryDetailForm.data.get('ref_id').split(',')
+            if len(myref) > 0]
 
         myOptions = {
-                'myOrderForm': myOrderForm,
-                'myDeliveryDetailForm': myDeliveryDetailForm,
-                'myTitle': myTitle,
-                'mySubmitLabel': 'Submit Order',
-              }
+            'myOrderForm': myOrderForm,
+            'myDeliveryDetailForm': myDeliveryDetailForm,
+            'myTitle': myTitle,
+            'mySubmitLabel': 'Submit Order',
+        }
         # shortcut to join two dicts
         myOptions.update(myExtraOptions)
         if (myOrderForm.is_valid() and myDeliveryDetailForm.is_valid()
-            and all([form.is_valid() for form in myProductForms])):
+                and all([form.is_valid() for form in myProductForms])):
             logging.debug('Order valid')
 
             myDeliveryDetailObject = myDeliveryDetailForm.save(commit=False)
             myDeliveryDetailObject.user = theRequest.user
             #check if user uploaded file and try to extract geometry
             try:
-                myGeometry = getGeometryFromUploadedFile(theRequest,
-                                        myDeliveryDetailForm, 'geometry_file')
+                myGeometry = getGeometryFromUploadedFile(
+                    theRequest, myDeliveryDetailForm, 'geometry_file')
                 if myGeometry:
                     myDeliveryDetailObject.geometry = myGeometry
                 else:
@@ -624,15 +630,14 @@ def addOrder(theRequest):
                 # temporary store reference to deliverydetails
                 # with search record ID as a key
                 myDeliveryDetailsProducts[
-                        int(mySubDeliveryForm.cleaned_data.get('ref_id'))
-                    ] = mySubData
+                    int(mySubDeliveryForm.cleaned_data.get('ref_id'))
+                ] = mySubData
             #update serachrecords
             for myRecord in myRecords:
                 #check if this record has sepcific DeliveryDetails
                 if myRecord.id in myDeliveryDetailsProducts:
                     myRecord.delivery_detail = myDeliveryDetailsProducts[
-                                                                myRecord.id
-                                                            ]
+                        myRecord.id]
                 myRecord.order = myObject
                 myRecord.save()
 
@@ -644,23 +649,23 @@ def addOrder(theRequest):
             return HttpResponseRedirect(myRedirectPath + str(myObject.id))
         else:
             logging.info('Add Order: form is NOT valid')
-            return render_to_response('addPage.html',
-                myOptions,
+            return render_to_response(
+                'addPage.html', myOptions,
                 context_instance=RequestContext(theRequest))
     else:  # new order
         myOrderForm = OrderForm()
         myDeliveryDetailForm = DeliveryDetailForm(myRecords)
         myOptions = {
-          'myOrderForm': myOrderForm,
-          'myDeliveryDetailForm': myDeliveryDetailForm,
-          'myTitle': myTitle,
-          'mySubmitLabel': 'Submit Order',
-            }
+            'myOrderForm': myOrderForm,
+            'myDeliveryDetailForm': myDeliveryDetailForm,
+            'myTitle': myTitle,
+            'mySubmitLabel': 'Submit Order',
+        }
         # shortcut to join two dicts
         myOptions.update(myExtraOptions),
         logging.info('Add Order: new object requested')
-        return render_to_response('addPage.html',
-            myOptions,
+        return render_to_response(
+            'addPage.html', myOptions,
             context_instance=RequestContext(theRequest))
 
 
@@ -675,31 +680,31 @@ def viewOrderItems(theRequest, theOrderId):
     myRecords = SearchRecord.objects.all().filter(order=theOrderId)
 
     return ({
-           'myRecords': myRecords,
-           # Possible flags for the record template
-           # myShowSensorFlag
-           # myShowSceneIdFlag
-           # myShowDateFlag
-           # myShowCartFlag
-           # myShowRemoveIconFlag
-           # myShowPreviewFlag
-           # myShowDeliveryDetailsFlag
-           # myShowDeliveryDetailsFormFlag
-           'myShowSensorFlag': False,
-           'myShowSceneIdFlag': True,
-           'myShowDateFlag': False,
-           'myShowRemoveIconFlag': False,
-           'myShowRowFlag': False,
-           'myShowPathFlag': False,
-           'myShowCloudCoverFlag': False,
-           'myShowMetdataFlag': False,
-            #used when you need to add an item to the cart only
-           'myShowCartFlag': False,
-           'myShowPreviewFlag': False,
-           'myShowDeliveryDetailsFlag': True,
-           'myShowDeliveryDetailsFormFlag': False,
-           'myBaseTemplate': 'emptytemplate.html',
-           })
+        'myRecords': myRecords,
+        # Possible flags for the record template
+        # myShowSensorFlag
+        # myShowSceneIdFlag
+        # myShowDateFlag
+        # myShowCartFlag
+        # myShowRemoveIconFlag
+        # myShowPreviewFlag
+        # myShowDeliveryDetailsFlag
+        # myShowDeliveryDetailsFormFlag
+        'myShowSensorFlag': False,
+        'myShowSceneIdFlag': True,
+        'myShowDateFlag': False,
+        'myShowRemoveIconFlag': False,
+        'myShowRowFlag': False,
+        'myShowPathFlag': False,
+        'myShowCloudCoverFlag': False,
+        'myShowMetdataFlag': False,
+        # used when you need to add an item to the cart only
+        'myShowCartFlag': False,
+        'myShowPreviewFlag': False,
+        'myShowDeliveryDetailsFlag': True,
+        'myShowDeliveryDetailsFormFlag': False,
+        'myBaseTemplate': 'emptytemplate.html',
+    })
 
 
 @login_required
@@ -711,7 +716,8 @@ def ordersSummary(theRequest):
     myOrderStatus = OrderStatus.objects.annotate(num_orders=Count('order__id'))
     #count orders by product type (misson sensor)
     myOrderProductType = MissionSensor.objects.annotate(
-                            num_orders=Count('taskingrequest__order_ptr__id'))
+        num_orders=Count('taskingrequest__order_ptr__id'))
 
-    return dict(myOrderStatus=myOrderStatus,
-                myOrderProductType=myOrderProductType)
+    return dict(
+        myOrderStatus=myOrderStatus,
+        myOrderProductType=myOrderProductType)
