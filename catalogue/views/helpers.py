@@ -45,8 +45,9 @@ from django.conf import settings
 from django.core.mail import EmailMultiAlternatives, SafeMIMEMultipart
 
 # Read default notification recipients from settings
-CATALOGUE_DEFAULT_NOTIFICATION_RECIPIENTS = getattr(settings,
-                        'CATALOGUE_DEFAULT_NOTIFICATION_RECIPIENTS', False)
+CATALOGUE_DEFAULT_NOTIFICATION_RECIPIENTS = getattr(
+    settings,
+    'CATALOGUE_DEFAULT_NOTIFICATION_RECIPIENTS', False)
 
 ###########################################################
 #
@@ -66,14 +67,15 @@ class EmailMultiRelated(EmailMultiAlternatives):
     """
     related_subtype = 'related'
 
-    def __init__(self, subject='', body='', from_email=None, to=None, bcc=None,
-                  connection=None, attachments=None, headers=None,
-                   alternatives=None):
+    def __init__(
+            self, subject='', body='', from_email=None, to=None, bcc=None,
+            connection=None, attachments=None, headers=None,
+            alternatives=None):
         # self.related_ids = []
         self.related_attachments = []
-        return super(EmailMultiRelated, self).__init__(subject, body,
-                from_email, to, bcc, connection, attachments,
-                headers, alternatives)
+        return super(EmailMultiRelated, self).__init__(
+            subject, body, from_email, to, bcc, connection, attachments,
+            headers, alternatives)
 
     def attach_related(self, filename=None, content=None, mimetype=None):
         """
@@ -85,7 +87,7 @@ class EmailMultiRelated(EmailMultiAlternatives):
         """
 
         if isinstance(filename, MIMEBase):
-            assert content == mimetype == None
+            assert content == mimetype is None
             self.related_attachments.append(filename)
         else:
             assert content is not None
@@ -130,7 +132,7 @@ class EmailMultiRelated(EmailMultiAlternatives):
         Taken from http://code.djangoproject.com/ticket/4771
         """
         attachment = super(EmailMultiRelated, self)._create_attachment(
-                                                filename, content, mimetype)
+            filename, content, mimetype)
         if filename:
             mimetype = attachment['Content-Type']
             del(attachment['Content-Type'])
@@ -249,7 +251,7 @@ def notifySalesStaff(theUser, theOrderId):
 
     if not settings.EMAIL_NOTIFICATIONS_ENABLED:
         logging.info('Email sending disabled, set EMAIL_NOTIFICATIONS_ENABLED '
-                    'in settings')
+                     'in settings')
         return
     myOrder = get_object_or_404(Order, id=theOrderId)
     myRecords = SearchRecord.objects.filter(user=theUser,
@@ -269,7 +271,7 @@ def notifySalesStaff(theUser, theOrderId):
     # get the list of recipients
     for myProduct in [s.product for s in myRecords]:
         myRecipients.update(
-                    OrderNotificationRecipients.getUsersForProduct(myProduct))
+            OrderNotificationRecipients.getUsersForProduct(myProduct))
 
     # Add default recipients
     if not myRecipients and CATALOGUE_DEFAULT_NOTIFICATION_RECIPIENTS:
@@ -280,32 +282,36 @@ def notifySalesStaff(theUser, theOrderId):
     for myRecipient in myRecipients:
         #txt email template
         myEmailMessage_txt = render_to_string(
-                                'mail/order.txt', {'myOrder': myOrder,
-                                                   'myRecords': myRecords,
-                                                   'myHistory': myHistory,
-                                                   'myRecipient': myRecipient,
-                                                   'domain': settings.DOMAIN
-                                                   })
+            'mail/order.txt', {
+                'myOrder': myOrder,
+                'myRecords': myRecords,
+                'myHistory': myHistory,
+                'myRecipient': myRecipient,
+                'domain': settings.DOMAIN
+            })
         #html email template
         myEmailMessage_html = render_to_string(
-                                'mail/order.html', {'myOrder': myOrder,
-                                                    'myRecords': myRecords,
-                                                    'myHistory': myHistory,
-                                                    'myRecipient': myRecipient,
-                                                    'domain': settings.DOMAIN
-                                                   })
+            'mail/order.html', {
+                'myOrder': myOrder,
+                'myRecords': myRecords,
+                'myHistory': myHistory,
+                'myRecipient': myRecipient,
+                'domain': settings.DOMAIN
+            })
         myAddress = myRecipient.email
-        myMsg = EmailMultiRelated(myEmailSubject,
-                                  myEmailMessage_txt,
-                                  'dontreply@' + settings.DOMAIN, [myAddress])
+        myMsg = EmailMultiRelated(
+            myEmailSubject,
+            myEmailMessage_txt,
+            'dontreply@' + settings.DOMAIN, [myAddress])
         logging.info('Sending notice to : %s' % myAddress)
 
         #attach alternative payload - html
         myMsg.attach_alternative(myEmailMessage_html, 'text/html')
         # add required images, as inline attachments,
         # accesed by 'name' in templates
-        myMsg.attach_related_file(os.path.join(settings.MEDIA_ROOT,
-                                        'images', 'sac_header_email.jpg'))
+        myMsg.attach_related_file(
+            os.path.join(
+                settings.MEDIA_ROOT, 'images', 'sac_header_email.jpg'))
         #add message
         myMessagesList.append(myMsg)
 
@@ -336,13 +342,13 @@ def notifySalesStaffOfTaskRequest(theUser, theId):
     myTaskingRequest = get_object_or_404(TaskingRequest, id=theId)
     myHistory = OrderStatusHistory.objects.all().filter(order=myTaskingRequest)
 
-    myEmailSubject = ('SANSA Tasking Request ' + str(myTaskingRequest.id) +
-    ' status update (' + myTaskingRequest.order_status.name + ')')
+    myEmailSubject = ('SANSA Tasking Request %s status update (%s)' % (
+        str(myTaskingRequest.id), myTaskingRequest.order_status.name))
 
     myMessagesList = []
     # get the list of recipients
     myTaskingRecipients = OrderNotificationRecipients.objects.filter(
-                                    sensors=myTaskingRequest.mission_sensor)
+        sensors=myTaskingRequest.mission_sensor)
     myRecipients = set()
     myRecipients.update([theUser])
     for recepient in myTaskingRecipients:
@@ -357,18 +363,20 @@ def notifySalesStaffOfTaskRequest(theUser, theId):
     for myRecipient in myRecipients:
         #txt email template
         myEmailMessage_txt = render_to_string(
-                                'mail/task.txt', {'myTask': myTaskingRequest,
-                                                  'myHistory': myHistory,
-                                                  'myRecipient': myRecipient,
-                                                  'domain': settings.DOMAIN
-                                                  })
+            'mail/task.txt', {
+                'myTask': myTaskingRequest,
+                'myHistory': myHistory,
+                'myRecipient': myRecipient,
+                'domain': settings.DOMAIN
+            })
         #html email template
-        myEmailMessage_html = render_to_string('mail/task.html', {
-                                                'myTask': myTaskingRequest,
-                                                'myHistory': myHistory,
-                                                'myRecipient': myRecipient,
-                                                'domain': settings.DOMAIN
-                                                })
+        myEmailMessage_html = render_to_string(
+            'mail/task.html', {
+                'myTask': myTaskingRequest,
+                'myHistory': myHistory,
+                'myRecipient': myRecipient,
+                'domain': settings.DOMAIN
+            })
         myAddress = myRecipient.email
         myMsg = EmailMultiRelated(myEmailSubject,
                                   myEmailMessage_txt,
@@ -379,8 +387,8 @@ def notifySalesStaffOfTaskRequest(theUser, theId):
         myMsg.attach_alternative(myEmailMessage_html, 'text/html')
         #add required images, as inline attachments, accessed by
         # 'name' in templates
-        myMsg.attach_related_file(os.path.join(settings.MEDIA_ROOT,
-                                            'images', 'sac_header_email.jpg'))
+        myMsg.attach_related_file(os.path.join(
+            settings.MEDIA_ROOT, 'images', 'sac_header_email.jpg'))
         #add message
         myMessagesList.append(myMsg)
 
@@ -875,23 +883,24 @@ WEB_LAYERS = {
            """,
         }
 
-mLayerJs = {'VirtualEarth':
-            ('<script src="http://dev.virtualearth.net/mapcontrol/mapcontrol.'
-            'ashx?v=6.1"></script>'),
-            'Google':
-            ('<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;'
-            'key="{{GOOGLE_MAPS_API_KEY}}"></script>')
-          }
+mLayerJs = {
+    'VirtualEarth': (
+        '<script src="http://dev.virtualearth.net/mapcontrol/mapcontrol.'
+        'ashx?v=6.1"></script>'),
+    'Google': (
+        '<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;'
+        'key="{{GOOGLE_MAPS_API_KEY}}"></script>')
+}
 
 
 # Note this code is from Tims personal codebase and copyright is retained
 @login_required
-def genericAdd(theRequest,
-    theFormClass,
-    theTitle,
-    theRedirectPath,
-    theOptions
-   ):
+def genericAdd(
+        theRequest,
+        theFormClass,
+        theTitle,
+        theRedirectPath,
+        theOptions):
     myObject = getObject(theFormClass)
     logging.info('Generic add called')
     if theRequest.method == 'POST':
@@ -900,9 +909,9 @@ def genericAdd(theRequest,
         #         -equivalent-to-java-class-forname/452981
         myForm = myObject(theRequest.POST, theRequest.FILES)
         myOptions = {
-                'myForm': myForm,
-                'myTitle': theTitle
-              }
+            'myForm': myForm,
+            'myTitle': theTitle
+        }
         # shortcut to join two dicts
         myOptions.update(theOptions),
         if myForm.is_valid():
@@ -913,20 +922,20 @@ def genericAdd(theRequest,
             return HttpResponseRedirect(theRedirectPath + str(myObject.id))
         else:
             logging.info('Add : form is NOT valid')
-            return render_to_response('add.html',
-                myOptions,
+            return render_to_response(
+                'add.html', myOptions,
                 context_instance=RequestContext(theRequest))
     else:
         myForm = myObject()
         myOptions = {
-              'myForm': myForm,
-              'myTitle': theTitle
-            }
+            'myForm': myForm,
+            'myTitle': theTitle
+        }
         #shortcut to join two dicts
         myOptions.update(theOptions),
         logging.info('Add : new object requested')
-        return render_to_response('add.html',
-            myOptions,
+        return render_to_response(
+            'add.html', myOptions,
             context_instance=RequestContext(theRequest))
 
 
@@ -989,29 +998,33 @@ def standardLayers(theRequest):
     except:
         logging.debug('Profile does not exist')
     if myProfile and myProfile.strategic_partner:
-        myLayerDefinitions = [WEB_LAYERS['ZaSpot2mMosaic2010TC'],
-                              WEB_LAYERS['ZaSpot2mMosaic2009TC'],
-                              WEB_LAYERS['ZaSpot2mMosaic2008TC'],
-                              WEB_LAYERS['ZaSpot2mMosaic2007TC'],
-                              WEB_LAYERS['ZaSpot10mMosaic2010'],
-                              WEB_LAYERS['ZaSpot10mMosaic2009'],
-                              WEB_LAYERS['ZaSpot10mMosaic2008'],
-                              WEB_LAYERS['ZaSpot10mMosaic2007'],
-                              WEB_LAYERS['ZaRoadsBoundaries']]
-        myLayersList = ('[zaSpot2mMosaic2010TC, zaSpot2mMosaic2009TC,'
+        myLayerDefinitions = [
+            WEB_LAYERS['ZaSpot2mMosaic2010TC'],
+            WEB_LAYERS['ZaSpot2mMosaic2009TC'],
+            WEB_LAYERS['ZaSpot2mMosaic2008TC'],
+            WEB_LAYERS['ZaSpot2mMosaic2007TC'],
+            WEB_LAYERS['ZaSpot10mMosaic2010'],
+            WEB_LAYERS['ZaSpot10mMosaic2009'],
+            WEB_LAYERS['ZaSpot10mMosaic2008'],
+            WEB_LAYERS['ZaSpot10mMosaic2007'],
+            WEB_LAYERS['ZaRoadsBoundaries']]
+        myLayersList = (
+            '[zaSpot2mMosaic2010TC, zaSpot2mMosaic2009TC,'
             'zaSpot2mMosaic2008TC, zaSpot2mMosaic2007TC, zaSpot10mMosaic2010,'
             'zaSpot10mMosaic2009,zaSpot10mMosaic2008,zaSpot10mMosaic2007,'
             'zaRoadsBoundaries ]')
         myActiveBaseMap = 'zaSpot2mMosaic2010TC'
     else:
-        myLayerDefinitions = [WEB_LAYERS['ZaSpot10mMosaic2010'],
+        myLayerDefinitions = [
+            WEB_LAYERS['ZaSpot10mMosaic2010'],
             WEB_LAYERS['ZaSpot10mMosaic2009'],
             WEB_LAYERS['ZaSpot10mMosaic2008'],
             WEB_LAYERS['ZaSpot10mMosaic2007'],
             WEB_LAYERS['ZaRoadsBoundaries']]
-        myLayersList = ('[zaSpot10mMosaic2010,zaSpot10mMosaic2009,'
-                        'zaSpot10mMosaic2008,zaSpot10mMosaic2007,'
-                        'zaRoadsBoundaries]')
+        myLayersList = (
+            '[zaSpot10mMosaic2010,zaSpot10mMosaic2009,'
+            'zaSpot10mMosaic2008,zaSpot10mMosaic2007,'
+            'zaRoadsBoundaries]')
         myActiveBaseMap = 'zaSpot10mMosaic2010'
     return myLayersList, myLayerDefinitions, myActiveBaseMap
 
@@ -1133,7 +1146,7 @@ def downloadHtmlMetadata(theSearchRecords, theName):
     myThumbIsLocalFlag = True
     for mySearchRecord in theSearchRecords[:myMaxMetadataRecords]:
         myMetadata = mySearchRecord.product.getConcreteInstance().toHtml(
-                                                        myThumbIsLocalFlag)
+            myThumbIsLocalFlag)
         logging.info('Adding product HTML to HTML Metadata archive.')
         myZip.writestr('%s.html' % mySearchRecord.product.product_id,
                        myMetadata)
