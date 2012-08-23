@@ -105,7 +105,7 @@ variable-rgx=my(([A-Z][a-z]{1,30})+[A-Z]*$|[A-Z]$)|the(([A-Z][a-z]{0,30})+[A-Z]*
 inlinevar-rgx=[A-Za-z_][A-Za-z0-9_]*$
 
 # Good variable names which should always be accepted, separated by a comma
-good-names=i,j,k,ex,Run,_
+good-names=i,j,k,ex,Run,_,self
 
 # Bad variable names which should always be refused, separated by a comma
 bad-names=foo,bar,baz,toto,tutu,tata
