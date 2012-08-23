@@ -59,7 +59,7 @@ DATE_FORMATS = (
 class DateTimeWidget(forms.DateInput):
     dformat = '%d-%m-%Y'
 
-    def render(self, theName, theValue, theAttrs=None):
+    def render(self, theName, theValue, attrs=None):
         myDefaultDateProperty = ''
         myDefaultDate = ''
         logging.info('Rendering date widget with %s' % theValue)
@@ -67,7 +67,7 @@ class DateTimeWidget(forms.DateInput):
             logging.info('Value is none - setting to empty string')
             theValue = ''
         final_attrs = self.build_attrs(
-            theAttrs, type=self.input_type, name=theName)
+            attrs, type=self.input_type, name=theName)
         if theValue != '':
             logging.info('Value is not none : %s' % theValue)
             try:
