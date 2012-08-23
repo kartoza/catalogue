@@ -1,94 +1,146 @@
-from django import forms
+"""
+SANSA-EO Catalogue - AOIGeometry form field
+
+Contact : lkleyn@sansa.org.za
+
+.. note:: This program is the property of the South African National Space
+   Agency (SANSA) and may not be redistributed without expresse permission.
+   This program may include code which is the intellectual property of
+   Linfiniti Consulting CC. Linfiniti grants SANSA perpetual, non-transferrable
+   license to use any code contained herein which is the intellectual property
+   of Linfiniti Consulting CC.
+
+"""
+
+__author__ = 'tim@linfiniti.com'
+__version__ = '0.1'
+__date__ = '01/01/2011'
+__copyright__ = 'South African National Space Agency'
+
 import logging
 
-from django.contrib.gis.geos import Point,Polygon
+from django import forms
+from django.contrib.gis.geos import Point, Polygon
+
 
 class AOIGeometryField(forms.CharField):
     widget = forms.TextInput
 
-    def __init__(self, *args,**kwargs):
-        super(AOIGeometryField,self).__init__(*args, **kwargs)
-        self.label = "Area of interest"
+    def __init__(self, *args, **kwargs):
+        super(AOIGeometryField, self).__init__(*args, **kwargs)
+        self.label = 'Area of interest'
         #if we dont supply help_text use this as default
-        if not(kwargs.has_key('help_text')):
-            self.help_text ="Enter bounding box coordinates separated by comma for West, South, East and North edges i.e. (20,-34,22,-32), or enter single coordinate which defines circle center and radius in kilometers (20,-32,100)"
+        if not('help_text' in kwargs):
+            self.help_text = (
+                'Enter bounding box coordinates separated by comma for West, '
+                'South, East and North edges i.e. (20,-34,22,-32), or enter '
+                'single coordinate which defines circle center and radius in '
+                'kilometers (20,-32,100)')
 
-    def clean(self,value):
+    def clean(self, theValue):
         """ AOI geometry validator """
-        if not value:
+        if not theValue:
             #do nothing, return empty string ''
             return ''
         else:
             try:
-                myFields = value.split(',')
+                myFields = theValue.split(',')
 
                 #test if fields can be converted to nunbers
                 try:
-                    myFields=[float(field) for field in myFields]
+                    myFields = [float(field) for field in myFields]
                 except:
-                    logging.info("AOI geometry: invalid input values, can't be converted tu numbers: %s" % (value))
+                    logging.info(
+                        'AOI geometry: invalid input values, can\'t be '
+                        'converted tu numbers: %s' % (theValue))
                     raise
 
                 #point and radius validation
-                if len(myFields)==3:
-                    logging.info("AOI geometry: point and radius validation")
+                if len(myFields) == 3:
+                    logging.info('AOI geometry: point and radius validation')
                     if myFields[0] <= -180 or myFields[0] >= 180:
-                        logging.info("AOI geometry: point longitude not in -180..180 range: %f" % (myFields[0]))
+                        logging.info(
+                            'AOI geometry: point longitude not in -180..180 '
+                            'range: %f' % (myFields[0]))
                         raise
                     if myFields[1] <= -90 or myFields[1] >= 90:
-                        logging.info("AOI geometry: point latitude not in -90..90 range: %f" % (myFields[1]))
+                        logging.info(
+                            'AOI geometry: point latitude not in -90..90 '
+                            'range: %f' % (myFields[1]))
                         raise
                     if myFields[2] <= 0:
-                        logging.info("AOI geometry: radius equal or less then Zero: %f" % (myFields[2]))
+                        logging.info(
+                            'AOI geometry: radius equal or less then Zero: %f'
+                            % (myFields[2]))
                         raise
                 #bbox validation
-                elif len(myFields)==4:
-                    logging.info("AOI geometry: bbox validation")
+                elif len(myFields) == 4:
+                    logging.info('AOI geometry: bbox validation')
                     if myFields[0] <= -180 or myFields[0] >= 180:
-                        logging.info("AOI geometry: west longitude not in -180..180 range: %f" % (myFields[0]))
+                        logging.info(
+                            'AOI geometry: west longitude not in -180..180 '
+                            'range: %f' % (myFields[0]))
                         raise
                     if myFields[2] <= -180 or myFields[2] >= 180:
-                        logging.info("AOI geometry: east longitude not in -180..180 range: %f" % (myFields[2]))
+                        logging.info(
+                            'AOI geometry: east longitude not in -180..180 '
+                            'range: %f' % (myFields[2]))
                         raise
                     if myFields[1] <= -90 or myFields[1] >= 90:
-                        logging.info("AOI geometry: south latitude not in -90..90 range: %f" % (myFields[1]))
+                        logging.info(
+                            'AOI geometry: south latitude not in -90..90 '
+                            'range: %f' % (myFields[1]))
                         raise
                     if myFields[3] <= -90 or myFields[3] >= 90:
-                        logging.info("AOI geometry: north latitude not in -90..90 range: %f" % (myFields[3]))
+                        logging.info(
+                            'AOI geometry: north latitude not in -90..90 '
+                            'range: %f' % (myFields[3]))
                         raise
                     #check bbox
-                    if myFields[0]>myFields[2]:
-                        logging.info("AOI geometry: west edge can't be after east edge: %f<%f" % (myFields[0],myFields[2]))
+                    if myFields[0] > myFields[2]:
+                        logging.info(
+                            'AOI geometry: west edge can\'t be after east '
+                            'edge: %f<%f' % (myFields[0], myFields[2]))
                         raise
 
-                    if myFields[1]>myFields[3]:
-                        logging.info("AOI geometry: south edge can't be after north edge: %f<%f" % (myFields[1],myFields[3]))
+                    if myFields[1] > myFields[3]:
+                        logging.info(
+                            'AOI geometry: south edge can\'t be after north '
+                            'edge: %f<%f' % (myFields[1], myFields[3]))
                         raise
 
-                    if myFields[0]==myFields[2]:
-                        logging.info("AOI geometry: west edge and east edge are identical: %f=%f" % (myFields[0],myFields[2]))
+                    if myFields[0] == myFields[2]:
+                        logging.info(
+                            'AOI geometry: west edge and east edge are '
+                            'identical: %f=%f' % (myFields[0], myFields[2]))
                         raise
-                    if myFields[1]==myFields[3]:
-                        logging.info("AOI geometry: south edge and north edge are identical: %f=%f" % (myFields[1],myFields[3]))
+                    if myFields[1] == myFields[3]:
+                        logging.info(
+                            'AOI geometry: south edge and north edge are '
+                            'identical: %f=%f' % (myFields[1], myFields[3]))
                         raise
                 #unexpected number of arguments
                 else:
-                    logging.info("AOI geometry: unexpected number of arguments: (%i),%s" % (len(myFields),value))
+                    logging.info(
+                        'AOI geometry: unexpected number of arguments: (%i),%s'
+                        % (len(myFields), theValue))
                     raise
-            except Exception,e:
+            except Exception, e:
                 logging.info(str(e))
-                raise forms.ValidationError( "Area of interest geometry is not valid." )
+                raise forms.ValidationError(
+                    'Area of interest geometry is not valid.')
 
         return self.to_python(myFields)
 
-    def to_python(self,value):
-        if len(value)==3:
+    def to_python(self, theValue):
+        if len(theValue) == 3:
             #calculate radius in degrees 1 deg ~= 111 km
-            myradius=value[2]/111.
-            mygeometry=Point(value[0],value[1]).buffer(myradius)
+            myRadius = theValue[2] / 111.
+            myGeometry = Point(theValue[0], theValue[1]).buffer(myRadius)
         else:
-            mygeometry=Polygon.from_bbox((value[0],value[3],value[2],value[1]))
+            myGeometry = Polygon.from_bbox(
+                (theValue[0], theValue[3], theValue[2], theValue[1]))
         #set srid
-        mygeometry.set_srid(4326)
+        myGeometry.set_srid(4326)
         #geos must output geom as ewkt, because wkt doesm't contain SRID info
-        return mygeometry.ewkt
+        return myGeometry.ewkt
