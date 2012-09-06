@@ -36,18 +36,18 @@
         var myDay = myParts[0];
         var myMonth = myParts[1];
         var myYear = myParts[2];
-        if ( myDay < 10 ) myDay = "0" + parseInt(myDay);
-        if ( myMonth < 10 ) myMonth = "0" + parseInt(myMonth);
-        sd = myDay + "-" + myMonth + "-" + parseInt(myYear);
+        if ( myDay < 10 ) myDay = "0" + parseInt(myDay,10);
+        if ( myMonth < 10 ) myMonth = "0" + parseInt(myMonth,10);
+        sd = myDay + "-" + myMonth + "-" + parseInt(myYear,10);
         // get the end date and zero pad day and month
         var ed = $("#id_end_datepicker").val();
         myParts = ed.split('-');
         myDay = myParts[0];
         myMonth = myParts[1];
         myYear = myParts[2];
-        if ( myDay < 10 ) myDay = "0" + parseInt(myDay);
-        if ( myMonth < 10 ) myMonth = "0" + parseInt(myMonth);
-        ed = myDay + "-" + myMonth + "-" + parseInt(myYear);
+        if ( myDay < 10 ) myDay = "0" + parseInt(myDay,10);
+        if ( myMonth < 10 ) myMonth = "0" + parseInt(myMonth,10);
+        ed = myDay + "-" + myMonth + "-" + parseInt(myYear,10);
         // turn them into iso dates (Y-m-d)
         var iso_sd = sd.split('-').reverse().join('-');
         var iso_ed = ed.split('-').reverse().join('-');
