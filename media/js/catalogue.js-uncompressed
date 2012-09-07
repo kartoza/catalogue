@@ -442,6 +442,18 @@ function setHTML(response)
   });
 }
 
+/*
+Create a custom map control to show map help dialog
+*/
+// this is a global variable which is intialized by setupMapHelpDialog()
+var myMapHelpDialog = null;
+var map_help_button = new OpenLayers.Control.Button({
+        displayClass: 'olControlMapHelp',
+        trigger: function () {
+          //show maphelp dialog
+          myMapHelpDialog.dialog('open')}
+    });
+
 function setupBaseMap()
 {
   // The options hash, w/ zoom, resolution, and projection settings.
@@ -487,14 +499,17 @@ function setupBaseMap()
     }
   });
   mMap.addControl(myHistoryControl);
+  // add map help button
+  mMap.addControl(map_help_button);
   // now add these controls all to our toolbar / panel
-  mNavigationPanel.addControls([myZoomInControl,myZoomOutControl, myNavigationControl, myHistoryControl.next, myHistoryControl.previous]);
+  mNavigationPanel.addControls([map_help_button, myZoomInControl,myZoomOutControl, myNavigationControl, myHistoryControl.next, myHistoryControl.previous]);
   mMap.addControl(new OpenLayers.Control.ScaleBar({
       align: "left",
       minWidth: 150,
       maxWidth: 200,
       div: document.getElementById("map-scale")
     }));
+
   //show cursor location
   mMap.addControl(new OpenLayers.Control.MousePosition({'div': document.getElementById("map-location")}));
   mMap.addControl(mNavigationPanel);
@@ -733,7 +748,7 @@ function setupSceneIdHelpDialog()
 
 function setupMapHelpDialog()
 {
-  var myMapHelpDialog = $('<div></div>').load("/mapHelp/").dialog({
+  myMapHelpDialog = $('<div></div>').load("/mapHelp/").dialog({
     autoOpen: false,
     title: 'Map Help',
     modal: true,
@@ -744,11 +759,6 @@ function setupMapHelpDialog()
     width: $(window).width() / 2,
     buttons: { "Close" : function() { $(this).dialog('close'); } }
   });
-
-  $('#map-help-button').live('click', (function () {
-    myMapHelpDialog.dialog('open');
-    return false;
-  }));
 }
 
 /* Show a pop up dialog with metadata.

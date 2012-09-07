@@ -77,6 +77,15 @@
   height:24px;
   width:24px;
 }
+.olControlMapHelpItemInactive
+{
+  /* OL button control uses ItemInactive CSS class
+  http://dev.openlayers.org/docs/files/OpenLayers/Control/Button-js.html
+  */
+  background:url(/media/images/maphelp-active.png) no-repeat;
+  height:24px;
+  width:24px;
+}
 
 /*
  * Scalebar
