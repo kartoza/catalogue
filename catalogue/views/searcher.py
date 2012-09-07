@@ -205,7 +205,7 @@ mMap.addLayer(mySearchAreaLayer);''' % self.mSearch.geometry.geojson)
                         self.mSearch.sensors.values_list('name', flat=True)))
             except Exception, e:
                 logging.error(
-                    'QuerySet modification failed \n %s' % e.message())
+                    'QuerySet modification failed \n %s' % e.message)
                 # This exception handler was added to prevent crashes here like
                 # this:
                 # FieldError: Cannot resolve keyword 'acquisition_mode' into
