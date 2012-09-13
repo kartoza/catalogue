@@ -343,3 +343,19 @@ JENKINS_TASKS = (
     'django_jenkins.tasks.run_pyflakes',
     'django_jenkins.tasks.run_sloccount',
 )
+
+
+from raven.conf import setup_logging
+from raven.contrib.django.handlers import SentryHandler
+
+logging.getLogger().setLevel(logging.ERROR)
+logging.getLogger().addHandler(SentryHandler())
+setup_logging(SentryHandler())
+
+# Sentry server client settings
+SENTRY_DSN = 'http://52e7dbc1645742bba1e30c5f91214a18:5d4ce7c82eeb45c28b3a6e38e42185cc@10.20.10.152:10000/2'
+
+# only if running with Debug=True
+# RAVEN_CONFIG = {
+#     'register_signals': True,
+# }

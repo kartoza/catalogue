@@ -635,3 +635,37 @@ Now run sentry and it should bd available at http://catalogue.sansa.org.za/sentr
 
   sentry --config=sentry.conf.py start
 
+
+Sentry client setup
+-------------------
+
+On client we need to add ``raven`` to application virtualenv::
+
+  pip install raven
+
+Then in local setting.py, we need to update following config parameters
+(default settings are already present in settings.py.template)::
+
+  from raven.conf import setup_logging
+  from raven.contrib.django.handlers import SentryHandler
+
+  logging.getLogger().setLevel(logging.ERROR)
+  logging.getLogger().addHandler(SentryHandler())
+  setup_logging(SentryHandler())
+
+  # Sentry server client settings
+  SENTRY_DSN = 'http://52e7dbc1645742bba1e30c5f91214a18:5d4ce7c82eeb45c28b3a6e38e42185cc@10.20.10.152:10000/2'
+
+  # only if running with DEBUG=True ( DEVELOPMENT ENV )
+  # and we want to catch exceptions with sentry
+  # RAVEN_CONFIG = {
+  #     'register_signals': True,
+  # }
+
+Most important settings are ``logging.getLogger().setLevel()`` and ``SENTRY_DSN``:
+
+  * ``setLevel`` sets which level of messages are sent to Sentry (for production use logging.ERROR)
+  * ``SENTRY_DSN`` we can get this on sentry server when we create project
+
+Currently commented out section is only relevant if we want to catch
+exceptions with sentry in development environment (DEBUG=True).
