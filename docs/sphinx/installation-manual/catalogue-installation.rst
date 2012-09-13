@@ -639,9 +639,13 @@ Now run sentry and it should bd available at http://catalogue.sansa.org.za/sentr
 Sentry client setup
 -------------------
 
+
 On client we need to add ``raven`` to application virtualenv::
 
   pip install raven
+
+Make sure to add ``'raven.contrib.django'`` to **INSTALLED_APPS** list in
+settings.py.
 
 Then in local setting.py, we need to update following config parameters
 (default settings are already present in settings.py.template)::
@@ -655,7 +659,7 @@ Then in local setting.py, we need to update following config parameters
   setup_logging(SentryHandler())
 
   # Sentry server client settings
-  SENTRY_DSN = 'http://52e7dbc1645742bba1e30c5f91214a18:5d4ce7c82eeb45c28b3a6e38e42185cc@10.20.10.152:9000/2'
+  SENTRY_DSN = 'http://74b4e04b3738403c9670c8b67bb602c0:36f52a2271094938b2e8739e562bb37c@localhost:9000/2'
 
   # only if running with DEBUG=True ( DEVELOPMENT ENV )
   # and we want to catch exceptions with sentry

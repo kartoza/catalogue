@@ -241,7 +241,8 @@ INSTALLED_APPS = (
     'userprofile',
     #commented out as needs django >= 1.3
     #'django_jenkins',
-    #'debug_toolbar'
+    #'debug_toolbar',
+    'raven.contrib.django',
 )
 
 # Added by Tim for in db logging of exceptions
@@ -354,7 +355,7 @@ logging.getLogger().addHandler(SentryHandler())
 setup_logging(SentryHandler())
 
 # Sentry server client settings
-SENTRY_DSN = 'http://52e7dbc1645742bba1e30c5f91214a18:5d4ce7c82eeb45c28b3a6e38e42185cc@10.20.10.152:9000/2'
+SENTRY_DSN = 'http://74b4e04b3738403c9670c8b67bb602c0:36f52a2271094938b2e8739e562bb37c@localhost:9000/2'
 
 # only if running with Debug=True
 # RAVEN_CONFIG = {
