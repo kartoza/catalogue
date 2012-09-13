@@ -579,3 +579,59 @@ import settings
 ```````````````
 
 The error you obtain there (if any) will be more descriptive.
+
+
+Sentry Setup
+------------
+
+We use sentry to log events and provide over time history of issues. The
+process is described well here: http://sentry.readthedocs.org/en/latest/quickstart/index.html
+
+Here is the log of the setup process I did, and any variations on the process
+documented above::
+
+  mkdir sentry
+  cd sentry/
+  virtualenv python
+  source python/bin/activate
+  pip install sentry
+  sentry init sentry.conf.py
+  sentry --config=sentry.conf.py upgrade
+  vim sentry.conf.py 
+
+At this point I needed to add the following to the top of the file::
+
+  #Added by Tim
+  from sentry.conf.server import *
+  INSTALLED_APPS = INSTALLED_APPS + (
+           'gunicorn',
+  )
+
+
+Then setup apache to use a reverse proxy.::
+
+  sudo vim /etc/apache2/sites-enabled/catalogue.wsgi 
+
+And add these lines::
+
+  ProxyPass /sentry/ http://localhost:9000/
+  ProxyPassReverse /sentry/ http://localhost:9000/
+  <Location /sentry/>
+    Order deny,allow
+    Allow from all
+    SetHandler None
+  </Location>
+
+Check that mod_proxy is installed then restart::
+
+  sudo a2enmod proxy
+  sudo /etc/init.d/apache2 reload
+
+Now run sentry and it should bd available at http://catalogue.sansa.org.za/sentry/
+
+.. note:: The above embedding into existing site doesnt work - css doesnt show.
+   We will host it under its own subdomain.
+
+
+  sentry --config=sentry.conf.py start
+
