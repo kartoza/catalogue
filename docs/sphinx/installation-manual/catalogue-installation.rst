@@ -654,7 +654,7 @@ Then in local setting.py, we need to update following config parameters
   setup_logging(SentryHandler())
 
   # Sentry server client settings
-  SENTRY_DSN = 'http://52e7dbc1645742bba1e30c5f91214a18:5d4ce7c82eeb45c28b3a6e38e42185cc@10.20.10.152:10000/2'
+  SENTRY_DSN = 'http://52e7dbc1645742bba1e30c5f91214a18:5d4ce7c82eeb45c28b3a6e38e42185cc@10.20.10.152:9000/2'
 
   # only if running with DEBUG=True ( DEVELOPMENT ENV )
   # and we want to catch exceptions with sentry
