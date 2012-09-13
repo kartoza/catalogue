@@ -57,6 +57,7 @@ from search_cloudcover import SearchCloudCover_Test
 from search_rowpath import SearchRowPath_Test
 from email_notification_test import EmailNotificationTest, EmailTest
 from integerCSVIntervalsField_return import IntegersCSVIntervalsField_Test
+from AOIGeometryField_return import AOIGeometryField_Test
 from visit_model import VisitCRUD_Test
 from sacuserprofile_model import SacUserProfileCRUD_Test
 from ordernotificationrecipients_model import OrderNotificationRecipientsCRUD_Test
