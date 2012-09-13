@@ -25,7 +25,7 @@ urlpatterns = patterns('',
     (r'^admin_media/(.*)$','django.views.static.serve',
       {'document_root': "/usr/share/python-support/python-django/django/contrib/admin/media/"
         , 'show_indexes': True}),
-    url(r'^sentry/', include('sentry.web.urls')),
+    #url(r'^sentry/', include('sentry.web.urls')),
     (r'^media/(.*)$','django.views.static.serve',
       {'document_root': settings.MEDIA_ROOT, 'show_indexes': True}),
     (r'^thumbnails/(.*)$','django.views.static.serve',
