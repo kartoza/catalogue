@@ -229,7 +229,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.gis',
     #'south',
-    'sentry',
+    #'sentry',
     'registration',
     'catalogue',
     #'acscatalogue',
@@ -315,16 +315,16 @@ TEST_RUNNER = 'django_coverage.coverage_runner.CoverageRunner'
 # python manage.py syncdb
 
 # To enable sentry in debug mode too
-SENTRY_TESTING = True
-import logging
-logging.getLogger().setLevel(logging.INFO)
-from sentry.client.handlers import SentryHandler
-logging.getLogger().addHandler(SentryHandler())
+#SENTRY_TESTING = True
+#import logging
+#logging.getLogger().setLevel(logging.INFO)
+#from sentry.client.handlers import SentryHandler
+#logging.getLogger().addHandler(SentryHandler())
 
 # Add StreamHandler to sentry's default so you can catch missed exceptions
-logger = logging.getLogger('sentry.errors')
-logger.propagate = False
-logger.addHandler(logging.StreamHandler())
+#logger = logging.getLogger('sentry.errors')
+#logger.propagate = False
+#logger.addHandler(logging.StreamHandler())
 #
 #
 # For django-jenkins integration
