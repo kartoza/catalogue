@@ -648,6 +648,7 @@ Then in local setting.py, we need to update following config parameters
 
   from raven.conf import setup_logging
   from raven.contrib.django.handlers import SentryHandler
+  import logging
 
   logging.getLogger().setLevel(logging.ERROR)
   logging.getLogger().addHandler(SentryHandler())

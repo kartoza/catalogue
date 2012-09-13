@@ -3,6 +3,9 @@ import os
 #from catalogue.middleware.prettify import PrettifyMiddleware
 #from catalogue.middleware.stripwhitespace import StripWhitespaceMiddleware
 import coverage
+import logging
+from raven.conf import setup_logging
+from raven.contrib.django.handlers import SentryHandler
 
 ROOT_PROJECT_FOLDER = os.path.dirname(__file__)
 # external site URL, used in KML data generation and elsewhere
@@ -345,8 +348,6 @@ JENKINS_TASKS = (
 )
 
 
-from raven.conf import setup_logging
-from raven.contrib.django.handlers import SentryHandler
 
 logging.getLogger().setLevel(logging.ERROR)
 logging.getLogger().addHandler(SentryHandler())
