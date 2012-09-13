@@ -199,9 +199,10 @@ class AdvancedSearchForm(forms.ModelForm):
     aoi_geometry = AOIGeometryField(
         widget=forms.TextInput(attrs={'title': (
             'Enter bounding box coordinates separated by comma for West, '
-            'South, East and North edges i.e. (20,-34,22,-32), or enter single'
+            'North, East and South edges i.e. (22,-32,20,-34), or enter single'
             ' coordinate which defines circle center and radius in kilometers '
-            '(20,-32,100)')}),
+            '(20,-32,100). Alternatively, digitise the clip area in the map.')
+        }),
         required=False)
 
     k_orbit_path = IntegersCSVIntervalsField(
@@ -481,7 +482,7 @@ class DeliveryDetailForm(forms.ModelForm):
         required=False,
         help_text=(
             'Enter bounding box coordinates separated by comma for West, '
-            'South, East and North edges i.e. (20,-34,22,-32), or enter single'
+            'North, East and South edges i.e. (22,-32,20,-34), or enter single'
             ' coordinate which defines circle center and radius in kilometers '
             '(20,-32,100). Alternatively, digitise the clip area in the map.'))
     geometry = forms.CharField(widget=forms.HiddenInput(), required=False)
