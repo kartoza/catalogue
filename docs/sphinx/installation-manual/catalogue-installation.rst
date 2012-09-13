@@ -599,7 +599,8 @@ documented above::
   sentry --config=sentry.conf.py upgrade
   vim sentry.conf.py 
 
-At this point I needed to add the following to the top of the file::
+At this point I needed to add the following to the top of the 
+:file:`sentry.conf.py` file::
 
   #Added by Tim
   from sentry.conf.server import *
@@ -607,6 +608,9 @@ At this point I needed to add the following to the top of the file::
            'gunicorn',
   )
 
+And also set the following::
+
+  SENTRY_URL_PREFIX='http://sansa.org.za'
 
 Then setup apache to use a reverse proxy.::
 
