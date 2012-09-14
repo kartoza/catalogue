@@ -253,7 +253,8 @@ class AdvancedSearchForm(forms.ModelForm):
         self.fields['sensors'].queryset = (MissionSensor.objects
             .filter(pk__in=qs.distinct().values_list(
                 'sensor_type__mission_sensor', flat=True))
-            .filter(has_data=True))
+            .filter(has_data=True)
+            .order_by('name'))
         self.fields['mission'].queryset = (Mission.objects
             .filter(pk__in=qs.distinct().values_list(
                 'sensor_type__mission_sensor__mission', flat=True))

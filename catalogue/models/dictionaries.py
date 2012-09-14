@@ -98,7 +98,7 @@ class MissionSensor(models.Model):
 
     def __unicode__(self):
         if self.name:
-            return '%s:%s' % (self.mission.operator_abbreviation, self.name)
+            return self.name
         else:
             return '%s:%s' % (
                 self.mission.operator_abbreviation, self.abbreviation)
