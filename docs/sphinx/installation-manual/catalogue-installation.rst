@@ -579,3 +579,102 @@ import settings
 ```````````````
 
 The error you obtain there (if any) will be more descriptive.
+
+
+Sentry Setup
+------------
+
+We use sentry to log events and provide over time history of issues. The
+process is described well here: http://sentry.readthedocs.org/en/latest/quickstart/index.html
+
+Here is the log of the setup process I did, and any variations on the process
+documented above::
+
+  mkdir sentry
+  cd sentry/
+  virtualenv python
+  source python/bin/activate
+  pip install sentry
+  sentry init sentry.conf.py
+  sentry --config=sentry.conf.py upgrade
+  vim sentry.conf.py 
+
+At this point I needed to add the following to the top of the 
+:file:`sentry.conf.py` file::
+
+  #Added by Tim
+  from sentry.conf.server import *
+  INSTALLED_APPS = INSTALLED_APPS + (
+           'gunicorn',
+  )
+
+And also set the following::
+
+  SENTRY_URL_PREFIX='http://sansa.org.za'
+
+Then setup apache to use a reverse proxy.::
+
+  sudo vim /etc/apache2/sites-enabled/catalogue.wsgi 
+
+And add these lines::
+
+  ProxyPass /sentry/ http://localhost:9000/
+  ProxyPassReverse /sentry/ http://localhost:9000/
+  <Location /sentry/>
+    Order deny,allow
+    Allow from all
+    SetHandler None
+  </Location>
+
+Check that mod_proxy is installed then restart::
+
+  sudo a2enmod proxy
+  sudo /etc/init.d/apache2 reload
+
+Now run sentry and it should bd available at http://catalogue.sansa.org.za/sentry/
+
+.. note:: The above embedding into existing site doesnt work - css doesnt show.
+   We will host it under its own subdomain.
+
+
+  sentry --config=sentry.conf.py start
+
+
+Sentry client setup
+-------------------
+
+
+On client we need to add ``raven`` to application virtualenv::
+
+  pip install raven
+
+Make sure to add ``'raven.contrib.django'`` to **INSTALLED_APPS** list in
+settings.py.
+
+Then in local setting.py, we need to update following config parameters
+(default settings are already present in settings.py.template)::
+
+  from raven.conf import setup_logging
+  from raven.contrib.django.handlers import SentryHandler
+  import logging
+
+  logging.getLogger().setLevel(logging.ERROR)
+  logging.getLogger().addHandler(SentryHandler())
+  setup_logging(SentryHandler())
+
+  # Sentry server client settings
+  SENTRY_DSN = 'http://74b4e04b3738403c9670c8b67bb602c0:36f52a2271094938b2e8739e562bb37c@localhost:9000/2'
+
+  # only if running with DEBUG=True ( DEVELOPMENT ENV )
+  # and we want to catch exceptions with sentry
+  # RAVEN_CONFIG = {
+  #     'register_signals': True,
+  # }
+
+Most important settings are ``logging.getLogger().setLevel()`` and ``SENTRY_DSN``:
+
+  * ``setLevel`` sets which level of messages are sent to Sentry (for production use logging.ERROR)
+  * ``SENTRY_DSN`` we can get this on sentry server when we create project
+
+Currently commented out section is only relevant if we want to catch
+exceptions with sentry in development environment (DEBUG=True).

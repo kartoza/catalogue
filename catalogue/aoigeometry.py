@@ -33,9 +33,10 @@ class AOIGeometryField(forms.CharField):
         if not('help_text' in kwargs):
             self.help_text = (
                 'Enter bounding box coordinates separated by comma for West, '
-                'South, East and North edges i.e. (20,-34,22,-32), or enter '
+                'North, East and South edges i.e. (22,-32,20,-34), or enter '
                 'single coordinate which defines circle center and radius in '
-                'kilometers (20,-32,100)')
+                'kilometers (20,-32,100). Alternatively, digitise the clip '
+                'area in the map.')
 
     def clean(self, theValue):
         """ AOI geometry validator """
@@ -88,12 +89,12 @@ class AOIGeometryField(forms.CharField):
                         raise
                     if myFields[1] <= -90 or myFields[1] >= 90:
                         logging.info(
-                            'AOI geometry: south latitude not in -90..90 '
+                            'AOI geometry: north latitude not in -90..90 '
                             'range: %f' % (myFields[1]))
                         raise
                     if myFields[3] <= -90 or myFields[3] >= 90:
                         logging.info(
-                            'AOI geometry: north latitude not in -90..90 '
+                            'AOI geometry: south latitude not in -90..90 '
                             'range: %f' % (myFields[3]))
                         raise
                     #check bbox
@@ -103,7 +104,7 @@ class AOIGeometryField(forms.CharField):
                             'edge: %f<%f' % (myFields[0], myFields[2]))
                         raise
 
-                    if myFields[1] > myFields[3]:
+                    if myFields[3] > myFields[1]:
                         logging.info(
                             'AOI geometry: south edge can\'t be after north '
                             'edge: %f<%f' % (myFields[1], myFields[3]))
@@ -116,7 +117,7 @@ class AOIGeometryField(forms.CharField):
                         raise
                     if myFields[1] == myFields[3]:
                         logging.info(
-                            'AOI geometry: south edge and north edge are '
+                            'AOI geometry: north edge and south edge are '
                             'identical: %f=%f' % (myFields[1], myFields[3]))
                         raise
                 #unexpected number of arguments
@@ -139,7 +140,7 @@ class AOIGeometryField(forms.CharField):
             myGeometry = Point(theValue[0], theValue[1]).buffer(myRadius)
         else:
             myGeometry = Polygon.from_bbox(
-                (theValue[0], theValue[3], theValue[2], theValue[1]))
+                (theValue[0], theValue[1], theValue[2], theValue[3]))
         #set srid
         myGeometry.set_srid(4326)
         #geos must output geom as ewkt, because wkt doesm't contain SRID info
