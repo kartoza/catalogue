@@ -128,7 +128,7 @@ class MissionSensorCRUD_Test(TestCase):
         Tests MissionSensor model representation
         """
         myModelPKs = [1, 100]
-        myExpResults = [u'NOAA-14:NOAA-14 AVHRR', u':UMS']
+        myExpResults = [u'NOAA-14 AVHRR', u':UMS']
 
         for idx, PK in enumerate(myModelPKs):
             myModel = MissionSensor.objects.get(pk=PK)
