@@ -28,7 +28,7 @@ WHERE
   catalogue_genericsensorproduct.acquisition_mode_id = spot_prod.id AND
 -- condition
 (catalogue_genericsensorproduct.path < 80 OR catalogue_genericsensorproduct.path > 190 OR
-catalogue_genericsensorproduct.row < 335 OR catalogue_genericsensorproduct.row > 420)
+catalogue_genericsensorproduct.row < 355 OR catalogue_genericsensorproduct.row > 420)
 
   AND catalogue_genericproduct.owner_id = 4;
 
