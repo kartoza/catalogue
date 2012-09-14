@@ -198,10 +198,11 @@ class AdvancedSearchForm(forms.ModelForm):
             'refine the set of search results to a specific area.'))
     aoi_geometry = AOIGeometryField(
         widget=forms.TextInput(attrs={'title': (
-            'Enter bounding box coordinates separated by comma for West, '
-            'North, East and South edges i.e. (22,-32,20,-34), or enter single'
-            ' coordinate which defines circle center and radius in kilometers '
-            '(20,-32,100). Alternatively, digitise the clip area in the map.')
+            'Enter bounding box coordinates separated by comma for Upper '
+            'left and Lower right coordinates i.e. (20,-32,22,-34), or '
+            'enter single coordinate which defines circle center and '
+            'radius in kilometers (20,-32,100). Alternatively, digitise '
+            'the clip area in the map.')
         }),
         required=False)
 
@@ -482,10 +483,11 @@ class DeliveryDetailForm(forms.ModelForm):
     aoi_geometry = AOIGeometryField(
         required=False,
         help_text=(
-            'Enter bounding box coordinates separated by comma for West, '
-            'North, East and South edges i.e. (22,-32,20,-34), or enter single'
-            ' coordinate which defines circle center and radius in kilometers '
-            '(20,-32,100). Alternatively, digitise the clip area in the map.'))
+            'Enter bounding box coordinates separated by comma for Upper '
+            'left and Lower right coordinates i.e. (20,-32,22,-34), or '
+            'enter single coordinate which defines circle center and '
+            'radius in kilometers (20,-32,100). Alternatively, digitise '
+            'the clip area in the map.'))
     geometry = forms.CharField(widget=forms.HiddenInput(), required=False)
     geometry_file = forms.FileField(
         widget=forms.FileInput(attrs={'class': 'file'}),
