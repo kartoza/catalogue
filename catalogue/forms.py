@@ -587,6 +587,9 @@ class TaskingRequestForm(forms.ModelForm):
         model = TaskingRequest
         exclude = ('user', 'delivery_detail', 'order_status')
 
+    class Media:
+        js = ("/media/js/widget.sansa-datepicker.js",)
+
     def __init__(self, *args, **kwargs):
         super(TaskingRequestForm, self).__init__(*args, **kwargs)
         self.fields['mission_sensor'].queryset = (
