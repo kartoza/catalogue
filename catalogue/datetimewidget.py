@@ -38,9 +38,7 @@ __copyright__ = 'South African National Space Agency'
 import datetime
 import time
 import logging
-from dateutil.relativedelta import relativedelta
 
-from django.utils.encoding import force_unicode
 from django import forms
 from django.utils.safestring import mark_safe
 from django.forms.util import flatatt
@@ -60,61 +58,32 @@ class DateTimeWidget(forms.DateInput):
     dformat = '%d-%m-%Y'
 
     def render(self, theName, theValue, attrs=None):
-        myDefaultDateProperty = ''
-        myDefaultDate = ''
-        logging.info('Rendering date widget with %s' % theValue)
-        if theValue is None:
-            logging.info('Value is none - setting to empty string')
-            theValue = ''
-        final_attrs = self.build_attrs(
+        # generate attrs
+        myFinal_attrs = self.build_attrs(
             attrs, type=self.input_type, name=theName)
-        if theValue != '':
-            logging.info('Value is not none : %s' % theValue)
-            try:
-                final_attrs['value'] = (
-                    force_unicode(theValue.strftime(self.dformat)))
-            except:
-                final_attrs['value'] = force_unicode(theValue)
-            myDefaultDate = '%s' % theValue.strftime(self.dformat)
-            logging.info('MyDefaultDate is not none : %s' % myDefaultDate)
-            myDefaultDateProperty = ', defaultDate: \'%s\'' % (
-                theValue.strftime(self.dformat,))
-            logging.info('MyDefaultDateProperty is : %s' % (
-                myDefaultDateProperty,))
-        if not 'id' in final_attrs:
-            final_attrs['id'] = u'%s_id' % (theName)
-        myId = final_attrs['id']
-        #set defaults to start and end days of month if not set explicitly
-        myDate = datetime.date.today()
-        if 'start' in theName and not myDefaultDate:
-            myDefaultDate = '01-%s-%s' % (
-                str(myDate.month), str(myDate.year))
-        elif 'end' in theName and not myDefaultDate:
-            # work out the last day of the current month
-            #myEndDate = datetime.date.today() + relativedelta(months=+1)
-            #myEndDate = datetime.date( myFutureDate.year(),
-            #    myFutureDate.month(), 1) - relativedelta(days=-1)
+        # IMPORTANT: save form field id, later used in form->object translation
+        myId = myFinal_attrs['id']
 
-            # work out yesterdays date
-            myEndDate = datetime.date.today() + relativedelta(days=-1)
-            myDefaultDate = '%s-%s-%s' % (
-                myEndDate.day, myEndDate.month, myEndDate.year)
-        elif not myDefaultDate or myDefaultDate == '':
-            myDefaultDate = datetime.date.today() + relativedelta(days=-1)
-            myDefaultDate = '%s-%s-%s' % (
-                myDefaultDate.day, myDefaultDate.month, myDefaultDate.year)
+        # update widget id (append _widget)
+        myFinal_attrs['id'] = myFinal_attrs['id'] + '_widget'
+
+        if theValue:
+            # logging for Sentry, not really needed, but not sure if there is
+            # a case when theValue is actually required
+            # TRAP TRIGGER
+            logging.error('DateTimeWidget theValue is not None: %s' % theValue)
 
         myA = u'''
 <script type="text/javascript">
-    $(function() {
-        //acivate widget on document ready
-        $('#%(id)s').sansa_datepicker();
-    });
+$(function() {
+    //acivate widget on document ready
+    $('#%(id)s_widget').sansa_datepicker();
+});
 </script>
-<div %(attrs)s ></div>
-<input type="hidden" name="%(name)s" id="%(id)s" value="%(defaultDate)s" />''' % {
-            'id': myId, 'defaultDatePropery': myDefaultDateProperty,
-            'defaultDate': myDefaultDate, 'name': theName, 'attrs':flatatt(final_attrs)}
+<div %(attrs)s>
+<input type="hidden" name="%(name)s" id="%(id)s"/>
+</div>
+''' % {'id': myId, 'name': theName, 'attrs': flatatt(myFinal_attrs)}
 
         return mark_safe(myA)
 
