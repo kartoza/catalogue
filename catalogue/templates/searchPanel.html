@@ -187,6 +187,8 @@
     </script>
 
   {% if myForm %}
+    {# add additional form media, defined by form Media class}
+    {{ myForm.media }}
     <form enctype="multipart/form-data" action="/search/" method="post" id="search_form" class="inline">
       {{ myForm.non_field_errors }}
       {{ myForm.isAdvanced }}

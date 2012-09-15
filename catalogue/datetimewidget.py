@@ -43,7 +43,7 @@ from dateutil.relativedelta import relativedelta
 from django.utils.encoding import force_unicode
 from django import forms
 from django.utils.safestring import mark_safe
-
+from django.forms.util import flatatt
 
 # Support dmy formats
 # (see http://dantallis.blogspot.com/2008/11/date-validation-in-django.html )
@@ -84,7 +84,6 @@ class DateTimeWidget(forms.DateInput):
         if not 'id' in final_attrs:
             final_attrs['id'] = u'%s_id' % (theName)
         myId = final_attrs['id']
-
         #set defaults to start and end days of month if not set explicitly
         myDate = datetime.date.today()
         if 'start' in theName and not myDefaultDate:
@@ -108,67 +107,15 @@ class DateTimeWidget(forms.DateInput):
         myA = u'''
 <script type="text/javascript">
     $(function() {
-        $("#%s-widget").datepicker({
-        minDate: new Date(1970, 1, 1),
-        yearRange: "1972:+1",
-        dateFormat: 'dd-m-yy',
-        maxDate: '+1Y',
-        changeMonth: true,
-        changeYear: true,
-        onChangeMonthYear: function(year, month, inst) {
-            try {
-            if (changingDate) {
-                return;
-            }
-            } catch(e) {
-            //do nothing - handler for undefined reference to changingDate
-            }
-            changingDate = true;
-            myId = "%s";
-            if ( myId.substring(0,8) == "id_start")
-            {
-            $("#%s-widget").datepicker("setDate", "01-" + month + "-" + year);
-            }
-            else if ( myId.substring(0,6) == "id_end")
-            {
-            //calculate the last day of the month
-            //see http://javascript.about.com/library/bllday.htm
-            var myLastDay = new Date(year, month, 0).getDate();
-            $("#%s-widget").datepicker("setDate",
-                myLastDay + "-" + month + "-" + year);
-            }
-            // returns a js date object
-            var myDate = $("#%s-widget").datepicker("getDate");
-            var myDay = myDate.getDate();
-            if ( myDay < 10 ) //zero pad the day
-            {
-            myDay = "0" + myDay;
-            }
-            //+1 below because js months start at 0
-            var myMonth = myDate.getMonth() + 1;
-            if ( myMonth < 10 ) //zero pad the day
-            {
-            myMonth = "0" + myMonth;
-            }
-            var myYear  = myDate.getFullYear();
-            var myTextDate = myDay + "-" + myMonth + "-" + myYear;
-            $('#%s').val( myTextDate );
-            changingDate = false;
-        },
-        onSelect: function( theDate, inst)
-            {
-            check_search_dates();
-            $('#%s').val( theDate );
-            }
-        %s
-        });
-    $("#%s-widget").datepicker("setDate", "%s");
+        //acivate widget on document ready
+        $('#%(id)s').sansa_datepicker();
     });
 </script>
-<div id="%s-widget"></div>
-<input type="hidden" name="%s" id="%s" value="%s" />''' % (
-            myId, myId, myId, myId, myId, myId, myId, myDefaultDateProperty,
-            myId, myDefaultDate, myId, theName, myId, myDefaultDate)
+<div %(attrs)s ></div>
+<input type="hidden" name="%(name)s" id="%(id)s" value="%(defaultDate)s" />''' % {
+            'id': myId, 'defaultDatePropery': myDefaultDateProperty,
+            'defaultDate': myDefaultDate, 'name': theName, 'attrs':flatatt(final_attrs)}
+
         return mark_safe(myA)
 
     def value_from_datadict(self, theData, theFiles, theName):

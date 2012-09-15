@@ -160,14 +160,19 @@ class AdvancedSearchForm(forms.ModelForm):
     # ABP: the common part: will be searched on GenericProducts class only
     start_datepicker = forms.DateField(
         widget=DateTimeWidget(
-            attrs={'title': 'Choose the start date for this date range.'}),
+            attrs={
+                'title': 'Choose the start date for this date range.',
+                'data-date_focus': 'start'}),
         required=False, label='Start date', input_formats=DATE_FORMATS,
         error_messages={
             'required': 'Entering a start date for your search is required.'},
         help_text='Start date is required. DD-MM-YYYY.')
     end_datepicker = forms.DateField(
-        widget=DateTimeWidget, required=False, label='End date',
-        input_formats=DATE_FORMATS,
+        widget=DateTimeWidget(
+            attrs={
+                'title': 'Choose the end date for this date range.',
+                'data-date_focus': 'end'}),
+        required=False, label='End date', input_formats=DATE_FORMATS,
         error_messages={
             'required': 'Entering an end date for your search is required.'},
         help_text='End date is required. DD-MM-YYYY.')
@@ -232,6 +237,9 @@ class AdvancedSearchForm(forms.ModelForm):
         exclude = (
             'ip_position', 'guid', 'keywords', 'geometry_file', 'user',
             'deleted', 'processing_level')
+
+    class Media:
+        js = ("/media/js/widget.sansa-datepicker.js",)
 
     def __init__(self, *args, **kwargs):
         """
