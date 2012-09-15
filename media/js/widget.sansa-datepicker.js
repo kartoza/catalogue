@@ -1,7 +1,8 @@
 $.widget( "linfinity.sansa_datepicker", {
     // default options
     options: {
-        dateFormat: 'd-m-yy'
+        dateFormat: 'd-m-yy',
+        currentDate: new Date()
     },
 
     // the constructor
@@ -17,7 +18,11 @@ $.widget( "linfinity.sansa_datepicker", {
         }
 
         //set default_date
-        this.current_date = new Date();
+        if (typeof(this.options.currentDate) === 'string') {
+            this.current_date = this._parse_date(this.options.currentDate);
+        } else {
+            this.current_date = this.options.currentDate;
+        }
 
         this.element.datepicker({
             minDate: new Date(1970, 1, 1),
@@ -36,6 +41,9 @@ $.widget( "linfinity.sansa_datepicker", {
                 } else {
                     //if date_focus is not set
                 }
+            },
+            onSelect: function (theDate, inst) {
+                self._set_date(self._parse_date(theDate));
             }
         });
 
@@ -45,7 +53,7 @@ $.widget( "linfinity.sansa_datepicker", {
         } else if (this.options.date_focus === 'end') {
             self._set_date(self._get_last_day_of_month(this.current_date.getFullYear(), this.current_date.getMonth()+1));
         } else {
-            //set TODAY as current date
+            //set current date
             this._set_date(this.current_date);
         }
     },

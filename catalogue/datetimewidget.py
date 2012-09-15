@@ -38,6 +38,7 @@ __copyright__ = 'South African National Space Agency'
 import datetime
 import time
 import logging
+from dateutil.relativedelta import relativedelta
 
 from django import forms
 from django.utils.safestring import mark_safe
@@ -68,22 +69,25 @@ class DateTimeWidget(forms.DateInput):
         myFinal_attrs['id'] = myFinal_attrs['id'] + '_widget'
 
         if theValue:
-            # logging for Sentry, not really needed, but not sure if there is
-            # a case when theValue is actually required
-            # TRAP TRIGGER
-            logging.error('DateTimeWidget theValue is not None: %s' % theValue)
+            myCurrentDate = theValue
+        else:
+            # set current date to YESTERDAY
+            myCurrentDate = datetime.date.today() + relativedelta(days=-1)
 
         myA = u'''
 <script type="text/javascript">
 $(function() {
     //acivate widget on document ready
-    $('#%(id)s_widget').sansa_datepicker();
+    $('#%(id)s_widget').sansa_datepicker({
+        currentDate: "%(currentDate)s"
+        });
 });
 </script>
 <div %(attrs)s>
 <input type="hidden" name="%(name)s" id="%(id)s"/>
 </div>
-''' % {'id': myId, 'name': theName, 'attrs': flatatt(myFinal_attrs)}
+''' % {'id': myId, 'name': theName, 'attrs': flatatt(myFinal_attrs),
+       'currentDate': myCurrentDate.strftime(self.dformat)}
 
         return mark_safe(myA)
 
