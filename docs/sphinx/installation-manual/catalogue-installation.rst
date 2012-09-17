@@ -639,6 +639,38 @@ Now run sentry and it should bd available at http://catalogue.sansa.org.za/sentr
 
   sentry --config=sentry.conf.py start
 
+Sentry daemon setup
+-------------------
+
+First ensure that no virtualenv is enabled::
+  
+  deactivate 
+
+Then install supervisor and create a configuration file::
+  
+  sudo pip install supervisor
+  echo_supervisord_conf > /tmp/supervisord.conf
+  sudo mv /tmp/supervisord.conf /etc/
+  sudo vim /etc/supervisord.conf 
+
+Now add the following section to the end of the config file
+(:file:`/etc/supervisord.conf`)::
+  
+  [program:sentry-web]
+  directory=/opt/sentry/
+  command=/opt/sentry/python/bin/sentry --config=sentry.conf.py start http
+  autostart=true
+  autorestart=true
+  redirect_stderr=true
+
+Finally start the supervisor daemon::
+  
+  supervisord
+
+And test it using either of these urls:
+
+* http://localhost.9000  (if logged in locally at the server)
+* http://sentry.sansa.org.za (general remote access)
 
 Sentry client setup
 -------------------
