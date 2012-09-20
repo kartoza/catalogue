@@ -205,7 +205,7 @@ def downloadOrder(theRequest, theId):
         myResponder.file_name = u'products_for_order_%s' % myOrder.id
         return  myResponder.write_order_products(
             myOrder.searchrecord_set.all())
-    elif 'kml' in theRequest:
+    elif 'kml' in theRequest.GET:
         return render_to_kml('kml/searchRecords.kml', {
             'mySearchRecords': myOrder.searchrecord_set.all(),
             'external_site_url': settings.DOMAIN,
