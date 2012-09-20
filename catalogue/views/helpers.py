@@ -1066,9 +1066,9 @@ def writeThumbToZip(mySearchRecord, myZip):
             with open(myImageFile, 'rb') as myFile:
                 myZip.writestr('%s.jpg' % mySearchRecord.product.product_id,
                                myFile.read())
-                logging.error('Adding thumbnail image to archive.')
+                logging.info('Adding thumbnail image to archive.')
         else:
-            logging.info('Thumbnail image not found: %s' % myImageFile)
+            logging.error('Thumbnail image not found: %s' % myImageFile)
         if os.path.isfile(myWLDFile):
             with open(myWLDFile, 'rb') as myFile:
                 myZip.writestr('%s.wld' % mySearchRecord.product.product_id,
