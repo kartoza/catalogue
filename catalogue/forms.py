@@ -239,7 +239,9 @@ class AdvancedSearchForm(forms.ModelForm):
             'deleted', 'processing_level')
 
     class Media:
-        js = ("/media/js/widget.sansa-datepicker.js",)
+        js = (
+            "/media/js/widget.sansa-datepicker.js",
+            "/media/js/widget.sansa-daterangecontainer.js",)
 
     def __init__(self, *args, **kwargs):
         """
