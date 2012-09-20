@@ -43,7 +43,7 @@ def getGeometryFromUploadedFile(theRequest, theForm, theFileField):
         id="search_form">
     """
     logging.info('Form cleaned data: ' + str(theForm.cleaned_data))
-    if theRequest.FILES[theFileField]:
+    if theRequest.FILES.get(theFileField):
         logging.debug('Using geometry from file.')
 
         #use last part of filename as extension
