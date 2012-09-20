@@ -80,7 +80,7 @@
         //debugger;
         $('.adv_fld').not('.adv_search_all, .adv_search_' + search_type).hide();
         $('fieldset').each(function(){
-          if(!this.classList.contains('simple_search') && !$(this).find('.adv_fld:visible').length) {
+          if(!$(this).hasClass('simple_search') && !$(this).find('.adv_fld:visible').length) {
             $(this).hide();
           };
         });
