@@ -1,7 +1,7 @@
 $.widget( "linfinity.sansa_datepicker", {
     // default options
     options: {
-        dateFormat: 'd-m-yy',
+        dateFormat: 'dd-mm-yy',
         currentDate: new Date()
     },
 
@@ -74,7 +74,7 @@ $.widget( "linfinity.sansa_datepicker", {
     },
 
     _get_first_day_of_month:function (year, month) {
-        return this._parse_date("1-" + month + "-" + year);
+        return this._parse_date("01-" + month + "-" + year);
     },
     _get_last_day_of_month:function(year, month){
         //calculate the last day of the month
