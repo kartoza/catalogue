@@ -18,7 +18,7 @@ Do this (on the server)::
    cd sac
 
 Or on a desktop development system::
-   
+
    cd /home
    sudo mkdir web
    sudo chown -R <username>.<username> web
@@ -52,26 +52,26 @@ environment.::
 Set your ssh config up
 ^^^^^^^^^^^^^^^^^^^^^^
 
-To get started, first add an entry like this to your ssh config file in 
+To get started, first add an entry like this to your ssh config file in
 :file:`~/.ssh/config`::
 
    Host rhino
      User <your user>
      Port 8697
      HostName hbk-rhino.sansa.org.za
-     FallBackToRsh no  
+     FallBackToRsh no
 
    Host lion
      User <your user>
      Port 8697
      HostName hbk-lion.sansa.org.za
-     FallBackToRsh no  
-     
+     FallBackToRsh no
+
    Host elephant
      User <your user>
      Port 8697
      HostName hbk-elephant.sansa.org.za
-     FallBackToRsh no  
+     FallBackToRsh no
 
 
 Checkout Sources
@@ -130,7 +130,7 @@ Then make sure the virtual environment is active:
 ``source ../python/bin/activate``
 
 Then extract the python informix client to tmp and install it into your venv::
-   
+
    cd /tmp/
    tar xfz /home/timlinux/Informix/InformixDBPython-2.5.tar.gz
    cd InformixDB-2.5/
@@ -165,18 +165,18 @@ GDAL Python Bindings - Ubuntu 12.04 - Python virtual environment
 
 **Optional:**
 
-You may want to upgrade to newer gdal:: 
-   
+You may want to upgrade to newer gdal::
+
    sudo gedit /etc/apt/sources.list
 
 Then add these two lines
 
-   deb http://ppa.launchpad.net/ubuntugis/ubuntugis-unstable/ubuntu precise main 
+   deb http://ppa.launchpad.net/ubuntugis/ubuntugis-unstable/ubuntu precise main
    deb-src http://ppa.launchpad.net/ubuntugis/ubuntugis-unstable/ubuntu precise main
 
 
 Now upgrade your gdal doing this::
-   
+
    sudo apt-get update
    sudo apt-get upgrade
    dpkg -l | grep gdal
@@ -194,7 +194,7 @@ If your gdal does not work, try the procedure below.
 **On the live system (legacy notes)**
 
 To install GDAL Python bindings in virtual environment, manual installation
-is required. 
+is required.
 
 .. warning:: On live server dont forget to copy swq.h header, in active
    virtual environment execute:
@@ -203,7 +203,7 @@ First delete GDAL folder ``$VIRTUAL_ENV/build/GDAL``, if it exists.
 
 On Ubuntu 12.04 we have 1.7.2 GDAL library, so we need to install correct
 Python GDAL library from pypi::
-   
+
    pip install --no-install GDAL==1.7
    cd $VIRTUAL_ENV/build/GDAL
    rm setup.cfg
@@ -222,11 +222,11 @@ Install django and required django apps
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 To install django, django authentication etc into our virtual environment do::
-   
+
    pip install -r sac_catalogue/REQUIREMENTS.txt
 
 
-Then make sure the appropriate settings from djangodblog in settings.py.templ are 
+Then make sure the appropriate settings from djangodblog in settings.py.templ are
 deployed in your production settings.py
 
 The full list of packages installed using the REQUIREMENTS file is:
@@ -248,7 +248,7 @@ when trying to view jpg thumbs::
    decoder jpeg not available
 
 then our PIL is missing jpg (and probably png support). To fix it do::
-   
+
    ../python/bin/activate
    pip uninstall pil
    sudo apt-get install libjpeg-dev libfreetype6 libfreetype6-dev
@@ -257,7 +257,7 @@ then our PIL is missing jpg (and probably png support). To fix it do::
    cd Imaging-1.1.7
 
 Now edit setup.py to set these (for 64 bit)::
-   
+
    TCL_ROOT = "/usr/lib/x86_64-linux-gnu/", "/usr/include"
    JPEG_ROOT = "/usr/lib/x86_64-linux-gnu/", "/usr/include"
    ZLIB_ROOT = "/usr/lib/x86_64-linux-gnu/", "/usr/include"
@@ -266,7 +266,7 @@ Now edit setup.py to set these (for 64 bit)::
 
 
 Now edit setup.py to set these (for 32 bit)::
-   
+
    TCL_ROOT = "/usr/lib/i386-linux-gnu/", "/usr/include"
    JPEG_ROOT = "/usr/lib/i386-linux-gnu/", "/usr/include"
    ZLIB_ROOT = "/usr/lib/i386-linux-gnu/", "/usr/include"
@@ -275,11 +275,11 @@ Now edit setup.py to set these (for 32 bit)::
 
 
 Test if your configs work::
-   
+
    python setup.py build_ext -i
 
 The build report should show::
-   
+
    *** TKINTER support not available (Tcl/Tk 8.5 libraries needed)
    --- JPEG support available
    --- ZLIB (PNG/ZIP) support available
@@ -287,15 +287,15 @@ The build report should show::
    *** LITTLECMS support not available
 
 Now build pil::
-   
+
    python setup.py install
 
 Further info on django registration
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 You may also want to read this `article on <http://devdoodles.wordpress.com/2009/02/16/user-authentication-with-django-registration/>`_
-if you want more info on how the registration stuff works.  
-  
+if you want more info on how the registration stuff works.
+
 .. note:: You need to log in to the admin area of the site and change the
    domain name in the sites table from something other than 'example.com',
    otherwise the registration middleware will send the reminder with an incorrect
@@ -305,25 +305,25 @@ if you want more info on how the registration stuff works.
 Settings configuration
 ^^^^^^^^^^^^^^^^^^^^^^
 
-Copy :file:`settings.py.template` to :file:`settings.py` and then 
-modify settings.py as needed (probably you just need to set 
+Copy :file:`settings.py.template` to :file:`settings.py` and then
+modify settings.py as needed (probably you just need to set
 the eth adapter and db connection settings).
 
 Database setup
 ^^^^^^^^^^^^^^
 
 Create the database using::
-   
+
    createlang plpgsql template1
    psql template1 < /usr/share/postgresql-8.3-postgis/lwpostgis.sql
    psql template1 < /usr/share/postgresql-8.3-postgis/spatial_ref_sys.sql
    createdb sac
    createdb acs
 
-.. warning:: There is a known bug with django 1.2 and postgresql 9.1, 
+.. warning:: There is a known bug with django 1.2 and postgresql 9.1,
    which requires that you make the following alteration to your postgresql.conf
    configuration::
-      
+
       ###########################
       #Added by Tim
       ###########################
@@ -348,7 +348,7 @@ And if you have the legacy acs catalogue do:
 python manage.py syncdb --database=acs
 ``````````````````````````````````````
 
-The django fixtures included with this project should populate the 
+The django fixtures included with this project should populate the
 initial database when you run the above command.
 
 Restoring an existing database
@@ -361,7 +361,7 @@ Nightly backups are made on lion at:
 ``````````````````````````````````````````````
 
 To restore the backup do::
-   
+
    pg_restore sac_postgis_30August2010.dmp | psql sac
    pg_restore acs_postgis_30August2010.dmp | psql acs
 
@@ -374,7 +374,7 @@ Setup apache (mod  python way)
 
 Make sure you have mod_expires and mod_deflate installed.
 
-The assumption is that you are using name based virtual hosts and that the 
+The assumption is that you are using name based virtual hosts and that the
 catalogue will run at the root of such a virtual host. Add to you apache site
 config::
 
@@ -383,15 +383,15 @@ config::
 
 Modify as appropriate your closed catalogue-modpy file the source tree then
 link it to apache.::
-   
+
    sudo ln -s catlogue-modpy /etc/apache2/sites-available/catalogue-modpy
 
 Also do::
-   
+
    sudo apt-get install libapache2-mod-python
 
 Now deploy the site::
-   
+
    sudo a2ensite catalogue-modpy
    sudo /etc/init.d/apache reload
 
@@ -399,21 +399,21 @@ Now deploy the site::
 Setup apache (mod_wsgi way)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The assumption is that you are using name based virtual hosts and that the 
+The assumption is that you are using name based virtual hosts and that the
 catalogue will run at the root of such a virtual host. Add to you apache site config:
 
-Modify as appropriate a copy of the apache-site-wsgi.templ file found in the apache 
+Modify as appropriate a copy of the apache-site-wsgi.templ file found in the apache
 dir in the source tree then link it to apache::
-   
+
    cd apache
    cp apache-site-wsgi.templ catlogue-wsgi
 
 Now create a symlink::
-   
+
    sudo ln -s catlogue-wsgi /etc/apache2/sites-available/catalogue-wsgi
 
 Also do::
-   
+
    sudo apt-get install libapache2-mod-wsgi
 
 Now deploy the site::
@@ -427,7 +427,7 @@ Copy over the ribbon
 There is a ribbon image that displays in the top left corner of the site that
 is used to convey version numbers etc. Since this may vary from deployment to
 deployment, you should copy over an appropriate ribbon e.g.::
-   
+
    cp media/images/ribbon_template.png media/images/ribbon.png
 
 
@@ -453,25 +453,25 @@ Some parts of this site use cross site XHttpRequests. This is not allowed in
 the spec (to prevent cross site scripting attacks) so to get around this you
 need to install a proxy cgi on the django hosting server *if the mapserver
 instance is on a different physical server*::
-   
+
    cd /usr/lib/cgi-bin
    sudo wget -O proxy.cgi \
    http://trac.openlayers.org/browser/trunk/openlayers/examples/proxy.cgi?format=raw
    sudo chmod +x /usr/lib/cgi-bin/proxy.cgi
 
-Once you have installed the proxy.cgi you need to configure it to tell it the 
-list of allowed servers it can proxy for. This is to prevent it becoming 
-an open relay on the internet. Edit /usr/lib/cgi-bin/proxy/cgi and change 
+Once you have installed the proxy.cgi you need to configure it to tell it the
+list of allowed servers it can proxy for. This is to prevent it becoming
+an open relay on the internet. Edit /usr/lib/cgi-bin/proxy/cgi and change
 line 18 to look like this::
 
    allowedHosts = [ '196.35.94.243','lion', ]
 
 I also changed line 32 to look like this::
-   
+
    url = fs.getvalue('url', "http://196.35.94.243")
 
 
-so that the default proxy url is our wms server. See 
+so that the default proxy url is our wms server. See
 http://faq.openlayers.org/proxyhost/all/ for more info...
 
 
@@ -481,8 +481,8 @@ Creating branches
 .. note:: This section uses svn commands and should be updated to use git
    equivalents.
 
-When the code gets stabilised to a certain point you should create a branch 
-to mark that stable code base and then deploy it on the live server. To 
+When the code gets stabilised to a certain point you should create a branch
+to mark that stable code base and then deploy it on the live server. To
 create the branch do e.g.::
 
    svn cp https://196.35.94.196/svn/trunk/sac_catalogue \
@@ -507,7 +507,7 @@ Creation of the ReadOnly db user
 This should be done on the database server i.e. elephant
 
 This user is required for mapserver access to some of the tables::
-   
+
    sudo su - postgres
    createuser -S -D -R -l -P -E -e readonly
    exit
@@ -597,9 +597,9 @@ documented above::
   pip install sentry
   sentry init sentry.conf.py
   sentry --config=sentry.conf.py upgrade
-  vim sentry.conf.py 
+  vim sentry.conf.py
 
-At this point I needed to add the following to the top of the 
+At this point I needed to add the following to the top of the
 :file:`sentry.conf.py` file::
 
   #Added by Tim
@@ -610,17 +610,18 @@ At this point I needed to add the following to the top of the
 
 And also set the following::
 
-  SENTRY_URL_PREFIX='http://sansa.org.za'
+  SENTRY_URL_PREFIX='http://sentry.sansa.org.za'
 
 Then setup apache to use a reverse proxy.::
 
-  sudo vim /etc/apache2/sites-enabled/catalogue.wsgi 
+  sudo vim /etc/apache2/sites-enabled/catalogue.wsgi
 
 And add these lines::
 
   ProxyPass /sentry/ http://localhost:9000/
   ProxyPassReverse /sentry/ http://localhost:9000/
-  <Location /sentry/>
+  ProxyRequests     Off
+  <Location />
     Order deny,allow
     Allow from all
     SetHandler None
@@ -643,19 +644,19 @@ Sentry daemon setup
 -------------------
 
 First ensure that no virtualenv is enabled::
-  
-  deactivate 
+
+  deactivate
 
 Then install supervisor and create a configuration file::
-  
+
   sudo pip install supervisor
   echo_supervisord_conf > /tmp/supervisord.conf
   sudo mv /tmp/supervisord.conf /etc/
-  sudo vim /etc/supervisord.conf 
+  sudo vim /etc/supervisord.conf
 
 Now add the following section to the end of the config file
 (:file:`/etc/supervisord.conf`)::
-  
+
   [program:sentry-web]
   directory=/opt/sentry/
   command=/opt/sentry/python/bin/sentry --config=sentry.conf.py start http
@@ -664,7 +665,7 @@ Now add the following section to the end of the config file
   redirect_stderr=true
 
 Finally start the supervisor daemon::
-  
+
   supervisord
 
 And test it using either of these urls:
