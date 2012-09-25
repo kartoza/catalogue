@@ -35,8 +35,7 @@ from catalogue.models import (
     License)
 from catalogue.forms import IntegersCSVIntervalsField
 # for using django Q() query defs
-from helpers import (
-    standardLayersWithCart,)
+from helpers import standardLayersWithCart
 
 DEFAULT_EXTENT = (
     '(-61.773122863038, -74.531249997024, 128.32031249488, 70.612614236677)')

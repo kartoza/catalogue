@@ -270,7 +270,7 @@ def downloadOrderMetadata(theRequest, theId):
 
 @login_required
 def viewOrder(theRequest, theId):
-    '''This view is strictly for staff only or the order owner'''
+    """This view is strictly for staff only or the order owner"""
     # check if the post ended with /?xhr
     # we do this as well as is_ajax call because we
     # may have arrived at this page via a response redirect
@@ -395,7 +395,8 @@ def coverageForOrder(theOrder, theSearchRecords):
         else:
             myCoverage['IntersectedArea'] = 'Not applicable'
             myCoverage['ClipZone'] = 'Not applicable'
-    except:
+    except Exception, e:
+        logging.info('Error calculating coverage for order %s' % e.message)
         pass
     return myCoverage
 
