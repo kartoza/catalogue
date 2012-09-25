@@ -35,4 +35,4 @@ pylint
 pyflakes
 pep8
 jslint
-
+django-offline-messages==0.2.6

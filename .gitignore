@@ -7,7 +7,7 @@ desktop.ini
 apache/apache-site-wsgi
 apache/django.wsgi
 scenes_out_projected/
-settings.py
+settings_local.py
 thumbs_out/
 *.*~
 *~
@@ -48,3 +48,6 @@ docs/t2t/SANSA-Catalogue-Manual.out
 docs/t2t/SANSA-Catalogue-Manual.tex
 docs/t2t/SANSA-Catalogue-Manual.toc
 *.rc
+*.dmp
+*.orig
+build

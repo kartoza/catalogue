@@ -114,6 +114,7 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.admin',
     'django.contrib.gis',
+    'offline_messages',
     'registration',
     'raven',  # for sentry logging
     'raven.contrib.django',  # for sentry logging

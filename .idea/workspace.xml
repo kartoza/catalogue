@@ -2,7 +2,18 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4914a05c-a80a-45d2-88ac-5248c1d0b3d9" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/other.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/testrunner.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/catalogue/templates/messageForm.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/catalogue/templates/messages.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/catalogue/views/messaging.py" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/settings.py.template" afterPath="$PROJECT_DIR$/settings_local.py.template" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/sac_catalogue.iml" afterPath="$PROJECT_DIR$/.idea/sac_catalogue.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/REQUIREMENTS.txt" afterPath="$PROJECT_DIR$/REQUIREMENTS.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/catalogue/forms.py" afterPath="$PROJECT_DIR$/catalogue/forms.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/settings.py" afterPath="$PROJECT_DIR$/settings.py" />
     </list>
     <ignored path="sac_catalogue.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -23,57 +34,84 @@
     <flatten value="false" />
     <groupTables value="false" />
   </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FavoritesManager">
     <favorites_list name="sac_catalogue" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file leaf-file-name="test_spot_ingestor.py" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/catalogue/tests/test_spot_ingestor.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="168" column="19" selection-start="6190" selection-end="6190" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="searcher.py" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/catalogue/views/searcher.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="207" column="68" selection-start="8390" selection-end="8390" vertical-scroll-proportion="-4.9814816">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="helpers.py" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/catalogue/views/helpers.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="orders.py" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/catalogue/views/orders.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="179" column="0" selection-start="5655" selection-end="5715" vertical-scroll-proportion="0.51448435">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="test_acquisitionmode.json" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/catalogue/fixtures/test_acquisitionmode.json">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <splitter split-orientation="horizontal" split-proportion="0.5">
+      <split-first>
+        <leaf>
+          <file leaf-file-name="settings.py" pinned="false" current="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/settings.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state line="184" column="1" selection-start="5622" selection-end="5622" vertical-scroll-proportion="0.0">
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="others.py" pinned="false" current="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/catalogue/views/others.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state line="0" column="0" selection-start="0" selection-end="629" vertical-scroll-proportion="0.0">
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="messaging.py" pinned="false" current="true" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/catalogue/views/messaging.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state line="117" column="53" selection-start="4559" selection-end="4559" vertical-scroll-proportion="0.3325554">
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="forms.py" pinned="false" current="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/catalogue/forms.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state line="626" column="34" selection-start="24926" selection-end="24926" vertical-scroll-proportion="0.0">
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="views.py" pinned="false" current="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/../../qrust/qrust/linfiniti/views.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state line="20" column="0" selection-start="944" selection-end="976" vertical-scroll-proportion="0.0">
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+        </leaf>
+      </split-first>
+      <split-second>
+        <leaf>
+          <file leaf-file-name="settings_local.py" pinned="false" current="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/settings_local.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state line="12" column="23" selection-start="309" selection-end="309" vertical-scroll-proportion="0.0">
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="forms.py" pinned="false" current="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/../../qrust/qrust/linfiniti/forms.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state line="7" column="0" selection-start="203" selection-end="1522" vertical-scroll-proportion="0.15519254">
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+        </leaf>
+      </split-second>
+    </splitter>
   </component>
   <component name="FindManager">
     <FindUsagesManager>
@@ -86,14 +124,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/catalogue/models/dictionaries.py" />
-        <option value="$PROJECT_DIR$/catalogue/fixtures/test_sensortype.json" />
-        <option value="$PROJECT_DIR$/catalogue/tests/graphtag_templatetag.py" />
-        <option value="$PROJECT_DIR$/spot.txt" />
-        <option value="$PROJECT_DIR$/catalogue/templates/index.html" />
-        <option value="$PROJECT_DIR$/catalogue/ingestors/spot.py" />
-        <option value="$PROJECT_DIR$/catalogue/tests/taskingrequest_model.py" />
-        <option value="$PROJECT_DIR$/catalogue/tests/opticalproduct_model.py" />
         <option value="$PROJECT_DIR$/catalogue/tests/geospatialproduct_model.py" />
         <option value="$PROJECT_DIR$/catalogue/tests/genericsensorproduct_model.py" />
         <option value="$PROJECT_DIR$/catalogue/tests/genericimageryproduct_model.py" />
@@ -102,14 +132,22 @@
         <option value="$PROJECT_DIR$/catalogue/tests/radarproduct_model.py" />
         <option value="$PROJECT_DIR$/catalogue/tests/test_spot_ingestor.py" />
         <option value="$PROJECT_DIR$/catalogue/views/searcher.py" />
+        <option value="$PROJECT_DIR$/catalogue/views/orders.py" />
+        <option value="$PROJECT_DIR$/settings.py" />
+        <option value="$PROJECT_DIR$/settings_local.py" />
+        <option value="$PROJECT_DIR$/settings_local.py.templ" />
+        <option value="$PROJECT_DIR$/docs/sphinx/installation-manual/catalogue-installation.rst" />
+        <option value="$PROJECT_DIR$/../../qrust/qrust/linfiniti/views.py" />
+        <option value="$PROJECT_DIR$/catalogue/forms.py" />
+        <option value="$PROJECT_DIR$/catalogue/views/messaging.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="3839" />
-    <option name="y" value="40" />
-    <option name="width" value="1922" />
-    <option name="height" value="1042" />
+    <option name="x" value="1918" />
+    <option name="y" value="9" />
+    <option name="width" value="1924" />
+    <option name="height" value="1036" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -204,12 +242,13 @@
   <component name="PropertiesComponent">
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="recentsLimit" value="5" />
     <property name="options.lastSelected" value="preferences.intentionPowerPack" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../farminfo/farminfo/valuations/tests" />
-    <property name="dynamic.classpath" value="false" />
-    <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="recentsLimit" value="5" />
+    <property name="restartRequiresConfirmation" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../qrust/qrust/linfiniti/forms.py" />
     <property name="options.searchVisible" value="true" />
+    <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="dynamic.classpath" value="false" />
   </component>
   <component name="PyConsoleOptionsProvider">
     <option name="myPythonConsoleState">
@@ -221,11 +260,34 @@
       <PyConsoleSettings />
     </option>
   </component>
-  <component name="RunManager" selected="Django tests.All Catalogue Tests">
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Django server.sac_catalogue">
     <configuration default="false" name="Default" type="com.intellij.persistence.run.ConsoleRunConfigurationType" factoryName="Query Language Console" temporary="true">
       <option name="VM_PARAMETERS" value="" />
       <option name="USER_CFG_CLASS" />
       <option name="CONTEXT_PROVIDER" />
+      <method />
+    </configuration>
+    <configuration default="false" name="Test: catalogue.SimpleTest.test_MissionGroup_count" type="DjangoTestsConfigurationType" factoryName="Django tests" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="$PROJECT_DIR$/../python/bin/python" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <module name="sac_catalogue" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+      <option name="TARGET" value="catalogue.SimpleTest.test_MissionGroup_count" />
+      <option name="SETTINGS_FILE" value="" />
+      <option name="CUSTOM_SETTINGS" value="false" />
+      <RunnerSettings RunnerId="PyDebugRunner" />
+      <ConfigurationWrapper RunnerId="PyDebugRunner" />
       <method />
     </configuration>
     <configuration default="true" type="DjangoTestsConfigurationType" factoryName="Django tests">
@@ -244,22 +306,6 @@
       <option name="CUSTOM_SETTINGS" value="false" />
       <method />
     </configuration>
-    <configuration default="true" type="docs" factoryName="Docutils task">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="" />
-      <option name="IS_MODULE_SDK" value="false" />
-      <module name="sac_catalogue" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="docutils_input_file" value="" />
-      <option name="docutils_output_file" value="" />
-      <option name="docutils_params" value="" />
-      <option name="docutils_task" value="" />
-      <option name="docutils_open_in_browser" value="false" />
-      <method />
-    </configuration>
     <configuration default="true" type="PythonConfigurationType" factoryName="Python">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -276,7 +322,7 @@
       <option name="MULTIPROCESS" value="false" />
       <method />
     </configuration>
-    <configuration default="true" type="tests" factoryName="Unittests">
+    <configuration default="true" type="docs" factoryName="Docutils task">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs />
@@ -285,14 +331,11 @@
       <option name="IS_MODULE_SDK" value="false" />
       <module name="sac_catalogue" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="" />
-      <option name="CLASS_NAME" value="" />
-      <option name="METHOD_NAME" value="" />
-      <option name="FOLDER_NAME" value="" />
-      <option name="TEST_TYPE" value="TEST_SCRIPT" />
-      <option name="PATTERN" value="" />
-      <option name="USE_PATTERN" value="false" />
-      <option name="PUREUNITTEST" value="true" />
+      <option name="docutils_input_file" value="" />
+      <option name="docutils_output_file" value="" />
+      <option name="docutils_params" value="" />
+      <option name="docutils_task" value="" />
+      <option name="docutils_open_in_browser" value="false" />
       <method />
     </configuration>
     <configuration default="true" type="Python.DjangoServer" factoryName="Django server">
@@ -314,6 +357,25 @@
       <option name="runNoReload" value="false" />
       <option name="useCustomRunCommand" value="false" />
       <option name="customRunCommand" value="" />
+      <method />
+    </configuration>
+    <configuration default="true" type="tests" factoryName="Unittests">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <module name="sac_catalogue" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="FOLDER_NAME" value="" />
+      <option name="TEST_TYPE" value="TEST_SCRIPT" />
+      <option name="PATTERN" value="" />
+      <option name="USE_PATTERN" value="false" />
+      <option name="PUREUNITTEST" value="true" />
       <method />
     </configuration>
     <configuration default="true" type="tests" factoryName="Doctests">
@@ -359,17 +421,25 @@
       <option name="runNoReload" value="false" />
       <option name="useCustomRunCommand" value="false" />
       <option name="customRunCommand" value="" />
+      <RunnerSettings RunnerId="PyDebugRunner" />
       <RunnerSettings RunnerId="PythonRunner" />
+      <ConfigurationWrapper RunnerId="PyDebugRunner" />
       <ConfigurationWrapper RunnerId="PythonRunner" />
       <method />
     </configuration>
-    <list size="5">
+    <list size="6">
       <item index="0" class="java.lang.String" itemvalue="Django server.sac_catalogue" />
       <item index="1" class="java.lang.String" itemvalue="Django tests.Spot Ingestor Test" />
       <item index="2" class="java.lang.String" itemvalue="Django tests.Email Notification Test" />
       <item index="3" class="java.lang.String" itemvalue="Django tests.All Catalogue Tests" />
       <item index="4" class="java.lang.String" itemvalue="Query Language Console.Default" />
+      <item index="5" class="java.lang.String" itemvalue="Django tests.Test: catalogue.SimpleTest.test_MissionGroup_count" />
     </list>
+    <recent_temporary>
+      <list size="1">
+        <item index="0" class="java.lang.String" itemvalue="Django tests.Test: catalogue.SimpleTest.test_MissionGroup_count" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="ShelveChangesManager" show_recycled="false" />
   <component name="SvnConfiguration" maxAnnotateRevisions="500" myUseAcceleration="nothing" myAutoUpdateAfterCommit="false" cleanupOnStartRun="false">
@@ -399,15 +469,15 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="3839" y="40" width="1922" height="1042" extended-state="6" />
+    <frame x="1918" y="9" width="1924" height="1036" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33191034" sideWeight="0.67098165" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.20971185" sideWeight="0.43806306" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.20971185" sideWeight="0.5540541" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="false" weight="0.399137" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" x="3" y="0" width="1917" height="1058" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.21184632" sideWeight="0.37528345" order="1" side_tool="true" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.21184632" sideWeight="0.61678004" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="false" weight="0.399137" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" x="107" y="236" width="1634" height="802" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32901832" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="false" weight="0.32901832" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" x="1" y="1" width="1919" height="1079" />
@@ -415,6 +485,7 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Database Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32901832" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33191034" sideWeight="0.67098165" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32901832" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -445,7 +516,6 @@
     <option name="PERFORM_ADD_REMOVE_IN_BACKGROUND" value="true" />
     <option name="PERFORM_ROLLBACK_IN_BACKGROUND" value="false" />
     <option name="CHECK_LOCALLY_CHANGED_CONFLICTS_IN_BACKGROUND" value="false" />
-    <option name="ENABLE_BACKGROUND_PROCESSES" value="false" />
     <option name="CHANGED_ON_SERVER_INTERVAL" value="60" />
     <option name="SHOW_ONLY_CHANGED_IN_SELECTION_DIFF" value="true" />
     <option name="CHECK_COMMIT_MESSAGE_SPELLING" value="true" />
@@ -455,7 +525,6 @@
     <option name="SOFT_WRAPS_IN_SHORT_DIFF" value="true" />
     <option name="INCLUDE_TEXT_INTO_PATCH" value="false" />
     <option name="INCLUDE_TEXT_INTO_SHELF" value="false" />
-    <option name="CREATE_PATCH_EXPAND_DETAILS_DEFAULT" value="true" />
     <option name="SHOW_FILE_HISTORY_DETAILS" value="true" />
     <option name="SHOW_VCS_ERROR_NOTIFICATIONS" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
@@ -493,84 +562,61 @@
           <url>file://$PROJECT_DIR$/catalogue/tests/email_notification_test.py</url>
           <line>97</line>
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="python-line">
+          <url>file://$PROJECT_DIR$/catalogue/tests/simpleTest.py</url>
+          <line>37</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
       </breakpoints>
+      <option name="time" value="2" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/catalogue/ingestors/spot.py">
+    <entry file="file://$PROJECT_DIR$/catalogue/tests/simpleTest.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="61" column="11" selection-start="2098" selection-end="2098" vertical-scroll-proportion="0.36666667">
-          <folding>
-            <element signature="e#650#659#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/catalogue/tests/rangetag_templatetag.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/catalogue/templatetags/graphtag.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/catalogue/tests/geospatialproduct_model.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="147" column="9" selection-start="5335" selection-end="5335" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/catalogue/tests/continuousproduct_model.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="124" column="9" selection-start="4263" selection-end="4263" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/catalogue/tests/opticalproduct_model.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="188" column="0" selection-start="6817" selection-end="6817" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/catalogue/tests/ordinalproduct_model.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="124" column="9" selection-start="4291" selection-end="4291" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/catalogue/tests/radarproduct_model.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="166" column="9" selection-start="5976" selection-end="5976" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/catalogue/tests/genericimageryproduct_model.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="131" column="9" selection-start="4682" selection-end="4682" vertical-scroll-proportion="0.33258173" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/catalogue/tests/genericsensorproduct_model.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="169" column="9" selection-start="6349" selection-end="6349" vertical-scroll-proportion="0.33258173" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/catalogue/tests/taskingrequest_model.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="106" column="9" selection-start="3311" selection-end="3311" vertical-scroll-proportion="0.53555554" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/catalogue/fixtures/test_acquisitionmode.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/catalogue/tests/test_spot_ingestor.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="168" column="19" selection-start="6190" selection-end="6190" vertical-scroll-proportion="0.0">
+        <state line="37" column="0" selection-start="912" selection-end="912" vertical-scroll-proportion="0.7463592">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/catalogue/views/searcher.py">
+    <entry file="file://$PROJECT_DIR$/catalogue/fixtures/test_acquisitionmode.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="207" column="68" selection-start="8390" selection-end="8390" vertical-scroll-proportion="-4.9814816">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/catalogue/getIpAddress.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="31" column="0" selection-start="880" selection-end="880" vertical-scroll-proportion="0.6978673">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs/sphinx/installation-manual/catalogue-installation.rst">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="640" column="5" selection-start="17390" selection-end="17426" vertical-scroll-proportion="0.12085308">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/catalogue/tests/email_notification_test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-1.7594787">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/settings_local.py.templ">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="13" column="14" selection-start="277" selection-end="277" vertical-scroll-proportion="0.29265404">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/catalogue/views/orders.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="399" column="12" selection-start="14634" selection-end="14634" vertical-scroll-proportion="0.8353081">
           <folding />
         </state>
       </provider>
@@ -582,9 +628,58 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/catalogue/views/orders.py">
+    <entry file="file://$PROJECT_DIR$/catalogue/tests/test_spot_ingestor.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="179" column="0" selection-start="5655" selection-end="5715" vertical-scroll-proportion="0.51448435">
+        <state line="168" column="19" selection-start="6190" selection-end="6190" vertical-scroll-proportion="0.8578199">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/settings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="184" column="1" selection-start="5622" selection-end="5622" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/catalogue/views/others.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="629" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/settings_local.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="12" column="23" selection-start="309" selection-end="309" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../qrust/qrust/linfiniti/forms.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="7" column="0" selection-start="203" selection-end="1522" vertical-scroll-proportion="0.15519254">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../qrust/qrust/linfiniti/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="20" column="0" selection-start="944" selection-end="976" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/catalogue/forms.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="626" column="34" selection-start="24926" selection-end="24926" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/catalogue/views/messaging.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="117" column="53" selection-start="4559" selection-end="4559" vertical-scroll-proportion="0.3325554">
           <folding />
         </state>
       </provider>
