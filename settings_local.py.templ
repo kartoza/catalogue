@@ -147,3 +147,10 @@ CATALOGUE_ISO_METADATA_XML_TEMPLATE = os.path.join(ROOT_PROJECT_FOLDER, (
 
 #limit the number of returned metadata records
 MAX_METADATA_RECORDS = 500
+
+
+# in case of ImportError: cannot import name DataSource related to
+# from django.contrib.gis.gdal import DataSource
+# we need to specify exact path of GEOS and GDAL libraries
+#GEOS_LIBRARY_PATH='/usr/lib/libgeos_c.so.1'
+#GDAL_LIBRARY_PATH='/usr/lib/libgdal1.7.0.so.1'
