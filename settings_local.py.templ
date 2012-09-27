@@ -20,9 +20,19 @@ ACSDBPORT = 5432
 DEBUG = False
 
 # Sentry server client settings
-LOG_LEVEL = logging.INFO
-SENTRY_DSN = ('http://74b4e04b3738403c9670c8b67bb602c0'
-             ':36f52a2271094938b2e8739e562bb37c@localhost:9000/2')
+# logging levels (ERROR -> WARNING -> INFO -> DEBUG)
+# for producion set to logging.ERROR
+LOG_LEVEL = logging.ERROR
+
+# setup RAVEN Sentry client
+
+RAVEN_CONFIG = {
+    'dsn': ('http://74b4e04b3738403c9670c8b67bb602c0'
+           ':36f52a2271094938b2e8739e562bb37c@localhost:9000/2'),
+    # if you are using DEBUG = True, and want to catch exceptions with Sentry
+    # set register_signals: True
+    'register_signals': False
+}
 
 # Things you may want to edit
 # ----------------------------------------------------------------------------

@@ -692,17 +692,15 @@ Then in local setting.py, we need to update following config parameters
   import logging
 
   logging.getLogger().setLevel(logging.ERROR)
-  logging.getLogger().addHandler(SentryHandler())
   setup_logging(SentryHandler())
 
   # Sentry server client settings
-  SENTRY_DSN = 'http://74b4e04b3738403c9670c8b67bb602c0:36f52a2271094938b2e8739e562bb37c@localhost:9000/2'
-
-  # only if running with DEBUG=True ( DEVELOPMENT ENV )
-  # and we want to catch exceptions with sentry
-  # RAVEN_CONFIG = {
-  #     'register_signals': True,
-  # }
+  RAVEN_CONFIG = {
+      'dsn': 'http://52e7dbc1645742bba1e30c5f91214a18:5d4ce7c82eeb45c28b3a6e38e42185cc@127.0.0.1:10000/2',
+      # if you are using DEBUG = True, and want to catch exceptions with Sentry
+      # set register_signals: True
+      'register_signals': False
+  }
 
 Most important settings are ``logging.getLogger().setLevel()`` and ``SENTRY_DSN``:
 

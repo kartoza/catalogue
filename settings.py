@@ -1,5 +1,6 @@
 import os
 import coverage
+import logging
 from raven.conf import setup_logging
 from raven.contrib.django.handlers import SentryHandler
 # This is an exception to our 'dont import globally' rule
@@ -116,7 +117,6 @@ INSTALLED_APPS = (
     'django.contrib.gis',
     'offline_messages',
     'registration',
-    'raven',  # for sentry logging
     'raven.contrib.django',  # for sentry logging
     'catalogue',
     #'acscatalogue',
@@ -181,7 +181,6 @@ JENKINS_TASKS = (
 # see http://sentry.sansa.org.za/account/projects/catalogue-live/docs/django/
 
 #logging.getLogger().setLevel(logging.INFO)
-#logging.getLogger().setLevel(LOG_LEVEL)
-logging.getLogger().addHandler(SentryHandler())
+logging.getLogger().setLevel(LOG_LEVEL)
 setup_logging(SentryHandler())
-logging.info('Catalogue started')
+

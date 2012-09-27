@@ -36,3 +36,4 @@ pyflakes
 pep8
 jslint
 django-offline-messages==0.2.6
+raven==2.0.6
