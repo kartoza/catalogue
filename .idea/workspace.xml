@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4914a05c-a80a-45d2-88ac-5248c1d0b3d9" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/catalogue/tests/messaging_tests.py" afterPath="$PROJECT_DIR$/catalogue/tests/messaging_tests.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/media/js/catalogue.js-uncompressed" afterPath="$PROJECT_DIR$/media/js/catalogue.js-uncompressed" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/media/js/catalogue.js" afterPath="$PROJECT_DIR$/media/js/catalogue.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/catalogue/admin.py" afterPath="$PROJECT_DIR$/catalogue/admin.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/settings.py" afterPath="$PROJECT_DIR$/settings.py" />
     </list>
     <ignored path="sac_catalogue.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -60,10 +60,28 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="messaging_tests.py" pinned="false" current="true" current-in-tab="true">
+          <file leaf-file-name="messaging_tests.py" pinned="false" current="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/catalogue/tests/messaging_tests.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state line="142" column="27" selection-start="5267" selection-end="5267" vertical-scroll-proportion="0.14532872">
+                <state line="25" column="0" selection-start="787" selection-end="837" vertical-scroll-proportion="0.0">
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="admin.py" pinned="false" current="true" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/catalogue/admin.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state line="232" column="0" selection-start="6330" selection-end="6330" vertical-scroll-proportion="0.8800461">
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="settings.py" pinned="false" current="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/settings.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state line="147" column="17" selection-start="4636" selection-end="4636" vertical-scroll-proportion="0.0">
                   <folding />
                 </state>
               </provider>
@@ -85,7 +103,7 @@
           <file leaf-file-name="catalogue.js-uncompressed" pinned="false" current="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/media/js/catalogue.js-uncompressed">
               <provider selected="true" editor-type-id="text-editor">
-                <state line="40" column="27" selection-start="1293" selection-end="1293" vertical-scroll-proportion="0.12514758">
+                <state line="55" column="33" selection-start="1659" selection-end="1659" vertical-scroll-proportion="0.46162927">
                   <folding />
                 </state>
               </provider>
@@ -169,10 +187,8 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/../../qrust/qrust/linfiniti/views.py" />
         <option value="$PROJECT_DIR$/urls.py" />
         <option value="$PROJECT_DIR$/catalogue/views/__init__.py" />
-        <option value="$PROJECT_DIR$/settings.py" />
         <option value="$PROJECT_DIR$/catalogue/tests/helpers.py" />
         <option value="$PROJECT_DIR$/catalogue/fixtures/test_user.json" />
         <option value="$PROJECT_DIR$/catalogue/forms.py" />
@@ -185,6 +201,8 @@
         <option value="$PROJECT_DIR$/catalogue/views/messaging.py" />
         <option value="$PROJECT_DIR$/media/js/catalogue.js-uncompressed" />
         <option value="$PROJECT_DIR$/catalogue/tests/messaging_tests.py" />
+        <option value="$PROJECT_DIR$/settings.py" />
+        <option value="$PROJECT_DIR$/catalogue/admin.py" />
       </list>
     </option>
   </component>
@@ -357,7 +375,7 @@
       <recent name="$PROJECT_DIR$" />
     </key>
   </component>
-  <component name="RunManager" selected="Django tests.Test: catalogue.MessagingTests">
+  <component name="RunManager" selected="Django server.sac_catalogue">
     <configuration default="false" name="Test: catalogue.SimpleTest.test_MissionGroup_count" type="DjangoTestsConfigurationType" factoryName="Django tests" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -725,20 +743,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/settings_local.py.template">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="0" selection-start="0" selection-end="4990" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/catalogue/fixtures/test_user.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="32" column="76" selection-start="1025" selection-end="1025" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/catalogue/forms.py">
       <provider selected="true" editor-type-id="text-editor">
         <state line="640" column="33" selection-start="25407" selection-end="25424" vertical-scroll-proportion="0.4083045">
@@ -825,14 +829,28 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/media/js/catalogue.js-uncompressed">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="40" column="27" selection-start="1293" selection-end="1293" vertical-scroll-proportion="0.12514758">
+        <state line="55" column="33" selection-start="1659" selection-end="1659" vertical-scroll-proportion="0.46162927">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/catalogue/tests/messaging_tests.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="142" column="27" selection-start="5267" selection-end="5267" vertical-scroll-proportion="0.14532872">
+        <state line="25" column="0" selection-start="787" selection-end="837" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/settings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="147" column="17" selection-start="4636" selection-end="4636" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/catalogue/admin.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="232" column="0" selection-start="6330" selection-end="6330" vertical-scroll-proportion="0.8800461">
           <folding />
         </state>
       </provider>
