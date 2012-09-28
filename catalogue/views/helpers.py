@@ -73,7 +73,7 @@ class EmailMultiRelated(EmailMultiAlternatives):
             alternatives=None):
         # self.related_ids = []
         self.related_attachments = []
-        return super(EmailMultiRelated, self).__init__(
+        super(EmailMultiRelated, self).__init__(
             subject, body, from_email, to, bcc, connection, attachments,
             headers, alternatives)
 
@@ -1052,33 +1052,58 @@ def standardLayersWithCart(theRequest):
     return myLayersList, myLayerDefinitions, myActiveBaseMap
 
 
-def writeThumbToZip(mySearchRecord, myZip):
+def writeThumbToZip(theImagePath, theProductId, theZip):
+    """Write a thumb and its world file into a zip file.
+
+    Args:
+        theImagePath: str required - path to the image file to write. For the
+            world file its extension will be replaced with .wld.
+        theProductId: str required - product id used as the output file name
+            in the zip file.
+        theZip: ZipFile required - handle to a ZipFile instance in which the
+            images will be written.
+
+    Returns:
+        bool: True on success, False on failure
+
+    Raises:
+        Exceptions and issues are logged but not raised.
+    """
+
+    myWLDFile = '%s.wld' % os.path.splitext(theImagePath)[0]
+    try:
+        if os.path.isfile(theImagePath):
+            with open(theImagePath, 'rb') as myFile:
+                theZip.writestr('%s.jpg' % theProductId,
+                               myFile.read())
+                logging.debug('Adding thumbnail image to archive.')
+        else:
+            raise Exception('Thumbnail image not found: %s' % theImagePath)
+        if os.path.isfile(myWLDFile):
+            with open(myWLDFile, 'rb') as myFile:
+                theZip.writestr('%s.wld' % theProductId,
+                               myFile.read())
+                logging.debug('Adding worldfile to archive.')
+        else:
+            raise Exception('World file not found: %s' % myWLDFile)
+    except:
+        logging.exception('Error writing thumb to zip')
+        return False
+    return True
+
+
+def writeSearchRecordThumbToZip(theSearchRecord, theZip):
     """A helper function to write a thumbnail into a zip file.
     @parameter myRecord - a searchrecord instance
-    @parameter myZip - a zip file handle ready to write stuff to
+    @parameter theZip - a zip file handle ready to write stuff to
     """
     # Try to add thumbnail + wld file, we assume that jpg and wld
     # file have same name
-    try:
-        myImageFile = mySearchRecord.product.georeferencedThumbnail()
-        myWLDFile = '%s.wld' % myImageFile
-        if os.path.isfile(myImageFile):
-            with open(myImageFile, 'rb') as myFile:
-                myZip.writestr('%s.jpg' % mySearchRecord.product.product_id,
-                               myFile.read())
-                logging.info('Adding thumbnail image to archive.')
-        else:
-            logging.error('Thumbnail image not found: %s' % myImageFile)
-        if os.path.isfile(myWLDFile):
-            with open(myWLDFile, 'rb') as myFile:
-                myZip.writestr('%s.wld' % mySearchRecord.product.product_id,
-                               myFile.read())
-                logging.info('Adding worldfile to archive.')
-        else:
-            logging.error('World file not found: %s' % myImageFile)
-    except:
-        pass
 
+    myImageFile = theSearchRecord.product.georeferencedThumbnail()
+    return writeThumbToZip(myImageFile,
+                           theSearchRecord.product.product_id,
+                           theZip)
 
 #render_to_kml helpers
 def render_to_kml(theTemplate, theContext, filename):
@@ -1099,7 +1124,7 @@ def render_to_kmz(theTemplate, theContext, filename):
     myZip.writestr('%s.kml' % filename, myKml)
     if 'mySearchRecords' in theContext:
         for myRecord in theContext['mySearchRecords'][:myMaxMetadataRecords]:
-            writeThumbToZip(myRecord, myZip)
+            writeSearchRecordThumbToZip(myRecord, myZip)
     myZip.close()
     response = HttpResponse()
     response.content = myZipData.getvalue()
@@ -1121,7 +1146,7 @@ def downloadISOMetadata(theSearchRecords, theName):
         logging.info('Adding product XML to ISO Metadata archive.')
         myZip.writestr('%s.xml' % mySearchRecord.product.product_id,
                        myMetadata)
-        writeThumbToZip(mySearchRecord, myZip)
+        writeSearchRecordThumbToZip(mySearchRecord, myZip)
 
     myZip.close()
     response.content = myZipData.getvalue()
@@ -1150,7 +1175,7 @@ def downloadHtmlMetadata(theSearchRecords, theName):
         logging.info('Adding product HTML to HTML Metadata archive.')
         myZip.writestr('%s.html' % mySearchRecord.product.product_id,
                        myMetadata)
-        writeThumbToZip(mySearchRecord, myZip)
+        writeSearchRecordThumbToZip(mySearchRecord, myZip)
 
     myZip.close()
     response.content = myZipData.getvalue()

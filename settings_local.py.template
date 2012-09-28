@@ -1,44 +1,57 @@
 import os
-#from catalogue.getIpAddress import *
-#from catalogue.middleware.prettify import PrettifyMiddleware
-#from catalogue.middleware.stripwhitespace import StripWhitespaceMiddleware
-import coverage
 import logging
-from raven.conf import setup_logging
-from raven.contrib.django.handlers import SentryHandler
+from catalogue.getIpAddress import get_ip_address
+
+# Things you definately want to edit
+# ----------------------------------------------------------------------------
+
+DBNAME = 'sac'
+#DBNAME = 'sac_unittest'
+DBUSER = 'XXX'
+DBPASSWORD = 'XXX'
+DBHOST = 'localhost'
+DBPORT = 5432
+DBTEST = 'sac_unittest'
+ACSDBNAME = 'acs'
+ACSDBUSER = 'XXX'
+ACSDBPASSWORD = 'XXX'
+ACSDBHOST = 'localhost'
+ACSDBPORT = 5432
+
+# Is debugging enabled? Disable on production machines!
+DEBUG = True
+
+# Sentry server client settings
+LOG_LEVEL = logging.ERROR
+# Local Same as on live server)
+#SENTRY_DSN = ('http://f350e896390d48ceb4ec565ee9f0cabc:'
+#              '5be8f1cfae10427cb18d817d2d5637be@localhost:9000/3')
+# Linfiniti
+SENTRY_DSN = ('http://c9b3062853e34c2b857122d75d4ec663:'
+              'ff3010968b4e47c0a84166da3c1842ae@sentry.linfiniti.com/3')
+# Things you may want to edit
+# ----------------------------------------------------------------------------
 
 ROOT_PROJECT_FOLDER = os.path.dirname(__file__)
-# external site URL, used in KML data generation and elsewhere
+
+# External site URL, used in KML data generation and elsewhere
 # No terminating slash
 EXTERNAL_SITE_URL = 'http://catalogue.localhost'
-# Added by Tim - url that holds directories of thumbnails...
+
+# Url that holds directories of thumbnails...
 THUMBS_ROOT = os.path.join(ROOT_PROJECT_FOLDER, 'thumbs_out')
+
 # Dir where image rectified thumbs from acs are put - see catalogue/informix.py
 # This var is used by catalogue/models/products.py
 # Note products in that folder are named after their original_product_id
-ACS_THUMBS_ROOT = ("/mnt/cataloguestorage/thumbnail_processing/"
-                   "3_scenes_referenced")
+ACS_THUMBS_ROOT = ('/mnt/cataloguestorage/thumbnail_processing/'
+                   '3_scenes_referenced')
 # And this is the dir that holds imagery
 IMAGERY_ROOT = os.path.join(ROOT_PROJECT_FOLDER, 'imagery_mastercopies')
-# And this is the public visible url that imagery should be
+
+# The public visible url that imagery should be
 # accessed from (include trailing /)
-IMAGERY_URL_ROOT = EXTERNAL_SITE_URL + "/imagery/"
-
-#GEOS_LIBRARY_PATH='/usr/lib/libgeos_c.so.1'
-#GEOIP_LIBRARY_PATH='/usr/lib/libGeoIP.so.1'
-# if you are using django > 1.1 and have gdal <= 1.5
-# you will need to install gdal >= 1.6 and explicitly set the
-# path to this library as shown below:
-#GDAL_LIBRARY_PATH='/usr/local/lib/libgdal.so'
-#GDAL_LIBRARY_PATH='/usr/local/lib/libgdal.so'
-# Next added so we can use google maps as backdrop
-# for http://localhost/
-# for http://146.64.55.209/
-
-GOOGLE_MAPS_API_KEY = ('ABQIAAAA8cCuOnTBhHkat_fIf7DyzRSoLoX8ngwj'
-                    'qeRS0hbsGp4TNHRYhRSYcObtx3JYax-0DMXOuo9qhVWpsg')
-# for olwidget
-GOOGLE_API_KEY = GOOGLE_MAPS_API_KEY
+IMAGERY_URL_ROOT = EXTERNAL_SITE_URL + '/imagery/'
 
 # This is the path to MaxMinds Datasets, can be relative or absolute
 GEOIP_PATH = os.path.join(ROOT_PROJECT_FOLDER, 'geoip_data')
@@ -47,29 +60,24 @@ GEOIP_PATH = os.path.join(ROOT_PROJECT_FOLDER, 'geoip_data')
 # on clients from google mirrors rather
 LOCAL_JQUERY = True
 
-
-#OLWIDGET_MEDIA_URL = "/media/olwidget/"
-
 # Set to false to temporarily disable ip lat long logging - useful for then sac
 # internet connection is in super tortoise mode
-USE_GEOIP = False
+USE_GEOIP = True
+
 # this is the public domain name or IP address of this django instance.
 # get ip address logic provided in utils.py
-#HOST = get_ip_address('eth0')
-#HOST = get_ip_address('eth1')
-#HOST = '146.64.55.220'
-HOST = '192.168.1.1'
-# used in various places including kml generator
-DOMAIN = "catalogue.locahost"
+HOST = get_ip_address('eth2')
+#HOST = '192.168.1.1'
 
-# See: http://www.djangobook.com/en/1.0/chapter12/#cn222
-AUTH_PROFILE_MODULE = 'catalogue.SacUserProfile'
+# used in various places including kml generator
+DOMAIN = 'catalogue.locahost'
 
 # Standard page size for pagination
 PAGE_SIZE = 20
 
-WMS_SERVER = "maps.sansa.org.za"
-CART_LAYER = "CART_TEST"
+WMS_SERVER = 'maps.sansa.org.za'
+
+CART_LAYER = 'CART_TEST'
 
 # This is for shapefile uploading using dane springmeyer's django-shapes lib
 SHP_UPLOAD_DIR = '/tmp/'
@@ -78,41 +86,13 @@ SHP_UPLOAD_DIR = '/tmp/'
 # when orders are received and changed
 EMAIL_NOTIFICATIONS_ENABLED = True
 
-# Django settings for sac_catalogue project.
-
+SERVER_EMAIL = 'error@catalogue.sansa.org.za'
 
 ADMINS = (
     ('Tim Sutton', 'tim@linfiniti.com'),
     ('Linda Kleyn', 'lkleyn@sansa.org.za'),
-)
+    )
 
-MANAGERS = ADMINS
-DATABASES = {
-        'default': {  # new db that does not mimic acs system
-         'ENGINE': 'postgresql_psycopg2',
-         'NAME' : 'sac',
-         #'NAME': 'sac-unittest',
-         'USER': 'foo',
-         'PASSWORD': 'foo',
-         'HOST': '',
-         'PORT': '5432',
-         'TEST_NAME': 'sac-unittest',
-         },
-        'acs': {  # legacy acs port to django
-         'ENGINE': 'postgresql_psycopg2',
-         'NAME': 'acs',
-         'USER': 'foo',
-         'PASSWORD': 'foo',
-         'HOST': '',
-         'PORT': '5432',
-         }
-        }
-DATABASE_ROUTERS = ['catalogue.dbrouter.CatalogueRouter']
-
-# Local time zone for this installation. Choices can be found here:
-# http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
-# although not all choices may be available on all operating systems.
-# If running in a Windows environment this must be set to the same as your
 # system time zone.
 TIME_ZONE = 'Africa/Johannesburg'
 
@@ -120,97 +100,12 @@ TIME_ZONE = 'Africa/Johannesburg'
 # http://www.i18nguy.com/unicode/language-identifiers.html
 LANGUAGE_CODE = 'en-ZA'
 
-SITE_ID = 1
-
-# If you set this to False, Django will make some optimizations so as not
-# to load the internationalization machinery.
-USE_I18N = False
-
-# Absolute filesystem path to the directory that will hold user-uploaded files.
-# Example: "/home/media/media.lawrence.com/media/"
-MEDIA_ROOT = os.path.join(ROOT_PROJECT_FOLDER, 'media')
-
-# URL that handles the media served from MEDIA_ROOT. Make sure to use a
-# trailing slash.
-# Examples: "http://media.lawrence.com/media/", "http://example.com/media/"
-MEDIA_URL = '/media/'
-
-# Absolute path to the directory static files should be collected to.
-# Don't put anything in this directory yourself; store your static files
-# in apps' "static/" subdirectories and in STATICFILES_DIRS.
-# Example: "/home/media/media.lawrence.com/static/"
-STATIC_ROOT = os.path.join(ROOT_PROJECT_FOLDER, 'static')
-
-# URL prefix for static files.
-# Example: "http://media.lawrence.com/static/"
-STATIC_URL = '/static/'
-
-# URL prefix for admin static files -- CSS, JavaScript and images.
-# Make sure to use a trailing slash.
-# Examples: "http://foo.com/static/admin/", "/static/admin/".
-ADMIN_MEDIA_PREFIX = '/static/admin/'
-
-# Additional locations of static files
-STATICFILES_DIRS = (
-    # Put strings here, like "/home/html/static" or "C:/www/django/static".
-    # Always use forward slashes, even on Windows.
-    # Don't forget to use absolute paths, not relative paths.
-    os.path.join(ROOT_PROJECT_FOLDER, 'project_static_files'),
-)
-
-# List of finder classes that know how to find static files in
-# various locations.
-STATICFILES_FINDERS = (
-    'django.contrib.staticfiles.finders.FileSystemFinder',
-    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-    'django.contrib.staticfiles.finders.DefaultStorageFinder',
-)
-
-# Make this unique, and don't share it with anybody.
-SECRET_KEY = 'c(x1$mngg*&#re1shf2r3(j&1&rl528_ubo2#x_)ljabk2*cly'
-
-# List of callables that know how to import templates from various sources.
-TEMPLATE_LOADERS = (
-    'django.template.loaders.filesystem.load_template_source',
-    'django.template.loaders.app_directories.load_template_source',
-#     'django.template.loaders.eggs.load_template_source',
-)
-
-
-MIDDLEWARE_CLASSES = (
-    'django.middleware.common.CommonMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.middleware.csrf.CsrfResponseMiddleware',
+EXTRA_MIDDLEWARE_CLASSES = (
     #'catalogue.middleware.prettify.PrettifyMiddleware',
     'catalogue.middleware.stripwhitespace.StripWhitespaceMiddleware',
     # Added by Tim for advanced loggin options
-    #'debug_toolbar.middleware.DebugToolbarMiddleware',
-)
-
-# Added by Tim - tells django which clients may
-# receive debug messages...
-INTERNAL_IPS = ('127.0.0.1', '196.35.94.7')
-# Also added for logging disabled for prod machine
-DEBUG = True
-TEMPLATE_DEBUG = DEBUG
-# Disabled for prod machine
-LOGGING_OUTPUT_ENABLED = DEBUG
-LOGGING_LOG_SQL = DEBUG
-
-# Also install pygments for pretty sql debug printing:
-# sudo apt-get install python-pygments
-
-ROOT_URLCONF = 'urls'
-
-TEMPLATE_DIRS = (
-    # Put strings here, like "/home/html/django_templates" or
-    #"C:/www/django/templates".
-    # Always use forward slashes, even on Windows.
-    # Don't forget to use absolute paths, not relative paths.
-    os.path.join(ROOT_PROJECT_FOLDER, 'templates'),
-)
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
+    )
 
 DEBUG_TOOLBAR_PANELS = (
     'debug_toolbar.panels.version.VersionDebugPanel',
@@ -224,140 +119,33 @@ DEBUG_TOOLBAR_PANELS = (
     'debug_toolbar.panels.logger.LoggingPanel',
     )
 
-INSTALLED_APPS = (
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.sites',
-    'django.contrib.admin',
-    'django.contrib.gis',
-    #'south',
-    #'sentry',
-    'registration',
-    'catalogue',
-    #'acscatalogue',
-    'shapes',
-    'django_extensions',
-    'userprofile',
+EXTRA_INSTALLED_APPS = (
     #commented out as needs django >= 1.3
     #'django_jenkins',
-    #'debug_toolbar',
-    'raven.contrib.django',
-)
+    'debug_toolbar',  # don't remove this comma
+    )
 
-# Added by Tim for in db logging of exceptions
-# Disable embedded interactive tracebacks in the admin
-DBLOG_ENHANCED_TRACEBACKS = True
-DBLOG_CATCH_404_ERRORS = True
-
+SERVER_EMAIL = 'error@catalogue.sansa.org.za'
 # Added by Tim for registration app
 ACCOUNT_ACTIVATION_DAYS = 2
 EMAIL_HOST = 'localhost'
-DEFAULT_FROM_EMAIL = 'noreply@catalogue.sac.co.za'
-
-#where to take the user after they logged in
-LOGIN_REDIRECT_URL = '/'
-#where to take the user if they try to access a page requiring a logged in user
-LOGIN_URL = '/accounts/login/'
-#for userprofile app
-I18N_URLS = False
-DEFAULT_AVATAR = os.path.join(MEDIA_ROOT, 'generic.jpg')
-AVATAR_WEBSEARCH = False
+DEFAULT_FROM_EMAIL = 'noreply@catalogue.sansa.org.za'
+#define organisation acronym, used in filenaming schemes
+ORGANISATION_ACRONYM = 'SANSA'
 
 # PLace where thumbs from ACS catalogue are extracted into a flat dir tree
-ACS_CATALOGUE_SCENES_PATH = ""
+ACS_CATALOGUE_SCENES_PATH = ''
 
 CATALOGUE_ISO_METADATA_XML_TEMPLATE = os.path.join(ROOT_PROJECT_FOLDER, (
-                   'resources/PackageTemplate/Metadata/'
-                  'ISOMetadata/ISOMetadata_template.xml'))
+    'resources/PackageTemplate/Metadata/'
+    'ISOMetadata/ISOMetadata_template.xml'))
 
 #limit the number of returned metadata records
 MAX_METADATA_RECORDS = 500
 
-#define organisation acronym, used in filenaming schemes
-ORGANISATION_ACRONYM = "SANSA"
-
-# For debugging on dev server - comment out on prod server
-import logging
-LOG_FILENAME = 'catalogue.log'
-logging.basicConfig(filename=LOG_FILENAME, level=logging.DEBUG)
-logging.debug('This message should go to the log file')
-
-SOUTH_MIGRATION_MODULES = {
-  'acs': 'ignore',
-}
-
-if DEBUG:
-    EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
-    # change this to a proper location
-    EMAIL_FILE_PATH = '/tmp/'
-
-#
-# For django coverage support when testing
-#
-# not changed, just shown as an example
-COVERAGE_MODULE_EXCLUDES = [
-        'tests$', 'settings$', '^urls$', 'locale$',
-        '__init__', 'django',
-        'migrations',
-    ]
-
-coverage.use_cache(False)
-for e in COVERAGE_MODULE_EXCLUDES:
-    coverage.exclude(e)
-coverage.start()
-
-TEST_RUNNER = 'django_coverage.coverage_runner.CoverageRunner'
-
-#
-# Sentry settings
-# see:
-# http://moprea.ro/2011/03/05/logs-aggregation-for-django-applications/
-# http://sentry.readthedocs.org/en/latest/index.html
-#
-# Note you will need to syncdb the first time you run
-# python manage.py syncdb
-
-# To enable sentry in debug mode too
-#SENTRY_TESTING = True
-#import logging
-#logging.getLogger().setLevel(logging.INFO)
-#from sentry.client.handlers import SentryHandler
-#logging.getLogger().addHandler(SentryHandler())
-
-# Add StreamHandler to sentry's default so you can catch missed exceptions
-#logger = logging.getLogger('sentry.errors')
-#logger.propagate = False
-#logger.addHandler(logging.StreamHandler())
-#
-#
-# For django-jenkins integration
-#
-PROJECT_APPS = (
-    'catalogue',
-)
-JENKINS_TASKS = (
-    'django_jenkins.tasks.with_coverage',
-    'django_jenkins.tasks.run_pylint',
-    'django_jenkins.tasks.django_tests',
-    #'django_jenkins.tasks.run_pep8',
-    # Needs rhino or nodejs
-    #'django_jenkins.tasks.run_jslint',
-    #'django_jenkins.tasks.run_csslint',
-    'django_jenkins.tasks.run_pyflakes',
-    'django_jenkins.tasks.run_sloccount',
-)
-
-
-
-logging.getLogger().setLevel(logging.ERROR)
-logging.getLogger().addHandler(SentryHandler())
-setup_logging(SentryHandler())
-
-# Sentry server client settings
-SENTRY_DSN = 'http://74b4e04b3738403c9670c8b67bb602c0:36f52a2271094938b2e8739e562bb37c@localhost:9000/2'
-
-# only if running with Debug=True
-# RAVEN_CONFIG = {
-#     'register_signals': True,
-# }
+# These are optional - only set if you have wierd issues like DataSource
+# unknown
+#GEOS_LIBRARY_PATH='/usr/lib/libgeos_c.so.1'
+#GEOIP_LIBRARY_PATH='/usr/lib/libGeoIP.so
+#GDAL_LIBRARY_PATH='/usr/local/lib/libgdal.so'
+#GDAL_LIBRARY_PATH='/usr/local/lib/libgdal.so'

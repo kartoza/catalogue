@@ -124,4 +124,10 @@ urlpatterns = patterns('',
     ( r'^dataSummaryTable/$', dataSummaryTable),
     ( r'^dictionaryReport/$', dictionaryReport),
     ( r'^sensorSummaryTable/(?P<theSensorId>[0-9]+)/$', sensorSummaryTable),
+    (r'^getUserMessages/$', messaging.userMessages),
+    #need to be staff to use this
+    (r'^sendMessageToUser/$', messaging.sendMessageToUser),
+    #need to be staff to use this
+    (r'^sendMessageToAllUsers/$', messaging.sendMessageToAllUsers),
+
 )

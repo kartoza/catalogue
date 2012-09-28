@@ -106,6 +106,6 @@ class SearchTestCase(TestCase):
         """
         self.factory = RequestFactory(enforce_csrf_checks=True)
         #authenticate
-        self.factory.login(username='timlinux', password='chrisdebug')
+        self.factory.login(username='timlinux', password='password')
         #get user object
         self.user = User.objects.get(pk=1)

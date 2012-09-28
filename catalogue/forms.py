@@ -22,6 +22,7 @@ import datetime
 import time
 
 from django import forms
+from django.contrib.auth.models import User
 from django.forms.models import BaseInlineFormSet
 #from django.utils.translation import ugettext_lazy as _
 from django.core.exceptions import ValidationError
@@ -631,7 +632,7 @@ class MessageForm(forms.Form):
         super(MessageForm, self).__init__(*args, **kwargs)
         self.fields['user_id'].choices = [('', '----------')] + [
         (myUser.id, myUser
-            ) for myUser in models.User.objects.all().order_by(
+            ) for myUser in User.objects.all().order_by(
             'username')
         ]
 

@@ -18,8 +18,6 @@ __date__ = '17/08/2012'
 __copyright__ = 'South African National Space Agency'
 
 import logging
-import traceback
-import pprint
 
 from django.shortcuts import render_to_response
 from django.template import RequestContext
@@ -46,6 +44,8 @@ def sendMessageToUser(theRequest):
         HttpResponse: An html snippet indicating the message was successfully
             submitted
     """
+    logging.debug('sendMessageToUser called.')
+    # Should not need these two lines due to decorator
     if not theRequest.user.is_staff:
         return HttpResponseBadRequest('You are not permitted to do this.')
     if theRequest.method == 'POST':
@@ -59,13 +59,14 @@ def sendMessageToUser(theRequest):
                 myUserId = theRequest.POST['user_id']
                 myUser = User.objects.get(id=myUserId)
                 create_offline_message(myUser, myMessage, level=constants.INFO)
+                logging.debug('Offline message created:\n%s' % myMessage)
                 return HttpResponse('Message sent successfully to %s.' %
                                     myUser)
             except:
-                logging.error(pprint.pformat(traceback.extract_stack()))
-                return HttpResponse(
-                    'Message sending failed. '
-                    'Please check the logs and try again.')
+                myMessage = ('Message sending failed. '
+                             'Please check the logs and try again.')
+                logging.exception(myMessage)
+                return HttpResponse(myMessage)
         else:
             # Otherwise the form is not valid so redisplay it
             # with validation messages
@@ -118,9 +119,10 @@ def sendMessageToAllUsers(theRequest):
                             myUser, myMessage, level=constants.INFO)
                 return HttpResponse('Message sent successfully to all users.')
             except:
-                logging.error(pprint.pformat(traceback.extract_stack()))
-                return HttpResponse('Message sending failed. Please check '
-                                    'the logs and try again.')
+                myMessage = ('Message sending failed. '
+                             'Please check the logs and try again.')
+                logging.exception(myMessage)
+                return HttpResponse(myMessage)
         else:
             # Otherwise the form is not valid so redisplay it with
             # validation messages form.as_p() means 'render the form
@@ -152,7 +154,6 @@ def userMessages(theRequest):
     @note login_required should not be set otherwise anonymous
           users will see spurious popups.
     '''
-    #messages.add_message( theRequest, messages.INFO, 'Hello world.')
-    #import pdb; pdb.set_trace()
+    logging.debug('User messages requested')
     return render_to_response(
         'messages.html', context_instance=RequestContext(theRequest))
