@@ -221,10 +221,29 @@ delete from catalogue_ordernotificationrecipients_sensors where missionsensor_id
 delete from catalogue_search_sensors where missionsensor_id in (select mission_id from catalogue_missionsensor where id = 1);
 delete from catalogue_missionsensor where id = 1;
 
+
 -- Final cleanup of all missions, sensors, sensor types and acquisition modes that are not used on the catalogue currently (Aug 2012)
+
 delete from catalogue_ordernotificationrecipients_sensors where missionsensor_id in (select id from catalogue_missionsensor where (mission_id  > 0 AND mission_id < 9) OR (mission_id >23 and mission_id < 49) OR (id=4) OR (id > 24 AND id < 40));
 delete from catalogue_search_sensors where missionsensor_id in (select id from catalogue_missionsensor where (mission_id  > 0 AND mission_id < 9) OR (mission_id >23 and mission_id < 49) OR (id=4) OR (id > 24 AND id < 40));
 delete from catalogue_taskingrequest where mission_sensor_id in (select id from catalogue_missionsensor where (mission_id  > 0 AND mission_id < 9) OR (mission_id >23 and mission_id < 49) OR (id=4) OR (id > 24 AND id < 40));
 delete from catalogue_missionsensor where (mission_id  > 0 and mission_id < 9) OR (mission_id >23 and mission_id < 49) or (id=4) or (id > 24 and id < 40);
 delete from catalogue_mission where (id > 0 and id < 9) OR (id >23 and id < 49);
 
+
+-- Delete SPOT4 imagery with incorrect product_id duplicated after import using latest ingest-spot.py (DELETE 191773)
+
+-- delete from catalogue_opticalproduct 
+delete from catalogue_opticalproduct where genericsensorproduct_ptr_id in (select id from catalogue_genericproduct where id in (select genericimageryproduct_ptr_id from catalogue_genericsensorproduct where (acquisition_mode_id = 92 OR acquisition_mode_id = 93)) AND substring (catalogue_genericproduct.product_id from 5 for 3) = 'VMI');
+
+-- delete from catalogue_genericimageryproduct 
+delete from catalogue_genericimageryproduct where genericproduct_ptr_id in (select id from catalogue_genericproduct where id in (select genericimageryproduct_ptr_id from catalogue_genericsensorproduct where (acquisition_mode_id = 92 OR acquisition_mode_id = 93)) AND substring (catalogue_genericproduct.product_id from 5 for 3) = 'VMI');
+
+-- delete from catalogue_genericsensorproduct
+ delete from catalogue_genericsensorproduct where genericimageryproduct_ptr_id in (select id from catalogue_genericproduct where id in (select genericimageryproduct_ptr_id from catalogue_genericsensorproduct where (acquisition_mode_id = 92 OR acquisition_mode_id = 93)) AND substring (catalogue_genericproduct.product_id from 5 for 3) = 'VMI');
+
+-- delete from catalogue_searchrecord
+delete from catalogue_searchrecord where product_id in (select id from catalogue_genericproduct where substring (catalogue_genericproduct.product_id from 5 for 3) = 'VMI');
+
+-- delete from catalogue_genericproduct 
+delete from catalogue_genericproduct where substring (catalogue_genericproduct.product_id from 5 for 3) = 'VMI';
