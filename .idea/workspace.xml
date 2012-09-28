@@ -2,16 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4914a05c-a80a-45d2-88ac-5248c1d0b3d9" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/catalogue/tests/messaging_tests.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/catalogue/fixtures/test_user.json" afterPath="$PROJECT_DIR$/catalogue/fixtures/test_user.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/catalogue/forms.py" afterPath="$PROJECT_DIR$/catalogue/forms.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/catalogue/tests/test_utils.py" afterPath="$PROJECT_DIR$/catalogue/tests/test_utils.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/catalogue/views/__init__.py" afterPath="$PROJECT_DIR$/catalogue/views/__init__.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/catalogue/views/helpers.py" afterPath="$PROJECT_DIR$/catalogue/views/helpers.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/catalogue/views/messaging.py" afterPath="$PROJECT_DIR$/catalogue/views/messaging.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/settings_local.py.template" afterPath="$PROJECT_DIR$/settings_local.py.template" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/urls.py" afterPath="$PROJECT_DIR$/urls.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/catalogue/tests/messaging_tests.py" afterPath="$PROJECT_DIR$/catalogue/tests/messaging_tests.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/media/js/catalogue.js-uncompressed" afterPath="$PROJECT_DIR$/media/js/catalogue.js-uncompressed" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/media/js/catalogue.js" afterPath="$PROJECT_DIR$/media/js/catalogue.js" />
     </list>
     <ignored path="sac_catalogue.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -49,19 +42,28 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="messaging_tests.py" pinned="false" current="true" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/catalogue/tests/messaging_tests.py">
+          <file leaf-file-name="linfiniti.js" pinned="false" current="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/../../farminfo/farminfo/project_static_files/js/linfiniti.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state line="168" column="35" selection-start="6470" selection-end="6470" vertical-scroll-proportion="0.82468283">
+                <state line="389" column="25" selection-start="10803" selection-end="10819" vertical-scroll-proportion="-6.245283">
                   <folding />
                 </state>
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="decorators.py" pinned="false" current="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/../python/local/lib/python2.7/site-packages/django/contrib/admin/views/decorators.py">
+          <file leaf-file-name="valuations.js" pinned="false" current="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/../../farminfo/farminfo/valuations/static/js/valuations.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state line="30" column="0" selection-start="1130" selection-end="1130" vertical-scroll-proportion="0.0">
+                <state line="409" column="29" selection-start="12960" selection-end="12967" vertical-scroll-proportion="-5.4716983">
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="messaging_tests.py" pinned="false" current="true" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/catalogue/tests/messaging_tests.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state line="142" column="27" selection-start="5267" selection-end="5267" vertical-scroll-proportion="0.14532872">
                   <folding />
                 </state>
               </provider>
@@ -71,10 +73,19 @@
       </split-first>
       <split-second>
         <leaf>
-          <file leaf-file-name="settings_local.py" pinned="false" current="false" current-in-tab="true">
+          <file leaf-file-name="settings_local.py" pinned="false" current="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/settings_local.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state line="68" column="0" selection-start="2339" selection-end="2368" vertical-scroll-proportion="1.5023255">
+                <state line="15" column="22" selection-start="375" selection-end="375" vertical-scroll-proportion="0.0">
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="catalogue.js-uncompressed" pinned="false" current="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/media/js/catalogue.js-uncompressed">
+              <provider selected="true" editor-type-id="text-editor">
+                <state line="40" column="27" selection-start="1293" selection-end="1293" vertical-scroll-proportion="0.12514758">
                   <folding />
                 </state>
               </provider>
@@ -89,28 +100,10 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="forms.py" pinned="false" current="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/../../qrust/qrust/linfiniti/forms.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state line="28" column="0" selection-start="1076" selection-end="1076" vertical-scroll-proportion="0.0">
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
           <file leaf-file-name="test_user.json" pinned="false" current="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/catalogue/fixtures/test_user.json">
               <provider selected="true" editor-type-id="text-editor">
                 <state line="32" column="76" selection-start="1025" selection-end="1025" vertical-scroll-proportion="0.0">
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="catalogue-installation.rst" pinned="false" current="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/docs/sphinx/installation-manual/catalogue-installation.rst">
-              <provider selected="true" editor-type-id="text-editor">
-                <state line="638" column="0" selection-start="17390" selection-end="17426" vertical-scroll-proportion="0.0">
                   <folding />
                 </state>
               </provider>
@@ -176,7 +169,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/docs/sphinx/installation-manual/catalogue-installation.rst" />
         <option value="$PROJECT_DIR$/../../qrust/qrust/linfiniti/views.py" />
         <option value="$PROJECT_DIR$/urls.py" />
         <option value="$PROJECT_DIR$/catalogue/views/__init__.py" />
@@ -191,6 +183,7 @@
         <option value="$PROJECT_DIR$/settings_local.py" />
         <option value="$PROJECT_DIR$/settings_local.py.template" />
         <option value="$PROJECT_DIR$/catalogue/views/messaging.py" />
+        <option value="$PROJECT_DIR$/media/js/catalogue.js-uncompressed" />
         <option value="$PROJECT_DIR$/catalogue/tests/messaging_tests.py" />
       </list>
     </option>
@@ -265,6 +258,52 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="project_static_files" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sac_catalogue" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sac_catalogue" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="media" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sac_catalogue" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sac_catalogue" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="media" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="js" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sac_catalogue" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sac_catalogue" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="catalogue" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -297,7 +336,7 @@
     <property name="options.lastSelected" value="preferences.intentionPowerPack" />
     <property name="recentsLimit" value="5" />
     <property name="restartRequiresConfirmation" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../qrust/qrust/qrust_site/tests.py" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../farminfo/farminfo/valuations/static/js/valuations.js" />
     <property name="options.searchVisible" value="true" />
     <property name="options.splitter.details.proportions" value="0.2" />
     <property name="dynamic.classpath" value="false" />
@@ -591,7 +630,7 @@
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3281768" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2139808" sideWeight="0.32596686" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2139808" sideWeight="0.66629833" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2139808" sideWeight="0.66629833" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="false" weight="0.399137" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" x="3888" y="56" width="1634" height="802" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2139808" sideWeight="0.32596686" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32901832" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -686,53 +725,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/catalogue/tests/sample_files/sample_thumbnail.wld">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/catalogue/management/commands/terrasar_harvest.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="131" column="23" selection-start="6049" selection-end="6082" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/catalogue/tests/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="69" column="45" selection-start="3388" selection-end="3388" vertical-scroll-proportion="0.5254545">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/catalogue/views/helpers.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="1102" column="33" selection-start="41821" selection-end="41821" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/catalogue/tests/view_helper_tests.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="46" column="52" selection-start="1506" selection-end="1506" vertical-scroll-proportion="0.89042675">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/catalogue/tests/test_utils.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="88" column="28" selection-start="2770" selection-end="2770" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/catalogue/tests/search_bandcount.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="58" column="0" selection-start="2099" selection-end="2099" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/settings_local.py.template">
       <provider selected="true" editor-type-id="text-editor">
         <state line="26" column="0" selection-start="0" selection-end="4990" vertical-scroll-proportion="0.0">
@@ -761,20 +753,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="0" selection-start="471" selection-end="471" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../python/local/lib/python2.7/site-packages/django/contrib/admin/views/decorators.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="30" column="0" selection-start="1130" selection-end="1130" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/catalogue/views/messaging.py">
       <provider selected="true" editor-type-id="text-editor">
         <state line="156" column="42" selection-start="6115" selection-end="6115" vertical-scroll-proportion="0.0">
@@ -782,16 +760,79 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/../python/local/lib/python2.7/site-packages/django/contrib/admin/views/decorators.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="30" column="0" selection-start="1130" selection-end="1130" vertical-scroll-proportion="0.6574395">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="14" column="0" selection-start="471" selection-end="471" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/settings_local.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="68" column="0" selection-start="2339" selection-end="2368" vertical-scroll-proportion="1.5023255">
+        <state line="15" column="22" selection-start="375" selection-end="375" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../qrust/qrust/linfiniti/forms.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="28" column="0" selection-start="1076" selection-end="1076" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/media/js/catalogue.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/docs/sphinx/installation-manual/catalogue-installation.rst">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="638" column="0" selection-start="17390" selection-end="17426" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../farminfo/farminfo/project_static_files/js/linfiniti.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="389" column="25" selection-start="10803" selection-end="10819" vertical-scroll-proportion="-6.245283">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/lib/JavascriptLanguage.jar!/com/intellij/lang/javascript/index/predefined/DHTML.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="1135" column="7" selection-start="16827" selection-end="16827" vertical-scroll-proportion="0.33333334">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../farminfo/farminfo/valuations/static/js/valuations.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="409" column="29" selection-start="12960" selection-end="12967" vertical-scroll-proportion="-5.4716983">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/media/js/catalogue.js-uncompressed">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="40" column="27" selection-start="1293" selection-end="1293" vertical-scroll-proportion="0.12514758">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/catalogue/tests/messaging_tests.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="168" column="35" selection-start="6470" selection-end="6470" vertical-scroll-proportion="0.82468283">
+        <state line="142" column="27" selection-start="5267" selection-end="5267" vertical-scroll-proportion="0.14532872">
           <folding />
         </state>
       </provider>
