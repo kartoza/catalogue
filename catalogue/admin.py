@@ -22,7 +22,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import ValidationError
 from django import forms
 from django.contrib.auth.models import User
-
+from offline_messages.models import OfflineMessage
 
 from catalogue.models import (
     OrderNotificationRecipients,
@@ -197,6 +197,10 @@ class SensorTypeAdmin(admin.GeoModelAdmin):
 class AcquisitionModeAdmin(admin.GeoModelAdmin):
     pass
 
+
+class OfflineMessageAdmin(admin.ModelAdmin):
+    list_display = [f.name for f in OfflineMessage._meta.fields]
+
 admin.site.register(Mission, MissionAdmin)
 admin.site.register(MissionSensor, MissionSensorAdmin)
 admin.site.register(SensorType, SensorTypeAdmin)
@@ -226,3 +230,4 @@ admin.site.register(
 admin.site.register(Search, SearchAdmin)
 admin.site.register(Visit, VisitAdmin)
 admin.site.register(SacUserProfile, SacUserProfileAdmin)
+admin.site.register(OfflineMessage, OfflineMessageAdmin)

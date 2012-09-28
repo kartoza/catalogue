@@ -144,6 +144,9 @@ SOUTH_MIGRATION_MODULES = {
   'acs': 'ignore',
 }
 
+# For offline messages app
+MESSAGE_STORAGE = 'offline_messages.storage.OfflineStorageEngine'
+
 # not changed, just shown as an example
 COVERAGE_MODULE_EXCLUDES = [
         'tests$', 'settings$', '^urls$', 'locale$',
