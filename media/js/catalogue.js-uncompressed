@@ -64,6 +64,8 @@ $(document).ready(function()
   setupSceneIdHelpDialog();
   //block the user interface when an ajax request is sent
   $(".blocking-link").live('click',block);
+  //check for messages every 60 s
+  setInterval(checkForMessages, 60000);
 });
 
 
@@ -982,4 +984,96 @@ function reverseTransformPoint(thePoint)
   myPoint = thePoint.clone();
   myPoint = myPoint.transform(mySourceCRS, myCRS);
   return myPoint;
+}
+
+/** This function will pop up a form to let admins send messages to users.
+ * @param theAllFlag - whether the message should go to all users
+ * (c) Linfiniti
+ **/
+function sendMessage( theAllFlag )
+{
+  var myMessageDialog = $('#message-dialog').dialog({
+    autoOpen: true,
+    title: 'Send Message',
+    closeOnEscape: true,
+    dialogClass: 'scrollable',
+    position: 'center',
+    width: 480,
+    modal: true,
+    buttons:
+    [
+      {
+        text: "Send",
+        click : function( ) { postMessage ( theAllFlag ); }
+      },
+      {
+        text: "Close",
+        click : function() {
+          $(this).dialog("close");
+        }
+      }
+    ],
+    open: function() {
+      if ( theAllFlag )
+      {
+        $("#message-dialog").load("/sendMessageToAllUsers/", function() {
+          $('#message-dialog').dialog('option', 'position', 'center');
+        });
+      }
+      else
+      {
+        $("#message-dialog").load("/sendMessageToUser/", function() {
+          $('#message-dialog').dialog('option', 'position', 'center');
+        });
+      }
+
+    }
+  });
+}
+
+/** Posts edited message to server for dissemination.
+ * (c) Linfiniti
+ **/
+function postMessage( theAllFlag )
+{
+  var myUrl = "/sendMessageToUser/";
+  if ( theAllFlag )
+  {
+    myUrl = "/sendMessageToAllUsers/";
+  }
+  $.post( myUrl, $("#message-form" ).serialize(), function(data) {
+    $("#message-dialog").empty();
+    $("#message-dialog").append(data);
+  });
+}
+
+/** Check for messages on the server and display any returned messages
+ * in a popup.
+ * (c) Linfiniti
+ */
+function checkForMessages()
+{
+  $.get("/getUserMessages/" , function(data) {
+    if ( data != "\n" )
+    {
+      var myDialog = $(data).dialog({
+        autoOpen: true,
+        title: 'You have messages',
+        closeOnEscape: true,
+        dialogClass: 'scrollable',
+        position: 'center',
+        width: 480,
+        modal: true,
+        buttons:
+        [
+          {
+            text: "Close",
+            click : function() {
+              $(this).dialog("close");
+            }
+          }
+        ]
+      });
+    }
+  });
 }

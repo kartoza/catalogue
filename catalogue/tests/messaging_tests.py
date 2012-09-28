@@ -23,6 +23,8 @@ from django.test import TestCase
 from django.test.client import Client
 from django.contrib.auth.models import User
 
+from offline_messages.models import OfflineMessage
+
 from catalogue.tests.test_utils import RequestFactory
 from catalogue.views import (sendMessageToUser,
                              sendMessageToAllUsers,
@@ -137,6 +139,8 @@ class MessagingTests(TestCase):
 
     def testUserMessages(self):
         """Test a user gets messages when we send them."""
+        myMessages = OfflineMessage.objects.all()
+        myMessages.delete()
         self.factory = RequestFactory(enforce_csrf_checks=True)
         myClient = Client()
         # First try to send a message as timlinux who IS staff
@@ -168,5 +172,7 @@ class MessagingTests(TestCase):
         myMessage = 'No messages obtained for user'
         assert myResponse.content != '', myMessage
 
+        myMessages = OfflineMessage.objects.all()
+        assert myMessages.count() > 0, myMessage
 
 
