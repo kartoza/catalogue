@@ -104,6 +104,7 @@ $.widget( "linfinity.sansa_daterangecontainer", {
                     });
                 }
                 //decrease datecount
+                $(this).removeClass('selected');
                 self.datecount--;
             });
             self._check_date_count();
