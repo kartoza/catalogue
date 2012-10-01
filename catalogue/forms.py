@@ -238,6 +238,7 @@ class AdvancedSearchForm(forms.ModelForm):
             'ip_position', 'guid', 'keywords', 'geometry_file', 'user',
             'deleted', 'processing_level')
 
+    # add Media class for this form, rendered specific for this form
     class Media:
         js = (
             "/media/js/widget.sansa-datepicker.js",

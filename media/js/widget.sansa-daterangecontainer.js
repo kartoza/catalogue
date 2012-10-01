@@ -1,8 +1,29 @@
+// SANSA-EO Catalogue - DatePicker widget
+
+// Contact : lkleyn@sansa.org.za
+
+// .. note:: This program is the property of the South African National Space
+//    Agency (SANSA) and may not be redistributed without expresse permission.
+//    This program may include code which is the intellectual property of
+//    Linfiniti Consulting CC. Linfiniti grants SANSA perpetual, non-transferrable
+//    license to use any code contained herein which is the intellectual property
+//    of Linfiniti Consulting CC.
+
+
+// __author__ = 'dodobasic@gmail.com'
+// __version__ = '0.1'
+// __date__ = '01/10/2012'
+// __copyright__ = 'South African National Space Agency'
+
+// Options:
+// - dateFormat (optional)
+//      - define JQuery date widget date format
+//      - http://docs.jquery.com/UI/Datepicker/formatDate
+
 $.widget( "linfinity.sansa_daterangecontainer", {
     // default options
     options: {
-        dateFormat: 'yy-mm-dd',
-        currentDate: new Date()
+        dateFormat: 'yy-mm-dd'
     },
 
     // the constructor
@@ -20,7 +41,7 @@ $.widget( "linfinity.sansa_daterangecontainer", {
         this.element.find('.dr_row .dr_input').each(function(index, elem){
             //extract date range from the formset
             var myDateRange = $(elem).find(':text').map(function(index,elem){return $(elem).val();});
-            //the dates passwd in are y-m-d so we need to switch them around to display as d-m-y
+            //parse the dates
             myStartDate = self._parse_date(myDateRange[0]);
             myEndDate = self._parse_date(myDateRange[1]);
 
@@ -39,11 +60,12 @@ $.widget( "linfinity.sansa_daterangecontainer", {
     _setup_events: function () {
         var self=this;
         $('#dr_add').live('click', function() {
-            // get the start date and zero pad day and month
+            // get the dates from datepickers and parse them
             var myStartDate = self._parse_date($("#id_start_datepicker").val(),'dd-mm-yy');
             var myEndDate = self._parse_date($("#id_end_datepicker").val(),'dd-mm-yy');
 
             if(myStartDate && myEndDate) {
+                // basic checks for date range
                 if (myStartDate <= myEndDate) {
                     var in_list;
                     in_list = false;
@@ -71,7 +93,7 @@ $.widget( "linfinity.sansa_daterangecontainer", {
 
         $('#dr_del').live('click', function(){
             self.element.find('.dr_row.selected').each(function(){
-                // if an row has checkbox it means it was fetch from the database
+                // if an row has checkbox it means it was fetched from the database
                 if ($(this).find('input[type=checkbox]').length) {
                     $(this).find('input[type=checkbox]').attr('checked', 'checked');
                     $(this).hide('slow');
@@ -89,7 +111,7 @@ $.widget( "linfinity.sansa_daterangecontainer", {
     },
 
     _check_date_count: function () {
-        console.log(this.datecount);
+        //check the current datecount
         if (this.datecount === 0) {
             //disable remove button
             $('#dr_del img').attr('src','/media/images/selector-remove.gif');
@@ -103,7 +125,7 @@ $.widget( "linfinity.sansa_daterangecontainer", {
 
     _cloneMore:function(theStartDate, theEndDate){
         var total = $('#id_searchdaterange_set-TOTAL_FORMS').val();
-
+        // prepare template
         var tpl = [
         '<div class="dr_row">',
         '<div class="dr_input">',
@@ -135,6 +157,7 @@ $.widget( "linfinity.sansa_daterangecontainer", {
         return $.datepicker.parseDate(theFormat, theDate);
     },
     _format_output: function(theStartDate, theEndDate){
+        //format date container date output
         return this._format_date(theStartDate,'dd-mm-yy') + " : " + this._format_date(theEndDate,'dd-mm-yy');
     }
 });

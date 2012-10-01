@@ -1,8 +1,36 @@
+
+// SANSA-EO Catalogue - DatePicker widget
+
+// Contact : lkleyn@sansa.org.za
+
+// .. note:: This program is the property of the South African National Space
+//    Agency (SANSA) and may not be redistributed without expresse permission.
+//    This program may include code which is the intellectual property of
+//    Linfiniti Consulting CC. Linfiniti grants SANSA perpetual, non-transferrable
+//    license to use any code contained herein which is the intellectual property
+//    of Linfiniti Consulting CC.
+
+
+// __author__ = 'dodobasic@gmail.com'
+// __version__ = '0.1'
+// __date__ = '01/10/2012'
+// __copyright__ = 'South African National Space Agency'
+
+// Options:
+// - dateFormat (optional)
+//      - define JQuery date widget date format
+//      - http://docs.jquery.com/UI/Datepicker/formatDate
+// - currentDate (optional)
+//      - set current picked date
+// - date-focus (optional)
+//      - set focus on datepicker monthyear change
+
 $.widget( "linfinity.sansa_datepicker", {
     // default options
     options: {
         dateFormat: 'dd-mm-yy',
-        currentDate: new Date()
+        currentDate: new Date(),
+        date_focus: 'start'
     },
 
     // the constructor
@@ -11,7 +39,7 @@ $.widget( "linfinity.sansa_datepicker", {
 
         this.input_element = this.element.find('input');
 
-        //update date_focus options from html5data
+        //update date_focus options from html5data, set by widget attrs in form
         var mydate_focus = this.element.data('date_focus');
         if (mydate_focus) {
             this.options.date_focus = mydate_focus;
@@ -40,6 +68,7 @@ $.widget( "linfinity.sansa_datepicker", {
                     self._set_date(self._get_last_day_of_month(year, month));
                 } else {
                     //if date_focus is not set
+                    throw 'DateFocus is not set !?!?!?';
                 }
             },
             onSelect: function (theDate, inst) {

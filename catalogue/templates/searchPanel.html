@@ -5,38 +5,36 @@
     <h3 class="centered"><img src="/media/images/search_16.png" alt="" />&nbsp;Search criteria (you can optionally digitise a search area above)</h3>
   </div>
   <script type="text/javascript">
-   $( function () {
-       {#% if myAdvancedFlag %#}
-       {# restyle the file choose using jquery stylefile plugin #}
+  $( function () {
+   {#% if myAdvancedFlag %#}
+   {# restyle the file choose using jquery stylefile plugin #}
        //$("input[type=file]").filestyle({ image: "/media/images/choose-file.gif", imageheight : 22, imagewidth : 160, width : 0 });
 
        {#% endif %#}
 
-      {% for myField in myForm %}
-        {% ifnotequal myField.html_name "geometry" %}
-        $("#{{myField.html_name}}Help").dialog({
+       {% for myField in myForm %}
+       {% ifnotequal myField.html_name "geometry" %}
+       $("#{{myField.html_name}}Help").dialog({
         autoOpen: false,
         bgiframe: true,
         modal: true,
         buttons: {
           Ok: function() {
             $(this).dialog('close');
-            }
           }
-        });
-        $('#{{myField.html_name}}Button').click(function(){
-          $('#{{myField.html_name}}Help').dialog('open');
-        });
-        {% endifnotequal %}
-      {% endfor %}
+        }
+      });
+       $('#{{myField.html_name}}Button').click(function(){
+        $('#{{myField.html_name}}Help').dialog('open');
+      });
+       {% endifnotequal %}
+       {% endfor %}
 
 
 
       // datewidgetcontainer
       $('#dr_container').sansa_daterangecontainer();
-    });
 
-    $(function(){
         // for toggling advanced search on / off
         $('#advancedSearch').click(function(event){
           //console.log('clicked - val: ' + $('#id_isAdvanced').val());
@@ -61,11 +59,11 @@
         advSearchActivate({{ mySearchType }});
         {% endif %}
         $('#id_search_type').change(function(e){
-            advSearchActivate(e.currentTarget.value);
+          advSearchActivate(e.currentTarget.value);
         });
         $('#id_sensor_inclination_angle_start').change(check_sensor_inclination_angles);
         $('#id_sensor_inclination_angle_end').change(check_sensor_inclination_angles);
-    });
+      });
 
     /*
     * @param num : search_type enum value
