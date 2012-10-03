@@ -106,9 +106,7 @@ class Searcher:
             'myShowPreviewFlag': True,
             'myLegendFlag': True,  # used to show the legend in the accordion
             'mySearchFlag': True,
-            'myPaginator': self.mPaginator,
-            'myProductIdSearch': (
-                self.mSearch.search_type == Search.PRODUCT_SEARCH_OPTICAL),
+            'myPaginator': self.mPaginator
         })
 
     def __del__(self):

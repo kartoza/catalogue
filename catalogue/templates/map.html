@@ -139,9 +139,6 @@
       <button onclick='location="/modifysearch/{{mySearchGuid}}/"' title="Returns to the main search page (works on a copy of the current search)">Modify this search</button>
     </div>
   <div>
-    {% if myProductIdSearch %}<br />
-    <button onclick='location="/modifysearch/{{mySearchGuid}}/"' title="Refine this search (works on a copy of the current search)">Product ID search</button>
-    {% endif %}
   </div>
           {#% if user.is_staff %}<div id="sql" style="display: none;">{{ mySqlString }}</div><input type=button id="sql-button" value="Show SQL" />{% endif %#}
     </div>
