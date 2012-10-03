@@ -18,6 +18,7 @@ __date__ = '01/01/2011'
 __copyright__ = 'South African National Space Agency'
 
 import logging
+from datetime import timedelta
 
 from django.shortcuts import get_object_or_404
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
@@ -170,10 +171,14 @@ mMap.addLayer(mySearchAreaLayer);''' % self.mSearch.geometry.geojson)
         if self.mSearch.searchdaterange_set.count():
             self.mDateQuery = Q()
             for date_range in self.mSearch.searchdaterange_set.all():
+                # add one day to end date to search in the last day
+                # search for 01-03-2012 -> 01-03-2012 yields no results
+                # because range only compares dates
+                myEndDate = date_range.end_date + timedelta(days=1)
                 self.mDateQuery = (
                     self.mDateQuery | Q(
                         product_date__range=(
-                            date_range.start_date, date_range.end_date)))
+                            date_range.start_date, myEndDate)))
                 # TODO: format dates in dd-mm-yyyy
                 self.mMessages.append(
                     'date range <b>%s</b>' % date_range.local_format())
