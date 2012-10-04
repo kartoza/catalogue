@@ -353,8 +353,8 @@ class Search(models.Model):
         myAdvParameterTestList = [
             self.processing_level.count() > 0,
             self.keywords != '',
-            self.k_orbit_path is not None,
-            self.j_frame_row is not None,
+            self.k_orbit_path is not None and self.k_orbit_path != '',
+            self.j_frame_row is not None and self.j_frame_row != '',
             self.use_cloud_cover is True,
             self.acquisition_mode is not None,
             self.spatial_resolution is not None,
