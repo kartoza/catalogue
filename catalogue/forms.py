@@ -311,7 +311,6 @@ class AdvancedSearchForm(forms.ModelForm):
     def clean(self):
         myCleanedData = self.cleaned_data
         logging.info('cleaned data: ' + str(myCleanedData))
-
         # ABP: checks for advanced search only (not in cleaned_data because it
         # does not belong to Search model)
         if self.data.get('isAdvanced') == 'true':
@@ -334,15 +333,15 @@ class AdvancedSearchForm(forms.ModelForm):
                 raise forms.ValidationError(
                     'Error: Start sensor angle can not be greater than the end'
                     ' sensor angle!')
-
-            if (int(myCleanedData.get('search_type')) in (
-                    Search.PRODUCT_SEARCH_OPTICAL, Search.PRODUCT_SEARCH_RADAR)
-                    and not myCleanedData.get('sensors')):
-                self._errors['sensors'] = self.error_class([
-                    'Please select one or more sensors.'])
-                raise forms.ValidationError(
-                    'Error: Sensors are mandatory for sensors-based products '
-                    'search!')
+        # check if user selected sensors for search
+        if (int(myCleanedData.get('search_type')) in (
+                Search.PRODUCT_SEARCH_OPTICAL, Search.PRODUCT_SEARCH_RADAR)
+                and not myCleanedData.get('sensors')):
+            self._errors['sensors'] = self.error_class([
+                'Please select one or more sensors.'])
+            raise forms.ValidationError(
+                'Error: Sensors are mandatory for sensors-based products '
+                'search!')
 
         return self.cleaned_data
 
