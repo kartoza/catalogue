@@ -83,6 +83,31 @@ DateRangeInlineFormSet = inlineformset_factory(
     Search, SearchDateRange, extra=0, max_num=0, formset=DateRangeFormSet)
 
 
+def detectAdvancedSearchForm(theSearchForm):
+    """
+    Based on search form input determine if the form is advanced
+    """
+    if theSearchForm.data.get('isAdvanced') == 'true':
+        return True
+    myFormIsAdvancedTest = [
+        theSearchForm.data.get('sensor_inclination_angle_start') != '',
+        theSearchForm.data.get('sensor_inclination_angle_end') != '',
+        theSearchForm.data.get('j_frame_row') != '',
+        theSearchForm.data.get('aoi_geometry') != '',
+        theSearchForm.data.get('spatial_resolution') != '',
+        theSearchForm.data.get('acquisition_mode') != '',
+        theSearchForm.data.get('geometry_file') != '',
+        theSearchForm.data.get('k_orbit_path') != '',
+        theSearchForm.data.get('band_count') != '',
+        theSearchForm.data.get('license_type') != '',
+        theSearchForm.data.get('geometry') != '',
+        theSearchForm.data.get('sensor_type') != '',
+        (theSearchForm.data.get('cloud_mean') != '' and
+            theSearchForm.data.get('cloud_mean') != '0')
+    ]
+    return any(myFormIsAdvancedTest)
+
+
 @login_required
 #theRequest context decorator not used here since we have different return
 #paths
@@ -187,7 +212,7 @@ def search(theRequest):
         #render_to_response is done by the renderWithContext decorator
         return render_to_response(
             'search.html', {
-                'myAdvancedFlag': theRequest.POST['isAdvanced'] == 'true',
+                'myAdvancedFlag': detectAdvancedSearchForm(myForm),
                 'mySearchType': theRequest.POST['search_type'],
                 'myForm': myForm,
                 'myHost': settings.HOST,
