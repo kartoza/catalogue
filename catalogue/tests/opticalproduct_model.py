@@ -13,14 +13,15 @@ Contact : lkleyn@sansa.org.za
 """
 
 __author__ = 'dodobasic@gmail.com'
-__version__ = '0.1'
-__date__ = '27/06/2012'
+__version__ = '0.2'
+__date__ = '11/10/2012'
 __copyright__ = 'South African National Space Agency'
 
 from django.test import TestCase
 from catalogue.tests.test_utils import simpleMessage
 from catalogue.models import OpticalProduct
 from datetime import datetime
+
 
 class OpticalProductCRUD_Test(TestCase):
     """
@@ -41,7 +42,7 @@ class OpticalProductCRUD_Test(TestCase):
         'test_genericsensorproduct.json',
         'test_opticalproduct.json',
         #'test_radarproduct.json'
-        ]
+    ]
 
     def setUp(self):
         """
@@ -60,7 +61,11 @@ class OpticalProductCRUD_Test(TestCase):
             # we need to include 'parent' model attributes
             # without it parent models will no be created
             'product_date': '2100-01-01 12:00:00',
-            'spatial_coverage': 'POLYGON ((21.3566000000000145 -27.2013999999999783, 21.4955000000000496 -26.6752999999999929, 22.0914000000000215 -26.7661999999999978, 21.9554000000000542 -27.2926999999999964, 21.3566000000000145 -27.2013999999999783))',
+            'spatial_coverage': (
+                'POLYGON ((21.3566000000000145 -27.2013999999999783, 21.495500'
+                '0000000496 -26.6752999999999929, 22.0914000000000215 -26.7661'
+                '999999999978, 21.9554000000000542 -27.2926999999999964, 21.35'
+                '66000000000145 -27.2013999999999783))'),
             'projection_id': 89,
             'license_id': 1,
             'original_product_id': '11204048606190846322X',
@@ -72,7 +77,8 @@ class OpticalProductCRUD_Test(TestCase):
             'metadata': '',
             'quality_id': 1,
             'processing_level_id': 16,
-            'product_id': 'S1-_HRV_X--_S1C2_0120_00_0404_00_000101_084632_1B--_ORBIT-',
+            'product_id': (
+                'S1-_HRV_X--_S1C2_0120_00_0404_00_000101_084632_1B--_ORBIT-'),
             'radiometric_resolution': 16,
             'spatial_resolution_y': 1.0,
             'spatial_resolution_x': 1.0,
@@ -109,8 +115,10 @@ class OpticalProductCRUD_Test(TestCase):
         myModel = OpticalProduct(**myNewData)
         myModel.save()
         #check if PK exists
-        self.assertTrue(myModel.pk != None,
-            simpleMessage(myModel.pk, 'not None',
+        self.assertTrue(
+            myModel.pk is not None,
+            simpleMessage(
+                myModel.pk, 'not None',
                 message='Model PK should NOT equal None'))
 
     def test_OpticalProduct_read(self):
@@ -133,8 +141,10 @@ class OpticalProductCRUD_Test(TestCase):
         myModel = OpticalProduct.objects.get(pk=myModelPK)
         #check if data is correct
         for key, val in myExpectedModelData.items():
-            self.assertEqual(myModel.__dict__.get(key), val,
-                simpleMessage(myModel.__dict__.get(key), val,
+            self.assertEqual(
+                myModel.__dict__.get(key), val,
+                simpleMessage(
+                    myModel.__dict__.get(key), val,
                     message='For key "%s"' % key))
 
     def test_OpticalProduct_update(self):
@@ -167,9 +177,10 @@ class OpticalProductCRUD_Test(TestCase):
 
         #check if updated
         for key, val in myNewModelData.items():
-            self.assertEqual(myModel.__dict__.get(key), val,
-                simpleMessage(myModel.__dict__.get(key), val,
-                message='For key "%s"' % key))
+            myRes = myModel.__dict__.get(key)
+            self.assertEqual(
+                myRes, val,
+                simpleMessage(myRes, val, message='For key "%s"' % key))
 
     def Xtest_OpticalProduct_delete(self):
         """
@@ -184,35 +195,90 @@ class OpticalProductCRUD_Test(TestCase):
         myModel.delete()
 
         #check if deleted
-        self.assertTrue(myModel.pk is None,
-            simpleMessage(myModel.pk, None,
-            message='Model PK should equal None'))
+        self.assertTrue(
+            myModel.pk is None,
+            simpleMessage(
+                myModel.pk, None, message='Model PK should equal None'))
 
     def test_OpticalProduct_getMetadataDict(self):
         """
         Tests OpticalProduct model getMetadataDict method
         """
         myModelPKs = [1934163, 1001218]
-        myExpResults = [{'product_date': '1986-06-19T08:46:32', 'institution_address': u'Hartebeeshoek',
-        'institution_region': '', 'image_quality_code': u'Unknown', 'vertical_cs': u'ORBIT', 'processing_level_code': u'3Ba',
-        'cloud_cover_percentage': 5, 'file_identifier': u'S1-_HRV_X--_S1C2_0120_00_0404_00_860619_084632_1B--_ORBIT-',
-        'spatial_coverage': '21.3566,-27.2014 21.4955,-26.6753 22.0914,-26.7662 21.9554,-27.2927 21.3566,-27.2014',
-        'bbox_east': 22.09140000000002, 'md_abstract': '', 'md_product_date': '1986-06-19T08:46:32',
-        'institution_city': u'Gauteng', 'bbox_north': -26.675299999999993, 'institution_name': u'Satellite Applications Centre',
-        'institution_country': u'South Africa', 'bbox_west': 21.356600000000014, 'institution_postcode': u'0000',
-        'md_data_identification': u'HRV-1:Camera 2', 'bbox_south': -27.292699999999996},
-        {'product_date': '1992-07-03T08:29:48', 'institution_address': u'Hartebeeshoek',
-        'institution_region': '', 'image_quality_code': u'Unknown', 'vertical_cs': u'UTM35S', 'processing_level_code': u'2A',
-        'cloud_cover_percentage': -1, 'file_identifier': u'S1-_Pan_P--_CAM2_0126_00_0387_00_920703_082948_L2A-_UTM35S',
-        'spatial_coverage': '26.447275,-18.739992 27.00868,-18.826267 27.134314,-18.296593 26.574713,-18.210571 26.447275,-18.739992',
-        'bbox_east': 27.134314, 'md_abstract': '', 'md_product_date': '1992-07-03T08:29:48',
-        'institution_city': u'Gauteng', 'bbox_north': -18.210571, 'institution_name': u'Satellite Applications Centre',
-        'institution_country': u'South Africa', 'bbox_west': 26.447275, 'institution_postcode': u'0000',
-        'md_data_identification': u'HRV-3:Camera 1', 'bbox_south': -18.826267}]
+        myExpResults = [{
+            'product_date': '1986-06-19T08:46:32',
+            'institution_address': u'Hartebeeshoek',
+            'institution_region': '', 'image_quality_code': u'Unknown',
+            'vertical_cs': u'ORBIT', 'processing_level_code': u'3Ba',
+            'cloud_cover_percentage': 5,
+            'file_identifier': u'S1-_HRV_X--_S1C2_0120_00_0404_00_860619_08463'
+            '2_1B--_ORBIT-',
+            'spatial_coverage': '21.3566,-27.2014 21.4955,-26.6753 22.0914,-26'
+            '.7662 21.9554,-27.2927 21.3566,-27.2014',
+            'bbox_east': 22.09140000000002, 'md_abstract': '',
+            'md_product_date': '1986-06-19T08:46:32',
+            'institution_city': u'Gauteng', 'bbox_north': -26.675299999999993,
+            'institution_name': u'Satellite Applications Centre',
+            'institution_country': u'South Africa',
+            'bbox_west': 21.356600000000014, 'institution_postcode': u'0000',
+            'md_data_identification': u'HRV-1:Camera 2',
+            'bbox_south': -27.292699999999996
+        }, {
+            'product_date': '1992-07-03T08:29:48',
+            'institution_address': u'Hartebeeshoek',
+            'institution_region': '', 'image_quality_code': u'Unknown',
+            'vertical_cs': u'UTM35S', 'processing_level_code': u'2A',
+            'cloud_cover_percentage': -1,
+            'file_identifier': u'S1-_Pan_P--_CAM2_0126_00_0387_00_920703_08294'
+            '8_L2A-_UTM35S',
+            'spatial_coverage': '26.447275,-18.739992 27.00868,-18.826267 27.1'
+            '34314,-18.296593 26.574713,-18.210571 26.447275,-18.739992',
+            'bbox_east': 27.134314, 'md_abstract': '',
+            'md_product_date': '1992-07-03T08:29:48',
+            'institution_city': u'Gauteng', 'bbox_north': -18.210571,
+            'institution_name': u'Satellite Applications Centre',
+            'institution_country': u'South Africa', 'bbox_west': 26.447275,
+            'institution_postcode': u'0000',
+            'md_data_identification': u'HRV-3:Camera 1',
+            'bbox_south': -18.826267}]
 
         for idx, PK in enumerate(myModelPKs):
             myModel = OpticalProduct.objects.get(pk=PK)
             myRes = myModel.getMetadataDict()
-            self.assertEqual(myRes, myExpResults[idx],
-                simpleMessage(myRes, myExpResults[idx],
+            self.assertEqual(
+                myRes, myExpResults[idx],
+                simpleMessage(
+                    myRes, myExpResults[idx],
                     message='Model PK %s getMetadataDict:' % PK))
+
+    def test_OpticalProduct_thumbnailDirectory(self):
+        """
+        Tests OpticalProduct model thumbnailDirectory method
+        """
+        myModelPKs = [1934163, 1001218]
+        myExpResults = ['S1/1986/6/19', 'S3/1992/7/3']
+
+        for idx, PK in enumerate(myModelPKs):
+            myModel = OpticalProduct.objects.get(pk=PK)
+            myRes = myModel.thumbnailDirectory()
+            self.assertEqual(
+                myRes, myExpResults[idx],
+                simpleMessage(
+                    myRes, myExpResults[idx],
+                    message='Model PK %s thumbnailDirectory:' % PK))
+
+    def test_OpticalProduct_productDirectory(self):
+        """
+        Tests OpticalProduct model productDirectory method
+        """
+        myModelPKs = [1934163, 1001218]
+        myExpResults = ['S1/3Ba/1986/6/19', 'S3/2A/1992/7/3']
+
+        for idx, PK in enumerate(myModelPKs):
+            myModel = OpticalProduct.objects.get(pk=PK)
+            myRes = myModel.productDirectory()
+            self.assertEqual(
+                myRes, myExpResults[idx],
+                simpleMessage(
+                    myRes, myExpResults[idx],
+                    message='Model PK %s productDirectory:' % PK))
