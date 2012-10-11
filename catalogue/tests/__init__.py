@@ -26,6 +26,7 @@ from topic_model import TopicCRUD_Test
 from placeType_model import PlaceTypeCRUD_Test
 from place_model import PlaceCRUD_Test
 from unit_model import UnitCRUD_Test
+from products_model_helpermethods import Product_HelperMethods_Test
 from genericproduct_model import GenericProductCRUD_Test
 from genericimageryproduct_model import GenericImageryProductCRUD_Test
 from genericsensorproduct_model import GenericSensorProductCRUD_Test
