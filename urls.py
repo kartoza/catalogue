@@ -110,7 +110,7 @@ urlpatterns = patterns('',
     (r'^updateorderhistory/$', updateOrderHistory),
     (r'^orderssummary/$', ordersSummary),
     # Tasking request managmenet
-    (r'^listtaskingrequests/$', listTaskingRequests),
+    url(r'^listtaskingrequests/$', listTaskingRequests, name='listTaskingRequests'),
     (r'^addtaskingrequest/', addTaskingRequest),
     url(r'^mytaskingrequests/$', myTaskingRequests, name='myTaskingRequests'),
     url(r'^viewtaskingrequest/(?P<theId>[0-9]+)/$', viewTaskingRequest, name='viewTaskingRequest'),
