@@ -112,7 +112,7 @@ urlpatterns = patterns('',
     # Tasking request managmenet
     (r'^listtaskingrequests/$', listTaskingRequests),
     (r'^addtaskingrequest/', addTaskingRequest),
-    (r'^mytaskingrequests/$', myTaskingRequests),
+    url(r'^mytaskingrequests/$', myTaskingRequests, name='myTaskingRequests'),
     url(r'^viewtaskingrequest/(?P<theId>[0-9]+)/$', viewTaskingRequest, name='viewTaskingRequest'),
     (r'^downloadtaskingrequest/(?P<theId>\d*)/$', downloadTaskingRequest),
 
