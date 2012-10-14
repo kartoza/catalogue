@@ -69,6 +69,7 @@ from graphtag_templatetag import gPieChart_Test
 from boxtag_templatetag import BoxTag_Test
 from messaging_tests import MessagingTests
 from view_helper_tests import ViewHelperTests
+from tasking_view_viewTaskingRequest import TaskingViews_viewTaskingRequest_Tests
 #this is only required for doctests
 __test__ = {
   #'simple_tests' : simple_tests,

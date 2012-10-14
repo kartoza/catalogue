@@ -11,5 +11,18 @@
             "market_sector": 1,
             "order_date": "2010-11-10 10:23:37"
         }
+    },
+    {
+        "pk": 2,
+        "model": "catalogue.order",
+        "fields": {
+            "user": 2,
+            "notes": "Sample Order notes",
+            "order_status": 1,
+            "delivery_method": 1,
+            "delivery_detail": null,
+            "market_sector": 1,
+            "order_date": "2011-11-10 10:23:37"
+        }
     }
 ]
