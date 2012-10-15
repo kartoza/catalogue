@@ -88,7 +88,7 @@ urlpatterns = patterns('',
     (r'^addtocart/(?P<theId>[0-9]+)/$', addToCart),
     (r'^removefromcart/(?P<theId>[0-9]+)/$', removeFromCart),
     # cart contents for embedding into other pages
-    (r'^downloadcart/$', downloadCart),
+    url(r'^downloadcart/$', downloadCart, name='downloadCart'),
     (r'^downloadcartmetadata/$', downloadCartMetadata),
     (r'^myCart/$', showCartContents),
     (r'^showcartcontents/$', showCartContents), #used by xhr requests
@@ -114,7 +114,7 @@ urlpatterns = patterns('',
     url(r'^addtaskingrequest/', addTaskingRequest, name='addTaskingRequest'),
     url(r'^mytaskingrequests/$', myTaskingRequests, name='myTaskingRequests'),
     url(r'^viewtaskingrequest/(?P<theId>[0-9]+)/$', viewTaskingRequest, name='viewTaskingRequest'),
-    url(r'^downloadtaskingrequest/(?P<theId>\d*)/$', downloadTaskingRequest, name='downloadTaskingRequest'),
+    url(r'^taskingrequest/(?P<theId>\d*)/$', downloadTaskingRequest, name='downloadTaskingRequest'),
 
     # upload polygon from zipped shapefile for search/clip
     #( r'^uploadFeature/$', uploadFeature),
