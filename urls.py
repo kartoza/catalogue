@@ -89,7 +89,7 @@ urlpatterns = patterns('',
     (r'^removefromcart/(?P<theId>[0-9]+)/$', removeFromCart),
     # cart contents for embedding into other pages
     url(r'^downloadcart/$', downloadCart, name='downloadCart'),
-    (r'^downloadcartmetadata/$', downloadCartMetadata),
+    url(r'^downloadcartmetadata/$', downloadCartMetadata, name='downloadCartMetadata'),
     (r'^myCart/$', showCartContents),
     (r'^showcartcontents/$', showCartContents), #used by xhr requests
     (r'^showminicartcontents/$', showMiniCartContents),

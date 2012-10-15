@@ -75,6 +75,7 @@ from tasking_view_listTaskingRequests import TaskingViews_listTaskingRequests_Te
 from tasking_view_downloadTaskingRequest import TaskingViews_downloadTaskingRequest_Tests
 from tasking_view_addTaskingRequest import TaskingViews_addTaskingRequest_Tests
 from shopping_cart_view_downloadCart import ShoppingCart_downloadCart_Tests
+from shopping_cart_view_downloadCartMetadata import ShoppingCart_downloadCartMetadata_Tests
 #this is only required for doctests
 __test__ = {
   #'simple_tests' : simple_tests,
