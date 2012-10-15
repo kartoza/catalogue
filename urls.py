@@ -114,7 +114,7 @@ urlpatterns = patterns('',
     (r'^addtaskingrequest/', addTaskingRequest),
     url(r'^mytaskingrequests/$', myTaskingRequests, name='myTaskingRequests'),
     url(r'^viewtaskingrequest/(?P<theId>[0-9]+)/$', viewTaskingRequest, name='viewTaskingRequest'),
-    (r'^downloadtaskingrequest/(?P<theId>\d*)/$', downloadTaskingRequest),
+    url(r'^downloadtaskingrequest/(?P<theId>\d*)/$', downloadTaskingRequest, name='downloadTaskingRequest'),
 
     # upload polygon from zipped shapefile for search/clip
     #( r'^uploadFeature/$', uploadFeature),

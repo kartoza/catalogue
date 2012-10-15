@@ -7,7 +7,7 @@
             "notes": "Sample Order notes",
             "order_status": 1,
             "delivery_method": 1,
-            "delivery_detail": null,
+            "delivery_detail": 1,
             "market_sector": 1,
             "order_date": "2010-11-10 10:23:37"
         }
@@ -17,6 +17,19 @@
         "model": "catalogue.order",
         "fields": {
             "user": 2,
+            "notes": "Sample Order notes",
+            "order_status": 1,
+            "delivery_method": 1,
+            "delivery_detail": 2,
+            "market_sector": 1,
+            "order_date": "2011-11-10 10:23:37"
+        }
+    },
+    {
+        "pk": 3,
+        "model": "catalogue.order",
+        "fields": {
+            "user": 1,
             "notes": "Sample Order notes",
             "order_status": 1,
             "delivery_method": 1,

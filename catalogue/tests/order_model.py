@@ -73,7 +73,7 @@ class OrderCRUD_Test(TestCase):
             'notes': 'Sample Order notes',
             'order_status_id': 1,
             'delivery_method_id': 1,
-            'delivery_detail_id': None,
+            'delivery_detail_id': 1,
             'market_sector_id': 1,
             'order_date':  datetime.strptime('2010-11-10 10:23:37', '%Y-%m-%d %H:%M:%S'),
         }
