@@ -66,8 +66,7 @@ class TaskingViews_downloadTaskingRequest_Tests(TestCase):
         self.assertEqual(myResp.status_code, 302)
         self.assertEqual(
             myResp['Location'], (
-                'http://testserver/accounts/login/?next=/'
-                'downloadtaskingrequest/1/'))
+                'http://testserver/accounts/login/?next=/taskingrequest/1/'))
 
     def test_downloadTaskingRequest_login_staff_shp(self):
         """
