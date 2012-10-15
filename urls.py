@@ -85,7 +85,7 @@ urlpatterns = patterns('',
     #show info for a scene or segment by #
     (r'^metadata/(?P<theId>[0-9]+)/$', metadata),
     (r'^metadatatext/(?P<theId>[0-9]+)/$', metadataText),
-    (r'^addtocart/(?P<theId>[0-9]+)/$', addToCart),
+    url(r'^addtocart/(?P<theId>[0-9]+)/$', addToCart, name='addToCart'),
     (r'^removefromcart/(?P<theId>[0-9]+)/$', removeFromCart),
     # cart contents for embedding into other pages
     url(r'^downloadcart/$', downloadCart, name='downloadCart'),

@@ -109,7 +109,7 @@ def addToCart(theRequest, theId):
     # does not pass along the ajax request header to the redirect url
     # The redirected url needs to check for is_ajax or xhr to
     # decide how to respond# check if the post ended with /?xhr
-    myAjaxFlag = 'xhr' in theRequest.GET
+    myAjaxFlag = 'xhr' in theRequest.GET or theRequest.is_ajax()
 
     # construct a record by passing some params
     myGenericProduct = GenericProduct.objects.get(id=theId)
