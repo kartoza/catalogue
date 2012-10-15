@@ -73,6 +73,8 @@ from tasking_view_viewTaskingRequest import TaskingViews_viewTaskingRequest_Test
 from tasking_view_myTaskingRequests import TaskingViews_myTaskingRequests_Tests
 from tasking_view_listTaskingRequests import TaskingViews_listTaskingRequests_Tests
 from tasking_view_downloadTaskingRequest import TaskingViews_downloadTaskingRequest_Tests
+from tasking_view_addTaskingRequest import TaskingViews_addTaskingRequest_Tests
+
 #this is only required for doctests
 __test__ = {
   #'simple_tests' : simple_tests,
