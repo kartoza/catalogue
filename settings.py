@@ -1,5 +1,4 @@
 import os
-import coverage
 import logging
 from raven.conf import setup_logging
 from raven.contrib.django.handlers import SentryHandler
@@ -147,19 +146,14 @@ SOUTH_MIGRATION_MODULES = {
 # For offline messages app
 MESSAGE_STORAGE = 'offline_messages.storage.OfflineStorageEngine'
 
-# not changed, just shown as an example
-COVERAGE_MODULE_EXCLUDES = [
-        'tests$', 'settings$', '^urls$', 'locale$',
-        '__init__', 'django',
-        'migrations',
-    ]
+TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 
-coverage.use_cache(False)
-for e in COVERAGE_MODULE_EXCLUDES:
-    coverage.exclude(e)
-coverage.start()
-
-TEST_RUNNER = 'django_coverage.coverage_runner.CoverageRunner'
+NOSE_ARGS = [
+    '--nologcapture',
+    '--with-coverage',
+    '--cover-package=catalogue',
+    '--cover-inclusive',
+]
 
 #
 # For django-jenkins integration
