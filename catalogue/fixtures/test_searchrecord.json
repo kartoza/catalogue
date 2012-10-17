@@ -76,5 +76,18 @@
             "order": null,
             "internal_order_id": null
         }
+    },
+    {
+        "pk": 7,
+        "model": "catalogue.searchrecord",
+        "fields": {
+            "product_ready": false,
+            "product": 3471094,
+            "download_path": "",
+            "delivery_detail": null,
+            "user": 2,
+            "order": null,
+            "internal_order_id": null
+        }
     }
 ]
