@@ -79,6 +79,7 @@ from shopping_cart_view_downloadCartMetadata import ShoppingCart_downloadCartMet
 from shopping_cart_view_addToCart import ShoppingCart_addToCart_Tests
 from shopping_cart_view_removeFromCart import ShoppingCart_removeFromCart_Tests
 from shopping_cart_view_showCartContents import ShoppingCart_showCartContents_Tests
+from shopping_cart_view_showMiniCartContents import ShoppingCart_showMiniCartContents_Tests
 #this is only required for doctests
 __test__ = {
   #'simple_tests' : simple_tests,

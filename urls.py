@@ -92,7 +92,7 @@ urlpatterns = patterns('',
     url(r'^downloadcartmetadata/$', downloadCartMetadata, name='downloadCartMetadata'),
     (r'^myCart/$', showCartContents),
     url(r'^showcartcontents/$', showCartContents, name='showCartContents'), #used by xhr requests
-    (r'^showminicartcontents/$', showMiniCartContents),
+    url(r'^showminicartcontents/$', showMiniCartContents, name='showMiniCartContents'),
     #
     # Order management and related lookup tables
     #
