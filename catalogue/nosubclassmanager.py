@@ -44,9 +44,10 @@ class NoSubclassManager(models.Manager):
     def get_query_set(self):
         qn = connection.ops.quote_name
         return super(NoSubclassManager, self).get_query_set().extra(
-            where=['not exists (select 1 from %s where %s.%s = %s)' % (
+            where=['not exists (select 1 from %s where %s.%s = %s.%s)' % (
                 qn(model._meta.db_table),
                 qn(model._meta.db_table),
                 qn(model._meta.pk.column),
+                qn(self.model._meta.db_table),
                 qn(self.model._meta.pk.column)
             ) for model in self.excludes])
