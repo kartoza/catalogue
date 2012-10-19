@@ -81,6 +81,7 @@ from shopping_cart_view_removeFromCart import ShoppingCart_removeFromCart_Tests
 from shopping_cart_view_showCartContents import ShoppingCart_showCartContents_Tests
 from shopping_cart_view_showMiniCartContents import ShoppingCart_showMiniCartContents_Tests
 from orders_view_myOrders import OrdersViews_myOrders_Tests
+from orders_view_listOrders import OrdersViews_listOrders_Tests
 #this is only required for doctests
 __test__ = {
   #'simple_tests' : simple_tests,
