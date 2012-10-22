@@ -83,6 +83,7 @@ from shopping_cart_view_showMiniCartContents import ShoppingCart_showMiniCartCon
 from orders_view_myOrders import OrdersViews_myOrders_Tests
 from orders_view_listOrders import OrdersViews_listOrders_Tests
 from orders_view_orderMonthlyReport import OrdersViews_orderMonthlyReport_Tests
+from orders_view_downloadOrder import OrdersViews_downloadOrder_Tests
 #this is only required for doctests
 __test__ = {
   #'simple_tests' : simple_tests,
