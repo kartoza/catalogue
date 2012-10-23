@@ -86,6 +86,7 @@ from orders_view_orderMonthlyReport import OrdersViews_orderMonthlyReport_Tests
 from orders_view_downloadOrder import OrdersViews_downloadOrder_Tests
 from orders_view_downloadClipGeometry import  OrdersViews_downloadClipGeometry_Tests
 from orders_view_downloadOrderMetadata import OrdersViews_downloadOrderMetadata_Tests
+from orders_view_viewOrder import OrdersViews_viewOrder_Tests
 #this is only required for doctests
 __test__ = {
   #'simple_tests' : simple_tests,
