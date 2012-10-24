@@ -436,12 +436,15 @@ def updateOrderHistory(theRequest):
     # for no ajax fallback
     myRecords = SearchRecord.objects.all().filter(order=myOrder)
     myForm = None
+
+    myRequestContext = RequestContext(theRequest)
     if theRequest.user.is_staff:
         myForm = OrderStatusHistoryForm()
     if TaskingRequest.objects.filter(id=myOrderId):
-        notifySalesStaffOfTaskRequest(myOrder.user, myOrderId)
+        notifySalesStaffOfTaskRequest(
+            myOrder.user, myOrderId, myRequestContext)
     else:
-        notifySalesStaff(myOrder.user, myOrderId)
+        notifySalesStaff(myOrder.user, myOrderId, myRequestContext)
     return render_to_response(myTemplatePath, {
         'myOrder': myOrder,
         'myRecords': myRecords,
@@ -458,7 +461,7 @@ def updateOrderHistory(theRequest):
         'myForm': myForm,
         'myHistory': myHistory,
         'myCartTitle': 'Product List',
-    }, context_instance=RequestContext(theRequest))
+    }, context_instance=myRequestContext)
 
 
 @renderWithContext('deliveryDetailForm.html')

@@ -238,15 +238,29 @@ def duplicate(obj, value=None, field=None, duplicate_order=None):
 ###########################################################
 
 
-def notifySalesStaff(theUser, theOrderId):
-    """ A helper method to notify sales staff who are subscribed to a sensor
-       Example usage from the console / doctest:
+def notifySalesStaff(theUser, theOrderId, theContext=None):
+    """
+    A helper method to notify sales staff who are subscribed to a sensor
+    Example usage from the console / doctest:
+
        >>> from catalogue.models import *
        >>> from catalogue.views import *
        >>> myUser = User.objects.get(id=1)
        >>> myUser
        >>> notifySalesStaff(myUser, 16)
+    Args:
+        theUser obj - Required. Django user object
+        theOrderId int - Required. ID of the Order which has changed
+        theContext obj - Optional. Useful when we need to pass RequestContext
+            to the render_to_string (see Note)
 
+    Note:
+        RequestContext is important when executing unittests using test.client
+        because of the way test.client generates response context object.
+        Response context is a list of context objects, one for each used
+        template, and if during rendering of a template context object is None,
+        values of response context object are going to be empty. For example
+        myResp.context['myObjects'] = [], but in reality it should have values
     """
 
     if not settings.EMAIL_NOTIFICATIONS_ENABLED:
@@ -288,7 +302,7 @@ def notifySalesStaff(theUser, theOrderId):
                 'myHistory': myHistory,
                 'myRecipient': myRecipient,
                 'domain': settings.DOMAIN
-            })
+            }, theContext)
         #html email template
         myEmailMessage_html = render_to_string(
             'mail/order.html', {
@@ -297,7 +311,7 @@ def notifySalesStaff(theUser, theOrderId):
                 'myHistory': myHistory,
                 'myRecipient': myRecipient,
                 'domain': settings.DOMAIN
-            })
+            }, theContext)
         myAddress = myRecipient.email
         myMsg = EmailMultiRelated(
             myEmailSubject,
@@ -328,12 +342,28 @@ def notifySalesStaff(theUser, theOrderId):
 ###########################################################
 
 
-def notifySalesStaffOfTaskRequest(theUser, theId):
-    """ A helper method to notify tasking staff who are subscribed to a sensor
-       Example usage from the console / doctest:
+def notifySalesStaffOfTaskRequest(theUser, theId, theContext=None):
+    """
+    A helper method to notify tasking staff who are subscribed to a sensor
+    Example usage from the console / doctest:
        >>> from catalogue.models import *
        >>> from catalogue.views import *
-       >>> notifySalesStaffOfTaskRequest(11)"""
+       >>> notifySalesStaffOfTaskRequest(11)
+
+    Args:
+        theUser obj - Required. Django user object
+        theOrderId int - Required. ID of the Order which has changed
+        theContext obj - Optional. Useful when we need to pass RequestContext
+            to the render_to_string (see Note)
+
+    Note:
+        RequestContext is important when executing unittests using test.client
+        because of the way test.client generates response context object.
+        Response context is a list of context objects, one for each used
+        template, and if during rendering of a template context object is None,
+        values of response context object are going to be empty. For example
+        myResp.context['myObjects'] = [], but in reality it should have values
+    """
     if not settings.EMAIL_NOTIFICATIONS_ENABLED:
         logging.info('Email sending disabled, set '
                      'EMAIL_NOTIFICATIONS_ENABLED in settings')
@@ -368,7 +398,7 @@ def notifySalesStaffOfTaskRequest(theUser, theId):
                 'myHistory': myHistory,
                 'myRecipient': myRecipient,
                 'domain': settings.DOMAIN
-            })
+            }, theContext)
         #html email template
         myEmailMessage_html = render_to_string(
             'mail/task.html', {
@@ -376,7 +406,7 @@ def notifySalesStaffOfTaskRequest(theUser, theId):
                 'myHistory': myHistory,
                 'myRecipient': myRecipient,
                 'domain': settings.DOMAIN
-            })
+            }, theContext)
         myAddress = myRecipient.email
         myMsg = EmailMultiRelated(myEmailSubject,
                                   myEmailMessage_txt,
