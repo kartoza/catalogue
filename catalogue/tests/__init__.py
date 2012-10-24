@@ -91,6 +91,7 @@ from orders_view_updateOrderHistory import OrdersViews_updateOrderHistory_Tests
 from orders_view_createDeliveryDetailForm import OrdersViews_createDeliveryDetailForm_Tests
 from orders_view_showDeliveryDetail import OrdersViews_showDeliveryDetail_Tests
 from orders_view_viewOrderItems import OrdersViews_viewOrderItems_Tests
+from orders_view_ordersSummary import OrdersViews_ordersSummary_Tests
 #this is only required for doctests
 __test__ = {
   #'simple_tests' : simple_tests,
