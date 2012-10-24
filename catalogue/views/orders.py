@@ -464,8 +464,8 @@ def updateOrderHistory(theRequest):
     }, context_instance=myRequestContext)
 
 
-@renderWithContext('deliveryDetailForm.html')
 @login_required
+@renderWithContext('deliveryDetailForm.html')
 def createDeliveryDetailForm(theRequest, theReferenceId):
     del theRequest
     myDeliveryDetailForm = ProductDeliveryDetailForm(
@@ -473,8 +473,8 @@ def createDeliveryDetailForm(theRequest, theReferenceId):
     return dict(myDeliveryDetailForm=myDeliveryDetailForm)
 
 
-@renderWithContext('deliveryDetail.html')
 @login_required
+@renderWithContext('deliveryDetail.html')
 def showDeliveryDetail(theRequest, theReferenceId):
     del theRequest
     myDeliveryDetail = DeliveryDetail.objects.filter(
@@ -482,8 +482,8 @@ def showDeliveryDetail(theRequest, theReferenceId):
     return dict(myDeliveryDetail=myDeliveryDetail)
 
 
-@requireProfile('addorder')
 @login_required
+@requireProfile('addorder')
 def addOrder(theRequest):
     logging.debug('Order called')
     myTitle = 'Create a new order'
