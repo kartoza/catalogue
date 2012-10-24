@@ -98,7 +98,7 @@ urlpatterns = patterns('',
     #
     (r'^addorder/', addOrder),
     url(r'^deliverydetailform/(?P<theReferenceId>\d*)/$', createDeliveryDetailForm, name='createDeliveryDetailForm'),
-    (r'^showdeliverydetail/(?P<theReferenceId>\d*)/$', showDeliveryDetail),
+    url(r'^showdeliverydetail/(?P<theReferenceId>\d*)/$', showDeliveryDetail, name='showDeliveryDetail'),
     url(r'^downloadclipgeometry/(?P<theId>\d*)/$', downloadClipGeometry, name='downloadClipGeometry'),
     url(r'^downloadordermetadata/(?P<theId>\d*)/$', downloadOrderMetadata, name='downloadOrderMetadata'),
     url(r'^downloadorder/(?P<theId>\d*)/$', downloadOrder, name='downloadOrder'),

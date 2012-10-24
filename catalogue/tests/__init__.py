@@ -89,6 +89,7 @@ from orders_view_downloadOrderMetadata import OrdersViews_downloadOrderMetadata_
 from orders_view_viewOrder import OrdersViews_viewOrder_Tests
 from orders_view_updateOrderHistory import OrdersViews_updateOrderHistory_Tests
 from orders_view_createDeliveryDetailForm import OrdersViews_createDeliveryDetailForm_Tests
+from orders_view_showDeliveryDetail import OrdersViews_showDeliveryDetail_Tests
 #this is only required for doctests
 __test__ = {
   #'simple_tests' : simple_tests,
