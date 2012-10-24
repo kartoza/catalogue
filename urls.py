@@ -106,7 +106,7 @@ urlpatterns = patterns('',
     url(r'^listorders/$', listOrders, name='listOrders'),
     url(r'^ordermonthlyreport/(?P<theyear>\d{4})/(?P<themonth>\d{1,2})/$', orderMonthlyReport, name='orderMonthlyReport'),
     url(r'^vieworder/(?P<theId>[0-9]+)/$', viewOrder, name='viewOrder'),
-    (r'^vieworderitems/(?P<theOrderId>[0-9]+)/$', viewOrderItems),
+    url(r'^vieworderitems/(?P<theOrderId>[0-9]+)/$', viewOrderItems, name='viewOrderItems'),
     url(r'^updateorderhistory/$', updateOrderHistory, name='updateOrderHistory'),
     (r'^orderssummary/$', ordersSummary),
     # Tasking request managmenet
