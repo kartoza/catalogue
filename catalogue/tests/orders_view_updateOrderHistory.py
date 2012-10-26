@@ -168,6 +168,57 @@ class OrdersViews_updateOrderHistory_Tests(TestCase):
         myUsedTemplates = [tmpl.name for tmpl in myResp.template]
         self.assertEqual(myUsedTemplates, myExpTemplates)
 
+    def test_updateOrderHistory_login_staff_post_ajax(self):
+        """
+        Test view if user is staff, and has valid post
+        """
+
+        myOrderId = 1
+        # get initial objects
+        myOrderObj = Order.objects.get(pk=myOrderId)
+        mySearchRecords = SearchRecord.objects.all().filter(order=myOrderObj)
+        myFormObj = OrderStatusHistoryForm()
+        myHistoryObj = OrderStatusHistory.objects.all().filter(
+            order=myOrderObj)
+        # create the request
+        myClient = Client()
+        myClient.login(username='timlinux', password='password')
+        myPostData = {
+            u'new_order_status': [u'4'], u'notes': [u'simple notes'],
+            u'order': [myOrderId]
+        }
+        myResp = myClient.post(
+            reverse('updateOrderHistory', kwargs={}), myPostData,
+            HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+
+        self.assertEqual(myResp.status_code, 200)
+
+        self.assertEqual(myResp.context['myOrder'], myOrderObj)
+        self.assertEqual(
+            len(myResp.context['myRecords']), len(mySearchRecords))
+        self.assertEqual(myResp.context['myShowSensorFlag'], True)
+        self.assertEqual(myResp.context['myShowSceneIdFlag'], True)
+        self.assertEqual(myResp.context['myShowDateFlag'], True)
+
+        self.assertEqual(myResp.context['myRemoveFlag'], False)
+        self.assertEqual(myResp.context['myThumbFlag'], False)
+        self.assertEqual(myResp.context['myShowMetdataFlag'], False)
+
+        self.assertEqual(myResp.context['myCartFlag'], False)
+        self.assertEqual(myResp.context['myPreviewFlag'], False)
+        self.assertEqual(
+            myResp.context['myForm'].__class__, myFormObj.__class__)
+        self.assertEqual(len(myResp.context['myHistory']), len(myHistoryObj))
+        self.assertEqual(myResp.context['myCartTitle'], 'Product List')
+
+        # check used templates
+        myExpTemplates = [
+            'mail/order.txt', u'mail/base.txt', 'mail/order.html',
+            u'mail/base.html', 'orderStatusHistory.html']
+
+        myUsedTemplates = [tmpl.name for tmpl in myResp.template]
+        self.assertEqual(myUsedTemplates, myExpTemplates)
+
     def test_updateOrderHistory_login_staff_post_invalid_order(self):
         """
         Test view if user is staff, and has invalid post (mismatched order)
