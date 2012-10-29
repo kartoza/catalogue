@@ -38,3 +38,5 @@ jslint
 django-offline-messages==0.2.6
 raven==2.0.6
 django-nose==1.1
+nose-exclude
+git+git://github.com/cmheisel/nose-xcover.git#egg=nosexcover
