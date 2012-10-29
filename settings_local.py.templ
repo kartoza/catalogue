@@ -1,39 +1,34 @@
 import os
 import logging
+from catalogue.getIpAddress import get_ip_address
 
 # Things you definately want to edit
 # ----------------------------------------------------------------------------
 
 DBNAME = 'sac'
-DBUSER = ''
-DBPASSWORD = ''
+#DBNAME = 'sac_unittest'
+DBUSER = 'XXX'
+DBPASSWORD = 'XXX'
 DBHOST = 'localhost'
 DBPORT = 5432
 DBTEST = 'sac_unittest'
 ACSDBNAME = 'acs'
-ACSDBUSER = ''
-ACSDBPASSWORD = ''
+ACSDBUSER = 'XXX'
+ACSDBPASSWORD = 'XXX'
 ACSDBHOST = 'localhost'
 ACSDBPORT = 5432
 
 # Is debugging enabled? Disable on production machines!
-DEBUG = False
+DEBUG = True
 
 # Sentry server client settings
-# logging levels (ERROR -> WARNING -> INFO -> DEBUG)
-# for producion set to logging.ERROR
 LOG_LEVEL = logging.ERROR
-
-# setup RAVEN Sentry client
-
-RAVEN_CONFIG = {
-    'dsn': ('http://74b4e04b3738403c9670c8b67bb602c0'
-           ':36f52a2271094938b2e8739e562bb37c@localhost:9000/2'),
-    # if you are using DEBUG = True, and want to catch exceptions with Sentry
-    # set register_signals: True
-    'register_signals': False
-}
-
+# Local Same as on live server)
+#SENTRY_DSN = ('http://f350e896390d48ceb4ec565ee9f0cabc:'
+#              '5be8f1cfae10427cb18d817d2d5637be@localhost:9000/3')
+# Linfiniti
+SENTRY_DSN = ('http://c9b3062853e34c2b857122d75d4ec663:'
+              'ff3010968b4e47c0a84166da3c1842ae@sentry.linfiniti.com/3')
 # Things you may want to edit
 # ----------------------------------------------------------------------------
 
@@ -71,8 +66,8 @@ USE_GEOIP = True
 
 # this is the public domain name or IP address of this django instance.
 # get ip address logic provided in utils.py
-#HOST = get_ip_address('eth1')
-HOST = '192.168.1.1'
+HOST = get_ip_address('eth2')
+#HOST = '192.168.1.1'
 
 # used in various places including kml generator
 DOMAIN = 'catalogue.locahost'
@@ -148,9 +143,9 @@ CATALOGUE_ISO_METADATA_XML_TEMPLATE = os.path.join(ROOT_PROJECT_FOLDER, (
 #limit the number of returned metadata records
 MAX_METADATA_RECORDS = 500
 
-
-# in case of ImportError: cannot import name DataSource related to
-# from django.contrib.gis.gdal import DataSource
-# we need to specify exact path of GEOS and GDAL libraries
+# These are optional - only set if you have wierd issues like DataSource
+# unknown
 #GEOS_LIBRARY_PATH='/usr/lib/libgeos_c.so.1'
-#GDAL_LIBRARY_PATH='/usr/lib/libgdal1.7.0.so.1'
+#GEOIP_LIBRARY_PATH='/usr/lib/libGeoIP.so
+#GDAL_LIBRARY_PATH='/usr/local/lib/libgdal.so'
+#GDAL_LIBRARY_PATH='/usr/local/lib/libgdal.so'
