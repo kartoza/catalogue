@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Spot Ingestor Test" type="DjangoTestsConfigurationType" factoryName="Django tests" editBeforeRun="true">
+  <configuration default="false" name="Spot Ingestor Test" type="DjangoTestsConfigurationType" factoryName="Django tests">
     <option name="INTERPRETER_OPTIONS" value="" />
     <option name="PARENT_ENVS" value="true" />
     <envs>
