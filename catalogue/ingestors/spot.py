@@ -438,7 +438,7 @@ def ingest(theShapeFile,
                   'product_id': myProductId,
                   'radiometric_resolution': myRadiometricResolution,
                   'band_count': myBandCount,
-                  # integer percent
+                  # integer percent - must be scaled to 0-100 for all ingestors
                   'cloud_cover': int(myFeature.get('CLOUD_PER')),
                   'owner_id': myOwner.id,
                   'license': theLicense,
