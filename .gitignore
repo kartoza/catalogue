@@ -50,3 +50,4 @@ docs/t2t/SANSA-Catalogue-Manual.toc
 *.dmp
 *.orig
 build
+.idea/workspace.xml
