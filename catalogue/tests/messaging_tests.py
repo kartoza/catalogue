@@ -142,7 +142,7 @@ class MessagingTests(TestCase):
         myMessages = OfflineMessage.objects.all()
         myMessages.delete()
         self.factory = RequestFactory(enforce_csrf_checks=True)
-        myClient = Client()
+        #myClient = Client()
         # First try to send a message as timlinux who IS staff
         assert self.factory.login(username='timlinux', password='password')
         self.user = User.objects.get(id=1)
@@ -151,11 +151,11 @@ class MessagingTests(TestCase):
         myPayload = {'user_id': '1',
                      'message': 'Hello'}
         # Note url below here is not used in direct view tests
-        myResponse = self.factory.post('/sendMessageToAllUsers/', myPayload)
-        myResponse.user = self.user
+        myRequest = self.factory.post('/sendMessageToUser/', myPayload)
+        myRequest.user = self.user
 
         try:
-            myResponse = sendMessageToUser(myResponse)
+            myResponse = sendMessageToUser(myRequest)
         except:
             myMessage = 'Probably the user session was not found'
             logging.exception(myMessage)
@@ -168,11 +168,13 @@ class MessagingTests(TestCase):
         assert myResponse.content == myExpectedResponse, myMessage
 
         # Now see if we can get the messages back:
-        myResponse = userMessages(myResponse)
+        myResponse2 = userMessages(myRequest)
         myMessage = 'No messages obtained for user'
-        assert myResponse.content != '', myMessage
+        self.assertContains(myResponse2,
+                            'Hello',
+                            status_code=200,
+                            msg_prefix=myMessage)
 
         myMessages = OfflineMessage.objects.all()
-        assert myMessages.count() > 0, myMessage
-
+        self.assertEqual(0, myMessages.count(), myMessage)
 
