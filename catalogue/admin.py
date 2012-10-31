@@ -63,8 +63,9 @@ class VisitAdmin(admin.GeoModelAdmin):
 
 
 class SacUserProfileAdmin (admin.GeoModelAdmin):
-    list_display = ('user', 'strategic_partner')
-    list_filter = ('user', 'strategic_partner')
+    list_display = ('user', 'firstname', 'surname', 'strategic_partner', 'date')
+    list_filter = ('strategic_partner', 'date')
+    list_per_page = 200
 
 
 class OrderStatusAdmin(admin.GeoModelAdmin):
@@ -200,6 +201,19 @@ class AcquisitionModeAdmin(admin.GeoModelAdmin):
 
 class OfflineMessageAdmin(admin.ModelAdmin):
     list_display = [f.name for f in OfflineMessage._meta.fields]
+    ordering = ('message',)
+    exclude = ('level',)
+    field_options = {
+        'fields' : ('message', 'user',),
+        }
+    # This next method will filter the users list in the admin form
+    # so that only staff members can be chosen from the users list
+    def render_change_form(self, request, context, *args, **kwargs):
+        context['adminform'].form.fields['user'].queryset = (
+            User.objects.order_by('username'))
+        return (
+            super(OfflineMessageAdmin, self)
+            .render_change_form(request, context, args, kwargs))
 
 admin.site.register(Mission, MissionAdmin)
 admin.site.register(MissionSensor, MissionSensorAdmin)
