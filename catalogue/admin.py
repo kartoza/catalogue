@@ -17,10 +17,14 @@ __version__ = '0.1'
 __date__ = '01/01/2011'
 __copyright__ = 'South African National Space Agency'
 
+import logging
+
+from django.db import models
 from django.contrib.gis import admin
 from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import ValidationError
 from django import forms
+from django.contrib.admin import widgets
 from django.contrib.auth.models import User
 from offline_messages.models import OfflineMessage
 
@@ -47,7 +51,8 @@ from catalogue.models import (
     OpticalProduct,
     GeospatialProduct,
     Visit,
-    SacUserProfile)
+    SacUserProfile,
+    AllUsersMessage)
 
 
 #
@@ -81,7 +86,7 @@ class OrderNotificationRecipientsAdminForm(forms.ModelForm):
         Validates that at least one of the m2m has values
         """
         if (not self.cleaned_data['classes'] and
-                not self.cleaned_data['sensors']):
+            not self.cleaned_data['sensors']):
             raise ValidationError(
                 u'Classes and sensors cannot be simultaneously blank')
         return self.cleaned_data
@@ -109,10 +114,10 @@ class OrderNotificationRecipientsAdmin(admin.GeoModelAdmin):
                 super(OrderNotificationRecipientsAdmin, self)
                 .formfield_for_manytomany(db_field, request, **kwargs))
             form_field.choices = [
-                c for c in form_field.choices
-                if getattr(
-                    ContentType.objects.get(
-                        pk=c[0]).model_class(), 'concrete', False)]
+            c for c in form_field.choices
+            if getattr(
+                ContentType.objects.get(
+                    pk=c[0]).model_class(), 'concrete', False)]
             return form_field
         return (
             super(OrderNotificationRecipientsAdmin, self)
@@ -205,7 +210,12 @@ class OfflineMessageAdmin(admin.ModelAdmin):
     exclude = ('level',)
     field_options = {
         'fields' : ('message', 'user',),
+    }
+    formfield_overrides = {
+        models.CharField: {'widget': widgets.AdminTextareaWidget},
         }
+    list_filter = ('user', 'created')
+
     # This next method will filter the users list in the admin form
     # so that only staff members can be chosen from the users list
     def render_change_form(self, request, context, *args, **kwargs):
@@ -214,6 +224,11 @@ class OfflineMessageAdmin(admin.ModelAdmin):
         return (
             super(OfflineMessageAdmin, self)
             .render_change_form(request, context, args, kwargs))
+
+class AllUsersMessageAdmin(admin.ModelAdmin):
+    list_display = [f.name for f in AllUsersMessage._meta.fields]
+    ordering = ('created', 'message')
+
 
 admin.site.register(Mission, MissionAdmin)
 admin.site.register(MissionSensor, MissionSensorAdmin)
@@ -245,3 +260,4 @@ admin.site.register(Search, SearchAdmin)
 admin.site.register(Visit, VisitAdmin)
 admin.site.register(SacUserProfile, SacUserProfileAdmin)
 admin.site.register(OfflineMessage, OfflineMessageAdmin)
+admin.site.register(AllUsersMessage, AllUsersMessageAdmin)

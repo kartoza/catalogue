@@ -21,10 +21,13 @@ from django.contrib.gis.db import models
 #for user id foreign keys
 from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
+from offline_messages.models import OfflineMessage
+from offline_messages.utils import create_offline_message, constants
 #for translation
 from userprofile.models import BaseProfile
 from catalogue.models.dictionaries import MissionSensor
 from catalogue.models.products import GenericSensorProduct
+
 
 ###############################################################################
 
@@ -222,9 +225,30 @@ class WorldBorders(models.Model):
     class Meta:
         app_label = 'catalogue'
 
+
 world_borders_mapping = {
     'iso2': 'ISO2',
     'iso3': 'ISO3',
     'name': 'NAME',
     'geometry': 'POLYGON'
 }
+
+class AllUsersMessage(models.Model):
+    """A simple model for creating messages to broadcase to all users."""
+    message = models.TextField()
+    created = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        # Specifies which database this model ORM goes to
+        app_label = 'catalogue'
+
+    def save(self, *args, **kwargs):
+        """Broadcase the message using offline messages."""
+        for myUser in User.objects.all():
+            myNotifiedAlreadyFlag = OfflineMessage.objects.filter(
+                user=myUser, message=self.message).exists()
+            if not myNotifiedAlreadyFlag:
+                create_offline_message(
+                    myUser, self.message, level=constants.INFO)
+        super(AllUsersMessage, self).save(*args, **kwargs)
+
