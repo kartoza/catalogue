@@ -60,6 +60,7 @@ from email_notification_test import EmailNotificationTest, EmailTest
 from integerCSVIntervalsField_return import IntegersCSVIntervalsField_Test
 from AOIGeometryField_return import AOIGeometryField_Test
 from visit_model import VisitCRUD_Test
+from allusersmessage_model import AllUsersMesageCRUD_Test
 from sacuserprofile_model import SacUserProfileCRUD_Test
 from ordernotificationrecipients_model import OrderNotificationRecipientsCRUD_Test
 from sacuserprofile_model import SacUserProfileCRUD_Test
@@ -93,6 +94,7 @@ from orders_view_showDeliveryDetail import OrdersViews_showDeliveryDetail_Tests
 from orders_view_viewOrderItems import OrdersViews_viewOrderItems_Tests
 from orders_view_ordersSummary import OrdersViews_ordersSummary_Tests
 from orders_view_addOrder import OrdersViews_addOrder_Tests
+
 #this is only required for doctests
 __test__ = {
   #'simple_tests' : simple_tests,
