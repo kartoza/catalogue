@@ -161,17 +161,14 @@
 
 {% box_end %}
 <br />
-{% box_start "box-" %}
-<div class="span-22">
-  <div class="span-11">
+{% box_start "box-order-history" %}
     <h2 class="centered" ><img class="icon" src="/media/images/clock_32.png"> Order History</h2>
-  </div>
-  <div class="span-11">
+
 {% if myForm %}
-  <button onclick="$('#statusForm').dialog('open'); return false;"'>Update status</button>
-{% endif %}
-  </div>
+<div style="margin:5px">
+  <button onclick="$('#statusForm').dialog('open'); return false;">Update status</button>
 </div>
+{% endif %}
 <div id="orderHistory">
   {% if myHistory %}
     {% include "orderStatusHistory.html" %}
