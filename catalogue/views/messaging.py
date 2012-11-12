@@ -155,6 +155,9 @@ def userMessages(theRequest):
           users will see spurious popups.
     '''
     logging.debug('User messages requested')
+    if theRequest.user.is_anonymous():
+        return HttpResponse('')
+
     myMessages = OfflineMessage.objects.filter(user=theRequest.user)
     myResponse = render_to_response(
         'messages.html',

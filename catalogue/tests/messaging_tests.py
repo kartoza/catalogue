@@ -22,6 +22,7 @@ import logging
 from django.test import TestCase
 from django.test.client import Client
 from django.contrib.auth.models import User
+from django.contrib.auth.models import AnonymousUser
 
 from offline_messages.models import OfflineMessage
 
@@ -178,3 +179,22 @@ class MessagingTests(TestCase):
         myMessages = OfflineMessage.objects.all()
         self.assertEqual(0, myMessages.count(), myMessage)
 
+    def testAnonymousMessages(self):
+        """Test an anonymous user gets no error when checking for messages."""
+        myMessages = OfflineMessage.objects.all()
+        myMessages.delete()
+        self.factory = RequestFactory(enforce_csrf_checks=True)
+        self.user = AnonymousUser()
+        myRequest = self.factory.get('/getUserMessages/')
+        myRequest.user = self.user
+        myResponse = userMessages(myRequest)
+
+        myExpectedResponse = ('')
+        myMessage = 'Expected %s\n got\n %s' % (myExpectedResponse,
+                                                myResponse.content)
+        assert myResponse.content == myExpectedResponse, myMessage
+
+        self.assertContains(myResponse,
+                         text='',
+                         status_code=200,
+                         msg_prefix=myMessage)
