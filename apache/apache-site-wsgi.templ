@@ -1,16 +1,15 @@
-<VirtualHost *>
+<VirtualHost *:80>
   ServerAdmin tim@linfiniti.com 
-  ServerName catalogue.sac.co.za
-  ServerAlias www.catalogue.sac.co.za
-  LogLevel warn
+  ServerName catalogue.sansa.org.za
+  ServerAlias www.sac.co.za sac.co.za catalogue.sac.co.za
 
   CustomLog /var/log/apache2/catalogue.access.log combined
   # Possible values include: debug, info, notice, warn, error, crit,
   # alert, emerg.
+  LogLevel debug
   ErrorLog /var/log/apache2/catalogue.error.log
 
   ServerSignature Off
-
 
 
   ScriptAlias /cgi-bin/ /usr/lib/cgi-bin/
@@ -31,6 +30,8 @@
   #  SetEnv INFORMIXSERVER catalog2
   #</LocationMatch>
 
+  SetEnv LD_LIBRARY_PATH /opt/sac_catalogue/python/lib
+  SetEnv PYTHONPATH /opt/sac_catalogue/python/lib/python2.6/site-packages/
   WSGIScriptAlias / /opt/sac_catalogue/sac_live/apache/django.wsgi
   WSGIDaemonProcess sac-live user=www-data group=www-data processes=3 threads=25 python-path=/opt/sac_catalogue/python/lib/python2.6/site-packages
   WSGIProcessGroup sac-live
@@ -39,8 +40,8 @@
     Allow from all
   </Directory>
 
-  Alias /admin_media /opt/sac_catalogue/python/lib/python2.6/site-packages/django/contrib/admin/media/
-  <Location /admin_media>
+  Alias /admin-media /opt/sac_catalogue/python/lib/python2.6/site-packages/django/contrib/admin/media/
+  <Location /admin-media>
     Order deny,allow
     Allow from all
     SetHandler None
@@ -53,11 +54,12 @@
     SetHandler None
   </Location>
 
-  Alias /imagery /opt/sac_catalogue/sac_test/imagery_mastercopies
+  Alias /imagery /opt/sac_catalogue/sac_live/imagery_mastercopies
   <Location /media>
     Order deny,allow
     Allow from all
     SetHandler None
   </Location>
+
 </VirtualHost>
 
