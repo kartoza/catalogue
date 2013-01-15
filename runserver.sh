@@ -1,6 +1,6 @@
 #!/bin/bash
 echo "Run $0 -d to run standard runserver in debugger mode"
-source ../python/bin/activate
+source ../python-live/bin/activate
 #python manage.py collectstatic --noinput
 
 if [ $# -ne 1 ] 
