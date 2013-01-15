@@ -1,4 +1,4 @@
 #!/bin/bash
-source ../python/bin/activate
+source ../python-live/bin/activate
 python manage.py test catalogue
 
