@@ -273,6 +273,14 @@ Now edit setup.py to set these (for 32 bit)::
    TIFF_ROOT = "/usr/lib/i386-linux-gnu/", "/usr/include"
    FREETYPE_ROOT = "/usr/lib/i386-linux-gnu/", "/usr/include"
 
+or for 64 bit::
+
+   TCL_ROOT = "/usr/lib/x86_64-linux-gnu/", "/usr/include"
+   JPEG_ROOT = "/usr/lib/x86_64-linux-gnu/", "/usr/include"
+   ZLIB_ROOT = "/usr/lib/x86_64-linux-gnu/", "/usr/include"
+   TIFF_ROOT = "/usr/lib/x86_64-linux-gnu/", "/usr/include"
+   FREETYPE_ROOT = "/usr/lib/x86_64-linux-gnu/", "/usr/include"
+
 
 Test if your configs work::
 
