@@ -1,6 +1,7 @@
 var map = new OpenLayers.Map( 'map', {controls: []});
 var SearchPanelState = false;
 var CartPanelState = false;
+var ResultPanelState = false;
 
 function initMap() {
     var layer = new OpenLayers.Layer.OSM( "Simple OSM Map");
@@ -55,4 +56,14 @@ function closeCartPanel() {
     $("#cart-panel").animate({left: -300}, 300 );
     CartPanelState = false;
     $("#search-panel-toggle").animate({top: 0}, 200 );
+}
+
+function toggleResultPanel() {
+    if (ResultPanelState) {
+        $("#result-panel").animate({right: -300}, 300 );
+        ResultPanelState = false;
+    } else {
+        $("#result-panel").animate({right: 10}, 300 );
+        ResultPanelState = true;
+    }
 }
