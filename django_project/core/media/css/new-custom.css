@@ -8,6 +8,13 @@ hr {display: block;position: relative;padding: 0;margin: 8px auto;height: 0;widt
     right: 0;
     top: 100px;
 }
+
+.big-map {
+    left: 0;
+    position: fixed;
+    right: 0;
+    top: 37px;
+}
 h2 {color:#228441;font-family: arial; text-align:center;}
 h3 {color:#228441;font-family: arial;}
 .footer-text{font-size: 12px;line-height: 14px;text-align:center;padding-top:3px;}

@@ -4,7 +4,12 @@
 
 #map {
   /* width defined by blueprint.css */
-  height: 500px;
+  /*height: 100%;*/
+  left: 0;
+  right: 0;
+  top: 37px;
+  bottom:34px;
+  position: fixed;
 }
 
 /*

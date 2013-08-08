@@ -1,95 +1,27 @@
-{% load rangetag %} {# Custom tag defined in templatetags/ #}
-{% if myRecords %}
-<script type="text/javascript">
-/* <![CDATA[ */
-function loadMoreData() {
-  {# vars initialised inside a function using var will have local scope #}
-  {# vars initialised inside a function withoug using var will have global scope #}
-  clearSearchResults();
-      {# see http://trac.openlayers.org/wiki/Styles for more info on styling #}
-      var myScenesLayer = new OpenLayers.Layer.Vector("scenes",{
-        styleMap: mSceneStyleMap,
-        rendererOptions: {zIndexing: true},
-        projection: new OpenLayers.Projection("EPSG:900913")
-      });
-      var myGJFormat = new OpenLayers.Format.GeoJSON(
+{% extends "base-fluid.html" %}
+{% load url from future %} {# https://docs.djangoproject.com/en/1.4/releases/1.3/#changes-to-url-and-ssi #}
 
-        );
-      {% for myResult in myRecords %}
-      var myFeature{{forloop.counter}} = myGJFormat.read({{myResult.product.spatial_coverage.geojson|safe}})[0];
-      myFeature{{forloop.counter}}.geometry = transformGeometry(myFeature{{forloop.counter}}.geometry);
-      myFeature{{forloop.counter}}.id = '{{myResult.product.id}}';
-      myFeature{{forloop.counter}}.product_id = '{{myResult.product.product_id}}';
-      myFeature{{forloop.counter}}.selected = 'no';
-      myScenesLayer.addFeatures(myFeature{{forloop.counter}});
-      {% endfor %}
-      mMap.addLayer(myScenesLayer);
-      {% if myExtent %}
-      var myBounds = transformBounds( new OpenLayers.Bounds{{myExtent}}); //calculated from search page results
-      mMap.zoomToExtent( myBounds );
-      {% else %}
-      mMap.zoomToExtent( transformBounds(new OpenLayers.Bounds(14.0,-35.0,34.0,-21.0)));  //sa
-      {% endif %}
-      setupSceneSelector( myScenesLayer );
+{% block body_load %}{% endblock %}
 
-    }
-    if (pageLoaded) {
-      loadMoreData();
-      loadMoreData = null;
-    }
+{% block content%}
+  <div class="row-fluid">
+    <div class="span12">
+      <div id="map"></div>
+    </div>
+  </div>
+{% endblock%}
 
-    /* ]]> */
-    </script>
-      <div class="pagination">
-        <div class="step-links left vcentered" style="width:50px; float:left; margin-left: 25px;">
-          {% if myPage.has_previous %}
-          <a href="#" onclick='loadPage({{ myPage.previous_page_number }},"{{mySearchGuid}}"); return false;'><img alt="previous" src="/media/images/back_alt.png" /></a>
-          {% else %}
-          <img alt="previous" src="/media/images/back_alt_inactive.png" />
-          {% endif %}
-        </div>
-        {% if myPage %}
-        <div class="current center" style="width:400px; float:left;">
-          Page  
-          <select style="width:50px;" id="page-selector" value="{{ myPage.number }}"  name="page-selector" onchange='loadPage( $("#page-selector option:selected").val(),"{{mySearchGuid}}"); return false;'>
-            {% for i in myPage.paginator.num_pages|get_range %}<option value='{{ i }}' {% if i == myPage.number %}selected='yes'{% endif %}>{{i}}</option>{% endfor %}
-          </select> of {{ myPage.paginator.num_pages }}.
-        </div>
-        {% endif %}
-        <div class="step-links vcentered" style="width:50px; float:left; margin-left: 25px;">
-          {% if myPage.has_next %}
-          <a href="#" onclick='loadPage({{ myPage.next_page_number }},"{{mySearchGuid}}"); return false;'><img alt="previous" src="/media/images/forward_alt.png" /></a>
-          {% else %}
-          <img alt="previous" src="/media/images/forward_alt_inactive.png" />
-          {% endif %}
-        </div>
-      </div>
-      <div class="span10">
-        <table id="results" class="table table-striped">
-          {% include "recordHeader.html" %}
-          <tbody>
-            {% for myRecord in myRecords %}
-            {% include "record.html" %}
-            {% empty %}
-            <h2>No records found.</h2>
-            {% endfor %}
-          </tbody>
-        </table>
-      </div>
-      {% else %}
-      <div id="results" class="span6 gap-top center">
-        <p class="lead">
-          No Records Found
-        </p>
-      </div>
-      {% endif %}
-      {% if myMessagesFlag %}
-      {{ myMessagesHeading|safe }}
-      <div>
-        {% if myMessages %}
-        {% for myValue in myMessages %}
-        {{ myValue|safe }}<br/>
-        {% endfor %}
-        {% endif %}
-      </div>
-      {% endif %}
+{% block extrajs %}
+  {{ block.super }}
+  <script>
+    var map = new OpenLayers.Map( 'map');
+    var layer = new OpenLayers.Layer.OSM( "Simple OSM Map");
+    map.addLayer(layer);
+    map.setCenter(
+        new OpenLayers.LonLat(-71.147, 42.472).transform(
+            new OpenLayers.Projection("EPSG:4326"),
+            map.getProjectionObject()
+        ), 12
+    );
+  </script>
+{% endblock %}
