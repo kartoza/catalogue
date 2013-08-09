@@ -16,6 +16,7 @@ function initMap() {
 
 function toggleSearchPanel() {
     if (SearchPanelState) {
+        hideSearchPanelButtons();
         $("#search-panel").animate({left: -300}, 300 );
         SearchPanelState = false;
         $("#cart-panel-toggle").animate({top: 145}, 200 );
@@ -24,12 +25,14 @@ function toggleSearchPanel() {
             closeCartPanel();
         }
         $("#search-panel").animate({left: 10}, 300 );
+        showSearchPanelButtons();
         SearchPanelState = true;
         $("#cart-panel-toggle").animate({top: 515}, 200 );
     }
 }
 
 function closeSearchPanel() {
+    hideSearchPanelButtons();
     $("#search-panel").animate({left: -300}, 300 );
     SearchPanelState = false;
     $("#cart-panel-toggle").animate({top: 145}, 200 );
@@ -81,4 +84,14 @@ function defaultPanelState() {
     if (ResultPanelState) {
         $("#result-panel").animate({right: 10}, 300 );
     }
+}
+
+function hideSearchPanelButtons() {
+    $("#search-panel-search-button").hide();
+    $("#search-panel-reset-button").hide();
+}
+
+function showSearchPanelButtons() {
+    $("#search-panel-search-button").show();
+    $("#search-panel-reset-button").show();
 }
