@@ -40,7 +40,7 @@ function toggleCartPanel() {
         $("#cart-panel").animate({left: -300}, 300 );
         CartPanelState = false;
         $("#cart-panel-toggle").animate({top: 145}, 200 );
-        $("#search-panel-toggle").animate({top: 25}, 200 );
+        $("#search-panel-toggle").animate({top: 28}, 200 );
     } else {
         if (SearchPanelState) {
             closeSearchPanel();
@@ -55,7 +55,7 @@ function toggleCartPanel() {
 function closeCartPanel() {
     $("#cart-panel").animate({left: -300}, 300 );
     CartPanelState = false;
-    $("#search-panel-toggle").animate({top: 25}, 200 );
+    $("#search-panel-toggle").animate({top: 28}, 200 );
 }
 
 function toggleResultPanel() {
