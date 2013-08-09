@@ -11,48 +11,49 @@
         <div id="search-panel-reset-button"><p class="fbtn fbtn-warning"><i class="icon-refresh"></i> </p></div>
         <div id="search-panel-toggle"><p onclick="toggleSearchPanel();"><i class="icon-search"></i> SEARCH</p></div>
         <section class="tabs">
-          <input id="tab-1" type="radio" name="radio-set" class="tab-selector-1" checked />
+          <input id="tab-1" type="radio" name="radio-set" class="tab-selector-1 chk-hide" checked />
           <label for="tab-1" class="tab-label-1"><i class="icon-adjust"></i></label>
 
-          <input id="tab-2" type="radio" name="radio-set" class="tab-selector-2" />
+          <input id="tab-2" type="radio" name="radio-set" class="tab-selector-2 chk-hide" />
           <label for="tab-2" class="tab-label-2"><i class="icon-leaf"></i></label>
 
-          <input id="tab-3" type="radio" name="radio-set" class="tab-selector-3" />
+          <input id="tab-3" type="radio" name="radio-set" class="tab-selector-3 chk-hide" />
           <label for="tab-3" class="tab-label-3"><i class="icon-eye-close"></i></label>
 
-          <input id="tab-4" type="radio" name="radio-set" class="tab-selector-4" />
+          <input id="tab-4" type="radio" name="radio-set" class="tab-selector-4 chk-hide" />
           <label for="tab-4" class="tab-label-4"><i class="icon-picture"></i></label>
 
-          <input id="tab-5" type="radio" name="radio-set" class="tab-selector-5" />
+          <input id="tab-5" type="radio" name="radio-set" class="tab-selector-5 chk-hide" />
           <label for="tab-5" class="tab-label-5"><i class="icon-headphones"></i></label>
 
-          <input id="tab-6" type="radio" name="radio-set" class="tab-selector-6" />
+          <input id="tab-6" type="radio" name="radio-set" class="tab-selector-6 chk-hide" />
           <label for="tab-6" class="tab-label-6"><i class="icon-camera"></i></label>
 
           <div class="clear-shadow"></div>
 
           <div class="content">
-            <div class="content-1">
+            <div class="content-1 content_div">
               <h2>SATTELITE</h2>
               <hr />
+              <div class="listTree"></div>
             </div>
-            <div class="content-2">
+            <div class="content-2 content_div">
               <h2>DATE RANGE</h2>
               <hr />
             </div>
-            <div class="content-3">
+            <div class="content-3 content_div">
               <h2>AREA OF INTEREST</h2>
               <hr />
             </div>
-            <div class="content-4">
+            <div class="content-4 content_div">
               <h2>Some content</h2>
               <hr />
             </div>
-            <div class="content-5">
+            <div class="content-5 content_div">
               <h2>Some content</h2>
               <hr />
             </div>
-            <div class="content-6">
+            <div class="content-6 content_div">
               <h2>Some content</h2>
               <hr />
             </div>
@@ -77,6 +78,7 @@
   $( document ).ready(function() {
     initMap();
     defaultPanelState();
+    $('.listTree').listTree(data, { "startCollapsed": true });
   });
   </script>
 {% endblock %}

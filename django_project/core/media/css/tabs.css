@@ -4,7 +4,7 @@
     width: 448px;
 }
 
-.tabs input {
+.tabs .chk-hide {
     position: absolute;
     z-index: 1000;
     width: 49px;
@@ -191,7 +191,7 @@
     box-shadow: 3px 2px 2px rgba(0,0,0,0.5);
 }
 
-.content div {
+.content_div {
     width: 440px;
     position: absolute;
     top: 0;

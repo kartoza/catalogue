@@ -1,5 +1,5 @@
 var map = new OpenLayers.Map( 'map', {controls: []});
-var SearchPanelState = false;
+var SearchPanelState = true;
 var CartPanelState = false;
 var ResultPanelState = false;
 
@@ -97,3 +97,40 @@ function showSearchPanelButtons() {
     $("#search-panel-search-button").show();
     $("#search-panel-reset-button").show();
 }
+
+var data = [
+    {
+        "key": "Sensors",
+        "values": [
+            { "key": "Parent 1 Child 1" },
+            { "key": "Parent 1 Child 2" },
+            { "key": "Parent 1 Child 3" },
+            { "key": "Parent 1 Child 4" },
+            { "key": "Parent 1 Child 5" }
+        ]
+    },
+    {
+        "key": "Mission",
+        "values": [
+            { "key": "Parent 2 Child 1" },
+            { "key": "Parent 2 Child 2" },
+            { "key": "Parent 2 Child 3" }
+        ]
+    },
+    {
+        "key": "Sensor type",
+        "values": [
+            { "key": "Parent 3 Child 1" },
+            { "key": "Parent 3 Child 2" },
+            { "key": "Parent 3 Child 3" }
+        ]
+    },
+    {
+        "key": "Acquisition mode",
+        "values": [
+            { "key": "Parent 3 Child 1" },
+            { "key": "Parent 3 Child 2" },
+            { "key": "Parent 3 Child 3" }
+        ]
+    }
+];
