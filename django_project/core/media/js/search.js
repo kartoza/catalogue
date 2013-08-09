@@ -1,5 +1,5 @@
 var map = new OpenLayers.Map( 'map', {controls: []});
-var SearchPanelState = true;
+var SearchPanelState = false;
 var CartPanelState = false;
 var ResultPanelState = false;
 
@@ -17,9 +17,9 @@ function initMap() {
 function toggleSearchPanel() {
     if (SearchPanelState) {
         hideSearchPanelButtons();
-        $("#search-panel").animate({left: -300}, 300 );
+        $("#search-panel").animate({left: -450}, 300 );
         SearchPanelState = false;
-        $("#cart-panel-toggle").animate({top: 145}, 200 );
+        $("#cart-panel-toggle").animate({top: 155}, 200 );
     } else {
         if (CartPanelState) {
             closeCartPanel();
@@ -33,17 +33,17 @@ function toggleSearchPanel() {
 
 function closeSearchPanel() {
     hideSearchPanelButtons();
-    $("#search-panel").animate({left: -300}, 300 );
+    $("#search-panel").animate({left: -450}, 300 );
     SearchPanelState = false;
-    $("#cart-panel-toggle").animate({top: 145}, 200 );
+    $("#cart-panel-toggle").animate({top: 155}, 200 );
 }
 
 function toggleCartPanel() {
     if (CartPanelState) {
-        $("#cart-panel").animate({left: -300}, 300 );
+        $("#cart-panel").animate({left: -450}, 300 );
         CartPanelState = false;
-        $("#cart-panel-toggle").animate({top: 145}, 200 );
-        $("#search-panel-toggle").animate({top: 28}, 200 );
+        $("#cart-panel-toggle").animate({top: 155}, 200 );
+        $("#search-panel-toggle").animate({top: 35}, 200 );
     } else {
         if (SearchPanelState) {
             closeSearchPanel();
@@ -56,9 +56,9 @@ function toggleCartPanel() {
 }
 
 function closeCartPanel() {
-    $("#cart-panel").animate({left: -300}, 300 );
+    $("#cart-panel").animate({left: -450}, 300 );
     CartPanelState = false;
-    $("#search-panel-toggle").animate({top: 28}, 200 );
+    $("#search-panel-toggle").animate({top: 35}, 200 );
 }
 
 function toggleResultPanel() {
@@ -72,10 +72,12 @@ function toggleResultPanel() {
 }
 
 function defaultPanelState() {
+    hideSearchPanelButtons();
     if (SearchPanelState) {
         $("#search-panel").animate({left: 10}, 300 );
         SearchPanelState = true;
         $("#cart-panel-toggle").animate({top: 515}, 200 );
+        showSearchPanelButtons();
     } else if (CartPanelState) {
         $("#cart-panel").animate({left: 10}, 300 );
         $("#cart-panel-toggle").animate({top: 0}, 200 );

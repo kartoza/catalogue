@@ -1,7 +1,7 @@
 .tabs {
     position: relative;
     margin: 0px auto;
-    width: 298px;
+    width: 448px;
 }
 
 .tabs input {
@@ -102,7 +102,7 @@
     background: #fff;
 }
 .tabs input:checked:hover + label ~ .clear-shadow {
-    top: 0px;
+    top: 2px;
     background: #fff;
     -webkit-transition: none;
     -moz-transition: none;
@@ -192,11 +192,12 @@
 }
 
 .content div {
+    width: 440px;
     position: absolute;
     top: 0;
     left: 0;
     bottom: 100%;
-    padding: 5px 10px;
+    padding: 5px;
     overflow: hidden;
     z-index: 1;
     opacity: 0;
@@ -228,9 +229,12 @@
 .content div h2 {
     font-size: 14px;
     line-height: 16px;
-    padding-left:30px;
     color: #000;
     font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
     font-weight: normal;
     margin: 0px;
+}
+
+.content div hr {
+    margin: 2px;
 }
