@@ -27,7 +27,7 @@ try:
     DEBUG_TOOLBAR_CONFIG = {
         'INTERCEPT_REDIRECTS': False,
         # always show toolbar
-        'SHOW_TOOLBAR_CALLBACK': lambda *args, **kwargs: True,
+        'SHOW_TOOLBAR_CALLBACK': lambda *args, **kwargs: False,
         'ENABLE_STACKTRACES': True
     }
     DEBUG_TOOLBAR_PANELS = (

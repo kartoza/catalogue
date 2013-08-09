@@ -8,6 +8,48 @@
     <div class="span12">
       <div id="search-panel">
         <div id="search-panel-toggle"><p onclick="toggleSearchPanel();"><i class="icon-search"></i> SEARCH</p></div>
+        <section class="tabs">
+          <input id="tab-1" type="radio" name="radio-set" class="tab-selector-1" />
+          <label for="tab-1" class="tab-label-1">A</label>
+
+          <input id="tab-2" type="radio" name="radio-set" class="tab-selector-2" />
+          <label for="tab-2" class="tab-label-2">H</label>
+
+          <input id="tab-3" type="radio" name="radio-set" class="tab-selector-3" />
+          <label for="tab-3" class="tab-label-3">R</label>
+
+          <input id="tab-4" type="radio" name="radio-set" class="tab-selector-4" />
+          <label for="tab-4" class="tab-label-4">C</label>
+
+          <input id="tab-5" type="radio" name="radio-set" class="tab-selector-5" />
+          <label for="tab-5" class="tab-label-5">C</label>
+
+          <input id="tab-6" type="radio" name="radio-set" class="tab-selector-6" />
+          <label for="tab-6" class="tab-label-6">C</label>
+
+          <div class="clear-shadow"></div>
+
+          <div class="content">
+            <div class="content-1">
+              <p>Some content</p>
+            </div>
+            <div class="content-2">
+              <p>Some content</p>
+            </div>
+            <div class="content-3">
+              <p>Some content</p>
+            </div>
+            <div class="content-4">
+              <p>Some content</p>
+            </div>
+            <div class="content-5">
+              <p>Some content</p>
+            </div>
+            <div class="content-6">
+              <p>Some content</p>
+            </div>
+          </div>
+        </section>
       </div>
       <div id="cart-panel">
         <div id="cart-panel-toggle"><p onclick="toggleCartPanel();"><i class="icon-shopping-cart"></i> CART</p></div>
@@ -24,6 +66,9 @@
   {{ block.super }}
   <script type="text/javascript" src="/media/js/search.js"></script>
   <script>
+  $( document ).ready(function() {
     initMap();
+    defaultPanelState();
+  });
   </script>
 {% endblock %}

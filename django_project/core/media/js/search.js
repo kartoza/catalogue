@@ -1,5 +1,5 @@
 var map = new OpenLayers.Map( 'map', {controls: []});
-var SearchPanelState = false;
+var SearchPanelState = true;
 var CartPanelState = false;
 var ResultPanelState = false;
 
@@ -65,5 +65,20 @@ function toggleResultPanel() {
     } else {
         $("#result-panel").animate({right: 10}, 300 );
         ResultPanelState = true;
+    }
+}
+
+function defaultPanelState() {
+    if (SearchPanelState) {
+        $("#search-panel").animate({left: 10}, 300 );
+        SearchPanelState = true;
+        $("#cart-panel-toggle").animate({top: 515}, 200 );
+    } else if (CartPanelState) {
+        $("#cart-panel").animate({left: 10}, 300 );
+        $("#cart-panel-toggle").animate({top: 0}, 200 );
+        $("#search-panel-toggle").animate({top: 515}, 200 );
+    }
+    if (ResultPanelState) {
+        $("#result-panel").animate({right: 10}, 300 );
     }
 }
