@@ -18,7 +18,7 @@ function toggleSearchPanel() {
     if (SearchPanelState) {
         $("#search-panel").animate({left: -300}, 300 );
         SearchPanelState = false;
-        $("#cart-panel-toggle").animate({top: 130}, 200 );
+        $("#cart-panel-toggle").animate({top: 145}, 200 );
     } else {
         if (CartPanelState) {
             closeCartPanel();
@@ -32,15 +32,15 @@ function toggleSearchPanel() {
 function closeSearchPanel() {
     $("#search-panel").animate({left: -300}, 300 );
     SearchPanelState = false;
-    $("#cart-panel-toggle").animate({top: 130}, 200 );
+    $("#cart-panel-toggle").animate({top: 145}, 200 );
 }
 
 function toggleCartPanel() {
     if (CartPanelState) {
         $("#cart-panel").animate({left: -300}, 300 );
         CartPanelState = false;
-        $("#cart-panel-toggle").animate({top: 130}, 200 );
-        $("#search-panel-toggle").animate({top: 0}, 200 );
+        $("#cart-panel-toggle").animate({top: 145}, 200 );
+        $("#search-panel-toggle").animate({top: 25}, 200 );
     } else {
         if (SearchPanelState) {
             closeSearchPanel();
@@ -55,7 +55,7 @@ function toggleCartPanel() {
 function closeCartPanel() {
     $("#cart-panel").animate({left: -300}, 300 );
     CartPanelState = false;
-    $("#search-panel-toggle").animate({top: 0}, 200 );
+    $("#search-panel-toggle").animate({top: 25}, 200 );
 }
 
 function toggleResultPanel() {

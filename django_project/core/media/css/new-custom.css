@@ -61,11 +61,10 @@ div.dr_row{
 
 #search-panel {
     width: 300px; height: 500px; z-index: 9999; position: fixed; top: 50px; left: -300px;
-    background-image: linear-gradient(to bottom, #FFFFFF, #F2F2F2);
 }
 
 #search-panel-toggle {
-    width: 30px; height: 110px; z-index: 10000; position: absolute; top: 0px; right: -30px;
+    width: 30px; height: 110px; z-index: 10000; position: absolute; top: 25px; right: -30px;
     background: #FFFFFF;
     overflow: hidden;
     white-space: nowrap;
@@ -77,6 +76,7 @@ div.dr_row{
 #search-panel-toggle p {
     -webkit-transform: rotate(-90deg);
     -moz-transform: rotate(-90deg);
+    -ms-transform: rotate(-90deg);
     filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
     margin-top: 70px;
 }
@@ -88,11 +88,11 @@ div.dr_row{
 
 #cart-panel {
     width: 300px; height: 500px; z-index: 9999; position: fixed; top: 50px; left: -300px;
-    background-image: linear-gradient(to bottom, #FFFFFF, #F2F2F2);
+    background: #FFFFFF
 }
 
 #cart-panel-toggle {
-    width: 30px; height: 90px; z-index: 10000; position: absolute; top: 130px; right: -30px;
+    width: 30px; height: 90px; z-index: 10000; position: absolute; top: 145px; right: -30px;
     background: #FFFFFF;
     overflow: hidden;
     white-space: nowrap;
@@ -104,6 +104,7 @@ div.dr_row{
 #cart-panel-toggle p {
     -webkit-transform: rotate(-90deg);
     -moz-transform: rotate(-90deg);
+    -ms-transform: rotate(-90deg);
     filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
     margin-top: 50px;
 }
@@ -115,7 +116,7 @@ div.dr_row{
 
 #result-panel {
     width: 300px; height: 500px; z-index: 9999; position: fixed; top: 50px; right: -300px;
-    background-image: linear-gradient(to bottom, #FFFFFF, #F2F2F2);
+    background: #FFFFFF
 }
 
 #result-panel-toggle {
@@ -131,6 +132,7 @@ div.dr_row{
 #result-panel-toggle p {
     -webkit-transform: rotate(-90deg);
     -moz-transform: rotate(-90deg);
+    -ms-transform: rotate(-90deg);
     filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
     margin-top: 80px;
 }

@@ -1,7 +1,7 @@
 .tabs {
     position: relative;
-    margin: 10px auto;
-    width: 296px;
+    margin: 0px auto;
+    width: 298px;
 }
 
 .tabs input {
@@ -164,6 +164,7 @@
     -o-transition: top linear 0.2s;
     -ms-transition: top linear 0.2s;
     transition: top linear 0.2s;
+    text-shadow: 0 0 10px #c61a1a;
 }
 
 .clear-shadow {
