@@ -1,7 +1,7 @@
 var map = new OpenLayers.Map( 'map', {controls: []});
-var SearchPanelState = false;
+var SearchPanelState = true;
 var CartPanelState = false;
-var ResultPanelState = true;
+var ResultPanelState = false;
 
 function initMap() {
     var layer = new OpenLayers.Layer.OSM( "Simple OSM Map");
@@ -66,11 +66,13 @@ function closeCartPanel() {
 
 function toggleResultPanel() {
     if (ResultPanelState) {
+        hideResultPanelButtons();
         $("#result-panel").animate({right: -450}, 300 );
         ResultPanelState = false;
     } else {
         $("#result-panel").animate({right: 10}, 300 );
         ResultPanelState = true;
+        showResultPanelButtons();
     }
 }
 
@@ -110,6 +112,14 @@ function hideCartPanelButtons() {
 function showCartPanelButtons() {
     $("#cart-panel-order-button").show();
     $("#cart-panel-download-button").show();
+}
+
+function hideResultPanelButtons() {
+    $("#result-panel-download-button").hide();
+}
+
+function showResultPanelButtons() {
+    $("#result-panel-download-button").show();
 }
 
 var data = [
