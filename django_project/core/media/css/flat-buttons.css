@@ -26,9 +26,13 @@
   -o-transition: 0.25s;
   transition: 0.25s;
   -webkit-backface-visibility: hidden;
-  box-shadow: 3px 2px 2px rgba(0,0,0,0.5), 3px -2px 2px rgba(0,0,0,0.5);
   text-align: center;
 }
+
+.drop-shadow {
+  box-shadow: 3px 2px 2px rgba(0,0,0,0.5), 3px -2px 2px rgba(0,0,0,0.5);
+}
+
 .fbtn:hover,
 .fbtn:focus,
 .fbtn-group:focus .fbtn.dropdown-toggle {

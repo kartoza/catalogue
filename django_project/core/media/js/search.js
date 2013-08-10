@@ -1,6 +1,6 @@
 var map = new OpenLayers.Map( 'map', {controls: []});
-var SearchPanelState = true;
-var CartPanelState = false;
+var SearchPanelState = false;
+var CartPanelState = true;
 var ResultPanelState = false;
 
 function initMap() {
