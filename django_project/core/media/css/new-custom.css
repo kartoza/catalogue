@@ -89,15 +89,9 @@ div.dr_row{
 
 #search-panel-reset-button {
     width: 50px; height: 35px; z-index: 10000; position: absolute; top: 410px; right: -54px;
-    /*overflow: hidden;*/
     white-space: nowrap;
     color: #fff;
     margin: 3px;
-    /*background: #408140;*/
-    /*border-top: 1px solid;
-    border-right: 1px solid;
-    border-bottom: 1px solid;*/
-    /*box-shadow: 3px 2px 2px rgba(0,0,0,0.5), 3px -2px 2px rgba(0,0,0,0.5);*/
 }
 
 #search-panel-toggle p {
@@ -115,7 +109,8 @@ div.dr_row{
 
 #cart-panel {
     width: 450px; height: 500px; z-index: 9999; position: fixed; top: 50px; left: -450px;
-    background: #FFFFFF
+    background: #FFFFFF;
+    box-shadow: 3px 2px 2px rgba(0,0,0,0.5);
 }
 
 #cart-panel-toggle {
@@ -137,6 +132,20 @@ div.dr_row{
 #cart-panel-toggle p:hover {
     cursor: pointer; cursor: hand;
     text-shadow: 0 0 10px #c61a1a;
+}
+
+#cart-panel-order-button {
+    width: 50px; height: 35px; z-index: 10000; position: absolute; top: 370px; right: -54px;
+    white-space: nowrap;
+    color: #fff;
+    margin: 3px;
+}
+
+#cart-panel-download-button {
+    width: 50px; height: 35px; z-index: 10000; position: absolute; top: 410px; right: -54px;
+    white-space: nowrap;
+    color: #fff;
+    margin: 3px;
 }
 
 #result-panel {
@@ -186,6 +195,10 @@ div.dr_row{
     position: relative;
 }
 
+.cart-item:hover {
+    background: #F2F2F2;
+}
+
 .cart-item img {
     width:90px;
     height:90px;
@@ -219,15 +232,19 @@ div.dr_row{
 }
 
 .cart-item .cart-item-info .button {
-    padding: 2px 10px 2px;
-    line-height: 14px;
+
+}
+
+.cart-item .cart-item-info .delete-button {
+    position: absolute;
+    right: 5px;
 }
 
 .cart-item .cart-item-info .buttons {
     margin-left: 10px;
 }
 
-.cart-item .cart-item-info .buttons:hover {
+.cart-item .cart-item-info .button:hover {
     cursor: pointer; cursor: hand;
     text-shadow: 0 0 10px #c61a1a;
 }

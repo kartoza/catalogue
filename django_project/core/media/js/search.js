@@ -40,6 +40,7 @@ function closeSearchPanel() {
 
 function toggleCartPanel() {
     if (CartPanelState) {
+        hideCartPanelButtons();
         $("#cart-panel").animate({left: -450}, 300 );
         CartPanelState = false;
         $("#cart-panel-toggle").animate({top: 155}, 200 );
@@ -49,6 +50,7 @@ function toggleCartPanel() {
             closeSearchPanel();
         }
         $("#cart-panel").animate({left: 10}, 300 );
+        showCartPanelButtons();
         CartPanelState = true;
         $("#cart-panel-toggle").animate({top: 0}, 200 );
         $("#search-panel-toggle").animate({top: 515}, 200 );
@@ -56,6 +58,7 @@ function toggleCartPanel() {
 }
 
 function closeCartPanel() {
+    hideCartPanelButtons();
     $("#cart-panel").animate({left: -450}, 300 );
     CartPanelState = false;
     $("#search-panel-toggle").animate({top: 35}, 200 );
@@ -96,6 +99,16 @@ function hideSearchPanelButtons() {
 function showSearchPanelButtons() {
     $("#search-panel-search-button").show();
     $("#search-panel-reset-button").show();
+}
+
+function hideCartPanelButtons() {
+    $("#cart-panel-order-button").hide();
+    $("#cart-panel-download-button").hide();
+}
+
+function showCartPanelButtons() {
+    $("#cart-panel-order-button").show();
+    $("#cart-panel-download-button").show();
 }
 
 var data = [
