@@ -166,3 +166,15 @@ div.dr_row{
     cursor: pointer; cursor: hand;
     text-shadow: 0 0 10px #c61a1a;
 }
+
+.search-panel-input {
+    padding: 0 40px 0 5px;
+}
+
+.search-panel-input-chk {
+    margin-top: 0px !important;
+}
+
+.search-options {
+    padding: 1px 0 10px 0;
+}

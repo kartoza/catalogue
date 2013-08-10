@@ -233,6 +233,21 @@
     font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
     font-weight: normal;
     margin: 0px;
+    text-transform:uppercase;
+}
+
+.content div h3 {
+    font-size: 12px;
+    line-height: 14px;
+    color: #000;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-weight: normal;
+    margin: 0px;
+    text-align: left;
+    display: block;
+    background: #F2F2F2;
+    padding: 5px;
+    text-transform:uppercase;
 }
 
 .content div hr {

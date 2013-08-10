@@ -3,7 +3,10 @@
  * Licensed under GPLv2 ONLY
  */
 .listTree {
-    margin-bottom: 18px;
+    margin-bottom: 5px;
+    width: 440px;
+    height: 250px;
+    overflow: auto;
 }
 
 .listTree i {
@@ -46,12 +49,12 @@
 
 .listTree span {
     display: inline-block;
-    width: 100%;
-    padding: 5px;
+    width: 99%;
+    padding: 5px 0 5px 5px;
 }
 
 .listTree > ul > li > span {
-    font-weight: bold;
+    font-weight: normal;
 }
 
 .listTree > ul > li > ul > li {
@@ -72,4 +75,15 @@
 
 .listTree input[type="checkbox"] {
     margin-top: 0;
+}
+
+.chk {
+    position: absolute;
+overflow: hidden;
+clip: rect(0 0 0 0);
+height: 1px;
+width: 1px;
+margin: -1px;
+padding: 0;
+border: 0;
 }

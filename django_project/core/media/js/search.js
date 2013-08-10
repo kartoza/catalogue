@@ -102,35 +102,35 @@ var data = [
     {
         "key": "Sensors",
         "values": [
-            { "key": "Parent 1 Child 1" },
-            { "key": "Parent 1 Child 2" },
-            { "key": "Parent 1 Child 3" },
-            { "key": "Parent 1 Child 4" },
-            { "key": "Parent 1 Child 5" }
+            { "key": "CBERS-2B HR CCD" },
+            { "key": "Landsat 2 MSS" },
+            { "key": "Landsat 3 MSS" },
+            { "key": "SPOT 2 HRV" },
+            { "key": "SPOT 5 HRG" }
         ]
     },
     {
         "key": "Mission",
         "values": [
-            { "key": "Parent 2 Child 1" },
-            { "key": "Parent 2 Child 2" },
-            { "key": "Parent 2 Child 3" }
+            { "key": "ZASat-002" },
+            { "key": "LS-5" },
+            { "key": "SPOT-4" }
         ]
     },
     {
         "key": "Sensor type",
         "values": [
-            { "key": "Parent 3 Child 1" },
-            { "key": "Parent 3 Child 2" },
-            { "key": "Parent 3 Child 3" }
+            { "key": "HRG-5:Panchromatic B" },
+            { "key": "HRG-5:Panchromatic A" },
+            { "key": "HRG-5:Supersampled Panchromatic T" }
         ]
     },
     {
         "key": "Acquisition mode",
         "values": [
-            { "key": "Parent 3 Child 1" },
-            { "key": "Parent 3 Child 2" },
-            { "key": "Parent 3 Child 3" }
+            { "key": "HRCC-2B:GRN" },
+            { "key": "HRV-2:Camera 1" },
+            { "key": "AMI-1:Vertical Vertical Polarisation" }
         ]
     }
 ];
