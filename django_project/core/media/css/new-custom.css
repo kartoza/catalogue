@@ -149,7 +149,7 @@ div.dr_row{
 }
 
 #result-panel {
-    width: 450px; height: 500px; z-index: 9999; position: fixed; top: 50px; right: -450px;
+    width: 450px; height: 650px; z-index: 9999; position: fixed; top: 50px; right: -450px;
     background: #FFFFFF;
     box-shadow: -3px 2px 2px rgba(0,0,0,0.5)
 }
@@ -244,6 +244,72 @@ div.dr_row{
 }
 
 .cart-item .cart-item-info .button:hover {
+    cursor: pointer; cursor: hand;
+    text-shadow: 0 0 10px #c61a1a;
+}
+
+.result-item {
+    width: 440px;
+    height: 46px;
+    margin:1px 2px 0 2px;
+    position: relative;
+}
+
+.result-item:hover {
+    background: #F2F2F2;
+}
+
+.result-item img {
+    width:45px;
+    height:45px;
+}
+
+.result-item p {
+    font-size: 12px;
+}
+
+.result-item .result-item-info {
+    position: absolute;
+    top: 0px;
+    left: 51px;
+    width: 200px;
+}
+
+.result-item .result-item-info p {
+    margin: 0 0 1px 0;
+    line-height: 12px;
+}
+
+.result-item .cloud-cover {
+    position: absolute;
+    top: 0px;
+    left: 260px;
+}
+
+.result-item .cloud-cover img {
+    width:50px;
+    height:50px;
+}
+
+.result-item .cloud-cover p {
+    position: absolute;
+    top: 17px;
+    left: 20px;
+}
+
+.result-item .metadata-button {
+    margin: 8px 5px 5px 0px;
+    position: absolute;
+    right: 70px;
+}
+
+.result-item .cart-button {
+    margin: 5px 5px 5px 0px;
+    position: absolute;
+    right: 25px;
+}
+
+.result-item .button:hover {
     cursor: pointer; cursor: hand;
     text-shadow: 0 0 10px #c61a1a;
 }
