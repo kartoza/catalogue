@@ -1,7 +1,7 @@
 var map = new OpenLayers.Map( 'map', {controls: []});
 var SearchPanelState = false;
-var CartPanelState = true;
-var ResultPanelState = false;
+var CartPanelState = false;
+var ResultPanelState = true;
 
 function initMap() {
     var layer = new OpenLayers.Layer.OSM( "Simple OSM Map");
@@ -66,7 +66,7 @@ function closeCartPanel() {
 
 function toggleResultPanel() {
     if (ResultPanelState) {
-        $("#result-panel").animate({right: -300}, 300 );
+        $("#result-panel").animate({right: -450}, 300 );
         ResultPanelState = false;
     } else {
         $("#result-panel").animate({right: 10}, 300 );
@@ -76,6 +76,7 @@ function toggleResultPanel() {
 
 function defaultPanelState() {
     hideSearchPanelButtons();
+    hideCartPanelButtons();
     if (SearchPanelState) {
         $("#search-panel").animate({left: 10}, 300 );
         SearchPanelState = true;
