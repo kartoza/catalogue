@@ -7,7 +7,7 @@
   <div class="row-fluid">
     <div class="span12">
       <div id="search-panel">
-        <div id="search-panel-search-button"><p class="fbtn fbtn-success drop-shadow"><i class="icon-search"></i></p></div>
+        <div id="search-panel-search-button"><p class="fbtn fbtn-success drop-shadow" onclick="submitSearchForm();"><i class="icon-search"></i></p></div>
         <div id="search-panel-reset-button"><p class="fbtn fbtn-warning drop-shadow"><i class="icon-refresh"></i> </p></div>
         <div id="search-panel-toggle"><p onclick="toggleSearchPanel();"><i class="icon-search"></i> SEARCH</p></div>
         <section class="tabs">
@@ -54,18 +54,21 @@
             <div class="content-2 content_div">
               <h2>DATE RANGE</h2>
               <hr />
-              <div class="control-group">
-                <label class="control-label" for="inputEmail">From</label>
+              <div id="date_from_cg" class="control-group">
+                <label class="control-label" for="inputEmail">Date from</label>
                 <div class="controls">
-                  <input type="text" id="date_from" placeholder="Email">
+                  <input type="text" id="date_from" placeholder="">
                 </div>
               </div>
-              <div class="control-group">
-                <label class="control-label" for="inputEmail">To</label>
+              <div id="date_to_cg" class="control-group">
+                <label class="control-label" for="inputEmail">Date to</label>
                 <div class="controls">
-                  <input type="text" id="date_to" placeholder="Email">
+                  <input type="text" id="date_to" placeholder="">
+                  <span id="date_to_inline" class="help-inline"></span>
                 </div>
               </div>
+              <p onclick="addNewDateRange();">Add</p>
+            <div id="date_range"></div>
             </div>
             <div class="content-3 content_div">
               <h2>CLOUD COVER</h2>

@@ -124,6 +124,36 @@ function showResultPanelButtons() {
     $("#result-panel-download-button").show();
 }
 
+function addNewDateRange() {
+    var date_from = $('#date_from').val();
+    var date_to = $('#date_to').val();
+    if (date_from == '') {
+        $('#date_from_cg').addClass('error');
+        $('#date_from').focus();
+    } else if (date_to == '') {
+        $('#date_to_cg').addClass('error');
+        $('#date_to').focus();
+    } else if(date_to < date_from) {
+        $('#date_to_cg').addClass('error');
+        $('#date_to_inline').html('Date has to be later then date from!');
+    } else {
+        $('#date_to_cg').removeClass('error');
+        $('#date_from_cg').removeClass('error');
+        $('#date_to_inline').html('');
+        var dr = '<p><span class="date_from">'+date_from+'</span> - <span class="date_to">'+date_to+'</span> <span onclick="deleteDateRange(this);"> del </span></p>';
+        $('#date_range').append(dr);
+    }
+}
+
+function deleteDateRange(elem) {
+    $(elem).parent().remove();
+}
+
+function submitSearchForm() {
+    var sat = JSON.stringify($('.listTree').data('listTree').selected);
+    console.log(sat);
+}
+
 var data = [
     {
         "key": "Sensors",
