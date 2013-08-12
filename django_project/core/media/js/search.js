@@ -1,7 +1,7 @@
 var map = new OpenLayers.Map( 'map', {controls: []});
-var SearchPanelState = true;
+var SearchPanelState = false;
 var CartPanelState = false;
-var ResultPanelState = false;
+var ResultPanelState = true;
 
 function initMap() {
     var layer = new OpenLayers.Layer.OSM( "Simple OSM Map");
