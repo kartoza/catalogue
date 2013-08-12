@@ -40,10 +40,10 @@
               <hr />
               <div class="search-options">
                 <span class="search-panel-input">
-                  <input class="search-panel-input-chk" type="checkbox" value="SPOT 5 HRG"> Free imagery only
+                  <input id="free_imagery" class="search-panel-input-chk" type="checkbox" value="SPOT 5 HRG"> Free imagery only
                 </span>
                 <span class="search-panel-input">
-                  <input class="search-panel-input-chk" type="checkbox" value="SPOT 5 HRG" checked="checked"> Panchromatic images only
+                  <input id="panchromatic_imagery" class="search-panel-input-chk" type="checkbox" value="SPOT 5 HRG" checked="checked"> Panchromatic images only
                 </span>
               </div>
               <hr />
@@ -55,13 +55,13 @@
               <h2>DATE RANGE</h2>
               <hr />
               <div id="date_from_cg" class="control-group">
-                <label class="control-label" for="inputEmail">Date from</label>
+                <label class="control-label" for="date_from">Date from</label>
                 <div class="controls">
                   <input type="text" id="date_from" placeholder="">
                 </div>
               </div>
               <div id="date_to_cg" class="control-group">
-                <label class="control-label" for="inputEmail">Date to</label>
+                <label class="control-label" for="date_to">Date to</label>
                 <div class="controls">
                   <input type="text" id="date_to" placeholder="">
                   <span id="date_to_inline" class="help-inline"></span>
@@ -74,89 +74,77 @@
               <h2>CLOUD COVER</h2>
               <hr />
               <div class="control-group">
-                <label class="control-label" for="inputEmail">Cloud cover</label>
+                <label class="control-label" for="cloud_cover">Cloud cover</label>
                 <div class="controls">
-                  <input type="text" id="inputEmail" placeholder="Cloud cover">
+                  <input id="cloud_cover" type="text" placeholder="Cloud cover">
                 </div>
               </div>
               <h2>PATH & ROW</h2>
               <hr />
               <div class="control-group">
-                <label class="control-label" for="inputEmail"> Path (K/orbit) </label>
+                <label class="control-label" for="path"> Path (K/orbit) </label>
                 <div class="controls">
-                  <input type="text" id="inputEmail" placeholder="Path (K/orbit)">
+                  <input id="path" type="text" placeholder="Path (K/orbit)">
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label" for="inputEmail"> Row (J/frame)  </label>
+                <label class="control-label" for="row"> Row (J/frame)  </label>
                 <div class="controls">
-                  <input type="text" id="inputEmail" placeholder="Row (J/frame)">
+                  <input type="text" id="row" placeholder="Row (J/frame)">
                 </div>
               </div>
               <h2>AREA OF INTEREST</h2>
               <hr />
               <div class="control-group">
-                <label class="control-label" for="inputEmail"> Bounding Box/Circle  </label>
+                <label class="control-label" for="bbox"> Bounding Box/Circle  </label>
                 <div class="controls">
-                  <input type="text" id="inputEmail" placeholder="Bounding Box/Circle">
+                  <input type="text" id="bbox" placeholder="Bounding Box/Circle">
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label" for="inputEmail">  Geometry file   </label>
+                <label class="control-label" for="geo_file">  Geometry file   </label>
                 <div class="controls">
-                  <input type="file" id="inputEmail" placeholder="Geometry file">
+                  <input type="file" id="geo_file" placeholder="Geometry file">
                 </div>
               </div>
               <h2>OTHER OPTIONS</h2>
               <hr />
               <div class="control-group">
-                <label class="control-label" for="inputEmail">  Sensor inclination angle start   </label>
+                <label class="control-label" for="sensor_inc_start">  Sensor inclination angle start   </label>
                 <div class="controls">
-                  <input type="text" id="inputEmail" placeholder="">
+                  <input type="text" id="sensor_inc_start" placeholder="">
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label" for="inputEmail">  Sensor inclination angle end    </label>
+                <label class="control-label" for="sensor_inc_end">  Sensor inclination angle end    </label>
                 <div class="controls">
-                  <input type="text" id="text" placeholder="">
+                  <input type="text" id="sensor_inc_end" placeholder="">
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label" for="inputEmail">   Spatial resolution    </label>
+                <label class="control-label" for="resolution">   Spatial resolution    </label>
                 <div class="controls">
-                  <select>
-              <option>1</option>
-              <option>2</option>
-              <option>3</option>
-              <option>4</option>
-              <option>5</option>
+                  <select id="resolution">
+              <option value="">--</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
             </select>
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label" for="inputEmail">   Band count     </label>
+                <label class="control-label" for="band_count">   Band count     </label>
                 <div class="controls">
-                  <select>
-              <option>1</option>
-              <option>2</option>
-              <option>3</option>
-              <option>4</option>
-              <option>5</option>
+                  <select id="band_count">
+              <option value="">--</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4" >4</option>
+              <option value="5">5</option>
             </select>
                 </div>
               </div>
-            </div>
-            <div class="content-4 content_div">
-              <h2>Some content</h2>
-              <hr />
-            </div>
-            <div class="content-5 content_div">
-              <h2>Some content</h2>
-              <hr />
-            </div>
-            <div class="content-6 content_div">
-              <h2>Some content</h2>
-              <hr />
             </div>
           </form>
           </div>

@@ -151,12 +151,14 @@ function deleteDateRange(elem) {
 
 function submitSearchForm() {
     var search_data = new Object();
+
     _.each($('.listTree').data('listTree').selected, function(parent) {
         search_data[parent.key] = [];
         _.each(parent.values, function(sat) {
             search_data[parent.key].push(sat.val);
         });
     });
+
     search_data['Dates'] = [];
     _.each($('.date_rage_row'), function(row) {
         var dr = new Object();
@@ -164,6 +166,48 @@ function submitSearchForm() {
         dr.date_to = $(row).children(".date_to").html();
         search_data['Dates'].push(dr);
     });
+
+    if ($('#panchromatic_imagery').prop('checked')) {
+        search_data['panchromatic_imagery'] = 1
+    }
+
+    if ($('#free_imagery').prop('checked')) {
+        search_data['free_imagery'] = 1
+    }
+
+    if ($('#cloud_cover').val() != '') {
+        search_data['cloud_cover'] = $('#cloud_cover').val();
+    }
+
+    if ($('#path').val() != '') {
+        search_data['path'] = $('#path').val();
+    }
+
+    if ($('#row').val() != '') {
+        search_data['row'] = $('#row').val();
+    }
+
+    if ($('#bbox').val() != '') {
+        search_data['bbox'] = $('#bbox').val();
+    }
+
+    if ($('#sensor_inc_start').val() != '') {
+        search_data['sensor_inc_start'] = $('#sensor_inc_start').val();
+    }
+
+    if ($('#sensor_inc_end').val() != '') {
+        search_data['sensor_inc_end'] = $('#sensor_inc_end').val();
+    }
+
+    if ($('#resolution').val() != '') {
+        search_data['resolution'] = $('#resolution').val();
+    }
+
+    if ($('#band_count').val() != '') {
+        search_data['band_count'] = $('#band_count').val();
+    }
+
+    search_data = JSON.stringify(search_data);
     console.log(search_data);
 }
 
