@@ -1,7 +1,7 @@
 var map = new OpenLayers.Map( 'map', {controls: []});
-var SearchPanelState = false;
+var SearchPanelState = true;
 var CartPanelState = false;
-var ResultPanelState = true;
+var ResultPanelState = false;
 
 function initMap() {
     var layer = new OpenLayers.Layer.OSM( "Simple OSM Map");
@@ -92,6 +92,7 @@ function defaultPanelState() {
     }
     if (ResultPanelState) {
         $("#result-panel").animate({right: 10}, 300 );
+        showResultPanelButtons();
     }
 }
 
@@ -126,36 +127,40 @@ function showResultPanelButtons() {
 var data = [
     {
         "key": "Sensors",
+        "val": "1",
         "values": [
-            { "key": "CBERS-2B HR CCD" },
-            { "key": "Landsat 2 MSS" },
-            { "key": "Landsat 3 MSS" },
-            { "key": "SPOT 2 HRV" },
-            { "key": "SPOT 5 HRG" }
+            { "key": "CBERS-2B HR CCD", "val": "1" },
+            { "key": "Landsat 2 MSS", "val": "1" },
+            { "key": "Landsat 3 MSS", "val": "1" },
+            { "key": "SPOT 2 HRV", "val": "1" },
+            { "key": "SPOT 5 HRG", "val": "1" }
         ]
     },
     {
         "key": "Mission",
+        "val": "1",
         "values": [
-            { "key": "ZASat-002" },
-            { "key": "LS-5" },
-            { "key": "SPOT-4" }
+            { "key": "ZASat-002", "val": "1" },
+            { "key": "LS-5", "val": "1" },
+            { "key": "SPOT-4", "val": "1" }
         ]
     },
     {
         "key": "Sensor type",
+        "val": "1",
         "values": [
-            { "key": "HRG-5:Panchromatic B" },
-            { "key": "HRG-5:Panchromatic A" },
-            { "key": "HRG-5:Supersampled Panchromatic T" }
+            { "key": "HRG-5:Panchromatic B", "val": "1" },
+            { "key": "HRG-5:Panchromatic A", "val": "1" },
+            { "key": "HRG-5:Supersampled Panchromatic T", "val": "1" }
         ]
     },
     {
         "key": "Acquisition mode",
+        "val": "1",
         "values": [
-            { "key": "HRCC-2B:GRN" },
-            { "key": "HRV-2:Camera 1" },
-            { "key": "AMI-1:Vertical Vertical Polarisation" }
+            { "key": "HRCC-2B:GRN", "val": "1" },
+            { "key": "HRV-2:Camera 1", "val": "1" },
+            { "key": "AMI-1:Vertical Vertical Polarisation", "val": "1" }
         ]
     }
 ];

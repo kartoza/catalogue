@@ -11,7 +11,7 @@
                 <% var ps; %>\
                 <% if ( !_.isUndefined(ps = _.find(options.selected, function(elem) { return elem.key === this.key; }, parent)) ) { %>\
                 checked="checked"\
-                <% } %> value="<%= parent.key %>" /> <%= parent.key %><i class="icon-chevron-up icon-black"></i></span>\
+                <% } %> value="<%= parent.val %>" /> <%= parent.key %><i class="icon-chevron-up icon-black"></i></span>\
                 <% if (options.startCollapsed) { %>\
                 <ul style="display: none;">\
                 <% } else { %>\
@@ -22,7 +22,7 @@
                         <span><input type="checkbox" \
                         <% if ( !_.isUndefined(this) && !_.isUndefined(_.find(this.values, function(elem) { return elem.key === this.key; }, child)) ) { %>\
                         checked="checked"\
-                        <% } %> value="<%= child.key %>" /> <%= child.key %></span>\
+                        <% } %> value="<%= child.val %>" /> <%= child.key %></span>\
                     </li>\
                     <% }, ps); %>\
                 </ul>\
