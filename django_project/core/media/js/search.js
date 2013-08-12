@@ -79,6 +79,7 @@ function toggleResultPanel() {
 function defaultPanelState() {
     hideSearchPanelButtons();
     hideCartPanelButtons();
+    hideResultPanelButtons();
     if (SearchPanelState) {
         $("#search-panel").animate({left: 10}, 300 );
         SearchPanelState = true;
