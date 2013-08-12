@@ -60,7 +60,7 @@ div.dr_row{
 }
 
 #search-panel {
-    width: 450px; height: 500px; z-index: 9999; position: fixed; top: 50px; left: -450px;
+    width: 450px; height: 500px; z-index: 101; position: fixed; top: 50px; left: -450px;
 }
 
 #search-panel-toggle {

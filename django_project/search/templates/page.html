@@ -12,14 +12,14 @@
         <div id="search-panel-toggle"><p onclick="toggleSearchPanel();"><i class="icon-search"></i> SEARCH</p></div>
         <section class="tabs">
           <input id="tab-1" type="radio" name="radio-set" class="tab-selector-1 chk-hide" checked />
-          <label for="tab-1" class="tab-label-1"><i class="icon-adjust"></i></label>
+          <label for="tab-1" class="tab-label-1"><i class="icon-globe"></i></label>
 
           <input id="tab-2" type="radio" name="radio-set" class="tab-selector-2 chk-hide" />
-          <label for="tab-2" class="tab-label-2"><i class="icon-leaf"></i></label>
+          <label for="tab-2" class="tab-label-2"><i class="icon-calendar"></i></label>
 
           <input id="tab-3" type="radio" name="radio-set" class="tab-selector-3 chk-hide" />
-          <label for="tab-3" class="tab-label-3"><i class="icon-eye-close"></i></label>
-
+          <label for="tab-3" class="tab-label-3"><i class="icon-cogs"></i></label>
+<!--
           <input id="tab-4" type="radio" name="radio-set" class="tab-selector-4 chk-hide" />
           <label for="tab-4" class="tab-label-4"><i class="icon-picture"></i></label>
 
@@ -28,7 +28,7 @@
 
           <input id="tab-6" type="radio" name="radio-set" class="tab-selector-6 chk-hide" />
           <label for="tab-6" class="tab-label-6"><i class="icon-camera"></i></label>
-
+-->
           <div class="clear-shadow"></div>
 
           <div class="content">
@@ -54,14 +54,26 @@
             <div class="content-2 content_div">
               <h2>DATE RANGE</h2>
               <hr />
+              <div class="control-group">
+                <label class="control-label" for="inputEmail">From</label>
+                <div class="controls">
+                  <input type="text" id="date_from" placeholder="Email">
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label" for="inputEmail">To</label>
+                <div class="controls">
+                  <input type="text" id="date_to" placeholder="Email">
+                </div>
+              </div>
             </div>
             <div class="content-3 content_div">
               <h2>CLOUD COVER</h2>
               <hr />
               <div class="control-group">
-                <label class="control-label" for="inputEmail">Email</label>
+                <label class="control-label" for="inputEmail">Cloud cover</label>
                 <div class="controls">
-                  <input type="text" id="inputEmail" placeholder="Email">
+                  <input type="text" id="inputEmail" placeholder="Cloud cover">
                 </div>
               </div>
               <h2>PATH & ROW</h2>
@@ -103,7 +115,7 @@
               <div class="control-group">
                 <label class="control-label" for="inputEmail">  Sensor inclination angle end    </label>
                 <div class="controls">
-                  <input type="file" id="text" placeholder="">
+                  <input type="text" id="text" placeholder="">
                 </div>
               </div>
               <div class="control-group">
@@ -437,6 +449,8 @@ Note:The SPOT Imagery provided in this backdrop has been degraded to 10m
     defaultPanelState();
     $('.listTree').listTree(data, { "startCollapsed": true });
     $('#results-container').perfectScrollbar( { wheelSpeed: 20 } );
+    $('#date_from').datepicker();
+    $('#date_to').datepicker();
   });
   </script>
 {% endblock %}
