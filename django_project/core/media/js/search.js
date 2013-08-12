@@ -150,8 +150,13 @@ function deleteDateRange(elem) {
 }
 
 function submitSearchForm() {
-    var sat = JSON.stringify($('.listTree').data('listTree').selected);
-    console.log(sat);
+    var data = new Object();
+     _.each($('.listTree').data('listTree').selected, function(parent) {
+        data[parent.key] = [];
+        _.each(parent.values, function(sat) {
+            data[parent.key].push(sat.val);
+        });
+     });
 }
 
 var data = [
