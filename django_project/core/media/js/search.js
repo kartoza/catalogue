@@ -140,7 +140,7 @@ function addNewDateRange() {
         $('#date_to_cg').removeClass('error');
         $('#date_from_cg').removeClass('error');
         $('#date_to_inline').html('');
-        var dr = '<p><span class="date_from">'+date_from+'</span> - <span class="date_to">'+date_to+'</span> <span onclick="deleteDateRange(this);"> del </span></p>';
+        var dr = '<p class="date_rage_row"><span class="date_from">'+date_from+'</span> - <span class="date_to">'+date_to+'</span> <span onclick="deleteDateRange(this);"> del </span></p>';
         $('#date_range').append(dr);
     }
 }
@@ -150,13 +150,21 @@ function deleteDateRange(elem) {
 }
 
 function submitSearchForm() {
-    var data = new Object();
-     _.each($('.listTree').data('listTree').selected, function(parent) {
-        data[parent.key] = [];
+    var search_data = new Object();
+    _.each($('.listTree').data('listTree').selected, function(parent) {
+        search_data[parent.key] = [];
         _.each(parent.values, function(sat) {
-            data[parent.key].push(sat.val);
+            search_data[parent.key].push(sat.val);
         });
-     });
+    });
+    search_data['Dates'] = [];
+    _.each($('.date_rage_row'), function(row) {
+        var dr = new Object();
+        dr.date_from = $(row).children(".date_from").html();
+        dr.date_to = $(row).children(".date_to").html();
+        search_data['Dates'].push(dr);
+    });
+    console.log(search_data);
 }
 
 var data = [
