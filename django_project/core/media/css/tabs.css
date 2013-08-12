@@ -34,7 +34,7 @@
     left: 250px;
 }
 
-.tabs label {
+.tabs > label {
     background: #F2F2F2;
     background: -moz-linear-gradient(top, #F2F2F2 0%, #fff 100%);
     background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#F2F2F2), color-stop(100%,#fff));
@@ -63,7 +63,7 @@
 
 }
 
-.tabs label:after {
+.tabs > label:after {
     content: '';
     background: #fff;
     position: absolute;
@@ -74,7 +74,7 @@
     display: block;
 }
 
-.tabs input:hover + label {
+.tabs > input:hover + label {
     background: #FFE0E0;
     top: -4px;
     -webkit-transition: top linear 0.2s;
@@ -83,10 +83,10 @@
     -ms-transition: top linear 0.2s;
     transition: top linear 0.2s;
 }
-.tabs input:hover + label:after{
+.tabs > input:hover + label:after{
     background: #FFE0E0;
 }
-.tabs input:hover + label ~ .clear-shadow {
+.tabs > input:hover + label ~ .clear-shadow {
     top: -4px;
     -webkit-transition: top linear 0.2s;
     -moz-transition: top linear 0.2s;
@@ -95,13 +95,13 @@
     transition: top linear 0.2s;
 }
 
-.tabs input:checked:hover + label {
+.tabs > input:checked:hover + label {
     top: 0;
 }
-.tabs input:checked:hover + label:after{
+.tabs > input:checked:hover + label:after{
     background: #fff;
 }
-.tabs input:checked:hover + label ~ .clear-shadow {
+.tabs > input:checked:hover + label ~ .clear-shadow {
     top: 2px;
     background: #fff;
     -webkit-transition: none;
@@ -156,7 +156,7 @@
 .tab-label-6 {
     z-index: 1;
 }
-.tabs input:checked + label {
+.tabs > input:checked + label {
     background: #fff;
     z-index: 7;
     -webkit-transition: top linear 0.2s;
