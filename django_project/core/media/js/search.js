@@ -159,38 +159,38 @@ var data = [
         "key": "Sensors",
         "val": "1",
         "values": [
-            { "key": "CBERS-2B HR CCD", "val": "1" },
-            { "key": "Landsat 2 MSS", "val": "1" },
-            { "key": "Landsat 3 MSS", "val": "1" },
-            { "key": "SPOT 2 HRV", "val": "1" },
-            { "key": "SPOT 5 HRG", "val": "1" }
+            { "key": "CBERS-2B HR CCD", "val": "12" },
+            { "key": "Landsat 2 MSS", "val": "13" },
+            { "key": "Landsat 3 MSS", "val": "14" },
+            { "key": "SPOT 2 HRV", "val": "15" },
+            { "key": "SPOT 5 HRG", "val": "16" }
         ]
     },
     {
         "key": "Mission",
-        "val": "1",
+        "val": "2",
         "values": [
-            { "key": "ZASat-002", "val": "1" },
-            { "key": "LS-5", "val": "1" },
-            { "key": "SPOT-4", "val": "1" }
+            { "key": "ZASat-002", "val": "22" },
+            { "key": "LS-5", "val": "23" },
+            { "key": "SPOT-4", "val": "24" }
         ]
     },
     {
         "key": "Sensor type",
-        "val": "1",
+        "val": "3",
         "values": [
-            { "key": "HRG-5:Panchromatic B", "val": "1" },
-            { "key": "HRG-5:Panchromatic A", "val": "1" },
-            { "key": "HRG-5:Supersampled Panchromatic T", "val": "1" }
+            { "key": "HRG-5:Panchromatic B", "val": "32" },
+            { "key": "HRG-5:Panchromatic A", "val": "33" },
+            { "key": "HRG-5:Supersampled Panchromatic T", "val": "34" }
         ]
     },
     {
         "key": "Acquisition mode",
-        "val": "1",
+        "val": "4",
         "values": [
-            { "key": "HRCC-2B:GRN", "val": "1" },
-            { "key": "HRV-2:Camera 1", "val": "1" },
-            { "key": "AMI-1:Vertical Vertical Polarisation", "val": "1" }
+            { "key": "HRCC-2B:GRN", "val": "42" },
+            { "key": "HRV-2:Camera 1", "val": "43" },
+            { "key": "AMI-1:Vertical Vertical Polarisation", "val": "44" }
         ]
     }
 ];

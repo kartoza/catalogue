@@ -120,15 +120,15 @@
 
         // Filter the context to the selected parents.
         var selected = _.filter($.extend(true, {}, data.context), function(parent) {
-            return $('.listTree > ul > li > span > input[value="' + parent.key + '"]').prop('checked')
+            return $('.listTree > ul > li > span > input[value="' + parent.val + '"]').prop('checked')
         });
-        
+
         // For each parent in the working context...
         _.each(selected, function(parent) {
 
             // Filter the children to the selected children.
             parent.values = _.filter(parent.values, function(child) {
-                return $('.listTree > ul > li > ul > li > span > input[value="' + child.key + '"]').prop('checked');
+                return $('.listTree > ul > li > ul > li > span > input[value="' + child.val + '"]').prop('checked');
             });
         });
 
@@ -149,10 +149,10 @@
                 "selected": context
             };
             options = $.extend(defaults, options);
-            
+
             // Validate the user entered default selections.
             options.selected = _validateDefaultSelectionValues(options.selected);
-            
+
             return this.each(function() {
                 var $this = $(this),
                     data = $this.data('listTree');
@@ -166,34 +166,34 @@
                         "options": options,
                         "selected": options.selected
                     });
-                    
+
                     // Register checkbox handlers.
                     $(document).on('change', '.listTree input[type="checkbox"]', function(e) {
                         var node = $(e.target).parent().parent();
 
                         // Toggle all children.
                         _toggleAllChildren(node);
-                        
+
                         // Handle parent checkbox if all children are (un)checked.
                         _handleChildParentRelationship(node);
-                        
+
                         // Filter context to selection and store in data.selected.
                         _updateSelectedObject(node);
                     })
-                    
+
                     // Register collapse handlers on parents.
                     .on('click', '.listTree > ul > li > span', function(e) {
                         var node = $(e.target).parent();
-                        
+
                         // Change the icon.
                         _toggleIcon(node);
-                        
+
                         // Toggle the child list.
                         node.children('ul').slideToggle('fast');
 
                         e.stopImmediatePropagation();
                     });
-                    
+
                     // Generate the list tree.
                     $this.html( _.template( template, { "context": context, "options": options } ) );
                 }
@@ -214,7 +214,7 @@
             return this.each(function() {
                 // Select each parent checkbox.
                 _selectAllChildren($(this));
-                
+
                 // For each listTree parent...
                 $(this).children('ul > li:first-child').each(function() {
                     // Select each child checkbox.
@@ -229,7 +229,7 @@
             return this.each(function() {
                 // Deselect each parent checkbox.
                 _deselectAllChildren($(this));
-                
+
                 // For each listTree parent...
                 $(this).children('ul > li:first-child').each(function() {
                     // Deselect each child checkbox.
@@ -243,10 +243,10 @@
             // For each listTree...
             return this.each(function() {
                 var node = $(this).children('ul').children('li');
-                
+
                 // Change the icon.
                 _toggleIcon(node);
-                
+
                 // Show the child list.
                 node.children('ul').slideDown('fast');
             });
