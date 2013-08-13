@@ -140,7 +140,7 @@ function addNewDateRange() {
         $('#date_to_cg').removeClass('error');
         $('#date_from_cg').removeClass('error');
         $('#date_to_inline').html('');
-        var dr = '<p class="date_rage_row"><span class="date_from">'+date_from+'</span> - <span class="date_to">'+date_to+'</span> <span onclick="deleteDateRange(this);"> del </span></p>';
+        var dr = '<p class="date_range_row"><span class="date_from">'+date_from+'</span><span>-</span> <span class="date_to">'+date_to+'</span> <span onclick="deleteDateRange(this);"> <i class="icon-trash"></i> </span></p>';
         $('#date_range').append(dr);
     }
 }
@@ -160,7 +160,7 @@ function submitSearchForm() {
     });
 
     search_data['Dates'] = [];
-    _.each($('.date_rage_row'), function(row) {
+    _.each($('.date_range_row'), function(row) {
         var dr = new Object();
         dr.date_from = $(row).children(".date_from").html();
         dr.date_to = $(row).children(".date_to").html();
