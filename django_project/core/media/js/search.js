@@ -151,6 +151,7 @@ function deleteDateRange(elem) {
 
 function submitSearchForm() {
     var search_data = new Object();
+    var form_ok = true;
 
     _.each($('.listTree').data('listTree').selected, function(parent) {
         search_data[parent.key] = [];
@@ -158,6 +159,14 @@ function submitSearchForm() {
             search_data[parent.key].push(sat.val);
         });
     });
+
+    if (typeof(search_data['Sensors']) == 'undefined')  {
+        $('#sattelite_inline').html('You have to select at least 1 sensor!').addClass('form-error');
+        $('#tab-1').prop('checked',true);
+        form_ok = false;
+    } else {
+        $('#sattelite_inline').html('');
+    }
 
     search_data['Dates'] = [];
     _.each($('.date_range_row'), function(row) {
@@ -207,8 +216,10 @@ function submitSearchForm() {
         search_data['band_count'] = $('#band_count').val();
     }
 
-    search_data = JSON.stringify(search_data);
-    console.log(search_data);
+    if (form_ok) {
+        search_data = JSON.stringify(search_data);
+        console.log(search_data);
+    }
 }
 
 var data = [

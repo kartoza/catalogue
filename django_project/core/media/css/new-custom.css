@@ -429,3 +429,7 @@ div.dr_row{
     cursor: pointer; cursor: hand;
     text-shadow: 0 0 10px #c61a1a;
 }
+
+.form-error {
+    color: #B94A48;
+}
