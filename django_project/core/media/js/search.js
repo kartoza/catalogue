@@ -176,6 +176,14 @@ function submitSearchForm() {
         search_data['Dates'].push(dr);
     });
 
+    if (search_data['Dates'].length == 0) {
+        $('#daterange_inline').html('You have to select at least 1 date range!').addClass('form-error');
+        $('#tab-2').prop('checked',true);
+        form_ok = false;
+    } else {
+        $('#daterange_inline').html('');
+    }
+
     if ($('#panchromatic_imagery').prop('checked')) {
         search_data['panchromatic_imagery'] = 1
     }
