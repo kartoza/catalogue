@@ -48,6 +48,7 @@ from catalogue.models import (
 )
 
 from search.models import SearchRecord
+from webodt.shortcuts import render_to_response as renderPDF
 
 # Read default notification recipients from settings
 CATALOGUE_DEFAULT_NOTIFICATION_RECIPIENTS = getattr(
@@ -276,7 +277,12 @@ def notifySalesStaff(theUser, theOrderId, theContext=None):
     myRecords = SearchRecord.objects.filter(user=theUser,
                                             order=myOrder).select_related()
     myHistory = OrderStatusHistory.objects.filter(order=myOrder)
-
+    theOrderPDF = renderPDF('order-summary.odt',
+                            dictionary={'myOrder': myOrder,
+                                       'myRecords': myRecords,
+                                       'myHistory': myHistory},
+                            format='pdf',
+                            filename='order-summary.pdf')
     myEmailSubject = ('SANSA Order ' + str(myOrder.id) + ' status update (' +
                       myOrder.order_status.name + ')')
 
@@ -331,6 +337,7 @@ def notifySalesStaff(theUser, theOrderId, theContext=None):
         myMsg.attach_related_file(
             os.path.join(
                 settings.MEDIA_ROOT, 'images', 'sac_header_email.jpg'))
+        myMsg.attach_related_file(theOrderPDF)
         #add message
         myMessagesList.append(myMsg)
 

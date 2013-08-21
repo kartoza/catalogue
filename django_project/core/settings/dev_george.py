@@ -3,10 +3,10 @@ from .dev import *
 DATABASES = {
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': 'sac',
-        'USER': 'catalogue',
-        'PASSWORD': 'catalogue',
-        'HOST': '',
+        'NAME': 'catalogue',
+        'USER': 'vagrant',
+        'PASSWORD': 'vagrant',
+        'HOST': 'localhost',
         'PORT': '5432',
         'TEST_NAME': 'sac_unittest_master',
     }

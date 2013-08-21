@@ -10,7 +10,8 @@ from .views import (
     visitorMonthlyReport,
     dataSummaryTable,
     dictionaryReport,
-    sensorSummaryTable
+    sensorSummaryTable,
+    renderVisitorListPDF
 )
 
 
@@ -34,4 +35,8 @@ urlpatterns = patterns(
     url(r'^sensorSummaryTable/(?P<theSensorId>[0-9]+)/$',
         sensorSummaryTable, name='sensorSummaryTable'
         ),
+
+    # George's URLs
+    url(r'^renderVisitorListPDF/$', renderVisitorListPDF,
+        name='visitorListPDF'),
 )

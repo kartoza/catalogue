@@ -447,3 +447,10 @@ def searchguid(theRequest, theGuid):
             'myActiveBaseMap': myActiveBaseMap,
             'theGuid': theGuid},
         context_instance=RequestContext(theRequest))
+
+
+@renderWithContext('page.html')
+def searchView(theRequest):
+    """
+    Perform an attribute and spatial search for imagery
+    """

@@ -9,8 +9,19 @@ INSTALLED_APPS += (
     'userena',
     'guardian',
     'easy_thumbnails',
-    'crispy_forms'
+    'crispy_forms',
+    'webodt'
 )
+
+# Added by George for webodt
+WEBODT_CONVERTER = 'webodt.converters.openoffice.OpenOfficeODFConverter'
+WEBODT_TEMPLATE_PATH = '/home/web/catalogue/django_project/reports/report-templates/'
+WEBODT_ODF_TEMPLATE_PREPROCESSORS = [
+    'webodt.preprocessors.xmlfor_preprocessor',
+    'webodt.preprocessors.unescape_templatetags_preprocessor',
+]
+WEBODT_OPENOFFICE_SERVER = ('127.0.0.1', 2002)
+WEBODT_DEFAULT_FORMAT = 'pdf'
 
 # Added by Tim for registration app
 ACCOUNT_ACTIVATION_DAYS = 2

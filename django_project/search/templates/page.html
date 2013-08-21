@@ -1,95 +1,449 @@
-{% load rangetag %} {# Custom tag defined in templatetags/ #}
-{% if myRecords %}
-<script type="text/javascript">
-/* <![CDATA[ */
-function loadMoreData() {
-  {# vars initialised inside a function using var will have local scope #}
-  {# vars initialised inside a function withoug using var will have global scope #}
-  clearSearchResults();
-      {# see http://trac.openlayers.org/wiki/Styles for more info on styling #}
-      var myScenesLayer = new OpenLayers.Layer.Vector("scenes",{
-        styleMap: mSceneStyleMap,
-        rendererOptions: {zIndexing: true},
-        projection: new OpenLayers.Projection("EPSG:900913")
-      });
-      var myGJFormat = new OpenLayers.Format.GeoJSON(
+{% extends "base-fluid.html" %}
+{% load url from future %} {# https://docs.djangoproject.com/en/1.4/releases/1.3/#changes-to-url-and-ssi #}
 
-        );
-      {% for myResult in myRecords %}
-      var myFeature{{forloop.counter}} = myGJFormat.read({{myResult.product.spatial_coverage.geojson|safe}})[0];
-      myFeature{{forloop.counter}}.geometry = transformGeometry(myFeature{{forloop.counter}}.geometry);
-      myFeature{{forloop.counter}}.id = '{{myResult.product.id}}';
-      myFeature{{forloop.counter}}.product_id = '{{myResult.product.product_id}}';
-      myFeature{{forloop.counter}}.selected = 'no';
-      myScenesLayer.addFeatures(myFeature{{forloop.counter}});
-      {% endfor %}
-      mMap.addLayer(myScenesLayer);
-      {% if myExtent %}
-      var myBounds = transformBounds( new OpenLayers.Bounds{{myExtent}}); //calculated from search page results
-      mMap.zoomToExtent( myBounds );
-      {% else %}
-      mMap.zoomToExtent( transformBounds(new OpenLayers.Bounds(14.0,-35.0,34.0,-21.0)));  //sa
-      {% endif %}
-      setupSceneSelector( myScenesLayer );
+{% block body_load %}{% endblock %}
 
-    }
-    if (pageLoaded) {
-      loadMoreData();
-      loadMoreData = null;
-    }
+{% block content%}
+  <div class="row-fluid">
+    <div class="span12">
+      <div id="search-panel">
+        <div id="search-panel-search-button"><p class="fbtn fbtn-success drop-shadow" onclick="submitSearchForm();"><i class="icon-search"></i></p></div>
+        <div id="search-panel-reset-button"><p class="fbtn fbtn-warning drop-shadow"><i class="icon-refresh"></i> </p></div>
+        <div id="search-panel-toggle"><p onclick="toggleSearchPanel();"><i class="icon-search"></i> SEARCH</p></div>
+        <section class="tabs">
+          <input id="tab-1" type="radio" name="radio-set" class="tab-selector-1 chk-hide" checked />
+          <label for="tab-1" class="tab-label-1"><i class="icon-globe"></i></label>
 
-    /* ]]> */
-    </script>
-      <div class="pagination">
-        <div class="step-links left vcentered" style="width:50px; float:left; margin-left: 25px;">
-          {% if myPage.has_previous %}
-          <a href="#" onclick='loadPage({{ myPage.previous_page_number }},"{{mySearchGuid}}"); return false;'><img alt="previous" src="/media/images/back_alt.png" /></a>
-          {% else %}
-          <img alt="previous" src="/media/images/back_alt_inactive.png" />
-          {% endif %}
+          <input id="tab-2" type="radio" name="radio-set" class="tab-selector-2 chk-hide" />
+          <label for="tab-2" class="tab-label-2"><i class="icon-calendar"></i></label>
+
+          <input id="tab-3" type="radio" name="radio-set" class="tab-selector-3 chk-hide" />
+          <label for="tab-3" class="tab-label-3"><i class="icon-cogs"></i></label>
+<!--
+          <input id="tab-4" type="radio" name="radio-set" class="tab-selector-4 chk-hide" />
+          <label for="tab-4" class="tab-label-4"><i class="icon-picture"></i></label>
+
+          <input id="tab-5" type="radio" name="radio-set" class="tab-selector-5 chk-hide" />
+          <label for="tab-5" class="tab-label-5"><i class="icon-headphones"></i></label>
+
+          <input id="tab-6" type="radio" name="radio-set" class="tab-selector-6 chk-hide" />
+          <label for="tab-6" class="tab-label-6"><i class="icon-camera"></i></label>
+-->
+          <div class="clear-shadow"></div>
+
+          <div class="content">
+            <form class="form-horizontal">
+            <div class="content-1 content_div">
+              <h2>SATTELITE</h2>
+              <hr />
+              <span id="sattelite_inline" class="help-inline"></span>
+              <div id="listTree" class="listTree"></div>
+              <hr />
+              <div class="search-options">
+                <span class="search-panel-input">
+                  <input id="free_imagery" class="search-panel-input-chk" type="checkbox" value="SPOT 5 HRG"> Free imagery only
+                </span>
+                <span class="search-panel-input">
+                  <input id="panchromatic_imagery" class="search-panel-input-chk" type="checkbox" value="SPOT 5 HRG" checked="checked"> Panchromatic images only
+                </span>
+              </div>
+              <hr />
+              <div class="search-options">
+                <h3>Search summary</h3>
+              </div>
+            </div>
+            <div class="content-2 content_div">
+              <h2>DATE RANGE</h2>
+              <hr />
+              <span id="daterange_inline" class="help-inline"></span>
+              <div id="date_from_cg" class="control-group">
+                <label class="control-label" for="date_from">Date from</label>
+                <div class="controls">
+                  <input type="text" id="date_from" placeholder="">
+                </div>
+              </div>
+              <div id="date_to_cg" class="control-group">
+                <label class="control-label" for="date_to">Date to</label>
+                <div class="controls">
+                  <input type="text" id="date_to" placeholder="">
+                  <span id="date_to_inline" class="help-inline"></span>
+                </div>
+              </div>
+              <div class="date-range"><p onclick="addNewDateRange();" class="button"><i class="icon-plus"></i> Add new date range</p></div>
+            <div id="date_range"></div>
+            </div>
+            <div class="content-3 content_div">
+              <h2>CLOUD COVER</h2>
+              <hr />
+              <div class="control-group">
+                <label class="control-label" for="cloud_cover">Cloud cover</label>
+                <div class="controls">
+                  <input id="cloud_cover" type="text" placeholder="Cloud cover">
+                </div>
+              </div>
+              <h2>PATH & ROW</h2>
+              <hr />
+              <div class="control-group">
+                <label class="control-label" for="path"> Path (K/orbit) </label>
+                <div class="controls">
+                  <input id="path" type="text" placeholder="Path (K/orbit)">
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label" for="row"> Row (J/frame)  </label>
+                <div class="controls">
+                  <input type="text" id="row" placeholder="Row (J/frame)">
+                </div>
+              </div>
+              <h2>AREA OF INTEREST</h2>
+              <hr />
+              <div class="control-group">
+                <label class="control-label" for="bbox"> Bounding Box/Circle  </label>
+                <div class="controls">
+                  <input type="text" id="bbox" placeholder="Bounding Box/Circle">
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label" for="geo_file">  Geometry file   </label>
+                <div class="controls">
+                  <input type="file" id="geo_file" placeholder="Geometry file">
+                </div>
+              </div>
+              <h2>OTHER OPTIONS</h2>
+              <hr />
+              <div class="control-group">
+                <label class="control-label" for="sensor_inc_start">  Sensor inclination angle start   </label>
+                <div class="controls">
+                  <input type="text" id="sensor_inc_start" placeholder="">
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label" for="sensor_inc_end">  Sensor inclination angle end    </label>
+                <div class="controls">
+                  <input type="text" id="sensor_inc_end" placeholder="">
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label" for="resolution">   Spatial resolution    </label>
+                <div class="controls">
+                  <select id="resolution">
+              <option value="">--</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+            </select>
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label" for="band_count">   Band count     </label>
+                <div class="controls">
+                  <select id="band_count">
+              <option value="">--</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4" >4</option>
+              <option value="5">5</option>
+            </select>
+                </div>
+              </div>
+            </div>
+          </form>
+          </div>
+        </section>
+      </div>
+      <div id="cart-panel">
+        <div id="cart-panel-order-button"><p class="fbtn fbtn-success drop-shadow"><i class="icon-ok"></i></p></div>
+        <div id="cart-panel-download-button"><p class="fbtn fbtn-info drop-shadow"><i class="icon-download-alt"></i></p></div>
+        <div id="cart-panel-toggle"><p onclick="toggleCartPanel();"><i class="icon-shopping-cart"></i> CART</p></div>
+        <div class="cart-item">
+          <img src="/media/images/mockup1.png" />
+          <div class="cart-item-info">
+            <p>L5 TM HRT MST 0167 00 0063 00 051001</p>
+            <p>18.02.2013 08:10:32</p>
+            <div class="buttons">
+              <span class="button"><i class="icon-list-alt"></i> Metadata</span>
+              <span class="button icon-2x delete-button"><i class="icon-trash"></i></span>
+            </div>
+          </div>
+          <div class="cloud-cover">
+            <img src="/media/images/cloud-icon.png" />
+            <p>55</p>
+          </div>
         </div>
-        {% if myPage %}
-        <div class="current center" style="width:400px; float:left;">
-          Page  
-          <select style="width:50px;" id="page-selector" value="{{ myPage.number }}"  name="page-selector" onchange='loadPage( $("#page-selector option:selected").val(),"{{mySearchGuid}}"); return false;'>
-            {% for i in myPage.paginator.num_pages|get_range %}<option value='{{ i }}' {% if i == myPage.number %}selected='yes'{% endif %}>{{i}}</option>{% endfor %}
-          </select> of {{ myPage.paginator.num_pages }}.
+        <div class="cart-item">
+          <img src="/media/images/mockup2.png" />
+          <div class="cart-item-info">
+            <p>L5 TM HRT MST 0167 00 0063 00 051002</p>
+            <p>18.02.2013 08:10:32</p>
+            <div class="buttons">
+              <span class="button"><i class="icon-list-alt"></i> Metadata</span>
+              <span class="button icon-2x delete-button"><i class="icon-trash"></i></span>
+            </div>
+          </div>
+          <div class="cloud-cover">
+            <img src="/media/images/cloud-icon.png" />
+            <p>95</p>
+          </div>
         </div>
-        {% endif %}
-        <div class="step-links vcentered" style="width:50px; float:left; margin-left: 25px;">
-          {% if myPage.has_next %}
-          <a href="#" onclick='loadPage({{ myPage.next_page_number }},"{{mySearchGuid}}"); return false;'><img alt="previous" src="/media/images/forward_alt.png" /></a>
-          {% else %}
-          <img alt="previous" src="/media/images/forward_alt_inactive.png" />
-          {% endif %}
+        <div class="cart-item">
+          <img src="/media/images/mockup4.png" />
+          <div class="cart-item-info">
+            <p>L5 TM HRT MST 0167 00 0063 00 051002</p>
+            <p>18.02.2013 08:10:32</p>
+            <div class="buttons">
+              <span class="button"><i class="icon-list-alt"></i> Metadata</span>
+              <span class="button icon-2x delete-button"><i class="icon-trash"></i></span>
+            </div>
+          </div>
+          <div class="cloud-cover">
+            <img src="/media/images/cloud-icon.png" />
+            <p>20</p>
+          </div>
+        </div>
+        <div class="cart-item">
+          <img src="/media/images/mockup3.png" />
+          <div class="cart-item-info">
+            <p>L5 TM HRT MST 0167 00 0063 00 051002</p>
+            <p>18.02.2013 08:10:32</p>
+            <div class="buttons">
+              <span class="button"><i class="icon-list-alt"></i> Metadata</span>
+              <span class="button icon-2x delete-button"><i class="icon-trash"></i></span>
+            </div>
+          </div>
+          <div class="cloud-cover">
+            <img src="/media/images/cloud-icon.png" />
+            <p>25</p>
+          </div>
         </div>
       </div>
-      <div class="span10">
-        <table id="results" class="table table-striped">
-          {% include "recordHeader.html" %}
-          <tbody>
-            {% for myRecord in myRecords %}
-            {% include "record.html" %}
-            {% empty %}
-            <h2>No records found.</h2>
-            {% endfor %}
-          </tbody>
-        </table>
+      <div id="result-panel">
+        <div id="result-panel-download-button"><p class="fbtn fbtn-info shadow"><i class="icon-download-alt"></i></p></div>
+        <div id="result-panel-toggle"><p onclick="toggleResultPanel();"><i class="icon-list"></i> RESULTS</p></div>
+        <div class="navigation">
+          <div class="fbtn button"><i class="icon-chevron-left"></i></div>
+          <div class="position">Page 1 of 45 (335 records)</div>
+          <div class="fbtn button"><i class="icon-chevron-right"></i></div>
+        </div>
+        <div id="results-container">
+          <div class="result-item">
+            <img src="/media/images/mockup1.png" />
+            <div class="result-item-info">
+              <p>L5 TM HRT MST 0167 00 0063 00 051001</p>
+              <p>18.02.2013 08:10:32</p>
+            </div>
+            <div class="cloud-cover">
+              <img src="/media/images/cloud-icon.png" />
+              <p>55</p>
+            </div>
+            <span class="button metadata-button"><i class="icon-list-alt icon-2x"></i></span>
+            <span class="button cart-button"><i class="icon-shopping-cart icon-2x"></i></span>
+          </div>
+          <div class="result-item">
+            <img src="/media/images/mockup2.png" />
+            <div class="result-item-info">
+              <p>L5 TM HRT MST 0167 00 0063 00 051001</p>
+              <p>18.02.2013 08:10:32</p>
+            </div>
+            <div class="cloud-cover">
+              <img src="/media/images/cloud-icon.png" />
+              <p>45</p>
+            </div>
+            <span class="button metadata-button"><i class="icon-list-alt icon-2x"></i></span>
+            <span class="button cart-button"><i class="icon-shopping-cart icon-2x"></i></span>
+          </div>
+          <div class="result-item">
+            <img src="/media/images/mockup4.png" />
+            <div class="result-item-info">
+              <p>L5 TM HRT MST 0167 00 0063 00 051001</p>
+              <p>18.02.2013 08:10:32</p>
+            </div>
+            <div class="cloud-cover">
+              <img src="/media/images/cloud-icon.png" />
+              <p>75</p>
+            </div>
+            <span class="button metadata-button"><i class="icon-list-alt icon-2x"></i></span>
+            <span class="button cart-button"><i class="icon-shopping-cart icon-2x"></i></span>
+          </div>
+          <div class="result-item">
+            <img src="/media/images/mockup4.png" />
+            <div class="result-item-info">
+              <p>L5 TM HRT MST 0167 00 0063 00 051001</p>
+              <p>18.02.2013 08:10:32</p>
+            </div>
+            <div class="cloud-cover">
+              <img src="/media/images/cloud-icon.png" />
+              <p>99</p>
+            </div>
+            <span class="button metadata-button"><i class="icon-list-alt icon-2x"></i></span>
+            <span class="button cart-button"><i class="icon-shopping-cart icon-2x"></i></span>
+          </div>
+          <div class="result-item">
+            <img src="/media/images/mockup2.png" />
+            <div class="result-item-info">
+              <p>L5 TM HRT MST 0167 00 0063 00 051001</p>
+              <p>18.02.2013 08:10:32</p>
+            </div>
+            <div class="cloud-cover">
+              <img src="/media/images/cloud-icon.png" />
+              <p>55</p>
+            </div>
+            <span class="button metadata-button"><i class="icon-list-alt icon-2x"></i></span>
+            <span class="button cart-button"><i class="icon-shopping-cart icon-2x"></i></span>
+          </div>
+          <div class="result-item">
+            <img src="/media/images/mockup4.png" />
+            <div class="result-item-info">
+              <p>L5 TM HRT MST 0167 00 0063 00 051001</p>
+              <p>18.02.2013 08:10:32</p>
+            </div>
+            <div class="cloud-cover">
+              <img src="/media/images/cloud-icon.png" />
+              <p>15</p>
+            </div>
+            <span class="button metadata-button"><i class="icon-list-alt icon-2x"></i></span>
+            <span class="button cart-button"><i class="icon-shopping-cart icon-2x"></i></span>
+          </div>
+          <div class="result-item">
+            <img src="/media/images/mockup3.png" />
+            <div class="result-item-info">
+              <p>L5 TM HRT MST 0167 00 0063 00 051001</p>
+              <p>18.02.2013 08:10:32</p>
+            </div>
+            <div class="cloud-cover">
+              <img src="/media/images/cloud-icon.png" />
+              <p>24</p>
+            </div>
+            <span class="button metadata-button"><i class="icon-list-alt icon-2x"></i></span>
+            <span class="button cart-button"><i class="icon-shopping-cart icon-2x"></i></span>
+          </div>
+          <div class="result-item">
+            <img src="/media/images/mockup1.png" />
+            <div class="result-item-info">
+              <p>L5 TM HRT MST 0167 00 0063 00 051001</p>
+              <p>18.02.2013 08:10:32</p>
+            </div>
+            <div class="cloud-cover">
+              <img src="/media/images/cloud-icon.png" />
+              <p>55</p>
+            </div>
+            <span class="button metadata-button"><i class="icon-list-alt icon-2x"></i></span>
+            <span class="button cart-button"><i class="icon-shopping-cart icon-2x"></i></span>
+          </div>
+          <div class="result-item">
+            <img src="/media/images/mockup4.png" />
+            <div class="result-item-info">
+              <p>L5 TM HRT MST 0167 00 0063 00 051001</p>
+              <p>18.02.2013 08:10:32</p>
+            </div>
+            <div class="cloud-cover">
+              <img src="/media/images/cloud-icon.png" />
+              <p>15</p>
+            </div>
+            <span class="button metadata-button"><i class="icon-list-alt icon-2x"></i></span>
+            <span class="button cart-button"><i class="icon-shopping-cart icon-2x"></i></span>
+          </div>
+          <div class="result-item">
+            <img src="/media/images/mockup3.png" />
+            <div class="result-item-info">
+              <p>L5 TM HRT MST 0167 00 0063 00 051001</p>
+              <p>18.02.2013 08:10:32</p>
+            </div>
+            <div class="cloud-cover">
+              <img src="/media/images/cloud-icon.png" />
+              <p>24</p>
+            </div>
+            <span class="button metadata-button"><i class="icon-list-alt icon-2x"></i></span>
+            <span class="button cart-button"><i class="icon-shopping-cart icon-2x"></i></span>
+          </div>
+          <div class="result-item">
+            <img src="/media/images/mockup4.png" />
+            <div class="result-item-info">
+              <p>L5 TM HRT MST 0167 00 0063 00 051001</p>
+              <p>18.02.2013 08:10:32</p>
+            </div>
+            <div class="cloud-cover">
+              <img src="/media/images/cloud-icon.png" />
+              <p>15</p>
+            </div>
+            <span class="button metadata-button"><i class="icon-list-alt icon-2x"></i></span>
+            <span class="button cart-button"><i class="icon-shopping-cart icon-2x"></i></span>
+          </div>
+          <div class="result-item">
+            <img src="/media/images/mockup3.png" />
+            <div class="result-item-info">
+              <p>L5 TM HRT MST 0167 00 0063 00 051001</p>
+              <p>18.02.2013 08:10:32</p>
+            </div>
+            <div class="cloud-cover">
+              <img src="/media/images/cloud-icon.png" />
+              <p>24</p>
+            </div>
+            <span class="button metadata-button"><i class="icon-list-alt icon-2x"></i></span>
+            <span class="button cart-button"><i class="icon-shopping-cart icon-2x"></i></span>
+          </div>
+          <div class="result-item">
+            <img src="/media/images/mockup1.png" />
+            <div class="result-item-info">
+              <p>L5 TM HRT MST 0167 00 0063 00 051001</p>
+              <p>18.02.2013 08:10:32</p>
+            </div>
+            <div class="cloud-cover">
+              <img src="/media/images/cloud-icon.png" />
+              <p>55</p>
+            </div>
+            <span class="button metadata-button"><i class="icon-list-alt icon-2x"></i></span>
+            <span class="button cart-button"><i class="icon-shopping-cart icon-2x"></i></span>
+          </div>
+          <div class="result-item">
+            <img src="/media/images/mockup4.png" />
+            <div class="result-item-info">
+              <p>L5 TM HRT MST 0167 00 0063 00 051001</p>
+              <p>18.02.2013 08:10:32</p>
+            </div>
+            <div class="cloud-cover">
+              <img src="/media/images/cloud-icon.png" />
+              <p>15</p>
+            </div>
+            <span class="button metadata-button"><i class="icon-list-alt icon-2x"></i></span>
+            <span class="button cart-button"><i class="icon-shopping-cart icon-2x"></i></span>
+          </div>
+          <div class="result-item">
+            <img src="/media/images/mockup3.png" />
+            <div class="result-item-info">
+              <p>L5 TM HRT MST 0167 00 0063 00 051001</p>
+              <p>18.02.2013 08:10:32</p>
+            </div>
+            <div class="cloud-cover">
+              <img src="/media/images/cloud-icon.png" />
+              <p>24</p>
+            </div>
+            <span class="button metadata-button"><i class="icon-list-alt icon-2x"></i></span>
+            <span class="button cart-button"><i class="icon-shopping-cart icon-2x"></i></span>
+          </div>
+        </div>
+        <div class="summary"><b>Summary:</b><br />
+          22 record found for date range 01-01-2002 : 31-12-2002,
+sensors HRG-5.<br />
+Note:The SPOT Imagery provided in this backdrop has been degraded to 10m
+        </div>
       </div>
-      {% else %}
-      <div id="results" class="span6 gap-top center">
-        <p class="lead">
-          No Records Found
-        </p>
-      </div>
-      {% endif %}
-      {% if myMessagesFlag %}
-      {{ myMessagesHeading|safe }}
-      <div>
-        {% if myMessages %}
-        {% for myValue in myMessages %}
-        {{ myValue|safe }}<br/>
-        {% endfor %}
-        {% endif %}
-      </div>
-      {% endif %}
+      <div id="map"></div>
+    </div>
+  </div>
+{% endblock%}
+
+{% block extrajs %}
+  {{ block.super }}
+  <script type="text/javascript" src="/media/js/search.js"></script>
+  <script>
+  $( document ).ready(function() {
+    initMap();
+    defaultPanelState();
+    $('.listTree').listTree(data, { "startCollapsed": true });
+    $('#results-container').perfectScrollbar( { wheelSpeed: 20 } );
+    $('#date_from').datepicker();
+    $('#date_to').datepicker();
+  });
+  </script>
+{% endblock %}
