@@ -1,4 +1,4 @@
-from django.conf.urls import patterns, url
+from django.conf.urls import patterns, url, include
 
 from .views import (
     modifySearch,
@@ -14,6 +14,7 @@ from .views import (
     updateSelectOptions
 )
 
+from .api import v1_API
 
 urlpatterns = patterns(
     '',
@@ -39,4 +40,5 @@ urlpatterns = patterns(
         renderSearchResultsPage, name='renderSearchResultsPage'),
     url(r'^updateselectoptions/$', updateSelectOptions,
         name='updateSelectOptions'),
+    url(r'^api/', include(v1_API.urls)),
 )

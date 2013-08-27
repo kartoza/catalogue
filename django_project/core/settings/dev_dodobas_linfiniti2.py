@@ -123,3 +123,6 @@ DEBUG_TOOLBAR_CONFIG = {
     'SHOW_TOOLBAR_CALLBACK': lambda *args, **kwargs: False,
     'ENABLE_STACKTRACES': True
 }
+
+# show full Django debug report on TastyPie error
+TASTYPIE_FULL_DEBUG = True
