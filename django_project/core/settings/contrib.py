@@ -9,7 +9,8 @@ INSTALLED_APPS += (
     'userena',
     'guardian',
     'easy_thumbnails',
-    'crispy_forms'
+    'crispy_forms',
+    'tastypie'
 )
 
 # Added by Tim for registration app
