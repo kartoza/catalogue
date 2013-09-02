@@ -5,7 +5,7 @@ Jinja2==2.5.5
 PIL==1.1.7
 Pygments==1.4
 Sphinx
-distribute==0.6.10
+distribute==0.7.3
 django-dag==1.1
 django-db-log==2.2.1
 django-debug-toolbar==0.8.3
