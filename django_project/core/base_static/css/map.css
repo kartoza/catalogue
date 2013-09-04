@@ -21,7 +21,7 @@
   margin-right: 5px;
   /*height: 24px;
   width: 24px;
-  background:url(/media/images/delete_16.png) no-repeat;*/
+  background:url(/static/images/delete_16.png) no-repeat;*/
 }    
 
 .olControlDrawFeaturePolygonItemActive
@@ -29,7 +29,7 @@
   color:#228441;
   margin-right: 5px;
   cursor:pointer;
-  /*background:url(/media/images/draw_polygon_on.png) no-repeat;
+  /*background:url(/static/images/draw_polygon_on.png) no-repeat;
   height:24px;
   width:24px;*/
 }
@@ -37,7 +37,7 @@
 {
   margin-right: 5px;
   cursor:pointer;
-  /*background:url(/media/images/draw_polygon_off.png) no-repeat;
+  /*background:url(/static/images/draw_polygon_off.png) no-repeat;
   height:24px;
   width:24px;*/
 }
@@ -46,7 +46,7 @@
   color:#228441;
   margin-right: 5px;
   cursor:pointer;
-  /*background:url(/media/images/draw_line_on.png) no-repeat;
+  /*background:url(/static/images/draw_line_on.png) no-repeat;
   height:24px;
   width:24px;*/
 }
@@ -54,7 +54,7 @@
 {
   margin-right: 5px;
   cursor:pointer;
-  /*background:url(/media/images/draw_line_off.png) no-repeat;
+  /*background:url(/static/images/draw_line_off.png) no-repeat;
   height:24px;
   width:24px;*/
 }
@@ -68,7 +68,7 @@
 {
   margin-right: 5px;
   cursor:pointer;
-  /*background:url(/media/images/pan_off.png) no-repeat;
+  /*background:url(/static/images/pan_off.png) no-repeat;
   height:24px;
   width:24px;*/
 }
@@ -77,7 +77,7 @@
   color:#228441;
   margin-right: 5px;
   cursor:pointer;
-  /*background:url(/media/images/zoom_in_24.png) no-repeat;
+  /*background:url(/static/images/zoom_in_24.png) no-repeat;
   height:24px;
   width:24px;*/
 }
@@ -86,7 +86,7 @@
   color:#228441;
   margin-right: 5px;
   cursor:pointer;
-  /*background:url(/media/images/zoom_out_24.png) no-repeat;
+  /*background:url(/static/images/zoom_out_24.png) no-repeat;
   height:24px;
   width:24px;*/
 }
@@ -94,7 +94,7 @@
 {
   margin-right: 5px;
   cursor:pointer;
-  /*background:url(/media/images/zoom_in_off_24.png) no-repeat;
+  /*background:url(/static/images/zoom_in_off_24.png) no-repeat;
   height:24px;
   width:24px;*/
 }
@@ -102,7 +102,7 @@
 {
   margin-right: 5px;
   cursor:pointer;
-  /*background:url(/media/images/zoom_out_off_24.png) no-repeat;
+  /*background:url(/static/images/zoom_out_off_24.png) no-repeat;
   height:24px;
   width:24px;*/
 }
@@ -113,7 +113,7 @@
   /* OL button control uses ItemInactive CSS class
   http://dev.openlayers.org/docs/files/OpenLayers/Control/Button-js.html
   */
-  background:url(/media/images/maphelp-active.png) no-repeat;
+  background:url(/static/images/maphelp-active.png) no-repeat;
   height:24px;
   width:24px;
 }

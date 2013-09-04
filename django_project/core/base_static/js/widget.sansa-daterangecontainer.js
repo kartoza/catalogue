@@ -138,10 +138,10 @@ $.widget( "linfinity.sansa_daterangecontainer", {
         //check the current datecount
         if (this.datecount === 0) {
             //disable remove button
-            $('#dr_del img').attr('src','/media/images/selector-remove.gif');
+            $('#dr_del img').attr('src','/static/images/selector-remove.gif');
         } else if (this.datecount > 0) {
             //enable remove button
-            $('#dr_del img').attr('src','/media/images/selector-remove-active.gif');
+            $('#dr_del img').attr('src','/static/images/selector-remove-active.gif');
         } else {
             throw "datecount less then 0";
         }

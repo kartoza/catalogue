@@ -390,7 +390,7 @@ var template = [
               '<p><%= model.get("product_date") %></p>',
             '</div>',
             '<div class="cloud-cover">',
-              '<img src="/media/images/cloud-icon.png" />',
+              '<img src="/static/images/cloud-icon.png" />',
               '<p>',
               '<% if(model.get("cloud_cover") != -1) { %><%= model.get("cloud_cover") %>',
               '<% } else { %>UNK',

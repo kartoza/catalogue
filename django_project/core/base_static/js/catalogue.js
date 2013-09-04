@@ -83,7 +83,7 @@ function unblock()
 
 function block()
 {
-  $.blockUI({ message: '<h2><img src="/media/images/ajax-loader.gif" /> Loading...</h2>',
+  $.blockUI({ message: '<h2><img src="/static/images/ajax-loader.gif" /> Loading...</h2>',
       css: {
         border: '1px solid #000',
         padding: '15px',

@@ -126,7 +126,7 @@
 	    var fullscreen_image = $('<img>').attr({
 		'id':'fullscreen_img',
 		'title':'Resize map to full screen',
-		'src':"/media/images/view-fullscreen-4.png"
+		'src':"/static/images/view-fullscreen-4.png"
 	    });
 
 	    fullscreen_image.bind('click', function (evt){
@@ -144,7 +144,7 @@
 	    var restore_image = $('<img>').attr({
 		'id':'fullscreen_img',
 		'title':'Restore map to original size',
-		'src':"/media/images/view-restore-2.png"
+		'src':"/static/images/view-restore-2.png"
 	    });
 
 	    restore_image.bind('click', function (evt){
