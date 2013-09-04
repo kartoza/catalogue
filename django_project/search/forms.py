@@ -195,9 +195,9 @@ class AdvancedSearchForm(forms.ModelForm):
     # add Media class for this form, rendered specific for this form
     class Media:
         js = (
-            "/media/js/date_utils.js",
-            "/media/js/widget.sansa-datepicker.js",
-            "/media/js/widget.sansa-daterangecontainer.js",)
+            "/static/js/date_utils.js",
+            "/static/js/widget.sansa-datepicker.js",
+            "/staic/js/widget.sansa-daterangecontainer.js",)
 
     def __init__(self, *args, **kwargs):
         """
