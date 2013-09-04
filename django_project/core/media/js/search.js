@@ -338,7 +338,7 @@ APP.ResultGridView = Backbone.View.extend({
         _(this.collection.models).each(function(item){
             self.renderItem(item);
         },this);
-
+        this._update_pagination_info();
         return this;
     },
     renderItem: function(item) {
@@ -348,6 +348,15 @@ APP.ResultGridView = Backbone.View.extend({
         });
         this.cont.append(myItem.render().el);
     },
+    _update_pagination_info:function() {
+        var cur_pag_el = this.$el.find('.cur_pag_page');
+        var tot_pag_el = this.$el.find('.tot_pag_page');
+        var total_rec_el = this.$el.find('.total_pag_records');
+        var page_info = this.collection.pageInfo();
+        cur_pag_el.html(page_info.current_page);
+        tot_pag_el.html(page_info.pages);
+        total_rec_el.html(page_info.total);
+    }
 });
 
 APP.ResultGridViewItem = Backbone.View.extend({
