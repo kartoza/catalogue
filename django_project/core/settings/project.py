@@ -105,9 +105,9 @@ PIPELINE_JS = {
         'source_filenames': (
             'js/jquery/jquery-1.8.2.min.js',
             'js/jquery/jquery-ui-1.10.2.custom.min.js',
-            'js/jquery-plugins/jquery.imgareaselect-0.4.2.min.js',
+            'js/jquery.imgareaselect-0.4.2.min.js',
             'js/csrf-ajax.js',
-            'js/catalogue-uncompressed.js',
+            'js/catalogue.js',
             'js/widget.mapResizer.js',
             'js/widget.deliveryform.js',
             'bootstrap/js/bootstrap.min.js',
