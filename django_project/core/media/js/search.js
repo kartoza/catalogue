@@ -279,6 +279,8 @@ var data = [
 
 // backbone models/collections/views
 
+APP.$modal = $('#ajax-modal');
+
 APP.ResultItem = Backbone.Model.extend({
     urlRoot: '/api/v1/searchresults/6cfa079f-8be1-4029-a1eb-f80875a4e64c/'
 });
@@ -361,6 +363,19 @@ APP.ResultGridView = Backbone.View.extend({
 
 APP.ResultGridViewItem = Backbone.View.extend({
     tagName: 'div',
+    events: {
+        'click span.metadata-button': 'showMetadata'
+    },
+
+    showMetadata: function() {
+        $('body').modalmanager('loading');
+        var id = this.model.get('id');
+        setTimeout(function(){
+            APP.$modal.load('/metadata/'+id, '', function(){
+            APP.$modal.modal();
+        });
+      }, 1000);
+    },
     render: function() {
        $(this.el).html(_.template(template, {model:this.model}));
         return this;
