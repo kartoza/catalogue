@@ -48,3 +48,4 @@ django-model-utils==1.2.0
 django-extensions==0.4.1
 django-tastypie==0.10.0
 python-mimeparse==0.1.4
+git+https://github.com/PaulUithol/backbone-tastypie.git

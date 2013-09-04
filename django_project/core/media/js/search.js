@@ -3,6 +3,12 @@ var SearchPanelState = true;
 var CartPanelState = false;
 var ResultPanelState = false;
 
+
+if (typeof APP == 'undefined') {
+    APP = {};
+    $APP = $(APP);
+}
+
 function initMap() {
     var layer = new OpenLayers.Layer.OSM( "Simple OSM Map");
     map.addLayer(layer);
@@ -270,3 +276,78 @@ var data = [
         ]
     }
 ];
+
+// backbone models/collections/views
+
+APP.ResultItem = Backbone.Model.extend({
+    urlRoot: '/api/v1/searchresults/6cfa079f-8be1-4029-a1eb-f80875a4e64c/'
+});
+
+APP.ResultItemCollection = Backbone.Collection.extend({
+    urlRoot: '/api/v1/searchresults/6cfa079f-8be1-4029-a1eb-f80875a4e64c/',
+    model: APP.ResultItem,
+    limit: 15
+});
+
+APP.Results = new APP.ResultItemCollection();
+
+APP.ResultGridView = Backbone.View.extend({
+    el: $("#results-container"),
+
+    initialize: function() {
+        this.collection.bind('reset', this.render, this);
+        this.collection.fetch({reset: true});
+    },
+
+    collectionSearch: function (evt, options) {
+        _.extend(this.collection, options);
+        this.collection.fetch({
+            reset: true
+        });
+    },
+    render: function() {
+        // house keeping
+        this.$el.empty();
+        var self=this;
+        _(this.collection.models).each(function(item){
+            self.renderItem(item);
+        },this);
+
+        return this;
+    },
+    renderItem: function(item) {
+        var myItem = new APP.ResultGridViewItem({
+            model:item,
+            collection:this.collection
+        });
+        this.$el.append(myItem.render().el);
+    },
+});
+
+APP.ResultGridViewItem = Backbone.View.extend({
+    tagName: 'div',
+    render: function() {
+        console.log(this.model);
+       $(this.el).html(_.template(template, {model:this.model}));
+        return this;
+    },
+});
+
+var template = [
+            '<div class="result-item">',
+            '<img src="/media/images/mockup1.png" />',
+            '<div class="result-item-info">',
+              '<p><%= model.get("unique_product_id") %></p>',
+              '<p><%= model.get("product_date") %></p>',
+            '</div>',
+            '<div class="cloud-cover">',
+              '<img src="/media/images/cloud-icon.png" />',
+              '<p>55</p>',
+            '</div>',
+            '<span class="button metadata-button"><i class="icon-list-alt icon-2x"></i></span>',
+            '<span class="button cart-button"><i class="icon-shopping-cart icon-2x"></i></span>',
+          '</div>'
+          ].join('');
+
+var ResultgridViewHtml = new APP.ResultGridView({
+        'collection': APP.Results});

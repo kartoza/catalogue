@@ -10,7 +10,8 @@ INSTALLED_APPS += (
     'guardian',
     'easy_thumbnails',
     'crispy_forms',
-    'tastypie'
+    'tastypie',
+    'backbone_tastypie',
 )
 
 # Added by Tim for registration app
