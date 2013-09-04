@@ -1,6 +1,7 @@
 {% load boxtag %} {# Custom tag defined in templatetags/ #}
+{% load staticfiles %}
 {% box_start "box-sensor-summary" %}
-<h2 class="centered"><img src="/media/images/statistics_32.png" /> Summary of catalogue activity for</h2>
+<h2 class="centered"><img src="{% static 'images/statistics_32.png' %}" /> Summary of catalogue activity for</h2>
 <h3 class="centered">{{mySensor}}</h3>
 <table>
   <thead>
