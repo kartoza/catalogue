@@ -72,8 +72,7 @@ class SearchResultsResource(ModelResource):
     def obj_get_list(self, bundle, *args, **kwargs):
         # for the specific guid, retrieve the results
         mySearch = get_object_or_404(Search, guid=kwargs.get('guid'))
-        mySearcher = Searcher(bundle.request, mySearch)
-        mySearcher.search()
+        mySearcher = Searcher(mySearch)
 
         try:
             objects = mySearcher.mQuerySet

@@ -1,7 +1,7 @@
 var map = new OpenLayers.Map( 'map', {controls: []});
-var SearchPanelState = true;
+var SearchPanelState = false;
 var CartPanelState = false;
-var ResultPanelState = false;
+var ResultPanelState = true;
 
 
 if (typeof APP == 'undefined') {
@@ -342,7 +342,11 @@ var template = [
             '</div>',
             '<div class="cloud-cover">',
               '<img src="/media/images/cloud-icon.png" />',
-              '<p>55</p>',
+              '<p>',
+              '<% if(model.get("cloud_cover") != -1) { %><%= model.get("cloud_cover") %>',
+              '<% } else { %>UNK',
+              '<% } %>',
+              '</p>',
             '</div>',
             '<span class="button metadata-button"><i class="icon-list-alt icon-2x"></i></span>',
             '<span class="button cart-button"><i class="icon-shopping-cart icon-2x"></i></span>',
