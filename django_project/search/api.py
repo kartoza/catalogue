@@ -41,7 +41,7 @@ class SearchResultsResource(ModelResource):
         authorization = Authorization()
         always_return_data = True
         paginator_class = Paginator
-        limit = 10
+        limit = 15
         include_resource_uri = False
         allowed_methods = ['get']
 

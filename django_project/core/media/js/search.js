@@ -283,7 +283,7 @@ APP.ResultItem = Backbone.Model.extend({
     urlRoot: '/api/v1/searchresults/6cfa079f-8be1-4029-a1eb-f80875a4e64c/'
 });
 
-APP.ResultItemCollection = Backbone.Collection.extend({
+APP.ResultItemCollection = PaginatedCollection.extend({
     urlRoot: '/api/v1/searchresults/6cfa079f-8be1-4029-a1eb-f80875a4e64c/',
     model: APP.ResultItem,
     limit: 15
@@ -292,11 +292,37 @@ APP.ResultItemCollection = Backbone.Collection.extend({
 APP.Results = new APP.ResultItemCollection();
 
 APP.ResultGridView = Backbone.View.extend({
-    el: $("#results-container"),
+    el: $("#result-panel"),
+
+    events: {
+        'click div.searchPrev': 'previous',
+        'click div.searchNext': 'next'
+    },
+
+    previous: function() {
+        this.collection.previousPage();
+        return false;
+    },
+
+    next: function() {
+        this.collection.nextPage();
+        return false;
+    },
+
+    first: function() {
+        this.collection.firstPage();
+        return false;
+    },
+
+    last: function() {
+        this.collection.lastPage();
+        return false;
+    },
 
     initialize: function() {
         this.collection.bind('reset', this.render, this);
         this.collection.fetch({reset: true});
+        this.cont = $("#results-container");
     },
 
     collectionSearch: function (evt, options) {
@@ -307,7 +333,7 @@ APP.ResultGridView = Backbone.View.extend({
     },
     render: function() {
         // house keeping
-        this.$el.empty();
+        this.cont.empty();
         var self=this;
         _(this.collection.models).each(function(item){
             self.renderItem(item);
@@ -320,14 +346,13 @@ APP.ResultGridView = Backbone.View.extend({
             model:item,
             collection:this.collection
         });
-        this.$el.append(myItem.render().el);
+        this.cont.append(myItem.render().el);
     },
 });
 
 APP.ResultGridViewItem = Backbone.View.extend({
     tagName: 'div',
     render: function() {
-        console.log(this.model);
        $(this.el).html(_.template(template, {model:this.model}));
         return this;
     },
