@@ -1,4 +1,6 @@
 {% load rangetag %} {# Custom tag defined in templatetags/ #}
+{% load staticfiles %}
+
 {% if myRecords %}
 <script type="text/javascript">
 /* <![CDATA[ */
@@ -43,9 +45,9 @@ function loadMoreData() {
       <div class="pagination">
         <div class="step-links left vcentered" style="width:50px; float:left; margin-left: 25px;">
           {% if myPage.has_previous %}
-          <a href="#" onclick='loadSearchResults({{ myPage.previous_page_number }},"{{mySearchGuid}}"); return false;'><img alt="previous" src="/media/images/back_alt.png" /></a>
+          <a href="#" onclick='loadSearchResults({{ myPage.previous_page_number }},"{{mySearchGuid}}"); return false;'><img alt="previous" src="{% static 'images/back_alt.png' %}" /></a>
           {% else %}
-          <img alt="previous" src="/media/images/back_alt_inactive.png" />
+          <img alt="previous" src="{% static 'images/back_alt_inactive.png' %}" />
           {% endif %}
         </div>
         {% if myPage %}
@@ -58,9 +60,9 @@ function loadMoreData() {
         {% endif %}
         <div class="step-links vcentered" style="width:50px; float:left; margin-left: 25px;">
           {% if myPage.has_next %}
-          <a href="#" onclick='loadSearchResults({{ myPage.next_page_number }},"{{mySearchGuid}}"); return false;'><img alt="previous" src="/media/images/forward_alt.png" /></a>
+          <a href="#" onclick='loadSearchResults({{ myPage.next_page_number }},"{{mySearchGuid}}"); return false;'><img alt="previous" src="{% static 'images/forward_alt.png' %}" /></a>
           {% else %}
-          <img alt="previous" src="/media/images/forward_alt_inactive.png" />
+          <img alt="previous" src="{% static 'images/forward_alt_inactive.png' %}" />
           {% endif %}
         </div>
       </div>

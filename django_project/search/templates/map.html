@@ -1,6 +1,7 @@
 {% extends "mapbody.html" %}
 {# Original code from Tim's SABIO project and copyright is retained by the original author #}
 {% load url from future %} {# https://docs.djangoproject.com/en/1.4/releases/1.3/#changes-to-url-and-ssi #}
+{% load staticfiles %}
 {% block extrajs %}
   {{ block.super }}
   {% block ol_map %}
@@ -95,7 +96,7 @@
   <div class="accordion-group">
     <div class="accordion-heading">
       <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
-        <h3 id="cart-accordion-h3"><img src="/media/images/buy_16.png" alt="" />&nbsp;Your Basket</h3>
+        <h3 id="cart-accordion-h3"><img src="{% static 'images/buy_16.png' %}" alt="" />&nbsp;Your Basket</h3>
        </a>
     </div>
     <div id="collapseOne" class="accordion-body collapse">
@@ -104,7 +105,7 @@
         <div id="cart"></div>
         <div class="center">
           <a href="{% url 'addOrder' %}" onclick='addOrderClicked(); return false;'>{# return false to prevent invoking link #}
-            <img src="/media/images/letter_16.png" alt="" /> Order Now!
+            <img src="{% static 'images/letter_16.png' %}" alt="" /> Order Now!
           </a>
           <div style="display: none;" id="cart-empty-dialog" title="SAC Catalogue"><b>Your cart is empty.</b> Please add some items to your cart first!</div>
         </div>
@@ -119,7 +120,7 @@
   <div class="accordion-group">
     <div class="accordion-heading">
       <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
-        <h3 id="preview-accordion-h3"><img src="/media/images/picture_16.png" alt="" />&nbsp;Preview</h3>
+        <h3 id="preview-accordion-h3"><img src="{% static 'images/picture_16.png' %}" alt="" />&nbsp;Preview</h3>
        </a>
     </div>
     <div id="collapseTwo" class="accordion-body collapse">
@@ -136,7 +137,7 @@
   <div class="accordion-group">
     <div class="accordion-heading">
       <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
-        <h3 id="search-summary-accordion-h3"><img src="/media/images/search_16.png" alt="" />&nbsp;Search Summary</h3>
+        <h3 id="search-summary-accordion-h3"><img src="{% static 'images/search_16.png' %}" alt="" />&nbsp;Search Summary</h3>
        </a>
     </div>
     <div id="collapseThree" class="accordion-body collapse in">
@@ -150,7 +151,7 @@
       </div>{% endif %}
       {% if myRecords %}
       <div id="cart-download-div" style="text-align: center;">
-        <span class="loud"><img src="/media/images/down_16.png" alt=""/>Download search as:</span></br/>
+        <span class="loud"><img src="{% static 'images/down_16.png' %}" alt=""/>Download search as:</span></br/>
         <button class="btn" onclick='location="{% url 'downloadSearchResult' mySearchGuid %}?shp"'>SHP</button>
         <button class="btn" onclick='location="{% url 'downloadSearchResult' mySearchGuid %}?kml"'>KML</button>
         <button class="btn" onclick='location="{% url 'downloadSearchResult' mySearchGuid %}?kmz"'>KMZ</button>

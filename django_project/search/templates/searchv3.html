@@ -1,11 +1,12 @@
 {% extends "base-fluid.html" %}
 {% load url from future %} {# https://docs.djangoproject.com/en/1.4/releases/1.3/#changes-to-url-and-ssi #}
+{% load staticfiles %}
 
 {% block extrajs %}
 
   {{ block.super }}
-  <script type="text/javascript" charset="utf-8" src="/media/js/jquery.form.js"></script>
-  <script type="text/javascript" charset="utf-8" src="/media/js/widget.searchcriteria.js"></script>
+  <script type="text/javascript" charset="utf-8" src="{% static 'js/jquery.form.js' %}"></script>
+  <script type="text/javascript" charset="utf-8" src="{% static 'js/widget.searchcriteria.js' %}"></script>
 
   <script type="text/javascript">
     $(document).ready(function() {

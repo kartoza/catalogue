@@ -1,4 +1,5 @@
       {% load url from future %} {# https://docs.djangoproject.com/en/1.4/releases/1.3/#changes-to-url-and-ssi #}
+      {% load staticfiles %}
       <tr id="record-{{ myRecord.product.id }}" class="result-row">{#result-row used for row click callback - do not remove #}
         {% if myShowDetailFlag %}
         <td class="show-record-detail-cell"><span class="small" onclick="$('#record-detail-table-{{myRecord.product.id}}').load('{% url 'metadata' myRecord.product.id %}','', $('#record-detail-row-{{myRecord.product.id}}').toggle('slow'));">more</span></td>
@@ -36,7 +37,7 @@
         {% endif %}
         {% if myShowMetadataFlag %}
         <td>
-          <img src="/media/images/info_16.png"
+          <img src="{% static 'images/info_16.png'%}"
                alt="View Metadata"
                style="cursor: pointer;"
                class="metadata-icon"
@@ -46,7 +47,7 @@
         {% endif %}
         {% if myShowCartFlag %}
         <td>
-          <img src='/media/images/buy_16.png'
+          <img src="{% static 'images/buy_16.png'%}"
                alt="Add to Cart"
                style='cursor: pointer;'
                onclick='addToCart("{{ myRecord.product.id }}");' />

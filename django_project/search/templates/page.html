@@ -1,6 +1,6 @@
 {% extends "base-fluid.html" %}
 {% load url from future %} {# https://docs.djangoproject.com/en/1.4/releases/1.3/#changes-to-url-and-ssi #}
-
+{% load staticfiles %}
 {% block body_load %}{% endblock %}
 
 {% block content%}
@@ -157,7 +157,7 @@
         <div id="cart-panel-download-button"><p class="fbtn fbtn-info drop-shadow"><i class="icon-download-alt"></i></p></div>
         <div id="cart-panel-toggle"><p onclick="toggleCartPanel();"><i class="icon-shopping-cart"></i> CART</p></div>
         <div class="cart-item">
-          <img src="/media/images/mockup1.png" />
+          <img src="{% static 'images/mockup1.png' %}" />
           <div class="cart-item-info">
             <p>L5 TM HRT MST 0167 00 0063 00 051001</p>
             <p>18.02.2013 08:10:32</p>
@@ -167,12 +167,12 @@
             </div>
           </div>
           <div class="cloud-cover">
-            <img src="/media/images/cloud-icon.png" />
+            <img src="{% static 'images/cloud-icon.png' %}" />
             <p>55</p>
           </div>
         </div>
         <div class="cart-item">
-          <img src="/media/images/mockup2.png" />
+          <img src="{% static 'images/mockup2.png' %}" />
           <div class="cart-item-info">
             <p>L5 TM HRT MST 0167 00 0063 00 051002</p>
             <p>18.02.2013 08:10:32</p>
@@ -182,12 +182,12 @@
             </div>
           </div>
           <div class="cloud-cover">
-            <img src="/media/images/cloud-icon.png" />
+            <img src="{% static 'images/cloud-icon.png' %}" />
             <p>95</p>
           </div>
         </div>
         <div class="cart-item">
-          <img src="/media/images/mockup4.png" />
+          <img src="{% static 'images/mockup4.png' %}" />
           <div class="cart-item-info">
             <p>L5 TM HRT MST 0167 00 0063 00 051002</p>
             <p>18.02.2013 08:10:32</p>
@@ -197,12 +197,12 @@
             </div>
           </div>
           <div class="cloud-cover">
-            <img src="/media/images/cloud-icon.png" />
+            <img src="{% static 'images/cloud-icon.png' %}" />
             <p>20</p>
           </div>
         </div>
         <div class="cart-item">
-          <img src="/media/images/mockup3.png" />
+          <img src="{% static 'images/mockup3.png' %}" />
           <div class="cart-item-info">
             <p>L5 TM HRT MST 0167 00 0063 00 051002</p>
             <p>18.02.2013 08:10:32</p>
@@ -212,7 +212,7 @@
             </div>
           </div>
           <div class="cloud-cover">
-            <img src="/media/images/cloud-icon.png" />
+            <img src="{% static 'images/cloud-icon.png'%}" />
             <p>25</p>
           </div>
         </div>
@@ -241,7 +241,7 @@ Note:The SPOT Imagery provided in this backdrop has been degraded to 10m
 
 {% block extrajs %}
   {{ block.super }}
-  <script type="text/javascript" src="/media/js/search.js"></script>
+  <script type="text/javascript" src="{% static 'js/search.js' %}"></script>
   <script>
   $( document ).ready(function() {
     initMap();
