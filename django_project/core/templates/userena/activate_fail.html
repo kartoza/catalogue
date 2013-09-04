@@ -1,4 +1,5 @@
 {% extends 'userena/base_userena.html' %}
+{% load staticfiles %}
 {% load i18n %}
 
 {% block title %}{% trans "Account activation failed." %}{% endblock %}
@@ -6,7 +7,7 @@
 
 {% block content %}
 <div class="row-fluid center">
-  <img src="/media/sansa-logos/SANSA-logo.png" class="gap-bottom"/>
+  <img src="{% static 'sansa-logos/SANSA-logo.png' %}" class="gap-bottom"/>
   <p class="lead">{% trans "Your account could not be activated. This could be because your activation link has expired." %}</p>
   <p class="lead">{% trans "Please try signing up again or contact us if you think something went wrong." %}</p>
   <a href="/contact/" class="btn btn-success">Contact Us</a>

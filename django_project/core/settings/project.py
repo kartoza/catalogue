@@ -103,7 +103,15 @@ MISR_ROOT = ''
 PIPELINE_JS = {
     'contrib': {
         'source_filenames': (
-            'js/jquery-1.10.1.min.js',
+            'js/jquery/jquery-1.8.2.min.js',
+            'js/jquery/jquery-ui-1.10.2.custom.min.js',
+            'js/jquery-plugins/jquery.imgareaselect-0.4.2.min.js',
+            'js/csrf-ajax.js',
+            'js/catalogue-uncompressed.js',
+            'js/widget.mapResizer.js',
+            'js/widget.deliveryform.js',
+            'bootstrap/js/bootstrap.min.js',
+            'datepicker/js/bootstrap-datepicker.js'
         ),
         'output_filename': 'js/contrib.js',
     }
@@ -112,8 +120,12 @@ PIPELINE_JS = {
 PIPELINE_CSS = {
     'contrib': {
         'source_filenames': (
-            'css/bootstrap.min.css',
-            # 'css/bootstrap-responsive.min.css',
+            'css/map.css',
+            'bootstrap/css/bootstrap.css',
+            'bootstrap/css/bootstrap-responsive.css',
+            'css/font-awesome/font-awesome.css',
+            'datepicker/css/datepicker.css',
+            'css/new-custom.css'
         ),
         'output_filename': 'css/contrib.css',
         'extra_context': {

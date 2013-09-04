@@ -1,4 +1,5 @@
 {% extends 'userena/base_userena.html' %}
+{% load staticfiles %}
 {% load i18n %}
 
 {% block title %}{% trans "Email Verification" %}{% endblock %}
@@ -6,7 +7,7 @@
 
 {% block content %}
 <div id="content" class="row-fluid center">
-  <img src="/media/sansa-logos/SANSA-logo.png" class="gap-bottom"/>
+  <img src="{% static 'sansa-logos/SANSA-logo.png' %}" class="gap-bottom"/>
   <p class="lead">{% blocktrans with viewed_user.userena_signup.email_unconfirmed as email %}We have sent an email to {{ email }}.{% endblocktrans %}</p>
   <p class="lead">{% blocktrans with viewed_user.username as username %}To associate this email address with your account ({{ username }}), click on the link provided in this email.{% endblocktrans %}</p>
 </div>

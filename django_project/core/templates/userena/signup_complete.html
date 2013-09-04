@@ -1,4 +1,5 @@
 {% extends 'userena/base_userena.html' %}
+{% load staticfiles %}
 {% load i18n %}
 
 {% block title %}{% trans "Registartion almost done!" %}{% endblock %}
@@ -7,7 +8,7 @@
 
 {% block content %}
 <div id="content" class="row-fluid">
-    <img src="/media/sansa-logos/SANSA-logo.png" class="gap-bottom"/>
+    <img src="{% static 'sansa-logos/SANSA-logo.png' %}" class="gap-bottom"/>
     <p class="lead">{% trans "Thank you for signing up with us!" %}</p>
     <p>{% trans "We will use your personal details to ship ordered products to you and to build a demographic profile of our clients so that we can improve the quality of service on this site." %}</p>
   {% if userena_activation_required %}

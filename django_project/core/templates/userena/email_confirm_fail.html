@@ -1,4 +1,5 @@
 {% extends 'userena/base_userena.html' %}
+{% load staticfiles %}
 {% load i18n %}
 
 {% block title %}{% trans "Email verification failed." %}{% endblock %}
@@ -6,7 +7,7 @@
 
 {% block content %}
 <div id="content" class="row-fluid center">
-  <img src="/media/sansa-logos/SANSA-logo.png" class="gap-bottom"/>
+  <img src="{% static 'sansa-logos/SANSA-logo.png' %}" class="gap-bottom"/>
   <p class="lead">{% trans "Sorry! Your email address could not be verified..." %}</p>
   <p class="lead">{% trans "You could try changing it again in your account settings." %}</p>
 </div>
