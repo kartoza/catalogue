@@ -1,3 +1,4 @@
+{% load staticfiles %}
     <div class="ui-widget" style="padding-left: 100px; padding-right: 100px;">
       <div class="ui-state-highlight ui-corner-all"  style="padding: 10px">
         <div>
@@ -7,7 +8,7 @@
           </h2>
           <br/>
           <br/>
-          <img src="/media/images/warning_64.png">
+          <img src="{% static 'images/warning_64.png' %}">
           <br/>
           <br/>
           <p>Please contact <a href="mailto:customers-eo@sansa.org.za">

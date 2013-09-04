@@ -114,7 +114,25 @@ PIPELINE_JS = {
             'datepicker/js/bootstrap-datepicker.js'
         ),
         'output_filename': 'js/contrib.js',
+    },
+    'fluid': {
+        'source_filenames': (
+            'js/jquery/jquery-1.8.2.min.js',
+            'js/jquery/jquery-ui-1.10.2.custom.min.js',
+            'js/underscore-min.js',
+            'js/backbone-min.js',
+            'js/backbone-tastypie.js',
+            'js/backbone-pagination.js',
+            'bootstrap/js/bootstrap.min.js',
+            'datepicker/js/bootstrap-datepicker.js',
+            'js/bootstrap-modal.js',
+            'js/bootstrap-modalmanager.js',
+            'js/bootstrap-listTree.js',
+            'js/perfect-scrollbar-0.4.3.with-mousewheel.min.js'
+        ),
+        'output_filename': 'js/fluid.js',
     }
+
 }
 
 PIPELINE_CSS = {
@@ -128,6 +146,19 @@ PIPELINE_CSS = {
             'css/new-custom.css'
         ),
         'output_filename': 'css/contrib.css',
+        'extra_context': {
+            'media': 'screen, projection',
+        },
+    },
+    'fluid': {
+        'source_filenames': (
+            'css/tabs.css',
+            'css/flat-buttons.css',
+            'css/bootstrap-listTree.css',
+            'css/perfect-scrollbar.css',
+            'css/bootstrap-modal.css'
+        ),
+        'output_filename': 'css/fluid.css',
         'extra_context': {
             'media': 'screen, projection',
         },
