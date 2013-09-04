@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load url from future %} {# https://docs.djangoproject.com/en/1.4/releases/1.3/#changes-to-url-and-ssi #}
+{% load staticfiles %}
 {% load boxtag %} {# Custom tag defined in templatetags/ #}
 {# page wrapped version of add.html for non ajax graceful degradation #}
 {% block content %}
@@ -17,7 +18,7 @@
     <button onclick='location="{% url 'orderMonthlyReport' myPrevDate|date:'Y' myPrevDate|date:'m' %}"'>Previous month</button>
   </div>
   <div class="span-6 centered">
-    <button onclick='location="?pdf"'><img src="/media/images/application-pdf.png" /> PDF</button>
+    <button onclick='location="?pdf"'><img src="{% static 'images/application-pdf.png' %}" /> PDF</button>
   </div>
   <div class="span-8 last" style="text-align: right;">
     <button onclick='location="{% url 'orderMonthlyReport' myNextDate|date:'Y' myNextDate|date:'m' %}"'>Next month</button>
@@ -47,7 +48,7 @@
         <td>{{myOrder.order_status}}</td>
         <td>{{myOrder.user.get_profile.firstname}} {{myOrder.user.get_profile.surname}}</td>
         <td>
-          <img src="/media/images/search_16.png" 
+          <img src="{% static 'images/search_16.png' %}" 
                style="cursor: pointer;"
                onclick='
                $("#content").load("/vieworder/{{myOrder.id}}/","", zebraTables );

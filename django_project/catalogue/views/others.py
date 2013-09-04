@@ -235,7 +235,7 @@ def clip(theRequest):
     myTitle = 'Clip Request'
     myExtent = '(15.256693,-35.325000,33.743307,-21.675000)'
     myHeading = (
-        '<h3><a href="#"><img src="/media/images/globe_16.png">&nbsp;'
+        '<h3><a href="#"><img src="/static/images/globe_16.png">&nbsp;'
         '2008 SPOT5 Mosaic</a></h3>')
     myMessages = []
     myMessages.append('<h3>SPOT5 Mosaic, South Africa</h3>')
@@ -436,7 +436,7 @@ def showThumbPage(theRequest, theId):
         + myImageFile + '"></center></td></tr>')
     #render_to_response is done by the renderWithContext decorator
     logger.info('Thumbnail path:   ' + str(settings.THUMBS_ROOT))
-    logger.info('Media path    :   ' + str(settings.MEDIA_ROOT))
+    logger.info('Static path    :   ' + str(settings.STATIC_ROOT))
     logger.info('Project root path:' + str(settings.PROJECT_ROOT))
     return ({'myDetails': myDetails})
 

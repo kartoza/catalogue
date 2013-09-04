@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load staticfiles %}
 {% block content%}
 
 <div id="title" class="row-fluid">
@@ -9,7 +10,7 @@
     <ul class="thumbnails">
       <li>
         <a href="#" class="thumbnail">
-          <img src="/media/images/sac.png" alt=""/>
+          <img src="{% static 'images/sac.png' %}" alt=""/>
         </a>
       </li>
     </ul>

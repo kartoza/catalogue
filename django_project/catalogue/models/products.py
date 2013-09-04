@@ -372,14 +372,13 @@ class GenericProduct(models.Model):
         myShadowFlag = False
         logger.info('Creating thumbnail of : ' + myFileName)
         logger.info('Thumbnail path:   ' + str(settings.THUMBS_ROOT))
-        logger.info('Media path    :   ' + str(settings.MEDIA_ROOT))
-        logger.info('Project root path:' + str(settings.PROJECT_ROOT))
 
         if not os.path.isfile(myFileName):
             #file does not exist so show an error icon
             #return HttpResponse("%s not found" % myFileName)
             myFileName = os.path.join(
-                settings.MEDIA_ROOT, 'images', 'block_16.png')
+                settings.ABS_PATH('core', 'base_static'), 'images',
+                'block_16.png')
             myImage = Image.open(myFileName)
             return (myImage)
 
@@ -388,7 +387,8 @@ class GenericProduct(models.Model):
         except:
             #file is not valid for some reason so show an error icon
             myFileName = os.path.join(
-                settings.MEDIA_ROOT, 'images', 'block_16.png')
+                settings.ABS_PATH('core', 'base_static'), 'images',
+                'block_16.png')
             myImage = Image.open(myFileName)
             return (myImage)
 

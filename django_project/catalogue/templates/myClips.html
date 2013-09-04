@@ -1,6 +1,7 @@
 {# Original code from Tim's SABIO project and copyright is retained by the original author #}
 {# Borrowed entirely from sibling mySearches.html #}
 {% load url from future %} {# https://docs.djangoproject.com/en/1.4/releases/1.3/#changes-to-url-and-ssi #}
+{% load staticfiles %}
 {% load boxtag %} {# Custom tag defined in templatetags/ #}
 {% box_start %}
   <h2>My Clip View</h2>
@@ -50,7 +51,7 @@
           return false;'
         {% endcomment %}
           >
-          <img src="/media/images/delete_16.png">
+          <img src="{% static 'images/delete_16.png' %}">
           </a>
       </td>
     </tr>

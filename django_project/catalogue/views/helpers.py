@@ -330,7 +330,7 @@ def notifySalesStaff(theUser, theOrderId, theContext=None):
         # accesed by 'name' in templates
         myMsg.attach_related_file(
             os.path.join(
-                settings.MEDIA_ROOT, 'images', 'sac_header_email.jpg'))
+                settings.STATIC_ROOT, 'images', 'sac_header_email.jpg'))
         #add message
         myMessagesList.append(myMsg)
 
@@ -423,7 +423,7 @@ def notifySalesStaffOfTaskRequest(theUser, theId, theContext=None):
         #add required images, as inline attachments, accessed by
         # 'name' in templates
         myMsg.attach_related_file(os.path.join(
-            settings.MEDIA_ROOT, 'images', 'sac_header_email.jpg'))
+            settings.STATIC_ROOT, 'images', 'sac_header_email.jpg'))
         #add message
         myMessagesList.append(myMsg)
 

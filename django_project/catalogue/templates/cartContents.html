@@ -1,4 +1,5 @@
 {% load url from future %} {# https://docs.djangoproject.com/en/1.4/releases/1.3/#changes-to-url-and-ssi #}
+{% load staticfiles %}
 <div id="content" class="row-fluid">
   {% if myCartTitle %}
   <h2>{{ myCartTitle }}</h2>
@@ -19,7 +20,7 @@
     {% endif %}
     {% if not myRecords and myMiniCartFlag %}
     <p>
-      Your cart is currently empty. You need to add some items to the cart before you can place your order. To do this, click on the green cart icon <img class="icon" src="/media/images/buy_16.png"> next to records in the table below.
+      Your cart is currently empty. You need to add some items to the cart before you can place your order. To do this, click on the green cart icon <img class="icon" src="{% static 'images/buy_16.png' %}"> next to records in the table below.
     </p>
     {% endif %}
     {% if myDownloadOrderFlag %}
