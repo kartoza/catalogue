@@ -99,3 +99,25 @@ MISR_ROOT = ''
 #GEOS_LIBRARY_PATH='/usr/lib/libgeos_c.so.1'
 #GEOIP_LIBRARY_PATH='/usr/lib/libGeoIP.so.1'
 #GDAL_LIBRARY_PATH='/usr/local/lib/libgdal.so'
+
+PIPELINE_JS = {
+    'contrib': {
+        'source_filenames': (
+            'js/jquery-1.10.1.min.js',
+        ),
+        'output_filename': 'js/contrib.js',
+    }
+}
+
+PIPELINE_CSS = {
+    'contrib': {
+        'source_filenames': (
+            'css/bootstrap.min.css',
+            # 'css/bootstrap-responsive.min.css',
+        ),
+        'output_filename': 'css/contrib.css',
+        'extra_context': {
+            'media': 'screen, projection',
+        },
+    }
+}
