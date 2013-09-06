@@ -476,14 +476,16 @@ def getSelectOptions(theRequest):
             'key': 'Collections',
             'val': 1,
             'values': [
-                {'key': obj['name'], 'val':'cc{}'.format(obj['pk'])} for obj in collections
+                {'key': obj['name'], 'val':'cc{}'.format(obj['pk'])}
+                for obj in collections
             ]
         },
         {
             'key': 'Satellites',
             'val': 1,
             'values': [
-                {'key': obj['name'], 'val':'st{}'.format(obj['pk'])} for obj in satellites
+                {'key': obj['name'], 'val':'st{}'.format(obj['pk'])}
+                for obj in satellites
             ]
         },
         {
@@ -522,8 +524,46 @@ def submitSearch(theRequest):
     """
     if theRequest.method == 'POST':
         myData = simplejson.loads(theRequest.body)
+
+    mySearch = Search()
+    mySearch.save()
+
+    mySearch.satellite.add(
+        *Satellite.objects.filter(
+            pk__in=[obj[2:] for obj in myData['Satellites']]
+        ).all()
+    )
+    mySearch.collection.add(
+        *Collection.objects.filter(
+            pk__in=[obj[2:] for obj in myData['Collections']]
+        ).all()
+    )
+    mySearch.instrumenttype.add(
+        *InstrumentType.objects.filter(
+            pk__in=[obj[2:] for obj in myData['Instrument Types']]
+        ).all()
+    )
+    mySearch.spectral_group.add(
+        *SpectralGroup.objects.filter(
+            pk__in=[obj[2:] for obj in myData['Spectral Groups']]
+        ).all()
+    )
+    mySearch.license_type.add(
+        *License.objects.filter(
+            pk__in=[obj[2:] for obj in myData['License Type']]
+        ).all()
+    )
+
+    mySearch.searchdaterange_set.add(*[
+        SearchDateRange(start_date=obj['date_from'], end_date=obj['date_to'])
+        for obj in myData['Dates']
+    ])
+
+    # finally save the search
+    mySearch.save()
+
     guid = {
-        'guid': 'b95f12f5-f1ce-4636-bec2-eaffac155809'
+        'guid': mySearch.guid
     }
     return HttpResponse(
         simplejson.dumps(guid), mimetype='application/json')
