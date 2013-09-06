@@ -176,8 +176,10 @@ function submitSearchForm() {
     search_data['Dates'] = [];
     _.each($('.date_range_row'), function(row) {
         var dr = new Object();
-        dr.date_from = $(row).children(".date_from").html();
-        dr.date_to = $(row).children(".date_to").html();
+        dr.date_from = $(row).children(".date_from").html().split('/');
+        dr.date_to = $(row).children(".date_to").html().split('/');
+        dr.date_from = dr.date_from[2]+'-'+dr.date_from[0]+'-'+dr.date_from[1];
+        dr.date_to = dr.date_to[2]+'-'+dr.date_to[0]+'-'+dr.date_to[1];
         search_data['Dates'].push(dr);
     });
 
