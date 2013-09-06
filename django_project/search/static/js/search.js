@@ -165,14 +165,13 @@ function submitSearchForm() {
             search_data[parent.key].push(sat.val);
         });
     });
-    console.log(search_data);
-    if (typeof(search_data['Collections']) == 'undefined')  {
-        $('#sattelite_inline').html('You have to select at least 1 sensor!').addClass('form-error');
-        $('#tab-1').prop('checked',true);
-        form_ok = false;
-    } else {
-        $('#sattelite_inline').html('');
-    }
+    // if (typeof(search_data['Collections']) == 'undefined')  {
+    //     $('#sattelite_inline').html('You have to select at least 1 sensor!').addClass('form-error');
+    //     $('#tab-1').prop('checked',true);
+    //     form_ok = false;
+    // } else {
+    //     $('#sattelite_inline').html('');
+    // }
 
     search_data['Dates'] = [];
     _.each($('.date_range_row'), function(row) {
