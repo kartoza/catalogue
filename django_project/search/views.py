@@ -476,21 +476,21 @@ def getSelectOptions(theRequest):
             'key': 'Collections',
             'val': 1,
             'values': [
-                {'key': obj['name'], 'val':obj['pk']} for obj in collections
+                {'key': obj['name'], 'val':'cc{}'.format(obj['pk'])} for obj in collections
             ]
         },
         {
             'key': 'Satellites',
             'val': 1,
             'values': [
-                {'key': obj['name'], 'val':obj['pk']} for obj in satellites
+                {'key': obj['name'], 'val':'st{}'.format(obj['pk'])} for obj in satellites
             ]
         },
         {
             'key': 'Instrument Types',
             'val': 1,
             'values': [
-                {'key': obj['name'], 'val':obj['pk']}
+                {'key': obj['name'], 'val':'it{}'.format(obj['pk'])}
                 for obj in instrumenttypes
             ]
         },
@@ -498,7 +498,7 @@ def getSelectOptions(theRequest):
             'key': 'Spectral Groups',
             'val': 1,
             'values': [
-                {'key': obj['name'], 'val':obj['pk']}
+                {'key': obj['name'], 'val':'sg{}'.format(obj['pk'])}
                 for obj in spectralgroups
             ]
         },
@@ -506,7 +506,7 @@ def getSelectOptions(theRequest):
             'key': 'License Type',
             'val': 1,
             'values': [
-                {'key': obj['name'], 'val':obj['pk']}
+                {'key': obj['name'], 'val':'lt{}'.format(obj['pk'])}
                 for obj in licensetypes
             ]
         }
@@ -522,7 +522,6 @@ def submitSearch(theRequest):
     """
     if theRequest.method == 'POST':
         myData = simplejson.loads(theRequest.body)
-
     guid = {
         'guid': 'b95f12f5-f1ce-4636-bec2-eaffac155809'
     }
