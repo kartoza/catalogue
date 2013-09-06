@@ -119,6 +119,7 @@ PIPELINE_JS = {
         'source_filenames': (
             'js/jquery/jquery-1.8.2.min.js',
             'js/jquery/jquery-ui-1.10.2.custom.min.js',
+            'js/csrf-ajax.js',
             'js/underscore-min.js',
             'js/backbone-min.js',
             'js/backbone-tastypie.js',

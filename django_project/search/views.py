@@ -463,6 +463,8 @@ def submitSearch(theRequest):
     """
     Perform an attribute and spatial search for imagery
     """
+
+    import pdb; pdb.set_trace()
     guid = {
         'guid': 'b95f12f5-f1ce-4636-bec2-eaffac155809'
     }

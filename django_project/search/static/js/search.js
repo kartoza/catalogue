@@ -233,9 +233,28 @@ function submitSearchForm() {
     if (form_ok) {
         search_data = JSON.stringify(search_data);
         console.log(search_data);
-        $.getJSON('/submitsearch/', function(data) {
-            APP.guid = data.guid;
+        $.ajax({
+            type: "POST",
+            url: "/submitsearch/",
+            data: search_data ,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function(data){
+                APP.guid = data.guid;
+                $APP.trigger('collectionSearch', {
+                    offset: 0
+                });
+            },
+            failure: function(errMsg) {
+                alert(errMsg);
+            }
         });
+        // $.getJSON('/submitsearch/', search_data, function(data) {
+        //     APP.guid = data.guid;
+        //     $APP.trigger('collectionSearch', {
+        //         offset: 0
+        //     });
+        // });
     }
 }
 
@@ -332,6 +351,7 @@ APP.ResultGridView = Backbone.View.extend({
         this.collection.bind('reset', this.render, this);
         this.collection.fetch({reset: true});
         this.cont = $("#results-container");
+        $APP.on('collectionSearch', $.proxy(this.collectionSearch, this));
     },
 
     collectionSearch: function (evt, options) {
