@@ -233,6 +233,9 @@ function submitSearchForm() {
     if (form_ok) {
         search_data = JSON.stringify(search_data);
         console.log(search_data);
+        $.getJSON('/submitsearch/', function(data) {
+            APP.guid = data.guid;
+        });
     }
 }
 
@@ -280,13 +283,17 @@ var data = [
 // backbone models/collections/views
 
 APP.$modal = $('#ajax-modal');
+APP.guid = '6cfa079f-8be1-4029-a1eb-f80875a4e64c';
 
 APP.ResultItem = Backbone.Model.extend({
-    urlRoot: '/api/v1/searchresults/6cfa079f-8be1-4029-a1eb-f80875a4e64c/'
+    //urlRoot: '/api/v1/searchresults/6cfa079f-8be1-4029-a1eb-f80875a4e64c/'
 });
 
 APP.ResultItemCollection = PaginatedCollection.extend({
-    urlRoot: '/api/v1/searchresults/6cfa079f-8be1-4029-a1eb-f80875a4e64c/',
+    //urlRoot: '/api/v1/searchresults/6cfa079f-8be1-4029-a1eb-f80875a4e64c/',
+    urlRoot: function() {
+        return '/api/v1/searchresults/'+ APP.guid + '/';
+    },
     model: APP.ResultItem,
     limit: 15
 });

@@ -11,7 +11,8 @@ from .views import (
     renderSearchForm,
     renderSearchMap,
     renderSearchResultsPage,
-    updateSelectOptions
+    updateSelectOptions,
+    submitSearch
 )
 
 from .api import v1_API
@@ -40,5 +41,7 @@ urlpatterns = patterns(
         renderSearchResultsPage, name='renderSearchResultsPage'),
     url(r'^updateselectoptions/$', updateSelectOptions,
         name='updateSelectOptions'),
+    url(r'^submitsearch/$', submitSearch,
+        name='submitSearch'),
     url(r'^api/', include(v1_API.urls)),
 )

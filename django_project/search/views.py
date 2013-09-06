@@ -457,3 +457,14 @@ def searchView(theRequest):
     """
     Perform an attribute and spatial search for imagery
     """
+
+
+def submitSearch(theRequest):
+    """
+    Perform an attribute and spatial search for imagery
+    """
+    guid = {
+        'guid': 'b95f12f5-f1ce-4636-bec2-eaffac155809'
+    }
+    return HttpResponse(
+        simplejson.dumps(guid), mimetype='application/json')

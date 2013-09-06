@@ -34,8 +34,10 @@ var PaginatedCollection = Backbone.Collection.extend({
                 sort_by: this.sort_field
             });
         }
+        var urlRoot;
+        if (_.isFunction(this.urlRoot)) { urlRoot = this.urlRoot(); } else { urlRoot = this.urlRoot; }
 
-        return this.urlRoot + '?' + $.param(urlparams);
+        return urlRoot + '?' + $.param(urlparams);
     },
     pageInfo: function() {
         var info = {
