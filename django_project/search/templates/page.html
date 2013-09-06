@@ -247,7 +247,7 @@ Note:The SPOT Imagery provided in this backdrop has been degraded to 10m
   $( document ).ready(function() {
     initMap();
     defaultPanelState();
-    $('.listTree').listTree(data, { "startCollapsed": true });
+    $('.listTree').listTree(data, { "startCollapsed": true, "selected": [] });
     $('#results-container').perfectScrollbar( { wheelSpeed: 20 } );
     $('#date_from').datepicker();
     $('#date_to').datepicker();

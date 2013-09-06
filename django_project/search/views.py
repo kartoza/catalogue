@@ -528,31 +528,40 @@ def submitSearch(theRequest):
     mySearch = Search()
     mySearch.save()
 
-    mySearch.satellite.add(
-        *Satellite.objects.filter(
-            pk__in=[obj[2:] for obj in myData['Satellites']]
-        ).all()
-    )
-    mySearch.collection.add(
-        *Collection.objects.filter(
-            pk__in=[obj[2:] for obj in myData['Collections']]
-        ).all()
-    )
-    mySearch.instrumenttype.add(
-        *InstrumentType.objects.filter(
-            pk__in=[obj[2:] for obj in myData['Instrument Types']]
-        ).all()
-    )
-    mySearch.spectral_group.add(
-        *SpectralGroup.objects.filter(
-            pk__in=[obj[2:] for obj in myData['Spectral Groups']]
-        ).all()
-    )
-    mySearch.license_type.add(
-        *License.objects.filter(
-            pk__in=[obj[2:] for obj in myData['License Type']]
-        ).all()
-    )
+    if myData.get('Satellites'):
+        mySearch.satellite.add(
+            *Satellite.objects.filter(
+                pk__in=[obj[2:] for obj in myData['Satellites']]
+            ).all()
+        )
+
+    if myData.get('Collections'):
+        mySearch.collection.add(
+            *Collection.objects.filter(
+                pk__in=[obj[2:] for obj in myData['Collections']]
+            ).all()
+        )
+
+    if myData.get('Instrument Types'):
+        mySearch.instrumenttype.add(
+            *InstrumentType.objects.filter(
+                pk__in=[obj[2:] for obj in myData['Instrument Types']]
+            ).all()
+        )
+
+    if myData.get('Spectral Groups'):
+        mySearch.spectral_group.add(
+            *SpectralGroup.objects.filter(
+                pk__in=[obj[2:] for obj in myData['Spectral Groups']]
+            ).all()
+        )
+
+    if myData.get('License Type'):
+        mySearch.license_type.add(
+            *License.objects.filter(
+                pk__in=[obj[2:] for obj in myData['License Type']]
+            ).all()
+        )
 
     mySearch.searchdaterange_set.add(*[
         SearchDateRange(start_date=obj['date_from'], end_date=obj['date_to'])

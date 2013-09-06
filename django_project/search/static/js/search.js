@@ -1,7 +1,7 @@
 var map = new OpenLayers.Map( 'map', {controls: []});
-var SearchPanelState = false;
+var SearchPanelState = true;
 var CartPanelState = false;
-var ResultPanelState = true;
+var ResultPanelState = false;
 
 
 if (typeof APP == 'undefined') {
@@ -244,6 +244,8 @@ function submitSearchForm() {
                 $APP.trigger('collectionSearch', {
                     offset: 0
                 });
+                toggleResultPanel();
+                toggleSearchPanel();
             },
             failure: function(errMsg) {
                 alert(errMsg);
@@ -265,7 +267,7 @@ $.ajax({
 // backbone models/collections/views
 
 APP.$modal = $('#ajax-modal');
-APP.guid = '6cfa079f-8be1-4029-a1eb-f80875a4e64c';
+APP.guid = '';
 
 APP.ResultItem = Backbone.Model.extend({
     //urlRoot: '/api/v1/searchresults/6cfa079f-8be1-4029-a1eb-f80875a4e64c/'
