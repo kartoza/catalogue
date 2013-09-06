@@ -63,6 +63,10 @@ from catalogue.featureReaders import (
 
 from catalogue.views.geoiputils import GeoIpUtils
 
+from dictionaries.models import (
+    Collection, Satellite, InstrumentType, SpectralGroup
+)
+from catalogue.models import License
 
 # modularized app dependencies
 from .searcher import Searcher
@@ -459,12 +463,66 @@ def searchView(theRequest):
     """
 
 
+def getSelectOptions(theRequest):
+    """
+    """
+    collections = Collection.objects.all().values('pk', 'name')
+    satellites = Satellite.objects.all().values('pk', 'name')
+    instrumenttypes = InstrumentType.objects.all().values('pk', 'name')
+    spectralgroups = SpectralGroup.objects.all().values('pk', 'name')
+    licensetypes = License.objects.all().values('pk', 'name')
+    data = [
+        {
+            'key': 'Collections',
+            'val': 1,
+            'values': [
+                {'key': obj['name'], 'val':obj['pk']} for obj in collections
+            ]
+        },
+        {
+            'key': 'Satellites',
+            'val': 1,
+            'values': [
+                {'key': obj['name'], 'val':obj['pk']} for obj in satellites
+            ]
+        },
+        {
+            'key': 'Instrument Types',
+            'val': 1,
+            'values': [
+                {'key': obj['name'], 'val':obj['pk']}
+                for obj in instrumenttypes
+            ]
+        },
+        {
+            'key': 'Spectral Groups',
+            'val': 1,
+            'values': [
+                {'key': obj['name'], 'val':obj['pk']}
+                for obj in spectralgroups
+            ]
+        },
+        {
+            'key': 'License Type',
+            'val': 1,
+            'values': [
+                {'key': obj['name'], 'val':obj['pk']}
+                for obj in licensetypes
+            ]
+        }
+    ]
+
+    return HttpResponse(
+        simplejson.dumps(data), mimetype='application/json')
+
+
 def submitSearch(theRequest):
     """
     Perform an attribute and spatial search for imagery
     """
+    if theRequest.method == 'POST':
+        myData = simplejson.loads(theRequest.body)
 
-    import pdb; pdb.set_trace()
     guid = {
         'guid': 'b95f12f5-f1ce-4636-bec2-eaffac155809'
     }

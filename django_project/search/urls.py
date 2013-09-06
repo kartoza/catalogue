@@ -12,7 +12,8 @@ from .views import (
     renderSearchMap,
     renderSearchResultsPage,
     updateSelectOptions,
-    submitSearch
+    submitSearch,
+    getSelectOptions
 )
 
 from .api import v1_API
@@ -43,5 +44,6 @@ urlpatterns = patterns(
         name='updateSelectOptions'),
     url(r'^submitsearch/$', submitSearch,
         name='submitSearch'),
+    url(r'^getselectoptions/$', getSelectOptions, name='getselectoptions'),
     url(r'^api/', include(v1_API.urls)),
 )
