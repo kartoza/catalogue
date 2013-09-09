@@ -376,6 +376,45 @@ div.dr_row{
     box-shadow: -3px 2px 2px rgba(0,0,0,0.5), -3px -2px 2px rgba(0,0,0,0.5);
 }
 
+#result-panel-download-button-shp {
+    width: 50px; height: 35px; z-index: 10000; position: absolute; top: 340px; left: -55px;
+    white-space: nowrap;
+    margin: 3px;
+}
+
+#result-panel-download-button-kml {
+    width: 50px; height: 35px; z-index: 10000; position: absolute; top: 380px; left: -55px;
+    white-space: nowrap;
+    margin: 3px;
+}
+
+#result-panel-download-button-kmz {
+    width: 50px; height: 35px; z-index: 10000; position: absolute; top: 420px; left: -55px;
+    white-space: nowrap;
+    margin: 3px;
+}
+
+#result-panel-download-button-xml {
+    width: 50px; height: 35px; z-index: 10000; position: absolute; top: 460px; left: -55px;
+    white-space: nowrap;
+    margin: 3px;
+}
+
+#result-panel-download-button-htm {
+    width: 50px; height: 35px; z-index: 10000; position: absolute; top: 500px; left: -55px;
+    white-space: nowrap;
+    margin: 3px;
+}
+
+#result-panel-download-button-shp .shadow, #result-panel-download-button-htm .shadow, #result-panel-download-button-xml .shadow,
+#result-panel-download-button-kmz .shadow, #result-panel-download-button-kml .shadow {
+    box-shadow: -3px 2px 2px rgba(0,0,0,0.5), -3px -2px 2px rgba(0,0,0,0.5);
+}
+
+#result-panel-download-button .shadow {
+    box-shadow: -3px 2px 2px rgba(0,0,0,0.5), -3px -2px 2px rgba(0,0,0,0.5);
+}
+
 #results-container {
     position: relative;
     float: left;

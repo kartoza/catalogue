@@ -2,6 +2,7 @@ var map = new OpenLayers.Map( 'map', {controls: []});
 var SearchPanelState = true;
 var CartPanelState = false;
 var ResultPanelState = false;
+var ResultDownloadOptionsState = false;
 
 
 if (typeof APP == 'undefined') {
@@ -91,6 +92,7 @@ function openResultPanel() {
 }
 
 function defaultPanelState() {
+    hideResultDownloadOptions()
     hideSearchPanelButtons();
     hideCartPanelButtons();
     hideResultPanelButtons();
@@ -134,6 +136,14 @@ function hideResultPanelButtons() {
     $("#result-panel-download-button").hide();
 }
 
+function hideResultDownloadOptions() {
+    $(".downloadoptions").hide();
+}
+
+function showResultDownloadOptions() {
+    $(".downloadoptions").show();
+}
+
 function showResultPanelButtons() {
     $("#result-panel-download-button").show();
 }
@@ -154,6 +164,18 @@ function blockResultPanel() {
 
 function unblockResultPanel() {
     $('#result-panel').unblock();
+}
+
+function toggleResultDownloadButton() {
+    if (ResultDownloadOptionsState) {
+        hideResultDownloadOptions();
+        $("#result-panel-download-button").animate({top: 500}, 200 );
+        ResultDownloadOptionsState = false;
+    } else {
+        $("#result-panel-download-button").animate({top: 300}, 200 );
+        setTimeout(showResultDownloadOptions,210);
+        ResultDownloadOptionsState = true;
+    }
 }
 
 function addNewDateRange() {

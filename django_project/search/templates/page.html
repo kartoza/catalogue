@@ -220,6 +220,11 @@
       </div>
       <div id="result-panel">
         <div id="result-panel-download-button"><p class="fbtn fbtn-info shadow"><i class="icon-download-alt"></i></p></div>
+        <div id="result-panel-download-button-shp" class="downloadoptions"><p class="fbtn fbtn-info shadow">SHP</p></div>
+        <div id="result-panel-download-button-kml" class="downloadoptions"><p class="fbtn fbtn-info shadow">KML</p></div>
+        <div id="result-panel-download-button-kmz" class="downloadoptions"><p class="fbtn fbtn-info shadow">KMZ</p></div>
+        <div id="result-panel-download-button-xml" class="downloadoptions"><p class="fbtn fbtn-info shadow">XML</p></div>
+        <div id="result-panel-download-button-htm" class="downloadoptions"><p class="fbtn fbtn-info shadow">HTM</p></div>
         <div id="result-panel-toggle"><p onclick="toggleResultPanel();"><i class="icon-list"></i> RESULTS</p></div>
         <div class="navigation">
           <div id="searchPrev" class="fbtn button searchPrev"><i class="icon-chevron-left"></i></div>
@@ -248,6 +253,39 @@
     $('#results-container').perfectScrollbar( { wheelSpeed: 20 } );
     $('#date_from').datepicker();
     $('#date_to').datepicker();
+    $('#result-panel-download-button').click(function() {
+      toggleResultDownloadButton();
+    });
+    $('#result-panel-download-button-shp').click(function() {
+      window.open(
+        '/downloadsearchresults/' + APP.guid + '/?shp',
+        '_blank'
+      );
+    });
+    $('#result-panel-download-button-htm').click(function() {
+      window.open(
+        '/downloadsearchresults/' + APP.guid + '/?html',
+        '_blank'
+      );
+    });
+    $('#result-panel-download-button-kml').click(function() {
+      window.open(
+        '/downloadsearchresults/' + APP.guid + '/?kml',
+        '_blank'
+      );
+    });
+    $('#result-panel-download-button-kmz').click(function() {
+      window.open(
+        '/downloadsearchresults/' + APP.guid + '/?kmz',
+        '_blank'
+      );
+    });
+    $('#result-panel-download-button-xml').click(function() {
+      window.open(
+        '/downloadsearchresults/' + APP.guid + '/',
+        '_blank'
+      );
+    });
   });
   </script>
 {% endblock %}
