@@ -373,13 +373,10 @@ APP.ResultGridView = Backbone.View.extend({
         this.cont.append(myItem.render().el);
     },
     _update_pagination_info:function() {
-        var cur_pag_el = this.$el.find('.cur_pag_page');
-        var tot_pag_el = this.$el.find('.tot_pag_page');
-        var total_rec_el = this.$el.find('.total_pag_records');
+        var cur_pag_el = this.$el.find('#resultsPosition');
         var page_info = this.collection.pageInfo();
-        cur_pag_el.html(page_info.current_page);
-        tot_pag_el.html(page_info.pages);
-        total_rec_el.html(page_info.total);
+        var text = 'Page ' + page_info.current_page + ' of ' + page_info.pages + '('+page_info.total+' records)'
+        cur_pag_el.html(text);
     }
 });
 
