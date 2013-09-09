@@ -82,6 +82,14 @@ function toggleResultPanel() {
     }
 }
 
+function openResultPanel() {
+    if (!ResultPanelState) {
+        $("#result-panel").animate({right: 10}, 300 );
+        ResultPanelState = true;
+        showResultPanelButtons();
+    }
+}
+
 function defaultPanelState() {
     hideSearchPanelButtons();
     hideCartPanelButtons();
@@ -128,6 +136,24 @@ function hideResultPanelButtons() {
 
 function showResultPanelButtons() {
     $("#result-panel-download-button").show();
+}
+
+function blockResultPanel() {
+    $('#result-panel').block({
+        message: 'Please wait <i class="icon-refresh icon-spin"></i>',
+        css: {
+            border: '1px solid #000',
+            background: '#FFF',
+            width: '350px',
+            height:'200px',
+            'line-height': '200px',
+            'font-size': '24px'
+        }
+    });
+}
+
+function unblockResultPanel() {
+    $('#result-panel').unblock();
 }
 
 function addNewDateRange() {
@@ -244,7 +270,7 @@ function submitSearchForm() {
                 $APP.trigger('collectionSearch', {
                     offset: 0
                 });
-                toggleResultPanel();
+                openResultPanel();
                 toggleSearchPanel();
             },
             failure: function(errMsg) {
@@ -293,11 +319,13 @@ APP.ResultGridView = Backbone.View.extend({
     },
 
     previous: function() {
+        blockResultPanel();
         this.collection.previousPage();
         return false;
     },
 
     next: function() {
+        blockResultPanel();
         this.collection.nextPage();
         return false;
     },
@@ -320,6 +348,7 @@ APP.ResultGridView = Backbone.View.extend({
     },
 
     collectionSearch: function (evt, options) {
+        blockResultPanel();
         _.extend(this.collection, options);
         this.collection.fetch({
             reset: true
@@ -333,6 +362,7 @@ APP.ResultGridView = Backbone.View.extend({
             self.renderItem(item);
         },this);
         this._update_pagination_info();
+        unblockResultPanel();
         return this;
     },
     renderItem: function(item) {

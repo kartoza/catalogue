@@ -129,7 +129,8 @@ PIPELINE_JS = {
             'js/bootstrap-modal.js',
             'js/bootstrap-modalmanager.js',
             'js/bootstrap-listTree.js',
-            'js/perfect-scrollbar-0.4.3.with-mousewheel.min.js'
+            'js/perfect-scrollbar-0.4.3.with-mousewheel.min.js',
+            'js/jquery.blockUI.js'
         ),
         'output_filename': 'js/fluid.js',
     }
