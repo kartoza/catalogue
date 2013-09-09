@@ -64,7 +64,7 @@ div.dr_row{
 }
 
 #search-panel-toggle {
-    width: 30px; height: 110px; z-index: 10000; position: absolute; top: 35px; right: -29px;
+    width: 30px; height: 110px; z-index: 500; position: absolute; top: 35px; right: -29px;
     background: #FFFFFF;
     overflow: hidden;
     white-space: nowrap;
@@ -72,7 +72,7 @@ div.dr_row{
 }
 
 #search-panel-search-button {
-    width: 50px; height: 35px; z-index: 10000; position: absolute; top: 370px; right: -54px;
+    width: 50px; height: 35px; z-index: 500; position: absolute; top: 370px; right: -54px;
     /*overflow: hidden;*/
     white-space: nowrap;
     color: #fff;
@@ -80,7 +80,7 @@ div.dr_row{
 }
 
 #search-panel-reset-button {
-    width: 50px; height: 35px; z-index: 10000; position: absolute; top: 410px; right: -54px;
+    width: 50px; height: 35px; z-index: 500; position: absolute; top: 410px; right: -54px;
     white-space: nowrap;
     color: #fff;
     margin: 3px;
@@ -100,13 +100,13 @@ div.dr_row{
 }
 
 #cart-panel {
-    width: 450px; height: 500px; z-index: 9999; position: fixed; top: 50px; left: -450px;
+    width: 450px; height: 500px; z-index: 99; position: fixed; top: 50px; left: -450px;
     background: #FFFFFF;
     box-shadow: 3px 2px 2px rgba(0,0,0,0.5);
 }
 
 #cart-panel-toggle {
-    width: 30px; height: 90px; z-index: 10000; position: absolute; top: 155px; right: -30px;
+    width: 30px; height: 90px; z-index: 500; position: absolute; top: 155px; right: -30px;
     background: #FFFFFF;
     overflow: hidden;
     white-space: nowrap;
@@ -127,27 +127,27 @@ div.dr_row{
 }
 
 #cart-panel-order-button {
-    width: 50px; height: 35px; z-index: 10000; position: absolute; top: 370px; right: -54px;
+    width: 50px; height: 35px; z-index: 500; position: absolute; top: 370px; right: -54px;
     white-space: nowrap;
     color: #fff;
     margin: 3px;
 }
 
 #cart-panel-download-button {
-    width: 50px; height: 35px; z-index: 10000; position: absolute; top: 410px; right: -54px;
+    width: 50px; height: 35px; z-index: 500; position: absolute; top: 410px; right: -54px;
     white-space: nowrap;
     color: #fff;
     margin: 3px;
 }
 
 #result-panel {
-    width: 450px; height: 600px; z-index: 9999; position: fixed; top: 50px; right: -450px;
+    width: 450px; height: 600px; z-index: 99; position: fixed; top: 50px; right: -450px;
     background: #FFFFFF;
     box-shadow: -3px 2px 2px rgba(0,0,0,0.5)
 }
 
 #result-panel-toggle {
-    width: 30px; height: 130px; z-index: 10000; position: absolute; top: 0px; left: -30px;
+    width: 30px; height: 130px; z-index: 500; position: absolute; top: 0px; left: -30px;
     background: #FFFFFF;
     overflow: hidden;
     white-space: nowrap;
