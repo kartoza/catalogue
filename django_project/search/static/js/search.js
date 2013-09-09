@@ -411,7 +411,8 @@ APP.ResultGridView = Backbone.View.extend({
 APP.ResultGridViewItem = Backbone.View.extend({
     tagName: 'div',
     events: {
-        'click span.metadata-button': 'showMetadata'
+        'click span.metadata-button': 'showMetadata',
+        'click span.cart-button': 'addToCart'
     },
 
     showMetadata: function() {
@@ -422,6 +423,18 @@ APP.ResultGridViewItem = Backbone.View.extend({
             APP.$modal.modal();
         });
       }, 1000);
+    },
+    addToCart: function() {
+        var id = this.model.get('id');
+        $.ajax({
+            'async':false,
+            'url': '/addtocart/'+id+'/',
+            'dataType': 'json'
+        }).done(function (response) {
+            console.log(response);
+        }).fail(function(response) {
+            console.log(response);
+        })
     },
     render: function() {
        $(this.el).html(_.template(template, {model:this.model}));
