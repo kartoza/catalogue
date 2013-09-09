@@ -362,6 +362,7 @@ APP.ResultGridView = Backbone.View.extend({
             self.renderItem(item);
         },this);
         this._update_pagination_info();
+        this._updateResultsInfo();
         unblockResultPanel();
         return this;
     },
@@ -377,6 +378,11 @@ APP.ResultGridView = Backbone.View.extend({
         var page_info = this.collection.pageInfo();
         var text = 'Page ' + page_info.current_page + ' of ' + page_info.pages + '('+page_info.total+' records)'
         cur_pag_el.html(text);
+    },
+    _updateResultsInfo:function() {
+        var text = '<b>Summary</b>:<br />'+this.collection.total+' record found for<br />Note:The SPOT Imagery provided in this backdrop has been degraded to 10m';
+        var pag_el = this.$el.find('#resultsSummary');
+        pag_el.html(text);
     }
 });
 
