@@ -364,7 +364,7 @@ APP.ResultGridView = Backbone.View.extend({
 
     initialize: function() {
         this.collection.bind('reset', this.render, this);
-        this.collection.fetch({reset: true});
+        //this.collection.fetch({reset: true});
         this.cont = $("#results-container");
         $APP.on('collectionSearch', $.proxy(this.collectionSearch, this));
     },
