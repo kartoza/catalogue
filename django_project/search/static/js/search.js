@@ -450,6 +450,7 @@ APP.ResultGridViewItem = Backbone.View.extend({
             var id = this.model.get('id');
 
             APP.Cart.create({'product': {'id':id}},{wait: true});
+            alert('Product added to cart');
         } else {
             alert('You need to log in first!');
         }
@@ -490,7 +491,13 @@ APP.CartItem = Backbone.Model.extend({
     url: function () {
         var urlRoot;
         if (_.isFunction(this.urlRoot)) { urlRoot = this.urlRoot(); } else { urlRoot = this.urlRoot; }
-        return urlRoot+this.id+'/';
+        var id;
+        if (typeof this.id === 'undefined') {
+            id = '';
+        } else {
+            id = this.id + '/';
+        }
+        return urlRoot+id;
     }
 });
 
