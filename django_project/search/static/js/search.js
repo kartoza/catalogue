@@ -448,15 +448,24 @@ APP.ResultGridViewItem = Backbone.View.extend({
     addToCart: function() {
         if (UserLoged) {
             var id = this.model.get('id');
-            $.ajax({
-                'async':false,
-                'url': '/addtocart/'+id+'/',
-                'dataType': 'json'
-            }).done(function (response) {
-                console.log(response);
-            }).fail(function(response) {
-                console.log(response);
-            })
+
+            var CartItem = new APP.CartItem({'product': {'id':id}});
+            CartItem.save();
+            $APP.trigger('collectionCartSearch', {
+                     offset: 0
+                 });
+            // $.ajax({
+            //     'async':false,
+            //     'url': '/addtocart/'+id+'/',
+            //     'dataType': 'json'
+            // }).done(function (response) {
+            //     $APP.trigger('collectionCartSearch', {
+            //         offset: 0
+            //     });
+            //     console.log(response);
+            // }).fail(function(response) {
+            //     console.log(response);
+            // })
         } else {
             alert('You need to log in first!');
         }
@@ -489,3 +498,112 @@ var template = [
 
 var ResultgridViewHtml = new APP.ResultGridView({
         'collection': APP.Results});
+
+
+APP.CartItem = Backbone.Model.extend({
+    urlRoot: '/api/v1/searchrecords/'
+});
+
+APP.CartItemCollection = Backbone.Collection.extend({
+    //urlRoot: '/api/v1/searchresults/6cfa079f-8be1-4029-a1eb-f80875a4e64c/',
+    urlRoot: '/api/v1/searchrecords/',
+    model: APP.CartItem,
+    limit: 100
+});
+
+APP.Cart = new APP.CartItemCollection();
+
+APP.CartGridView = Backbone.View.extend({
+    el: $("#cart-container"),
+
+    initialize: function() {
+        this.collection.bind('reset', this.render, this);
+        this.collection.fetch({reset: true});
+        $APP.on('collectionCartSearch', $.proxy(this.collectionSearch, this));
+    },
+
+    collectionSearch: function (evt, options) {
+        blockResultPanel();
+        _.extend(this.collection, options);
+        this.collection.fetch({
+            reset: true
+        });
+    },
+    render: function() {
+        // house keeping
+        this.$el.empty();
+        var self=this;
+        _(this.collection.models).each(function(item){
+            self.renderItem(item);
+        },this);
+        unblockResultPanel();
+        return this;
+    },
+    renderItem: function(item) {
+        var myItem = new APP.CartGridViewItem({
+            model:item,
+            collection:this.collection
+        });
+        this.$el.append(myItem.render().el);
+    }
+});
+
+APP.CartGridViewItem = Backbone.View.extend({
+    tagName: 'div',
+    events: {
+        'click span.metadata-button': 'showMetadata',
+        'click span.cart-button': 'addToCart'
+    },
+
+    showMetadata: function() {
+        $('body').modalmanager('loading');
+        var id = this.model.get('id');
+        setTimeout(function(){
+            APP.$modal.load('/metadata/'+id, '', function(){
+            APP.$modal.modal();
+        });
+      }, 1000);
+    },
+    addToCart: function() {
+        if (UserLoged) {
+            var id = this.model.get('id');
+            $.ajax({
+                'async':false,
+                'url': '/addtocart/'+id+'/',
+                'dataType': 'json'
+            }).done(function (response) {
+                console.log(response);
+            }).fail(function(response) {
+                console.log(response);
+            })
+        } else {
+            alert('You need to log in first!');
+        }
+    },
+    render: function() {
+       $(this.el).html(_.template(templateCart, {model:this.model}));
+        return this;
+    },
+});
+
+
+var templateCart = [
+        '<div class="cart-item">',
+          '<img src="/thumbnail/<%= model.get("product").id %>/large/" />',
+          '<div class="cart-item-info">',
+            '<p><%= model.get("product").unique_product_id %></p>',
+            '<p><%= model.get("product").product_date %></p>',
+            '<div class="buttons">',
+              '<span class="button"><i class="icon-list-alt"></i> Metadata</span>',
+              '<span class="button icon-2x delete-button"><i class="icon-trash"></i></span>',
+            '</div>',
+          '</div>',
+          '<div class="cloud-cover">',
+            '<img src="/static/images/cloud-icon.png" />',
+            '<p><%= model.get("product").cloud_cover %></p>',
+          '</div>',
+        '</div>'
+        ].join('');
+
+var CartgridViewHtml = new APP.CartGridView({
+        'collection': APP.Cart});

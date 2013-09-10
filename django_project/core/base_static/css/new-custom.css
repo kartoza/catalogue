@@ -175,8 +175,6 @@ div.dr_row{
     margin: 3px;
 }
 
-#cart-panel-download-button-shp 
-
 #result-panel {
     width: 450px; height: 600px; z-index: 99; position: fixed; top: 50px; right: -450px;
     background: #FFFFFF;

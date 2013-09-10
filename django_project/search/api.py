@@ -85,7 +85,7 @@ class SearchResultsResource(ModelResource):
 class SearchRecordResource(ModelResource):
     user = fields.ToOneField('useraccounts.api.UserResource', 'user')
     product = fields.ToOneField(
-        'catalogue.api.GenericProductResource', 'product')
+        'catalogue.api.GenericProductResource', 'product', full=True)
 
     class Meta:
         queryset = SearchRecord.objects.filter(order=None).all()
@@ -103,5 +103,6 @@ class SearchRecordResource(ModelResource):
             bundle, user=bundle.request.user)
 
     def get_object_list(self, request):
+        import pdb; pdb.set_trace()
         return super(SearchRecordResource, self).get_object_list(
             request).filter(user=request.user.id)

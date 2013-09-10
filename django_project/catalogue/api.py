@@ -22,16 +22,16 @@ from tastypie.authorization import Authorization
 # from tastypie.authentication import SessionAuthentication
 
 
-from .models import GenericProduct
+from .models import OpticalProduct
 
 
 class GenericProductResource(ModelResource):
     class Meta:
-        queryset = GenericProduct.objects.all()
+        queryset = OpticalProduct.objects.all()
         resource_name = 'genericproducts'
         # authentication = SessionAuthentication()
         authorization = Authorization()
         always_return_data = True
         include_resource_uri = False
         # allowed_methods = ['get']
-        # fields = ['pk']
+        fields = ['id', 'unique_product_id', 'product_date', 'cloud_cover']
