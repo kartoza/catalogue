@@ -22,11 +22,11 @@ from tastypie.api import Api
 from search.api import SearchResultsResource, SearchRecordResource
 
 from useraccounts.api import UserResource
-from catalogue.api import GenericProductResource
+from catalogue.api import OpticalProductResource
 
 # register the api
 v1_API = Api(api_name='v1')
 v1_API.register(SearchResultsResource())
 v1_API.register(SearchRecordResource())
 v1_API.register(UserResource())
-v1_API.register(GenericProductResource())
+v1_API.register(OpticalProductResource())

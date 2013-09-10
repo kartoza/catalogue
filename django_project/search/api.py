@@ -27,6 +27,8 @@ from tastypie.authentication import SessionAuthentication
 from tastypie.paginator import Paginator
 from tastypie.exceptions import BadRequest
 
+from core.api_fields import ProductRelField
+
 from .models import Search, SearchRecord
 from .searcher import Searcher
 
@@ -84,8 +86,8 @@ class SearchResultsResource(ModelResource):
 
 class SearchRecordResource(ModelResource):
     user = fields.ToOneField('useraccounts.api.UserResource', 'user')
-    product = fields.ToOneField(
-        'catalogue.api.GenericProductResource', 'product', full=True)
+    product = ProductRelField(
+        'catalogue.api.OpticalProductResource', 'product', full=True)
 
     class Meta:
         queryset = SearchRecord.objects.filter(order=None).all()
@@ -94,7 +96,7 @@ class SearchRecordResource(ModelResource):
         authorization = Authorization()
         # always_return_data = True
         paginator_class = Paginator
-        limit = 15
+        limit = 1
         include_resource_uri = False
         # allowed_methods = ['get']
 

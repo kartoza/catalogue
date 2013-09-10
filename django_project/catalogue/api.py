@@ -25,10 +25,10 @@ from tastypie.authorization import Authorization
 from .models import OpticalProduct
 
 
-class GenericProductResource(ModelResource):
+class OpticalProductResource(ModelResource):
     class Meta:
         queryset = OpticalProduct.objects.all()
-        resource_name = 'genericproducts'
+        resource_name = 'opticalproducts'
         # authentication = SessionAuthentication()
         authorization = Authorization()
         always_return_data = True
