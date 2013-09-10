@@ -485,7 +485,13 @@ var ResultgridViewHtml = new APP.ResultGridView({
 
 
 APP.CartItem = Backbone.Model.extend({
-    urlRoot: '/api/v1/searchrecords/'
+    urlRoot: '/api/v1/searchrecords/',
+    idAttribute: 'id',
+    url: function () {
+        var urlRoot;
+        if (_.isFunction(this.urlRoot)) { urlRoot = this.urlRoot(); } else { urlRoot = this.urlRoot; }
+        return urlRoot+this.id+'/';
+    }
 });
 
 APP.CartItemCollection = Backbone.Collection.extend({
@@ -503,15 +509,8 @@ APP.CartGridView = Backbone.View.extend({
     initialize: function() {
         this.collection.bind('reset', this.render, this);
         this.collection.bind('add', this.render, this);
+        this.collection.bind('destroy', this.render, this);
         this.collection.fetch({reset: true});
-        $APP.on('collectionCartSearch', $.proxy(this.collectionSearch, this));
-    },
-
-    collectionSearch: function (evt, options) {
-        _.extend(this.collection, options);
-        this.collection.fetch({
-            reset: true
-        });
     },
     render: function() {
         // house keeping
@@ -536,7 +535,7 @@ APP.CartGridViewItem = Backbone.View.extend({
     tagName: 'div',
     events: {
         'click span.metadata-button': 'showMetadata',
-        'click span.cart-button': 'addToCart'
+        'click span.delete-button': 'delete'
     },
 
     showMetadata: function() {
@@ -548,21 +547,11 @@ APP.CartGridViewItem = Backbone.View.extend({
         });
       }, 1000);
     },
-    addToCart: function() {
-        if (UserLoged) {
-            var id = this.model.get('id');
-            $.ajax({
-                'async':false,
-                'url': '/addtocart/'+id+'/',
-                'dataType': 'json'
-            }).done(function (response) {
-                console.log(response);
-            }).fail(function(response) {
-                console.log(response);
-            })
-        } else {
-            alert('You need to log in first!');
-        }
+    delete: function() {
+        //console.log(this.model);
+        this.model.destroy({wait: true});
+        //var id = this.model.get('id');
+        //this.remove({'product': {'id':id}},{wait: true});
     },
     render: function() {
        $(this.el).html(_.template(templateCart, {model:this.model}));
