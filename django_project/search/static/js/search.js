@@ -4,7 +4,6 @@ var CartPanelState = false;
 var ResultPanelState = false;
 var ResultDownloadOptionsState = false;
 
-
 if (typeof APP == 'undefined') {
     APP = {};
     $APP = $(APP);
@@ -425,16 +424,20 @@ APP.ResultGridViewItem = Backbone.View.extend({
       }, 1000);
     },
     addToCart: function() {
-        var id = this.model.get('id');
-        $.ajax({
-            'async':false,
-            'url': '/addtocart/'+id+'/',
-            'dataType': 'json'
-        }).done(function (response) {
-            console.log(response);
-        }).fail(function(response) {
-            console.log(response);
-        })
+        if (UserLoged) {
+            var id = this.model.get('id');
+            $.ajax({
+                'async':false,
+                'url': '/addtocart/'+id+'/',
+                'dataType': 'json'
+            }).done(function (response) {
+                console.log(response);
+            }).fail(function(response) {
+                console.log(response);
+            })
+        } else {
+            alert('You need to log in first!');
+        }
     },
     render: function() {
        $(this.el).html(_.template(template, {model:this.model}));

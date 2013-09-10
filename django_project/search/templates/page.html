@@ -244,6 +244,13 @@
 
 {% block extrajs %}
   {{ block.super }}
+  <script type="text/javascript">
+    {% if user.is_authenticated %}
+      var UserLoged = true;
+    {% else %}
+      var UserLoged = false;
+    {% endif %}
+  </script>
   <script type="text/javascript" src="{% static 'js/search.js' %}"></script>
   <script>
   $( document ).ready(function() {
