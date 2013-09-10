@@ -555,10 +555,10 @@ APP.CartGridViewItem = Backbone.View.extend({
       }, 1000);
     },
     delete: function() {
-        //console.log(this.model);
-        this.model.destroy({wait: true});
-        //var id = this.model.get('id');
-        //this.remove({'product': {'id':id}},{wait: true});
+        var del = confirm('Are you sure?');
+        if (del) {
+            this.model.destroy({wait: true});
+        }
     },
     render: function() {
        $(this.el).html(_.template(templateCart, {model:this.model}));
