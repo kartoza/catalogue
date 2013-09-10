@@ -16,8 +16,6 @@ from .views import (
     getSelectOptions
 )
 
-from .api import v1_API
-
 urlpatterns = patterns(
     '',
     url(r'^modifysearch/(?P<theGuid>[a-h0-9\-]{36})/$',
@@ -44,6 +42,5 @@ urlpatterns = patterns(
         name='updateSelectOptions'),
     url(r'^submitsearch/$', submitSearch,
         name='submitSearch'),
-    url(r'^getselectoptions/$', getSelectOptions, name='getselectoptions'),
-    url(r'^api/', include(v1_API.urls)),
+    url(r'^getselectoptions/$', getSelectOptions, name='getselectoptions')
 )

@@ -13,6 +13,7 @@ admin.autodiscover()
    #  "template_object_name" : "myOrders",
 #    }
 
+from api import v1_API
 
 # Here are our patterns
 urlpatterns = patterns('',
@@ -111,4 +112,7 @@ urlpatterns = patterns('',
     url(r'', include('pycsw_integration.urls')),
     # new reports app
     url(r'', include('reports.urls')),
+
+    # api urls
+    url(r'^api/', include(v1_API.urls)),
 )

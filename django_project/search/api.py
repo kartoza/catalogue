@@ -20,14 +20,14 @@ __copyright__ = 'South African National Space Agency'
 from django.conf.urls import url
 from django.shortcuts import get_object_or_404
 
-from tastypie.api import Api
+from tastypie import fields
 from tastypie.resources import ModelResource
 from tastypie.authorization import Authorization
-# from tastypie.authentication import SessionAuthentication
+from tastypie.authentication import SessionAuthentication
 from tastypie.paginator import Paginator
 from tastypie.exceptions import BadRequest
 
-from .models import Search
+from .models import Search, SearchRecord
 from .searcher import Searcher
 
 from catalogue.models import OpticalProduct
@@ -37,7 +37,7 @@ class SearchResultsResource(ModelResource):
     class Meta:
         queryset = OpticalProduct.objects.all()
         resource_name = 'searchresults'
-        # authentication = SessionAuthentication()
+        authentication = SessionAuthentication()
         authorization = Authorization()
         always_return_data = True
         paginator_class = Paginator
@@ -81,6 +81,27 @@ class SearchResultsResource(ModelResource):
             raise BadRequest(
                 'Invalid resource lookup data provided (mismatched type).')
 
-# register the api
-v1_API = Api(api_name='v1')
-v1_API.register(SearchResultsResource())
+
+class SearchRecordResource(ModelResource):
+    user = fields.ToOneField('useraccounts.api.UserResource', 'user')
+    product = fields.ToOneField(
+        'catalogue.api.GenericProductResource', 'product')
+
+    class Meta:
+        queryset = SearchRecord.objects.filter(order=None).all()
+        resource_name = 'searchrecords'
+        authentication = SessionAuthentication()
+        authorization = Authorization()
+        # always_return_data = True
+        paginator_class = Paginator
+        limit = 15
+        include_resource_uri = False
+        # allowed_methods = ['get']
+
+    def obj_create(self, bundle, **kwargs):
+        return super(SearchRecordResource, self).obj_create(
+            bundle, user=bundle.request.user)
+
+    def get_object_list(self, request):
+        return super(SearchRecordResource, self).get_object_list(
+            request).filter(user=request.user.id)
