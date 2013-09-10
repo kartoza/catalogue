@@ -3,6 +3,7 @@ var SearchPanelState = true;
 var CartPanelState = false;
 var ResultPanelState = false;
 var ResultDownloadOptionsState = false;
+var CartDownloadOptionsState = false;
 
 if (typeof APP == 'undefined') {
     APP = {};
@@ -91,7 +92,8 @@ function openResultPanel() {
 }
 
 function defaultPanelState() {
-    hideResultDownloadOptions()
+    hideResultDownloadOptions();
+    hideCartDownloadOptions();
     hideSearchPanelButtons();
     hideCartPanelButtons();
     hideResultPanelButtons();
@@ -143,6 +145,14 @@ function showResultDownloadOptions() {
     $(".downloadoptions").show();
 }
 
+function hideCartDownloadOptions() {
+    $(".downloadcartoptions").hide();
+}
+
+function showCartDownloadOptions() {
+    $(".downloadcartoptions").show();
+}
+
 function showResultPanelButtons() {
     $("#result-panel-download-button").show();
 }
@@ -174,6 +184,18 @@ function toggleResultDownloadButton() {
         $("#result-panel-download-button").animate({top: 300}, 200 );
         setTimeout(showResultDownloadOptions,210);
         ResultDownloadOptionsState = true;
+    }
+}
+
+function toggleCartDownloadButton() {
+    if (CartDownloadOptionsState) {
+        hideCartDownloadOptions();
+        $("#cart-panel-download-button").animate({top: 370}, 200 );
+        CartDownloadOptionsState = false;
+    } else {
+        $("#cart-panel-download-button").animate({top: 170}, 200 );
+        setTimeout(showCartDownloadOptions,210);
+        CartDownloadOptionsState = true;
     }
 }
 

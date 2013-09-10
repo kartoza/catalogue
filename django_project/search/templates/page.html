@@ -156,6 +156,11 @@
       <div id="cart-panel">
         <div id="cart-panel-order-button"><p class="fbtn fbtn-success drop-shadow"><i class="icon-ok"></i></p></div>
         <div id="cart-panel-download-button"><p class="fbtn fbtn-info drop-shadow"><i class="icon-download-alt"></i></p></div>
+        <div id="cart-panel-download-button-shp" class="downloadcartoptions"><p class="fbtn fbtn-info drop-shadow">SHP</p></div>
+        <div id="cart-panel-download-button-kml" class="downloadcartoptions"><p class="fbtn fbtn-info drop-shadow">KML</p></div>
+        <div id="cart-panel-download-button-kmz" class="downloadcartoptions"><p class="fbtn fbtn-info drop-shadow">KMZ</p></div>
+        <div id="cart-panel-download-button-xml" class="downloadcartoptions"><p class="fbtn fbtn-info drop-shadow">XML</p></div>
+        <div id="cart-panel-download-button-htm" class="downloadcartoptions"><p class="fbtn fbtn-info drop-shadow">HTM</p></div>
         <div id="cart-panel-toggle"><p onclick="toggleCartPanel();"><i class="icon-shopping-cart"></i> CART</p></div>
         <div class="cart-item">
           <img src="{% static 'images/mockup1.png' %}" />
@@ -263,6 +268,9 @@
     $('#result-panel-download-button').click(function() {
       toggleResultDownloadButton();
     });
+    $('#cart-panel-download-button').click(function() {
+      toggleCartDownloadButton();
+    });
     $('#result-panel-download-button-shp').click(function() {
       window.open(
         '/downloadsearchresults/' + APP.guid + '/?shp',
@@ -290,6 +298,37 @@
     $('#result-panel-download-button-xml').click(function() {
       window.open(
         '/downloadsearchresults/' + APP.guid + '/',
+        '_blank'
+      );
+    });
+
+    $('#cart-panel-download-button-shp').click(function() {
+      window.open(
+        '/downloadcart/?shp',
+        '_blank'
+      );
+    });
+    $('#cart-panel-download-button-htm').click(function() {
+      window.open(
+        '/downloadcartmetadata/?html',
+        '_blank'
+      );
+    });
+    $('#cart-panel-download-button-kml').click(function() {
+      window.open(
+        '/downloadcart/?kml',
+        '_blank'
+      );
+    });
+    $('#cart-panel-download-button-kmz').click(function() {
+      window.open(
+        '/downloadcart/?kmz',
+        '_blank'
+      );
+    });
+    $('#cart-panel-download-button-xml').click(function() {
+      window.open(
+        '/downloadcartmetadata/',
         '_blank'
       );
     });

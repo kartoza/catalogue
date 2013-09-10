@@ -127,18 +127,55 @@ div.dr_row{
 }
 
 #cart-panel-order-button {
-    width: 50px; height: 35px; z-index: 500; position: absolute; top: 370px; right: -54px;
+    width: 50px; height: 35px; z-index: 500; position: absolute; top: 410px; right: -54px;
     white-space: nowrap;
     color: #fff;
     margin: 3px;
 }
 
 #cart-panel-download-button {
-    width: 50px; height: 35px; z-index: 500; position: absolute; top: 410px; right: -54px;
+    width: 50px; height: 35px; z-index: 500; position: absolute; top: 370px; right: -54px;
     white-space: nowrap;
     color: #fff;
     margin: 3px;
 }
+
+#cart-panel-download-button-shp {
+    width: 50px; height: 35px; z-index: 500; position: absolute; top: 210px; right: -54px;
+    white-space: nowrap;
+    color: #fff;
+    margin: 3px;
+}
+
+#cart-panel-download-button-kml {
+    width: 50px; height: 35px; z-index: 500; position: absolute; top: 250px; right: -54px;
+    white-space: nowrap;
+    color: #fff;
+    margin: 3px;
+}
+
+#cart-panel-download-button-kmz {
+    width: 50px; height: 35px; z-index: 500; position: absolute; top: 290px; right: -54px;
+    white-space: nowrap;
+    color: #fff;
+    margin: 3px;
+}
+
+#cart-panel-download-button-xml {
+    width: 50px; height: 35px; z-index: 500; position: absolute; top: 330px; right: -54px;
+    white-space: nowrap;
+    color: #fff;
+    margin: 3px;
+}
+
+#cart-panel-download-button-htm {
+    width: 50px; height: 35px; z-index: 500; position: absolute; top: 370px; right: -54px;
+    white-space: nowrap;
+    color: #fff;
+    margin: 3px;
+}
+
+#cart-panel-download-button-shp 
 
 #result-panel {
     width: 450px; height: 600px; z-index: 99; position: fixed; top: 50px; right: -450px;
