@@ -541,7 +541,7 @@ APP.CartGridViewItem = Backbone.View.extend({
 
     showMetadata: function() {
         $('body').modalmanager('loading');
-        var id = this.model.get('id');
+        var id = this.model.get('product').id;
         setTimeout(function(){
             APP.$modal.load('/metadata/'+id, '', function(){
             APP.$modal.modal();
@@ -578,7 +578,7 @@ var templateCart = [
             '<p><%= model.get("product").unique_product_id %></p>',
             '<p><%= model.get("product").product_date %></p>',
             '<div class="buttons">',
-              '<span class="button"><i class="icon-list-alt"></i> Metadata</span>',
+              '<span class="button metadata-button"><i class="icon-list-alt"></i> Metadata</span>',
               '<span class="button icon-2x delete-button"><i class="icon-trash"></i></span>',
             '</div>',
           '</div>',
