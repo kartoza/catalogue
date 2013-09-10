@@ -457,6 +457,13 @@ div.dr_row{
     overflow: hidden;
 }
 
+#cart-container {
+    position: relative;
+    float: left;
+    height: 495px;
+    overflow: hidden;
+}
+
 #search-panel .date-range .button {
     line-height: 12px;
     padding: 4px 15px 4px;

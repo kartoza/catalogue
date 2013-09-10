@@ -103,6 +103,5 @@ class SearchRecordResource(ModelResource):
             bundle, user=bundle.request.user)
 
     def get_object_list(self, request):
-        import pdb; pdb.set_trace()
         return super(SearchRecordResource, self).get_object_list(
             request).filter(user=request.user.id)

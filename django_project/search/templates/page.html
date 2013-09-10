@@ -163,67 +163,7 @@
         <div id="cart-panel-download-button-htm" class="downloadcartoptions"><p class="fbtn fbtn-info drop-shadow">HTM</p></div>
         <div id="cart-panel-toggle"><p onclick="toggleCartPanel();"><i class="icon-shopping-cart"></i> CART</p></div>
         <div id="cart-container">
-        <div class="cart-item">
-          <img src="{% static 'images/mockup1.png' %}" />
-          <div class="cart-item-info">
-            <p>L5 TM HRT MST 0167 00 0063 00 051001</p>
-            <p>18.02.2013 08:10:32</p>
-            <div class="buttons">
-              <span class="button"><i class="icon-list-alt"></i> Metadata</span>
-              <span class="button icon-2x delete-button"><i class="icon-trash"></i></span>
-            </div>
-          </div>
-          <div class="cloud-cover">
-            <img src="{% static 'images/cloud-icon.png' %}" />
-            <p>55</p>
-          </div>
         </div>
-        <div class="cart-item">
-          <img src="{% static 'images/mockup2.png' %}" />
-          <div class="cart-item-info">
-            <p>L5 TM HRT MST 0167 00 0063 00 051002</p>
-            <p>18.02.2013 08:10:32</p>
-            <div class="buttons">
-              <span class="button"><i class="icon-list-alt"></i> Metadata</span>
-              <span class="button icon-2x delete-button"><i class="icon-trash"></i></span>
-            </div>
-          </div>
-          <div class="cloud-cover">
-            <img src="{% static 'images/cloud-icon.png' %}" />
-            <p>95</p>
-          </div>
-        </div>
-        <div class="cart-item">
-          <img src="{% static 'images/mockup4.png' %}" />
-          <div class="cart-item-info">
-            <p>L5 TM HRT MST 0167 00 0063 00 051002</p>
-            <p>18.02.2013 08:10:32</p>
-            <div class="buttons">
-              <span class="button"><i class="icon-list-alt"></i> Metadata</span>
-              <span class="button icon-2x delete-button"><i class="icon-trash"></i></span>
-            </div>
-          </div>
-          <div class="cloud-cover">
-            <img src="{% static 'images/cloud-icon.png' %}" />
-            <p>20</p>
-          </div>
-        </div>
-        <div class="cart-item">
-          <img src="{% static 'images/mockup3.png' %}" />
-          <div class="cart-item-info">
-            <p>L5 TM HRT MST 0167 00 0063 00 051002</p>
-            <p>18.02.2013 08:10:32</p>
-            <div class="buttons">
-              <span class="button"><i class="icon-list-alt"></i> Metadata</span>
-              <span class="button icon-2x delete-button"><i class="icon-trash"></i></span>
-            </div>
-          </div>
-          <div class="cloud-cover">
-            <img src="{% static 'images/cloud-icon.png'%}" />
-            <p>25</p>
-          </div>
-        </div>
-      </div>
       </div>
       <div id="result-panel">
         <div id="result-panel-download-button"><p class="fbtn fbtn-info shadow"><i class="icon-download-alt"></i></p></div>
@@ -265,6 +205,7 @@
     defaultPanelState();
     $('.listTree').listTree(data, { "startCollapsed": true, "selected": [] });
     $('#results-container').perfectScrollbar( { wheelSpeed: 20 } );
+    $('#cart-container').perfectScrollbar( { wheelSpeed: 20 } );
     $('#date_from').datepicker();
     $('#date_to').datepicker();
     $('#result-panel-download-button').click(function() {

@@ -449,23 +449,7 @@ APP.ResultGridViewItem = Backbone.View.extend({
         if (UserLoged) {
             var id = this.model.get('id');
 
-            var CartItem = new APP.CartItem({'product': {'id':id}});
-            CartItem.save();
-            $APP.trigger('collectionCartSearch', {
-                     offset: 0
-                 });
-            // $.ajax({
-            //     'async':false,
-            //     'url': '/addtocart/'+id+'/',
-            //     'dataType': 'json'
-            // }).done(function (response) {
-            //     $APP.trigger('collectionCartSearch', {
-            //         offset: 0
-            //     });
-            //     console.log(response);
-            // }).fail(function(response) {
-            //     console.log(response);
-            // })
+            APP.Cart.create({'product': {'id':id}},{wait: true});
         } else {
             alert('You need to log in first!');
         }
@@ -518,12 +502,12 @@ APP.CartGridView = Backbone.View.extend({
 
     initialize: function() {
         this.collection.bind('reset', this.render, this);
+        this.collection.bind('add', this.render, this);
         this.collection.fetch({reset: true});
         $APP.on('collectionCartSearch', $.proxy(this.collectionSearch, this));
     },
 
     collectionSearch: function (evt, options) {
-        blockResultPanel();
         _.extend(this.collection, options);
         this.collection.fetch({
             reset: true
@@ -536,7 +520,7 @@ APP.CartGridView = Backbone.View.extend({
         _(this.collection.models).each(function(item){
             self.renderItem(item);
         },this);
-        unblockResultPanel();
+        $('#cart-container').perfectScrollbar('update');
         return this;
     },
     renderItem: function(item) {
