@@ -260,7 +260,7 @@ function showResultPanelButtons() {
 }
 
 function blockResultPanel() {
-    $('#all').block({
+    $('body').block({
         message: 'Please wait <i class="icon-refresh icon-spin"></i>',
         css: {
             border: '1px solid #000',
@@ -274,7 +274,7 @@ function blockResultPanel() {
 }
 
 function unblockResultPanel() {
-    $('#all').unblock();
+    $('body').unblock();
 }
 
 function toggleResultDownloadButton() {
