@@ -4,6 +4,7 @@ var CartPanelState = false;
 var ResultPanelState = false;
 var ResultDownloadOptionsState = false;
 var CartDownloadOptionsState = false;
+var LastSelectedResultItem = "0";
 
 if (typeof APP == 'undefined') {
     APP = {};
@@ -62,6 +63,64 @@ function initMap() {
     ];
     map.addLayers(myLayersList);
     map.zoomToExtent( transformBounds(new OpenLayers.Bounds(14.0,-35.0,34.0,-21.0)));
+
+    var myHighlightControl = new OpenLayers.Control.SelectFeature( layerSearch , {
+        hover: false,
+        highlightOnly: true,
+        renderIntent: "temporary",
+        eventListeners: {
+            beforefeaturehighlighted: null,
+            featurehighlighted: featureSelected,
+            featureunhighlighted: null
+        }
+    });
+    map.addControl(myHighlightControl);
+    myHighlightControl.activate();
+    layerSearch.selectFeatureControl = myHighlightControl;
+}
+
+function resetSceneZIndices() {
+    var myFeatures = layerSearch.features;
+    for(var i=0; i < myFeatures.length; ++i) {
+        myFeatures[i].attributes.zIndex=0;
+        myFeatures[i].selected = "no";
+    }
+}
+
+function getFeatureIndexByRecordId( theRecordId ) {
+    var myFeatures = layerSearch.features;
+    for(var i=0; i < myFeatures.length; ++i)
+    {
+      if(myFeatures[i].attributes.unique_product_id == theRecordId)
+      {
+        return i;
+      }
+    }
+}
+
+function featureSelected(theEvent) {
+    blockResultPanel();
+    hightlightRecord(theEvent.feature.attributes.unique_product_id, false);
+    unblockResultPanel();
+}
+
+function hightlightRecord( theRecordId, theZoomFlag )
+{
+  var myIndex = getFeatureIndexByRecordId( theRecordId );
+  layerSearch.features[myIndex].attributes.zIndex=1;
+  layerSearch.features[myIndex].selected = "yes";
+  if ( LastSelectedResultItem != "0")
+  {
+    $("#result_item_"+ LastSelectedResultItem).css("background-color", "#ffffff");
+  }
+  LastSelectedResultItem = theRecordId;
+  $("#result_item_"+ theRecordId).css("background-color", "#aa0000");
+  resetSceneZIndices();
+  if (theZoomFlag)
+  {
+    map.zoomToExtent(layerSearch.features[myIndex].geometry.bounds);
+  }
+  layerSearch.redraw();
 }
 
 function toggleSearchPanel() {
@@ -201,7 +260,7 @@ function showResultPanelButtons() {
 }
 
 function blockResultPanel() {
-    $('#result-panel').block({
+    $('#all').block({
         message: 'Please wait <i class="icon-refresh icon-spin"></i>',
         css: {
             border: '1px solid #000',
@@ -215,7 +274,7 @@ function blockResultPanel() {
 }
 
 function unblockResultPanel() {
-    $('#result-panel').unblock();
+    $('#all').unblock();
 }
 
 function toggleResultDownloadButton() {
@@ -454,7 +513,7 @@ APP.ResultGridView = Backbone.View.extend({
         return this;
     },
     renderItem: function(item) {
-        var feat = new OpenLayers.Feature.Vector(transformGeometry(OpenLayers.Geometry.fromWKT(item.attributes.spatial_coverage)));
+        var feat = new OpenLayers.Feature.Vector(transformGeometry(OpenLayers.Geometry.fromWKT(item.attributes.spatial_coverage)),item.attributes);
         layerSearch.addFeatures([feat]);
         var myItem = new APP.ResultGridViewItem({
             model:item,
@@ -479,9 +538,15 @@ APP.ResultGridViewItem = Backbone.View.extend({
     tagName: 'div',
     events: {
         'click span.metadata-button': 'showMetadata',
-        'click span.cart-button': 'addToCart'
+        'click span.cart-button': 'addToCart',
+        'click img.result-img': 'highlightResultItem'
     },
-
+    initialize: function() {
+        $APP.on('highlightResultItem', $.proxy(this.highlightResultItem, this));
+    },
+    highlightResultItem: function() {
+        hightlightRecord(this.model.get('unique_product_id'), true);
+    },
     showMetadata: function() {
         $('body').modalmanager('loading');
         var id = this.model.get('id');
@@ -508,8 +573,8 @@ APP.ResultGridViewItem = Backbone.View.extend({
 });
 
 var template = [
-            '<div class="result-item">',
-            '<img src="/thumbnail/<%= model.get("id") %>/medium/" />',
+            '<div class="result-item" id="result_item_<%= model.get("unique_product_id") %>">',
+            '<img class="result-img" src="/thumbnail/<%= model.get("id") %>/medium/" />',
             '<div class="result-item-info">',
               '<p><%= model.get("unique_product_id") %></p>',
               '<p><%= model.get("product_date") %></p>',
