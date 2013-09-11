@@ -24,6 +24,15 @@ function transformBounds(theBounds)
   return myBounds;
 }
 
+function transformGeometry(theGeometry)
+{
+  var myGeometry = theGeometry.clone();
+  var myCRS = new OpenLayers.Projection("EPSG:4326");
+  var toCRS = map.getProjectionObject() || new OpenLayers.Projection("EPSG:900913");
+  myGeometry.transform(myCRS,toCRS);
+  return myGeometry;
+}
+
 function initMap() {
 
     var options = {
@@ -37,7 +46,7 @@ function initMap() {
       };
     map = new OpenLayers.Map('map', options);
     var layerMapnik = new OpenLayers.Layer.OSM("Open Street Map");
-    var layerSearch = new OpenLayers.Layer.Vector("search_geometry");
+    layerSearch = new OpenLayers.Layer.Vector("search_geometry");
     myLayersList = [
         WEB_LAYERS.zaSpot2mMosaic2010TC,
         WEB_LAYERS.zaSpot2mMosaic2009TC,
@@ -432,7 +441,7 @@ APP.ResultGridView = Backbone.View.extend({
         });
     },
     render: function() {
-        // house keeping
+        layerSearch.removeFeatures(layerSearch.features);
         this.cont.empty();
         var self=this;
         _(this.collection.models).each(function(item){
@@ -440,11 +449,13 @@ APP.ResultGridView = Backbone.View.extend({
         },this);
         this._update_pagination_info();
         this._updateResultsInfo();
+        map.zoomToExtent(layerSearch.getDataExtent());
         unblockResultPanel();
         return this;
     },
     renderItem: function(item) {
-        console.log(item);
+        var feat = new OpenLayers.Feature.Vector(transformGeometry(OpenLayers.Geometry.fromWKT(item.attributes.spatial_coverage)));
+        layerSearch.addFeatures([feat]);
         var myItem = new APP.ResultGridViewItem({
             model:item,
             collection:this.collection
