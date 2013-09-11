@@ -114,7 +114,7 @@ function hightlightRecord( theRecordId, theZoomFlag )
     $("#result_item_"+ LastSelectedResultItem).css("background-color", "#ffffff");
   }
   LastSelectedResultItem = theRecordId;
-  $("#result_item_"+ theRecordId).css("background-color", "#aa0000");
+  $("#result_item_"+ theRecordId).css("background-color", "#BAD696");
   resetSceneZIndices();
   if (theZoomFlag)
   {
