@@ -77,6 +77,43 @@ function initMap() {
     map.addControl(myHighlightControl);
     myHighlightControl.activate();
     layerSearch.selectFeatureControl = myHighlightControl;
+
+    mNavigationPanel = new OpenLayers.Control.Panel({div : OpenLayers.Util.getElement('map-navigation')});
+  map.addControl(mNavigationPanel);
+  var myZoomInControl = new OpenLayers.Control.ZoomBox({
+        title: "Zoom In Box: draw a box on the map, to see the area at a larger scale.",
+        displayClass:'right icon-zoom-in icon-2x olControlZoomBoxIn',
+        div : OpenLayers.Util.getElement('map-navigation-panel'),
+        out: false
+      });
+  //mMap.addControl(myZoomInControl);
+
+  var myZoomOutControl = new OpenLayers.Control.ZoomBox({
+        title: "Zoom Out Box: draw a box on the map, to see the area at a smaller scale.",
+        displayClass:'right icon-zoom-out icon-2x olControlZoomBoxOut', 
+        out: true
+      });
+  //mMap.addControl(myZoomOutControl);
+
+    var myNavigationControl = new OpenLayers.Control.Navigation({
+    title : "Pan map: click and drag map to move the map in the direction of the mouse.",
+    zoomWheelEnabled: false,
+    displayClass:'right icon-move icon-2x olControlNavigation',
+    }
+  );
+  //mMap.addControl(myNavigationControl);
+
+    var myHistoryControl = new OpenLayers.Control.NavigationHistory({
+  nextOptions: {
+      title : "Next view: quickly jump to the next map view, works only with prevoius view.",
+      displayClass:'right icon-chevron-right icon-2x olControlNavigationHistoryNext',
+    },
+  previousOptions: {
+      title : "Previous view: quickly jump to the prevoius map view.",
+      displayClass:'right icon-chevron-left icon-2x olControlNavigationHistoryPrevious',
+    }
+  });
+  mNavigationPanel.addControls([myZoomInControl,myZoomOutControl, myNavigationControl, myHistoryControl.previous, myHistoryControl.next]);
 }
 
 function resetSceneZIndices() {

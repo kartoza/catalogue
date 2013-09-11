@@ -514,3 +514,13 @@ div.dr_row{
 .form-error {
     color: #B94A48;
 }
+
+#map-navigation {
+    width: 450px;
+    height: 50px;
+    z-index: 101;
+    position: fixed;
+    bottom: 50px;
+    left: 50px;
+    background: #ffffff;
+}
