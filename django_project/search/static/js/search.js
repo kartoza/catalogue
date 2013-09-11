@@ -1,4 +1,4 @@
-var map = new OpenLayers.Map( 'map', {controls: []});
+var map;
 var SearchPanelState = true;
 var CartPanelState = false;
 var ResultPanelState = false;
@@ -10,15 +10,49 @@ if (typeof APP == 'undefined') {
     $APP = $(APP);
 }
 
+/* Transform an openlayers bounds object such that
+ * it matches the CRS of the map
+ * @param a bounds object (assumed to be in EPSG:4326)
+ * @return a new bounds object projected into the map CRS
+ */
+function transformBounds(theBounds)
+{
+  var myBounds = theBounds.clone();
+  var myCRS = new OpenLayers.Projection("EPSG:4326");
+  var toCRS = map.getProjectionObject() || new OpenLayers.Projection("EPSG:900913");
+  myBounds.transform(myCRS, toCRS);
+  return myBounds;
+}
+
 function initMap() {
-    var layer = new OpenLayers.Layer.OSM( "Simple OSM Map");
-    map.addLayer(layer);
-    map.setCenter(
-        new OpenLayers.LonLat(-71.147, 42.472).transform(
-            new OpenLayers.Projection("EPSG:4326"),
-            map.getProjectionObject()
-        ), 12
-    );
+
+    var options = {
+        projection : new OpenLayers.Projection("EPSG:900913"),
+        displayProjection : new OpenLayers.Projection("EPSG:4326"),
+        units : 'm',
+        maxResolution: 156543.0339,
+        maxExtent: new OpenLayers.Bounds(-20037508.34, -20037508.34,20037508.34, 20037508.34),
+        numZoomLevels : 18,
+        controls: [] //no controls by default we add them explicitly lower down
+      };
+    map = new OpenLayers.Map('map', options);
+    var layerMapnik = new OpenLayers.Layer.OSM("Open Street Map");
+    var layerSearch = new OpenLayers.Layer.Vector("search_geometry");
+    myLayersList = [
+        WEB_LAYERS.zaSpot2mMosaic2010TC,
+        WEB_LAYERS.zaSpot2mMosaic2009TC,
+        WEB_LAYERS.zaSpot2mMosaic2008TC,
+        WEB_LAYERS.zaSpot2mMosaic2007TC,
+        WEB_LAYERS.zaSpot10mMosaic2010,
+        WEB_LAYERS.zaSpot10mMosaic2009,
+        WEB_LAYERS.zaSpot10mMosaic2008,
+        WEB_LAYERS.zaSpot10mMosaic2007,
+        WEB_LAYERS.zaRoadsBoundaries,
+        layerMapnik,
+        layerSearch
+    ];
+    map.addLayers(myLayersList);
+    map.zoomToExtent( transformBounds(new OpenLayers.Bounds(14.0,-35.0,34.0,-21.0)));
 }
 
 function toggleSearchPanel() {
@@ -410,6 +444,7 @@ APP.ResultGridView = Backbone.View.extend({
         return this;
     },
     renderItem: function(item) {
+        console.log(item);
         var myItem = new APP.ResultGridViewItem({
             model:item,
             collection:this.collection
