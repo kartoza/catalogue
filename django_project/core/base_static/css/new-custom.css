@@ -536,6 +536,7 @@ div.dr_row{
     color: #000;
     background: #ffffff;
     display: none;
+    padding-top: 2px;
 }
 
 #map-layerswitcher-control {
