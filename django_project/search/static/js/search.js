@@ -35,6 +35,48 @@ function transformGeometry(theGeometry)
   return myGeometry;
 }
 
+function switchBaseLayer(name, el) {
+    map.setBaseLayer(map.getLayersByName(name)[0]);
+    $('#map-layerswitcher .visible').removeClass('visible');
+    $(el).addClass('visible');
+}
+
+function switchVectorLayer(name, el) {
+    var layer = map.getLayersByName(name)[0];
+    if (layer.visibility) {
+        layer.setVisibility(false);
+        $(el).removeClass('visible_layer');
+    } else {
+        layer.setVisibility(true);
+        $(el).addClass('visible_layer');
+    }
+}
+
+function populateLayerSwitcher() {4
+    var div = $('#map-layerswitcher');
+    var layerHTML;
+    var visible;
+    var js_layer_switch;
+    _.each(map.layers, function(val) {
+
+        if (val.visibility && val.isBaseLayer) {
+            visible = 'visible';
+        } else if (val.visibility)
+            visible = 'visible_layer';
+        else {
+            visible = '';
+        }
+
+        if (val.isBaseLayer) {
+            js_layer_switch = ' onclick="switchBaseLayer(\''+val.name+'\', this);" '
+        } else {
+            js_layer_switch = ' onclick="switchVectorLayer(\''+val.name+'\', this);" ';
+        }
+        layerHTML = '<div class="layer-control '+ visible +'" '+js_layer_switch+'><img src="/static/images/'+WEB_LAYERS_IMAGE[val.name]+'" /><p>'+val.name+'</p></div>'
+        div.append(layerHTML);
+    });
+}
+
 function initMap() {
 
     var options = {
@@ -48,7 +90,7 @@ function initMap() {
       };
     map = new OpenLayers.Map('map', options);
     var layerMapnik = new OpenLayers.Layer.OSM("Open Street Map");
-    layerSearch = new OpenLayers.Layer.Vector("search_geometry");
+    layerSearch = new OpenLayers.Layer.Vector("Search geometry");
     myLayersList = [
         WEB_LAYERS.zaSpot2mMosaic2010TC,
         WEB_LAYERS.zaSpot2mMosaic2009TC,
@@ -120,8 +162,7 @@ function initMap() {
   });
   mNavigationPanel.addControls([myZoomInControl,myZoomOutControl, myNavigationControl, myHistoryControl.previous, myHistoryControl.next]);
 
-  var layerswitcher = new OpenLayers.Control.LayerSwitcher();
-  map.addControl(layerswitcher);
+  populateLayerSwitcher();
 }
 
 function resetSceneZIndices() {

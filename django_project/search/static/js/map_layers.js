@@ -1,6 +1,7 @@
 var WMS_SERVER = 'maps.sansa.org.za';
 
 WEB_LAYERS = {}
+WEB_LAYERS_IMAGE = {}
 // Streets and boundaries for SA base map with an
 // underlay of spot 2010 2m mosaic
 //
@@ -437,3 +438,15 @@ WEB_LAYERS.Heatmap_lastweek = new OpenLayers.Layer.Image(
 //   transparent: 'true'
 // },
 // {isBaseLayer: false});
+
+WEB_LAYERS_IMAGE['2m Mosaic 2010 TC'] = 'zaLayer.jpeg';
+WEB_LAYERS_IMAGE['2m Mosaic 2009 TC'] = 'zaLayer.jpeg';
+WEB_LAYERS_IMAGE['2m Mosaic 2008 TC'] = 'zaLayer.jpeg';
+WEB_LAYERS_IMAGE['2m Mosaic 2007 TC'] = 'zaLayer.jpeg';
+WEB_LAYERS_IMAGE['10m Mosaic 2010 TC'] = 'zaLayer.jpeg';
+WEB_LAYERS_IMAGE['10m Mosaic 2009 TC'] = 'zaLayer.jpeg';
+WEB_LAYERS_IMAGE['10m Mosaic 2008 TC'] = 'zaLayer.jpeg';
+WEB_LAYERS_IMAGE['10m Mosaic 2007 TC'] = 'zaLayer.jpeg';
+WEB_LAYERS_IMAGE['SA Vector'] = 'zaLayer2.jpeg';
+WEB_LAYERS_IMAGE['Open Street Map'] = 'layerOSM.png';
+WEB_LAYERS_IMAGE['Search geometry'] = 'mockup3.png';
