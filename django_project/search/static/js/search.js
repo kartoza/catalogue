@@ -82,15 +82,16 @@ function initMap() {
   map.addControl(mNavigationPanel);
   var myZoomInControl = new OpenLayers.Control.ZoomBox({
         title: "Zoom In Box: draw a box on the map, to see the area at a larger scale.",
-        displayClass:'right icon-zoom-in icon-2x olControlZoomBoxIn',
-        div : OpenLayers.Util.getElement('map-navigation-panel'),
+        displayClass:'right icon-zoom-in icon-2x icon-border olControlZoomBoxIn',
+        div : OpenLayers.Util.getElement('map-navigation'),
         out: false
       });
   //mMap.addControl(myZoomInControl);
 
   var myZoomOutControl = new OpenLayers.Control.ZoomBox({
         title: "Zoom Out Box: draw a box on the map, to see the area at a smaller scale.",
-        displayClass:'right icon-zoom-out icon-2x olControlZoomBoxOut', 
+        displayClass:'right icon-zoom-out icon-2x icon-border olControlZoomBoxOut',
+        div : OpenLayers.Util.getElement('map-navigation'),
         out: true
       });
   //mMap.addControl(myZoomOutControl);
@@ -98,7 +99,8 @@ function initMap() {
     var myNavigationControl = new OpenLayers.Control.Navigation({
     title : "Pan map: click and drag map to move the map in the direction of the mouse.",
     zoomWheelEnabled: false,
-    displayClass:'right icon-move icon-2x olControlNavigation',
+    displayClass:'right icon-move icon-2x icon-border olControlNavigation',
+    div : OpenLayers.Util.getElement('map-navigation'),
     }
   );
   //mMap.addControl(myNavigationControl);
@@ -106,11 +108,13 @@ function initMap() {
     var myHistoryControl = new OpenLayers.Control.NavigationHistory({
   nextOptions: {
       title : "Next view: quickly jump to the next map view, works only with prevoius view.",
-      displayClass:'right icon-chevron-right icon-2x olControlNavigationHistoryNext',
+      displayClass:'right icon-chevron-right icon-2x icon-border olControlNavigationHistoryNext',
+      div : OpenLayers.Util.getElement('map-navigation'),
     },
   previousOptions: {
       title : "Previous view: quickly jump to the prevoius map view.",
-      displayClass:'right icon-chevron-left icon-2x olControlNavigationHistoryPrevious',
+      displayClass:'right icon-chevron-left icon-2x icon-border olControlNavigationHistoryPrevious',
+      div : OpenLayers.Util.getElement('map-navigation'),
     }
   });
   mNavigationPanel.addControls([myZoomInControl,myZoomOutControl, myNavigationControl, myHistoryControl.previous, myHistoryControl.next]);

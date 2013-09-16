@@ -520,7 +520,8 @@ div.dr_row{
     height: 50px;
     z-index: 101;
     position: fixed;
-    bottom: 50px;
+    bottom: 30px;
     left: 50px;
-    background: #ffffff;
+    color: #ffffff;
+    /*background: #ffffff;*/
 }
