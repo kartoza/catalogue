@@ -184,7 +184,11 @@
         </div>
       </div>
       <div id="map"></div>
+      <div id="map-layerswitcher-control">
+        <div class="right icon-globe icon-2x icon-border"></div>
+      </div>
       <div id="map-navigation"></div>
+      <div id="map-layerswitcher"></div>
     </div>
   </div>
   <div id="ajax-modal" class="modal hide fade" tabindex="-1"></div>
@@ -214,6 +218,9 @@
     });
     $('#cart-panel-download-button').click(function() {
       toggleCartDownloadButton();
+    });
+    $('#map-layerswitcher-control').click(function() {
+      toggleLayerSwitcher();
     });
     $('#result-panel-download-button-shp').click(function() {
       window.open(

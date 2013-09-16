@@ -5,6 +5,7 @@ var ResultPanelState = false;
 var ResultDownloadOptionsState = false;
 var CartDownloadOptionsState = false;
 var LastSelectedResultItem = "0";
+var LayerSwitcherState = false;
 
 if (typeof APP == 'undefined') {
     APP = {};
@@ -118,6 +119,9 @@ function initMap() {
     }
   });
   mNavigationPanel.addControls([myZoomInControl,myZoomOutControl, myNavigationControl, myHistoryControl.previous, myHistoryControl.next]);
+
+  var layerswitcher = new OpenLayers.Control.LayerSwitcher();
+  map.addControl(layerswitcher);
 }
 
 function resetSceneZIndices() {
@@ -339,6 +343,18 @@ function toggleCartDownloadButton() {
         $("#cart-panel-download-button").animate({top: 170}, 200 );
         setTimeout(showCartDownloadOptions,210);
         CartDownloadOptionsState = true;
+    }
+}
+
+function toggleLayerSwitcher() {
+    if (LayerSwitcherState) {
+        $('#map-layerswitcher').hide();
+        $('#map-layerswitcher-control').css('color','#FFFFFF');
+        LayerSwitcherState = false;
+    } else {
+        $('#map-layerswitcher').show();
+        $('#map-layerswitcher-control').css('color','green');
+        LayerSwitcherState = true;
     }
 }
 
