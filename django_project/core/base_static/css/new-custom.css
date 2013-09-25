@@ -569,6 +569,7 @@ div.dr_row{
     position: relative;
     float: left;
     color: #ffffff;
+    cursor: pointer; cursor: hand;
     /*background: #ffffff;*/
 }
 
