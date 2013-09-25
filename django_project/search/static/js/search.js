@@ -122,8 +122,8 @@ function initMap() {
     layerSearch.selectFeatureControl = myHighlightControl;
 
     mNavigationPanel = new OpenLayers.Control.Panel({div : OpenLayers.Util.getElement('map-navigation')});
-  map.addControl(mNavigationPanel);
-  var myZoomInControl = new OpenLayers.Control.ZoomBox({
+    map.addControl(mNavigationPanel);
+    var myZoomInControl = new OpenLayers.Control.ZoomBox({
         title: "Zoom In Box: draw a box on the map, to see the area at a larger scale.",
         displayClass:'right icon-zoom-in icon-2x icon-border olControlZoomBoxIn',
         div : OpenLayers.Util.getElement('map-navigation'),
@@ -163,6 +163,14 @@ function initMap() {
   mNavigationPanel.addControls([myZoomInControl,myZoomOutControl, myNavigationControl, myHistoryControl.previous, myHistoryControl.next]);
 
   populateLayerSwitcher();
+
+  map.addControl(new OpenLayers.Control.MousePosition({'div': document.getElementById("map-control-position")}));
+  map.addControl(new OpenLayers.Control.ScaleBar({
+      align: "left",
+      minWidth: 150,
+      maxWidth: 200,
+      div: document.getElementById("map-control-scalebar")
+    }));
 }
 
 function resetSceneZIndices() {

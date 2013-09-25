@@ -131,7 +131,8 @@ PIPELINE_JS = {
             'js/bootstrap-listTree.js',
             'js/perfect-scrollbar-0.4.3.with-mousewheel.min.js',
             'js/jquery.blockUI.js',
-            'js/map_layers.js'
+            'js/map_layers.js',
+            'js/openlayers-plugins/ScaleBar.js'
         ),
         'output_filename': 'js/fluid.js',
     }

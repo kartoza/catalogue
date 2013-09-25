@@ -515,6 +515,31 @@ div.dr_row{
     color: #B94A48;
 }
 
+#map-controls2 {
+    width: 200px;
+    height: 53px;
+    z-index: 100;
+    position: fixed;
+    bottom: 40px;
+    right: 10px;
+    color: #ffffff;
+    font-size: 10px;
+}
+
+#map-control-position {
+    position: relative;
+    float:left;
+    clear:left;
+    margin-left: 20px;
+    margin-bottom: 3px;
+}
+
+#map-control-scalebar {
+    position: relative;
+    float:left;
+    clear:left;
+}
+
 #map-controls {
     width: 277px;
     height: 40px;
