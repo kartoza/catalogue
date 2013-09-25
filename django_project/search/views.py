@@ -525,7 +525,25 @@ def submitSearch(theRequest):
     if theRequest.method == 'POST':
         myData = simplejson.loads(theRequest.body)
 
-    mySearch = Search()
+    # detect search request attributes
+    myAttrs = {}
+    if 'cloud_cover' in myData:
+        myAttrs['cloud_mean'] = myData.get('cloud_cover')
+    if 'path' in myData:
+        myAttrs['k_orbit_path'] = myData.get('path')
+    if 'row' in myData:
+        myAttrs['j_frame_row'] = myData.get('row')
+    if 'sensor_inc_end' in myData:
+        myAttrs['sensor_inclination_angle_end'] = myData.get('sensor_inc_end')
+    if 'sensor_inc_start' in myData:
+        myAttrs['sensor_inclination_angle_start'] = myData.get(
+            'sensor_inc_start')
+    if 'resolution' in myData:
+        myAttrs['spatial_resolution'] = myData.get('resolution')
+    if 'band_count' in myData:
+        myAttrs['band_count'] = myData.get('band_count')
+    # create new Search object
+    mySearch = Search(**myAttrs)
     mySearch.save()
 
     if myData.get('Satellites'):
