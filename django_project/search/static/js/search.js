@@ -410,13 +410,15 @@ function toggleLayerSwitcher() {
 function addNewDateRange() {
     var date_from = $('#date_from').val();
     var date_to = $('#date_to').val();
+    var d1 = new Date (date_from);
+    var d2 = new Date (date_to);
     if (date_from == '') {
         $('#date_from_cg').addClass('error');
         $('#date_from').focus();
     } else if (date_to == '') {
         $('#date_to_cg').addClass('error');
         $('#date_to').focus();
-    } else if(date_to < date_from) {
+    } else if(d2 < d1) {
         $('#date_to_cg').addClass('error');
         $('#date_to_inline').html('Date has to be later then date from!');
     } else {
