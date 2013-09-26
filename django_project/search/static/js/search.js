@@ -355,14 +355,12 @@ function showResultPanelButtons() {
 
 function blockResultPanel() {
     $('body').block({
-        message: 'Please wait <i class="icon-refresh icon-spin"></i>',
+        message: '<div class="wrapperloading"><div class="loading up"></div><div class="loading down"></div></div>',
         css: {
             border: '1px solid #000',
-            background: '#FFF',
-            width: '350px',
-            height:'200px',
-            'line-height': '200px',
-            'font-size': '24px'
+            background: 'rgba(0, 0, 0, 0.3)',
+            width: '550px',
+            height:'550px'
         }
     });
 }
@@ -604,7 +602,8 @@ APP.ResultGridView = Backbone.View.extend({
         blockResultPanel();
         _.extend(this.collection, options);
         this.collection.fetch({
-            reset: true
+            reset: true,
+            error: function() { unblockResultPanel(); }
         });
     },
     render: function() {
