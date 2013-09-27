@@ -107,6 +107,7 @@ function initMap() {
     map = new OpenLayers.Map('map', options);
     var layerMapnik = new OpenLayers.Layer.OSM("Open Street Map");
     layerSearch = new OpenLayers.Layer.Vector("Search geometry");
+    geoSearch = new OpenLayers.Layer.Vector("Polygon select");
     myLayersList = [
         WEB_LAYERS.zaSpot2mMosaic2010TC,
         WEB_LAYERS.zaSpot2mMosaic2009TC,
@@ -136,9 +137,10 @@ function initMap() {
     map.addControl(myHighlightControl);
     myHighlightControl.activate();
     layerSearch.selectFeatureControl = myHighlightControl;
-    layerSearch.events.on({"featuremodified" : modifyWKT});
-    layerSearch.events.on({"featureadded" : addWKT});
-    layerSearch.events.on({"featureremoved": removeWKT});
+    map.addLayer(geoSearch);
+    geoSearch.events.on({"featuremodified" : modifyWKT});
+    geoSearch.events.on({"featureadded" : addWKT});
+    geoSearch.events.on({"featureremoved": removeWKT});
     mNavigationPanel = new OpenLayers.Control.Panel({div : OpenLayers.Util.getElement('map-navigation')});
     map.addControl(mNavigationPanel);
     var myZoomInControl = new OpenLayers.Control.ZoomBox({
@@ -180,13 +182,13 @@ function initMap() {
   });
   mNavigationPanel.addControls([myZoomInControl,myZoomOutControl, myNavigationControl, myHistoryControl.previous, myHistoryControl.next]);
 
-  var myDrawingControl = new OpenLayers.Control.DrawFeature(layerSearch,
+  var myDrawingControl = new OpenLayers.Control.DrawFeature(geoSearch,
       OpenLayers.Handler.Polygon, {
     'displayClass': 'right icon-check-empty icon-2x icon-border olControlDrawFeaturePolygon',
     'title': 'Capture polygon: left click to add points, double click to finish capturing',
       div : OpenLayers.Util.getElement('map-navigation'),
       });
-  var myModifyFeatureControl = new OpenLayers.Control.ModifyFeature(layerSearch, {
+  var myModifyFeatureControl = new OpenLayers.Control.ModifyFeature(geoSearch, {
       'displayClass': 'right icon-edit icon-2x icon-border olControlModifyFeature',
       'title': 'Modify polygon: left click to move/add points, hover and press <i>delete</i> to delete points',
       div : OpenLayers.Util.getElement('map-navigation'),
@@ -194,7 +196,7 @@ function initMap() {
   var myDestroyFeaturesControl = new DestroyFeatures({
       'displayClass': 'right icon-remove icon-2x icon-border destroyFeature',
       'title':'Delete polygon: deletes polygon',
-      'layer': layerSearch,
+      'layer': geoSearch,
       div : OpenLayers.Util.getElement('map-navigation'),
       }
     );
@@ -241,10 +243,10 @@ function addWKT(event)
   // This function will sync the contents of the `vector` layer with the
   // WKT in the text field.
   // Make sure to remove any previously added features.
-  if (layerSearch.features.length > 1){
-    myOldFeatures = [layerSearch.features[0]];
-    layerSearch.removeFeatures(myOldFeatures);
-    layerSearch.destroyFeatures(myOldFeatures);
+  if (geoSearch.features.length > 1){
+    myOldFeatures = [geoSearch.features[0]];
+    geoSearch.removeFeatures(myOldFeatures);
+    geoSearch.destroyFeatures(myOldFeatures);
   }
   writeWKT(event.feature.geometry);
 }
