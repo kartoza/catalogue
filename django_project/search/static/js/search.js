@@ -6,11 +6,19 @@ var ResultDownloadOptionsState = false;
 var CartDownloadOptionsState = false;
 var LastSelectedResultItem = "0";
 var LayerSwitcherState = false;
+var mWKTFormat = new OpenLayers.Format.WKT();
 
 if (typeof APP == 'undefined') {
     APP = {};
     $APP = $(APP);
 }
+
+var DestroyFeatures = OpenLayers.Class(OpenLayers.Control, {
+    type: OpenLayers.Control.TYPE_BUTTON,
+    trigger: function() {
+        this.layer.destroyFeatures();
+    }
+});
 
 /* Transform an openlayers bounds object such that
  * it matches the CRS of the map
@@ -32,6 +40,14 @@ function transformGeometry(theGeometry)
   var myCRS = new OpenLayers.Projection("EPSG:4326");
   var toCRS = map.getProjectionObject() || new OpenLayers.Projection("EPSG:900913");
   myGeometry.transform(myCRS,toCRS);
+  return myGeometry;
+}
+
+function reverseTransformGeometry(theGeometry)
+{
+  var myGeometry = theGeometry.clone();
+  var myCRS = new OpenLayers.Projection("EPSG:4326");
+  myGeometry.transform(map.getProjectionObject(),myCRS);
   return myGeometry;
 }
 
@@ -120,7 +136,9 @@ function initMap() {
     map.addControl(myHighlightControl);
     myHighlightControl.activate();
     layerSearch.selectFeatureControl = myHighlightControl;
-
+    layerSearch.events.on({"featuremodified" : modifyWKT});
+    layerSearch.events.on({"featureadded" : addWKT});
+    layerSearch.events.on({"featureremoved": removeWKT});
     mNavigationPanel = new OpenLayers.Control.Panel({div : OpenLayers.Util.getElement('map-navigation')});
     map.addControl(mNavigationPanel);
     var myZoomInControl = new OpenLayers.Control.ZoomBox({
@@ -162,6 +180,26 @@ function initMap() {
   });
   mNavigationPanel.addControls([myZoomInControl,myZoomOutControl, myNavigationControl, myHistoryControl.previous, myHistoryControl.next]);
 
+  var myDrawingControl = new OpenLayers.Control.DrawFeature(layerSearch,
+      OpenLayers.Handler.Polygon, {
+    'displayClass': 'right icon-check-empty icon-2x icon-border olControlDrawFeaturePolygon',
+    'title': 'Capture polygon: left click to add points, double click to finish capturing',
+      div : OpenLayers.Util.getElement('map-navigation'),
+      });
+  var myModifyFeatureControl = new OpenLayers.Control.ModifyFeature(layerSearch, {
+      'displayClass': 'right icon-edit icon-2x icon-border olControlModifyFeature',
+      'title': 'Modify polygon: left click to move/add points, hover and press <i>delete</i> to delete points',
+      div : OpenLayers.Util.getElement('map-navigation'),
+  });
+  var myDestroyFeaturesControl = new DestroyFeatures({
+      'displayClass': 'right icon-remove icon-2x icon-border destroyFeature',
+      'title':'Delete polygon: deletes polygon',
+      'layer': layerSearch,
+      div : OpenLayers.Util.getElement('map-navigation'),
+      }
+    );
+  mNavigationPanel.addControls([myDrawingControl, myModifyFeatureControl, myDestroyFeaturesControl]);
+
   populateLayerSwitcher();
 
   map.addControl(new OpenLayers.Control.MousePosition({'div': document.getElementById("map-control-position")}));
@@ -171,6 +209,51 @@ function initMap() {
       maxWidth: 200,
       div: document.getElementById("map-control-scalebar")
     }));
+}
+
+/* ------------------------------------------------------
+ * OpenLayers WKT manipulators
+ * -------------------------------------------------------- */
+function readWKT(wkt)
+{
+  // OpenLayers cannot handle EWKT -- we make sure to strip it out.
+  // EWKT is only exposed to OL if there's a validation error in the admin.
+  var myRegularExpression = new RegExp("^SRID=\\d+;(.+)", "i");
+  var myMatch = myRegularExpression.exec(wkt);
+  if (myMatch)
+  {
+    wkt = myMatch[1];
+  }
+  var feature = mWKTFormat.read(wkt);
+  if (feature) {
+    return feature.geometry;
+  }
+}
+function writeWKT(geometry)
+{
+  myGeometry = geometry.clone();
+  myUnprojectedGeometry = reverseTransformGeometry(myGeometry);
+  document.getElementById('id_geometry').value =
+   'SRID=4326;' + mWKTFormat.write(new OpenLayers.Feature.Vector(myUnprojectedGeometry));
+}
+function addWKT(event)
+{
+  // This function will sync the contents of the `vector` layer with the
+  // WKT in the text field.
+  // Make sure to remove any previously added features.
+  if (layerSearch.features.length > 1){
+    myOldFeatures = [layerSearch.features[0]];
+    layerSearch.removeFeatures(myOldFeatures);
+    layerSearch.destroyFeatures(myOldFeatures);
+  }
+  writeWKT(event.feature.geometry);
+}
+function modifyWKT(event)
+{
+  writeWKT(event.feature.geometry);
+}
+function removeWKT(event) {
+  document.getElementById('id_geometry').value = '';
 }
 
 function resetSceneZIndices() {
@@ -506,6 +589,10 @@ function submitSearchForm() {
 
     if ($('#band_count').val() != '') {
         search_data['band_count'] = $('#band_count').val();
+    }
+
+    if ($('#id_geometry').val() != '') {
+        search_data['geometry'] = $('#id_geometry').val();
     }
 
     if (form_ok) {

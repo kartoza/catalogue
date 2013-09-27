@@ -541,7 +541,7 @@ div.dr_row{
 }
 
 #map-controls {
-    width: 277px;
+    width: 422px;
     height: 40px;
     z-index: 100;
     position: fixed;
@@ -564,7 +564,7 @@ div.dr_row{
 }
 
 #map-navigation {
-    width: 228px;
+    width: 375px;
     height: 50px;
     z-index: 101;
     position: relative;
