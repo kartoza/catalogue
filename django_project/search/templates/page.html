@@ -32,8 +32,9 @@
           <div class="clear-shadow"></div>
 
           <div class="content">
-            <form class="form-horizontal">
+            <form id="catalogueSearch" class="form-horizontal" action={% url 'submitSearch' %}>
               {% csrf_token %}
+              {{ searchform.geometry }}
             <div class="content-1 content_div">
               <h2>SATELLITE</h2>
               <hr />
@@ -42,10 +43,10 @@
               <hr />
               <div class="search-options">
                 <span class="search-panel-input">
-                  <input id="free_imagery" class="search-panel-input-chk" type="checkbox" value="SPOT 5 HRG"> Free imagery only
+                  <input name="free_imagery" id="free_imagery" class="search-panel-input-chk" type="checkbox" value="SPOT 5 HRG"> Free imagery only
                 </span>
                 <span class="search-panel-input">
-                  <input id="panchromatic_imagery" class="search-panel-input-chk" type="checkbox" value="SPOT 5 HRG" checked="checked"> Panchromatic images only
+                  <input name="panchromatic_imagery" id="panchromatic_imagery" class="search-panel-input-chk" type="checkbox" value="SPOT 5 HRG" checked="checked"> Panchromatic images only
                 </span>
               </div>
               <hr />
@@ -72,87 +73,76 @@
               </div>
               <div class="date-range"><p onclick="addNewDateRange();" class="button"><i class="icon-plus"></i> Add new date range</p></div>
             <div id="date_range"></div>
+              {{ dateformset.management_form }}
+              {% for form in dateformset.forms %}
+                {{ form.as_p }}
+              {% endfor %}
             </div>
             <div class="content-3 content_div">
               <h2>CLOUD COVER</h2>
               <hr />
               <div class="control-group">
-                <label class="control-label" for="cloud_cover">Cloud cover</label>
+                <label class="control-label" for="id_cloud_mean">Cloud cover</label>
                 <div class="controls">
-                  <input id="cloud_cover" type="text" placeholder="Cloud cover">
+                  {{ searchform.cloud_mean }}
                 </div>
               </div>
               <h2>PATH & ROW</h2>
               <hr />
               <div class="control-group">
-                <label class="control-label" for="path"> Path (K/orbit) </label>
+                <label class="control-label" for="id_k_orbit_path"> Path (K/orbit) </label>
                 <div class="controls">
-                  <input id="path" type="text" placeholder="Path (K/orbit)">
+                  {{ searchform.k_orbit_path }}
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label" for="row"> Row (J/frame)  </label>
+                <label class="control-label" for="id_j_frame_row"> Row (J/frame)  </label>
                 <div class="controls">
-                  <input type="text" id="row" placeholder="Row (J/frame)">
+                  {{ searchform.j_frame_row }}
                 </div>
               </div>
               <h2>AREA OF INTEREST</h2>
               <hr />
               <div class="control-group">
-                <label class="control-label" for="bbox"> Bounding Box/Circle  </label>
+                <label class="control-label" for="id_aoi_geometry"> Bounding Box/Circle  </label>
                 <div class="controls">
-                  <input type="text" id="bbox" placeholder="Bounding Box/Circle">
+                  {{ searchform.aoi_geometry }}
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label" for="geo_file">  Geometry file   </label>
+                <label class="control-label" for="id_geometry_file">  Geometry file   </label>
                 <div class="controls">
-                  <input type="file" id="geo_file" placeholder="Geometry file">
+                  {{ searchform.geometry_file }}
                 </div>
               </div>
               <h2>OTHER OPTIONS</h2>
               <hr />
               <div class="control-group">
-                <label class="control-label" for="sensor_inc_start">  Sensor inclination angle start   </label>
+                <label class="control-label" for="id_sensor_inclination_angle_start">  Sensor inclination angle start   </label>
                 <div class="controls">
-                  <input type="text" id="sensor_inc_start" placeholder="">
+                  {{ searchform.sensor_inclination_angle_start }}
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label" for="sensor_inc_end">  Sensor inclination angle end    </label>
+                <label class="control-label" for="id_sensor_inclination_angle_end">  Sensor inclination angle end    </label>
                 <div class="controls">
-                  <input type="text" id="sensor_inc_end" placeholder="">
+                  {{ searchform.sensor_inclination_angle_end }}
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label" for="resolution">   Spatial resolution    </label>
+                <label class="control-label" for="id_spatial_resolution">   Spatial resolution    </label>
                 <div class="controls">
-                  <select id="resolution">
-              <option value="">--</option>
-              <option value="0"><= 1m</option>
-              <option value="1">1m - 2m</option>
-              <option value="2">2m - 6m</option>
-              <option value="3">6m - 20m</option>
-              <option value="4">20m - 35m</option>
-              <option value="5">35m - 60m</option>
-            </select>
+                  {{ searchform.spatial_resolution }}
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label" for="band_count">   Band count     </label>
+                <label class="control-label" for="id_band_count">   Band count     </label>
                 <div class="controls">
-                  <select id="band_count">
-              <option value="">--</option>
-              <option value="0">Panchromatic</option>
-              <option value="1">True colour (3 bands RGB)</option>
-              <option value="2">Multispectral (4 - 8 bands)</option>
-              <option value="3">Superspectral (9 - 40 bands)</option>
-              <option value="4">Hyperspectral (> 41 bands)</option>
-            </select>
+                  {{ searchform.band_count }}
                 </div>
               </div>
+              </form> {# end form #}
             </div>
-          </form>
           </div>
         </section>
       </div>
@@ -216,6 +206,7 @@
   <script type="text/javascript" src="{% static 'js/search.js' %}"></script>
   <script>
   $( document ).ready(function() {
+
     initMap();
     defaultPanelState();
     $('.listTree').listTree(data, { "startCollapsed": true, "selected": [] });

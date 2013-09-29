@@ -517,7 +517,19 @@ function deleteDateRange(elem) {
     $(elem).parent().remove();
 }
 
+
+
 function submitSearchForm() {
+    $('#catalogueSearch').ajaxForm({
+        type: 'POST',
+        beforeSubmit: function(formData, jqForm, options) {
+            console.log(formData,jqForm,options);
+        }
+
+    });
+    $('#catalogueSearch').submit();
+
+    /*
     var search_data = new Object();
     var form_ok = true;
 
@@ -618,6 +630,7 @@ function submitSearchForm() {
             }
         });
     }
+    */
 }
 
 var data = null;

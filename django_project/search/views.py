@@ -461,6 +461,10 @@ def searchView(theRequest):
     """
     Perform an attribute and spatial search for imagery
     """
+    myForm = AdvancedSearchForm()
+    myFormset = DateRangeInlineFormSet()
+
+    return {'searchform':myForm, 'dateformset':myFormset}
 
 
 def getSelectOptions(theRequest):
@@ -523,74 +527,109 @@ def submitSearch(theRequest):
     Perform an attribute and spatial search for imagery
     """
     if theRequest.method == 'POST':
-        myData = simplejson.loads(theRequest.body)
+        post_values = theRequest.POST
+        # if the request.POST is not 'multipart/form-data' then QueryDict that
+        # holds POST values is not mutable, however, we need it to be mutable
+        # because 'save_as_new' on inlineformset directly changes values
+        #
+        # we need to force this behavior
+        post_values._mutable = True
 
-    # detect search request attributes
-    myAttrs = {}
-    if 'cloud_cover' in myData:
-        myAttrs['cloud_mean'] = myData.get('cloud_cover')
-    if 'path' in myData:
-        myAttrs['k_orbit_path'] = myData.get('path')
-    if 'row' in myData:
-        myAttrs['j_frame_row'] = myData.get('row')
-    if 'sensor_inc_end' in myData:
-        myAttrs['sensor_inclination_angle_end'] = myData.get('sensor_inc_end')
-    if 'sensor_inc_start' in myData:
-        myAttrs['sensor_inclination_angle_start'] = myData.get(
-            'sensor_inc_start')
-    if 'resolution' in myData:
-        myAttrs['spatial_resolution'] = myData.get('resolution')
-    if 'band_count' in myData:
-        myAttrs['band_count'] = myData.get('band_count')
-    # create new Search object
-    mySearch = Search(**myAttrs)
-    mySearch.save()
+        logger.debug('Post vars: %s', str(post_values))
+        myForm = AdvancedSearchForm(post_values, theRequest.FILES)
+        logger.debug('Uploaded files: %s', theRequest.FILES)
 
-    if myData.get('Satellites'):
-        mySearch.satellite.add(
-            *Satellite.objects.filter(
-                pk__in=[obj[2:] for obj in myData['Satellites']]
-            ).all()
-        )
+        if myForm.is_valid():
+            import pdb; pdb.set_trace()
+            logger.info('AdvancedForm is VALID')
+            mySearch = myForm.save(commit=False)
+            # ABP: save_as_new is necessary due to the fact that a new Search
+            # object is always
+            # created even on Search modify pages
+            myFormset = DateRangeInlineFormSet(
+                post_values, theRequest.FILES, instance=mySearch,
+                save_as_new=True)
+            if myFormset.is_valid():
+                logger.info('Daterange formset is VALID')
+                myLatLong = {'longitude': 0, 'latitude': 0}
 
-    if myData.get('Collections'):
-        mySearch.collection.add(
-            *Collection.objects.filter(
-                pk__in=[obj[2:] for obj in myData['Collections']]
-            ).all()
-        )
+                if settings.USE_GEOIP:
+                    try:
+                        myGeoIpUtils = GeoIpUtils()
+                        myLatLong = myGeoIpUtils.getMyLatLong(theRequest)
+                    except:
+                        # raise forms.ValidationError( "Could not get geoip for
+                        # for this request" + traceback.format_exc() )
+                        # do nothing - better in a production environment
+                        pass
+                if myLatLong:
+                    mySearch.ip_position = (
+                        'SRID=4326;POINT(' + str(myLatLong['longitude']) + ' '
+                        + str(myLatLong['latitude']) + ')')
+                #if user is anonymous set to None
+                if theRequest.user.is_anonymous():
+                    mySearch.user = None
+                else:
+                    mySearch.user = theRequest.user
+                mySearch.deleted = False
+                try:
+                    myGeometry = getGeometryFromUploadedFile(
+                        theRequest, myForm, 'geometry_file')
+                    if myGeometry:
+                        mySearch.geometry = myGeometry
+                    else:
+                        logger.info(
+                            'Failed to set search area from uploaded geometry '
+                            'file')
+                except:
+                    logger.error(
+                        'Could not get geometry for this request' +
+                        traceback.format_exc())
+                    logger.info(
+                        'An error occurred trying to set search area from '
+                        'uploaded geometry file')
+                #check if aoi_geometry exists
+                myAOIGeometry = myForm.cleaned_data.get('aoi_geometry')
+                if myAOIGeometry:
+                    logger.info('Using AOI geometry, specified by user')
+                    mySearch.geometry = myAOIGeometry
+                # else use the on-the-fly digitised geometry
+                mySearch.save()
+                """
+                Another side effect of using commit=False is seen when your
+                model has a many-to-many relation with another model. If your
+                model has a many-to-many relation and you specify commit=False
+                when you save a form, Django cannot immediately save the form
+                data for the many-to-many relation. This is because it isn't
+                possible to save many-to-many data for an instance until the
+                instance exists in the database.
 
-    if myData.get('Instrument Types'):
-        mySearch.instrumenttype.add(
-            *InstrumentType.objects.filter(
-                pk__in=[obj[2:] for obj in myData['Instrument Types']]
-            ).all()
-        )
+                To work around this problem, every time you save a form using
+                commit=False, Django adds a save_m2m() method to your ModelForm
+                subclass. After you've manually saved the instance produced by
+                the form, you can invoke save_m2m() to save the many-to-many
+                form data.
 
-    if myData.get('Spectral Groups'):
-        mySearch.spectral_group.add(
-            *SpectralGroup.objects.filter(
-                pk__in=[obj[2:] for obj in myData['Spectral Groups']]
-            ).all()
-        )
+                ref: http://docs.djangoproject.com/en/dev/topics/forms
+                            /modelforms/#the-save-method
+                """
+                myForm.save_m2m()
+                logger.debug('Search: ' + str(mySearch))
+                logger.info('form is VALID after editing')
+                myFormset.save()
+                to_json = {
+                    "guid": mySearch.guid
+                }
+                return HttpResponse(simplejson.dumps(
+                    to_json), mimetype='application/json')
+            else:
+                logger.debug('Daterange formset is NOT VALID')
+                logger.debug(myFormset.errors)
+        else:
+            logger.info('form is INVALID after editing')
+            logger.debug('%s' % myForm.errors)
+            # logger.debug('%s' % myFormset.errors)
 
-    if myData.get('License Type'):
-        mySearch.license_type.add(
-            *License.objects.filter(
-                pk__in=[obj[2:] for obj in myData['License Type']]
-            ).all()
-        )
-
-    mySearch.searchdaterange_set.add(*[
-        SearchDateRange(start_date=obj['date_from'], end_date=obj['date_to'])
-        for obj in myData['Dates']
-    ])
-
-    # finally save the search
-    mySearch.save()
-
-    guid = {
-        'guid': mySearch.guid
-    }
-    return HttpResponse(
-        simplejson.dumps(guid), mimetype='application/json')
+            # form was not valid return 404
+            return HttpResponse(str(myForm.errors), status=404)
+    return HttpResponse('Not a POST!', status=404)
