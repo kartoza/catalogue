@@ -10,7 +10,25 @@
     this.datecount = 0;
     var self=this;
     this.input_element = this.$element.find('input');
-    console.log(this.input_element);
+
+    // TODO: we need to support existing daterange records
+
+    // //Initial fill of dr_text - when modifysearch view is loaded
+    // this.element.find('.dr_row .dr_input').each(function(index, elem){
+    //     //extract date range from the formset
+    //     var myDateRange = $(elem).find(':text').map(function(index,elem){return $(elem).val();});
+    //     //parse the dates
+    //     myStartDate = self._parse_date(myDateRange[0]);
+    //     myEndDate = self._parse_date(myDateRange[1]);
+
+    //     var myDateString = self._format_output(myStartDate, myEndDate);
+    //     $(this).closest('.dr_row').find('.dr_text').html(myDateString);
+
+    //     //increase datecount
+    //     self.datecount++;
+    // });
+    // $('#id_searchdaterange_set-TOTAL_FORMS').val(self.datecount);
+    // $('#id_searchdaterange_set-INITIAL_FORMS').val(self.datecount);
 
     this._setup_events();
   };
@@ -43,9 +61,26 @@
   DateRange.prototype._setup_events = function () {
     var self=this;
     this.$element.find('.date-range').on('click', function () {
+
+      //remove error classes from inputs
+      $('#date_to_cg').removeClass('error');
+      $('#date_from_cg').removeClass('error');
+
+      if ($("#id_start_datepicker").val() === '') {
+        $('#date_from_cg').addClass('error');
+        return false
+      }
+
+      if ($("#id_end_datepicker").val() === '') {
+        $('#date_to_cg').addClass('error');
+        return false;
+      }
+
+
       // get the dates from datepickers and parse them
       var myStartDate = self._parse_date($("#id_start_datepicker").val(),'mm/dd/yy');
       var myEndDate = self._parse_date($("#id_end_datepicker").val(),'mm/dd/yy');
+
 
       if(myStartDate && myEndDate) {
           // basic checks for date range

@@ -75,7 +75,7 @@
                 <div class="date-range"><p class="button"><i class="icon-plus"></i> Add new date range</p></div>
                 {{ dateformset.management_form }}
                 {% for form in dateformset.forms %}
-                  {{ form.as_p }}
+                  {{ form.as_p }} {# TODO: this will FAIL , needs to be specifically formated for daterange widget #}
                 {% endfor %}
               </div>
             </div>

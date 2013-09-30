@@ -490,36 +490,13 @@ function toggleLayerSwitcher() {
     }
 }
 
-// function addNewDateRange() {
-//     var date_from = $('#date_from').val();
-//     var date_to = $('#date_to').val();
-//     var d1 = new Date (date_from);
-//     var d2 = new Date (date_to);
-//     if (date_from == '') {
-//         $('#date_from_cg').addClass('error');
-//         $('#date_from').focus();
-//     } else if (date_to == '') {
-//         $('#date_to_cg').addClass('error');
-//         $('#date_to').focus();
-//     } else if(d2 < d1) {
-//         $('#date_to_cg').addClass('error');
-//         $('#date_to_inline').html('Date has to be later then date from!');
-//     } else {
-//         $('#date_to_cg').removeClass('error');
-//         $('#date_from_cg').removeClass('error');
-//         $('#date_to_inline').html('');
-//         var dr = '<p class="date_range_row"><span class="date_from">'+date_from+'</span><span>-</span> <span class="date_to">'+date_to+'</span> <span onclick="deleteDateRange(this);"> <i class="icon-trash"></i> </span></p>';
-//         $('#date_range').append(dr);
-//     }
-// }
-
 
 function submitSearchForm() {
     $('#catalogueSearch').ajaxForm({
         type: 'POST',
         dataType: 'json',
         beforeSubmit: function(formData, jqForm, options) {
-            console.log(formData,jqForm,options);
+          // process data if needed... before submit
         },
         success: function(data){
           APP.guid = data.guid;
