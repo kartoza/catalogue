@@ -53,7 +53,7 @@ LOGGING = {
             'level': 'INFO',  # switch to DEBUG to show actual SQL
         },
         'search': {
-            'level': 'ERROR',
+            'level': 'DEBUG',
             'handlers': ['logfile'],
             # propagate is True by default, which proppagates logs upstream
             'propagate': False
@@ -126,3 +126,5 @@ DEBUG_TOOLBAR_CONFIG = {
 
 # show full Django debug report on TastyPie error
 TASTYPIE_FULL_DEBUG = True
+
+USE_GEOIP = False
