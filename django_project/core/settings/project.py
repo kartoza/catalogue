@@ -133,7 +133,9 @@ PIPELINE_JS = {
             'js/perfect-scrollbar-0.4.3.with-mousewheel.min.js',
             'js/jquery.blockUI.js',
             'js/map_layers.js',
-            'js/openlayers-plugins/ScaleBar.js'
+            'js/openlayers-plugins/ScaleBar.js',
+            'js/date_utils.js',
+            'js/widget.daterange.js'
         ),
         'output_filename': 'js/fluid.js',
     }

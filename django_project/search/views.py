@@ -540,7 +540,6 @@ def submitSearch(theRequest):
         logger.debug('Uploaded files: %s', theRequest.FILES)
 
         if myForm.is_valid():
-            import pdb; pdb.set_trace()
             logger.info('AdvancedForm is VALID')
             mySearch = myForm.save(commit=False)
             # ABP: save_as_new is necessary due to the fact that a new Search

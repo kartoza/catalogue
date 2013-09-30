@@ -320,5 +320,8 @@ sansa_dateutils = {
         }
         date.setHours(date.getHours() > 12 ? date.getHours() + 2 : 0);
         return date;
+    },
+    _getDaysInMonth: function(year, month) {
+        return 32 - this._daylightSavingAdjust(new Date(year, month, 32)).getDate();
     }
 };
