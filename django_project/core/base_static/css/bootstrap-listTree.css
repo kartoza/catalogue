@@ -53,6 +53,8 @@
     padding: 5px 0 5px 5px;
 }
 
+
+
 .listTree > ul > li > span {
     font-weight: normal;
 }
@@ -65,11 +67,43 @@
     padding-left: 10px;
 }
 
+.listTree > ul > li > ul > li > ul > li{
+    background-color: #fff;
+    border-width: 1px 0 0 0;
+    border-style: solid;
+    border-color: #ddd;
+    padding-left: 20px;
+}
+
+.listTree > ul > li > ul > li > ul > li > ul > li{
+    background-color: #fff;
+    border-width: 1px 0 0 0;
+    border-style: solid;
+    border-color: #ddd;
+    padding-left: 30px;
+}
+
 .listTree > ul > li > ul > li:first-child {
     border-width: 1px 0 0 0;
 }
 
 .listTree > ul > li > ul > li:last-child {
+    border-width: 1px 0 0 0;
+}
+
+.listTree > ul > li > ul > li > ul > li:first-child {
+    border-width: 1px 0 0 0;
+}
+
+.listTree > ul > li > ul > li > ul > li:last-child {
+    border-width: 1px 0 0 0;
+}
+
+.listTree > ul > li > ul > li > ul > li > ul > li:first-child {
+    border-width: 1px 0 0 0;
+}
+
+.listTree > ul > li > ul > li > ul > li > ul > li:last-child {
     border-width: 1px 0 0 0;
 }
 

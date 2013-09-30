@@ -3,33 +3,68 @@
  * Licensed under GPLv2 ONLY
  */
 ;(function($) {
-    var template = '\
-        <ul>\
-            <% _.each(context, function(parent, index) { %>\
-            <li>\
-                <span><input type="checkbox" \
-                <% var ps; %>\
-                <% if ( !_.isUndefined(ps = _.find(options.selected, function(elem) { return elem.key === this.key; }, parent)) ) { %>\
-                checked="checked"\
-                <% } %> value="<%= parent.val %>" /> <%= parent.key %><i class="icon-chevron-up icon-black"></i></span>\
-                <% if (options.startCollapsed) { %>\
-                <ul style="display: none;">\
-                <% } else { %>\
-                <ul>\
-                <% } %>\
-                    <% _.each(parent.values, function(child, index) { %>\
-                    <li>\
-                        <span><input type="checkbox" \
-                        <% if ( !_.isUndefined(this) && !_.isUndefined(_.find(this.values, function(elem) { return elem.key === this.key; }, child)) ) { %>\
-                        checked="checked"\
-                        <% } %> value="<%= child.val %>" /> <%= child.key %></span>\
-                    </li>\
-                    <% }, ps); %>\
-                </ul>\
-            </li>\
-            <% }); %>\
-        </ul>';
-    
+    var template = [
+        '<ul>',
+        '<% _.each(context, function(parent1, index) { %>',
+            // first level
+            '<li>',
+            '<span><input type="checkbox" ',
+            '<% var ps; %>',
+            '<% if ( !_.isUndefined(ps = _.find(options.selected, function(elem) { return elem.key === this.key; }, parent1)) ) { %>',
+            'checked="checked"',
+            '<% } %> value="<%= parent1.val %>" /> <%= parent1.key %><i class="icon-chevron-up icon-black"></i></span>',
+            '<% if (options.startCollapsed) { %>',
+                '<ul style="display: none;">',
+            '<% } else { %>',
+                '<ul>',
+            '<% } %>',
+            // second level
+            '<% _.each(parent1.values, function(parent2, index) { %>',
+                '<li>',
+                '<span><input type="checkbox" ',
+                '<% var ps2; %>',
+                '<% if ( !_.isUndefined(ps = _.find(options.selected, function(elem) { return elem.key === this.key; }, parent2)) ) { %>',
+                'checked="checked"',
+                '<% } %> value="<%= parent2.val %>" /> <%= parent2.key %><i class="icon-chevron-up icon-black"></i></span>',
+                '<% if (options.startCollapsed) { %>',
+                    '<ul style="display: none;">',
+                '<% } else { %>',
+                    '<ul>',
+                '<% } %>',
+                // third level
+                '<% _.each(parent2.values, function(parent3, index) { %>',
+                    '<li>',
+                    '<span><input type="checkbox" ',
+                    '<% var ps2; %>',
+                    '<% if ( !_.isUndefined(ps = _.find(options.selected, function(elem) { return elem.key === this.key; }, parent3)) ) { %>',
+                    'checked="checked"',
+                    '<% } %> value="<%= parent3.val %>" /> <%= parent3.key %><i class="icon-chevron-up icon-black"></i></span>',
+                    '<% if (options.startCollapsed) { %>',
+                        '<ul style="display: none;">',
+                    '<% } else { %>',
+                        '<ul>',
+                    '<% } %>',
+                    // fourth level
+                    '<% _.each(parent3.values, function(child, index) { %>',
+                        '<li>',
+                        '<span><input type="checkbox" ',
+                        '<% if ( !_.isUndefined(this) && !_.isUndefined(_.find(this.values, function(elem) { return elem.key === this.key; }, child)) ) { %>',
+                        'checked="checked"',
+                        '<% } %> value="<%= child.val %>" /> <%= child.key %></span>',
+                        '</li>',
+                    '<% }, ps); %>', // set the context of each
+                    '</ul>',
+                    '</li>',
+                '<% }); %>',
+                '</ul>',
+                '</li>',
+            '<% }); %>',
+            '</ul>',
+            '</li>',
+        '<% }); %>',
+        '</ul>'
+        ].join('');
+
     /** Check all child checkboxes.
      * @param jQElement The parent <li>.
      */
@@ -192,8 +227,29 @@
                         node.children('ul').slideToggle('fast');
 
                         e.stopImmediatePropagation();
-                    });
+                    })
+                    .on('click', '.listTree > ul > li > ul > li > span', function(e) {
+                        var node = $(e.target).parent();
 
+                        // Change the icon.
+                        _toggleIcon(node);
+
+                        // Toggle the child list.
+                        node.children('ul').slideToggle('fast');
+
+                        e.stopImmediatePropagation();
+                    })
+                    .on('click', '.listTree > ul > li > ul > li > ul > li > span', function(e) {
+                        var node = $(e.target).parent();
+
+                        // Change the icon.
+                        _toggleIcon(node);
+
+                        // Toggle the child list.
+                        node.children('ul').slideToggle('fast');
+
+                        e.stopImmediatePropagation();
+                    });
                     // Generate the list tree.
                     $this.html( _.template( template, { "context": context, "options": options } ) );
                 }
