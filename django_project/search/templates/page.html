@@ -59,24 +59,25 @@
               <hr />
               <span id="daterange_inline" class="help-inline"></span>
               <div id="date_from_cg" class="control-group">
-                <label class="control-label" for="date_from">Date from</label>
+                <label class="control-label" for="id_start_datepicker">Date from</label>
                 <div class="controls">
-                  <input type="text" id="date_from" placeholder="">
+                  <input type="text" id="id_start_datepicker" placeholder="">
                 </div>
               </div>
               <div id="date_to_cg" class="control-group">
-                <label class="control-label" for="date_to">Date to</label>
+                <label class="control-label" for="id_end_datepicker">Date to</label>
                 <div class="controls">
-                  <input type="text" id="date_to" placeholder="">
+                  <input type="text" id="id_end_datepicker" placeholder="">
                   <span id="date_to_inline" class="help-inline"></span>
                 </div>
               </div>
-              <div class="date-range"><p onclick="addNewDateRange();" class="button"><i class="icon-plus"></i> Add new date range</p></div>
-            <div id="date_range"></div>
-              {{ dateformset.management_form }}
-              {% for form in dateformset.forms %}
-                {{ form.as_p }}
-              {% endfor %}
+              <div id="date_range">
+                <div class="date-range"><p class="button"><i class="icon-plus"></i> Add new date range</p></div>
+                {{ dateformset.management_form }}
+                {% for form in dateformset.forms %}
+                  {{ form.as_p }}
+                {% endfor %}
+              </div>
             </div>
             <div class="content-3 content_div">
               <h2>CLOUD COVER</h2>
@@ -212,8 +213,8 @@
     $('.listTree').listTree(data, { "startCollapsed": true, "selected": [] });
     $('#results-container').perfectScrollbar( { wheelSpeed: 20 } );
     $('#cart-container').perfectScrollbar( { wheelSpeed: 20 } );
-    $('#date_from').datepicker();
-    $('#date_to').datepicker();
+    $('#id_start_datepicker').datepicker();
+    $('#id_end_datepicker').datepicker();
     $('#result-panel-download-button').click(function() {
       toggleResultDownloadButton();
     });
@@ -284,6 +285,8 @@
         '_blank'
       );
     });
+    // setup daterange widget
+    $('#date_range').daterange();
   });
   </script>
 {% endblock %}

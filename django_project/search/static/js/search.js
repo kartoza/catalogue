@@ -490,147 +490,50 @@ function toggleLayerSwitcher() {
     }
 }
 
-function addNewDateRange() {
-    var date_from = $('#date_from').val();
-    var date_to = $('#date_to').val();
-    var d1 = new Date (date_from);
-    var d2 = new Date (date_to);
-    if (date_from == '') {
-        $('#date_from_cg').addClass('error');
-        $('#date_from').focus();
-    } else if (date_to == '') {
-        $('#date_to_cg').addClass('error');
-        $('#date_to').focus();
-    } else if(d2 < d1) {
-        $('#date_to_cg').addClass('error');
-        $('#date_to_inline').html('Date has to be later then date from!');
-    } else {
-        $('#date_to_cg').removeClass('error');
-        $('#date_from_cg').removeClass('error');
-        $('#date_to_inline').html('');
-        var dr = '<p class="date_range_row"><span class="date_from">'+date_from+'</span><span>-</span> <span class="date_to">'+date_to+'</span> <span onclick="deleteDateRange(this);"> <i class="icon-trash"></i> </span></p>';
-        $('#date_range').append(dr);
-    }
-}
-
-function deleteDateRange(elem) {
-    $(elem).parent().remove();
-}
-
+// function addNewDateRange() {
+//     var date_from = $('#date_from').val();
+//     var date_to = $('#date_to').val();
+//     var d1 = new Date (date_from);
+//     var d2 = new Date (date_to);
+//     if (date_from == '') {
+//         $('#date_from_cg').addClass('error');
+//         $('#date_from').focus();
+//     } else if (date_to == '') {
+//         $('#date_to_cg').addClass('error');
+//         $('#date_to').focus();
+//     } else if(d2 < d1) {
+//         $('#date_to_cg').addClass('error');
+//         $('#date_to_inline').html('Date has to be later then date from!');
+//     } else {
+//         $('#date_to_cg').removeClass('error');
+//         $('#date_from_cg').removeClass('error');
+//         $('#date_to_inline').html('');
+//         var dr = '<p class="date_range_row"><span class="date_from">'+date_from+'</span><span>-</span> <span class="date_to">'+date_to+'</span> <span onclick="deleteDateRange(this);"> <i class="icon-trash"></i> </span></p>';
+//         $('#date_range').append(dr);
+//     }
+// }
 
 
 function submitSearchForm() {
     $('#catalogueSearch').ajaxForm({
         type: 'POST',
+        dataType: 'json',
         beforeSubmit: function(formData, jqForm, options) {
             console.log(formData,jqForm,options);
-        }
+        },
+        success: function(data){
+          APP.guid = data.guid;
+          $APP.trigger('collectionSearch', {
+              offset: 0
+          });
+          openResultPanel();
+          toggleSearchPanel();
+        },
 
     });
+    // submit the form
     $('#catalogueSearch').submit();
 
-    /*
-    var search_data = new Object();
-    var form_ok = true;
-
-    _.each($('.listTree').data('listTree').selected, function(parent) {
-        search_data[parent.key] = [];
-        _.each(parent.values, function(sat) {
-            search_data[parent.key].push(sat.val);
-        });
-    });
-    // if (typeof(search_data['Collections']) == 'undefined')  {
-    //     $('#sattelite_inline').html('You have to select at least 1 sensor!').addClass('form-error');
-    //     $('#tab-1').prop('checked',true);
-    //     form_ok = false;
-    // } else {
-    //     $('#sattelite_inline').html('');
-    // }
-
-    search_data['Dates'] = [];
-    _.each($('.date_range_row'), function(row) {
-        var dr = new Object();
-        dr.date_from = $(row).children(".date_from").html().split('/');
-        dr.date_to = $(row).children(".date_to").html().split('/');
-        dr.date_from = dr.date_from[2]+'-'+dr.date_from[0]+'-'+dr.date_from[1];
-        dr.date_to = dr.date_to[2]+'-'+dr.date_to[0]+'-'+dr.date_to[1];
-        search_data['Dates'].push(dr);
-    });
-
-    if (search_data['Dates'].length == 0) {
-        $('#daterange_inline').html('You have to select at least 1 date range!').addClass('form-error');
-        $('#tab-2').prop('checked',true);
-        form_ok = false;
-    } else {
-        $('#daterange_inline').html('');
-    }
-
-    if ($('#panchromatic_imagery').prop('checked')) {
-        search_data['panchromatic_imagery'] = 1
-    }
-
-    if ($('#free_imagery').prop('checked')) {
-        search_data['free_imagery'] = 1
-    }
-
-    if ($('#cloud_cover').val() != '') {
-        search_data['cloud_cover'] = $('#cloud_cover').val();
-    }
-
-    if ($('#path').val() != '') {
-        search_data['path'] = $('#path').val();
-    }
-
-    if ($('#row').val() != '') {
-        search_data['row'] = $('#row').val();
-    }
-
-    if ($('#bbox').val() != '') {
-        search_data['bbox'] = $('#bbox').val();
-    }
-
-    if ($('#sensor_inc_start').val() != '') {
-        search_data['sensor_inc_start'] = $('#sensor_inc_start').val();
-    }
-
-    if ($('#sensor_inc_end').val() != '') {
-        search_data['sensor_inc_end'] = $('#sensor_inc_end').val();
-    }
-
-    if ($('#resolution').val() != '') {
-        search_data['resolution'] = $('#resolution').val();
-    }
-
-    if ($('#band_count').val() != '') {
-        search_data['band_count'] = $('#band_count').val();
-    }
-
-    if ($('#id_geometry').val() != '') {
-        search_data['geometry'] = $('#id_geometry').val();
-    }
-
-    if (form_ok) {
-        search_data = JSON.stringify(search_data);
-        $.ajax({
-            type: "POST",
-            url: "/submitsearch/",
-            data: search_data ,
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: function(data){
-                APP.guid = data.guid;
-                $APP.trigger('collectionSearch', {
-                    offset: 0
-                });
-                openResultPanel();
-                toggleSearchPanel();
-            },
-            failure: function(errMsg) {
-                alert(errMsg);
-            }
-        });
-    }
-    */
 }
 
 var data = null;
