@@ -35,6 +35,7 @@
             <form id="catalogueSearch" class="form-horizontal" action={% url 'submitSearch' %}>
               {% csrf_token %}
               {{ searchform.geometry }}
+              {{ searchform.selected_sensors }}
             <div class="content-1 content_div">
               <h2>SATELLITE</h2>
               <hr />

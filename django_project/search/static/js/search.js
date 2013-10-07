@@ -497,6 +497,18 @@ function submitSearchForm() {
         dataType: 'json',
         beforeSubmit: function(formData, jqForm, options) {
           // process data if needed... before submit
+          var selected_sensors = [];
+          _.each($('.listTree').data('listTree').selected, function(parent) {
+            _.each(parent.values, function(sensor) {
+              selected_sensors.push(sensor.val);
+            });
+          });
+          _.each(formData, function (element, index) {
+            if (element.name === 'selected_sensors') {
+              // update selected sensors value
+              formData[index].value = selected_sensors;
+            }
+          });
         },
         success: function(data){
           APP.guid = data.guid;
@@ -506,6 +518,9 @@ function submitSearchForm() {
           openResultPanel();
           toggleSearchPanel();
         },
+        error: function() {
+          alert('oops!');
+        }
 
     });
     // submit the form

@@ -23,6 +23,7 @@ import logging
 logger = logging.getLogger(__name__)
 
 import traceback
+from itertools import chain
 
 # For shopping cart and ajax product id search
 from django.utils import simplejson
@@ -327,21 +328,13 @@ def getSelectOptions(theRequest):
     data = [{
         'key': col.name,
         'val': 'cc{}'.format(col.pk),
-        'values': [{
-            'key': sat.name,
-            'val': 'st{}'.format(sat.pk),
-            'values': [{
-                'key': ins.name,
-                'val': 'it{}'.format(ins.pk),
-                'values': [{
-                    'key': spg.spectralgroup.name,
-                    'val': 'sg{}'.format(spg.spectralgroup.pk)}
-                    for spg in ins.spectralmode_set.select_related().all()]
-                } for ins in [
-                sig.instrument_type
-                for sig in sat.satelliteinstrumentgroup_set.all()]
-            ]
-            } for sat in col.satellite_set.all()]
+        # we need to unnest the lists, and for that purpose we reuse chain
+        # from iterable module
+        'values': list(chain.from_iterable((({
+            'key': '{} {}'.format(sat.name, sig.instrument_type.name),
+            'val': '{}|{}'.format(sat.pk, sig.instrument_type.pk)
+            } for sig in sat.satelliteinstrumentgroup_set.all())
+            for sat in col.satellite_set.all())))
         } for col in collections
     ]
 

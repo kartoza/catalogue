@@ -185,6 +185,9 @@ class AdvancedSearchForm(forms.ModelForm):
             'Select the maximum cloud cover (range 0-100) when searching for '
             'images. Note that not all sensors support cloud cover filtering.')
     )
+    selected_sensors = forms.CharField(
+        widget=forms.HiddenInput(), required=False
+    )
 
     class Meta:
         model = Search
