@@ -346,6 +346,7 @@ def submitSearch(theRequest):
     """
     Perform an attribute and spatial search for imagery
     """
+    myFormErrors = {}
     if theRequest.method == 'POST':
         post_values = theRequest.POST
         # if the request.POST is not 'multipart/form-data' then QueryDict that
@@ -440,14 +441,22 @@ def submitSearch(theRequest):
                 return HttpResponse(simplejson.dumps({
                     "guid": mySearch.guid
                 }), mimetype='application/json')
-            else:
-                logger.debug('Daterange formset is NOT VALID')
-                logger.debug(myFormset.errors)
-        else:
-            logger.info('form is INVALID after editing')
-            logger.debug('%s' % myForm.errors)
-            # logger.debug('%s' % myFormset.errors)
 
-            # form was not valid return 404
-            return HttpResponse(str(myForm.errors), status=404)
+            else:
+                myFormErrors.update({
+                    'daterange': myFormset._non_form_errors
+                })
+                myFormErrors.update(myFormset.errors)
+                logger.debug('%s' % myFormset.errors)
+
+        # if we got to this point, then the form is invalid
+        logger.info('form is INVALID after editing')
+        logger.debug('%s' % myForm.errors)
+
+        # form was not valid return 404
+        myFormErrors.update(myForm.errors)
+        return HttpResponse(
+            simplejson.dumps(myFormErrors),
+            mimetype='application/json', status=404)
+    # we can only process POST requests
     return HttpResponse('Not a POST!', status=404)
