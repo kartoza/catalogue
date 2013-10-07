@@ -233,7 +233,6 @@ class AdvancedSearchForm(forms.ModelForm):
 
     def clean(self):
         myCleanedData = self.cleaned_data
-        logger.debug('cleaned data: ' + str(myCleanedData))
 
         myStartSensorAngle = myCleanedData.get(
             'sensor_inclination_angle_start')
@@ -248,5 +247,14 @@ class AdvancedSearchForm(forms.ModelForm):
             raise forms.ValidationError(
                 'Error: Start sensor angle can not be greater than the end'
                 ' sensor angle!')
+        if myCleanedData.get('selected_sensors'):
+            # we use the list unpack operatror to make a reverse zip
+            mySatellites, myInstTypes = zip(
+                *[[
+                    int(b) for b in a.split('|')
+                ] for a in myCleanedData.get('selected_sensors').split(',')])
+            self.cleaned_data['satellite'] = mySatellites
+            self.cleaned_data['instrumenttype'] = myInstTypes
 
+        logger.debug('cleaned data: ' + str(self.cleaned_data))
         return self.cleaned_data

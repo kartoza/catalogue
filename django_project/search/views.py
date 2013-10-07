@@ -436,11 +436,10 @@ def submitSearch(theRequest):
                 logger.debug('Search: ' + str(mySearch))
                 logger.info('form is VALID after editing')
                 myFormset.save()
-                to_json = {
+
+                return HttpResponse(simplejson.dumps({
                     "guid": mySearch.guid
-                }
-                return HttpResponse(simplejson.dumps(
-                    to_json), mimetype='application/json')
+                }), mimetype='application/json')
             else:
                 logger.debug('Daterange formset is NOT VALID')
                 logger.debug(myFormset.errors)
