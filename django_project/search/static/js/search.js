@@ -490,25 +490,43 @@ function toggleLayerSwitcher() {
     }
 }
 
+function validate_form(){
+  var form_ok = false;
+  var myDateRange = $('#date_range .date_range_row');
+  if (myDateRange.length === 0) {
+      $('#daterange_inline').html('You have to select at least 1 date range!').addClass('form-error');
+      $('#tab-2').prop('checked',true);
+  } else {
+    form_ok = true;
+    // clear missing daterange error
+    $('#daterange_inline').html('');
+  }
+  return form_ok;
+}
 
 function submitSearchForm() {
     $('#catalogueSearch').ajaxForm({
         type: 'POST',
         dataType: 'json',
         beforeSubmit: function(formData, jqForm, options) {
-          // process data if needed... before submit
-          var selected_sensors = [];
-          _.each($('.listTree').data('listTree').selected, function(parent) {
-            _.each(parent.values, function(sensor) {
-              selected_sensors.push(sensor.val);
+          if (validate_form()) {
+            // process data if needed... before submit
+            var selected_sensors = [];
+            _.each($('.listTree').data('listTree').selected, function(parent) {
+              _.each(parent.values, function(sensor) {
+                selected_sensors.push(sensor.val);
+              });
             });
-          });
-          _.each(formData, function (element, index) {
-            if (element.name === 'selected_sensors') {
-              // update selected sensors value
-              formData[index].value = selected_sensors;
-            }
-          });
+            _.each(formData, function (element, index) {
+              if (element.name === 'selected_sensors') {
+                // update selected sensors value
+                formData[index].value = selected_sensors;
+              }
+            });
+          } else {
+            // don't submit the form, there is an error in JS form validation
+            return false;
+          }
         },
         success: function(data){
           APP.guid = data.guid;
