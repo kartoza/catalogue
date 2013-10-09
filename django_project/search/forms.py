@@ -54,7 +54,6 @@ from catalogue.aoigeometry import AOIGeometryField
 
 
 from .models import Search
-from .utils import prepareSelectQuerysets
 
 
 # Support dmy formats (see

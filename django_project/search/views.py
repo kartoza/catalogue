@@ -29,18 +29,14 @@ from itertools import chain
 from django.utils import simplejson
 
 # Django helpers for forming html pages
-from django.core.urlresolvers import reverse
-from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render_to_response, get_object_or_404
 from django.http import (
-    HttpResponseRedirect,
     HttpResponse,
-    Http404,
-    HttpResponseServerError)
+    Http404)
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 #from django.contrib.admin.views.decorators import staff_member_required
-from django.template import RequestContext, loader, Context
+from django.template import RequestContext
 #from django.db.models import Count, Min, Max  # for aggregate queries
 from django.forms.models import inlineformset_factory
 
@@ -81,7 +77,7 @@ from .forms import (
     DateRangeFormSet
 )
 
-from .utils import prepareSelectQuerysets, SearchView
+from .utils import SearchView
 
 
 class Http500(Exception):
@@ -246,41 +242,6 @@ def renderSearchResultsPage(theRequest, theGuid):
     mySearcher = Searcher(mySearch)
     mySearchView = SearchView(theRequest, mySearcher)
     return(mySearchView.templateData())
-
-
-def updateSelectOptions(theRequest):
-    """
-    Returns JSON encoded InstrumentTypes, Satellites and SpectralModes options
-    """
-    mySelCollections = theRequest.GET.getlist('collections')
-    mySelSatellite = theRequest.GET.getlist('satellites')
-    mySelInstrumentType = theRequest.GET.getlist('instrumenttypes')
-    mySelSpectralGroups = theRequest.GET.getlist('spectralgroups')
-    mySelLicenseTypes = theRequest.GET.getlist('licencetypes')
-
-    myQS_data = prepareSelectQuerysets(
-        mySelCollections, mySelSatellite, mySelInstrumentType,
-        mySelSpectralGroups, mySelLicenseTypes)
-
-    myFinalData = {
-        'collections': [(
-            option.pk,
-            unicode(option)) for option in myQS_data[0]],
-        'satellites': [(
-            option.pk,
-            unicode(option)) for option in myQS_data[1]],
-        'instrumenttypes': [(
-            option.pk,
-            unicode(option)) for option in myQS_data[2]],
-        'spectralgroups': [(
-            option.pk,
-            unicode(option)) for option in myQS_data[3]],
-        'licensetypes': [(
-            option.pk,
-            unicode(option)) for option in myQS_data[4]]
-    }
-    return HttpResponse(
-        simplejson.dumps(myFinalData), mimetype='application/json')
 
 
 @login_required
