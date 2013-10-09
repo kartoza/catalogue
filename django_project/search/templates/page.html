@@ -44,10 +44,12 @@
               <hr />
               <div class="search-options">
                 <span class="search-panel-input">
-                  <input name="free_imagery" id="free_imagery" class="search-panel-input-chk" type="checkbox" value="SPOT 5 HRG"> Free imagery only
+                  {{ searchform.free_imagery }}
+                  {{ searchform.free_imagery.label_tag }}
                 </span>
                 <span class="search-panel-input">
-                  <input name="panchromatic_imagery" id="panchromatic_imagery" class="search-panel-input-chk" type="checkbox" value="SPOT 5 HRG" checked="checked"> Panchromatic images only
+                  {{ searchform.panchromatic_imagery }}
+                  {{ searchform.panchromatic_imagery.label_tag }}
                 </span>
               </div>
               <hr />

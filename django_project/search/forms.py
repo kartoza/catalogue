@@ -189,6 +189,11 @@ class AdvancedSearchForm(forms.ModelForm):
         widget=forms.HiddenInput(), required=False
     )
 
+    free_imagery = forms.BooleanField(
+        required=False, label="Free images only")
+    panchromatic_imagery = forms.BooleanField(
+        required=False, label="Panchromatic images only")
+
     class Meta:
         model = Search
         exclude = (
@@ -255,6 +260,14 @@ class AdvancedSearchForm(forms.ModelForm):
                 ] for a in myCleanedData.get('selected_sensors').split(',')])
             self.cleaned_data['satellite'] = mySatellites
             self.cleaned_data['instrumenttype'] = myInstTypes
+
+        # check free_imagery
+        if myCleanedData.get('free_imagery'):
+            # HARD CODED value
+            self.cleaned_data['license_type'] = [2]
+        # check panchromatic_imagery
+        if myCleanedData.get('panchromatic_imagery'):
+            self.cleaned_data['spectral_group'] = [2]
 
         logger.debug('cleaned data: ' + str(self.cleaned_data))
         return self.cleaned_data
