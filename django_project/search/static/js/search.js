@@ -546,16 +546,6 @@ function submitSearchForm() {
 
 }
 
-var data = null;
-$.ajax({
-    'async':false,
-    'url': '/getselectoptions/',
-    'dataType': 'json'
-}).done(function (response) {
-    // update global var... we must refactor this
-    data = response;
-})
-
 // backbone models/collections/views
 
 APP.$modal = $('#ajax-modal');

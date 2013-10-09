@@ -276,15 +276,7 @@ def searchView(theRequest):
     """
     Perform an attribute and spatial search for imagery
     """
-    myForm = AdvancedSearchForm()
-    myFormset = DateRangeInlineFormSet()
 
-    return {'searchform': myForm, 'dateformset': myFormset}
-
-
-def getSelectOptions(theRequest):
-    """
-    """
     collections = Collection.objects.all().prefetch_related('satellite_set')
     data = [{
         'key': col.name,
@@ -299,8 +291,15 @@ def getSelectOptions(theRequest):
         } for col in collections
     ]
 
-    return HttpResponse(
-        simplejson.dumps(data), mimetype='application/json')
+    myListTreeOptions = simplejson.dumps(data)
+
+    # add forms
+    myForm = AdvancedSearchForm()
+    myFormset = DateRangeInlineFormSet()
+    return {
+        'searchform': myForm, 'dateformset': myFormset,
+        'listreeoptions': myListTreeOptions
+    }
 
 
 def submitSearch(theRequest):

@@ -213,7 +213,7 @@
 
     initMap();
     defaultPanelState();
-    $('.listTree').listTree(data, { "startCollapsed": true, "selected": [] });
+    $('.listTree').listTree( {{ listreeoptions|safe }} , { "startCollapsed": true, "selected": [] });
     $('#results-container').perfectScrollbar( { wheelSpeed: 20 } );
     $('#cart-container').perfectScrollbar( { wheelSpeed: 20 } );
     $('#id_start_datepicker').datepicker();
