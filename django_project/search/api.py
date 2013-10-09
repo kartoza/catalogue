@@ -39,8 +39,8 @@ class SearchResultsResource(ModelResource):
     class Meta:
         queryset = OpticalProduct.objects.all()
         resource_name = 'searchresults'
-        authentication = SessionAuthentication()
-        authorization = Authorization()
+        # authentication = SessionAuthentication()
+        # authorization = Authorization()
         always_return_data = True
         paginator_class = Paginator
         limit = 15
