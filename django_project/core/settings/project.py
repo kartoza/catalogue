@@ -135,7 +135,8 @@ PIPELINE_JS = {
             'js/map_layers.js',
             'js/openlayers-plugins/ScaleBar.js',
             'js/date_utils.js',
-            'js/widget.daterange.js'
+            'js/widget.daterange.js',
+            'js/widget.sansaMap.js'
         ),
         'output_filename': 'js/fluid.js',
     }

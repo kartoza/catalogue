@@ -211,7 +211,8 @@
   <script>
   $( document ).ready(function() {
 
-    initMap();
+    $('#map').sansaMap();
+
     defaultPanelState();
     $('.listTree').listTree( {{ listreeoptions|safe }} , { "startCollapsed": true, "selected": [] });
     $('#results-container').perfectScrollbar( { wheelSpeed: 20 } );
