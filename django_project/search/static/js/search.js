@@ -1,4 +1,3 @@
-var map;
 var SearchPanelState = true;
 var CartPanelState = false;
 var ResultPanelState = false;
@@ -6,12 +5,8 @@ var ResultDownloadOptionsState = false;
 var CartDownloadOptionsState = false;
 var LastSelectedResultItem = "0";
 var LayerSwitcherState = false;
-var mWKTFormat = new OpenLayers.Format.WKT();
 
-if (typeof APP == 'undefined') {
-    APP = {};
-    $APP = $(APP);
-}
+var mWKTFormat = new OpenLayers.Format.WKT();
 
 var DestroyFeatures = OpenLayers.Class(OpenLayers.Control, {
     type: OpenLayers.Control.TYPE_BUTTON,

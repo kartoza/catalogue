@@ -118,6 +118,7 @@ PIPELINE_JS = {
     'fluid': {
         'source_filenames': (
             'js/jquery/jquery-1.8.2.min.js',
+            'js/init_project.js',
             'js/jquery/jquery-ui-1.10.2.custom.min.js',
             'js/jquery.form.min.js',
             'js/csrf-ajax.js',
@@ -136,7 +137,8 @@ PIPELINE_JS = {
             'js/openlayers-plugins/ScaleBar.js',
             'js/date_utils.js',
             'js/widget.daterange.js',
-            'js/widget.sansaMap.js'
+            'js/widget.sansaMap.js',
+            'js/widget.sansaMapSearchLayer.js'
         ),
         'output_filename': 'js/fluid.js',
     }
