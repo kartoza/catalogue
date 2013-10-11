@@ -40,6 +40,7 @@
     },
 
     _initialize: function() {
+      var self = this;
 
       this.map = new OpenLayers.Map(this.map_element, this.default_options);
 
@@ -47,7 +48,7 @@
 
     // special vector layers
 
-    this.geoSearch = new OpenLayers.Layer.Vector("Polygon select");
+    this.geoSearch = new OpenLayers.Layer.Vector("Polygon select", {'displayInLayerSwitcher': false});
 
     this.map.zoomToExtent(this.transformBounds(new OpenLayers.Bounds(14.0,-35.0,34.0,-21.0)));
 
@@ -118,7 +119,7 @@
 
     mNavigationPanel.addControls([myDrawingControl, myModifyFeatureControl, myDestroyFeaturesControl]);
 
-    this.populateLayerSwitcher();
+    this.refreshLayerSwitcher();
 
     this.map.addControl(new OpenLayers.Control.MousePosition({'div': document.getElementById("map-control-position")}));
     this.map.addControl(new OpenLayers.Control.ScaleBar({
@@ -127,6 +128,17 @@
         maxWidth: 200,
         div: document.getElementById("map-control-scalebar")
       }));
+
+    $('#map-layerswitcher').on('click', '.layer-control', function(evt,data){
+      var myLayer = $(evt.currentTarget).text();
+      self.switchLayer(myLayer,$(evt.currentTarget));
+    });
+  },
+
+  add_layer: function (theLayer) {
+    this.map.addLayers([theLayer]);
+    // refresh the layer switcher layers
+    this.refreshLayerSwitcher();
   },
 
   transformBounds: function (theBounds)
@@ -155,44 +167,47 @@
     return myGeometry;
   },
 
-  switchBaseLayer: function (name, el) {
-    this.map.setBaseLayer(this.map.getLayersByName(name)[0]);
-    $('#map-layerswitcher .visible').removeClass('visible');
-    $(el).addClass('visible');
-  },
-
-  switchVectorLayer: function(name, el) {
+  switchLayer: function(name, el) {
     var layer = this.map.getLayersByName(name)[0];
-    if (layer.visibility) {
-        layer.setVisibility(false);
-        $(el).removeClass('visible_layer');
+    if (layer.isBaseLayer === true) {
+      this.map.setBaseLayer(layer);
+      // clear classes on previously selected layers
+      $('#map-layerswitcher .base').removeClass('visible');
+      $(el).addClass('visible');
     } else {
-        layer.setVisibility(true);
-        $(el).addClass('visible_layer');
+      if (layer.visibility) {
+          layer.setVisibility(false);
+          $(el).removeClass('visible');
+      } else {
+          layer.setVisibility(true);
+          $(el).addClass('visible');
+      }
     }
   },
 
-  populateLayerSwitcher: function() {
+  refreshLayerSwitcher: function() {
     var div = $('#map-layerswitcher');
-    var layerHTML;
-    var visible;
-    var js_layer_switch;
-    _.each(this.map.layers, function(val) {
-      if (val.visibility && val.isBaseLayer) {
-          visible = 'visible';
-      } else if (val.visibility)
-          visible = 'visible_layer';
-      else {
-          visible = '';
-      }
+    //clear out elements
+    div.empty();
 
-      if (val.isBaseLayer) {
-          js_layer_switch = ' onclick="this.switchBaseLayer(\''+val.name+'\', this);" ';
-      } else {
-          js_layer_switch = ' onclick="switchVectorLayer(\''+val.name+'\', this);" ';
+    var visible, base;
+
+    _.each(this.map.layers, function(val) {
+      if (val.displayInLayerSwitcher === true) {
+        if (val.isBaseLayer === true) {
+          base = 'base';
+        } else {
+          base = '';
+        };
+        if (val.visibility) {
+            visible = 'visible';
+        } else {
+            visible = '';
+        }
+
+        var layerHTML = '<div class="layer-control '+ visible +' '+base+'"><img src="/static/images/'+WEB_LAYERS_IMAGE[val.name]+'" /><p>'+val.name+'</p></div>';
+        div.append(layerHTML);
       }
-      layerHTML = '<div class="layer-control '+ visible +'" '+js_layer_switch+'><img src="/static/images/'+WEB_LAYERS_IMAGE[val.name]+'" /><p>'+val.name+'</p></div>';
-      div.append(layerHTML);
     });
   }
 }; // prototype

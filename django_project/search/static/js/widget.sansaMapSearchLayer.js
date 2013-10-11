@@ -13,7 +13,7 @@
 
     _initialize: function() {
       this.layerSearch = new OpenLayers.Layer.Vector("Search geometry");
-      this.map_object.map.addLayers([this.layerSearch]);
+      this.map_object.add_layer(this.layerSearch);
 
       var myHighlightControl = new OpenLayers.Control.SelectFeature(
       this.layerSearch , {

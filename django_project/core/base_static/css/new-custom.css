@@ -623,7 +623,7 @@ div.dr_row{
     margin-left: 5px;
 }
 
-#map-layerswitcher .visible, #map-layerswitcher .visible_layer  {
+#map-layerswitcher .visible  {
     background-color: LightGray;
     font-weight: bold;
 }
