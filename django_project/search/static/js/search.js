@@ -3,7 +3,6 @@ var CartPanelState = false;
 var ResultPanelState = false;
 var ResultDownloadOptionsState = false;
 var CartDownloadOptionsState = false;
-var LastSelectedResultItem = "0";
 var LayerSwitcherState = false;
 
 var mWKTFormat = new OpenLayers.Format.WKT();
@@ -60,49 +59,6 @@ function removeWKT(event) {
   document.getElementById('id_geometry').value = '';
 }
 
-function resetSceneZIndices() {
-    var myFeatures = layerSearch.features;
-    for(var i=0; i < myFeatures.length; ++i) {
-        myFeatures[i].attributes.zIndex=0;
-        myFeatures[i].selected = "no";
-    }
-}
-
-function getFeatureIndexByRecordId( theRecordId ) {
-    var myFeatures = layerSearch.features;
-    for(var i=0; i < myFeatures.length; ++i)
-    {
-      if(myFeatures[i].attributes.unique_product_id == theRecordId)
-      {
-        return i;
-      }
-    }
-}
-
-function featureSelected(theEvent) {
-    blockResultPanel();
-    hightlightRecord(theEvent.feature.attributes.unique_product_id, false);
-    unblockResultPanel();
-}
-
-function hightlightRecord( theRecordId, theZoomFlag )
-{
-  var myIndex = getFeatureIndexByRecordId( theRecordId );
-  layerSearch.features[myIndex].attributes.zIndex=1;
-  layerSearch.features[myIndex].selected = "yes";
-  if ( LastSelectedResultItem != "0")
-  {
-    $("#result_item_"+ LastSelectedResultItem).css("background-color", "#ffffff");
-  }
-  LastSelectedResultItem = theRecordId;
-  $("#result_item_"+ theRecordId).css("background-color", "#BAD696");
-  resetSceneZIndices();
-  if (theZoomFlag)
-  {
-    map.zoomToExtent(layerSearch.features[myIndex].geometry.bounds);
-  }
-  layerSearch.redraw();
-}
 
 function toggleSearchPanel() {
     if (SearchPanelState) {
@@ -240,7 +196,7 @@ function showResultPanelButtons() {
     $("#result-panel-download-button").show();
 }
 
-function blockResultPanel() {
+APP.blockResultPanel = function() {
     $('body').block({
         message: '<div class="wrapperloading"><div class="loading up"></div><div class="loading down"></div></div>',
         css: {
@@ -250,11 +206,11 @@ function blockResultPanel() {
             height:'550px'
         }
     });
-}
+};
 
-function unblockResultPanel() {
+APP.unblockResultPanel= function (){
     $('body').unblock();
-}
+};
 
 function toggleResultDownloadButton() {
     if (ResultDownloadOptionsState) {
@@ -377,13 +333,13 @@ APP.ResultGridView = Backbone.View.extend({
     },
 
     previous: function() {
-        blockResultPanel();
+        APP.blockResultPanel();
         this.collection.previousPage();
         return false;
     },
 
     next: function() {
-        blockResultPanel();
+        APP.blockResultPanel();
         this.collection.nextPage();
         return false;
     },
@@ -403,18 +359,23 @@ APP.ResultGridView = Backbone.View.extend({
         //this.collection.fetch({reset: true});
         this.cont = $("#results-container");
         $APP.on('collectionSearch', $.proxy(this.collectionSearch, this));
+        $APP.on('');
     },
 
     collectionSearch: function (evt, options) {
-        blockResultPanel();
+        $APP.trigger('ResultGridView_fetchresults');
+        APP.blockResultPanel();
         _.extend(this.collection, options);
         this.collection.fetch({
             reset: true,
-            error: function() { unblockResultPanel(); }
+            error: function() { APP.unblockResultPanel(); }
         });
     },
     render: function() {
-        layerSearch.removeFeatures(layerSearch.features);
+        $APP.trigger('SearchLayer_addFeatures', {
+            'data': this.collection.models
+        });
+
         this.cont.empty();
         var self=this;
         _(this.collection.models).each(function(item){
@@ -422,13 +383,13 @@ APP.ResultGridView = Backbone.View.extend({
         },this);
         this._update_pagination_info();
         this._updateResultsInfo();
-        map.zoomToExtent(layerSearch.getDataExtent());
-        unblockResultPanel();
+
+        APP.unblockResultPanel();
+
         return this;
     },
     renderItem: function(item) {
-        var feat = new OpenLayers.Feature.Vector(transformGeometry(OpenLayers.Geometry.fromWKT(item.attributes.spatial_coverage)),item.attributes);
-        layerSearch.addFeatures([feat]);
+
         var myItem = new APP.ResultGridViewItem({
             model:item,
             collection:this.collection
@@ -438,7 +399,7 @@ APP.ResultGridView = Backbone.View.extend({
     _update_pagination_info:function() {
         var cur_pag_el = this.$el.find('#resultsPosition');
         var page_info = this.collection.pageInfo();
-        var text = 'Page ' + page_info.current_page + ' of ' + page_info.pages + '('+page_info.total+' records)'
+        var text = 'Page ' + page_info.current_page + ' of ' + page_info.pages + '('+page_info.total+' records)';
         cur_pag_el.html(text);
     },
     _updateResultsInfo:function() {
@@ -459,8 +420,14 @@ APP.ResultGridViewItem = Backbone.View.extend({
         $APP.on('highlightResultItem', $.proxy(this.highlightResultItem, this));
     },
     highlightResultItem: function() {
-        hightlightRecord(this.model.get('unique_product_id'), true);
+        $APP.trigger('highlightSearchRecord', {'unique_product_id': this.model.get('unique_product_id')});
+        $("#results-container div:first-child").each(function (id, data) {
+            // reset selected rows
+            $(data).css("background-color", "#ffffff");
+        });
+        $("#result_item_"+ this.model.get('unique_product_id')).css("background-color", "#BAD696");
     },
+
     showMetadata: function() {
         $('body').modalmanager('loading');
         var id = this.model.get('id');

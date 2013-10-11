@@ -6,8 +6,8 @@
       this.map_element = map_id;
       this._initialize();
 
-      // return the map object
-      return this.map;
+      // return the object
+      return this;
   };
 
   APP.SansaMap.prototype = {

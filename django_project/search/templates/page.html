@@ -211,8 +211,9 @@
   <script>
   $( document ).ready(function() {
 
+
     var myMap = new APP.SansaMap('map');
-    // var searchLayer = new APP.SearchLayer(myMap);
+    var searchLayer = new APP.SearchLayer(myMap);
 
     defaultPanelState();
     $('.listTree').listTree( {{ listreeoptions|safe }} , { "startCollapsed": true, "selected": [] });
