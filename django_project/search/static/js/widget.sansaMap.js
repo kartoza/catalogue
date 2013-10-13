@@ -46,19 +46,10 @@
 
       this.initLayers();
 
-    // special vector layers
-
-    this.geoSearch = new OpenLayers.Layer.Vector("Polygon select", {'displayInLayerSwitcher': false});
-
     this.map.zoomToExtent(this.transformBounds(new OpenLayers.Bounds(14.0,-35.0,34.0,-21.0)));
 
-    this.map.addLayer(this.geoSearch);
-    this.geoSearch.events.on({"featuremodified" : modifyWKT});
-    this.geoSearch.events.on({"featureadded" : addWKT});
-    this.geoSearch.events.on({"featureremoved": removeWKT});
-
-    var mNavigationPanel = new OpenLayers.Control.Panel({div : OpenLayers.Util.getElement('map-navigation')});
-    this.map.addControl(mNavigationPanel);
+    this.mNavigationPanel = new OpenLayers.Control.Panel({div : OpenLayers.Util.getElement('map-navigation')});
+    this.map.addControl(this.mNavigationPanel);
 
     var myZoomInControl = new OpenLayers.Control.ZoomBox({
       title: "Zoom In Box: draw a box on the map, to see the area at a larger scale.",
@@ -94,30 +85,9 @@
       }
     });
 
-    mNavigationPanel.addControls(
+    this.mNavigationPanel.addControls(
       [myZoomInControl,myZoomOutControl, myNavigationControl, myHistoryControl.previous, myHistoryControl.next]
     );
-
-    var myDrawingControl = new OpenLayers.Control.DrawFeature(this.geoSearch, OpenLayers.Handler.Polygon, {
-      'displayClass': 'right icon-check-empty icon-2x icon-border olControlDrawFeaturePolygon',
-      'title': 'Capture polygon: left click to add points, double click to finish capturing',
-      div : OpenLayers.Util.getElement('map-navigation'),
-    });
-
-    var myModifyFeatureControl = new OpenLayers.Control.ModifyFeature(this.geoSearch, {
-      'displayClass': 'right icon-edit icon-2x icon-border olControlModifyFeature',
-      'title': 'Modify polygon: left click to move/add points, hover and press <i>delete</i> to delete points',
-      div : OpenLayers.Util.getElement('map-navigation'),
-    });
-
-    var myDestroyFeaturesControl = new DestroyFeatures({
-      'displayClass': 'right icon-remove icon-2x icon-border destroyFeature',
-      'title':'Delete polygon: deletes polygon',
-      'layer': this.geoSearch,
-      div : OpenLayers.Util.getElement('map-navigation'),
-    });
-
-    mNavigationPanel.addControls([myDrawingControl, myModifyFeatureControl, myDestroyFeaturesControl]);
 
     this.refreshLayerSwitcher();
 

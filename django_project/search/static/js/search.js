@@ -5,61 +5,6 @@ var ResultDownloadOptionsState = false;
 var CartDownloadOptionsState = false;
 var LayerSwitcherState = false;
 
-var mWKTFormat = new OpenLayers.Format.WKT();
-
-var DestroyFeatures = OpenLayers.Class(OpenLayers.Control, {
-    type: OpenLayers.Control.TYPE_BUTTON,
-    trigger: function() {
-        this.layer.destroyFeatures();
-    }
-});
-
-/* ------------------------------------------------------
- * OpenLayers WKT manipulators
- * -------------------------------------------------------- */
-function readWKT(wkt)
-{
-  // OpenLayers cannot handle EWKT -- we make sure to strip it out.
-  // EWKT is only exposed to OL if there's a validation error in the admin.
-  var myRegularExpression = new RegExp("^SRID=\\d+;(.+)", "i");
-  var myMatch = myRegularExpression.exec(wkt);
-  if (myMatch)
-  {
-    wkt = myMatch[1];
-  }
-  var feature = mWKTFormat.read(wkt);
-  if (feature) {
-    return feature.geometry;
-  }
-}
-function writeWKT(geometry)
-{
-  myGeometry = geometry.clone();
-  myUnprojectedGeometry = reverseTransformGeometry(myGeometry);
-  document.getElementById('id_geometry').value =
-   'SRID=4326;' + mWKTFormat.write(new OpenLayers.Feature.Vector(myUnprojectedGeometry));
-}
-function addWKT(event)
-{
-  // This function will sync the contents of the `vector` layer with the
-  // WKT in the text field.
-  // Make sure to remove any previously added features.
-  if (geoSearch.features.length > 1){
-    myOldFeatures = [geoSearch.features[0]];
-    geoSearch.removeFeatures(myOldFeatures);
-    geoSearch.destroyFeatures(myOldFeatures);
-  }
-  writeWKT(event.feature.geometry);
-}
-function modifyWKT(event)
-{
-  writeWKT(event.feature.geometry);
-}
-function removeWKT(event) {
-  document.getElementById('id_geometry').value = '';
-}
-
-
 function toggleSearchPanel() {
     if (SearchPanelState) {
         hideSearchPanelButtons();

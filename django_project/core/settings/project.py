@@ -138,7 +138,8 @@ PIPELINE_JS = {
             'js/date_utils.js',
             'js/widget.daterange.js',
             'js/widget.sansaMap.js',
-            'js/widget.sansaMapSearchLayer.js'
+            'js/widget.sansaMapSearchLayer.js',
+            'js/widget.sansaGeoSearchLayer.js'
         ),
         'output_filename': 'js/fluid.js',
     }
