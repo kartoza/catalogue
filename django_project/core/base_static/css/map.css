@@ -121,10 +121,6 @@
 .olControlNavigationHistory {
   margin-right: 5px;
   cursor:pointer;
-   /*background-image: url("img/navigation_history.png");
-   background-repeat: no-repeat;
-   width:  24px;
-   height: 24px;*/
 }
 .olControlNavigationHistoryPreviousItemActive {
   color:black;
