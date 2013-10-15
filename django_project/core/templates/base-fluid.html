@@ -17,8 +17,7 @@
 
     {% block extracss %}
     {# Be very careful about changing the order of these css includes as it can have unintended side effects #}
-    {# <link href="{% url 'logVisit' %}" rel="stylesheet" type="text/css" /> #}
-    <link href="{% static 'js/openlayers/theme/default/style.css' %}" rel="stylesheet" type="text/css" />
+    <link href="{% url 'logVisit' %}" rel="stylesheet" type="text/css" />
 
     {% compressed_css 'contrib' %}
     {% compressed_css 'fluid' %}
@@ -61,8 +60,14 @@
       </div>
     </div>
     {% block extrajs %}
-    <script type="text/javascript" charset="utf-8" src="{% static 'js/openlayers/OpenLayers.js' %}"></script>
+    {# We can't use staticfiles template tag, because it will, in the combination with django-pipeline #}
+    {# it will generate a new OpenLayers.<insert_hash>.js filename which will break _getScriptLocation() -> https://github.com/openlayers/openlayers/blob/08327915d1f7f2add61e33c2092db211604a1921/lib/OpenLayers/SingleFile.js#L27 #}
+    {# which in the end breaks https://github.com/openlayers/openlayers/blob/08327915d1f7f2add61e33c2092db211604a1921/lib/OpenLayers/Map.js#L561 #}
+    {# the end result is a broken path for the style.css, which subtly brakes the page #}
+    <script type="text/javascript" charset="utf-8" src="/static/js/openlayers/OpenLayers.js"></script>
+
     {% compressed_js 'fluid' %}
+
     {% endblock %}
   </body>
 </html>
