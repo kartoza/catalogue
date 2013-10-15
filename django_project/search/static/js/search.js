@@ -482,7 +482,9 @@ APP.CartGridView = Backbone.View.extend({
         this.collection.bind('reset', this.render, this);
         this.collection.bind('add', this.render, this);
         this.collection.bind('destroy', this.render, this);
-        this.collection.fetch({reset: true});
+        if (UserLoged) {
+            this.collection.fetch({reset: true});
+        }
     },
     render: function() {
         // house keeping
