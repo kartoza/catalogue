@@ -232,21 +232,48 @@ function submitSearchForm() {
           }
         },
         success: function(data){
-          APP.guid = data.guid;
-          $APP.trigger('collectionSearch', {
+            resetSearchFromErrors()
+            APP.guid = data.guid;
+            $APP.trigger('collectionSearch', {
               offset: 0
-          });
-          openResultPanel();
-          toggleSearchPanel();
+            });
+            openResultPanel();
+            toggleSearchPanel();
         },
-        error: function() {
-          alert('oops!');
+        error: function(data) {
+            if (data.status == '404') {
+                processSearchFormErrors(data.responseText);
+            } else {
+                alert('There has been an error! Probably gnomes...');
+                console.log(data);
+            }
         }
 
     });
     // submit the form
     $('#catalogueSearch').submit();
 
+}
+
+function processSearchFormErrors(data) {
+    /* process json with errors when search submit fails
+    set class error to control-group div
+    add span element that holds error message afer input */
+    resetSearchFromErrors();
+    var errors = $.parseJSON(data);
+    for (field in errors) {
+        var inputDOM = $('#id_'+field);
+        inputDOM.parent().parent().addClass('error');
+        var helpElem = '<span class="error-block">'+ errors[field] +'</span>'
+        inputDOM.parent().append(helpElem);
+    }
+    $('#tab-3').prop('checked',true);
+}
+
+function resetSearchFromErrors() {
+    /* remove all error notifciatons on search form */
+    $('.error-block').each( function() { this.remove(); })
+    $('.error').each( function() { $(this).removeClass('error'); })
 }
 
 // backbone models/collections/views

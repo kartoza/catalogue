@@ -487,6 +487,18 @@ div.dr_row{
     text-shadow: 0 0 10px #c61a1a;
 }
 
+#search-panel .control-group {
+    margin-bottom: 4px;
+}
+
+.error-block {
+    font-size: 10px;
+    margin: 0;
+    padding: 0;
+    display: block;
+    color: red;
+}
+
 .date-range {
     width: 440px;
     margin: 10px 0 0;
