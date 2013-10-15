@@ -123,9 +123,9 @@
       var total = $('#id_searchdaterange_set-TOTAL_FORMS').val();
       // prepare template
       var tpl = [
-        '<p class="date_range_row">',
+        '<div class="date_range_row">',
           this._dr_input_template(total, theStartDate, theEndDate),
-        '</p>'
+        '</div>'
         ].join('');
 
       //increase total number of forms
