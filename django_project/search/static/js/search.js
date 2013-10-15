@@ -331,7 +331,6 @@ APP.ResultGridView = Backbone.View.extend({
         //this.collection.fetch({reset: true});
         this.cont = $("#results-container");
         $APP.on('collectionSearch', $.proxy(this.collectionSearch, this));
-        $APP.on('');
     },
 
     collectionSearch: function (evt, options) {
@@ -344,17 +343,19 @@ APP.ResultGridView = Backbone.View.extend({
         });
     },
     render: function() {
-        $APP.trigger('SearchLayer_addFeatures', {
-            'data': this.collection.models
-        });
+        if (_.size(this.collection.models) != 0) {
+            $APP.trigger('SearchLayer_addFeatures', {
+                'data': this.collection.models
+            });
 
-        this.cont.empty();
-        var self=this;
-        _(this.collection.models).each(function(item){
-            self.renderItem(item);
-        },this);
-        this._update_pagination_info();
-        this._updateResultsInfo();
+            this.cont.empty();
+            var self=this;
+            _(this.collection.models).each(function(item){
+                self.renderItem(item);
+            },this);
+            this._update_pagination_info();
+            this._updateResultsInfo();
+        }
 
         APP.unblockResultPanel();
 
