@@ -17,7 +17,8 @@
 
     {% block extracss %}
     {# Be very careful about changing the order of these css includes as it can have unintended side effects #}
-    <link href="{% url 'logVisit' %}" rel="stylesheet" type="text/css" />
+    {# <link href="{% url 'logVisit' %}" rel="stylesheet" type="text/css" /> #}
+    <link href="{% static 'js/openlayers/theme/default/style.css' %}" rel="stylesheet" type="text/css" />
 
     {% compressed_css 'contrib' %}
     {% compressed_css 'fluid' %}
