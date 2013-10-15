@@ -464,6 +464,10 @@ div.dr_row{
     overflow: hidden;
 }
 
+#search-panel label {
+    display: inline-block;
+}
+
 #search-panel .date-range .button {
     line-height: 12px;
     padding: 4px 15px 4px;
