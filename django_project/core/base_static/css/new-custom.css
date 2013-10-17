@@ -3,10 +3,7 @@ body {height:100%; margin: 0; background-repeat: no-repeat; background-attachmen
 hr {display: block;position: relative;padding: 0;margin: 8px auto;height: 0;width: 100%;max-height: 0;font-size: 1px;line-height: 0;clear: both;border: none;border-top: 1px solid #aaaaaa;border-bottom: 1px solid #ffffff;}
 .center{text-align:center!important;}
 .main-content {
-    left: 0;
-    position: fixed;
-    right: 0;
-    top: 100px;
+    margin-top: 100px;
 }
 
 .big-map {
