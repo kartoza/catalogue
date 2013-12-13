@@ -116,7 +116,11 @@ admin.site.register(ImagingMode, ImagingModeAdmin)
 class SatelliteInstrumentAdmin(admin.ModelAdmin):
     search_fields = ['name', 'abbreviation', 'description']
     list_filter = ['satellite_instrument_group']
-    list_display = ['name', 'abbreviation', 'description']
+    list_display = [
+        'name',
+        'abbreviation',
+        'description',
+        'satellite_instrument_group']
 admin.site.register(SatelliteInstrument, SatelliteInstrumentAdmin)
 
 
@@ -143,10 +147,10 @@ class SpectralModeAdmin(admin.ModelAdmin):
     search_fields = ['name', 'description']
     list_filter = ['instrument_type', 'spectralgroup']
     list_display = [
-        'instrument_type',
-        'spectralgroup',
         'abbreviation',
         'name',
+        'instrument_type',
+        'spectralgroup',
         'description']
 admin.site.register(SpectralMode, SpectralModeAdmin)
 
