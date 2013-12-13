@@ -31,6 +31,7 @@ from dictionaries.tests.model_factories import (
     SatelliteF,
     SatelliteInstrumentF,
     SpectralModeF,
+    SpectralGroupF,
     InstrumentTypeF,
     SatelliteInstrumentGroupF,
     OpticalProductProfileF,
@@ -51,36 +52,198 @@ class DIMSIIFIngestorTest(TestCase):
         """
         QualityF.create(name='Unknown')
         ProjectionF.create(epsg_code=32734)
-        satellite = SatelliteF.create(
-            abbreviation='L8',
-            operator_abbreviation='LS-8')
-        instrument_type = InstrumentTypeF.create(
+
+        #
+        # Create Instrument types
+        #
+
+        oli_instrument_type = InstrumentTypeF.create(
             abbreviation='OLI',
             operator_abbreviation='OLI')
-        group = SatelliteInstrumentGroupF.create(
-            satellite=satellite,
-            instrument_type=instrument_type
+        tirs_instrument_type = InstrumentTypeF.create(
+            abbreviation='TIRS',
+            operator_abbreviation='TIRS')
+        oli_tirs_instrument_type = InstrumentTypeF.create(
+            abbreviation='OTC',
+            operator_abbreviation='OLI_TIRS')
+        mss_instrument_type = InstrumentTypeF.create(
+            abbreviation='MSS',
+            operator_abbreviation='MSS')
+        etm_instrument_type = InstrumentTypeF.create(
+            abbreviation='ETM',
+            operator_abbreviation='ETM')
+        tm_instrument_type = InstrumentTypeF.create(
+            abbreviation='TM',
+            operator_abbreviation='TM')
+
+        #
+        # Create satellites and their groups
+        #
+
+        l8_satellite = SatelliteF.create(
+            abbreviation='L8',
+            operator_abbreviation='LS-8')
+        l8_oli_satellite_instrument_group = SatelliteInstrumentGroupF.create(
+            satellite=l8_satellite,
+            instrument_type=oli_instrument_type
+        )
+        l8_tirs_satellite_instrument_group = SatelliteInstrumentGroupF.create(
+            satellite=l8_satellite,
+            instrument_type=tirs_instrument_type
+        )
+        l8_oli_tirs_satellite_instrument_group = \
+            SatelliteInstrumentGroupF.create(
+                satellite=l8_satellite,
+                instrument_type=oli_tirs_instrument_type
+            )
+
+        l7_satellite = SatelliteF.create(
+            abbreviation='L7',
+            operator_abbreviation='LS-7')
+        l7_etm_satellite_instrument_group = SatelliteInstrumentGroupF.create(
+            satellite=l7_satellite,
+            instrument_type=etm_instrument_type
         )
 
-        instrument = SatelliteInstrumentF.create(
+        l5_satellite = SatelliteF.create(
+            abbreviation='L5',
+            operator_abbreviation='LS-5')
+        l5_tm_satellite_instrument_group = SatelliteInstrumentGroupF.create(
+            satellite=l5_satellite,
+            instrument_type=tm_instrument_type
+        )
+        l5_mss_satellite_instrument_group = SatelliteInstrumentGroupF.create(
+            satellite=l5_satellite,
+            instrument_type=mss_instrument_type
+        )
+
+        #
+        # Create SatelliteInstruments
+        #
+        l8_tirs_instrument = SatelliteInstrumentF.create(
+            operator_abbreviation='L8-TIRS',
+            satellite_instrument_group=l8_tirs_satellite_instrument_group
+        )
+        l8_oli_instrument = SatelliteInstrumentF.create(
             operator_abbreviation='L8-OLI',
-            satellite_instrument_group=group
+            satellite_instrument_group=l8_oli_satellite_instrument_group
+        )
+        l8_oli_tirs_instrument = SatelliteInstrumentF.create(
+            operator_abbreviation='L8-OLI-TIRS',
+            satellite_instrument_group=l8_oli_tirs_satellite_instrument_group
+        )
+        l7_etm_instrument = SatelliteInstrumentF.create(
+            operator_abbreviation='L7-ETM',
+            satellite_instrument_group=l7_etm_satellite_instrument_group
+        )
+        l5_tm_instrument = SatelliteInstrumentF.create(
+            operator_abbreviation='L5-TM',
+            satellite_instrument_group=l5_tm_satellite_instrument_group
+        )
+        l5_mss_instrument = SatelliteInstrumentF.create(
+            operator_abbreviation='L5-MSS',
+            satellite_instrument_group=l5_tm_satellite_instrument_group
         )
 
-        spectral_mode1 = SpectralModeF.create(**{
-            'abbreviation': 'MS',
-            'instrument_type': instrument_type
+        #
+        # Spectral groups
+        #
+
+        thm_spectral_group = SpectralGroupF.create(
+            abbreviation='THM'
+        )
+        rgb_spectral_group = SpectralGroupF.create(
+            abbreviation='RGB'
+        )
+        pan_spectral_group = SpectralGroupF.create(
+            abbreviation='PAN'
+        )
+        ms_spectral_group = SpectralGroupF.create(
+            abbreviation='MS'
+        )
+
+        #
+        # Spectral modes
+        #
+
+        l5_hrf_spectral_mode = SpectralModeF.create(**{
+            'abbreviation': 'HRF',
+            'instrument_type': tm_instrument_type,
+            'spectral_group': ms_spectral_group
         })
-        spectral_mode2 = SpectralModeF.create(**{
-            'abbreviation': 'PAN',
-            'instrument_type': instrument_type
+        l5_mss_spectral_mode = SpectralModeF.create(**{
+            'abbreviation': 'MSS',
+            'instrument_type': mss_instrument_type,
+            'spectral_group': ms_spectral_group
         })
-        spectral_mode3 = SpectralModeF.create(**{
+        l5_rgb_spectral_mode = SpectralModeF.create(**{
+            'abbreviation': 'RGB',
+            'instrument_type': tm_instrument_type,
+            'spectral_group': rgb_spectral_group
+        })
+        l5_thm_spectral_mode = SpectralModeF.create(**{
             'abbreviation': 'THM',
-            'instrument_type': instrument_type
+            'instrument_type': tm_instrument_type,
+            'spectral_group': thm_spectral_group
         })
+
+        l7_pan_spectral_mode = SpectralModeF.create(**{
+            'abbreviation': 'HPN',
+            'instrument_type': etm_instrument_type,
+            'spectral_group': pan_spectral_group
+        })
+        l7_hrf_spectral_mode = SpectralModeF.create(**{
+            'abbreviation': 'HRF',
+            'instrument_type': etm_instrument_type,
+            'spectral_group': ms_spectral_group
+        })
+        l7_htm_spectral_mode = SpectralModeF.create(**{
+            'abbreviation': 'HTM',
+            'instrument_type': etm_instrument_type,
+            'spectral_group': thm_spectral_group
+        })
+        l7_rgb_spectral_mode = SpectralModeF.create(**{
+            'abbreviation': 'RGB',
+            'instrument_type': etm_instrument_type,
+            'spectral_group': rgb_spectral_group
+        })
+
+        l8_ms_spectral_mode = SpectralModeF.create(**{
+            'abbreviation': 'OLI-MS',
+            'instrument_type': oli_instrument_type,
+            'spectral_group': ms_spectral_group
+        })
+        l8_oli_rgb_spectral_mode = SpectralModeF.create(**{
+            'abbreviation': 'OLI-RGB',
+            'instrument_type': oli_instrument_type,
+            'spectral_group': ms_spectral_group
+        })
+        l8_oli_thm_spectral_mode = SpectralModeF.create(**{
+            'abbreviation': 'TIRS-THM',
+            'instrument_type': oli_instrument_type,
+            'spectral_group': thm_spectral_group
+        })
+        l8_pan_spectral_mode = SpectralModeF.create(**{
+            'abbreviation': 'OLI-PAN',
+            'instrument_type': oli_instrument_type,
+            'spectral_group': pan_spectral_group
+        })
+
+        etm_spectral_mode = SpectralModeF.create(**{
+            'abbreviation': 'RGB',
+            'instrument_type': l7_etm_satellite_instrument_group
+        })
+        l8_oli_rgb_ = SpectralModeF.create(**{
+            'abbreviation': 'THM',
+            'instrument_type': ''
+        })
+
+        #
+        # Product profiles
+        #
+
         profile = OpticalProductProfileF.create(**{
-            'satellite_instrument': instrument,
+            'satellite_instrument': l8_oli_instrument,
             'spectral_mode': spectral_mode1
         })
 
