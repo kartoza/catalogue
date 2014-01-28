@@ -1,7 +1,7 @@
 #!/bin/bash
 python manage.py dumpdata --indent=4 --database default catalogue.Institution > catalogue/fixtures/institution.json
-python manage.py dumpdata --indent=4 --database default catalogue.ProcessingLevel > catalogue/fixtures/processing_level.json
 python manage.py dumpdata --indent=4 --database default catalogue.License > catalogue/fixtures/license.json
+python manage.py dumpdata --indent=4 --database default dictionaries.ProcessingLevel > dictionaries/fixtures/processing_level.json
 python manage.py dumpdata --indent=4 --database default dictionaries.Collection > dictionaries/fixtures/collection.json
 python manage.py dumpdata --indent=4 --database default dictionaries.Satellite > dictionaries/fixtures/satellite.json
 python manage.py dumpdata --indent=4 --database default dictionaries.InstrumentType > dictionaries/fixtures/instrument_type.json
@@ -12,7 +12,7 @@ python manage.py dumpdata --indent=4 --database default dictionaries.RadarBeam >
 python manage.py dumpdata --indent=4 --database default dictionaries.ImagingMode > dictionaries/fixtures/imagingmode.json
 python manage.py dumpdata --indent=4 --database default dictionaries.Band > dictionaries/fixtures/band.json
 python manage.py dumpdata --indent=4 --database default dictionaries.SpectralMode > dictionaries/fixtures/spectral_mode.json
-python manage.py dumpdata --indent=4 --database default dictionaries.BandSpectral > dictionaries/fixtures/band_spectral_mode.json
+python manage.py dumpdata --indent=4 --database default dictionaries.BandSpectralMode > dictionaries/fixtures/band_spectral_mode.json
 python manage.py dumpdata --indent=4 --database default dictionaries.SpectralGroup > dictionaries/fixtures/spectral_group.json
 python manage.py dumpdata --indent=4 --database default dictionaries.ReferenceSystem > dictionaries/fixtures/reference_system.json
 python manage.py dumpdata --indent=4 --database default dictionaries.InstrumentTypeProcessingLevel > dictionaries/fixtures/instrument_type_processing_level.json
