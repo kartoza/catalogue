@@ -4,7 +4,7 @@
 Vagrant.configure("1") do |config|
   # v1 configs...
   # I cant find the proper way to set up bridged networking in the v2 docs
-  config.vm.network :bridged, :bridge => "eth0"
+  config.vm.network :bridged, :bridge => "eth1"
 end
 
 Vagrant.configure("2") do |config|

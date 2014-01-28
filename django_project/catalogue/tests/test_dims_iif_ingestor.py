@@ -280,7 +280,7 @@ class DIMSIIFIngestorTest(TestCase):
             formatted_list)
         assert existing_product_id in product_list, message
 
-        # Reingest and make sure that overridden owner sticks
+        # Re-ingest and make sure that overridden owner sticks
         # Above ran in test mode so image was
 
         dims_iif.ingest(
