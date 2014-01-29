@@ -37,6 +37,7 @@ from dictionaries.tests.model_factories import (
     OpticalProductProfileF,
 )
 from catalogue.ingestors import spot
+from catalogue.models import Institution
 
 SHAPEFILE_NAME = os.path.join(
     os.path.dirname(__file__),
@@ -376,58 +377,60 @@ class SpotIngestorTest(TestCase):
             'spectral_mode': s5_b_spectral_mode
         })
 
-    def testImportUsingManagementCommand(self):
+    def test_import_using_management_command(self):
         """Test that we can ingest spot using the management command"""
         call_command(
             'spot_harvest',
             verbosity=2,
             shapefile=SHAPEFILE_NAME)
 
-    def testImportDirectly(self):
+    def test_import_directly(self):
         """Test that we can ingest spot using the ingestor function"""
 
         #
         # Test with a full load of data
         #
-        spot.ingest(theShapeFile=SHAPEFILE_NAME,
-                    theVerbosityLevel=1)
-        myProducts = GenericProduct.objects.filter(product_id__contains='S5')
-        myList = []
-        myFormattedList = ''
-        for myProduct in myProducts:
-            myList.append(myProduct.product_id)
-            myFormattedList += myProduct.product_id + '\n'
+        spot.ingest(shapefile=SHAPEFILE_NAME,
+                    theVerbosityLevel=2)
+        products = GenericProduct.objects.filter(
+            original_product_id__contains='51003681205100903082B')
+        result_list = []
+        formatted_list = ''
+        for product in products:
+            result_list.append(product.product_id)
+            formatted_list += product.product_id + '\n'
 
         # Test that 'T' Color products are not ingested
-        myExpectedProductId = (
+        expected_product_id = (
             'S5-_HRG_T--_S5C2_0100_00_0368_00'
             '_120510_090310_1B--_ORBIT-')
-        myMessage = 'Expected:\n%s\nTo be in:\n%s\n' % (
-            myExpectedProductId,
-            myFormattedList)
-        assert myExpectedProductId not in myList, myMessage
+        message = 'Expected:\n%s\nTo be in:\n%s\n' % (
+            expected_product_id,
+            formatted_list)
+        assert expected_product_id not in result_list, message
 
         # Test that 'T' Grayscale products ARE  ingested
-        myExpectedProductId = (
+        expected_product_id = (
             'S5-_HRG_T--_S5C2_0100_00_0368_00'
             '_120510_090308_1B--_ORBIT-')
-        myMessage = 'Expected:\n%s\nTo be in:\n%s\n' % (
-            myExpectedProductId,
-            myFormattedList)
-        assert myExpectedProductId in myList, myMessage
+        message = 'Expected:\n%s\nTo be in:\n%s\n' % (
+            expected_product_id,
+            formatted_list)
+        assert expected_product_id in result_list, message
 
         # Test that Spot products are not owned by RapidEye
-        myBadOwner = Institution.objects.get(id=3)
-        myProduct = GenericProduct.objects.get(product_id=myExpectedProductId)
-        assert myProduct.owner is not myBadOwner
+        bad_owner = Institution.objects.get(id=3)
+        product = GenericProduct.objects.get(
+            original_product_id__contains=expected_product_id)
+        assert product.owner is not bad_owner
 
         #Reingesst and make sure that overridden owner sticks
 
-        spot.ingest(theShapeFile=SHAPEFILE_NAME,
+        spot.ingest(shapefile=SHAPEFILE_NAME,
                     theOwner='Foobar')
-        myProduct = GenericProduct.objects.get(
-            product_id=(myExpectedProductId))
-        assert myProduct.owner.name == 'Foobar'
+        product = GenericProduct.objects.get(
+            product_id=(expected_product_id))
+        assert product.owner.name == 'Foobar'
 
     def testAreaFiltering(self):
         """Test that AOI filtering works"""
@@ -443,9 +446,9 @@ class SpotIngestorTest(TestCase):
             '16.206099 -5.592359))')
         print myArea
         myProductCount = GenericProduct.objects.count()
-        spot.ingest(theShapeFile=SHAPEFILE_NAME,
+        spot.ingest(shapefile=SHAPEFILE_NAME,
                     theVerbosityLevel=1,
-                    theArea=myArea)
+                    area_of_interest=myArea)
         myNewProductCount = GenericProduct.objects.count()
         self.assertEqual(myProductCount + 4, myNewProductCount)
 
@@ -462,7 +465,7 @@ class SpotIngestorTest(TestCase):
         mySensorType.delete()
         mySensorTypeCount = SensorType.objects.all().count()
         myAcquisitionModeCount = AcquisitionMode.objects.all().count()
-        spot.ingest(theShapeFile=SHAPEFILE_NAME,
+        spot.ingest(shapefile=SHAPEFILE_NAME,
                     theVerbosityLevel=1)
         myNewSensorTypeCount = SensorType.objects.all().count()
         myNewAcquisitionModeCount = AcquisitionMode.objects.all().count()

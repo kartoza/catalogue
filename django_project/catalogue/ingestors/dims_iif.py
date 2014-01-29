@@ -46,7 +46,7 @@ from catalogue.models import (
     Quality)
 
 
-def parseDateTime(theDate):
+def parse_date_time(theDate):
     """A helper method to create a date object from a landsat time stamp.
 
     :param theDate: Date in this format:
@@ -58,25 +58,25 @@ def parseDateTime(theDate):
     :rtype: datetime
     """
     #print 'Parsing Date: %s\n' % theDate
-    myStartYear = theDate[0:4]
-    myStartMonth = theDate[5:7]
-    myStartDay = theDate[8:10]
-    myStartTime = theDate[11:19]
-    myTokens = myStartTime.split(':')
-    myStartHour = myTokens[0]
-    myStartMinute = myTokens[1]
-    myStartSeconds = myTokens[2]
+    start_year = theDate[0:4]
+    start_month = theDate[5:7]
+    start_day = theDate[8:10]
+    start_time = theDate[11:19]
+    tokens = start_time.split(':')
+    start_hour = tokens[0]
+    start_minute = tokens[1]
+    start_seconds = tokens[2]
     #print "%s-%s-%sT%s:%s:%s" % (
-    #    myStartYear, myStartMonth, myStartDay,
-    #    myStartHour, myStartMinute, myStartSeconds)
-    myDateTime = datetime(
-        int(myStartYear),
-        int(myStartMonth),
-        int(myStartDay),
-        int(myStartHour),
-        int(myStartMinute),
-        int(myStartSeconds))
-    return myDateTime
+    #    start_year, start_month, start_day,
+    #    start_hour, start_minute, start_seconds)
+    parsed_date_time = datetime(
+        int(start_year),
+        int(start_month),
+        int(start_day),
+        int(start_hour),
+        int(start_minute),
+        int(start_seconds))
+    return parsed_date_time
 
 
 def get_parameters_element(dom):
@@ -184,17 +184,17 @@ def get_dates(log_message, dom):
 
     start_element = coverage.getElementsByTagName('startTime')[0]
     start_date = start_element.firstChild.nodeValue
-    start_date = parseDateTime(start_date)
+    start_date = parse_date_time(start_date)
     log_message('Product Start Date: %s' % start_date, 2)
 
     center_element = dom.getElementsByTagName('centerTime')[0]
     center_date = center_element.firstChild.nodeValue
-    center_date = parseDateTime(center_date)
+    center_date = parse_date_time(center_date)
     log_message('Product Date: %s' % center_date, 2)
 
     end_element = dom.getElementsByTagName('stopTime')[0]
     end_date = end_element.firstChild.nodeValue
-    end_date = parseDateTime(end_date)
+    end_date = parse_date_time(end_date)
     log_message('Product End Date: %s' % end_date, 2)
 
     return start_date, center_date, end_date
@@ -488,30 +488,23 @@ def ingest(
     """
     Ingest a collection of Landsat metadata folders.
 
-    Args:
-        * test_only_flag - (Optional) Defaults to False. Whether to do a dummy
-           run (database will not be updated).
-        * source_path - (Required) A DIMS created IIF metadata xml file and
-          thumbnail
-        * verbosity_level - (Optional) Defaults to 1. How verbose the logging
-           output should be. 0-2 where 2 is very very very very verbose!
-        * myLicense - (Optional) Defaults to 'SANSA Free License',
-            License holder of the product.
-        * theOwner - (Optional) Defaults to 'USGS', Original provider / owner
-           of the data.
-        * theSoftware - (Optional) Defaults to 'LPGS', The software used to
-            create / extract the product.
-        * theSoftwareVersion - str (Optional) Defaults to 11.6.0.
-        * theQuality - (Optional) Defaults to 'Unknown', A quality assessment
-            for these images defined in the IIF file.
-        * halt_on_error_flag: bool - set to True if we should stop processing
-            when the first error is encountered.
-    Returns:
-        None
-    Exceptions:
-        Any unhandled exceptions will be raised.
+    :param test_only_flag: Whether to do a dummy run ( database will not be
+        updated. Default False.
+
+    :param source_path: A DIMS created IIF metadata xml file and thumbnail.
+
+    :param verbosity_level: How verbose the logging output should be. 0-2
+        where 2 is very very very very verbose! Default is 1.
+
+    :param halt_on_error_flag: Whather we should stop processing when the first
+        error is encountered. Default is True.
     """
     def log_message(message, level=1):
+        """Log a message for a given leven.
+
+        :param message: A message.
+        :param level: A log level.
+        """
         if verbosity_level >= level:
             print message
 

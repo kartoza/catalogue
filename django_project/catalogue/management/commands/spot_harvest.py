@@ -134,14 +134,14 @@ class Command(BaseCommand):
         quality               = options.get('quality')
         processing_level      = options.get('processing_level')
 
-        spot.ingest(theShapeFile=shapefile,
+        spot.ingest(shapefile=shapefile,
                     myDownloadThumbsFlag=download_thumbs,
                     theTestOnlyFlag=test_only,
                     theVerbosityLevel=verbose,
                     theLicense=license,
                     theOwner=owner,
                     theSoftware=software,
-                    theArea=area,
+                    area_of_interest=area,
                     myQuality=quality,
                     theProcessingLevel=processing_level
         )
