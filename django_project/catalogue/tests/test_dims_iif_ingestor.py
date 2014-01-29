@@ -52,7 +52,7 @@ class DIMSIIFIngestorTest(TestCase):
         """
         QualityF.create(name='Unknown')
         ProjectionF.create(epsg_code=32734)
-
+        ProjectionF.create(epsg_code=4326)
         #
         # Create Instrument types
         #
@@ -142,7 +142,7 @@ class DIMSIIFIngestorTest(TestCase):
         )
         l5_mss_instrument = SatelliteInstrumentF.create(
             operator_abbreviation='L5-MSS',
-            satellite_instrument_group=l5_tm_satellite_instrument_group
+            satellite_instrument_group=l5_mss_satellite_instrument_group
         )
 
         #
@@ -169,82 +169,91 @@ class DIMSIIFIngestorTest(TestCase):
         l5_hrf_spectral_mode = SpectralModeF.create(**{
             'abbreviation': 'HRF',
             'instrument_type': tm_instrument_type,
-            'spectral_group': ms_spectral_group
+            'spectralgroup': ms_spectral_group
         })
         l5_mss_spectral_mode = SpectralModeF.create(**{
             'abbreviation': 'MSS',
             'instrument_type': mss_instrument_type,
-            'spectral_group': ms_spectral_group
+            'spectralgroup': ms_spectral_group
         })
         l5_rgb_spectral_mode = SpectralModeF.create(**{
             'abbreviation': 'RGB',
             'instrument_type': tm_instrument_type,
-            'spectral_group': rgb_spectral_group
+            'spectralgroup': rgb_spectral_group
         })
         l5_thm_spectral_mode = SpectralModeF.create(**{
             'abbreviation': 'THM',
             'instrument_type': tm_instrument_type,
-            'spectral_group': thm_spectral_group
+            'spectralgroup': thm_spectral_group
         })
 
         l7_pan_spectral_mode = SpectralModeF.create(**{
             'abbreviation': 'HPN',
             'instrument_type': etm_instrument_type,
-            'spectral_group': pan_spectral_group
+            'spectralgroup': pan_spectral_group
         })
         l7_hrf_spectral_mode = SpectralModeF.create(**{
             'abbreviation': 'HRF',
             'instrument_type': etm_instrument_type,
-            'spectral_group': ms_spectral_group
+            'spectralgroup': ms_spectral_group
         })
         l7_htm_spectral_mode = SpectralModeF.create(**{
             'abbreviation': 'HTM',
             'instrument_type': etm_instrument_type,
-            'spectral_group': thm_spectral_group
+            'spectralgroup': thm_spectral_group
         })
         l7_rgb_spectral_mode = SpectralModeF.create(**{
             'abbreviation': 'RGB',
             'instrument_type': etm_instrument_type,
-            'spectral_group': rgb_spectral_group
+            'spectralgroup': rgb_spectral_group
         })
 
-        l8_ms_spectral_mode = SpectralModeF.create(**{
-            'abbreviation': 'OLI-MS',
+        l8_oli_ms_spectral_mode = SpectralModeF.create(**{
+            'abbreviation': 'MS',  # name OLI MS
             'instrument_type': oli_instrument_type,
-            'spectral_group': ms_spectral_group
+            'spectralgroup': ms_spectral_group
         })
-        l8_oli_rgb_spectral_mode = SpectralModeF.create(**{
-            'abbreviation': 'OLI-RGB',
-            'instrument_type': oli_instrument_type,
-            'spectral_group': ms_spectral_group
+        l8_oli_tirs_spectral_mode = SpectralModeF.create(**{
+            'abbreviation': 'MS',  # name OLI TIRS MS
+            'instrument_type': oli_tirs_instrument_type,
+            'spectralgroup': ms_spectral_group
         })
         l8_oli_thm_spectral_mode = SpectralModeF.create(**{
             'abbreviation': 'TIRS-THM',
             'instrument_type': oli_instrument_type,
-            'spectral_group': thm_spectral_group
+            'spectralgroup': thm_spectral_group
         })
         l8_pan_spectral_mode = SpectralModeF.create(**{
             'abbreviation': 'OLI-PAN',
             'instrument_type': oli_instrument_type,
-            'spectral_group': pan_spectral_group
+            'spectralgroup': pan_spectral_group
         })
 
-        etm_spectral_mode = SpectralModeF.create(**{
-            'abbreviation': 'RGB',
-            'instrument_type': l7_etm_satellite_instrument_group
-        })
-        l8_oli_rgb_ = SpectralModeF.create(**{
-            'abbreviation': 'THM',
-            'instrument_type': ''
-        })
+        # etm_spectral_mode = SpectralModeF.create(**{
+        #     'abbreviation': 'RGB',
+        #     'instrument_type': etm_instrument_type,
+        #     'spectralgroup': rgb_spectral_group
+        # })
 
         #
         # Product profiles
         #
 
-        profile = OpticalProductProfileF.create(**{
+        l8_oli_ms_profile = OpticalProductProfileF.create(**{
             'satellite_instrument': l8_oli_instrument,
-            'spectral_mode': spectral_mode1
+            'spectral_mode': l8_oli_ms_spectral_mode
+        })
+        l8_oli_tirs_profile = OpticalProductProfileF.create(**{
+            'satellite_instrument': l8_oli_tirs_instrument,
+            'spectral_mode': l8_oli_tirs_spectral_mode
+        })
+        l7_etm_hrf_profile = OpticalProductProfileF.create(**{
+            'satellite_instrument': l7_etm_instrument,
+            'spectral_mode': l7_hrf_spectral_mode
+        })
+        l5_tm_hrf_profile = OpticalProductProfileF.create(**{
+            'satellite_instrument': l5_tm_instrument,
+            'spectral_mode': l5_hrf_spectral_mode
         })
 
     # noinspection PyMethodMayBeStatic
@@ -274,7 +283,7 @@ class DIMSIIFIngestorTest(TestCase):
             product_list.append(product.product_id)
             formatted_list += product.product_id + '\n'
 
-        existing_product_id = 'LC81730832013162JSA00'
+        existing_product_id = 'LC81780702013341JSA00'
         message = 'Expected:\n%s\nTo be in:\n%s\n' % (
             existing_product_id,
             formatted_list)

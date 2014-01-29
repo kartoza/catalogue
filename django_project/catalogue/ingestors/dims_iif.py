@@ -366,7 +366,7 @@ def get_product_profile(log_message, dom):
             satellite=satellite, instrument_type=instrument_type)
     except Exception, e:
         print e.message
-        satellite_instrument_group = None
+        raise e
     log_message('Satellite Instrument Group %s' %
                 satellite_instrument_group, 2)
 
@@ -380,7 +380,7 @@ def get_product_profile(log_message, dom):
             satellite_instrument_group=satellite_instrument_group)
     except Exception, e:
         print e.message
-        satellite_instrument = None
+        raise e
     log_message('Satellite Instrument %s' % satellite_instrument, 2)
 
     try:
@@ -388,7 +388,7 @@ def get_product_profile(log_message, dom):
             instrument_type=instrument_type)
     except Exception, e:
         print e.message
-        spectral_modes = None
+        raise
     log_message('Spectral Modes %s' % spectral_modes, 2)
 
     try:
@@ -400,7 +400,7 @@ def get_product_profile(log_message, dom):
         print 'Searched for satellite instrument: %s and spectral modes %s' % (
             satellite_instrument, spectral_modes
         )
-        product_profile = None
+        raise e
     log_message('Product Profile %s' % product_profile, 2)
 
     return product_profile
@@ -441,6 +441,8 @@ def get_projection(specific_parameters):
     The project is always expressed as an EPSG code and we fetch the related
     Projection model for that code.
 
+    In IIF we only get 'UTM' for the CRS which is basically unusable for
+    us (since we need the zone too) so we will always fail and return EPSG:4326
 
     :param specific_parameters: Dom Document containing the bounds of the scene.
     :type specific_parameters: DOM document.
@@ -451,13 +453,16 @@ def get_projection(specific_parameters):
 
     try:
         projection_element = get_feature(
-            'projectionInfo', specific_parameters)
+            'projectionName', specific_parameters)
         projection = get_feature_value('code', projection_element)
         projection = Projection.objects.get(epsg_code=int(projection))
     except:
         # If projection not found default to WGS84 - some IIF files
         # may not have a projection if they are 'scene identifying IIF's'
         # and the data is raw / unprocessed.
+        # Discussion with Linda 29 Jan 2014 - eventually we should probably
+        # just remove projection from GenericProduct and only worry about
+        # CRS on deliver of the product.
         projection = Projection.objects.get(epsg_code=4326)
     return projection
 
@@ -536,7 +541,8 @@ def ingest(
     for myFolder in glob.glob(os.path.join(source_path, '*')):
         record_count += 1
         try:
-
+            log_message('', 2)
+            log_message('---------------', 2)
             # Get the folder name
             product_folder = os.path.split(myFolder)[-1]
             log_message(product_folder, 2)
@@ -561,6 +567,11 @@ def ingest(
 
             # Now get all sensor specific metadata
             specific_parameters = get_specific_parameters_element(dom)
+
+            # projection for GenericProduct
+            #print specific_parameters.toxml()
+            projection = get_projection(specific_parameters)
+            log_message('Projection: %s' % projection, 2)
 
             # Orbit number for GenericSensorProduct
             orbit_number = get_feature_value(
@@ -599,10 +610,6 @@ def ingest(
                 resolution_element)
             log_message(
                 'Radiometric resolution: %s' % radiometric_resolution, 2)
-
-            # projection for GenericProduct
-            projection = get_projection(specific_parameters)
-            log_message('Projection: %s' % projection, 2)
 
             # path for GenericSensorProduct
             path = get_feature_value('path', specific_parameters)
@@ -656,7 +663,6 @@ def ingest(
             metadata = metadata_file.readlines()
             metadata_file.close()
             log_message('Metadata retrieved', 2)
-
 
             keys = get_administration_keys_element(dom)
             dims_product_id = get_feature_value('productID', keys)
@@ -790,6 +796,8 @@ def ingest(
                 transaction.commit()
                 log_message('Imported scene : %s' % product_folder, 1)
         except Exception, e:
+            log_message('Record import failed. AAAAAAARGH! : %s' %
+                        product_folder, 1)
             failed_record_count += 1
             if halt_on_error_flag:
                 print e.message
@@ -798,7 +806,10 @@ def ingest(
                 continue
 
     # To decide: should we remove ingested product folders?
+
+    print '==============================='
     print 'Products processed : %s ' % record_count
     print 'Products updated : %s ' % updated_record_count
     print 'Products imported : %s ' % created_record_count
     print 'Products failed to import : %s ' % failed_record_count
+    print '==============================='
