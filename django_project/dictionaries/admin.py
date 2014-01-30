@@ -59,7 +59,8 @@ admin.site.register(Collection, CollectionAdmin)
 
 
 class SatelliteAdmin(admin.ModelAdmin):
-    search_fields = ['name', 'abbreviation', 'description']
+    search_fields = [
+        'name', 'abbreviation', 'operator_abbreviation', 'description']
     list_filter = [
         'launch_date',
         'revist_time_days',

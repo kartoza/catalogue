@@ -20,18 +20,23 @@ __copyright__ = 'South African National Space Agency'
 
 import os
 import sys
-import glob
-from cmath import log
 from datetime import datetime
-from xml.dom.minidom import parse
 import traceback
-import shutil
-
-from django.db import transaction
-from django.contrib.gis.geos import WKTReader
+import urllib2
+from mercurial import lock, error
 from django.core.management.base import CommandError
-from django.core.exceptions import ObjectDoesNotExist
 from django.conf import settings
+from django.core.exceptions import ObjectDoesNotExist
+from django.db import transaction
+from django.contrib.gis.gdal import OGRGeometry
+from django.contrib.gis.gdal import DataSource
+from django.contrib.gis.gdal.feature import Feature
+
+# from django.db import transaction
+# from django.contrib.gis.geos import WKTReader
+# from django.core.management.base import CommandError
+# from django.core.exceptions import ObjectDoesNotExist
+# from django.conf import settings
 
 from dictionaries.models import (
     SpectralMode,
@@ -41,26 +46,10 @@ from dictionaries.models import (
     Satellite,
     SatelliteInstrumentGroup)
 
-from catalogue.models import (
+from ..models import (
     OpticalProduct,
     Projection,
     Quality)
-from mercurial import lock, error
-from django.core.management.base import CommandError
-from django.conf import settings
-from django.core.exceptions import ObjectDoesNotExist
-from django.db import transaction
-from django.contrib.gis.gdal import OGRGeometry
-from django.contrib.gis.gdal import DataSource
-
-from ..models import (
-    Quality,
-    License,
-    CreatingSoftware,
-    Institution,
-    OpticalProduct,
-)
-from dictionaries.models import Satellite
 
 
 def get_dates(log_message, feature):
@@ -93,7 +82,7 @@ def get_dates(log_message, feature):
         int(time_parts[0]),  # hour
         int(time_parts[1]),  # minutes
         int(time_parts[2]))  # seconds
-
+    log_message('Product date: %s' % image_date, 2)
     return image_date, image_date, image_date
 
 
@@ -127,69 +116,77 @@ def get_product_profile(log_message, feature):
     """
     # We need type, sensor and mission so that we can look up the
     # OpticalProductProfile that applies to this product
+
+    # Work out the satellite
     satellite_number = feature.get('SATEL')
     if not int(satellite_number) in (1, 2, 3, 4, 5):
         raise CommandError(
             'Unknown Spot mission number'
             '(should be 1-5) %s.' % satellite_number)
 
-    mission_value = 'S%s' % satellite_number
-    satellite = Satellite.objects.get(abbreviation=mission_value)
+    mission_value = 'SPOT-%s' % satellite_number
+    satellite = Satellite.objects.get(operator_abbreviation=mission_value)
 
-    abbreviation = None
+    # Work out the instrument type
+    instrument_type_abbreviation = None
     if satellite_number in [1, 2, 3]:
-        abbreviation = 'HRV'
+        instrument_type_abbreviation = 'HRV'
     elif satellite_number == 4:
-        abbreviation = 'HRVIR'
+        instrument_type_abbreviation = 'HRVIR'
     elif satellite_number == 5:
-        abbreviation = 'HRG'
+        instrument_type_abbreviation = 'HRG'
 
     instrument_type = InstrumentType.objects.get(
-        operator_abbreviation=abbreviation)
+        operator_abbreviation=instrument_type_abbreviation)
 
-    abbreviation = None
-    # If it is a spot 1,2 or three assume the sensor type
-    # is HRV-1 or HRV-2 or HRV-3.
-    if satellite_number in [1, 2, 3]:
-        abbreviation = 'HRV-%s' % satellite_number
-    # If it is a spot 4 image then assume the sensor type
-    # is HIR
-    elif satellite_number == 4:
-        abbreviation = 'HRVIR-4'
-    # If it is a spot 5 image then assume the sensor type
-    # is a HRG
-    elif satellite_number == 5:
-            abbreviation = 'HRG-5'
-
+    # Work out the instrument group
     try:
         satellite_instrument_group = SatelliteInstrumentGroup.objects.get(
             satellite=satellite, instrument_type=instrument_type)
     except Exception, e:
         print e.message
         raise e
-    log_message('Satellite Instrument Group %s' %
-                satellite_instrument_group, 2)
+    log_message(
+        'Satellite Instrument Group %s' %
+        satellite_instrument_group, 2)
+
+    # Work out the Instrument
 
     # Note that in SPOT you may get more that one instrument
-    # groups matched. When the time comes you will need to add more filtering
-    # rules to ensure that you end up with only one instrument group.
-    # For the mean time, we can assume that SPOT will return only one.
+    # matched. When the time comes you will need to add more filtering
+    # rules to ensure that you end up with only one instrument.
 
+    camera_number = feature.get('A21')[-2:-1]
+    satellite_instrument_abbreviation = 'S%s-%s%s' % (
+        satellite_number, instrument_type_abbreviation, camera_number
+    )
     try:
         satellite_instrument = SatelliteInstrument.objects.get(
-            satellite_instrument_group=satellite_instrument_group)
+            satellite_instrument_group=satellite_instrument_group,
+            operator_abbreviation=satellite_instrument_abbreviation)
     except Exception, e:
         print e.message
         raise e
     log_message('Satellite Instrument %s' % satellite_instrument, 2)
 
+    # Work out the spectral mode
+
+    # Note that you can get more than one spectral mode for an instrument
+    # type (e.g. J, T, A, B) so we need to filter on the instrument_type and
+    # the spectral mode string provided in the TYPE field of the SPOT
+    # shapefile.
+
+    spectral_mode_string = feature.get('TYPE')
     try:
         spectral_modes = SpectralMode.objects.filter(
-            instrument_type=instrument_type)
+            instrument_type=instrument_type,
+            abbreviation=spectral_mode_string)
     except Exception, e:
         print e.message
         raise
     log_message('Spectral Modes %s' % spectral_modes, 2)
+
+    # Work out the product profile
 
     try:
         product_profile = OpticalProductProfile.objects.get(
@@ -315,6 +312,8 @@ def fetch_features(shapefile, area_of_interest):
             if area_of_interest.intersects(myPolygon.geom):
                 yield myPolygon
 
+
+# noinspection PyDeprecation
 @transaction.commit_manually
 def ingest(
         shapefile,
@@ -393,6 +392,7 @@ def ingest(
         % (ingestor_version, test_only_flag, shapefile, area_of_interest,
            verbosity_level, halt_on_error_flag), 2)
 
+    aoi_geometry = None
     # Validate area_of_interest
     if area_of_interest is not None:
         try:
@@ -427,9 +427,12 @@ def ingest(
             print 'Products imported : %s ' % created_record_count
             transaction.commit()
 
-        if skip_record():
+        if skip_record(feature):
             skipped_record_count += 1
             continue
+
+        original_product_id = feature.get('A21')
+        log_message('Product Number: %s' % original_product_id, 2)
 
         try:
             log_message('', 2)
@@ -437,10 +440,6 @@ def ingest(
             log_message('Ingesting %s' % feature, 2)
 
             # First grab all the generic properties that any scene will have...
-
-            original_product_id = feature.get('A21')
-            log_message('Product Number: %s' % original_product_id, 2)
-
             geometry = feature.geom.geos
 
             start_date_time, center_date_time, end_date_time = get_dates(
@@ -452,8 +451,8 @@ def ingest(
             log_message('Projection: %s' % projection, 2)
 
             # Band count for GenericImageryProduct
-            band_count = band_count(feature)
-            log_message('Band count: %s' % band_count, 2)
+            product_band_count = get_band_count(feature)
+            log_message('Band count: %s' % product_band_count, 2)
 
             # Spatial resolution x for GenericImageryProduct
             spatial_resolution_x = feature.get('RESOL')
@@ -505,8 +504,7 @@ def ingest(
             quality = get_quality()
 
             # ProductProfile for OpticalProduct
-            product_profile = get_product_profile(
-                log_message, specific_parameters)
+            product_profile = get_product_profile(log_message, feature)
 
             # Get the original text file metadata
             metadata = '\n'.join(['%s=%s' % (
@@ -515,8 +513,8 @@ def ingest(
 
             # Metadata comes from shpfile dump not DIMS...
             dims_product_id = None
+            log_message('DIMS product ID: not available for SPOT ingestor')
 
-            log_message('DIMS product ID: %s' % dims_product_id)
             # Check if there is already a matching product based
             # on original_product_id
 
@@ -525,7 +523,7 @@ def ingest(
                 'metadata': metadata,
                 'spatial_coverage': geometry,
                 'radiometric_resolution': radiometric_resolution,
-                'band_count': band_count,
+                'band_count': product_band_count,
                 'cloud_cover': cloud_cover,
                 'sensor_inclination_angle': sensor_inclination_angle,
                 'sensor_viewing_angle': sensor_viewing_angle,
@@ -608,20 +606,32 @@ def ingest(
                         # attempt to  recreate an existing dir
                         pass
 
-                    jpeg_path = os.path.join(str(myFolder), '*.jpeg')
-                    log_message(jpeg_path, 2)
-                    jpeg_path = glob.glob(jpeg_path)[0]
-                    new_name = '%s.jpg' % product.original_product_id
-                    shutil.copyfile(
-                        jpeg_path,
-                        os.path.join(thumbs_folder, new_name))
-                    # Transform and store .wld file
-                    log_message('Referencing thumb', 2)
-                    try:
-                        path = product.georeferencedThumbnail()
-                        log_message('Georeferenced Thumb: %s' % path, 2)
-                    except:
-                        traceback.print_exc(file=sys.stdout)
+                    if download_thumbs:
+                        # Download original jpeg thumbnail and
+                        # creates a thumbnail
+                        new_name = '%s.jpg' % product.original_product_id
+                        handle = open(new_name, 'wb+')
+                        thumbnail = urllib2.urlopen(feature.get('URL_QL'))
+                        handle.write(thumbnail.read())
+                        thumbnail.close()
+                        handle.close()
+                        # Transform and store .wld file
+                        log_message('Referencing thumb', 2)
+                        # noinspection PyBroadException
+                        try:
+                            path = product.georeferencedThumbnail()
+                            log_message('Georeferenced Thumb: %s' % path, 2)
+                        except:
+                            traceback.print_exc(file=sys.stdout)
+                    else:
+                        # user opted not to ingest thumbs immediately
+                        # only set the thumb url if it is a new product
+                        # as existing products may already have cached a
+                        # copy
+                        if new_record_flag:
+                            product.remote_thumbnail_url = (
+                                feature.get('URL_QL'))
+                            product.save()
 
                 if new_record_flag:
                     log_message('Product %s imported.' % record_count, 2)
@@ -633,16 +643,16 @@ def ingest(
                 traceback.print_exc(file=sys.stdout)
                 raise CommandError('Cannot import: %s' % e)
 
+            log_message('Imported scene : %s' % original_product_id, 1)
             if test_only_flag:
                 transaction.rollback()
-                log_message('Imported scene : %s' % product_folder, 1)
                 log_message('Testing only: transaction rollback.', 1)
             else:
                 transaction.commit()
-                log_message('Imported scene : %s' % product_folder, 1)
+
         except Exception, e:
             log_message('Record import failed. AAAAAAARGH! : %s' %
-                        product_folder, 1)
+                        original_product_id, 1)
             failed_record_count += 1
             if halt_on_error_flag:
                 print e.message
@@ -650,8 +660,7 @@ def ingest(
             else:
                 continue
 
-    # To decide: should we remove ingested product folders?
-
+    lockfile.release()
     print '==============================='
     print 'Products processed : %s ' % record_count
     print 'Products skipped : %s ' % skipped_record_count
