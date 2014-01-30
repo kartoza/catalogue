@@ -22,7 +22,7 @@ __copyright__ = 'South African National Space Agency'
 import os
 from django.test import TestCase
 import unittest
-import factory
+# import factory
 from django.core.management import call_command
 from catalogue.models import (
     GenericProduct)
@@ -48,9 +48,6 @@ class SpotIngestorTest(TestCase):
     """
     Tests SPOT ingestor
     """
-
-
-
     def setUp(self):
         """
         Sets up before each test
@@ -133,7 +130,6 @@ class SpotIngestorTest(TestCase):
             satellite_instrument_group=s1_satellite_instrument_group
         )
 
-
         # Two HRV cameras on Spot2 satellite
         s2_hrv1_instrument = SatelliteInstrumentF.create(
             operator_abbreviation='S2-HRV1',
@@ -173,7 +169,6 @@ class SpotIngestorTest(TestCase):
             operator_abbreviation='S5-HRG2',
             satellite_instrument_group=s5_satellite_instrument_group
         )
-
 
         #
         # Spectral groups
@@ -240,22 +235,26 @@ class SpotIngestorTest(TestCase):
         ####### SPOT 1 possible products ###############
 
         # You can get a multispectral image from spot 1 camera hrv1
+        # noinspection PyUnusedLocal
         s1_hrv1_ms_profile = OpticalProductProfileF.create(**{
             'satellite_instrument': s1_hrv1_instrument,
             'spectral_mode': s123_x_spectral_mode
         })
         # You can get a pan image from spot 1 camera hrv1
+        # noinspection PyUnusedLocal
         s1_hrv1_pan_profile = OpticalProductProfileF.create(**{
             'satellite_instrument': s1_hrv1_instrument,
             'spectral_mode': s123_p_spectral_mode
         })
 
         # You can get a multispectral image from spot 1 camera hrv2
+        # noinspection PyUnusedLocal
         s1_hrv2_ms_profile = OpticalProductProfileF.create(**{
             'satellite_instrument': s1_hrv2_instrument,
             'spectral_mode': s123_x_spectral_mode
         })
         # You can get a pan image from spot 1 camera hrv2
+        # noinspection PyUnusedLocal
         s1_hrv2_pan_profile = OpticalProductProfileF.create(**{
             'satellite_instrument': s1_hrv2_instrument,
             'spectral_mode': s123_p_spectral_mode
@@ -264,22 +263,26 @@ class SpotIngestorTest(TestCase):
         ####### SPOT 2 possible products ###############
 
         # You can get a multispectral image from spot 2 camera hrv1
+        # noinspection PyUnusedLocal
         s2_hrv1_ms_profile = OpticalProductProfileF.create(**{
             'satellite_instrument': s2_hrv1_instrument,
             'spectral_mode': s123_x_spectral_mode
         })
         # You can get a pan image from spot 2 camera hrv1
+        # noinspection PyUnusedLocal
         s2_hrv1_pan_profile = OpticalProductProfileF.create(**{
             'satellite_instrument': s2_hrv1_instrument,
             'spectral_mode': s123_p_spectral_mode
         })
 
         # You can get a multispectral image from spot 2 camera hrv2
+        # noinspection PyUnusedLocal
         s2_hrv2_ms_profile = OpticalProductProfileF.create(**{
             'satellite_instrument': s2_hrv2_instrument,
             'spectral_mode': s123_x_spectral_mode
         })
         # You can get a pan image from spot 2 camera hrv2
+        # noinspection PyUnusedLocal
         s2_hrv2_pan_profile = OpticalProductProfileF.create(**{
             'satellite_instrument': s2_hrv2_instrument,
             'spectral_mode': s123_p_spectral_mode
@@ -288,22 +291,26 @@ class SpotIngestorTest(TestCase):
         ####### SPOT 3 possible products ###############
 
         # You can get a multispectral image from spot 3 camera hrv1
+        # noinspection PyUnusedLocal
         s3_hrv1_ms_profile = OpticalProductProfileF.create(**{
             'satellite_instrument': s3_hrv1_instrument,
             'spectral_mode': s123_x_spectral_mode
         })
         # You can get a pan image from spot 3 camera hrv1
+        # noinspection PyUnusedLocal
         s3_hrv1_pan_profile = OpticalProductProfileF.create(**{
             'satellite_instrument': s3_hrv1_instrument,
             'spectral_mode': s123_p_spectral_mode
         })
 
         # You can get a multispectral image from spot 3 camera hrv2
+        # noinspection PyUnusedLocal
         s3_hrv2_ms_profile = OpticalProductProfileF.create(**{
             'satellite_instrument': s3_hrv2_instrument,
             'spectral_mode': s123_x_spectral_mode
         })
         # You can get a pan image from spot 3 camera hrv2
+        # noinspection PyUnusedLocal
         s3_hrv2_pan_profile = OpticalProductProfileF.create(**{
             'satellite_instrument': s3_hrv2_instrument,
             'spectral_mode': s123_p_spectral_mode
@@ -312,22 +319,26 @@ class SpotIngestorTest(TestCase):
         ####### SPOT 4 possible products ###############
 
         # You can get a multispectral image from spot 4 camera hrvir1
+        # noinspection PyUnusedLocal
         s4_hrvir1_ms_profile = OpticalProductProfileF.create(**{
             'satellite_instrument': s4_hrvir1_instrument,
             'spectral_mode': s4_i_spectral_mode
         })
         # You can get a pan image from spot 4 camera hrvir1
+        # noinspection PyUnusedLocal
         s4_hrvir1_pan_profile = OpticalProductProfileF.create(**{
             'satellite_instrument': s4_hrvir1_instrument,
             'spectral_mode': s4_m_spectral_mode
         })
 
         # You can get a multispectral image from spot 4 camera hrvir2
+        # noinspection PyUnusedLocal
         s4_hrvir2_ms_profile = OpticalProductProfileF.create(**{
             'satellite_instrument': s4_hrvir2_instrument,
             'spectral_mode': s4_i_spectral_mode
         })
         # You can get a pan image from spot 4 camera hrvir2
+        # noinspection PyUnusedLocal
         s4_hrvir2_pan_profile = OpticalProductProfileF.create(**{
             'satellite_instrument': s4_hrvir2_instrument,
             'spectral_mode': s4_m_spectral_mode
@@ -336,47 +347,56 @@ class SpotIngestorTest(TestCase):
         ####### SPOT 5 possible products ###############
 
         # You can get a multispectral image from spot 5 camera hrg1
+        # noinspection PyUnusedLocal
         s5_hrg1_ms_profile = OpticalProductProfileF.create(**{
             'satellite_instrument': s5_hrg1_instrument,
             'spectral_mode': s5_j_spectral_mode
         })
         # You can get a pan T image from spot 5 camera hrg1
+        # noinspection PyUnusedLocal
         s5_hrg1_pan_t_profile = OpticalProductProfileF.create(**{
             'satellite_instrument': s5_hrg1_instrument,
             'spectral_mode': s5_t_spectral_mode
         })
         # You can get a pan A image from spot 5 camera hrg1
+        # noinspection PyUnusedLocal
         s5_hrg1_pan_a_profile = OpticalProductProfileF.create(**{
             'satellite_instrument': s5_hrg1_instrument,
             'spectral_mode': s5_a_spectral_mode
         })
         # You can get a pan B image from spot 5 camera hrg1
+        # noinspection PyUnusedLocal
         s5_hrg1_pan_b_profile = OpticalProductProfileF.create(**{
             'satellite_instrument': s5_hrg1_instrument,
             'spectral_mode': s5_b_spectral_mode
         })
 
         # You can get a multispectral image from spot 5 camera hrg2
+        # noinspection PyUnusedLocal
         s5_hrg2_ms_profile = OpticalProductProfileF.create(**{
             'satellite_instrument': s5_hrg2_instrument,
             'spectral_mode': s5_j_spectral_mode
         })
         # You can get a pan T image from spot 5 camera hrg2
+        # noinspection PyUnusedLocal
         s5_hrg2_pan_t_profile = OpticalProductProfileF.create(**{
             'satellite_instrument': s5_hrg2_instrument,
             'spectral_mode': s5_t_spectral_mode
         })
         # You can get a pan A image from spot 5 camera hrg2
+        # noinspection PyUnusedLocal
         s5_hrg2_pan_a_profile = OpticalProductProfileF.create(**{
             'satellite_instrument': s5_hrg2_instrument,
             'spectral_mode': s5_a_spectral_mode
         })
         # You can get a pan B image from spot 5 camera hrg2
+        # noinspection PyUnusedLocal
         s5_hrg2_pan_b_profile = OpticalProductProfileF.create(**{
             'satellite_instrument': s5_hrg2_instrument,
             'spectral_mode': s5_b_spectral_mode
         })
 
+    # noinspection PyMethodMayBeStatic
     def test_import_using_management_command(self):
         """Test that we can ingest spot using the management command"""
         call_command(
@@ -407,7 +427,7 @@ class SpotIngestorTest(TestCase):
         message = 'Expected:\n%s\nTo be in:\n%s\n' % (
             expected_product_id,
             formatted_list)
-        assert expected_product_id not in result_list, message
+        self.assertTrue(expected_product_id not in result_list, message)
 
         # Test that 'T' Grayscale products ARE  ingested
         expected_product_id = (
@@ -416,63 +436,42 @@ class SpotIngestorTest(TestCase):
         message = 'Expected:\n%s\nTo be in:\n%s\n' % (
             expected_product_id,
             formatted_list)
-        assert expected_product_id in result_list, message
+        self.assertTrue(expected_product_id in result_list, message)
 
         # Test that Spot products are not owned by RapidEye
         bad_owner = Institution.objects.get(id=3)
         product = GenericProduct.objects.get(
             original_product_id__contains=expected_product_id)
-        assert product.owner is not bad_owner
+        self.assertTrue(product.owner is not bad_owner)
 
         #Reingesst and make sure that overridden owner sticks
 
         spot.ingest(shapefile=SHAPEFILE_NAME,
                     theOwner='Foobar')
         product = GenericProduct.objects.get(
-            product_id=(expected_product_id))
-        assert product.owner.name == 'Foobar'
+            product_id=expected_product_id)
+        self.assertTrue(product.owner.name == 'Foobar')
 
     def testAreaFiltering(self):
         """Test that AOI filtering works"""
         #
         # Test importing only recs in an area of interest
         #
-        myArea = (
+        area = (
             'POLYGON('
             '(16.206099 -5.592359,'
             '16.206099 -6.359587,'
             '17.293880 -6.359587,'
             '17.293880 -5.592359,'
             '16.206099 -5.592359))')
-        print myArea
-        myProductCount = GenericProduct.objects.count()
+        print area
+        product_count = GenericProduct.objects.count()
         spot.ingest(shapefile=SHAPEFILE_NAME,
                     theVerbosityLevel=1,
-                    area_of_interest=myArea)
-        myNewProductCount = GenericProduct.objects.count()
-        self.assertEqual(myProductCount + 4, myNewProductCount)
+                    area_of_interest=area)
+        new_product_count = GenericProduct.objects.count()
+        self.assertEqual(product_count + 4, new_product_count)
 
-    def testAcquisitionCreation(self):
-        """Test that acquisistion modes are made on demand"""
-        #
-        # Test importing only recs in an area of interest
-        #
-        myAcquisitionMode = AcquisitionMode.objects.get(id=22)
-        myAcquisitionMode.delete()
-        myAcquisitionMode = AcquisitionMode.objects.get(id=23)
-        myAcquisitionMode.delete()
-        mySensorType = SensorType.objects.get(id=29)
-        mySensorType.delete()
-        mySensorTypeCount = SensorType.objects.all().count()
-        myAcquisitionModeCount = AcquisitionMode.objects.all().count()
-        spot.ingest(shapefile=SHAPEFILE_NAME,
-                    theVerbosityLevel=1)
-        myNewSensorTypeCount = SensorType.objects.all().count()
-        myNewAcquisitionModeCount = AcquisitionMode.objects.all().count()
-        #there should be two more than before HRV-2:P and HRV-2:X
-        self.assertEqual(mySensorTypeCount + 2, myNewSensorTypeCount)
-        #there should be four more than before
-        self.assertEqual(myAcquisitionModeCount + 4, myNewAcquisitionModeCount)
 
 if __name__ == '__main__':
     unittest.main()
