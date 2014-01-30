@@ -11,6 +11,38 @@ Contact : lkleyn@sansa.org.za
    license to use any code contained herein which is the intellectual property
    of Linfiniti Consulting CC.
 
+
+  Sample data from one record:
+  wkt_geom   POLYGON((5.381600 15.316700,5.507500 15.847000,6.055500 15.725200,5.928300 15.195200,5.381600 15.316700))
+  A21        50673191101191017402J
+  SC_NUM     17670901
+  SEG_NUM    6729479
+  SATEL      5
+  ANG_INC    5.884188
+  ANG_ACQ    5.2
+  DATE_ACQ   19/01/2011
+  MONTH_ACQ  01
+  TIME_ACQ   10:17:40
+  CLOUD_QUOT AAAAAAAA
+  CLOUD_PER  0
+  SNOW_QUOT  00000000
+  LAT_CEN    15.521
+  LON_CEN    5.7172
+  LAT_UP_L   15.847
+  LON_UP_L   5.5075
+  LAT_UP_R   15.725
+  LON_UP_R   6.0555
+  LAT_LO_L   15.316
+  LON_LO_L   5.3816
+  LAT_LO_R   15.195
+  LON_LO_R   5.9283
+  RESOL      2.5
+  MODE       COLOR
+  TYPE       T
+  URL_QL     http://sirius.spotimage.fr/url/catalogue.aspx?ID=-1&ACTION=Scenes%3AgetQuicklook&CODEA21=50673191101191017402J&SEGMENT=6524011&SAT=0
+
+
+
 """
 
 __author__ = 'tim@linfiniti.com, lkleyn@sansa.org.za'
