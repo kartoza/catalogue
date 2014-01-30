@@ -459,7 +459,7 @@ def ingest(
     for feature in fetch_features(shapefile, aoi_geometry):
         record_count += 1
 
-        if record_count % 10000 == 0 and record_count > 0:
+        if record_count % 1000 == 0 and record_count > 0:
             print 'Products processed : %s ' % record_count
             print 'Products updated : %s ' % updated_record_count
             print 'Products imported : %s ' % created_record_count
