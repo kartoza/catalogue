@@ -13,7 +13,8 @@ Contact : lkleyn@sansa.org.za
 
 
   Sample data from one record:
-  wkt_geom   POLYGON((5.381600 15.316700,5.507500 15.847000,6.055500 15.725200,5.928300 15.195200,5.381600 15.316700))
+  wkt_geom   POLYGON((5.381600 15.316700,5.507500 15.847000,6.055500
+             15.725200,5.928300 15.195200,5.381600 15.316700))
   A21        50673191101191017402J
   SC_NUM     17670901
   SEG_NUM    6729479
@@ -39,10 +40,9 @@ Contact : lkleyn@sansa.org.za
   RESOL      2.5
   MODE       COLOR
   TYPE       T
-  URL_QL     http://sirius.spotimage.fr/url/catalogue.aspx?ID=-1&ACTION=Scenes%3AgetQuicklook&CODEA21=50673191101191017402J&SEGMENT=6524011&SAT=0
-
-
-
+  URL_QL     http://sirius.spotimage.fr/url/catalogue.aspx?ID=
+             -1&ACTION=Scenes%3AgetQuicklook&CODEA21=
+             50673191101191017402J&SEGMENT=6524011&SAT=0
 """
 
 __author__ = 'tim@linfiniti.com, lkleyn@sansa.org.za'
@@ -106,9 +106,9 @@ def get_dates(log_message, feature):
     date_parts = feature.get('DATE_ACQ').split('/')
     # e.g. 08:29:01
     time_parts = feature.get('TIME_ACQ').split(':')
-
+    log_message('Parsing date: %s' % date_parts)
     image_date = datetime(
-        int(date_parts[2][-2:]),  # year
+        int(date_parts[2]),  # year
         int(date_parts[1]),  # month
         int(date_parts[0]),  # day
         int(time_parts[0]),  # hour
@@ -150,14 +150,18 @@ def get_product_profile(log_message, feature):
     # OpticalProductProfile that applies to this product
 
     # Work out the satellite
-    satellite_number = feature.get('SATEL')
+    satellite_number = int(feature.get('SATEL'))
+    log_message('Satellite number: %s' % satellite_number, 2)
     if not int(satellite_number) in (1, 2, 3, 4, 5):
         raise CommandError(
             'Unknown Spot mission number'
             '(should be 1-5) %s.' % satellite_number)
 
-    mission_value = 'SPOT-%s' % satellite_number
-    satellite = Satellite.objects.get(operator_abbreviation=mission_value)
+    satellite_abbreviation = 'SPOT-%s' % satellite_number
+    log_message('Satellite abbreviation: %s' % satellite_abbreviation)
+    satellite = Satellite.objects.get(
+        operator_abbreviation=satellite_abbreviation)
+    log_message('Satellite: %s' % satellite, 2)
 
     # Work out the instrument type
     instrument_type_abbreviation = None
@@ -170,6 +174,7 @@ def get_product_profile(log_message, feature):
 
     instrument_type = InstrumentType.objects.get(
         operator_abbreviation=instrument_type_abbreviation)
+    log_message('Instrument type: %s' % instrument_type, 2)
 
     # Work out the instrument group
     try:
@@ -198,6 +203,7 @@ def get_product_profile(log_message, feature):
             operator_abbreviation=satellite_instrument_abbreviation)
     except Exception, e:
         print e.message
+        print 'Abbreviation: %s' % satellite_instrument_abbreviation
         raise e
     log_message('Satellite Instrument %s' % satellite_instrument, 2)
 
@@ -230,12 +236,11 @@ def get_product_profile(log_message, feature):
             satellite_instrument, spectral_modes
         )
         raise e
-    log_message('Product Profile %s' % product_profile, 2)
 
     return product_profile
 
 
-def skip_record(feature):
+def skip_reco   rd(feature):
     """Determine if this feature should be skipped.
 
     :param feature: A shapefile feature.
@@ -248,9 +253,9 @@ def skip_record(feature):
     spectral_mode_string = feature.get('TYPE')
     # Some additional rules from Linda to skip unwanted records
     colour_mode = feature.get('MODE')
+    print 'Spectral mode, colour mode: %s, %s' % (spectral_mode_string, colour_mode)
     if spectral_mode_string == 'H':
         return True
-
     elif spectral_mode_string == 'T' and colour_mode == 'COLOR':
         return True
     else:
@@ -303,7 +308,7 @@ def get_projection(feature):
     :returns: A projection model for the specified EPSG.
     :rtype: Projection
     """
-
+    _ = feature
     projection = Projection.objects.get(epsg_code=4326)
     return projection
 
@@ -349,7 +354,7 @@ def fetch_features(shapefile, area_of_interest):
 @transaction.commit_manually
 def ingest(
         shapefile,
-        download_thumbs=False,
+        download_thumbs_flag=False,
         area_of_interest=None,
         test_only_flag=True,
         verbosity_level=2,
@@ -359,10 +364,10 @@ def ingest(
 
     Understanding SPOT a21 scene id:
     Concerning the SPOT SCENE products, the name will be
-    the string 'SCENE ' followed by 'formated A21 code'.
+    the string 'SCENE ' followed by 'formatted A21 code'.
     e.g. 41573401101010649501M
     e.g. 4 157 340 11/01/01 06:49:50 1 M
-    Formated A21 code is defined as :
+    Formatted A21 code is defined as :
     N KKK-JJJ YY/MM/DD HH:MM:SS I C
     (with N: Satellite number, KKK-JJJ :
     GRS coordinates, YY/MM/DD :
@@ -381,9 +386,9 @@ def ingest(
     :param shapefile: A shapefile downloaded from
             http://catalog.spotimage.com/pagedownload.aspx
 
-    :param download_thumbs: Whether thumbs should be retrieved. If they are not
-        fetched on ingestion, they will be fetched on demand as searches are
-        made.
+    :param download_thumbs_flag: Whether thumbs should be retrieved. If they
+        are not fetched on ingestion, they will be fetched on demand as
+        searches are made.
 
     :param area_of_interest: A geometry in well known text (WKT) defining which
         features to include.
@@ -394,11 +399,11 @@ def ingest(
     :param verbosity_level: How verbose the logging output should be. 0-2
         where 2 is very very very very verbose! Default is 1.
 
-    :param halt_on_error_flag: Whather we should stop processing when the first
+    :param halt_on_error_flag: Whether we should stop processing when the first
         error is encountered. Default is True.
     """
     def log_message(message, level=1):
-        """Log a message for a given leven.
+        """Log a message for a given level.
 
         :param message: A message.
         :param level: A log level.
@@ -407,7 +412,7 @@ def ingest(
             print message
 
     try:
-        lockfile = lock.lock('/tmp/spot_harvest.lock', timeout=60)
+        lock_file = lock.lock('/tmp/spot_harvest.lock', timeout=60)
     except error.LockHeld:
         # couldn't take the lock
         raise CommandError('Could not acquire lock.')
@@ -464,12 +469,11 @@ def ingest(
             continue
 
         original_product_id = feature.get('A21')
-        log_message('Product Number: %s' % original_product_id, 2)
 
         try:
             log_message('', 2)
             log_message('---------------', 2)
-            log_message('Ingesting %s' % feature, 2)
+            log_message('Ingesting %s' % original_product_id, 2)
 
             # First grab all the generic properties that any scene will have...
             geometry = feature.geom.geos
@@ -502,11 +506,11 @@ def ingest(
             radiometric_resolution = 8  # 8 bits will need to change in spot 6
 
             # path for GenericSensorProduct
-            path = feature.get('a21')[1:4].rjust(4, '0'),
+            path = feature.get('a21')[1:4].rjust(4, '0')[0]
             log_message('Path: %s' % path, 2)
 
             # row for GenericSensorProduct
-            row = feature.get('a21')[4:7].rjust(4, '0')
+            row = feature.get('a21')[4:7].rjust(4, '0')[0]
             log_message('Row: %s' % row, 2)
 
             # earth_sun_distance for OpticalProduct
@@ -534,9 +538,11 @@ def ingest(
 
             # Get the quality for GenericProduct
             quality = get_quality()
+            log_message('Quality: %s' % quality, 2)
 
             # ProductProfile for OpticalProduct
             product_profile = get_product_profile(log_message, feature)
+            log_message('Product Profile: %s' % product_profile, 2)
 
             # Get the original text file metadata
             metadata = '\n'.join(['%s=%s' % (
@@ -544,8 +550,8 @@ def ingest(
             log_message('Metadata retrieved', 2)
 
             # Metadata comes from shpfile dump not DIMS...
-            dims_product_id = None
-            log_message('DIMS product ID: not available for SPOT ingestor')
+            dims_product_id = original_product_id
+            log_message('Using original product ID for DIMS ID')
 
             # Check if there is already a matching product based
             # on original_product_id
@@ -593,18 +599,18 @@ def ingest(
                 log_message(('Already in catalogue: updating %s.'
                             % original_product_id), 2)
                 new_record_flag = False
-                message = product.ingestion_log
-                message += '\n'
-                message += '%s : %s - updating record' % (
+                update_message = product.ingestion_log
+                update_message += '\n'
+                update_message += '%s : %s - updating record' % (
                     time_stamp, ingestor_version)
-                data['ingestion_log'] = message
+                data['ingestion_log'] = update_message
                 product.__dict__.update(data)
             except ObjectDoesNotExist:
                 log_message('Not in catalogue: creating.', 2)
                 update_mode = False
-                message = '%s : %s - creating record' % (
+                create_message = '%s : %s - creating record' % (
                     time_stamp, ingestor_version)
-                data['ingestion_log'] = message
+                data['ingestion_log'] = create_message
                 try:
                     product = OpticalProduct(**data)
                     log_message('Product: %s' % product)
@@ -638,7 +644,7 @@ def ingest(
                         # attempt to  recreate an existing dir
                         pass
 
-                    if download_thumbs:
+                    if download_thumbs_flag:
                         # Download original jpeg thumbnail and
                         # creates a thumbnail
                         new_name = '%s.jpg' % product.original_product_id
@@ -692,7 +698,7 @@ def ingest(
             else:
                 continue
 
-    lockfile.release()
+    lock_file.release()
     print '==============================='
     print 'Products processed : %s ' % record_count
     print 'Products skipped : %s ' % skipped_record_count

@@ -78,7 +78,7 @@ class SpotIngestorTest(TestCase):
 
         s1_satellite = SatelliteF.create(
             abbreviation='S1',
-            operator_abbreviation='S1')
+            operator_abbreviation='SPOT-1')
         s1_satellite_instrument_group = SatelliteInstrumentGroupF.create(
             satellite=s1_satellite,
             instrument_type=hrv_instrument_type
@@ -86,7 +86,7 @@ class SpotIngestorTest(TestCase):
 
         s2_satellite = SatelliteF.create(
             abbreviation='S2',
-            operator_abbreviation='S2')
+            operator_abbreviation='SPOT-2')
         s2_satellite_instrument_group = SatelliteInstrumentGroupF.create(
             satellite=s2_satellite,
             instrument_type=hrv_instrument_type
@@ -94,7 +94,7 @@ class SpotIngestorTest(TestCase):
 
         s3_satellite = SatelliteF.create(
             abbreviation='S3',
-            operator_abbreviation='S3')
+            operator_abbreviation='SPOT-3')
         s3_satellite_instrument_group = SatelliteInstrumentGroupF.create(
             satellite=s3_satellite,
             instrument_type=hrv_instrument_type
@@ -102,7 +102,7 @@ class SpotIngestorTest(TestCase):
 
         s4_satellite = SatelliteF.create(
             abbreviation='S4',
-            operator_abbreviation='S4')
+            operator_abbreviation='SPOT-4')
         s4_satellite_instrument_group = SatelliteInstrumentGroupF.create(
             satellite=s4_satellite,
             instrument_type=hrvir_instrument_type
@@ -110,7 +110,7 @@ class SpotIngestorTest(TestCase):
 
         s5_satellite = SatelliteF.create(
             abbreviation='S5',
-            operator_abbreviation='S5')
+            operator_abbreviation='SPOT-5')
         s5_satellite_instrument_group = SatelliteInstrumentGroupF.create(
             satellite=s5_satellite,
             instrument_type=hrg_instrument_type
@@ -152,11 +152,11 @@ class SpotIngestorTest(TestCase):
 
         # Two HRVIR cameras on Spot4 satellite
         s4_hrvir1_instrument = SatelliteInstrumentF.create(
-            operator_abbreviation='S4-HIR1',
+            operator_abbreviation='S4-HRVIR1',
             satellite_instrument_group=s4_satellite_instrument_group
         )
         s4_hrvir2_instrument = SatelliteInstrumentF.create(
-            operator_abbreviation='S4-HIR2',
+            operator_abbreviation='S4-HRVIR2',
             satellite_instrument_group=s4_satellite_instrument_group
         )
 
@@ -411,48 +411,39 @@ class SpotIngestorTest(TestCase):
         # Test with a full load of data
         #
         spot.ingest(shapefile=SHAPEFILE_NAME,
-                    theVerbosityLevel=2)
+                    verbosity_level=2)
+
+        # Test that 'T' Color products are NOT ingested
+        expected_product_id = '51003681205100903102J'
         products = GenericProduct.objects.filter(
-            original_product_id__contains='51003681205100903082B')
+            original_product_id__contains=expected_product_id)
         result_list = []
         formatted_list = ''
         for product in products:
             result_list.append(product.product_id)
             formatted_list += product.product_id + '\n'
 
-        # Test that 'T' Color products are not ingested
-        expected_product_id = (
-            'S5-_HRG_T--_S5C2_0100_00_0368_00'
-            '_120510_090310_1B--_ORBIT-')
-        message = 'Expected:\n%s\nTo be in:\n%s\n' % (
+        message = 'Expected:\n%s\nTo not be in:\n%s\n' % (
             expected_product_id,
             formatted_list)
         self.assertTrue(expected_product_id not in result_list, message)
 
         # Test that 'T' Grayscale products ARE  ingested
-        expected_product_id = (
-            'S5-_HRG_T--_S5C2_0100_00_0368_00'
-            '_120510_090308_1B--_ORBIT-')
+        expected_product_id = '51003681205100903082A'
+        products = GenericProduct.objects.filter(
+            original_product_id__contains=expected_product_id)
+        result_list = []
+        formatted_list = ''
+        for product in products:
+            result_list.append(product.product_id)
+            formatted_list += product.product_id + '\n'
+
         message = 'Expected:\n%s\nTo be in:\n%s\n' % (
             expected_product_id,
             formatted_list)
         self.assertTrue(expected_product_id in result_list, message)
 
-        # Test that Spot products are not owned by RapidEye
-        bad_owner = Institution.objects.get(id=3)
-        product = GenericProduct.objects.get(
-            original_product_id__contains=expected_product_id)
-        self.assertTrue(product.owner is not bad_owner)
-
-        #Reingesst and make sure that overridden owner sticks
-
-        spot.ingest(shapefile=SHAPEFILE_NAME,
-                    theOwner='Foobar')
-        product = GenericProduct.objects.get(
-            product_id=expected_product_id)
-        self.assertTrue(product.owner.name == 'Foobar')
-
-    def testAreaFiltering(self):
+    def test_area_filtering(self):
         """Test that AOI filtering works"""
         #
         # Test importing only recs in an area of interest
@@ -467,7 +458,7 @@ class SpotIngestorTest(TestCase):
         print area
         product_count = GenericProduct.objects.count()
         spot.ingest(shapefile=SHAPEFILE_NAME,
-                    theVerbosityLevel=1,
+                    verbosity_level=3,
                     area_of_interest=area)
         new_product_count = GenericProduct.objects.count()
         self.assertEqual(product_count + 4, new_product_count)

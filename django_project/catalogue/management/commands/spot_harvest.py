@@ -57,7 +57,15 @@ class Command(BaseCommand):
             action='store',
             help=(
                 'Area of interest, images which are external to this'
-                ' area will not be imported (WKT Polygon, SRID=4326)'))
+                ' area will not be imported (WKT Polygon, SRID=4326)')),
+        make_option(
+            '--halt_on_error',
+            '-e',
+            dest='halt_on_error',
+            action='store',
+            help=(
+                'Halt on first error that occurs and print a stacktrace'),
+            default=False)
     )
 
     # noinspection PyDeprecation
@@ -68,12 +76,15 @@ class Command(BaseCommand):
         :param options:
         """
         shapefile = options.get('shapefile')
-        download_thumbs = options.get('download_thumbs')
-        test_only = options.get('test_only')
+        download_thumbs_flag = options.get('download_thumbs_flag')
+        test_only_flag = options.get('test_only_flag')
         verbose = int(options.get('verbosity'))
         area = options.get('area')
-        spot.ingest(shapefile=shapefile,
-                    download_thumbs=download_thumbs,
-                    area_of_interest=area,
-                    theTestOnlyFlag=test_only,
-                    theVerbosityLevel=verbose)
+        halt_on_error = options.get('halt_on_error')
+        spot.ingest(
+            shapefile=shapefile,
+            download_thumbs_flag=download_thumbs_flag,
+            area_of_interest=area,
+            test_only_flag=test_only_flag,
+            verbosity_level=verbose,
+            halt_on_error_flag=halt_on_error)
