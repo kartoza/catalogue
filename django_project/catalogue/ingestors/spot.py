@@ -106,7 +106,7 @@ def get_dates(log_message, feature):
     date_parts = feature.get('DATE_ACQ').split('/')
     # e.g. 08:29:01
     time_parts = feature.get('TIME_ACQ').split(':')
-    log_message('Parsing date: %s' % date_parts)
+    log_message('Parsing date: %s' % date_parts, 2)
     image_date = datetime(
         int(date_parts[2]),  # year
         int(date_parts[1]),  # month
@@ -158,7 +158,7 @@ def get_product_profile(log_message, feature):
             '(should be 1-5) %s.' % satellite_number)
 
     satellite_abbreviation = 'SPOT-%s' % satellite_number
-    log_message('Satellite abbreviation: %s' % satellite_abbreviation)
+    log_message('Satellite abbreviation: %s' % satellite_abbreviation, 2)
     satellite = Satellite.objects.get(
         operator_abbreviation=satellite_abbreviation)
     log_message('Satellite: %s' % satellite, 2)
@@ -203,7 +203,7 @@ def get_product_profile(log_message, feature):
             operator_abbreviation=satellite_instrument_abbreviation)
     except Exception, e:
         print e.message
-        print 'Abbreviation: %s' % satellite_instrument_abbreviation
+        log_message('Abbreviation: %s' % satellite_instrument_abbreviation, 2)
         raise e
     log_message('Satellite Instrument %s' % satellite_instrument, 2)
 
@@ -253,7 +253,6 @@ def skip_record(feature):
     spectral_mode_string = feature.get('TYPE')
     # Some additional rules from Linda to skip unwanted records
     colour_mode = feature.get('MODE')
-    print 'Spectral mode, colour mode: %s, %s' % (spectral_mode_string, colour_mode)
     if spectral_mode_string == 'H':
         print 'Skipping'
         return True
@@ -552,7 +551,7 @@ def ingest(
 
             # Metadata comes from shpfile dump not DIMS...
             dims_product_id = original_product_id
-            log_message('Using original product ID for DIMS ID')
+            log_message('Using original product ID for DIMS ID', 2)
 
             # Check if there is already a matching product based
             # on original_product_id
@@ -591,14 +590,13 @@ def ingest(
 
             update_mode = True
             try:
-                log_message('Trying to update')
                 #original_product_id is not necessarily unique
                 #so we use product_id
+                log_message(('Already in catalogue: updating %s.'
+                            % original_product_id), 2)
                 product = OpticalProduct.objects.get(
                     original_product_id=original_product_id
                 ).getConcreteInstance()
-                log_message(('Already in catalogue: updating %s.'
-                            % original_product_id), 2)
                 new_record_flag = False
                 update_message = product.ingestion_log
                 update_message += '\n'
@@ -606,15 +604,16 @@ def ingest(
                     time_stamp, ingestor_version)
                 data['ingestion_log'] = update_message
                 product.__dict__.update(data)
+                log_message('Updated %s' % original_product_id, 1)
             except ObjectDoesNotExist:
-                log_message('Not in catalogue: creating.', 2)
+                log_message('Creating %s' % original_product_id, 2)
                 update_mode = False
                 create_message = '%s : %s - creating record' % (
                     time_stamp, ingestor_version)
                 data['ingestion_log'] = create_message
                 try:
                     product = OpticalProduct(**data)
-                    log_message('Product: %s' % product)
+                    log_message('Creating %s' % original_product_id, 1)
 
                 except Exception, e:
                     log_message(e.message, 2)
@@ -682,7 +681,7 @@ def ingest(
                 traceback.print_exc(file=sys.stdout)
                 raise CommandError('Cannot import: %s' % e)
 
-            log_message('Imported scene : %s' % original_product_id, 1)
+            log_message('Imported scene : %s' % original_product_id, 2)
             if test_only_flag:
                 transaction.rollback()
                 log_message('Testing only: transaction rollback.', 1)
