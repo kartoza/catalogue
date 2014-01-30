@@ -25,7 +25,7 @@ import unittest
 # import factory
 from django.core.management import call_command
 from catalogue.models import (
-    GenericProduct)
+    GenericProduct, OpticalProduct)
 from .model_factories import ProjectionF, QualityF
 from dictionaries.tests.model_factories import (
     SatelliteF,
@@ -413,20 +413,15 @@ class SpotIngestorTest(TestCase):
         spot.ingest(shapefile=SHAPEFILE_NAME,
                     verbosity_level=2)
 
-        # Test that 'T' Color products are NOT ingested
+        # Test that 'H' and 'T' Color products are NOT ingested
+        # (they would have the same product id as below and would normally
+        # overwrite it so if we see we are on HRG2 then we know there
+        # was no attempted imported.
         expected_product_id = '51003681205100903102J'
-        products = GenericProduct.objects.filter(
+        product = OpticalProduct.objects.get(
             original_product_id__contains=expected_product_id)
-        result_list = []
-        formatted_list = ''
-        for product in products:
-            result_list.append(product.product_id)
-            formatted_list += product.product_id + '\n'
-
-        message = 'Expected:\n%s\nTo not be in:\n%s\n' % (
-            expected_product_id,
-            formatted_list)
-        self.assertTrue(expected_product_id not in result_list, message)
+        self.assertTrue(product.metadata.find('MODE=COLOR'))
+        self.assertTrue(product.metadata.find('TYPE=J'))
 
         # Test that 'T' Grayscale products ARE  ingested
         expected_product_id = '51003681205100903082A'

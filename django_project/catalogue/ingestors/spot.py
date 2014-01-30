@@ -240,7 +240,7 @@ def get_product_profile(log_message, feature):
     return product_profile
 
 
-def skip_reco   rd(feature):
+def skip_record(feature):
     """Determine if this feature should be skipped.
 
     :param feature: A shapefile feature.
@@ -255,8 +255,10 @@ def skip_reco   rd(feature):
     colour_mode = feature.get('MODE')
     print 'Spectral mode, colour mode: %s, %s' % (spectral_mode_string, colour_mode)
     if spectral_mode_string == 'H':
+        print 'Skipping'
         return True
     elif spectral_mode_string == 'T' and colour_mode == 'COLOR':
+        print 'Skipping'
         return True
     else:
         # Record is ok to ingest
@@ -287,7 +289,7 @@ def get_band_count(feature):
     elif spectral_mode_string in ['P']:
         band_count = 1
     else:
-        raise(
+        raise Exception(
             'Sensor type %s as per shp not recognised' %
             spectral_mode_string)
     return band_count
@@ -464,17 +466,16 @@ def ingest(
             print 'Products imported : %s ' % created_record_count
             transaction.commit()
 
+        original_product_id = feature.get('A21')
+        log_message('', 2)
+        log_message('---------------', 2)
+        log_message('Ingesting %s' % original_product_id, 2)
+
         if skip_record(feature):
             skipped_record_count += 1
             continue
 
-        original_product_id = feature.get('A21')
-
         try:
-            log_message('', 2)
-            log_message('---------------', 2)
-            log_message('Ingesting %s' % original_product_id, 2)
-
             # First grab all the generic properties that any scene will have...
             geometry = feature.geom.geos
 
