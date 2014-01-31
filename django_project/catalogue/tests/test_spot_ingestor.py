@@ -411,7 +411,8 @@ class SpotIngestorTest(TestCase):
         # Test with a full load of data
         #
         spot.ingest(shapefile=SHAPEFILE_NAME,
-                    verbosity_level=2)
+                    verbosity_level=1,
+                    halt_on_error_flag=False)
 
         # Test that 'H' and 'T' Color products are NOT ingested
         # (they would have the same product id as below and would normally
@@ -437,6 +438,14 @@ class SpotIngestorTest(TestCase):
             expected_product_id,
             formatted_list)
         self.assertTrue(expected_product_id in result_list, message)
+
+        # Check that if we get two records with the same ID in A21
+        # but that are A (5m BW) and T (2.5m BW) they are ingested as
+        # separate products. See notes in ingestor for more details.
+        expected_ids = ['51204201301160834432A', '51204201301160834432T']
+        products = GenericProduct.objects.filter(
+            original_product_id__in=expected_ids)
+        self.assertTrue(products.count() == 2)
 
     def test_area_filtering(self):
         """Test that AOI filtering works"""

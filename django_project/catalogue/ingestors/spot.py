@@ -58,7 +58,7 @@ import urllib2
 from mercurial import lock, error
 from django.core.management.base import CommandError
 from django.conf import settings
-from django.core.exceptions import ObjectDoesNotExist
+from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
 from django.db import transaction
 from django.contrib.gis.gdal import OGRGeometry
 from django.contrib.gis.gdal import DataSource
@@ -243,6 +243,13 @@ def get_product_profile(log_message, feature):
 def skip_record(feature):
     """Determine if this feature should be skipped.
 
+    We skip scenes with
+
+    "MODE"  = 'COLOR' AND "TYPE" = 'T'
+    "TYPE" = 'H'
+
+    Because they are spot image value added products not supplied by SANSA.
+
     :param feature: A shapefile feature.
     :type feature: Feature
 
@@ -250,14 +257,12 @@ def skip_record(feature):
     :rtype: bool
     """
     # work out the sensor type
-    spectral_mode_string = feature.get('TYPE')
+    scene_type = feature.get('TYPE')
     # Some additional rules from Linda to skip unwanted records
     colour_mode = feature.get('MODE')
-    if spectral_mode_string == 'H':
-        print 'Skipping'
+    if scene_type == 'H':
         return True
-    elif spectral_mode_string == 'T' and colour_mode == 'COLOR':
-        print 'Skipping'
+    elif scene_type == 'T' and colour_mode == 'COLOR':
         return True
     else:
         # Record is ok to ingest
@@ -343,12 +348,12 @@ def fetch_features(shapefile, area_of_interest):
     except Exception, e:
         raise CommandError('Loading index failed %s' % e)
 
-    for myPolygon in data_source[0]:
+    for feature in data_source[0]:
         if area_of_interest is None:
-            yield myPolygon
+            yield feature
         else:
-            if area_of_interest.intersects(myPolygon.geom):
-                yield myPolygon
+            if area_of_interest.intersects(feature.geom):
+                yield feature
 
 
 # noinspection PyDeprecation
@@ -459,19 +464,37 @@ def ingest(
     for feature in fetch_features(shapefile, aoi_geometry):
         record_count += 1
 
-        if record_count % 1000 == 0 and record_count > 0:
+        if record_count % 10000 == 0 and record_count > 0:
             print 'Products processed : %s ' % record_count
             print 'Products updated : %s ' % updated_record_count
             print 'Products imported : %s ' % created_record_count
             transaction.commit()
 
         original_product_id = feature.get('A21')
+
+        # SPOT has a wierd thing they do on their catalogue where they
+        # assign the same number to two kinds of products. For example:
+        #
+        # 51204201301160834432A  5m A BW image (the original product) and
+        # 51204201301160834432A  2.5m T BW image (supersampled from A and B)
+        #
+        # Attempting to import both will cause errors because upstream
+        # vendor ID's should be unique per product. To deal with this we
+        # are replacing the terminating 'A' with a 'T' for the supersampled
+        # products. Decision made by Linda & Tim in Jan workshop 2014
+        #
+        if feature.get('RESOL') == 2.5 and feature.get('TYPE') == 'T':
+            original_product_id = list(original_product_id)
+            original_product_id[-1:] = 'T'
+            original_product_id = "".join(original_product_id)
+
         log_message('', 2)
         log_message('---------------', 2)
         log_message('Ingesting %s' % original_product_id, 2)
 
         if skip_record(feature):
             skipped_record_count += 1
+            log_message('%s Skipped' % original_product_id, 1)
             continue
 
         try:
@@ -619,8 +642,11 @@ def ingest(
                     log_message(e.message, 2)
 
                 new_record_flag = True
-            except Exception, e:
-                print e.message
+            except MultipleObjectsReturned, e:
+                print (
+                    'There are more than one products with '
+                    'original_product_id of %s' % original_product_id)
+                raise e
 
             log_message('Saving product and setting thumb', 2)
             try:
@@ -672,10 +698,10 @@ def ingest(
                             product.save()
 
                 if new_record_flag:
-                    log_message('Product %s imported.' % record_count, 2)
+                    log_message('Product %s imported' % record_count, 2)
                     pass
                 else:
-                    log_message('Product %s updated.' % updated_record_count, 2)
+                    log_message('Product %s updated' % updated_record_count, 2)
                     pass
             except Exception, e:
                 traceback.print_exc(file=sys.stdout)
@@ -684,15 +710,19 @@ def ingest(
             log_message('Imported scene : %s' % original_product_id, 2)
             if test_only_flag:
                 transaction.rollback()
-                log_message('Testing only: transaction rollback.', 1)
+                log_message('Testing only: transaction rollback.', 2)
             else:
                 transaction.commit()
 
         except Exception, e:
+            # if original_product_id == '51194111302060828412B':
+            #     print e
+            #     raise e
             log_message('Record import failed. AAAAAAARGH! : %s' %
-                        original_product_id, 1)
+                        original_product_id, 0)
             failed_record_count += 1
-            if halt_on_error_flag:
+            if halt_on_error_flag is True:
+                print 'Halt on error flag was set to %s ' % halt_on_error_flag
                 print e.message
                 break
             else:
@@ -701,8 +731,16 @@ def ingest(
     lock_file.release()
     print '==============================='
     print 'Products processed : %s ' % record_count
-    print 'Products skipped : %s ' % skipped_record_count
+    print 'Products skipped (H and COLOR T): %s ' % skipped_record_count
     print 'Products updated : %s ' % updated_record_count
     print 'Products imported : %s ' % created_record_count
     print 'Products failed to import : %s ' % failed_record_count
     print '==============================='
+    print 'Notes:'
+    print 'The SPOT IMAGE Catalog shapefile may contain duplicate products'
+    print 'For example 51174181401200819562J (from 2014 shapefile) has'
+    print 'two MODE COLOR, TYPE J images. There are small differences between'
+    print 'the geometries of the duplicate records for this scene but'
+    print 'the scenes are the same. For this reason it is quite likely to get'
+    print 'updated records in the report above even if you have never imported'
+    print 'records from this time period before.'
