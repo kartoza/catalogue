@@ -538,7 +538,11 @@ def addOrder(theRequest):
                 'myOrderForm.html', myOptions,
                 context_instance=RequestContext(theRequest))
     else:  # new order
-        myOrderForm = OrderForm({'user': theRequest.user.id })
+        myOrderForm = OrderForm(
+            {
+            'user': theRequest.user.id,
+            'file_format': 1,
+            'delivery_method': 2 })
         myOptions = {
             'myOrderForm': myOrderForm,
         }

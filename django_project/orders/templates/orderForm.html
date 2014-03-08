@@ -86,7 +86,7 @@
 		$('td[name*="_cost"]').each(function() {
 			cost += APP['widget_' + $(this).data('id') + '_processing'].getCost();
 		})
-		$('#product_total_cost').html(cost);
+		$('#product_total_cost').html('R' + cost);
 	}
 
   	$( document ).ready(function() {
@@ -122,6 +122,7 @@
 			    .done(function () {
 			    	elem.parent().parent().remove();
 			        cartLayer.removeFeature(id);
+			        setTotalCost();
 			    })
 			    .fail(function () {
 			      alert('There has been a problem!');

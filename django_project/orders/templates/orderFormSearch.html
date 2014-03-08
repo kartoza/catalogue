@@ -86,13 +86,19 @@
 				</div>
 				{% if user.is_staff %}
 				<div class="control-group">
-					<label class="control-label" for="{{ myOrderForm.subsidy_type_assigned.auto_id }}">{{ myOrderForm.subsidy_type_assigned.label }}</label>
+					<label class="control-label" for="{{ myOrderForm.subsidy_type_assigned.auto_id }}">{{ myOrderForm.subsidy_type_assigned.label }}
+					<br /><span class="staffonly">Staff only
+					</span>
+					</label>
 					<div class="controls">
 						{{ myOrderForm.subsidy_type_assigned }}
 					</div>
 				</div>
 				<div class="control-group">
-					<label class="control-label" for="{{ myOrderForm.user.auto_id }}">{{ myOrderForm.user.label }}</label>
+					<label class="control-label" for="{{ myOrderForm.user.auto_id }}">{{ myOrderForm.user.label }}
+					<br /><span class="staffonly">Staff only
+					</span>
+					</label>
 					<div class="controls">
 						{{ myOrderForm.user }}
 					</div>
@@ -164,7 +170,7 @@
 							</script>
 						</td>
 						{% endautoescape %}
-						<td id="{{ record.product.id }}_cost" name="{{ record.product.id }}_cost" data-id="{{ record.product.id }}">
+						<td id="{{ record.product.id }}_cost" name="{{ record.product.id }}_cost" data-id="{{ record.product.id }}">R 
 							{% comment %}
 								As we are displaying initial cost during render while DOM is not ready
 								we are hooking via id to previously created widget to extract the price
@@ -183,7 +189,7 @@
 		</div>
 		<div class="row">
 			<div class="span12">
-				<div class="pull-right">Total cost: <span id="product_total_cost">0</span></div>
+				<div class="pull-right">Total cost: <span id="product_total_cost">R 0</span></div>
 			</div>
 		</div>
 		<div class="row">

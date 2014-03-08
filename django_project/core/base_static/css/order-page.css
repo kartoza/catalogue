@@ -126,3 +126,9 @@
     backface-visibility: inherit !important;
     transform: inherit !important;
 }
+
+.staffonly {
+    color: red;
+    font-size: 10px;
+    font-style: italic;
+}
