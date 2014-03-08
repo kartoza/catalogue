@@ -86,7 +86,7 @@
 		$('td[name*="_cost"]').each(function() {
 			cost += APP['widget_' + $(this).data('id') + '_processing'].getCost();
 		})
-		$('#product_total_cost').html('R' + cost);
+		$('#product_total_cost').html('R ' + cost);
 	}
 
   	$( document ).ready(function() {
