@@ -72,10 +72,11 @@
 					</div>
 				</div>
 				<hr />
-				<div class="control-group">
+				<div class="control-group {% if myOrderForm.market_sector.errors %}error{% endif %}">
 					<label class="control-label" for="{{ myOrderForm.market_sector.auto_id }}">{{ myOrderForm.market_sector.label }}</label>
 					<div class="controls">
 						{{ myOrderForm.market_sector }}
+						<span class="help-inline">{{ myOrderForm.market_sector.errors }}</span>
 					</div>
 				</div>
 				<div class="control-group">

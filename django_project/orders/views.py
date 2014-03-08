@@ -535,7 +535,7 @@ def addOrder(theRequest):
         else:
             logger.info('Add Order: form is NOT valid')
             return render_to_response(
-                'myOrderForm.html', myOptions,
+                'orderForm.html', myOptions,
                 context_instance=RequestContext(theRequest))
     else:  # new order
         myOrderForm = OrderForm(
