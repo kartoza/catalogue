@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
-import os
 import zipfile
 import tempfile
-import datetime
 from django.http import HttpResponse
 from django.utils.encoding import smart_str
 from django.contrib.gis.db.models.fields import GeometryField
@@ -536,21 +534,7 @@ class ShpResponder(object):
         attributes.append("delivery_method")
         attributes.append("order_date")
 
-        #delivery detail attributes
-        dd_attributes = []
-        dd_attributes.append("processing_level")
-        dd_attributes.append("projection")
-        dd_attributes.append("datum")
-        dd_attributes.append("resampling_method")
-        dd_attributes.append("file_format")
-
         for field in attributes:
-            field_defn = ogr.FieldDefn(str(field[0:10]), ogr.OFTString)
-            field_defn.SetWidth(255)
-            if layer.CreateField(field_defn) != 0:
-                raise Exception('Faild to create field')
-
-        for field in dd_attributes:
             field_defn = ogr.FieldDefn(str(field[0:10]), ogr.OFTString)
             field_defn.SetWidth(255)
             if layer.CreateField(field_defn) != 0:
@@ -564,28 +548,15 @@ class ShpResponder(object):
             value = getattr(theOrder, field)
             try:
                 string_value = str(value)
-            except UnicodeEncodeError, E:
+            except UnicodeEncodeError:
                 string_value = ''
             feat.SetField(str(field[0:10]), string_value)
 
-        for field in dd_attributes:
-            value = getattr(theOrder.delivery_detail, field)
             try:
                 string_value = str(value)
-            except UnicodeEncodeError, E:
+            except UnicodeEncodeError:
                 string_value = ''
             feat.SetField(str(field[0:10]), string_value)
-
-        geom = getattr(theOrder.delivery_detail, "geometry")
-
-        if geom:
-            ogr_geom = ogr.CreateGeometryFromWkt(geom.wkt)
-            if self.proj_transform:
-                ct = osr.CoordinateTransformation(native_srs, output_srs)
-                ogr_geom.Transform(ct)
-            check_err(feat.SetGeometry(ogr_geom))
-        else:
-            pass
 
         check_err(layer.CreateFeature(feat))
 

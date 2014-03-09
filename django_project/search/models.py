@@ -19,11 +19,19 @@ __copyright__ = 'South African National Space Agency'
 
 # for generating globally unique id's - I think python 2.5 is required
 import uuid
+import json
 from datetime import datetime
 
 from django.contrib.gis.db import models
 
+from exchange.conversion import convert_value
+
 from catalogue.dbhelpers import executeRAWSQL
+
+from dictionaries.models import (
+    SpectralModeProcessingCosts,
+    InstrumentTypeProcessingLevel
+)
 
 ###############################################################################
 
@@ -44,11 +52,9 @@ class SearchRecord(models.Model):
     havean order id should be added to it.
     """
     user = models.ForeignKey('auth.User')
-    order = models.ForeignKey('catalogue.Order', null=True, blank=True)
+    order = models.ForeignKey('orders.Order', null=True, blank=True)
     product = models.ForeignKey(
         'catalogue.GenericProduct', null=False, blank=False)
-    delivery_detail = models.ForeignKey(
-        'catalogue.DeliveryDetail', null=True, blank=True)
     # DIMS ordering related fields
     internal_order_id = models.IntegerField(null=True, blank=True)
     download_path = models.CharField(
@@ -59,7 +65,26 @@ class SearchRecord(models.Model):
     # Default to False unless there is a populated local_storage_path in the
     # product (see overridden save() below) or download_path is filled
     product_ready = models.BooleanField(default=False)
-
+    cost_per_scene = models.DecimalField(
+        max_digits=10, decimal_places=2, null=True, blank=True
+    )
+    rand_cost_per_scene = models.DecimalField(
+        max_digits=10, decimal_places=2, null=True, blank=True
+    )
+    currency = models.ForeignKey(
+        'exchange.Currency', null=True, blank=True
+    )
+    processing_level = models.ForeignKey(
+        'dictionaries.ProcessingLevel', verbose_name='Processing Level',
+        null=True, blank=True
+    )
+    projection = models.ForeignKey(
+        'dictionaries.Projection', verbose_name='Projection',
+        null=True, blank=True
+    )
+    product_process_state = models.ForeignKey(
+        'dictionaries.ProductProcessState', null=True, blank=True
+    )
     # Required because genericproduct fkey references a table with geometry
     objects = models.GeoManager()
 
@@ -69,6 +94,52 @@ class SearchRecord(models.Model):
 
     def __unicode__(self):
         return self.product.product_id
+
+    def availableUTMZonesJSON(self):
+        """
+        json formatted available UTM zones for product
+        used in order page for populating available product UTM zones
+        """
+        return json.dumps(
+            [list(zone) for zone in self.product.getUTMZones(theBuffer=1)])
+
+    def availableProcessingLevelsJSON(self):
+        """
+        json formated available processing levels for products
+        user in order page for populating available product processing
+        options
+        """
+        """levels = (
+            self.product.getConcreteInstance().availableProcessingLevels().
+            values_list('id', 'name')
+        )"""
+        test = (
+            self.product.getConcreteInstance().availableProcessingLevels()
+        )
+        levels = list()
+        for lvl in test:
+            insTypeProcLevel = InstrumentTypeProcessingLevel.objects.filter(
+            processing_level=lvl,
+            instrument_type=(
+                self.product.getConcreteInstance().product_profile
+                .satellite_instrument.satellite_instrument_group
+                .instrument_type
+            )
+            ).get()
+            spectralModeProcCosts = SpectralModeProcessingCosts.objects.filter(
+            spectral_mode=(
+                self.product.getConcreteInstance().product_profile
+                .spectral_mode
+            ),
+            instrument_type_processing_level=insTypeProcLevel
+            ).get()
+            rand_cost_per_scene = convert_value(
+            spectralModeProcCosts.cost_per_scene,
+            spectralModeProcCosts.currency.code, 'ZAR'
+            )
+            levels.append([lvl.id, lvl.name, int(rand_cost_per_scene)])
+        levels.append([14, 'Level 0 Raw instrument data', 0])
+        return json.dumps([list(level) for level in levels])
 
     def create(self, theUser, theProduct):
         """Python has no support for overloading constrctors"""
@@ -91,6 +162,13 @@ class SearchRecord(models.Model):
                 self.product_ready = True
             else:
                 self.product_ready = False
+        # if order is null and searchrecord is updated, make snapshot at the
+        # time of placing order
+        if (self.pk and self._cached_data.get('order_id') is None and
+                self.order_id is not None):
+            # snapshot data and suppress save (we are in a save method)
+            self._snapshot_cost_and_currency(save=False)
+
         super(SearchRecord, self).save(*args, **kwargs)
 
     def kmlExtents(self):
@@ -106,8 +184,41 @@ class SearchRecord(models.Model):
             myExtent[0])  # xmin
         return myString
 
-    class Admin:
-        pass
+    def _snapshot_cost_and_currency(self, save=True):
+        """
+        This method will grab latest price_per_km and currency and save them
+        to the model in the moment of order creation
+
+        This method is invoked by a post_save signal on Order model
+        """
+        # identify InstrumentTypeProcessingLevel
+        insTypeProcLevel = InstrumentTypeProcessingLevel.objects.filter(
+            processing_level=self.processing_level,
+            instrument_type=(
+                self.product.getConcreteInstance().product_profile
+                .satellite_instrument.satellite_instrument_group
+                .instrument_type
+            )
+        ).get()
+        # retrieve the processing mode costs
+        spectralModeProcCosts = SpectralModeProcessingCosts.objects.filter(
+            spectral_mode=(
+                self.product.getConcreteInstance().product_profile
+                .spectral_mode
+            ),
+            instrument_type_processing_level=insTypeProcLevel
+        ).get()
+        # snapshot current values
+        self.cost_per_scene = spectralModeProcCosts.cost_per_scene
+        self.currency = spectralModeProcCosts.currency
+        self.rand_cost_per_scene = convert_value(
+            spectralModeProcCosts.cost_per_scene,
+            spectralModeProcCosts.currency.code, 'ZAR'
+        )
+
+        # invoke model save method - default behaviour
+        if save is True:
+            self.save()
 
 
 ###############################################################################
@@ -242,7 +353,7 @@ class Search(BaseSearch):
 
     # foreign keys require the first arg to the be the relation name
     # so we explicitly have to use verbose_name for the user friendly name
-    instrumenttype = models.ManyToManyField(
+    instrument_type = models.ManyToManyField(
         'dictionaries.InstrumentType',
         verbose_name=u'Sensors', null=True, blank=True,
         help_text=(
@@ -281,7 +392,7 @@ class Search(BaseSearch):
         verbose_name="Max Clouds"
     )
     license_type = models.ManyToManyField(
-        'catalogue.License', blank=True, null=True,
+        'dictionaries.License', blank=True, null=True,
         help_text='Choose a license type.'
     )
     band_count = models.IntegerField(

@@ -21,164 +21,10 @@ import factory
 from datetime import datetime
 
 from ..models import (
-    Institution, Order, OrderStatus, DeliveryMethod, DeliveryDetail,
-    Projection, Datum, ResamplingMethod, FileFormat, MarketSector,
-    GenericProduct, License, Quality, CreatingSoftware, GenericImageryProduct,
-    GenericSensorProduct, OpticalProduct, RadarProduct, GeospatialProduct,
-    PlaceType, Place, Topic, OrdinalProduct, ContinuousProduct, Unit, Visit,
-    OrderStatusHistory, OrderNotificationRecipients, TaskingRequest,
-    WorldBorders
+    GenericProduct, GenericImageryProduct, GenericSensorProduct,
+    OpticalProduct, RadarProduct, GeospatialProduct, OrdinalProduct,
+    ContinuousProduct, Visit, WorldBorders
 )
-
-
-class InstitutionF(factory.django.DjangoModelFactory):
-    """
-    Institution model factory
-    """
-    FACTORY_FOR = Institution
-
-    name = factory.Sequence(lambda n: 'Institution {0}'.format(n))
-    address1 = 'Blank'
-    address2 = 'Blank'
-    address3 = 'Blank'
-    post_code = 'Blank'
-
-
-class LicenseF(factory.django.DjangoModelFactory):
-    """
-    License model factory
-    """
-    FACTORY_FOR = License
-
-    name = factory.Sequence(lambda n: 'License {0}'.format(n))
-    details = ''
-    type = factory.Iterator(
-        License.LICENSE_TYPE_CHOICES, getter=lambda c: c[0])
-
-
-class OrderStatusF(factory.django.DjangoModelFactory):
-    """
-    OrderStatus model factory
-    """
-    FACTORY_FOR = OrderStatus
-
-    name = factory.Sequence(lambda n: "Status {}".format(n))
-
-
-class DeliveryMethodF(factory.django.DjangoModelFactory):
-    """
-    DeliveryMethod model factory
-    """
-    FACTORY_FOR = DeliveryMethod
-
-    name = factory.Sequence(lambda n: "Delivery method {}".format(n))
-
-
-class ProjectionF(factory.django.DjangoModelFactory):
-    """
-    Projection model factory
-    """
-    FACTORY_FOR = Projection
-
-    name = factory.Sequence(lambda n: "Projection {}".format(n))
-    epsg_code = factory.Sequence(lambda n: n)
-
-
-class DatumF(factory.django.DjangoModelFactory):
-    """
-    Datum model factory
-    """
-    FACTORY_FOR = Datum
-
-    name = factory.Sequence(lambda n: "Datum {}".format(n))
-
-
-class ResamplingMethodF(factory.django.DjangoModelFactory):
-    """
-    ResamplingMethod model factory
-    """
-    FACTORY_FOR = ResamplingMethod
-
-    name = factory.Sequence(lambda n: "Resampling method {}".format(n))
-
-
-class FileFormatF(factory.django.DjangoModelFactory):
-    """
-    FileFormat model factory
-    """
-    FACTORY_FOR = FileFormat
-
-    name = factory.Sequence(lambda n: "File format {}".format(n))
-
-
-class MarketSectorF(factory.django.DjangoModelFactory):
-    """
-    MarketSector model factory
-    """
-    FACTORY_FOR = MarketSector
-
-    name = factory.Sequence(lambda n: "Market sector {}".format(n))
-
-
-class DeliveryDetailF(factory.django.DjangoModelFactory):
-    """
-    DeliveryDetail model factory
-    """
-    FACTORY_FOR = DeliveryDetail
-
-    user = factory.SubFactory('core.model_factories.UserF')
-    processing_level = factory.SubFactory(
-        'dictionaries.tests.model_factories.ProcessingLevelF')
-    projection = factory.SubFactory(ProjectionF)
-    datum = factory.SubFactory(DatumF)
-    resampling_method = factory.SubFactory(ResamplingMethodF)
-    file_format = factory.SubFactory(FileFormatF)
-    geometry = None
-
-
-class OrderF(factory.django.DjangoModelFactory):
-    """
-    Order model factory
-    """
-    FACTORY_FOR = Order
-
-    user = factory.SubFactory('core.model_factories.UserF')
-    notes = ''
-    order_status = factory.SubFactory(OrderStatusF)
-    delivery_method = factory.SubFactory(DeliveryMethodF)
-    delivery_detail = factory.SubFactory(DeliveryDetailF)
-    market_sector = factory.SubFactory(MarketSectorF)
-    order_date = None
-
-
-class TaskingRequestF(OrderF):
-    """
-    TaskingRequest model factory
-    """
-    FACTORY_FOR = TaskingRequest
-
-    target_date = datetime(2008, 1, 1)
-    satellite_instrument_group = factory.SubFactory(
-        'dictionaries.tests.model_factories.SatelliteInstrumentGroupF')
-
-
-class QualityF(factory.django.DjangoModelFactory):
-    """
-    Quality model factory
-    """
-    FACTORY_FOR = Quality
-
-    name = factory.Sequence(lambda n: "Quality {}".format(n))
-
-
-class CreatingSoftwareF(factory.django.DjangoModelFactory):
-    """
-    CreatingSoftware model factory
-    """
-    FACTORY_FOR = CreatingSoftware
-
-    name = factory.Sequence(lambda n: "Creating software {}".format(n))
-    version = ''
 
 
 class GenericProductF(factory.django.DjangoModelFactory):
@@ -191,8 +37,9 @@ class GenericProductF(factory.django.DjangoModelFactory):
     spatial_coverage = (
         'POLYGON ((17.54 -32.05, 20.83 -32.41, 20.30 -35.17, 17.84 '
         '-34.65, 17.54 -32.05))')
-    projection = factory.SubFactory(ProjectionF)
-    quality = factory.SubFactory(QualityF)
+    projection = factory.SubFactory(
+        'dictionaries.tests.model_factories.ProjectionF')
+    quality = factory.SubFactory('dictionaries.tests.model_factories.QualityF')
     unique_product_id = factory.Sequence(
         lambda n: "unique_product_id_{}".format(n))
     original_product_id = factory.Sequence(
@@ -284,36 +131,6 @@ class RadarProductF(GenericSensorProductF):
     incidence_angle = 0.0
 
 
-class PlaceTypeF(factory.django.DjangoModelFactory):
-    """
-    PlaceType model factory
-    """
-    FACTORY_FOR = PlaceType
-
-    name = factory.Sequence(lambda n: "PlaceType {}".format(n))
-
-
-class PlaceF(factory.django.DjangoModelFactory):
-    """
-    Place model factory
-    """
-    FACTORY_FOR = Place
-
-    name = factory.Sequence(lambda n: "Place {}".format(n))
-    place_type = factory.SubFactory(PlaceTypeF)
-    geometry = 'POINT(17.54 -32.05)'
-
-
-class TopicF(factory.django.DjangoModelFactory):
-    """
-    Topic model factory
-    """
-    FACTORY_FOR = Topic
-
-    abbreviation = factory.Sequence(lambda n: "T{}".format(n))
-    name = factory.Sequence(lambda n: "Topic {}".format(n))
-
-
 class GeospatialProductF(GenericProductF):
     """
     GeospatialProduct model factory
@@ -329,9 +146,11 @@ class GeospatialProductF(GenericProductF):
         getter=lambda c: c[0])
     temporal_extent_start = datetime(2008, 1, 1, 12, 00)
     temporal_extent_end = datetime(2008, 1, 1, 13, 00)
-    place_type = factory.SubFactory(PlaceTypeF)
-    place = factory.SubFactory(PlaceF)
-    primary_topic = factory.SubFactory(TopicF)
+    place_type = factory.SubFactory(
+        'dictionaries.tests.model_factories.PlaceTypeF')
+    place = factory.SubFactory('dictionaries.tests.model_factories.PlaceF')
+    primary_topic = factory.SubFactory(
+        'dictionaries.tests.model_factories.TopicF')
 
 
 class OrdinalProductF(GenericProductF):
@@ -345,16 +164,6 @@ class OrdinalProductF(GenericProductF):
     kappa_score = 0.0
 
 
-class UnitF(factory.django.DjangoModelFactory):
-    """
-    Unit model factory
-    """
-    FACTORY_FOR = Unit
-
-    abbreviation = factory.Sequence(lambda n: "U{}".format(n))
-    name = factory.Sequence(lambda n: "Unit {}".format(n))
-
-
 class ContinuousProductF(GenericProductF):
     """
     ContinuousProduct model factory
@@ -363,7 +172,7 @@ class ContinuousProductF(GenericProductF):
 
     range_min = 0.0
     range_max = 0.0
-    unit = factory.SubFactory(UnitF)
+    unit = factory.SubFactory('dictionaries.tests.model_factories.UnitF')
 
 
 class VisitF(factory.django.DjangoModelFactory):
@@ -377,50 +186,6 @@ class VisitF(factory.django.DjangoModelFactory):
     ip_address = '0.0.0.0'
     ip_position = 'POINT(0.0 0.0)'
     user = factory.SubFactory('core.model_factories.UserF')
-
-
-class OrderStatusHistoryF(factory.django.DjangoModelFactory):
-    """
-    OrderStatusHistory model factory
-    """
-    FACTORY_FOR = OrderStatusHistory
-
-    user = factory.SubFactory('core.model_factories.UserF')
-    order = factory.SubFactory(OrderF)
-    notes = ''
-    old_order_status = factory.SubFactory(OrderStatusF)
-    new_order_status = factory.SubFactory(OrderStatusF)
-
-
-class OrderNotificationRecipientsF(factory.django.DjangoModelFactory):
-    """
-    OrderNotificationRecipients model factory
-    """
-    FACTORY_FOR = OrderNotificationRecipients
-
-    user = factory.SubFactory('core.model_factories.UserF')
-
-    @factory.post_generation
-    def add_satellite_instrument_groups(self, create, extracted, **kwargs):
-        if not create:
-            # Simple build, do nothing.
-            return
-
-        if extracted:
-            # A list of groups were passed in, use them
-            for sat_inst_group in extracted:
-                self.satellite_instrument_group.add(sat_inst_group)
-
-    @factory.post_generation
-    def add_classes(self, create, extracted, **kwargs):
-        if not create:
-            # Simple build, do nothing.
-            return
-
-        if extracted:
-            # A list of groups were passed in, use them
-            for klass in extracted:
-                self.classes.add(klass)
 
 
 class WorldBordersF(factory.django.DjangoModelFactory):

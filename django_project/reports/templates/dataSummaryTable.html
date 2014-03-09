@@ -1,6 +1,5 @@
 {% extends "base.html" %}
 {% load staticfiles %}
-{% load boxtag %} {# Custom tag defined in templatetags/ #}
 {% block extrajs %}
       {{ block.super }}
       <script type="text/javascript" src="https://www.google.com/jsapi"></script>
@@ -30,16 +29,26 @@
 
           // Instantiate and draw our chart, passing in some options.
           var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
-          chart.draw(data, {width: 860, height: 400, is3D: true, title: 'Records by sensor'});
+          chart.draw(data, {width: 860, height: 400, is3D: true, title: 'Records by Sensor', backgroundColor: '#f5f5f5'});
         }
       </script>
 {% endblock %}
 {% block content %}
 
-<h2 class="centered"><img class="icon" src="{% static 'images/diagram_32.png' %}" /> Summary of all sensor based catalogue holdings</h2>
+<h2 class="centered">
+  Summary of All Sensor-Based Catalogue Holdings
+</h2>
 <!--Div that will hold the pie chart-->
-<div class="centered"><div id="chart_div" style="width: 860px; margin: auto;"></div></div>
-<div class="centered" style="margin-top:20px;">Click on a sensor name for a detailed summary for that sensor. For the sensor dictionary report click <a href="#" onclick='loadContent("{% url 'dictionaryReport' %}");'>here</a></div>
+<div class="row">
+  <div id="chart_div" style="width: 860px; margin: auto;"></div>
+</div>
+<div class="row" style="margin-top:20px;">
+  <p class="text-center">
+    Click on a sensor name for a detailed summary for that sensor. For the
+    sensor dictionary report click
+    <a href="#" onclick='loadContent("{% url 'dictionaryReport' %}");'>here</a>
+  </p>
+</div>
 <div style="width: 860px; margin: auto;">
   <table class="table table-striped">
     <thead>
@@ -62,5 +71,4 @@
   </table>
 </div>
 
-{% box_end %}
 {% endblock %}

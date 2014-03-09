@@ -20,7 +20,7 @@
       for(var index in this.options.wkt) {
         var featData = this.options.wkt[index].wkt;
         this.features[index] = new OpenLayers.Feature.Vector(this.map_object.transformGeometry(OpenLayers.Geometry.fromWKT(featData)));
-        this.features[index].attributes = { 'id': index, 'unique_product_id': this.options.wkt[index].id };
+        this.features[index].attributes = { 'id': index, 'original_product_id': this.options.wkt[index].id };
         feat.push(this.features[index]);
       }
       this.layerCart.addFeatures(feat);
@@ -44,7 +44,7 @@
     var point = evt.feature.geometry.getCentroid();
     var lonlat = new OpenLayers.LonLat(point.x, point.y);
 
-    var html = '<span class="loud white">' + data.unique_product_id + '</span>';
+    var html = '<span class="loud white">' + data.productName + '</span>';
     html = html + '<img src="/thumbnail/'+ data.id +'/large/" />';
 
     this.popup = new OpenLayers.Popup.Anchored(

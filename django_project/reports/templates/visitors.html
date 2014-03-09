@@ -11,17 +11,17 @@
     <button onclick="location='?pdf'" class="btn" id="download-btn"><i class="icon-download"></i> Download as PDF</button>
     <span class="step-links btn-group">
       {% if myRecords.has_previous %}
-        <a href="{% url 'visitorList' %}?page={{ myRecords.previous_page_number }}" class="previous-btn btn"><i class="icon-backward"></i></a>
+        <a href="{% url 'visitorList' %}?page={{ myRecords.previous_page_number }}" class="previous-btn btn"><i class="icon-chevron-left"></i></a>
       {% else %}
-          <a href="#" class="previous-btn btn disabled"><i class="icon-backward"></i></a>
+          <a href="#" class="previous-btn btn disabled"><i class="icon-chevron-left"></i></a>
       {% endif %}
       <span class="current btn  disabled btn-success">
         {{ myRecords.number }} of {{ myRecords.paginator.num_pages }}
       </span>
-      {% if myRecords.has_previous %}
-        <a href="{% url 'visitorList' %}?page={{ myRecords.next_page_number }}" class="next-btn btn "><i class="icon-forward"></i></a>
+      {% if myRecords.has_next %}
+        <a href="{% url 'visitorList' %}?page={{ myRecords.next_page_number }}" class="next-btn btn"><i class="icon-chevron-right"></i></a>
       {% else %}
-        <a href="#" class="previous-btn btn disabled"><i class="icon-forward"></i></a>
+        <a href="#" class="previous-btn btn disabled"><i class="icon-chevron-right"></i></a>
       {% endif %}
     </span>
   </div>
@@ -41,7 +41,13 @@
         </tr>
         {% for myRecord in myRecords.object_list %}
         <tr>
-          <td>{{ myRecord.user.get_profile.firstname}} {{myRecord.user.get_profile.surname}}</td>
+          <td>
+            {% if myRecord.user.first_name and myRecord.user.last_name %}
+              {{ myRecord.user.first_name}} {{myRecord.user.last_name}}
+            {% else %}
+              {{ myRecord.user.username }}
+            {% endif %}
+          </td>
           <td>{{ myRecord.ip_address }}</td>
           <td>{{ myRecord.country}}</td>
           <td>{{ myRecord.city }}</td>
@@ -53,17 +59,17 @@
     <div class="row-fluid center">
       <span class="step-links btn-group">
       {% if myRecords.has_previous %}
-        <a href="{% url 'visitorList' %}?page={{ myRecords.previous_page_number }}" class="previous-btn btn"><i class="icon-backward"></i></a>
+        <a href="{% url 'visitorList' %}?page={{ myRecords.previous_page_number }}" class="previous-btn btn"><i class="icon-chevron-left"></i></a>
       {% else %}
-          <a href="#" class="previous-btn btn disabled"><i class="icon-backward"></i></a>
+          <a href="#" class="previous-btn btn disabled"><i class="icon-chevron-left"></i></a>
       {% endif %}
       <span class="current btn  disabled btn-success">
         {{ myRecords.number }} of {{ myRecords.paginator.num_pages }}
       </span>
       {% if myRecords.has_previous %}
-        <a href="{% url 'visitorList' %}?page={{ myRecords.next_page_number }}" class="next-btn btn "><i class="icon-forward"></i></a>
+        <a href="{% url 'visitorList' %}?page={{ myRecords.next_page_number }}" class="next-btn btn "><i class="icon-chevron-right"></i></a>
       {% else %}
-        <a href="#" class="previous-btn btn disabled"><i class="icon-forward"></i></a>
+        <a href="#" class="previous-btn btn disabled"><i class="icon-chevron-right"></i></a>
       {% endif %}
       </span>
     </div>

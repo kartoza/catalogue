@@ -13,7 +13,8 @@ INSTALLED_APPS += (
     'webodt',
     'tastypie',
     'backbone_tastypie',
-    'pipeline'
+    'pipeline',
+    'exchange'
 )
 
 # Added by George for webodt
@@ -65,3 +66,6 @@ STATICFILES_STORAGE = 'pipeline.storage.PipelineCachedStorage'
 
 # we use some of the libraries which use global namespace (OL, Proj4JS, ...)
 PIPELINE_DISABLE_WRAPPER = True
+
+# django-exchange openexchangerates API Key
+OPENEXCHANGERATES_API_KEY = 'db63cb9bdc5f4199a9302fea8b173f41'

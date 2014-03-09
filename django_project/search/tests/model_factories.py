@@ -38,7 +38,7 @@ class SearchF(factory.django.DjangoModelFactory):
         if extracted:
             # A list of groups were passed in, use them
             for instrument_type in extracted:
-                self.instrumenttype.add(instrument_type)
+                self.instrument_type.add(instrument_type)
 
     @factory.post_generation
     def satellites(self, create, extracted, **kwargs):
@@ -133,11 +133,19 @@ class SearchRecordF(factory.django.DjangoModelFactory):
     FACTORY_FOR = SearchRecord
 
     user = factory.SubFactory('core.model_factories.UserF')
-    order = factory.SubFactory('catalogue.tests.model_factories.OrderF')
+    order = factory.SubFactory('orders.tests.model_factories.OrderF')
     product = factory.SubFactory(
         'catalogue.tests.model_factories.GenericProductF')
-    delivery_detail = factory.SubFactory(
-        'catalogue.tests.model_factories.DeliveryDetailF')
     internal_order_id = None
     download_path = factory.Sequence(lambda n: "Download path // {}".format(n))
     product_ready = False
+    cost_per_scene = 0.0
+    rand_cost_per_scene = 0.0
+    currency = factory.SubFactory(
+        'core.model_factories.CurrencyF')
+    processing_level = factory.SubFactory(
+        'dictionaries.tests.model_factories.ProcessingLevelF')
+    projection = factory.SubFactory(
+        'dictionaries.tests.model_factories.ProjectionF')
+    product_process_state = factory.SubFactory(
+        'dictionaries.tests.model_factories.ProductProcessStateF')

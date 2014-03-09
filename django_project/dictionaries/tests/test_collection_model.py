@@ -18,9 +18,7 @@ __copyright__ = 'South African National Space Agency'
 
 from django.test import TestCase
 
-from catalogue.tests.model_factories import InstitutionF
-
-from .model_factories import CollectionF
+from .model_factories import CollectionF, InstitutionF
 
 
 class TestCollectionCRUD(TestCase):

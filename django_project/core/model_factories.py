@@ -11,6 +11,8 @@ if DJANGO_VERSION[:2] >= (1, 4):
 
 import factory
 
+from exchange.models import Currency, ExchangeRate
+
 
 class ContentTypeF(factory.django.DjangoModelFactory):
     FACTORY_FOR = ct_models.ContentType
@@ -76,3 +78,24 @@ class UserF(factory.django.DjangoModelFactory):
             if create:
                 user.save()
         return user
+
+
+class CurrencyF(factory.django.DjangoModelFactory):
+    """
+    Factory for exchange.Currency
+    """
+    FACTORY_FOR = Currency
+
+    code = factory.Sequence(lambda n: "%s" % n)
+    name = factory.Sequence(lambda n: "Currency %s" % n)
+
+
+class ExchangeRateF(factory.django.DjangoModelFactory):
+    """
+    Factory for exchange.ExchangeRate
+    """
+    FACTORY_FOR = ExchangeRate
+
+    source = factory.SubFactory(CurrencyF)
+    target = factory.SubFactory(CurrencyF)
+    rate = 0.0

@@ -70,27 +70,7 @@ urlpatterns = patterns('',
     url(r'^downloadcartmetadata/$', downloadCartMetadata, name='downloadCartMetadata'),
     url(r'^showcartcontents/$', showCartContents, name='showCartContents'), #used by xhr requests
     url(r'^showminicartcontents/$', showMiniCartContents, name='showMiniCartContents'),
-    #
-    # Order management and related lookup tables
-    #
-    url(r'^addorder/', addOrder, name='addOrder'),
-    url(r'^deliverydetailform/(?P<theReferenceId>\d*)/$', createDeliveryDetailForm, name='createDeliveryDetailForm'),
-    url(r'^showdeliverydetail/(?P<theReferenceId>\d*)/$', showDeliveryDetail, name='showDeliveryDetail'),
-    url(r'^downloadclipgeometry/(?P<theId>\d*)/$', downloadClipGeometry, name='downloadClipGeometry'),
-    url(r'^downloadordermetadata/(?P<theId>\d*)/$', downloadOrderMetadata, name='downloadOrderMetadata'),
-    url(r'^downloadorder/(?P<theId>\d*)/$', downloadOrder, name='downloadOrder'),
-    url(r'^myorders/$', myOrders, name='myOrders'),
-    url(r'^listorders/$', listOrders, name='listOrders'),
-    url(r'^ordermonthlyreport/(?P<theyear>\d{4})/(?P<themonth>\d{1,2})/$', orderMonthlyReport, name='orderMonthlyReport'),
-    url(r'^vieworder/(?P<theId>[0-9]+)/$', viewOrder, name='viewOrder'),
-    url(r'^updateorderhistory/$', updateOrderHistory, name='updateOrderHistory'),
-    url(r'^orderssummary/$', ordersSummary, name='ordersSummary'),
-    # Tasking request managmenet
-    url(r'^listtaskingrequests/$', listTaskingRequests, name='listTaskingRequests'),
-    url(r'^addtaskingrequest/', addTaskingRequest, name='addTaskingRequest'),
-    url(r'^mytaskingrequests/$', myTaskingRequests, name='myTaskingRequests'),
-    url(r'^viewtaskingrequest/(?P<theId>[0-9]+)/$', viewTaskingRequest, name='viewTaskingRequest'),
-    url(r'^taskingrequest/(?P<theId>\d*)/$', downloadTaskingRequest, name='downloadTaskingRequest'),
+
 
     # upload polygon from zipped shapefile for search/clip
     #( r'^uploadFeature/$', uploadFeature),
@@ -113,6 +93,9 @@ urlpatterns = patterns('',
     url(r'', include('pycsw_integration.urls')),
     # new reports app
     url(r'', include('reports.urls')),
+    # new orders app
+    url(r'', include('orders.urls')),
+
 
     # api urls
     url(r'^api/', include(v1_API.urls)),

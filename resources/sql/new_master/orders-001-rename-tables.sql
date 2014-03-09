@@ -1,0 +1,39 @@
+BEGIN;
+
+ALTER TABLE catalogue_datum RENAME TO orders_datum;
+ALTER SEQUENCE catalogue_datum_id_seq RENAME TO orders_datum_id_seq;
+
+ALTER TABLE catalogue_resamplingmethod RENAME TO orders_resamplingmethod;
+ALTER SEQUENCE catalogue_resamplingmethod_id_seq RENAME TO orders_resamplingmethod_id_seq;
+
+ALTER TABLE catalogue_fileformat RENAME TO orders_fileformat;
+ALTER SEQUENCE catalogue_fileformat_id_seq RENAME TO orders_fileformat_id_seq;
+
+ALTER TABLE catalogue_orderstatus RENAME TO orders_orderstatus;
+ALTER SEQUENCE catalogue_orderstatus_id_seq RENAME TO orders_orderstatus_id_seq;
+
+ALTER TABLE catalogue_deliverymethod RENAME TO orders_deliverymethod;
+ALTER SEQUENCE catalogue_deliverymethod_id_seq RENAME TO orders_deliverymethod_id_seq;
+
+ALTER TABLE catalogue_deliverydetail RENAME TO orders_deliverydetail;
+ALTER SEQUENCE catalogue_deliverydetail_id_seq RENAME TO orders_deliverydetail_id_seq;
+
+ALTER TABLE catalogue_marketsector RENAME TO orders_marketsector;
+ALTER SEQUENCE catalogue_marketsector_id_seq RENAME TO orders_marketsector_id_seq;
+
+ALTER TABLE catalogue_order RENAME TO orders_order;
+ALTER SEQUENCE catalogue_order_id_seq RENAME TO orders_order_id_seq;
+
+ALTER TABLE catalogue_orderstatushistory RENAME TO orders_orderstatushistory;
+ALTER SEQUENCE catalogue_orderstatushistory_id_seq RENAME TO orders_orderstatushistory_id_seq;
+
+ALTER TABLE catalogue_ordernotificationrecipients RENAME TO orders_ordernotificationrecipients;
+ALTER SEQUENCE catalogue_ordernotificationrecipients_id_seq RENAME TO orders_ordernotificationrecipients_id_seq;
+
+ALTER TABLE catalogue_ordernotificationrecipients_satellite_instrument_2e0d RENAME TO orders_ordernotificationrecipients_satellite_instrument_group;
+ALTER SEQUENCE catalogue_ordernotificationrecipients_satellite_instrume_id_seq RENAME TO orders_ordernotificationrecipients_satellite_instrume_id_seq;
+
+ALTER TABLE catalogue_ordernotificationrecipients_classes RENAME TO orders_ordernotificationrecipients_classes;
+ALTER SEQUENCE catalogue_ordernotificationrecipients_classes_id_seq RENAME TO orders_ordernotificationrecipients_classes_id_seq;
+
+COMMIT;

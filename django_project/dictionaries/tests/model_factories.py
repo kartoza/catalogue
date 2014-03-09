@@ -19,11 +19,35 @@ __copyright__ = 'South African National Space Agency'
 import factory
 
 from ..models import (
-    Collection, ProcessingLevel, Satellite, ScannerType, InstrumentType,
-    ReferenceSystem, RadarBeam, ImagingMode, SatelliteInstrumentGroup,
-    SatelliteInstrument, Band, SpectralGroup, SpectralMode, BandSpectralMode,
-    InstrumentTypeProcessingLevel, SpectralModeProcessingCosts,
-    ForeignCurrency, RadarProductProfile, OpticalProductProfile
+    Collection,
+    ProcessingLevel,
+    Satellite,
+    ScannerType,
+    InstrumentType,
+    ReferenceSystem,
+    RadarBeam,
+    ImagingMode,
+    SatelliteInstrumentGroup,
+    SatelliteInstrument,
+    Band,
+    SpectralGroup,
+    SpectralMode,
+    BandSpectralMode,
+    InstrumentTypeProcessingLevel,
+    SpectralModeProcessingCosts,
+    Institution,
+    RadarProductProfile,
+    OpticalProductProfile,
+    Projection,
+    License,
+    Quality,
+    Topic,
+    PlaceType,
+    Place,
+    Unit,
+    SalesRegion,
+    SubsidyType,
+    ProductProcessState
 )
 
 
@@ -36,7 +60,7 @@ class CollectionF(factory.django.DjangoModelFactory):
     name = factory.Sequence(lambda n: 'Collection {0}'.format(n))
     description = 'None'
     institution = factory.SubFactory(
-        'catalogue.tests.model_factories.InstitutionF'
+        'dictionaries.tests.model_factories.InstitutionF'
     )
 
 
@@ -68,10 +92,10 @@ class SatelliteF(factory.django.DjangoModelFactory):
     status = None
     altitude_km = 0
     orbit = ''
-    revist_time_days = 0
+    revisit_time_days = 0
     reference_url = ''
     license_type = factory.SubFactory(
-        'catalogue.tests.model_factories.LicenseF'
+        'dictionaries.tests.model_factories.LicenseF'
     )
 
 
@@ -110,6 +134,7 @@ class InstrumentTypeF(factory.django.DjangoModelFactory):
         lambda n: 'OperatorAbbr {0}'.format(n))
     is_radar = False
     is_taskable = False
+    is_searchable = True
     scanner_type = factory.SubFactory(ScannerTypeF)
     base_processing_level = factory.SubFactory(ProcessingLevelF)
     default_processing_level = factory.SubFactory(ProcessingLevelF)
@@ -237,20 +262,9 @@ class InstrumentTypeProcessingLevelF(factory.django.DjangoModelFactory):
     FACTORY_FOR = InstrumentTypeProcessingLevel
 
     instrument_type = factory.SubFactory(InstrumentTypeF)
-    processinglevel = factory.SubFactory(ProcessingLevelF)
+    processing_level = factory.SubFactory(ProcessingLevelF)
     operator_processing_level_name = ''
     operator_processing_level_abbreviation = ''
-
-
-class ForeignCurrencyF(factory.django.DjangoModelFactory):
-    """
-    ForeignCurrency factory
-    """
-    FACTORY_FOR = ForeignCurrency
-
-    abbreviation = ''
-    name = factory.Sequence(lambda n: 'Foreign Currency {0}'.format(n))
-    conversion_rate = 0.0
 
 
 class SpectralModeProcessingCostsF(factory.django.DjangoModelFactory):
@@ -260,11 +274,12 @@ class SpectralModeProcessingCostsF(factory.django.DjangoModelFactory):
     FACTORY_FOR = SpectralModeProcessingCosts
 
     spectral_mode = factory.SubFactory(SpectralModeF)
-    instrumenttypeprocessinglevel = factory.SubFactory(
+    instrument_type_processing_level = factory.SubFactory(
         InstrumentTypeProcessingLevelF)
-    cost_per_scene_in_rands = 0.0
-    foreign_currency = factory.SubFactory(ForeignCurrencyF)
-    cost_per_scene_in_foreign = 0.0
+    cost_per_scene = 0.0
+    currency = factory.SubFactory('core.model_factories.CurrencyF')
+    cost_per_square_km = 0.0
+    minimum_square_km = 0.0
 
 
 class RadarProductProfileF(factory.django.DjangoModelFactory):
@@ -285,3 +300,117 @@ class OpticalProductProfileF(factory.django.DjangoModelFactory):
 
     satellite_instrument = factory.SubFactory(SatelliteInstrumentF)
     spectral_mode = factory.SubFactory(SpectralModeF)
+
+
+class ProjectionF(factory.django.DjangoModelFactory):
+    """
+    Projection model factory
+    """
+    FACTORY_FOR = Projection
+
+    name = factory.Sequence(lambda n: "Projection {}".format(n))
+    epsg_code = factory.Sequence(lambda n: n)
+
+
+class InstitutionF(factory.django.DjangoModelFactory):
+    """
+    Institution model factory
+    """
+    FACTORY_FOR = Institution
+
+    name = factory.Sequence(lambda n: 'Institution {0}'.format(n))
+    address1 = 'Blank'
+    address2 = 'Blank'
+    address3 = 'Blank'
+    post_code = 'Blank'
+
+
+class LicenseF(factory.django.DjangoModelFactory):
+    """
+    License model factory
+    """
+    FACTORY_FOR = License
+
+    name = factory.Sequence(lambda n: 'License {0}'.format(n))
+    details = ''
+    type = factory.Iterator(
+        License.LICENSE_TYPE_CHOICES, getter=lambda c: c[0])
+
+
+class QualityF(factory.django.DjangoModelFactory):
+    """
+    Quality model factory
+    """
+    FACTORY_FOR = Quality
+
+    name = factory.Sequence(lambda n: "Quality {}".format(n))
+
+
+class TopicF(factory.django.DjangoModelFactory):
+    """
+    Topic model factory
+    """
+    FACTORY_FOR = Topic
+
+    abbreviation = factory.Sequence(lambda n: "T{}".format(n))
+    name = factory.Sequence(lambda n: "Topic {}".format(n))
+
+
+class PlaceTypeF(factory.django.DjangoModelFactory):
+    """
+    PlaceType model factory
+    """
+    FACTORY_FOR = PlaceType
+
+    name = factory.Sequence(lambda n: "PlaceType {}".format(n))
+
+
+class PlaceF(factory.django.DjangoModelFactory):
+    """
+    Place model factory
+    """
+    FACTORY_FOR = Place
+
+    name = factory.Sequence(lambda n: "Place {}".format(n))
+    place_type = factory.SubFactory(
+        'dictionaries.tests.model_factories.PlaceTypeF')
+    geometry = 'POINT(17.54 -32.05)'
+
+
+class UnitF(factory.django.DjangoModelFactory):
+    """
+    Unit model factory
+    """
+    FACTORY_FOR = Unit
+
+    abbreviation = factory.Sequence(lambda n: "U{}".format(n))
+    name = factory.Sequence(lambda n: "Unit {}".format(n))
+
+
+class SalesRegionF(factory.django.DjangoModelFactory):
+    """
+    SalesRegion model factory
+    """
+    FACTORY_FOR = SalesRegion
+
+    name = factory.Sequence(lambda n: "SalesRegion {}".format(n))
+    abbreviation = factory.Sequence(lambda n: "SR{}".format(n))
+
+
+class SubsidyTypeF(factory.django.DjangoModelFactory):
+    """
+    SubsidyType model factory
+    """
+    FACTORY_FOR = SubsidyType
+
+    name = factory.Sequence(lambda n: "SubsidyType {}".format(n))
+    abbreviation = factory.Sequence(lambda n: "ST{}".format(n))
+
+
+class ProductProcessStateF(factory.django.DjangoModelFactory):
+    """
+    ProductProcessState model factory
+    """
+    FACTORY_FOR = ProductProcessState
+
+    name = factory.Sequence(lambda n: "ProductProcessState {}".format(n))

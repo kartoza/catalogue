@@ -33,25 +33,35 @@ class Command(BaseCommand):
         make_option(
             '--migrations', metavar="MIGRATION_TYPE", default='all',
             help=(
-                'Selectively migrate parts of the database, semicolon ";" '
-                'delimited list of migrations (new_dicts, userprofiles, '
-                'search, processing_levels, unique_product_id, pycsw, cleanup)'
-                'defaults to "all"')),
+                'Selectively migrate parts of the database, comma "," '
+                'delimited list of migrations (backup_tasks, new_dicts, '
+                'userprofiles, search, remove_spot, processing_levels, '
+                'unique_product_id, product_schema_changes, pycsw, orders, '
+                'exchange, cleanup defaults to "all"'
+            )
+        ),
     )
 
     def handle(self, *args, **options):
         self.db = settings.DATABASES['default']['NAME']
-        myMigrations = options.get('migrations').split(';')
+        myMigrations = options.get('migrations').split(',')
 
         if 'all' in myMigrations:
+            self.migrate_backup_tasks()
             self.migrate_new_dicts()
             self.migrate_userprofiles()
             self.migrate_search()
+            self.migrate_remove_spot()
             self.migrate_proc_levels()
             self.migrate_unique_product_ids()
             self.migrate_product_models()
             self.migrate_pycsw()
+            self.migrate_orders()
+            self.migrate_exchange()
             self.migrate_cleanup()
+
+        if 'backup_tasks' in myMigrations:
+            self.migrate_backup_tasks()
 
         if 'new_dicts' in myMigrations:
             self.migrate_new_dicts()
@@ -62,8 +72,8 @@ class Command(BaseCommand):
         if 'search' in myMigrations:
             self.migrate_search()
 
-        if 'pycsw' in myMigrations:
-            self.migrate_pycsw()
+        if 'remove_spot' in myMigrations:
+            self.migrate_remove_spot()
 
         if 'processing_levels' in myMigrations:
             self.migrate_proc_levels()
@@ -74,8 +84,25 @@ class Command(BaseCommand):
         if 'product_schema_changes' in myMigrations:
             self.migrate_product_models()
 
+        if 'pycsw' in myMigrations:
+            self.migrate_pycsw()
+
+        if 'orders' in myMigrations:
+            self.migrate_orders()
+
+        if 'exchange' in myMigrations:
+            self.migrate_exchange()
+
         if 'cleanup' in myMigrations:
             self.migrate_cleanup()
+
+    def migrate_backup_tasks(self):
+        print '* Starting backup tasks migration...'
+        origWD = os.getcwd()
+        os.chdir(os.path.join(origWD, '..', 'resources', 'sql', 'new_master'))
+        print '* Executing backup tasks scripts...'
+        subprocess.call(['sh', '000_backup_tasks.sh', self.db])
+        os.chdir(origWD)
 
     def migrate_product_models(self):
         print '* Starting product models migration...'
@@ -100,9 +127,6 @@ class Command(BaseCommand):
         print '* Executing database migration scripts...'
         subprocess.call(['sh', '002_profile_migration.sh', self.db])
         os.chdir(origWD)
-        print '* Trying to install required python modules (it might fail)'
-        subprocess.call(['../venv/bin/pip', 'install',
-                         'django-userena==1.1.2'])
         print '* Checking user permission (might take awhile)...'
         call_command('check_permissions')
 
@@ -114,6 +138,14 @@ class Command(BaseCommand):
         subprocess.call(['sh', '003_search_migration.sh', self.db])
         os.chdir(origWD)
 
+    def migrate_remove_spot(self):
+        print '* Starting remove_spot migration...'
+        origWD = os.getcwd()
+        os.chdir(os.path.join(origWD, '..', 'resources', 'sql', 'new_master'))
+        print '* Executing database migration scripts...'
+        subprocess.call(['sh', '008_remove_spot_migration.sh', self.db])
+        os.chdir(origWD)
+
     def migrate_pycsw(self):
         print '* Starting pycsw app migration...'
         origWD = os.getcwd()
@@ -121,12 +153,6 @@ class Command(BaseCommand):
         print '* Executing database migration scripts...'
         subprocess.call(['sh', '100_pycsw_integration.sh', self.db])
         os.chdir(origWD)
-        print '* Trying to install required python modules (it might fail)'
-        subprocess.call([
-            '../venv/bin/pip', 'install',
-            'git+git://github.com/dodobas/pycsw.git',
-            'SQLAlchemy==0.8.0b2'
-        ])
 
     def migrate_proc_levels(self):
         print '* Starting processing_levels migration...'
@@ -150,4 +176,20 @@ class Command(BaseCommand):
         os.chdir(os.path.join(origWD, '..', 'resources', 'sql', 'new_master'))
         print '* Executing database migration scripts...'
         subprocess.call(['sh', '999_cleanup.sh', self.db])
+        os.chdir(origWD)
+
+    def migrate_orders(self):
+        print '* Starting orders app migration...'
+        origWD = os.getcwd()
+        os.chdir(os.path.join(origWD, '..', 'resources', 'sql', 'new_master'))
+        print '* Executing database migration scripts...'
+        subprocess.call(['sh', '200_orders.sh', self.db])
+        os.chdir(origWD)
+
+    def migrate_exchange(self):
+        print '* Starting exchange app migration...'
+        origWD = os.getcwd()
+        os.chdir(os.path.join(origWD, '..', 'resources', 'sql', 'new_master'))
+        print '* Executing database migration scripts...'
+        subprocess.call(['sh', '250_exchange.sh', self.db])
         os.chdir(origWD)

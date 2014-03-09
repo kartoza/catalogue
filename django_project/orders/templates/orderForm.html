@@ -1,0 +1,134 @@
+<{% extends "base.html" %}
+{% load compressed %}
+
+{% block extracss %}
+	{{ block.super }}
+	{% compressed_css 'orderpage' %}
+{% endblock %}
+
+{% block content%}
+  <div class="row">
+  	<div class="span12">
+  		<div id="map" class="order-map">
+	  		<div id="map-controls" class="blackalpha60">
+			    <div id="map-layerswitcher-control">
+			      <button class="btn btn-info btn-large right icon-globe"></button>
+			    </div>
+				<div id="map-navigation"></div>
+			</div>
+			<div id="map-controls2" class="blackalpha60">
+			    <div id="map-control-position"></div>
+				<div id="map-control-scalebar"></div>
+			</div>
+			<div id="map-layerswitcher" class="drop-shadow"></div>
+		</div>
+  	</div>
+  </div>
+  <div class="row">
+  	<div class="span12">
+  		<h2>Order options</h2>
+  	</div>
+  </div>
+  {% include "orderFormSearch.html" %}
+{% endblock %}
+
+{% block extrajs %}
+  {{ block.super }}
+  {% compressed_js 'orderpage' %}
+  <script>
+  	var LayerSwitcherState = false;
+    function toggleLayerSwitcher() {
+	    if (LayerSwitcherState) {
+	        $('#map-layerswitcher').hide();
+	        $('#map-layerswitcher-control').css('color','#FFFFFF');
+	        LayerSwitcherState = false;
+	    } else {
+	        $('#map-layerswitcher').show();
+	        $('#map-layerswitcher-control').css('color','green');
+	        LayerSwitcherState = true;
+	    }
+	}
+
+	function triggerProjectionChange(option) {
+		/*
+		function is triggered by applying one of helper filters for either projection or
+		processing level
+		expected input is either "projection" or "processing"
+		filter value (option element) can be:
+		0 - default option
+		1 - secondary selection
+		logic is based on presumtion that default selection is first option in select
+		and secondary option (GEO for projection and RAW for processing) is last option in select
+		*/
+		var type = $('input[name='+ option +'Radio]:radio:checked').val()
+		if (type == 1) {
+			var selector = 'option:last';
+		} else {
+			var selector = 'option:first';
+		}
+		$("select[name*='_"+option+"']").find(selector).attr("selected","selected");
+		/* 
+		we need to manually trigger change event for costs to get updated
+		*/
+		$("select[name*='_"+option+"']").trigger('change');
+	}
+
+	function setTotalCost() {
+		/*
+		function expects for DOM elements that hold costs have name attribute with _cost suffix
+		and data-id attribute that holds product ID
+		using product ID we lookup corresponding widget which has method that returns cost
+		for curently selected process level
+		*/
+		var cost = 0;
+		$('td[name*="_cost"]').each(function() {
+			cost += APP['widget_' + $(this).data('id') + '_processing'].getCost();
+		})
+		$('#product_total_cost').html(cost);
+	}
+
+  	$( document ).ready(function() {
+  		var myMap = new APP.SansaMap('map');
+  		APP.$modal = $('#ajax-modal');
+  		APP.CartRecords = {};
+
+  		{% for record in myRecords %}
+        APP.CartRecords['{{ record.id }}'] = {
+          'wkt': '{{ record.product.spatial_coverage.wkt }}',
+          'id': '{{ record.product.unique_product_id }}',
+    	};
+      	{% endfor %}
+      	var cartLayer = new APP.CartLayer(myMap, {'wkt': APP.CartRecords});
+
+		$('#map-layerswitcher-control').click(function() {
+			toggleLayerSwitcher();
+		});
+
+		$('.metadata').click(function() {
+			var id = $(this).data('id');
+	        APP.$modal.load('/metadata/'+id, '', function(){
+	            APP.$modal.modal();
+	        });
+		})
+
+		$('.remove').click(function() {
+			if (confirm('You are about to remove product from cart, are you sure?')) {
+			    uiBlock();
+			    var elem = $(this);
+			    var id = elem.data('id');
+			    $.get("/removefromcart/" + id + "/?xhr")
+			    .done(function () {
+			    	elem.parent().parent().remove();
+			        cartLayer.removeFeature(id);
+			    })
+			    .fail(function () {
+			      alert('There has been a problem!');
+			    });
+				uiUnblock();
+			}
+		});
+		// initial setup of total cost across all products
+		setTotalCost();
+    });
+  </script>
+{% endblock %}

@@ -142,7 +142,7 @@ function toggleResultDownloadButton() {
 function toggleCartDownloadButton() {
     if (CartDownloadOptionsState) {
         hideCartDownloadOptions();
-        $('#cart-panel-download-button').html('<i class="icon-download"></i> Download Order');
+        $('#cart-panel-download-button').html('<i class="icon-download"></i>');
         CartDownloadOptionsState = false;
     } else {
         showCartDownloadOptions();
@@ -514,7 +514,7 @@ APP.ResultGridView = Backbone.View.extend({
 
             this.cont.empty();
             $('#results-container').perfectScrollbar('destroy');
-            this.cont.append('<div class="result-item"><div class="result-item-info">Product</div><div class="result-item-info-date">Date</div><div class="cloud-cover">Cloud cover</div></div>');
+            this.cont.append('<div class="result-items-header"><div class="result-item-info">Product</div><div class="result-item-info-date">Date</div><div class="cloud-cover">Cloud cover</div></div>');
             var self=this;
             _(this.collection.models).each(function(item){
                 self.renderItem(item);
@@ -539,9 +539,9 @@ APP.ResultGridView = Backbone.View.extend({
         });
         // if it is, color it differently
         if (exist.length > 0) {
-            $("#result_item_"+ myItem.model.get('unique_product_id')).addClass('cartResultRow');
-            $("#result_item_"+ myItem.model.get('unique_product_id')).children('.cart-remove-button').removeClass('hide');
-            $("#result_item_"+ myItem.model.get('unique_product_id')).children('.cart-button').addClass('hide');
+            $("#result_item_"+ myItem.model.get('original_product_id')).addClass('cartResultRow');
+            $("#result_item_"+ myItem.model.get('original_product_id')).children('.cart-remove-button').removeClass('hide');
+            $("#result_item_"+ myItem.model.get('original_product_id')).children('.cart-button').addClass('hide');
         }
     },
 
@@ -630,7 +630,7 @@ APP.ResultGridViewItem = Backbone.View.extend({
     },
 
     focusItem: function() {
-        var selectedID = this.model.get('unique_product_id');
+        var selectedID = this.model.get('original_product_id');
         var pos2 = $("#result_item_"+ selectedID).offset();
         var targetFeature = searchLayer.getFeatureElementRecordId(selectedID);
         if (targetFeature.onScreen()) {
@@ -639,26 +639,26 @@ APP.ResultGridViewItem = Backbone.View.extend({
             this.line = APP.s.line(pos.x, pos.y + 35, pos2.left+2, pos2.top+9);
             this.line.animate({stroke: "#2f96b4", strokeWidth: "4"}, 500);
         }
-        $APP.trigger('focusFeature', {'unique_product_id': selectedID});
+        $APP.trigger('focusFeature', {'original_product_id': selectedID});
     },
 
     blurItem: function() {
         if (typeof this.line != 'undefined') this.line.remove();
-        var selectedID = this.model.get('unique_product_id');
+        var selectedID = this.model.get('id');
         if (APP.selectedFeatureID == selectedID) {
-            $APP.trigger('highlightSearchRecord', {'unique_product_id': selectedID, 'zoom': false});
+            $APP.trigger('highlightSearchRecord', {'original_product_id': selectedID, 'zoom': false});
         } else {
-            $APP.trigger('removeFocusFeature', {'unique_product_id': selectedID});
+            $APP.trigger('removeFocusFeature', {'id': selectedID});
         }
     },
 
     removedItemFromCartUpdateResults: function(event, data) {
         var exist = this.collection.filter(function(item) {
-                return item.get("unique_product_id") == data.unique_product_id;
+                return item.get("original_product_id") == data.original_product_id;
             });
         if (exist.length > 0) {
-            this._removeFromCart(data.unique_product_id);
-            $APP.trigger('removedItemFromCart', {'unique_product_id': data.unique_product_id});
+            this._removeFromCart(data.original_product_id);
+            $APP.trigger('removedItemFromCart', {'original_product_id': data.original_product_id});
         }
     },
 
@@ -666,8 +666,8 @@ APP.ResultGridViewItem = Backbone.View.extend({
         // if id is not set presume user has clicked in result panel on item
         // if id is set presuem user has clicked record on the map
         if (typeof data == 'undefined') {
-            $APP.trigger('highlightSearchRecord', {'unique_product_id': this.model.get('unique_product_id'), 'zoom': true});
-            var selectedID = this.model.get('unique_product_id');
+            $APP.trigger('highlightSearchRecord', {'original_product_id': this.model.get('original_product_id'), 'zoom': true});
+            var selectedID = this.model.get('original_product_id');
             $('#resetZoom').show();
             this.line.remove();
         } else {
@@ -697,10 +697,10 @@ APP.ResultGridViewItem = Backbone.View.extend({
                 alert('Product already in cart!');
             } else {
                 APP.Cart.create({'product': {'id':id}},{wait: true});
-                $APP.trigger('colorCartFeature', {'unique_product_id': this.model.get('unique_product_id')});
-                $("#result_item_"+ this.model.get('unique_product_id')).addClass('cartResultRow');
-                $("#result_item_"+ this.model.get('unique_product_id')).children('.cart-remove-button').removeClass('hide');
-                $("#result_item_"+ this.model.get('unique_product_id')).children('.cart-button').addClass('hide');
+                $APP.trigger('colorCartFeature', {'original_product_id': this.model.get('original_product_id')});
+                $("#result_item_"+ this.model.get('original_product_id')).addClass('cartResultRow');
+                $("#result_item_"+ this.model.get('original_product_id')).children('.cart-remove-button').removeClass('hide');
+                $("#result_item_"+ this.model.get('original_product_id')).children('.cart-button').addClass('hide');
             }
         } else {
             alert('You need to log in first!');
@@ -709,9 +709,9 @@ APP.ResultGridViewItem = Backbone.View.extend({
     },
 
     removeFromCart: function(event) {
-        $APP.trigger('deleteCartItem', {'id': this.model.get('unique_product_id')});
-        this._removeFromCart(this.model.get('unique_product_id'));
-        $APP.trigger('removedItemFromCart', {'unique_product_id': this.model.get('unique_product_id')});
+        $APP.trigger('deleteCartItem', {'id': this.model.get('original_product_id')});
+        this._removeFromCart(this.model.get('original_product_id'));
+        $APP.trigger('removedItemFromCart', {'id': this.model.get('original_product_id')});
         event.stopPropagation();
     },
 
@@ -728,10 +728,10 @@ APP.ResultGridViewItem = Backbone.View.extend({
 });
 
 var template = [
-            '<div class="result-item" id="result_item_<%= model.get("unique_product_id") %>">',
+            '<div class="result-item" id="result_item_<%= model.get("original_product_id") %>">',
             '<img class="result-img" src="/thumbnail/<%= model.get("id") %>/mini/" />',
             '<div class="result-item-info">',
-              '<p><%= model.get("unique_product_id") %></p>',
+              '<p><%= model.get("productName") %></p>',
             '</div>',
             '<div class="result-item-info-date">',
               '<p><%= model.get("product_date") %></p>',
@@ -741,9 +741,9 @@ var template = [
               '<% } else { %>UNK',
               '<% } %>',
             '</p></div>',
-            '<span class="button metadata-button btn btn-default"><i class="icon-list-alt"></i></span>',
-            '<span class="button cart-button btn btn-default"><i class="icon-shopping-cart"></i></span>',
-            '<span class="button cart-remove-button btn btn-default hide"><i class="icon-remove"></i></span>',
+            '<span class="button metadata-button btn btn-default" data-toggle="tooltip" data-title="View Metadata"><i class="icon-list-alt"></i></span>',
+            '<span class="button cart-button btn btn-default" data-toggle="tooltip" data-title="Add to Cart"><i class="icon-shopping-cart"></i></span>',
+            '<span class="button cart-remove-button btn btn-danger hide" data-toggle="tooltip" data-title="Remove From Cart"><i class="icon-remove"></i></span>',
           '</div>'
           ].join('');
 
@@ -793,7 +793,7 @@ APP.CartGridView = Backbone.View.extend({
         var del = confirm('Are you sure?');
         if (del) {
             var exist = APP.Cart.find(function(item) {
-                return item.get("product").unique_product_id == data.id;
+                return item.get("product").original_product_id == data.id;
             });
             exist.destroy({wait: true});
         }
@@ -837,7 +837,7 @@ APP.CartGridViewItem = Backbone.View.extend({
     delete: function() {
         var del = confirm('Are you sure?');
         if (del) {
-            $APP.trigger('removedItemFromCartUpdateResults', {'unique_product_id': this.model.get('product').unique_product_id});
+            $APP.trigger('removedItemFromCartUpdateResults', {'original_product_id': this.model.get('product').original_product_id});
             this.model.destroy({wait: true});
         }
     },
@@ -850,16 +850,16 @@ APP.CartGridViewItem = Backbone.View.extend({
 
 var templateCart = [
         '<div class="cart-item">',
-          '<img src="/thumbnail/<%= model.get("product").id %>/mini/" />',
+          '<img src="/thumbnail/<%= model.get("product").original_product_id %>/mini/" />',
           '<div class="cart-item-info">',
-            '<p><%= model.get("product").unique_product_id %></p>',
+            '<p><%= model.get("product").productName %></p>',
           '</div>',
           //'<div class="cart-item-info-date">',
           //  '<p><%= model.get("product").product_date %></p>',
           //'</div>',
           '<div class="cart-item-buttons">',
-              '<span class="button metadata-button"><i class="icon-list-alt"></i></span>',
-              '<span class="button delete-button"><i class="icon-remove"></i></span>',
+              '<span class="button metadata-button btn btn-default" data-toggle="tooltip" data-title="View Metadata"><i class="icon-list-alt"></i></span>',
+              '<span class="button delete-button btn btn-danger" data-toggle="tooltip" data-title="Remove From Cart"><i class="icon-remove"></i></span>',
           '</div>',
           '<div class="cart-item-cloud-cover"><p>',
             '<% if(model.get("product").cloud_cover != -1) { %><%= model.get("product").cloud_cover %>%',

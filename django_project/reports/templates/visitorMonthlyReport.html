@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 {% load staticfiles %}
-{% load boxtag %} {# Custom tag defined in templatetags/ #}
 {% block extrajs %}
       {{ block.super }}
+      <script type="text/javascript" src="https://www.google.com/jsapi"></script>
       <script type="text/javascript">
         // Load the Visualization API and the piechart package.
         google.load('visualization', '1', {'packages':['corechart']});
@@ -32,41 +32,51 @@
       </script>
 {% endblock %}
 {% block content %}
-{% box_start "box-" %}
-<div id="monthSelector" class="span-22 last">
-  <div class="span-8">
-    <button onclick='location="{% url 'visitorMonthlyReport' myPrevDate|date:'Y' myPrevDate|date:'m' %}"'>Previous month</button>
+  <div id="monthSelector" class="row-fluid gap-bottom text-center btn-group">
+    <button onclick='location="{% url 'visitorMonthlyReport' myPrevDate|date:'Y' myPrevDate|date:'m' %}"'
+        class="btn" id="download-btn"><i class="icon-chevron-left"></i> Previous Month</button>
+    <button onclick='location="?pdf"'
+        class="btn btn-success" id="download-btn"><i class="icon-download"></i> PDF</button>
+    <button onclick='location="{% url 'visitorMonthlyReport' myNextDate|date:'Y' myNextDate|date:'m' %}"'
+        class="btn" id="download-btn">Next Month <i class="icon-chevron-right"></i> </button>
   </div>
-  <div class="span-6 centered">
-    <button onclick='location="?pdf"'><img src="{% static 'images/application-pdf.png' %}" /> PDF</button>
-  </div>
-  <div class="span-8 last" style="text-align: right;">
-    <button onclick='location="{% url 'visitorMonthlyReport' myNextDate|date:'Y' myNextDate|date:'m' %}"'>Next month</button>
-  </div>
-</div>
-    {% if myScores %}
-      <!--Load the AJAX API-->
-      <h2 class="centered chartTitle"><img class="icon" src="{% static 'images/diagram_32.png' %}"> Visits by country excluding SA for {{ myCurrentDate|date:'M, Y' }}</h2>
-      <!--Div that will hold the pie chart-->
-      <div id="chart_div" class="centered"></div>
 
-      <div id="allCountries">
-        <h3 class="centered chartTitle">All Countries</h3>
-         <table id="gradient-style" summary="SAC Catalogue Visitors" style="width:100%; margin:0px;">
-            <thead> 
+  {% if myScores %}
+    <!--Load the AJAX API-->
+    <h2 class="text-center chartTitle">
+      Visits by Country For {{ myCurrentDate|date:'F Y' }}
+    </h2>
+    <!--Div that will hold the pie chart-->
+    <div id="chart_div" class="centered"></div>
+
+    <div id="allCountries">
+      <h3 class="centered chartTitle">All Countries</h3>
+      <div class="row">
+        <div class="span8 offset2">
+          <table id="gradient-style" summary="SAC Catalogue Visitors"
+              class="table table-striped">
+            <thead>
               <th>Country</th>
               <th>Visitors</th>
             </thead>
             <tfoot></tfoot>
             <tbody>
               {% for myCountry in myScores %}
-                <tr><td>{% filter force_escape|capfirst %}{{myCountry.country}}{% endfilter %}</td><td>{{ myCountry.count }}</td></tr>
+                <tr>
+                  <td>{% filter force_escape|title %}{{myCountry.country}}{% endfilter %}</td>
+                  <td>{{ myCountry.count }}</td>
+                </tr>
               {% endfor %}
             </tbody>
-         </table>
-       </div>
-    {% else %}
-      <p>No reports to generate.</p>
-    {% endif %}
-{% box_end %}
+          </table>
+        </div>
+      </div>
+    </div>
+  {% else %}
+    <div class="row">
+      <div class="span6 offset3">
+        <p class="lead text-center">No reports to generate.</p>
+      </div>
+    </div>
+  {% endif %}
 {% endblock %}

@@ -30,11 +30,9 @@ from core.model_factories import UserF
 from dictionaries.tests.model_factories import (
     SatelliteInstrumentF, InstrumentTypeF, SpectralModeF,
     OpticalProductProfileF, SatelliteF, SatelliteInstrumentGroupF,
-    ProcessingLevelF
+    ProcessingLevelF, ProjectionF, LicenseF, QualityF
 )
-from .model_factories import (
-    OpticalProductF, ProjectionF, QualityF, LicenseF
-)
+from .model_factories import OpticalProductF
 
 
 class OthersViews_metadata(TestCase):

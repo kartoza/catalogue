@@ -99,23 +99,17 @@
         div: OpenLayers.Util.getElement('map-navigation')
       },
       onPreviousChange: function() {
-        var num = myHistoryControl.previousStack.length;
-        if (num > 1) {
+        if (myHistoryControl.previousStack.length > 1) {
           $('.olprev').removeClass('disabled');
-          $('.olprev').html(' <span class="badge">'+(num-1)+'</span>');
         } else {
           $('.olprev').addClass('disabled');
-          $('.olprev').html('');
         }
       },
       onNextChange: function() {
-        var num = myHistoryControl.nextStack.length;
-        if (num > 0) {
+        if (myHistoryControl.nextStack.length > 0) {
           $('.olnext').removeClass('disabled');
-          $('.olnext').html(' <span class="badge">'+num+'</span>');
         } else {
           $('.olnext').addClass('disabled');
-          $('.olnext').html('');
         }
       }
     });

@@ -5,151 +5,18 @@ BEGIN;
 
 SET statement_timeout = 0;
 SET client_encoding = 'UTF8';
-SET standard_conforming_strings = on;
+SET standard_conforming_strings = off;
 SET check_function_bodies = false;
 SET client_min_messages = warning;
+SET escape_string_warning = off;
 
 SET search_path = public, pg_catalog;
-
---
--- Name: dictionaries_band_id_seq; Type: SEQUENCE SET; Schema: public; Owner: dodobas
---
-
-SELECT pg_catalog.setval('dictionaries_band_id_seq', 49, true);
-
-
---
--- Name: dictionaries_bandspectralmode_id_seq; Type: SEQUENCE SET; Schema: public; Owner: dodobas
---
-
-SELECT pg_catalog.setval('dictionaries_bandspectralmode_id_seq', 61, true);
-
-
---
--- Name: dictionaries_collection_id_seq; Type: SEQUENCE SET; Schema: public; Owner: dodobas
---
-
-SELECT pg_catalog.setval('dictionaries_collection_id_seq', 6, true);
-
-
---
--- Name: dictionaries_foreigncurrency_id_seq; Type: SEQUENCE SET; Schema: public; Owner: dodobas
---
-
-SELECT pg_catalog.setval('dictionaries_foreigncurrency_id_seq', 1, false);
-
-
---
--- Name: dictionaries_imagingmode_id_seq; Type: SEQUENCE SET; Schema: public; Owner: dodobas
---
-
-SELECT pg_catalog.setval('dictionaries_imagingmode_id_seq', 1, true);
-
-
---
--- Name: dictionaries_instrumenttype_id_seq; Type: SEQUENCE SET; Schema: public; Owner: dodobas
---
-
-SELECT pg_catalog.setval('dictionaries_instrumenttype_id_seq', 10, true);
-
-
---
--- Name: dictionaries_instrumenttypeprocessinglevel_id_seq; Type: SEQUENCE SET; Schema: public; Owner: dodobas
---
-
-SELECT pg_catalog.setval('dictionaries_instrumenttypeprocessinglevel_id_seq', 23, true);
-
-
---
--- Name: dictionaries_opticalproductprofile_id_seq; Type: SEQUENCE SET; Schema: public; Owner: dodobas
---
-
-SELECT pg_catalog.setval('dictionaries_opticalproductprofile_id_seq', 36, true);
-
-
---
--- Name: dictionaries_processinglevel_id_seq; Type: SEQUENCE SET; Schema: public; Owner: dodobas
---
-
-SELECT pg_catalog.setval('dictionaries_processinglevel_id_seq', 13, true);
-
-
---
--- Name: dictionaries_radarbeam_id_seq; Type: SEQUENCE SET; Schema: public; Owner: dodobas
---
-
-SELECT pg_catalog.setval('dictionaries_radarbeam_id_seq', 1, true);
-
-
---
--- Name: dictionaries_radarproductprofile_id_seq; Type: SEQUENCE SET; Schema: public; Owner: dodobas
---
-
-SELECT pg_catalog.setval('dictionaries_radarproductprofile_id_seq', 1, true);
-
-
---
--- Name: dictionaries_referencesystem_id_seq; Type: SEQUENCE SET; Schema: public; Owner: dodobas
---
-
-SELECT pg_catalog.setval('dictionaries_referencesystem_id_seq', 1, false);
-
-
---
--- Name: dictionaries_satellite_id_seq; Type: SEQUENCE SET; Schema: public; Owner: dodobas
---
-
-SELECT pg_catalog.setval('dictionaries_satellite_id_seq', 16, true);
-
-
---
--- Name: dictionaries_satelliteinstrument_id_seq; Type: SEQUENCE SET; Schema: public; Owner: dodobas
---
-
-SELECT pg_catalog.setval('dictionaries_satelliteinstrument_id_seq', 23, true);
-
-
---
--- Name: dictionaries_satelliteinstrumentgroup_id_seq; Type: SEQUENCE SET; Schema: public; Owner: dodobas
---
-
-SELECT pg_catalog.setval('dictionaries_satelliteinstrumentgroup_id_seq', 21, true);
-
-
---
--- Name: dictionaries_scannertype_id_seq; Type: SEQUENCE SET; Schema: public; Owner: dodobas
---
-
-SELECT pg_catalog.setval('dictionaries_scannertype_id_seq', 4, true);
-
-
---
--- Name: dictionaries_spectralgroup_id_seq; Type: SEQUENCE SET; Schema: public; Owner: dodobas
---
-
-SELECT pg_catalog.setval('dictionaries_spectralgroup_id_seq', 6, true);
-
-
---
--- Name: dictionaries_spectralmode_id_seq; Type: SEQUENCE SET; Schema: public; Owner: dodobas
---
-
-SELECT pg_catalog.setval('dictionaries_spectralmode_id_seq', 35, true);
-
-
---
--- Name: dictionaries_spectralmodeprocessingcosts_id_seq; Type: SEQUENCE SET; Schema: public; Owner: dodobas
---
-
-SELECT pg_catalog.setval('dictionaries_spectralmodeprocessingcosts_id_seq', 28, true);
-
 
 --
 -- Data for Name: dictionaries_processinglevel; Type: TABLE DATA; Schema: public; Owner: dodobas
 --
 
 COPY dictionaries_processinglevel (id, abbreviation, name, description) FROM stdin;
-13	L4	Level 4 Value Added	Value added products
 1	L1	Level 1 Systematic Corrections	Radiometric corrections of the differences in sensitivy of the detectors based on in-flight calibrations (Level 1A).  Geometric corrections take into account both internal and external orientations of the satellite in relation to the earth to account for scan line misallignment and non-uniform pixel sizes (Level 1B).  Level 1 imagery is often referred to by customers as "raw" imagery as there is still a great deal of processing required before spatial or spectral analysis can be performed.
 2	L1A	Level 1A Radiometric 	Radiometric corrections of the differences in sensitivy of the detectors based on in-flight calibrations.
 3	L1B	Level 1B Geometric	Geometric corrections take into account both internal and external orientations of the satellite in relation to the earth to account for scan line misallignment and non-uniform pixel sizes.
@@ -162,6 +29,8 @@ COPY dictionaries_processinglevel (id, abbreviation, name, description) FROM std
 10	L3B	Level 3B Mosaic	Mosaic
 11	L3PS	Level 3 Pansharpened	Pansharpened
 12	L3TC	Level 3 True Colour	Blue band creation for SPOT for natural colour visualisation
+13	L4	Level 4 Value Added	Value added products
+14	L0	Level 0 Raw instrument data	Raw instrument data collected at the sensor is the input data to the ground segment processor.  Raw data is not in a usable format for customers.
 \.
 
 
@@ -170,6 +39,10 @@ COPY dictionaries_processinglevel (id, abbreviation, name, description) FROM std
 --
 
 COPY dictionaries_referencesystem (id, name, description, abbreviation) FROM stdin;
+1	WRS2	Worldwide Reference System 2 (WRS2)	WRS2
+2	WRS1	Worldwide Reference System 1 (WRS1)	WRS1
+3	SPOT GRS	SPOT Grid Reference System (GRS) using K and J co-ordinate pairs	SPOT-GRS
+4	Unknown	No information available\r\n	UNK
 \.
 
 
@@ -189,17 +62,20 @@ COPY dictionaries_scannertype (id, name, description, abbreviation) FROM stdin;
 -- Data for Name: dictionaries_instrumenttype; Type: TABLE DATA; Schema: public; Owner: dodobas
 --
 
-COPY dictionaries_instrumenttype (id, name, description, abbreviation, operator_abbreviation, is_radar, is_taskable, scanner_type_id, base_processing_level_id, default_processing_level_id, reference_system_id, swath_optical_km, band_count, band_type, spectral_range_list_nm, pixel_size_list_m, spatial_resolution_range, quantization_bits, image_size_km, processing_software, keywords) FROM stdin;
-1	AMI	Active Microwave Instrument\r\n	AMI	AMI	t	f	1	1	1	\N	\N	\N			\N		\N			
-2	MSI	Multi-Spectral Imager\r\n	MSI	MSI	f	f	4	3	3	\N	\N	\N					\N			
-3	MSS	Multi-Spectral Scanner\r\n	MSS	MSS	f	f	3	5	5	\N	\N	\N					\N			
-4	TM	Thematic Mapper\r\n	TM	TM	f	f	3	5	5	\N	\N	\N					\N			
-5	ETM+	Enhanced Thematic Mapper Plus\r\n	ETM+	ETM+	f	f	3	5	5	\N	\N	\N					\N			
-6	HRV	High Resolution Visible\r\n	HRV	HRV	f	f	2	5	5	\N	\N	\N					\N			
-7	HRVIR	High Resolution Visible and Infra-Red\r\n	HIR	HRVIR	f	f	2	5	5	\N	\N	\N					\N			
-8	HRG	High Resolution Geometric\r\n	HRG	HRG	f	t	2	5	5	\N	\N	\N					\N			
-9	HRCCD	High Resolution Couple Charged Device\r\n	HRC	HRCCD	f	f	2	5	5	\N	\N	\N					\N			
-10	MMRS	Multi-Spectral Medium Resolution Scanner\r\n	MMR	MMRS	f	f	2	2	2	\N	\N	\N					\N			
+COPY dictionaries_instrumenttype (id, name, description, abbreviation, operator_abbreviation, is_radar, is_taskable, is_searchable, scanner_type_id, base_processing_level_id, default_processing_level_id, reference_system_id, swath_optical_km, band_count, band_type, spectral_range_list_nm, pixel_size_list_m, spatial_resolution_range, quantization_bits, image_size_km, processing_software, keywords) FROM stdin;
+1	AMI	Active Microwave Instrument\r\n	AMI	AMI	t	f	f	1	1	2	4	\N	\N					\N			
+2	MSI	Multi-Spectral Imager\r\n	MSI	MSI	f	f	t	4	3	3	4	45	3	Multi-spectral	620 - 890 nm	6.25 m	6.25 m	12	45 km x 45 km	SANSA Experimental Algorithms 	SumbandilaSat; ZA-2; MSI; multi-spectral; 6.25m; red-edge
+3	MSS	Multi-Spectral Scanner\r\n	MSS	MSS	f	f	t	3	5	5	2	185	5	Multi-spectral; Thermal	500 - 12 600 nm	57 m x 79 m	57 m x 79 m resampled to 60 m	8	180 km x 170 km	Pink Matter Landsat Processor incl LPGS	Landsat 1; Landsat 2; Landsat 3; Landsat 4; 5; MSS; multi-spectral; 60m
+4	TM	Thematic Mapper\r\n	TM	TM	f	f	t	3	5	5	1	185	7	Multi-spectral; Thermal	450 - 12 500 nm	30 m; 120 m	30 m; 120m resampled to 30 m	8	180 km x 170 km	Pink Matter Landsat Processor incl LPGS	Landsat 5; TM; multi-spectral; thermal; 30m; 120m
+5	ETM+	Enhanced Thematic Mapper Plus\r\n	ETM+	ETM	f	f	t	3	5	5	1	183	9	Multi-spectral; Panchromatic; Thermal	450 -12 500 nm	15 m; 30 m; 60 m	15 m; 30 m; 60m resampled to 30 m	8	180 km x 170 km	Pink Matter Landsat Processor incl LPGS	Landsat 7; ETM+; multi-spectral; panchromatic; thermal; 15m; 30m; 60m; pan-sharpen; SLC-off; SLC-on
+6	HRV	High Resolution Visible\r\n	HRV	HRV	f	f	t	2	5	5	3	60	4	Multi-spectral; Panchromatic	500 - 890 nm	10 m; 20 m	10 m; 20 m	8	60 km x 80 km	TS5 Astrium Processing	SPOT 1; SPOT2; SPOT 3; HRV; multi-spectral; panchromatic; 10m; 20m; pan-sharpen
+7	HRVIR	High Resolution Visible and Infra-Red\r\n	HIR	HRVIR	f	f	t	2	5	5	3	60	5	Multi-spectral; Panchromatic	500 - 1750 nm	10 m; 20 m	10 m; 20 m	8	60 km x 80 km	TS5 Astrium Processing	SPOT 4; HRVIR; multi-spectral; monospectral; 10m; 20m; pan-sharpen
+8	HRG	High Resolution Geometric\r\n	HRG	HRG	f	t	t	2	5	5	3	60	7	Multi-spectral; Panchromatic	480 - 1750 nm	5 m; 10 m; 20 m	2.5 m supersampled; 5 m; 10 m; 20 m	8	60 km x 80 km	TS5 Astrium Processing	SPOT 5; HRG; multi-spectral; panchromatic; 2.5m; 10m; supersample; pan-sharpen
+9	CCD	High Resolution Couple Charged Device\r\n	CCD	CCD	f	f	t	2	5	5	4	113	5	Multi-spectral; Panchromatic	450 - 890 nm	20 m	20 m	8	113 km x 113 km	ONPE Processing software	CBERS-2B; CCD; multi-spectral; panchromatic; 20m
+10	MMRS	Multi-Spectral Medium Resolution Scanner\r\n	MMRS	MMRS	f	f	t	2	2	2	1	360	5	Multi-spectral	480 - 1700 nm	175 m	175 m	8	360 km x 360 km	CONAE - Argentina	SAC-C; MMRS; multi-spectral; 175m
+11	OLI	Operational Land Imager	OLI	OLI	f	f	t	2	6	6	1	185	9	Multi-spectral; Panchromatic	430 - 1380 nm	15 m; 30 m	15m; 30m resampled	12	185 km x 170 km 	Pink Matter Landsat Processor incl LPGS	Landsat 8; OLI; multi-spectral; panchromatic; 15m; 30m; pan-sharpen
+12	TIRS	Thermal Infrared Scanner	TIRS	TIRS	f	f	t	2	6	6	1	185	2	Thermal	10 600 - 12 510 nm	100 m	30 m resampled	12	185 km x 170 km	Pink Matter LandPink Matter Landsat Processor incl LPGSsat Processor	Landsat 8; TIRS; thermal; 30m resampled; 100m acquired
+13	OLI/TIRS	Operational Land Imager and Thermal Infrared Scanner Combined	OLI/TIRS	OLI_TIRS	f	f	t	2	6	6	1	185	11	Multi-spectral, Panchromatic, Thermal	430 - 12510 nm	15m; 30 m; 100 m	15m; 30m	12	185 km x 170 km	Pink Matter Landsat Processor incl LPGS	Landsat 8; OLI; multi-spectral; panchromatic; 15m; 30m; pan-sharpen; TIRS; thermal; 30m resampled; 100m acquired
 \.
 
 
@@ -217,13 +93,13 @@ COPY dictionaries_band (id, instrument_type_id, band_name, band_abbr, band_numbe
 7	4	Red	R	3	630	690	30	30
 8	4	Near Infrared	NIR	4	760	900	30	30
 9	4	Shortwave Infrared 1	SWIR1	5	1550	1750	30	30
+10	4	Thermal	THM	6	10400	12500	30	120
 11	4	Shortwave Infrared 2	SWIR2	7	2080	2350	30	30
 12	5	Blue	B	1	450	520	30	30
 13	5	Green	G	2	520	600	30	30
 14	5	Red	R	3	630	690	30	30
 15	5	Near Infrared	NIR	4	770	900	30	30
 16	5	Shortwave Infrared 1	SWIR1	5	1550	1750	30	30
-10	4	Thermal	THM	6	10400	12500	30	120
 17	5	Thermal - High gain	THM1	61	10400	12500	30	60
 18	5	Thermal - Low gain	THM2	62	10400	12500	30	60
 19	5	Shortwave Infrared 2	SWIR2	7	2090	2350	30	30
@@ -238,9 +114,14 @@ COPY dictionaries_band (id, instrument_type_id, band_name, band_abbr, band_numbe
 28	7	Near Infrared	NIR	3	780	890	20	20
 29	8	Panchromatic A	A	1	480	710	5	5
 30	8	Panchromatic B	B	1	480	710	5	5
+31	8	Panchromatic Resampled	T	1	480	710	2.5	5
 32	8	Green	G	1	500	590	10	10
 33	8	Red	R	2	610	680	10	10
 34	8	Near Infrared	NIR	3	780	890	10	10
+35	8	Shortwave Infrared	SWIR	4	1580	1750	10	20
+36	2	Red	R	1	620	680	6.25	6.25
+37	2	Red-edge	RE	2	690	730	6.25	6.25
+38	2	Near Infrared	NIR	3	840	890	6.25	6.25
 39	10	Blue	B	1	480	500	175	175
 40	10	Green	G	2	540	560	175	175
 41	10	Red	R	3	630	690	175	175
@@ -251,13 +132,15 @@ COPY dictionaries_band (id, instrument_type_id, band_name, band_abbr, band_numbe
 46	9	Green	G	3	520	590	20	20
 47	9	Red	R	4	630	690	20	20
 48	9	Near Infrared	NIR	5	770	890	20	20
-38	2	Near Infrared	NIR	3	840	890	6.25	6.25
-37	2	Red-edge	RE	2	690	730	6.25	6.25
-36	2	Red	R	1	620	680	6.25	6.25
-31	8	Panchromatic Resampled	T	1	480	710	2.5	5
 49	7	Shortwave Infrared	SWIR	4	1580	1750	20	20
-35	8	Shortwave Infrared	SWIR	4	1580	1750	10	20
 \.
+
+
+--
+-- Name: dictionaries_band_id_seq; Type: SEQUENCE SET; Schema: public; Owner: dodobas
+--
+
+SELECT pg_catalog.setval('dictionaries_band_id_seq', 49, true);
 
 
 --
@@ -265,7 +148,7 @@ COPY dictionaries_band (id, instrument_type_id, band_name, band_abbr, band_numbe
 --
 
 COPY dictionaries_spectralgroup (id, name, description, abbreviation) FROM stdin;
-1	Multi-spectral	Multi-spectral imagery	MSS
+1	Multi-spectral	Multi-spectral imagery	MS
 2	Panchromatic	Panchromatic	PAN
 3	Thermal	Thermal band collection\r\n	THM
 4	Visible RGB	Visible spectrum	RGB
@@ -279,23 +162,6 @@ COPY dictionaries_spectralgroup (id, name, description, abbreviation) FROM stdin
 --
 
 COPY dictionaries_spectralmode (id, name, description, abbreviation, instrument_type_id, spectralgroup_id) FROM stdin;
-14	HRG Panchromatic A	SPOT 5 HRG Panchromatic A spectral bands denoted as A on products	A	8	2
-16	HRG Multi-spectral	SPOT 5 HRG Multi-spectral bands denoted as J on products	J	8	1
-18	HRVIR Multi-spectral	SPOT 4 HRVIR Multi-spectral bands denoted as I on products	I	7	1
-17	HRVIR Monospectral	SPOT 4 HRVIR Panchromatic spectral bands denoted as Monospectral (M) on products	M	7	2
-19	HRV Multi-spectral	SPOT 1, 2 or 3 HRV Multi-spectral denoted as X on products	X	6	1
-20	HRV Panchromatic	SPOT 1, 2 or 3 HRV Multi-spectral denoted as X on products	P	6	2
-25	MSI Multi-spectral	ZA-2 SumbandilaSat MSI Multi-spectral denoted as MSS on products	R3B	2	1
-28	MMRS Multi-spectral	SAC-C MMRS Multi-spectral denoted as VNS for Visible, NIR and SWIR on products	VNS	10	1
-29	TM RGB	Landsat 4 or 5 Visible RGB bands	RGB	4	4
-30	ETM+ RGB	Landsat 7 Visible RGB bands	RGB	5	4
-31	MMRS RGB	SAC-C Visible RGB bands	RGB	10	4
-32	HRCCD RGB	CBERS-2B Visible RGB bands	RGB	9	4
-26	HRCCD Multi-spectral 5 bands	CBERS-2B HRCCD Multi-spectral denoted as 5BF for Visible, NIR and Panchromatic on products	5BF	9	1
-33	HRCCD Multi-spectral 3 band	HRCCD Multispectral 3 band combination of Green, Red and Near-infrared denoted as 3BG on the products	3BG	9	1
-34	HRCCD Multi-spectral 2 band + Pan	CBERS-2B HRCCD Panchromatic and Multi-spectral denoted as 3BP for Blue, Red and Panchromatic on products	3BP	9	1
-35	HRCCD Panchromatic 3 band	CBERS-2B HRCCD Panchromatic and Multi-spectral denoted as 3BP for Blue, Red and Panchromatic on products	3BP	9	2
-27	HRCCD Panchromatic 5 band	CBERS-2B HRCCD Panchromatic and Multi-spectral denoted as VNP for Visible, NIR and Panchromatic on products	5BF	9	2
 1	ETM+ HRF	Landsat 7 ETM+ Multi-spectral bands denoted as HRF on products	HRF	5	1
 2	ETM+ HTM	Landsat 7 ETM+ Thermal bands denoted as HTM on products	HTM	5	3
 3	ETM+ HPN	Landsat 7 ETM+ Panchromatic bands denoted as HPN on products	HPN	5	2
@@ -303,7 +169,32 @@ COPY dictionaries_spectralmode (id, name, description, abbreviation, instrument_
 5	TM THM	Landsat 4 or 5 TM Thermal bands denoted as HTM on products	THM	4	3
 6	MSS	Landsat 1, 2, 3, 4 or 5 MSS Multi-spectral bands denoted as MSS on products	MSS 	3	1
 13	HRG Panchromatic	SPOT 5 HRG Panchromatic resampled spectral bands denoted as T on products	T	8	2
+14	HRG Panchromatic A	SPOT 5 HRG Panchromatic A spectral bands denoted as A on products	A	8	2
 15	HRG Panchromatic B	SPOT 5 HRG Panchromatic B spectral bands denoted as B on products	B	8	2
+16	HRG Multi-spectral	SPOT 5 HRG Multi-spectral bands denoted as J on products	J	8	1
+17	HRVIR Monospectral	SPOT 4 HRVIR Panchromatic spectral bands denoted as Monospectral (M) on products	M	7	2
+18	HRVIR Multi-spectral	SPOT 4 HRVIR Multi-spectral bands denoted as I on products	I	7	1
+19	HRV Multi-spectral	SPOT 1, 2 or 3 HRV Multi-spectral denoted as X on products	X	6	1
+20	HRV Panchromatic	SPOT 1, 2 or 3 HRV Multi-spectral denoted as X on products	P	6	2
+25	MSI Multi-spectral	ZA-2 SumbandilaSat MSI Multi-spectral denoted as MSS on products	R3B	2	1
+26	HRCCD Multi-spectral 5 bands	CBERS-2B HRCCD Multi-spectral denoted as 5BF for Visible, NIR and Panchromatic on products	5BF	9	1
+27	HRCCD Panchromatic 5 band	CBERS-2B HRCCD Panchromatic and Multi-spectral denoted as VNP for Visible, NIR and Panchromatic on products	5BF	9	2
+28	MMRS Multi-spectral	SAC-C MMRS Multi-spectral denoted as VNS for Visible, NIR and SWIR on products	VNS	10	1
+29	TM RGB	Landsat 4 or 5 Visible RGB bands	RGB	4	4
+30	ETM+ RGB	Landsat 7 Visible RGB bands	RGB	5	4
+31	MMRS RGB	SAC-C Visible RGB bands	RGB	10	4
+32	HRCCD RGB	CBERS-2B Visible RGB bands	RGB	9	4
+33	HRCCD Multi-spectral 3 band	HRCCD Multispectral 3 band combination of Green, Red and Near-infrared denoted as 3BG on the products	3BG	9	1
+34	HRCCD Multi-spectral 2 band + Pan	CBERS-2B HRCCD Panchromatic and Multi-spectral denoted as 3BP for Blue, Red and Panchromatic on products	3BP	9	1
+35	HRCCD Panchromatic 3 band	CBERS-2B HRCCD Panchromatic and Multi-spectral denoted as 3BP for Blue, Red and Panchromatic on products	3BP	9	2
+36	OLI MS	Landsat 8 OLI Multispectral	MS	11	1
+37	OLI PAN	Landsat 8 OLI Panchromatic	PAN	11	2
+38	OLI RGB	Landsat 8 Visible RGB	RGB	11	4
+39	TIRS THM	Landsat 8 Thermal	THM	12	3
+40	OLI TIRS MS	Landsat 8 OLI TIRS Multispectral	MS	13	1
+41	OLI TIRS PAN	Landsat 8 OLI TIRS Panchromatic	PAN	13	2
+42	OLI TIRS RGB	Landsat 8 OLI TIRS Visible RGB	RGB	13	4
+43	OLI TIRS THM	Landsat 8 OLI TIRS Thermal	THM	13	3
 \.
 
 
@@ -313,6 +204,7 @@ COPY dictionaries_spectralmode (id, name, description, abbreviation, instrument_
 
 COPY dictionaries_bandspectralmode (id, band_id, spectral_mode_id) FROM stdin;
 1	29	14
+2	30	15
 3	31	13
 4	32	16
 5	33	16
@@ -372,8 +264,14 @@ COPY dictionaries_bandspectralmode (id, band_id, spectral_mode_id) FROM stdin;
 59	46	32
 60	47	32
 61	41	28
-2	30	15
 \.
+
+
+--
+-- Name: dictionaries_bandspectralmode_id_seq; Type: SEQUENCE SET; Schema: public; Owner: dodobas
+--
+
+SELECT pg_catalog.setval('dictionaries_bandspectralmode_id_seq', 61, true);
 
 
 --
@@ -381,9 +279,9 @@ COPY dictionaries_bandspectralmode (id, band_id, spectral_mode_id) FROM stdin;
 --
 
 COPY dictionaries_collection (id, name, description, institution_id) FROM stdin;
-1	SPOT	Système Pour l'Observation de la Terre\r\n	4
+1	SPOT	The SPOT (Système Pour l’Observation de la Terre or System for Earth Observation) satellites are operated by SPOT Image (created in 1982), a subsidiary of EADS Astrium and based in Toulouse, France.  The program was initiated by the French space agency, CNES (Centre national d'études spatiales) in the 1970s in collaboration with the Belgium (SSTC) and Swedish (SNSB) science and space agencies.	4
 2	Landsat	The Landsat program, originally known as the Earth Resources Technology Satellite (ERTS), was proposed in 1965 by the US Geological Survey(USGS) as a civilian satellite program.  NASA started building the first satellite in 1970 and have launched 6 spacecraft successfully (Landsat 6 was lost at launch).  In December 2009 all Landsat archive products were made available free to the public on the USGS website.\r\n	7
-3	ZA	South African (ZA) Satellite Program\r\n	1
+3	ZA South Africa	South African (ZA) Satellite Program	1
 4	CBERS	China-Brazil Earth Resources Satellite Program\r\n	5
 5	SAC	Satélite de Aplicaciones Científicas\r\n	8
 6	ERS	European Remote-Sensing Satellite Program\r\n	6
@@ -391,11 +289,11 @@ COPY dictionaries_collection (id, name, description, institution_id) FROM stdin;
 
 
 --
--- Data for Name: dictionaries_foreigncurrency; Type: TABLE DATA; Schema: public; Owner: dodobas
+-- Name: dictionaries_collection_id_seq; Type: SEQUENCE SET; Schema: public; Owner: dodobas
 --
 
-COPY dictionaries_foreigncurrency (id, abbreviation, name, conversion_rate) FROM stdin;
-\.
+SELECT pg_catalog.setval('dictionaries_collection_id_seq', 6, true);
+
 
 
 --
@@ -417,29 +315,43 @@ COPY dictionaries_imagingmode (id, radarbeam_id, name, incidence_angle_min, inci
 
 
 --
+-- Name: dictionaries_imagingmode_id_seq; Type: SEQUENCE SET; Schema: public; Owner: dodobas
+--
+
+SELECT pg_catalog.setval('dictionaries_imagingmode_id_seq', 1, true);
+
+
+--
+-- Name: dictionaries_instrumenttype_id_seq; Type: SEQUENCE SET; Schema: public; Owner: dodobas
+--
+
+SELECT pg_catalog.setval('dictionaries_instrumenttype_id_seq', 13, true);
+
+
+--
 -- Data for Name: dictionaries_instrumenttypeprocessinglevel; Type: TABLE DATA; Schema: public; Owner: dodobas
 --
 
-COPY dictionaries_instrumenttypeprocessinglevel (id, instrument_type_id, processinglevel_id, operator_processing_level_name, operator_processing_level_abbreviation) FROM stdin;
+COPY dictionaries_instrumenttypeprocessinglevel (id, instrument_type_id, processing_level_id, operator_processing_level_name, operator_processing_level_abbreviation) FROM stdin;
 1	2	2	Level 1A	L1A
 2	2	3	Level 1B	L1B
 4	3	3	Level 1G	L1G
 5	4	3	Level 1G	L1G
+6	4	8	Level 1T	L1T
 7	5	3	Level 1G	L1G
 8	5	8	Level 1T	L1T
-6	4	8	Level 1T	L1T
+9	6	2	Level 1A	L1A
 10	6	8	Level 3	L3
+11	7	2	Level 1A	L1A
 12	7	8	Level 3	L3
 13	7	11	Level 3	L3
+14	8	2	Level 1A	L1A
 15	8	8	Level 3	L3
 16	8	11	Level 3	L3
 17	8	12	Level 3	L3
 18	7	12	Level 3	L3
 19	10	5	Level 2	L2
 20	9	5	Level 2	L2
-14	8	2	Level 1A	L1A
-11	7	2	Level 1A	L1A
-9	6	2	Level 1A	L1A
 21	7	11	Level 3	L3
 22	6	11	Level 3 	L3
 23	6	12	Level 3	L3
@@ -447,26 +359,34 @@ COPY dictionaries_instrumenttypeprocessinglevel (id, instrument_type_id, process
 
 
 --
+-- Name: dictionaries_instrumenttypeprocessinglevel_id_seq; Type: SEQUENCE SET; Schema: public; Owner: dodobas
+--
+
+SELECT pg_catalog.setval('dictionaries_instrumenttypeprocessinglevel_id_seq', 23, true);
+
+
+--
 -- Data for Name: dictionaries_satellite; Type: TABLE DATA; Schema: public; Owner: dodobas
 --
 
-COPY dictionaries_satellite (id, name, description, abbreviation, operator_abbreviation, collection_id, launch_date, status, altitude_km, orbit, revist_time_days, reference_url, license_type_id) FROM stdin;
-1	ZA-2 SumbandilaSat	The second South African Satellite ZA-2 renamed as SumbandilaSat\r\n	ZA2	ZASat-002	3	\N		\N		\N		2
-2	Landsat 1	Landsat 1\r\n	L1	LS-1	2	\N		\N		\N		1
-3	Landsat 2	Landsat 2\r\n	LS2	LS-2	2	\N		\N		\N		1
-4	Landsat 3	Landsat 3\r\n	L3-MSS	LS-3	2	\N		\N		\N		1
-5	Landsat 4	Landsat 4\r\n	L4	LS-4	2	\N		\N		\N		1
-6	Landsat 5	Landsat 5\r\n	L5	LS-5	2	\N		\N		\N		1
-7	Landsat 7	Landsat 7\r\n	L7	LS-7	2	\N		\N		\N		1
-8	SPOT 1	SPOT 1\r\n	S1	SPOT-1	1	\N		\N		\N		1
-9	SPOT 2	SPOT 2	S2	SPOT-2	1	\N		\N		\N		1
-10	SPOT 3	SPOT 3\r\n	S3	SPOT-3	1	\N		\N		\N		1
-11	SPOT 4	SPOT 4\r\n	S4	SPOT-4	1	\N		\N		\N		1
-12	SPOT 5	SPOT 5\r\n	S5	SPOT-5	1	\N		\N		\N		1
-13	CBERS-2B	CBERS-2B\r\n	C2B	CBERS-2-B	4	\N		\N		\N		2
-14	SAC-C	SAC-C\r\n	SCC	SCC	5	\N		\N		\N		2
-16	ERS-2	European Remote-Sensing Satellite-2\r\n	E2	ERS-2	6	\N		\N		\N		1
-15	ERS-1	European Remote-Sensing Satellite 1\r\n	E1	ERS-1	6	\N		\N		\N		1
+COPY dictionaries_satellite (id, name, description, abbreviation, operator_abbreviation, collection_id, launch_date, status, altitude_km, orbit, revisit_time_days, reference_url, license_type_id) FROM stdin;
+1	ZA-2 SumbandilaSat	The SumbandilaSat Satellite (ZA-2), which was launched on 17 September 2009, is a collaboration between The University of Stellenbosch, Sunspace (Pty) Ltd and the South African National Space Agency (SANSA) under the South African Department of Science and Technology (DST).  No imagery has been acquired since July 2011.\r\n	ZA2	ZASat-002	3	2009-09-17	Stopped functioning July 2011	504	Sun-synchronous, near-circular	4	https://directory.eoportal.org/web/eoportal/satellite-missions/s/sumbandilasat	2
+2	Landsat 1	The Landsat 1 (1972 to 1978), Landsat 2 (1975-1982) and Landsat 3 (1978-1983) satellites have the same MSS instrument on board	L1	LS-1	2	1972-07-23	Decommissioned 6 January 1978	917	Sun-synchronous, near-polar	18	http://landsat.usgs.gov/about_landsat1.php	2
+3	Landsat 2	The Landsat 1 (1972 to 1978), Landsat 2 (1975-1982) and Landsat 3 (1978-1983) satellites have the same MSS instrument on board	L2	LS-2	2	1975-01-22	Decommissioned 27 July 1983	917	Sun-synchronous, near-polar	18	http://landsat.usgs.gov/about_landsat2.php	2
+4	Landsat 3	The Landsat 1 (1972 to 1978), Landsat 2 (1975-1982) and Landsat 3 (1978-1983) satellites have the same MSS instrument on board	L3	LS-3	2	1978-03-05	Decommissioned 7 September 1983	917	Sun-synchronous, near-polar	18	http://landsat.usgs.gov/about_landsat3.php	2
+5	Landsat 4	The Landsat 4 satellite, which has two instruments on board namely the MSS and TM sensors, was launched on 16 July 1982 by the USGS.  The satellite was decommisioned on 15 June 2001.	L4	LS-4	2	1982-07-17	Decommissioned 15 June 2001	705	Circular, sun-synchronous, near-polar orbit	16	http://landsat.usgs.gov/about_landsat4.php	2
+6	Landsat 5	The Landsat 5 satellite, which has two instruments on board namely the MSS and TM sensors, was launched on 1 March 1984 by the USGS.  The MSS instrument was switched off in August 1995.   On 18 November 2011, TM acquisitions were suspended after technical difficulties, but a legacy of 28 years of global imagery is archived.	L5	LS-5	2	1984-03-01	Decommissioned 5 June 2013	705	Circular, sun-synchronous, near-polar orbit	16	http://landsat.usgs.gov/about_landsat5.php	2
+7	Landsat 7	Landsat 7 carries the Enhanced Thematic Mapper plus  instrument (ETM+,) with the equivalent capabilites of the Thematic Mapper (TM) on board Landsat 4 and Landsat 5, including additional features: a 15m panchromatic band, a 60m thermal band, on board radiometric calibration and data recorder.  On 31 May 2003 the Scan Line Corrector (SLC) failed resulting in gaps of missing data in the imagery.  All acquisitions subsequent to this malfunction are supplied in SLC-off mode.	L7	LS-7	2	1999-04-15	Operational in SLC-off mode	705	Circular, sun-synchronous, near-polar orbit	16	http:/landsat.gsfc.nasa.gov/about/landsat7.html	2
+8	SPOT 1	SPOT 1-3 satellite imagery acquired by the two High Resolution Visible (HRV) cameras. SPOT 1 was actively acquiring imagery from 22 February 1986 to 31 December 1990, SPOT 2 from 22 January 1990 to July 2009 and SPOT3 from 26 September 1993 until it stopped functioning on 14 November 1997.	S1	SPOT-1	1	1986-02-22	Deorbited 17 November 2003	822	Sun-synchronous	26	http://www.astrium-geo.com/en/192-the-spot-satellites	1
+9	SPOT 2	SPOT 1-3 satellite imagery acquired by the two High Resolution Visible (HRV) cameras. SPOT 1 was actively acquiring imagery from 22 February 1986 to 31 December 1990, SPOT 2 from 22 January 1990 to July 2009 and SPOT3 from 26 September 1993 until it stopped functioning on 14 November 1997.	S2	SPOT-2	1	1990-01-22	Deorbited 30 July 2009	822	Sun-synchronous	26	http://www.astrium-geo.com/en/192-the-spot-satellites	1
+10	SPOT 3	SPOT 1-3 satellite imagery acquired by the two High Resolution Visible (HRV) cameras. SPOT 1 was actively acquiring imagery from 22 February 1986 to 31 December 1990, SPOT 2 from 22 January 1990 to July 2009 and SPOT3 from 26 September 1993 until it stopped functioning on 14 November 1997.	S3	SPOT-3	1	1993-09-26	Stopped functioning 14 November 1997	822	Sun-synchronous	26	http://www.astrium-geo.com/en/192-the-spot-satellites	1
+11	SPOT 4	SPOT 4 satellite imagery acquired by the two High Resolution Visible Infrared  (HRVIR) cameras launched on 24 March 1998 by Astrium, an EADS Company.	S4	SPOT-4	1	1998-03-24	Stopped functioning July 2013	822	Sun-synchronous, circular	26	http://www.astrium-geo.com/en/192-the-spot-satellites	1
+12	SPOT 5	The SPOT 5 satellite was launched on 4 May 2002 by Astrium, an EADS Company. SPOT 5 multi-spectral imagery is acquired by the two High Resolution Geometric (HRG) cameras on board the satellite at a spatial resolution of 5m, 10m and 20m.  The satellite also carries the High Resolution Stereo insturment (HRS), which acquires black and white (panchromatic) stereo pairs at 10m across track and 5m along track, and the wide swath VEGETATION 2 instrument with a spatial resolution of 1000 m.	S5	SPOT-5	1	2002-05-04	Operational	822	Polar, circular, sun-synchronous and phased	26	http://www.astrium-geo.com/en/192-the-spot-satellites	1
+13	CBERS-2B	The CBERS-2B Satellite which was launched on 19 September 2007 is a collaboration between China (CAST) and Brazil (INEP) and operated until June 2010.	C2B	CBERS-2B	4	2007-09-19	Decommissioned June 2010	778	Sun-synchronous	26	http://www.cbers.inpe.br/ingles/	2
+14	SAC-C	The SAC-C Satellite which was launched on 21 November 2000 is a collaboration between Argentina (CONAE), USA (NASA), Denmark, Brazil (INPE), Italy and France.	SCC	SCC	5	2000-11-21	Inactive September 2013	705	Sun-synchronous	8	http://www.conae.gov.ar/eng/satelites/sac-c.html	2
+15	ERS-1	European Remote-Sensing Satellite 1\r\n	E1	ERS-1	6	1991-07-17	Decommissioned 10 March 2000	785	Near-circular, polar, sun-synchronousNear-circular, polar, sun-synchronous	35	https://earth.esa.int/web/guest/missions/esa-operational-eo-missions/ers/satellite	1
+16	ERS-2	European Remote-Sensing Satellite-2\r\n	E2	ERS-2	6	1995-04-21	Decommissioned 5 September 2011	785	Near-circular, polar, sun-synchronous	35	https://earth.esa.int/web/guest/missions/esa-operational-eo-missions/ers/satellite	1
+17	Landsat 8	Landsat 8 carries the Operational Land Imager (OLI)  and the Thermal Infrared Sensor (TIRS) data recorder.  The OLI sensor includes two additional bands compared to previous Landsat missions: a coastal aerosol band and a cirrus cloud band.  The TIRS sensor provides data in two bands with different wavelengths and is resampled to 30m from 100m acquisition resolution.  All products are provided in the 16-bit data range and have improved radiometric and geometric performance. Landsat 8 is offset from the Landsat 7 orbit by 8 days giving a shorter revisit time between the two satellites.	L8	LS-8	2	2013-11-02	Operational	705	Circular, sun-synchronous, near-polar orbit	16	http://landsat.usgs.gov/about_ldcm.php	2
 \.
 
 
@@ -479,11 +399,8 @@ COPY dictionaries_satelliteinstrumentgroup (id, satellite_id, instrument_type_id
 2	14	10
 3	15	1
 4	12	8
-5	10	3
-6	9	3
 7	6	4
 8	9	6
-9	5	4
 10	16	1
 11	13	9
 12	11	7
@@ -495,6 +412,9 @@ COPY dictionaries_satelliteinstrumentgroup (id, satellite_id, instrument_type_id
 18	10	6
 20	4	3
 21	3	3
+22	17	11
+23	17	12
+24	17	13
 \.
 
 
@@ -503,29 +423,31 @@ COPY dictionaries_satelliteinstrumentgroup (id, satellite_id, instrument_type_id
 --
 
 COPY dictionaries_satelliteinstrument (id, name, description, abbreviation, operator_abbreviation, satellite_instrument_group_id) FROM stdin;
-23	SAC-C MMRS	SAC-C MMRS	SCC-MMRS	SCC-MMRS	2
-22	ERS-2 SMI	ERS-2 SMI\r\n	E2-AMI	E2-AMI	10
-21	ERS-1 AMI	ERS-1 AMI\r\n	E1-AMI	E1-AMI	3
-20	CBERS-2B HRCCD	CBERS-2B HRCCD\r\n	C2B-CCD	C2B-CCD	11
-19	ZA-2 SumbandilaSat MSI	ZA-2 SumbandilaSat MSI\r\n	ZA2-MSI	ZA2-MSI	17
-18	Landsat 7 ETM+	Landsat 7 ETM Plus\r\n	L7-ETM+	L7-ETM+	1
-17	Landsat 5 TM	Landsat 5 TM\r\n	L5-TM	L5-TM	7
-16	Landsat 5 MSS	Landsat 5 MSS\r\n	L5-MSS	L5-MSS	14
-15	Landsat 4 TM	Landsat 4 TM\r\n	L4-TM	L4-TM	9
-14	Landsat 4 MSS	Landsat 4 MSS\r\n	L4-MSS	L4-MSS	13
-13	Landsat 3 MSS	Landsat 3 MSS	L3-MSS	L3-MSS	20
-12	Landsat 2 MSS	Landsat 2 MSS\r\n	L2-MSS	L2-MSS	21
-11	Landsat 1 MSS	Landsat 1 MSS\r\n	L1-MSS	L1-MSS	16
-10	SPOT 1 HRV 2	HRV Camera 2 on the SPOT 1 Satellite\r\n	S1-HRV2	S1-HRV2	15
-9	SPOT 1 HRV 1	HRV Camera 1 on the SPOT 1 Satellite\r\n	S1-HRV1	S1-HRV1	15
-8	SPOT 2 HRV 2	HRV Camera 2 on the SPOT 2 Satellite\r\n	S2-HRV2	S2-HRV2	8
-7	SPOT 2 HRV 1	HRV Camera 1 on the SPOT 2 Satellite\r\n	S2-HRV1	S2-HRV1	8
-6	SPOT 3 HRV 2	HRV Camera 2 on the SPOT 3 Satellite\r\n	S3-HRV2	S3-HRV2	18
-5	SPOT 3 HRV 1	HRV Camera 1 on the SPOT 3 Satellite\r\n	S3-HRV1	S3-HRV1	18
-4	SPOT 4 HRVIR 2	HRVIR Camera 2 on the SPOT 4 Satellite\r\n	S4-HIR2	S4-HIR2	12
-3	SPOT 4 HRVIR 1	HRVIR Camera 1 on the SPOT 4 Satellite\r\n	S4-HIR1	S4-HIR1	12
-2	SPOT 5 HRG 2	HRG Camera 2 on the SPOT 5 Satellite\r\n	S5-HRG2	S5-HRG2	4
 1	SPOT 5 HRG 1	HRG Camera 1 on the SPOT 5 Satellite\r\n	S5-HRG1	S5-HRG1	4
+2	SPOT 5 HRG 2	HRG Camera 2 on the SPOT 5 Satellite\r\n	S5-HRG2	S5-HRG2	4
+3	SPOT 4 HRVIR 1	HRVIR Camera 1 on the SPOT 4 Satellite\r\n	S4-HIR1	S4-HIR1	12
+4	SPOT 4 HRVIR 2	HRVIR Camera 2 on the SPOT 4 Satellite\r\n	S4-HIR2	S4-HIR2	12
+5	SPOT 3 HRV 1	HRV Camera 1 on the SPOT 3 Satellite\r\n	S3-HRV1	S3-HRV1	18
+6	SPOT 3 HRV 2	HRV Camera 2 on the SPOT 3 Satellite\r\n	S3-HRV2	S3-HRV2	18
+7	SPOT 2 HRV 1	HRV Camera 1 on the SPOT 2 Satellite\r\n	S2-HRV1	S2-HRV1	8
+8	SPOT 2 HRV 2	HRV Camera 2 on the SPOT 2 Satellite\r\n	S2-HRV2	S2-HRV2	8
+9	SPOT 1 HRV 1	HRV Camera 1 on the SPOT 1 Satellite\r\n	S1-HRV1	S1-HRV1	15
+10	SPOT 1 HRV 2	HRV Camera 2 on the SPOT 1 Satellite\r\n	S1-HRV2	S1-HRV2	15
+11	Landsat 1 MSS	Landsat 1 MSS\r\n	L1-MSS	L1-MSS	16
+12	Landsat 2 MSS	Landsat 2 MSS\r\n	L2-MSS	L2-MSS	21
+13	Landsat 3 MSS	Landsat 3 MSS	L3-MSS	L3-MSS	20
+14	Landsat 4 MSS	Landsat 4 MSS\r\n	L4-MSS	L4-MSS	13
+16	Landsat 5 MSS	Landsat 5 MSS\r\n	L5-MSS	L5-MSS	14
+17	Landsat 5 TM	Landsat 5 TM\r\n	L5-TM	L5-TM	7
+18	Landsat 7 ETM+	Landsat 7 ETM Plus\r\n	L7-ETM+	L7-ETM+	1
+19	ZA-2 SumbandilaSat MSI	ZA-2 SumbandilaSat MSI\r\n	ZA2-MSI	ZA2-MSI	17
+20	CBERS-2B HRCCD	CBERS-2B HRCCD\r\n	C2B-CCD	C2B-CCD	11
+21	ERS-1 AMI	ERS-1 AMI\r\n	E1-AMI	E1-AMI	3
+22	ERS-2 SMI	ERS-2 SMI\r\n	E2-AMI	E2-AMI	10
+23	SAC-C MMRS	SAC-C MMRS	SCC-MMRS	SCC-MMRS	2
+24	Landsat 8 OLI	Landsat 8 OLI	L8-OLI	L8-OLI	22
+25	Landsat 8 TIRS	Landsat 8 TIRS	L8-TIRS	L8-TIRS	23
+26	Landsat 8 OTC	Landsat 8 OLI and TIRS combined	L8-OTC	L8-OTC	24
 \.
 
 
@@ -569,7 +491,31 @@ COPY dictionaries_opticalproductprofile (id, satellite_instrument_id, spectral_m
 34	4	18
 35	7	19
 36	8	19
+37	24	36
+39	26	40
+42	25	39
 \.
+
+
+--
+-- Name: dictionaries_opticalproductprofile_id_seq; Type: SEQUENCE SET; Schema: public; Owner: dodobas
+--
+
+SELECT pg_catalog.setval('dictionaries_opticalproductprofile_id_seq', 42, true);
+
+
+--
+-- Name: dictionaries_processinglevel_id_seq; Type: SEQUENCE SET; Schema: public; Owner: dodobas
+--
+
+SELECT pg_catalog.setval('dictionaries_processinglevel_id_seq', 14, true);
+
+
+--
+-- Name: dictionaries_radarbeam_id_seq; Type: SEQUENCE SET; Schema: public; Owner: dodobas
+--
+
+SELECT pg_catalog.setval('dictionaries_radarbeam_id_seq', 1, true);
 
 
 --
@@ -582,36 +528,130 @@ COPY dictionaries_radarproductprofile (id, satellite_instrument_id, imaging_mode
 
 
 --
+-- Name: dictionaries_radarproductprofile_id_seq; Type: SEQUENCE SET; Schema: public; Owner: dodobas
+--
+
+SELECT pg_catalog.setval('dictionaries_radarproductprofile_id_seq', 1, false);
+
+
+--
+-- Name: dictionaries_referencesystem_id_seq; Type: SEQUENCE SET; Schema: public; Owner: dodobas
+--
+
+SELECT pg_catalog.setval('dictionaries_referencesystem_id_seq', 4, true);
+
+
+--
+-- Name: dictionaries_satellite_id_seq; Type: SEQUENCE SET; Schema: public; Owner: dodobas
+--
+
+SELECT pg_catalog.setval('dictionaries_satellite_id_seq', 17, true);
+
+
+--
+-- Name: dictionaries_satelliteinstrument_id_seq; Type: SEQUENCE SET; Schema: public; Owner: dodobas
+--
+
+SELECT pg_catalog.setval('dictionaries_satelliteinstrument_id_seq', 26, true);
+
+
+--
+-- Name: dictionaries_satelliteinstrumentgroup_id_seq; Type: SEQUENCE SET; Schema: public; Owner: dodobas
+--
+
+SELECT pg_catalog.setval('dictionaries_satelliteinstrumentgroup_id_seq', 24, true);
+
+
+--
+-- Name: dictionaries_scannertype_id_seq; Type: SEQUENCE SET; Schema: public; Owner: dodobas
+--
+
+SELECT pg_catalog.setval('dictionaries_scannertype_id_seq', 4, true);
+
+
+--
+-- Name: dictionaries_spectralgroup_id_seq; Type: SEQUENCE SET; Schema: public; Owner: dodobas
+--
+
+SELECT pg_catalog.setval('dictionaries_spectralgroup_id_seq', 6, true);
+
+
+--
+-- Name: dictionaries_spectralmode_id_seq; Type: SEQUENCE SET; Schema: public; Owner: dodobas
+--
+
+SELECT pg_catalog.setval('dictionaries_spectralmode_id_seq', 43, true);
+
+
+--
+-- Data for Name: dictionaries_salesregion; Type: TABLE DATA; Schema: public; Owner: dodobas
+--
+
+COPY dictionaries_salesregion (id, name, abbreviation) FROM stdin;
+1	Not applicable	N/A
+\.
+
+--
+-- Name: dictionaries_salesregion_id_seq; Type: SEQUENCE SET; Schema: public; Owner: dodobas
+--
+
+SELECT pg_catalog.setval('dictionaries_salesregion_id_seq', 2, true);
+
+
+--
+-- Data for Name: dictionaries_subsidytype; Type: TABLE DATA; Schema: public; Owner: dodobas
+--
+
+COPY dictionaries_subsidytype (id, name, abbreviation) FROM stdin;
+1	None	None
+\.
+
+--
+-- Name: dictionaries_subsidytype_id_seq; Type: SEQUENCE SET; Schema: public; Owner: dodobas
+--
+
+SELECT pg_catalog.setval('dictionaries_subsidytype_id_seq', 2, true);
+
+
+--
 -- Data for Name: dictionaries_spectralmodeprocessingcosts; Type: TABLE DATA; Schema: public; Owner: dodobas
 --
 
-COPY dictionaries_spectralmodeprocessingcosts (id, spectral_mode_id, instrumenttypeprocessinglevel_id, cost_per_scene_in_rands, foreign_currency_id, cost_per_scene_in_foreign) FROM stdin;
-1	14	14	400	\N	\N
-2	16	14	400	\N	\N
-9	1	7	2000	\N	\N
-11	4	5	2000	\N	\N
-12	15	14	400	\N	\N
-13	13	14	800	\N	\N
-4	17	11	200	\N	\N
-3	18	11	200	\N	\N
-5	19	9	200	\N	\N
-6	20	9	200	\N	\N
-14	6	4	2000	\N	\N
-15	4	6	1000	\N	\N
-16	1	8	1000	\N	\N
-17	13	15	1000	\N	\N
-18	16	15	1000	\N	\N
-19	16	16	2500	\N	\N
-20	16	17	500	\N	\N
-21	18	12	1000	\N	\N
-22	18	12	1000	\N	\N
-23	18	13	2500	\N	\N
-24	18	18	500	\N	\N
-25	20	10	1000	\N	\N
-26	19	10	1000	\N	\N
-27	19	22	2500	\N	\N
-28	19	23	500	\N	\N
+
+COPY dictionaries_spectralmodeprocessingcosts (id, spectral_mode_id, instrument_type_processing_level_id, cost_per_scene, currency_id, cost_per_square_km, minimum_square_km, sales_region_id) FROM stdin;
+1	14	14	400	\N	\N	\N	1
+2	16	14	400	\N	\N	\N	1
+3	18	11	200	\N	\N	\N	1
+4	17	11	200	\N	\N	\N	1
+5	19	9	200	\N	\N	\N	1
+6	20	9	200	\N	\N	\N	1
+9	1	7	2000	\N	\N	\N	1
+11	4	5	2000	\N	\N	\N	1
+12	15	14	400	\N	\N	\N	1
+13	13	14	800	\N	\N	\N	1
+14	6	4	2000	\N	\N	\N	1
+15	4	6	1000	\N	\N	\N	1
+16	1	8	1000	\N	\N	\N	1
+17	13	15	1000	\N	\N	\N	1
+18	16	15	1000	\N	\N	\N	1
+19	16	16	2500	\N	\N	\N	1
+20	16	17	500	\N	\N	\N	1
+21	18	12	1000	\N	\N	\N	1
+22	18	12	1000	\N	\N	\N	1
+23	18	13	2500	\N	\N	\N	1
+24	18	18	500	\N	\N	\N	1
+25	20	10	1000	\N	\N	\N	1
+26	19	10	1000	\N	\N	\N	1
+27	19	22	2500	\N	\N	\N	1
+28	19	23	500	\N	\N	\N	1
 \.
+
+
+--
+-- Name: dictionaries_spectralmodeprocessingcosts_id_seq; Type: SEQUENCE SET; Schema: public; Owner: dodobas
+--
+
+SELECT pg_catalog.setval('dictionaries_spectralmodeprocessingcosts_id_seq', 28, true);
 
 
 --

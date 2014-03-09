@@ -60,7 +60,7 @@ class OthersViews_index(TestCase):
         self.assertEqual(myResp.status_code, 200)
         # check used templates
         myExpTemplates = [
-            'index.html', u'base.html', u'pipeline/css.html',
+            'index.html', u'base.html',
             u'pipeline/css.html', u'pipeline/js.html', u'menu.html'
         ]
 
@@ -80,7 +80,7 @@ class OthersViews_index(TestCase):
             myResp.context['myPartnerFlag'], False)
         # check used templates
         myExpTemplates = [
-            'index.html', u'base.html', u'pipeline/css.html',
+            'index.html', u'base.html',
             u'pipeline/css.html', u'pipeline/js.html', u'menu.html',
             u'useraccounts/menu_content.html'
         ]

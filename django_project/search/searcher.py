@@ -55,6 +55,9 @@ class Searcher:
 
         myOPP = OpticalProductProfile.objects
 
+        # make sure we return only products which are searchable
+        myOPP = myOPP.only_searchable()
+
         # filter instrument type
         if self.mSearch.collection.count() > 0:
             myOPP = myOPP.for_collection(
@@ -70,12 +73,12 @@ class Searcher:
                 self.mSearch.satellite.values_list('pk'))
 
         # filter instrument type
-        if self.mSearch.instrumenttype.count() > 0:
+        if self.mSearch.instrument_type.count() > 0:
             myOPP = myOPP.for_instrumenttypes(
-                self.mSearch.instrumenttype)
+                self.mSearch.instrument_type)
             logger.debug(
                 'OPP filter - instrumenttype %s',
-                self.mSearch.instrumenttype.values_list('pk'))
+                self.mSearch.instrument_type.values_list('pk'))
 
         if self.mSearch.spectral_group.count() > 0:
             myOPP = myOPP.for_spectralgroup(self.mSearch.spectral_group)

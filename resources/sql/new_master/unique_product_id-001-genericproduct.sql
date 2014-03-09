@@ -10,6 +10,21 @@ BEGIN;
 
 UPDATE catalogue_genericproduct SET unique_product_id = original_product_id;
 
+-- update Sumbandilasat, ERS, SACC, CBERS to SAC_ID
+
+UPDATE catalogue_genericproduct SET
+    unique_product_id = product_id
+FROM
+  dictionaries_opticalproductprofile,
+  catalogue_opticalproduct,
+  dictionaries_spectralmode
+WHERE
+  catalogue_opticalproduct.genericsensorproduct_ptr_id = catalogue_genericproduct.id AND
+  catalogue_opticalproduct.product_profile_id = dictionaries_opticalproductprofile.id AND
+  dictionaries_spectralmode.id = dictionaries_opticalproductprofile.spectral_mode_id AND
+  catalogue_opticalproduct.product_profile_id IN (2,3,4,5,6);
+
+
 -- update SPOT5 products
 UPDATE catalogue_genericproduct SET
     unique_product_id = substring(
@@ -97,15 +112,17 @@ DELETE FROM catalogue_genericimageryproduct USING tmp_gen_prod_id
 
 DELETE FROM catalogue_genericproduct WHERE unique_product_id = '534539';
 
+-- copy unique_product_id to original_product_id and set unique_product_id to null
+UPDATE catalogue_genericproduct SET original_product_id = unique_product_id, unique_product_id=NULL;
+
 COMMIT;
 
 
 
 BEGIN;
-
-ALTER TABLE catalogue_genericproduct ALTER unique_product_id SET NOT NULL;
+ALTER TABLE catalogue_genericproduct ALTER original_product_id SET NOT NULL;
 ALTER TABLE catalogue_genericproduct
-    ADD CONSTRAINT unique_product_id UNIQUE (unique_product_id);
+    ADD CONSTRAINT original_product_id UNIQUE (original_product_id);
 
 -- drop product_id column
 ALTER TABLE catalogue_genericproduct DROP product_id CASCADE;
@@ -114,7 +131,7 @@ ALTER TABLE catalogue_genericproduct DROP product_id CASCADE;
 create view vw_usercart as SELECT
   search_searchrecord.id, search_searchrecord.order_id,
   auth_user.username,
-  catalogue_genericproduct."unique_product_id",
+  catalogue_genericproduct."original_product_id",
   catalogue_genericproduct.spatial_coverage
 FROM
   public.search_searchrecord,

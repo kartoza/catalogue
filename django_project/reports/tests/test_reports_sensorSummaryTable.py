@@ -24,7 +24,7 @@ from django.test import TestCase
 from django.test.client import Client
 
 from core.model_factories import UserF
-from catalogue.tests.model_factories import TaskingRequestF, OpticalProductF
+from catalogue.tests.model_factories import OpticalProductF
 from search.tests.model_factories import SearchF, SearchRecordF
 
 from dictionaries.tests.model_factories import (
@@ -108,7 +108,6 @@ class ReportsViews_sensorSummaryTable_Tests(TestCase):
             'instrument_type': myInstType,
             'satellite': mySatellite
         })
-        TaskingRequestF.create(**{'satellite_instrument_group': mySensor})
         SearchF.create(**{'satellites': [mySatellite]})
 
         mySatInst = SatelliteInstrumentF.create(**{
@@ -135,10 +134,6 @@ class ReportsViews_sensorSummaryTable_Tests(TestCase):
         self.assertEqual(unicode(myResp.context['mySensor']), u'ST 1 - ITOP 1')
         self.assertEqual(
             myResp.context['mySensorYearyStats'].__name__, 'sliceForDisplay')
-        self.assertEqual(
-            myResp.context['myResults']['Tasking requests for this sensor'], 1)
-        self.assertEqual(
-            myResp.context['myResults']['Tasking requests all sensors'], 1)
         self.assertEqual(
             myResp.context['myResults']['Searches for this sensor'], 1)
         self.assertEqual(

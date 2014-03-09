@@ -1,0 +1,153 @@
+{% extends "base.html" %}
+{% load compressed %}
+
+{% block extracss %}
+	{{ block.super }}
+	{% compressed_css 'orderpage' %}
+{% endblock %}
+
+{% block content %}
+  <div class="row">
+  	<div class="span12">
+  		<h2>Order details</h2>
+  	</div>
+  </div>
+  <div class="row">
+  	<div class="span8">
+  		<p><b>Order no.</b> {{ myOrder.orderNumber }}</p>
+  	</div>
+  	<div class="span4">
+  		<p><b>Status:</b> {{ myOrder.order_status.name }}
+  	</div>
+  </div>
+  <div class="row">
+  	<div class="span12">
+  		<h4>Client details</h4>
+  	</div>
+  </div>
+  <div class="row">
+  	<div class="span4">
+  		<p>
+  			<b>Full name:</b> {{ myOrder.user.first_name}} {{ myOrder.user.last_name}}
+  		</p>
+  	</div>
+  	<div class="span8">
+  		<p><b>Email:</b> {{ myOrder.user.email }}
+  	</div>
+  </div>
+  <div class="row">
+  	<div class="span4">
+  		<p>
+  			<b>Organisation:</b> {{ myOrder.user.get_profile.organisation}}
+  		</p>
+  	</div>
+  	<div class="span8">
+  		<p><b>Contact No:</b> {{ myOrder.user.get_profile.contact_no }}
+  	</div>
+  </div>
+  <div class="row">
+  	<div class="span1">
+  		<p>
+  			<b>Address:</b> 
+  		</p>
+  	</div>
+  	<div class="span11">
+  			<address>
+			  {{ myOrder.user.get_profile.address1 }}<br>
+			  {{ myOrder.user.get_profile.address2 }}<br>
+			  {{ myOrder.user.get_profile.address3 }}<br>
+			  {{ myOrder.user.get_profile.address4 }}<br>
+			  {{ myOrder.user.get_profile.post_code }}
+			</address>
+  	</div>
+  </div>
+  <div class="row">
+  	<div class="span12">
+  		<h4>Order options</h4>
+  	</div>
+  </div>
+  <div class="row">
+    <div class="span6">
+      <div class="span2">
+        Market sector
+      </div>
+      <div class="span3">
+        {{ myOrder.market_sector }}
+      </div>
+      <div class="span2">
+        Subsidy application
+      </div>
+      <div class="span3">
+        {{ myOrder.subsidy_type_requested }}
+      </div>
+      <div class="span2">
+        Subsidy type approved
+      </div>
+      <div class="span3">
+        {{ myOrder.subsidy_type_assigned }}
+      </div>
+    </div>
+    <div class="span6">
+      <div class="row">
+        <div class="span4">
+          {{ myOrder.notes }}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="span12">
+      <table class="table table-striped">
+      <thead><tr>
+        <th>Product</th>
+        <th>Cost</th>
+      </tr></thead>
+      {% for record in myRecords %}
+        <tr>
+          <td>{{ record.product_description }}</td>
+          <td>{{ record.rand_cost_per_scene }}</td>
+        </tr>
+      {% endfor %}
+      </table>
+    </div>
+  </div>
+  <div class="row">
+<div class="span12">
+  <div class="pull-right">Total cost: R {{ mySum }}</div>
+</div>
+</div>
+  <div class="row">
+  	<div class="span10">
+  		<h4>Order history</h4>
+  	</div>
+  </div>
+  <div class="row">
+  	<div class="span8">
+  		{% for myRecord in myHistory %}
+			<div class="row">
+				<div class="span4">
+					<b>Old status</b>
+					{{ myRecord.old_order_status }}</div>
+				<div class="span4">
+					<b>New status</b>
+					{{ myRecord.new_order_status }}</div>
+			</div>
+			<div class="row">
+				<div class="span2">
+					<b>{{ myRecord.user }} notes:</b>
+				</div>
+				<div class="span6">
+					{{ myRecord.notes }}
+				</div>
+			</div>
+		{% endfor %}
+  	</div>
+  </div>
+
+{% endblock %}
+
+{% block extrajs %}
+  {{ block.super }}
+  {% compressed_js 'orderpage' %}
+
+{% endblock %}

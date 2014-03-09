@@ -38,12 +38,11 @@ from dictionaries.models import (
     OpticalProductProfile,
     InstrumentType,
     Satellite,
-    SatelliteInstrumentGroup)
-
-from catalogue.models import (
-    OpticalProduct,
     Projection,
-    Quality)
+    SatelliteInstrumentGroup,
+    Quality
+)
+from catalogue.models import OpticalProduct
 
 
 def parse_date_time(theDate):

@@ -3,7 +3,7 @@ from .dev import *
 DATABASES = {
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': 'sac_november',
+        'NAME': 'sac_db',
         'USER': 'dodobas',
         'PASSWORD': '',
         'HOST': '',

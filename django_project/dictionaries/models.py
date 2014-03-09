@@ -56,6 +56,11 @@ class OpticalProductProfileQuerySet(QuerySet):
         return self.filter(
             spectral_mode__spectralgroup__in=theSpectralgroup.all())
 
+    def only_searchable(self):
+        return self.filter(
+            satellite_instrument__satellite_instrument_group__instrument_type__is_searchable=True
+        )
+
 
 class OpticalProductProfile(models.Model):
     """
@@ -154,6 +159,7 @@ class RadarProductProfile(models.Model):
         """Meta class implementation."""
         ordering = ['satellite_instrument', 'imaging_mode']
 
+
 class ProcessingLevel(models.Model):
     """
     Available ProcessingLevels, e.g. L1, L1A, ...
@@ -174,6 +180,7 @@ class ProcessingLevel(models.Model):
         """Meta class implementation."""
         ordering = ['abbreviation']
 
+
 class Collection(models.Model):
     """Collection of satellites managed by a single operator."""
 
@@ -187,7 +194,7 @@ class Collection(models.Model):
     institution = models.ForeignKey(
         # NOTE: when referencing models in another application we need ti
         # specify a model with the full application label
-        'catalogue.Institution',
+        'Institution',
         help_text='Organisation that owns this satellite collection.')
 
     def __unicode__(self):
@@ -196,6 +203,7 @@ class Collection(models.Model):
     class Meta:
         """Meta class implementation."""
         ordering = ['name']
+
 
 class Satellite(models.Model):
     """Satellite e.g. SPOT5 - a real satellite in the sky."""
@@ -208,7 +216,9 @@ class Satellite(models.Model):
     operator_abbreviation = models.CharField(
         max_length=255, unique=True,
         help_text=(
-            'Satellite abbreviation as named by satellite owning institution.'))
+            'Satellite abbreviation as named by satellite owning institution.'
+        )
+    )
     #image = models.ImageField()
     collection = models.ForeignKey(Collection)
     launch_date = models.DateField(
@@ -223,14 +233,14 @@ class Satellite(models.Model):
     orbit = models.TextField(
         blank=True, null=True,
         help_text='Satellite orbit description')
-    revist_time_days = models.IntegerField(
+    revisit_time_days = models.IntegerField(
         blank=True, null=True,
         help_text='Days elapsed between observations of the same point')
     reference_url = models.URLField(
         blank=True, null=True,
         help_text='Satellite mission URL')
     license_type = models.ForeignKey(
-        'catalogue.License',
+        'License',
         help_text='Satellite product license type')
 
     def __unicode__(self):
@@ -240,6 +250,7 @@ class Satellite(models.Model):
     class Meta:
         """Meta class implementation."""
         ordering = ['name']
+
 
 class ScannerType(models.Model):
     """Scanner type for the instrument type e.g. Pushbroom"""
@@ -278,14 +289,20 @@ class InstrumentType(models.Model):
         default=False,
         help_text='Can this sensor be tasked?'
     )
+    is_searchable = models.BooleanField(
+        default=True,
+        help_text='Can this sensor be searched?'
+    )
     scanner_type = models.ForeignKey(ScannerType)
     base_processing_level = models.ForeignKey(
         ProcessingLevel,
+        blank=True, null=True,
         related_name='base_processing_level',
         help_text=('Processing level as provided by the ground station as '
                    '"raw data".'))
     default_processing_level = models.ForeignKey(
         ProcessingLevel,
+        blank=True, null=True,
         related_name='default_processing_level',
         help_text=('Default processing level that will be supplied to '
                    'customers.'))
@@ -340,6 +357,7 @@ class InstrumentType(models.Model):
         """Meta class implementation."""
         ordering = ['name']
 
+
 class RadarBeam(models.Model):
     """
     Only for Radar products
@@ -366,6 +384,7 @@ class RadarBeam(models.Model):
     class Meta:
         """Meta class implementation."""
         ordering = ['instrument_type']
+
 
 class ImagingMode(models.Model):
     """
@@ -408,6 +427,7 @@ class ImagingMode(models.Model):
     class Meta:
         """Meta class implementation."""
         ordering = ['name']
+
 
 class SatelliteInstrumentGroup(models.Model):
     """Satellite instrument group - an instrument as deployed on a satellite.
@@ -467,6 +487,7 @@ class SatelliteInstrumentGroup(models.Model):
             'satellite',
             'instrument_type'
         )
+        ordering = ['satellite', 'instrument_type']
 
     def __unicode__(self):
         return u'{0} - {1}'.format(
@@ -491,9 +512,6 @@ GROUP BY extract(YEAR from gp.product_date)
 ORDER BY year ASC;""", {'sensor_pk': self.pk})
         return myStats
 
-    class Meta:
-        """Meta class implementation."""
-        ordering = ['satellite', 'instrument_type']
 
 class SatelliteInstrument(models.Model):
     """Satellite instrument - a specific instrument as deployed on a satellite.
@@ -575,6 +593,7 @@ class SpectralGroup(models.Model):
         """Meta class implementation."""
         ordering = ['abbreviation', 'name']
 
+
 class SpectralMode(models.Model):
     """
     A specific spectral mode for of an instrument type
@@ -604,14 +623,11 @@ class BandSpectralMode(models.Model):
 
     class Meta:
         unique_together = (('band', 'spectral_mode'),)
+        ordering = ['band', 'spectral_mode']
 
     def __unicode__(self):
         return u'{0} ({1})'.format(
             self.band.band_name, self.spectral_mode.name)
-
-    class Meta:
-        """Meta class implementation."""
-        ordering = ['band', 'spectral_mode']
 
 
 class InstrumentTypeProcessingLevel(models.Model):
@@ -619,7 +635,7 @@ class InstrumentTypeProcessingLevel(models.Model):
     Relation between ProcessingLevel and InstrumentType
     """
     instrument_type = models.ForeignKey(InstrumentType)
-    processinglevel = models.ForeignKey(ProcessingLevel)
+    processing_level = models.ForeignKey(ProcessingLevel)
     operator_processing_level_name = models.CharField(
         max_length=50,
         help_text='Operator original processing level name'
@@ -631,11 +647,11 @@ class InstrumentTypeProcessingLevel(models.Model):
 
     def __unicode__(self):
         return u'{0} - {1}'.format(
-            self.instrument_type.name, self.processinglevel.abbreviation)
+            self.instrument_type.name, self.processing_level.abbreviation)
 
     class Meta:
         """Meta class implementation."""
-        ordering = ['instrument_type', 'processinglevel']
+        ordering = ['instrument_type', 'processing_level']
 
 
 class SpectralModeProcessingCosts(models.Model):
@@ -643,29 +659,38 @@ class SpectralModeProcessingCosts(models.Model):
     Processing costs for specific processing level per spectral mode
     """
     spectral_mode = models.ForeignKey(SpectralMode)
-    instrumenttypeprocessinglevel = models.ForeignKey(
+    instrument_type_processing_level = models.ForeignKey(
         InstrumentTypeProcessingLevel
     )
-    cost_per_scene_in_rands = models.FloatField(
-        help_text='Cost per scene in ZAR (rands)'
+    cost_per_scene = models.DecimalField(
+        help_text='Cost per scene', max_digits=10, decimal_places=2
     )
-    foreign_currency = models.ForeignKey(
-        'ForeignCurrency',
+    cost_per_square_km = models.DecimalField(
+        help_text='Cost per square kilometre',
+        null=True, blank=True, max_digits=10, decimal_places=2
+    )
+    currency = models.ForeignKey(
+        'exchange.Currency',
         null=True, blank=True
     )
-    cost_per_scene_in_foreign = models.FloatField(
-        null=True, blank=True,
-        help_text='Cost per scene in foreign currency'
+    minimum_square_km = models.FloatField(
+        help_text=(
+            'Minimum number of square kilometers that can be ordered for a'
+            'price of per kilometer'
+        ),
+        null=True, blank=True
     )
+    sales_region = models.ForeignKey('SalesRegion', default=1)
 
     def __unicode__(self):
-        return u'{0} ZAR ({1} - {2})'.format(
-            self.cost_per_scene_in_rands,
-            self.spectral_mode.name, self.instrumenttypeprocessinglevel)
+        return u'{0} {1} ({2} - {3})'.format(
+            self.cost_per_scene,
+            self.currency.code,
+            self.spectral_mode.name, self.instrument_type_processing_level)
 
     class Meta:
         """Meta class implementation."""
-        ordering = ['spectral_mode', 'instrumenttypeprocessinglevel']
+        ordering = ['spectral_mode', 'instrument_type_processing_level']
 
 
 class ReferenceSystem(models.Model):
@@ -686,21 +711,161 @@ class ReferenceSystem(models.Model):
         ordering = ['name']
 
 
-class ForeignCurrency(models.Model):
+class Projection(models.Model):
     """
-    Foreign currency lookup table
+    A dictionary to define Product Projection, e.g. 32737, UTM37S
+    """
 
-    conversion_rate: 1.00 unit in ZAR (i.e. 1.00 USD = 8.8634 ZAR)
+    epsg_code = models.IntegerField(unique=True)
+    name = models.CharField('Name', max_length=128, unique=True)
+
+    def __unicode__(self):
+        return 'EPSG: %s %s' % (str(self.epsg_code), self.name)
+
+    class Meta:
+        verbose_name = 'Projection'
+        verbose_name_plural = 'Projections'
+        ordering = ('epsg_code', 'name')
+
+
+class Institution(models.Model):
     """
-    abbreviation = models.CharField(max_length=20)
+    A dictionary to define Product Institution, e.g. SANSA, ESA
+    """
+
     name = models.CharField(max_length=255, unique=True)
-    conversion_rate = models.FloatField(
-        null=True, blank=True,
-        help_text='Conversion rate for 1.00 unit in ZAR')
+    address1 = models.CharField(max_length=255)
+    address2 = models.CharField(max_length=255)
+    address3 = models.CharField(max_length=255)
+    post_code = models.CharField(max_length=255)
+
+    def __unicode__(self):
+        return self.name
+
+
+class License(models.Model):
+    """
+    Licenses for Products, e.g. SANSA Free License.
+    """
+
+    LICENSE_TYPE_FREE = 1
+    LICENSE_TYPE_GOVERNMENT = 2
+    LICENSE_TYPE_COMMERCIAL = 3
+
+    LICENSE_TYPE_CHOICES = (
+        (LICENSE_TYPE_FREE, 'Free'),
+        (LICENSE_TYPE_GOVERNMENT, 'Government'),
+        (LICENSE_TYPE_COMMERCIAL, 'Commercial'),
+    )
+
+    name = models.CharField(max_length=255, unique=True)
+    details = models.TextField()
+    type = models.IntegerField(
+        choices=LICENSE_TYPE_CHOICES, default=LICENSE_TYPE_COMMERCIAL)
+
+    def __unicode__(self):
+        return self.name
+
+
+class Quality(models.Model):
+    """
+    A dictionary to define Product Quality, e.g. Unknown
+    """
+
+    name = models.CharField(max_length="255", unique=True)
 
     def __unicode__(self):
         return self.name
 
     class Meta:
-        """Meta class implementation."""
-        ordering = ['name']
+        verbose_name = 'Quality'
+        verbose_name_plural = 'Qualities'
+
+
+class Topic(models.Model):
+    """
+    A dictionary to define geospatial dataset topics e.g. LANDUSE, ROADS etc.
+    """
+
+    abbreviation = models.CharField(max_length=10, unique=True, null=False)
+    name = models.CharField(max_length=255, unique=True, null=False)
+
+    def __unicode__(self):
+        return self.name
+
+
+class PlaceType(models.Model):
+    """
+    A dictionary to define place types e.g. Global, Continent, Region,
+    Country, Province, City etc.
+    """
+
+    name = models.CharField(max_length=255, unique=True, null=False)
+
+    def __unicode__(self):
+        return self.name
+
+
+class Place(models.Model):
+    """
+    A collection on named places based largely on geonames (which all get a
+    place type of Nearest named place)
+    """
+
+    name = models.CharField(max_length=255, null=False)
+    place_type = models.ForeignKey(
+        'dictionaries.PlaceType', help_text='Type of place')
+    geometry = models.PointField(
+        srid=4326, help_text='Place geometry', null=False)
+
+    objects = models.GeoManager()
+
+    def __unicode__(self):
+        return self.name
+
+
+class Unit(models.Model):
+    """
+    A dictionary to define unit types e.g. m, km etc.
+    """
+
+    abbreviation = models.CharField(max_length=10, unique=True, null=False)
+    name = models.CharField(max_length=255, unique=True, null=False)
+
+    def __unicode__(self):
+        return self.name
+
+
+class SalesRegion(models.Model):
+    """
+    A dictionary for sales region information
+    """
+    name = models.CharField(
+        max_length=50, help_text='Full name of a sales region')
+    abbreviation = models.CharField(max_length=4)
+
+    def __unicode__(self):
+        return self.abbreviation
+
+
+class SubsidyType(models.Model):
+    """
+    A dictionary for subsidy types
+    """
+    name = models.CharField(
+        max_length=50, help_text='Full name of a subsidy type')
+    abbreviation = models.CharField(max_length=10)
+
+    def __unicode__(self):
+        return self.abbreviation
+
+
+class ProductProcessState(models.Model):
+    """
+    A dictionary for product process states
+    """
+    name = models.CharField(
+        max_length=30, help_text='Full name of a product process state')
+
+    def __unicode__(self):
+        return self.name

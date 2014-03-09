@@ -19,19 +19,15 @@ __copyright__ = 'South African National Space Agency'
 
 from django.test import TestCase
 
-from catalogue.models import License
-
 from ..models import (
     OpticalProductProfile, Collection, InstrumentType, Satellite,
-    SpectralGroup
+    SpectralGroup, License
 )
-
-from catalogue.tests.model_factories import LicenseF
 
 from .model_factories import (
     OpticalProductProfileF, SatelliteInstrumentF, SpectralModeF,
     InstrumentTypeF, ProcessingLevelF, SatelliteInstrumentGroupF, SatelliteF,
-    CollectionF, SpectralGroupF
+    CollectionF, SpectralGroupF, LicenseF
 )
 
 
@@ -314,5 +310,34 @@ class TestOpticalProductProfileCRUD(TestCase):
         mySpecGroup = SpectralGroup.objects.filter(pk=1)
 
         myResult = OpticalProductProfile.objects.for_spectralgroup(mySpecGroup)
+
+        self.assertEqual(myResult.count(), 1)
+
+    def test_OpticalProductProfile_QuerySet_only_searchable(self):
+        """
+        Tests OpticalProductProfile model QuerySet only_searchable
+        """
+
+        # is_searchable is by default True, so we can create a random OPP
+        OpticalProductProfileF()
+
+        # prepare a control object, which should not be included in results
+        instrumenttype_1 = InstrumentTypeF(**{
+            'id': 1,
+            'is_searchable': False
+        })
+
+        satelliteinstrumentgroup_1 = SatelliteInstrumentGroupF(**{
+            'id': 1, u'instrument_type': instrumenttype_1
+        })
+        satelliteinstrument_1 = SatelliteInstrumentF(**{
+            'id': 1, u'satellite_instrument_group': satelliteinstrumentgroup_1
+        })
+
+        OpticalProductProfileF(**{
+            'id': 1, u'satellite_instrument': satelliteinstrument_1
+        })
+
+        myResult = OpticalProductProfile.objects.only_searchable()
 
         self.assertEqual(myResult.count(), 1)

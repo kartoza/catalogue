@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% load compressed %}
+
+{% block extracss %}
+	{{ block.super }}
+	{% compressed_css 'orderpage' %}
+{% endblock %}
+
+{% block content%}
+  <div class="row">
+  	<div class="span12">
+  		<h2>Order</h2>
+  	</div>
+  </div>
+  <form enctype="multipart/form-data" action="" method="post" accept-charset="utf-8" class="form-horizontal" id="order-form">
+  	{% csrf_token %}
+  	<div class="row">
+		<div class="span6">
+			<div class="control-group">
+				<label class="control-label" for="{{ myOrderForm.market_sector.auto_id }}">{{ myOrderForm.market_sector.label }}</label>
+				<div class="controls">
+					{{ myOrderForm.market_sector }}
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="{{ myOrderForm.subsidy_type_requested.auto_id }}">{{ myOrderForm.subsidy_type_requested.label }}</label>
+				<div class="controls">
+					{{ myOrderForm.subsidy_type_requested }}
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" for="{{ myOrderForm.subsidy_type_assigned.auto_id }}">{{ myOrderForm.subsidy_type_assigned.label }}</label>
+				<div class="controls">
+					{{ myOrderForm.subsidy_type_assigned }}
+				</div>
+			</div>
+			<div class="control-group" id="user_div">
+				<label class="control-label" for="{{ myOrderForm.user.auto_id }}">{{ myOrderForm.user.label }}</label>
+				<div class="controls">
+					{{ myOrderForm.user }}
+				</div>
+			</div>
+		</div>
+		<div class="span6">
+			<div class="control-group">
+				<label class="control-label" for="{{ myOrderForm.notes.auto_id }}">{{ myOrderForm.notes.label }}</label>
+				<div class="controls">
+					{{ myOrderForm.notes }}
+				</div>
+			</div>
+		</div>
+	</div>
+  <div class="row">
+	<div class="span12">
+		<table class="table table-striped" id="nonsearchWidget">
+		</table>
+	</div>
+  </div>
+  <div class="row">
+	<div class="span12">
+		<button class="btn submit" type="button" id="submitForm">Submit</button>
+	</div>
+  </div>
+  </form>
+{% endblock %}
+
+{% block extrajs %}
+  {{ block.super }}
+  {% compressed_js 'orderpage' %}
+  <script>
+  	{% autoescape  off %}
+  		var currencies = $.parseJSON('{{ myCurrency }}');
+  	{% endautoescape %}
+  	$( document ).ready(function() {
+  		$('#nonsearchWidget').nonSearchRecordsTable({ 'currency': currencies });
+
+  		$('#submitForm').click(function() {
+  			if ($('#id_user').val() == "") {
+  				$('#user_div').addClass('error');
+  				return
+  			}
+  			$('#order-form').submit();
+  		});
+
+  	});
+  </script>
+{% endblock %}

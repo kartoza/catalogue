@@ -96,7 +96,7 @@ class OthersViews_showProduct_Tests(TestCase):
 
         # check used templates
         myExpTemplates = [
-            'productView.html', u'base.html', u'pipeline/css.html',
+            'productView.html', u'base.html',
             u'pipeline/css.html', u'pipeline/js.html', u'menu.html',
             u'useraccounts/menu_content.html',
             'productTypes/opticalProduct.html',

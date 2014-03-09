@@ -18,6 +18,7 @@ __date__ = '01/01/2011'
 __copyright__ = 'South African National Space Agency'
 
 from django.contrib.gis import admin
+from django import forms
 
 from .models import (
     ProcessingLevel,
@@ -37,8 +38,15 @@ from .models import (
     SpectralModeProcessingCosts,
     OpticalProductProfile,
     RadarProductProfile,
+    ReferenceSystem,
+    Projection, 
+    Institution, 
+    License, 
+    Quality, 
+    SalesRegion, 
+    SubsidyType,
+    ProductProcessState,
     ForeignCurrency,
-    ReferenceSystem
 )
 
 
@@ -59,11 +67,10 @@ admin.site.register(Collection, CollectionAdmin)
 
 
 class SatelliteAdmin(admin.ModelAdmin):
-    search_fields = [
-        'name', 'abbreviation', 'operator_abbreviation', 'description']
+    search_fields = ['name', 'abbreviation', 'description']
     list_filter = [
         'launch_date',
-        'revist_time_days',
+        'revisit_time_days',
         'status',
         'license_type']
     list_display = ['name', 'abbreviation', 'description']
@@ -76,12 +83,45 @@ class ScannerTypeAdmin(admin.ModelAdmin):
 admin.site.register(ScannerType, ScannerTypeAdmin)
 
 
+class InstrumentTypeAdminForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(InstrumentTypeAdminForm, self).__init__(*args, **kwargs)
+
+        # override default RelatedModelSelect widgets to disable 'Add new'
+        # which would allow to add processing levels on a whim
+        self.fields['base_processing_level'].widget = forms.Select()
+        self.fields['default_processing_level'].widget = forms.Select()
+
+        if self.instance.pk is not None:
+            # limit available ProcessingLevels to ones defined in the ITPL
+            # (InstrumentTypeProcessingLevel) model
+            procLvlQueryset = ProcessingLevel.objects.filter(
+                instrumenttypeprocessinglevel__instrument_type=self.instance.pk
+            )
+
+            self.fields['base_processing_level'].queryset = procLvlQueryset
+
+            self.fields['default_processing_level'].queryset = procLvlQueryset
+        else:
+            # in the case we are creating new InstrumentType, show no options
+            # user must first add records to the InstrumentTypeProcessingLevel
+            # model
+            self.fields['base_processing_level'].queryset = (
+                ProcessingLevel.objects.none()
+            )
+            self.fields['default_processing_level'].queryset = (
+                ProcessingLevel.objects.none()
+            )
+
+
 class InstrumentTypeAdmin(admin.ModelAdmin):
+    form = InstrumentTypeAdminForm
     search_fields = ['name', 'abbreviation', 'description']
     list_display = [
         'name',
         'abbreviation',
         'description',
+        'is_searchable',
         'is_radar',
         'band_count',
         'pixel_size_list_m',
@@ -163,10 +203,10 @@ admin.site.register(BandSpectralMode, BandSpectralModeAdmin)
 
 
 class InstrumentTypeProcessingLevelAdmin(admin.ModelAdmin):
-    list_filter = ['instrument_type', 'processinglevel']
+    list_filter = ['instrument_type', 'processing_level']
     list_display = [
         'instrument_type',
-        'processinglevel',
+        'processing_level',
         'operator_processing_level_name',
         'operator_processing_level_abbreviation']
 admin.site.register(
@@ -207,3 +247,52 @@ class ReferenceSystemAdmin(admin.ModelAdmin):
     search_fields = ['name', 'description']
     list_display = ['abbreviation', 'name', 'description']
 admin.site.register(ReferenceSystem, ReferenceSystemAdmin)
+
+
+class ProjectionAdmin(admin.GeoModelAdmin):
+    search_fields = ['name']
+    list_filter = ['name']
+    list_display = ('name',)
+admin.site.register(Projection, ProjectionAdmin)
+
+
+class InstitutionAdmin(admin.GeoModelAdmin):
+    search_fields = ['name']
+    list_filter = ['name']
+    list_display = ('name',)
+admin.site.register(Institution, InstitutionAdmin)
+
+
+class LicenseAdmin(admin.GeoModelAdmin):
+    search_fields = ['name']
+    list_filter = ['name']
+    list_display = ('name',)
+admin.site.register(License, LicenseAdmin)
+
+
+class QualityAdmin(admin.GeoModelAdmin):
+    search_fields = ['name']
+    list_filter = ['name']
+    list_display = ('name',)
+admin.site.register(Quality, QualityAdmin)
+
+
+class SalesRegionAdmin(admin.GeoModelAdmin):
+    search_fields = ['name']
+    list_filter = ['name']
+    list_display = ('name',)
+admin.site.register(SalesRegion, SalesRegionAdmin)
+
+
+class SubsidyTypeAdmin(admin.GeoModelAdmin):
+    search_fields = ['name']
+    list_filter = ['name']
+    list_display = ('name',)
+admin.site.register(SubsidyType, SubsidyTypeAdmin)
+
+
+class ProductProcessStateAdmin(admin.GeoModelAdmin):
+    search_fields = ['name']
+    list_filter = ['name']
+    list_display = ('name',)
+admin.site.register(ProductProcessState, ProductProcessStateAdmin)

@@ -260,9 +260,9 @@ def update_git_checkout(branch='master'):
     """
     _all()
     git.update_git_checkout(
-        env.code_path, env.webdir, env.repo_alias, branch=branch)
+        env.webdir, env.git_url, env.repo_alias, branch=branch)
     #run('./runcollectstatic.sh')
-    wsgi_file = 'django_project/core/wsgi.py'
+    wsgi_file = '%s/django_project/core/wsgi.py' % env.code_path
     run('touch %s' % wsgi_file)
 
 ###############################################################################

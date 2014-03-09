@@ -25,14 +25,21 @@ from datetime import datetime
 from django.test import TestCase
 
 from dictionaries.tests.model_factories import (
-    OpticalProductProfileF, SatelliteInstrumentF, ProcessingLevelF,
-    SpectralModeF, InstrumentTypeF, SatelliteF, SatelliteInstrumentGroupF,
-    CollectionF
+    OpticalProductProfileF,
+    SatelliteInstrumentF,
+    ProcessingLevelF,
+    SpectralModeF,
+    InstrumentTypeF,
+    SatelliteF,
+    SatelliteInstrumentGroupF,
+    CollectionF,
+    ProjectionF,
+    InstitutionF,
+    QualityF,
+    InstrumentTypeProcessingLevelF
 )
 
-from .model_factories import (
-    OpticalProductF, ProjectionF, QualityF, InstitutionF
-)
+from .model_factories import OpticalProductF
 
 
 class OpticalProductCRUD_Test(TestCase):
@@ -295,3 +302,101 @@ class OpticalProductCRUD_Test(TestCase):
 
         myRes = myModel.productDirectory()
         self.assertEqual(myRes, myExpResult)
+
+    def test_OpticalProduct_availableProcessingLevels(self):
+        """
+        Test OpticalProduct availableProcessingLevels method
+        """
+
+        myProcLevel = ProcessingLevelF.create(**{
+            'abbreviation': 'L1A'
+        })
+
+        myOtherProcLevel = ProcessingLevelF.create(**{
+            'abbreviation': 'L5X'
+        })
+
+        myInsType = InstrumentTypeF.create(**{
+            'base_processing_level': myProcLevel
+        })
+
+        # connect processing levels to the instrument type
+        InstrumentTypeProcessingLevelF.create(**{
+            'instrument_type': myInsType,
+            'processing_level': myProcLevel
+        })
+
+        InstrumentTypeProcessingLevelF.create(**{
+            'instrument_type': myInsType,
+            'processing_level': myOtherProcLevel
+        })
+        # a dummy InstrumentTypeProcessingLevel
+        InstrumentTypeProcessingLevelF.create()
+
+        mySat = SatelliteF.create(**{
+            'abbreviation': 'mySAT'
+        })
+
+        mySatInstGroup = SatelliteInstrumentGroupF.create(**{
+            'satellite': mySat,
+            'instrument_type': myInsType
+        })
+
+        mySatInst = SatelliteInstrumentF.create(**{
+            'operator_abbreviation': 'SATIN 1',
+            'satellite_instrument_group': mySatInstGroup
+        })
+
+        myOPP = OpticalProductProfileF.create(**{
+            u'satellite_instrument': mySatInst
+        })
+
+        myModel = OpticalProductF.create(**{
+            'product_profile': myOPP
+        })
+
+        # availableProcessingLevels method will return a QuerySet so we need
+        # to convert it to the list for comparison
+        self.assertEqual(
+            list(myModel.availableProcessingLevels()),
+            [myProcLevel, myOtherProcLevel]
+        )
+
+    def test_OpticalProduct_productName(self):
+        """
+        Test OpticalProduct productName method
+        """
+
+        myInsType = InstrumentTypeF.create(**{
+            'abbreviation': 'HRF'
+        })
+
+        mySat = SatelliteF.create(**{
+            'abbreviation': 'L5'
+        })
+
+        mySatInstGroup = SatelliteInstrumentGroupF.create(**{
+            'satellite': mySat,
+            'instrument_type': myInsType
+        })
+
+        mySatInst = SatelliteInstrumentF.create(**{
+            'satellite_instrument_group': mySatInstGroup
+        })
+
+        mySpecMode = SpectralModeF.create(**{
+            'abbreviation': 'TM'
+        })
+
+        myOPP = OpticalProductProfileF.create(**{
+            u'satellite_instrument': mySatInst,
+            u'spectral_mode': mySpecMode
+        })
+
+        myModel = OpticalProductF.create(**{
+            'product_profile': myOPP,
+            'path': 135,
+            'row': 78
+        })
+        # satellite instrument_type path row spectral_mode
+        self.assertEqual(myModel.productName(), u'L5 HRF 135 078 TM')

@@ -70,6 +70,7 @@ class TestInstrumentTypeCRUD(TestCase):
             'operator_abbreviation': 'OPNTY 1',
             'is_radar': False,
             'is_taskable': False,
+            'is_searchable': False,
             'scanner_type': myScannerType,
             'base_processing_level': myProcLevel,
             'default_processing_level': myProcLevel,
@@ -89,6 +90,8 @@ class TestInstrumentTypeCRUD(TestCase):
         self.assertEqual(myModel.is_radar, False)
 
         self.assertEqual(myModel.is_taskable, False)
+
+        self.assertEqual(myModel.is_searchable, False)
 
         self.assertEqual(myModel.scanner_type.abbreviation, 'NST1')
 
@@ -123,6 +126,7 @@ class TestInstrumentTypeCRUD(TestCase):
             'operator_abbreviation': 'OPNTY 1',
             'is_radar': False,
             'is_taskable': False,
+            'is_searchable': False,
             'swath_optical_km': 20,
             'band_count': 3
         })
@@ -144,6 +148,8 @@ class TestInstrumentTypeCRUD(TestCase):
         self.assertEqual(myModel.is_radar, False)
 
         self.assertEqual(myModel.is_taskable, False)
+
+        self.assertEqual(myModel.is_searchable, False)
 
         self.assertEqual(myModel.scanner_type.abbreviation, 'NST1')
 

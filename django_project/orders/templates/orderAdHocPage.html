@@ -1,0 +1,185 @@
+{% extends "base.html" %}
+{% load compressed %}
+
+{% block extracss %}
+	{{ block.super }}
+	{% compressed_css 'orderpage' %}
+{% endblock %}
+
+{% block content %}
+  <div class="row">
+  	<div class="span12">
+  		<h2>Order details</h2>
+  	</div>
+  </div>
+  <div class="row">
+  	<div class="span8">
+  		<p><b>Order no.</b> {{ myOrder.orderNumber }}</p>
+  	</div>
+  	<div class="span4">
+  		<p><b>Status:</b> {{ myOrder.order_status.name }}
+  	</div>
+  </div>
+  <div class="row">
+  	<div class="span12">
+  		<h4>Client details</h4>
+  	</div>
+  </div>
+  <div class="row">
+  	<div class="span4">
+  		<p>
+  			<b>Full name:</b> {{ myOrder.user.first_name}} {{ myOrder.user.last_name}}
+  		</p>
+  	</div>
+  	<div class="span8">
+  		<p><b>Email:</b> {{ myOrder.user.email }}
+  	</div>
+  </div>
+  <div class="row">
+  	<div class="span4">
+  		<p>
+  			<b>Organisation:</b> {{ myOrder.user.get_profile.organisation}}
+  		</p>
+  	</div>
+  	<div class="span8">
+  		<p><b>Contact No:</b> {{ myOrder.user.get_profile.contact_no }}
+  	</div>
+  </div>
+  <div class="row">
+  	<div class="span1">
+  		<p>
+  			<b>Address:</b> 
+  		</p>
+  	</div>
+  	<div class="span11">
+  			<address>
+			  {{ myOrder.user.get_profile.address1 }}<br>
+			  {{ myOrder.user.get_profile.address2 }}<br>
+			  {{ myOrder.user.get_profile.address3 }}<br>
+			  {{ myOrder.user.get_profile.address4 }}<br>
+			  {{ myOrder.user.get_profile.post_code }}
+			</address>
+  	</div>
+  </div>
+  <div class="row">
+  	<div class="span12">
+  		<h4>Order options</h4>
+  	</div>
+  </div>
+  {% include "orderFormAdHoc.html" %}
+  <div class="row">
+  	<div class="span10">
+  		<h4>Order history</h4>
+  	</div>
+  	<div class="span2">
+  		<button type="button" id="statusFormBtn" class="btn">Update status</button>
+  	</div>
+  </div>
+  <div class="row">
+  	<div class="span8">
+  		{% for myRecord in myHistory %}
+			<div class="row">
+				<div class="span4">
+					<b>Old status</b>
+					{{ myRecord.old_order_status }}</div>
+				<div class="span4">
+					<b>New status</b>
+					{{ myRecord.new_order_status }}</div>
+			</div>
+			<div class="row">
+				<div class="span2">
+					<b>{{ myRecord.user }} notes:</b>
+				</div>
+				<div class="span6">
+					{{ myRecord.notes }}
+				</div>
+			</div>
+		{% endfor %}
+  	</div>
+  	<div class="span4">
+  		<div class="row hide" id="statusForm">
+  		<form id="updateStatusForm" method="POST">
+	  		<div class="span4">
+	  			<b>New status: </b>
+	  			{{ myStatusForm.new_order_status }}
+	  		</div>
+	  		<div class="span1">
+	  			<b>Notes: </b>
+	  		</div>
+	  		<div class="span3">
+	  			{{ myStatusForm.notes }}
+	  		</div>
+	  		<div class="span4">
+	  			<button type="submit" id="statusUpdate" class="btn">Set</button>
+	  		</div>
+	  	</form>
+  		</div>
+  	</div>
+  </div>
+
+{% endblock %}
+
+{% block extrajs %}
+  {{ block.super }}
+  {% compressed_js 'orderpage' %}
+  <script>
+  	var datachanged = false;
+	{% autoescape  off %}
+  		var currencies = $.parseJSON('{{ myCurrency }}');
+  		var records = {};
+
+  		{% for record in myRecords %}
+        records['{{ record.id }}'] = {
+          'desc': '{{ record.product_description }}',
+          'id': '{{ record.id }}',
+          'price': '{{ record.cost_per_scene }}',
+          'currency': '{{ record.currency }}',
+          'rand_price': '{{ record.rand_cost_per_scene }}',
+    	};
+      	{% endfor %}
+  	{% endautoescape %}
+  	$( document ).ready(function() {
+  		$('#nonsearchWidget').nonSearchRecordsTable({ 'currency': currencies , 'records': records});
+
+  		$('#submitForm').click(function() {
+  			if ($('#id_user').val() == "") {
+  				$('#user_div').addClass('error');
+  				return
+  			}
+  			datachanged = false;
+  			$('#order-form').submit();
+  		});
+
+  		$('#statusFormBtn').click(function() {
+			var btn = $(this);
+			var div = $('#statusForm')
+			if (div.hasClass('hide')) {
+				div.removeClass('hide');
+				btn.html('Hide');
+			} else {
+				div.addClass('hide');
+				btn.html('Update status')
+			}
+		});
+
+		$('#updateStatusForm').ajaxForm({
+			url: '/updateorderhistory/',
+			data: { order: '{{ myOrder.id }}' },
+			success: function() {
+		        location.reload();
+		    },
+		    error: function() {
+		    	alert('There has been an error!')
+		    }
+		});
+
+		var warning = 'You have unsaved edits.';
+
+		window.onbeforeunload = function warn() {
+			if (datachanged) {
+			  	return warning;
+			}
+		};
+  	});
+  </script>
+{% endblock %}

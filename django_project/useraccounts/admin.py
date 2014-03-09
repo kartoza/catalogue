@@ -3,7 +3,7 @@ from django.contrib.gis import admin
 from .models import SansaUserProfile
 
 
-class SansaUserProfileAdmin (admin.GeoModelAdmin):
+class SansaUserProfileAdmin(admin.GeoModelAdmin):
     list_display = (
         'user', 'first_name', 'last_name', 'strategic_partner',)
     list_filter = ('strategic_partner', )

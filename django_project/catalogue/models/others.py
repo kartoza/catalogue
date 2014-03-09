@@ -21,14 +21,11 @@ from django.contrib.gis.db import models
 
 #for user id foreign keys
 from django.contrib.auth.models import User
-from django.contrib.contenttypes.models import ContentType
 
 from offline_messages.models import OfflineMessage
 from offline_messages.utils import create_offline_message, constants
 
-
 from catalogue.dbhelpers import executeRAWSQL
-from catalogue.models.products import GenericSensorProduct
 
 
 ###############################################################################
@@ -116,74 +113,6 @@ class VisitorReport(models.Model):
 ##############################################################################
 
 
-class OrderNotificationRecipients(models.Model):
-    """
-    This class is used to map which staff members receive
-    notifications for which sensors so that the notices when
-    orders are placed/updated etc are targeted to the correct
-    individuals
-    """
-    user = models.ForeignKey(User)
-    satellite_instrument_group = models.ManyToManyField(
-        'dictionaries.SatelliteInstrumentGroup',
-        verbose_name='SatelliteInstrument', null=True, blank=True,
-        help_text=(
-            'Please choose one or more SatelliteInstrument. Use ctrl-click'
-            'to select more than one.'
-        )
-    )
-    classes = models.ManyToManyField(
-        ContentType,
-        null=True, blank=True,
-        verbose_name='Product classes',
-        help_text=(
-            'Please subscribe to one or more product class. Use ctrl-click to '
-            'select more than one.')
-    )
-
-    class Meta:
-        app_label = 'catalogue'
-        verbose_name = 'Order Notification Recipient'
-        verbose_name_plural = 'Order Notification Recipients'
-        ordering = ['user']
-
-    def __unicode__(self):
-        return str(self.user.username)
-
-    @staticmethod
-    def getUsersForProduct(theProduct):
-        """
-        Returns all users registered to this product class or sensors
-
-        Args:
-            theProduct - instance of product model (Required)
-        Returns:
-            listeners - users monitoring contenttypes and sensors
-        Exceptions:
-            None
-        """
-        # Determines the product concrete class, should raise an error if does
-        # not exists
-        instance = theProduct.getConcreteInstance()
-        # Get class listeners
-        listeners = set([o.user for o in (
-            OrderNotificationRecipients.objects
-            .filter(
-                classes=ContentType.objects.get_for_model(instance.__class__))
-            .select_related()
-        )])
-        # Determines if is a sensor-based product and add sensor listeners
-        if isinstance(instance, GenericSensorProduct):
-            listeners.update([o.user for o in (
-                OrderNotificationRecipients.objects
-                .filter(
-                    satellite_instrument_group=instance.product_profile
-                    .satellite_instrument.satellite_instrument_group)
-                .select_related()
-            )])
-        return listeners
-
-
 class WorldBorders(models.Model):
     iso2 = models.CharField(max_length=2)
     iso3 = models.CharField(max_length=3)
@@ -213,7 +142,6 @@ class AllUsersMessage(models.Model):
         # Specifies which database this model ORM goes to
         app_label = 'catalogue'
         ordering = ['-created']
-
 
     def save(self, *args, **kwargs):
         """Broadcase the message using offline messages."""

@@ -18,7 +18,7 @@
     <link href="{% url 'logVisit' %}" rel="stylesheet" type="text/css" />
 
     {% compressed_css 'contrib' %}
-    {% compressed_css 'addpage' %}
+    {% compressed_css 'base' %}
 
     {% endblock %}
 
@@ -29,7 +29,7 @@
     {# the end result is a broken path for the style.css, which subtly brakes the page #}
     <script type="text/javascript" charset="utf-8" src="/static/js/openlayers/OpenLayers.js"></script>
 
-    {% compressed_js 'addpage' %}
+    {% compressed_js 'base' %}
 
     {% endblock %}
 

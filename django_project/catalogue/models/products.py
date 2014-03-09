@@ -34,15 +34,10 @@ from django.core.exceptions import ObjectDoesNotExist
 # PIL and os needed for making small thumbs
 from PIL import Image, ImageFilter, ImageOps
 
+from dictionaries.models import ProcessingLevel
+
 from catalogue.utmzonecalc import utmZoneFromLatLon
 from catalogue.dims_lib import dimsWriter
-from catalogue.models import (
-    Projection,
-    Quality,
-    PlaceType,
-    Place,
-    Topic,
-    Unit,)
 
 # for thumb georeferencer
 #from osgeo.gdalconst import *
@@ -209,24 +204,23 @@ class GenericProduct(models.Model):
     product_date = models.DateTimeField(db_index=True)
     spatial_coverage = models.PolygonField(
         srid=4326, help_text='Image footprint')
-    projection = models.ForeignKey(Projection)
+    projection = models.ForeignKey('dictionaries.Projection')
     quality = models.ForeignKey(
-        Quality,
+        'dictionaries.Quality',
         help_text=(
             'A quality assessment describing the amount of dropouts etc.'
             'and how usable the entire scene is.'))
     original_product_id = models.CharField(
         help_text='Original id assigned to the product by the vendor/operator',
         max_length=255,
-        null=True,
-        blank=True)
+        unique=True)
     unique_product_id = models.CharField(
         help_text=(
             'A unique identifier for product used internally e.g. for '
             'DIMS orders'),
         max_length=255,
-        db_index=True,
-        unique=True)
+        null=True,
+        blank=True)
     local_storage_path = models.CharField(
         help_text=(
             'Location on local storage if this product is offered for '
@@ -756,6 +750,20 @@ class GenericProduct(models.Model):
         """
         return self.original_product_id
 
+    @property
+    def formated_date(self):
+        """
+        Simple date property, helper with display
+        """
+        return self.product_date.strftime('%d/%m/%Y')
+
+    @property
+    def productName(self):
+        """
+        Return formated name for the product
+        """
+        return self.getConcreteInstance().productName()
+
 
 ###############################################################################
 
@@ -1160,6 +1168,36 @@ class OpticalProduct(GenericSensorProduct):
             'productTypes/opticalProduct.html', {
                 'myObject': self, 'myImageIsLocalFlag': theImageIsLocal})
 
+    def availableProcessingLevels(self):
+        """
+        Return a list of ProcessingLevel models which are available for this
+        product (related to the instrument_type)
+        """
+        return ProcessingLevel.objects.filter(
+            instrumenttypeprocessinglevel__instrument_type=(
+                self.product_profile.satellite_instrument
+                .satellite_instrument_group.instrument_type
+            )
+        )
+
+    def productName(self):
+        """
+        Returns product name as specified
+        """
+        return '{0} {1} {2:03d} {3:03d} {4}'.format(
+            (
+                self.product_profile.satellite_instrument
+                .satellite_instrument_group.satellite.abbreviation
+            ),
+            (
+                self.product_profile.satellite_instrument
+                .satellite_instrument_group.instrument_type.abbreviation
+            ),
+            self.path,
+            self.row,
+            self.product_profile.spectral_mode.abbreviation
+        )
+
 
 ###############################################################################
 
@@ -1280,14 +1318,14 @@ class GeospatialProduct(GenericProduct):
             'The start of the timespan covered by this dataset. If left blank'
             'will default to start date.'))
     place_type = models.ForeignKey(
-        PlaceType,
+        'dictionaries.PlaceType',
         help_text=(
             'Select the type of geographic region covered by this dataset'))
     place = models.ForeignKey(
-        Place,
+        'dictionaries.Place',
         help_text='Nearest place, town, country region etc. to this product')
     primary_topic = models.ForeignKey(
-        Topic,
+        'dictionaries.Topic',
         help_text=(
             'Select the most appopriate topic for this dataset. You can add '
             'additional keywords in the tags box.'))  # e.g. Landuse etc
@@ -1373,7 +1411,7 @@ class ContinuousProduct(GenericProduct):
             'The maximum value in the range of values represented in this'
             'dataset.'))
     unit = models.ForeignKey(
-        Unit,
+        'dictionaries.Unit',
         help_text='Units for the values represented in this dataset.')
     # We need a flag to tell if this Product class can have instances (if it is
     # not abstract)

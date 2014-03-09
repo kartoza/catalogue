@@ -2,7 +2,7 @@ BEGIN;
 
 DROP TABLE search_search_processing_level CASCADE;
 
-CREATE TABLE "search_search_instrumenttype" (
+CREATE TABLE "search_search_instrument_type" (
     "id" serial NOT NULL PRIMARY KEY,
     "search_id" integer NOT NULL,
     "instrumenttype_id" integer NOT NULL REFERENCES "dictionaries_instrumenttype" ("id") DEFERRABLE INITIALLY DEFERRED,
@@ -40,13 +40,13 @@ CREATE TABLE "search_search_collection" (
 CREATE TABLE "search_search_license_type" (
     "id" serial NOT NULL PRIMARY KEY,
     "search_id" integer NOT NULL,
-    "license_id" integer NOT NULL REFERENCES "catalogue_license" ("id") DEFERRABLE INITIALLY DEFERRED,
+    "license_id" integer NOT NULL REFERENCES "dictionaries_license" ("id") DEFERRABLE INITIALLY DEFERRED,
     UNIQUE ("search_id", "license_id")
 )
 ;
 
 
-ALTER TABLE "search_search_instrumenttype" ADD CONSTRAINT "search_id_refs_id_8a552118" FOREIGN KEY ("search_id") REFERENCES "search_search" ("id") DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE "search_search_instrument_type" ADD CONSTRAINT "search_id_refs_id_8a552118" FOREIGN KEY ("search_id") REFERENCES "search_search" ("id") DEFERRABLE INITIALLY DEFERRED;
 ALTER TABLE "search_search_spectral_group" ADD CONSTRAINT "search_id_refs_id_9f61c8db" FOREIGN KEY ("search_id") REFERENCES "search_search" ("id") DEFERRABLE INITIALLY DEFERRED;
 ALTER TABLE "search_search_processing_level" ADD CONSTRAINT "search_id_refs_id_2503a17" FOREIGN KEY ("search_id") REFERENCES "search_search" ("id") DEFERRABLE INITIALLY DEFERRED;
 ALTER TABLE "search_search_satellite" ADD CONSTRAINT "search_id_refs_id_d04b6631" FOREIGN KEY ("search_id") REFERENCES "search_search" ("id") DEFERRABLE INITIALLY DEFERRED;

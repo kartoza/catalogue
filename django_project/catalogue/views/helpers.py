@@ -40,11 +40,10 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render_to_response, get_object_or_404
 from django.http import HttpResponseRedirect, HttpResponse
 
-from catalogue.models import (
+from orders.models import (
     Order,
     OrderStatusHistory,
-    OrderNotificationRecipients,
-    TaskingRequest,
+    OrderNotificationRecipients
 )
 
 from search.models import SearchRecord
@@ -271,7 +270,7 @@ def notifySalesStaff(theUser, theOrderId, theContext=None):
 
     if not settings.EMAIL_NOTIFICATIONS_ENABLED:
         logger.info('Email sending disabled, set EMAIL_NOTIFICATIONS_ENABLED '
-                     'in settings')
+                    'in settings')
         return
     myOrder = get_object_or_404(Order, id=theOrderId)
     myRecords = SearchRecord.objects.filter(user=theUser,
@@ -302,7 +301,7 @@ def notifySalesStaff(theUser, theOrderId, theContext=None):
     # Add default recipients
     if not myRecipients and CATALOGUE_DEFAULT_NOTIFICATION_RECIPIENTS:
         logger.info('Sending notice to default recipients : %s' %
-                     CATALOGUE_DEFAULT_NOTIFICATION_RECIPIENTS)
+                    CATALOGUE_DEFAULT_NOTIFICATION_RECIPIENTS)
         myRecipients.update(list(CATALOGUE_DEFAULT_NOTIFICATION_RECIPIENTS))
 
     for myRecipient in myRecipients:
@@ -349,98 +348,6 @@ def notifySalesStaff(theUser, theOrderId, theContext=None):
     myEmailConnection.send_messages(myMessagesList)
     return
 
-###########################################################
-#
-# Email notification of tasking requests to sansa sales staff
-#
-###########################################################
-
-
-def notifySalesStaffOfTaskRequest(theUser, theId, theContext=None):
-    """
-    A helper method to notify tasking staff who are subscribed to a sensor
-    Example usage from the console / doctest:
-
-       >>> from catalogue.views import *
-       >>> notifySalesStaffOfTaskRequest(11)
-
-    Args:
-        theUser obj - Required. Django user object
-        theOrderId int - Required. ID of the Order which has changed
-        theContext obj - Optional. Useful when we need to pass RequestContext
-            to the render_to_string (see Note)
-
-    Note:
-        RequestContext is important when executing unittests using test.client
-        because of the way test.client generates response context object.
-        Response context is a list of context objects, one for each used
-        template, and if during rendering of a template context object is None,
-        values of response context object are going to be empty. For example
-        myResp.context['myObjects'] = [], but in reality it should have values
-    """
-    if not settings.EMAIL_NOTIFICATIONS_ENABLED:
-        logger.info('Email sending disabled, set '
-                     'EMAIL_NOTIFICATIONS_ENABLED in settings')
-        return
-
-    myTaskingRequest = get_object_or_404(TaskingRequest, id=theId)
-    myHistory = OrderStatusHistory.objects.all().filter(order=myTaskingRequest)
-
-    myEmailSubject = ('SANSA Tasking Request %s status update (%s)' % (
-        str(myTaskingRequest.id), myTaskingRequest.order_status.name))
-
-    myMessagesList = []
-    # get the list of recipients
-    myTaskingRecipients = OrderNotificationRecipients.objects.filter(
-        satellite_instrument_group=myTaskingRequest.satellite_instrument_group)
-    myRecipients = set()
-    myRecipients.update([theUser])
-    for recepient in myTaskingRecipients:
-        myRecipients.add(recepient.user)
-
-    # Add default recipients if no recipients
-    if not myRecipients and CATALOGUE_DEFAULT_NOTIFICATION_RECIPIENTS:
-        logger.info('Sending notice to default recipients : %s' %
-                     CATALOGUE_DEFAULT_NOTIFICATION_RECIPIENTS)
-        myRecipients.update(list(CATALOGUE_DEFAULT_NOTIFICATION_RECIPIENTS))
-
-    for myRecipient in myRecipients:
-        #txt email template
-        myEmailMessage_txt = render_to_string(
-            'mail/task.txt', {
-                'myTask': myTaskingRequest,
-                'myHistory': myHistory,
-                'myRecipient': myRecipient,
-                'domain': settings.DOMAIN
-            }, theContext)
-        #html email template
-        myEmailMessage_html = render_to_string(
-            'mail/task.html', {
-                'myTask': myTaskingRequest,
-                'myHistory': myHistory,
-                'myRecipient': myRecipient,
-                'domain': settings.DOMAIN
-            }, theContext)
-        myAddress = myRecipient.email
-        myMsg = EmailMultiRelated(myEmailSubject,
-                                  myEmailMessage_txt,
-                                  'dontreply@' + settings.DOMAIN, [myAddress])
-        logger.info('Sending notice to : %s' % myAddress)
-
-        #attach alternative payload - html
-        myMsg.attach_alternative(myEmailMessage_html, 'text/html')
-        #add required images, as inline attachments, accessed by
-        # 'name' in templates
-        myMsg.attach_related_file(os.path.join(
-            settings.STATIC_ROOT, 'images', 'sac_header_email.jpg'))
-        #add message
-        myMessagesList.append(myMsg)
-
-    logger.info('Sending messages: \n%s' % myMessagesList)
-    # initiate email connection, and send messages in bulk
-    myEmailConnection = mail.get_connection()
-    myEmailConnection.send_messages(myMessagesList)
-    return
 
 """Layer definitions for use in conjunction with open layers"""
 WEB_LAYERS = {

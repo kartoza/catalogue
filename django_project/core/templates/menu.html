@@ -40,14 +40,8 @@
           <li>
             <a href="{% url 'myOrders' %}">My Orders</a>
           </li>
-          <li>
-            <a href="{% url 'myTaskingRequests' %}">My Tasking Requests</a>
-          </li>
           {#<li><a href="{% url 'whereAmI' %}">Where am I?</a></li>#}
         </ul>
-      </li>
-      <li>
-        <a href="{% url 'addTaskingRequest' %}"><i class="icon-wrench"></i> <span class="hidden-phone hidden-tablet">Tasking Requests</span></a>
       </li>
       <li class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-circle-arrow-down"></i> <span class="hidden-phone hidden-tablet">Downloads</span>
@@ -120,13 +114,14 @@
         <ul class="dropdown-menu">
           <li><a href="{% url 'dataSummaryTable' %}">Data Summary</a></li>
           <li><a href="{% url 'listOrders' %}">Orders List</a></li>
+          <li><a href="{% url 'addAdhocOrder' %}">Ad-hoc order</a></li>
           <li><a href="{% url 'recentSearches' %}">Searches Table</a></li>
           <li><a href="{% url 'searchesMap' %}">Searches Map</a></li>
           <li><a href="{% url 'visitorMap' %}">Vistor Map</a></li>
           <li><a href="{% url 'visitorsKml' %}">Visitor KML</a></li>
           <li><a href="{% url 'visitorList' %}">Visitor List</a></li>
           <li><a href="{% url 'visitorReport' %}">Visitor Stats</a></li>
-          <li><a href="/admin/">Admin</a></li>
+          <li><a href="{% url 'admin:index' %}">Admin</a></li>
         </ul>
       </li>
       {% endif %}

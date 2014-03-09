@@ -19,10 +19,14 @@ __copyright__ = 'South African National Space Agency'
 
 from django.test import TestCase
 
+from core.model_factories import CurrencyF
 
 from .model_factories import (
-    SpectralModeProcessingCostsF, SpectralModeF, ForeignCurrencyF,
-    InstrumentTypeProcessingLevelF, InstrumentTypeF, ProcessingLevelF
+    SpectralModeProcessingCostsF,
+    SpectralModeF,
+    InstrumentTypeProcessingLevelF,
+    InstrumentTypeF,
+    ProcessingLevelF
 )
 
 
@@ -63,7 +67,7 @@ class TestSpectralModeProcessingCostsCRUD(TestCase):
         mySpecMode = SpectralModeF.create(**{
             'name': 'New Spectral mode'
         })
-        myForeignCur = ForeignCurrencyF.create(**{
+        myForeignCur = CurrencyF.create(**{
             'name': 'SuperGold'
         })
         myInstTypeProcLevel = InstrumentTypeProcessingLevelF.create(**{
@@ -72,24 +76,31 @@ class TestSpectralModeProcessingCostsCRUD(TestCase):
 
         myModel = SpectralModeProcessingCostsF.create(**{
             'spectral_mode': mySpecMode,
-            'instrumenttypeprocessinglevel': myInstTypeProcLevel,
-            'cost_per_scene_in_rands': 200.94,
-            'foreign_currency': myForeignCur,
-            'cost_per_scene_in_foreign': 123.12
+            'instrument_type_processing_level': myInstTypeProcLevel,
+            'cost_per_scene': 200.94,
+            'currency': myForeignCur,
+            'cost_per_square_km': 12.0,
+            'minimum_square_km': 1.0
+
         })
 
         self.assertEqual(myModel.spectral_mode.name, 'New Spectral mode')
 
         self.assertEqual(
-            myModel.instrumenttypeprocessinglevel.operator_processing_level_name,
+            (
+                myModel.instrument_type_processing_level
+                .operator_processing_level_name
+            ),
             'Level 0'
         )
 
-        self.assertEqual(myModel.cost_per_scene_in_rands, 200.94)
+        self.assertEqual(myModel.cost_per_scene, 200.94)
 
-        self.assertEqual(myModel.foreign_currency.name, 'SuperGold')
+        self.assertEqual(myModel.currency.name, 'SuperGold')
 
-        self.assertEqual(myModel.cost_per_scene_in_foreign, 123.12)
+        self.assertEqual(myModel.cost_per_square_km, 12.0)
+
+        self.assertEqual(myModel.minimum_square_km, 1.0)
 
     def test_SpectralModeProcessingCosts_update(self):
         """
@@ -98,7 +109,7 @@ class TestSpectralModeProcessingCostsCRUD(TestCase):
         mySpecMode = SpectralModeF.create(**{
             'name': 'New Spectral mode'
         })
-        myForeignCur = ForeignCurrencyF.create(**{
+        myForeignCur = CurrencyF.create(**{
             'name': 'SuperGold'
         })
         myInstTypeProcLevel = InstrumentTypeProcessingLevelF.create(**{
@@ -108,27 +119,33 @@ class TestSpectralModeProcessingCostsCRUD(TestCase):
         myModel = InstrumentTypeProcessingLevelF.create()
 
         myModel.__dict__.update(**{
-            'cost_per_scene_in_rands': 200.94,
-            'cost_per_scene_in_foreign': 123.12
+            'cost_per_scene': 200.94,
+            'cost_per_square_km': 12.0,
+            'minimum_square_km': 1.0
         })
 
         myModel.spectral_mode = mySpecMode
-        myModel.instrumenttypeprocessinglevel = myInstTypeProcLevel
-        myModel.foreign_currency = myForeignCur
+        myModel.instrument_type_processing_level = myInstTypeProcLevel
+        myModel.currency = myForeignCur
         myModel.save()
 
         self.assertEqual(myModel.spectral_mode.name, 'New Spectral mode')
 
         self.assertEqual(
-            myModel.instrumenttypeprocessinglevel.operator_processing_level_name,
+            (
+                myModel.instrument_type_processing_level
+                .operator_processing_level_name
+            ),
             'Level 0'
         )
 
-        self.assertEqual(myModel.cost_per_scene_in_rands, 200.94)
+        self.assertEqual(myModel.cost_per_scene, 200.94)
 
-        self.assertEqual(myModel.foreign_currency.name, 'SuperGold')
+        self.assertEqual(myModel.currency.name, 'SuperGold')
 
-        self.assertEqual(myModel.cost_per_scene_in_foreign, 123.12)
+        self.assertEqual(myModel.cost_per_square_km, 12.0)
+
+        self.assertEqual(myModel.minimum_square_km, 1.0)
 
     def test_SpectralModeProcessingCosts_repr(self):
         """
@@ -148,15 +165,21 @@ class TestSpectralModeProcessingCostsCRUD(TestCase):
 
         myInstTypeProcLevel = InstrumentTypeProcessingLevelF.create(**{
             'instrument_type': myInstType,
-            'processinglevel': myProcLevel
+            'processing_level': myProcLevel
+        })
+
+        myCurrency = CurrencyF.create(**{
+            'name': 'SuperGold',
+            'code': 'USD'
         })
 
         myModel = SpectralModeProcessingCostsF.create(**{
             'spectral_mode': mySpecMode,
-            'instrumenttypeprocessinglevel': myInstTypeProcLevel,
-            'cost_per_scene_in_rands': 200.94
+            'instrument_type_processing_level': myInstTypeProcLevel,
+            'cost_per_scene': 200.94,
+            'currency': myCurrency
         })
 
         self.assertEqual(
             unicode(myModel),
-            u'200.94 ZAR (New Spectral mode - IT name - PL1)')
+            u'200.94 USD (New Spectral mode - IT name - PL1)')

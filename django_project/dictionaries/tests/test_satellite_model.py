@@ -18,9 +18,7 @@ __copyright__ = 'South African National Space Agency'
 
 from django.test import TestCase
 
-from catalogue.tests.model_factories import LicenseF
-
-from .model_factories import SatelliteF, CollectionF
+from .model_factories import SatelliteF, CollectionF, LicenseF
 
 
 class TestSatelliteCRUD(TestCase):
@@ -63,13 +61,13 @@ class TestSatelliteCRUD(TestCase):
             'description': 'No description',
             'abbreviation': 'SAT1',
             'operator_abbreviation': 'SatOp1',
-            'collection':  myCollection,
-            'launch_date':  None,
-            'status':  None,
+            'collection': myCollection,
+            'launch_date': None,
+            'status': None,
             'altitude_km': 10000,
-            'orbit':  '',
-            'revist_time_days':  90,
-            'reference_url':  '',
+            'orbit': '',
+            'revisit_time_days': 90,
+            'reference_url': '',
             'license_type': myLicense
         })
 
@@ -96,12 +94,12 @@ class TestSatelliteCRUD(TestCase):
             'description': 'No description',
             'abbreviation': 'SAT1',
             'operator_abbreviation': 'SatOp1',
-            'launch_date':  None,
-            'status':  None,
+            'launch_date': None,
+            'status': None,
             'altitude_km': 10000,
-            'orbit':  '',
-            'revist_time_days':  90,
-            'reference_url':  ''
+            'orbit': '',
+            'revisit_time_days': 90,
+            'reference_url': ''
         })
         myModel.collection = myCollection
         myModel.license_type = myLicense

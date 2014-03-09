@@ -163,7 +163,7 @@ def searchguid(theRequest, theGuid):
 
     collections = Collection.objects.all().prefetch_related('satellite_set')
 
-    sel_instrumenttypes = mySearch.instrumenttype.all().values_list(
+    sel_instrumenttypes = mySearch.instrument_type.all().values_list(
         'pk', flat=True)
     sel_satellites = mySearch.satellite.all().values_list('pk', flat=True)
 
@@ -175,7 +175,9 @@ def searchguid(theRequest, theGuid):
         'values': list(chain.from_iterable((({
             'key': '{} {}'.format(sat.name, sig.instrument_type.name),
             'val': '{}|{}'.format(sat.pk, sig.instrument_type.pk)
-            } for sig in sat.satelliteinstrumentgroup_set.all())
+            } for sig in sat.satelliteinstrumentgroup_set.all()
+            # only select instrument_types which are searchable
+            if sig.instrument_type.is_searchable)
             for sat in col.satellite_set.all())))
     } for col in collections
     ]
@@ -220,7 +222,9 @@ def searchView(theRequest):
         'values': list(chain.from_iterable((({
             'key': '{} {}'.format(sat.name, sig.instrument_type.name),
             'val': '{}|{}'.format(sat.pk, sig.instrument_type.pk)
-            } for sig in sat.satelliteinstrumentgroup_set.all())
+            } for sig in sat.satelliteinstrumentgroup_set.all()
+            # only select instrument_types which are searchable
+            if sig.instrument_type.is_searchable)
             for sat in col.satellite_set.all())))
     } for col in collections
     ]

@@ -54,7 +54,7 @@ class OthersViews_video(TestCase):
         self.assertEqual(myResp.status_code, 200)
         # check used templates
         myExpTemplates = [
-            'video.html', u'base.html', u'pipeline/css.html',
+            'video.html', u'base.html',
             u'pipeline/css.html', u'pipeline/js.html', u'menu.html'
         ]
 

@@ -2,34 +2,34 @@ BEGIN;
 
 -- insert instrument types
 
-INSERT INTO "search_search_instrumenttype" (search_id, instrumenttype_id)
+INSERT INTO "search_search_instrument_type" (search_id, instrumenttype_id)
     SELECT search_id, 1 FROM search_search_sensors WHERE missionsensor_id=2;
 
-INSERT INTO "search_search_instrumenttype" (search_id, instrumenttype_id)
+INSERT INTO "search_search_instrument_type" (search_id, instrumenttype_id)
     SELECT search_id, 2 FROM search_search_sensors WHERE missionsensor_id=13;
 
-INSERT INTO "search_search_instrumenttype" (search_id, instrumenttype_id)
+INSERT INTO "search_search_instrument_type" (search_id, instrumenttype_id)
     SELECT DISTINCT search_id, 3 FROM search_search_sensors WHERE missionsensor_id IN (17,18,19,20);
 
-INSERT INTO "search_search_instrumenttype" (search_id, instrumenttype_id)
+INSERT INTO "search_search_instrument_type" (search_id, instrumenttype_id)
     SELECT search_id, 4 FROM search_search_sensors WHERE missionsensor_id=16;
 
-INSERT INTO "search_search_instrumenttype" (search_id, instrumenttype_id)
+INSERT INTO "search_search_instrument_type" (search_id, instrumenttype_id)
     SELECT search_id, 5 FROM search_search_sensors WHERE missionsensor_id=5;
 
-INSERT INTO "search_search_instrumenttype" (search_id, instrumenttype_id)
+INSERT INTO "search_search_instrument_type" (search_id, instrumenttype_id)
     SELECT DISTINCT search_id, 6 FROM search_search_sensors WHERE missionsensor_id IN (21,22,23);
 
-INSERT INTO "search_search_instrumenttype" (search_id, instrumenttype_id)
+INSERT INTO "search_search_instrument_type" (search_id, instrumenttype_id)
     SELECT search_id, 7 FROM search_search_sensors WHERE missionsensor_id=24;
 
-INSERT INTO "search_search_instrumenttype" (search_id, instrumenttype_id)
+INSERT INTO "search_search_instrument_type" (search_id, instrumenttype_id)
     SELECT search_id, 8 FROM search_search_sensors WHERE missionsensor_id=10;
 
-INSERT INTO "search_search_instrumenttype" (search_id, instrumenttype_id)
+INSERT INTO "search_search_instrument_type" (search_id, instrumenttype_id)
     SELECT search_id, 9 FROM search_search_sensors WHERE missionsensor_id=14;
 
-INSERT INTO "search_search_instrumenttype" (search_id, instrumenttype_id)
+INSERT INTO "search_search_instrument_type" (search_id, instrumenttype_id)
     SELECT search_id, 10 FROM search_search_sensors WHERE missionsensor_id=15;
 
 

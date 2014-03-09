@@ -112,7 +112,7 @@ class ReportsViews_dataSummaryTable_Tests(TestCase):
         self.assertEqual(myResp.context['myTotal'], 1)
         # check used templates
         myExpTemplates = [
-            'dataSummaryTable.html', u'base.html', u'pipeline/css.html',
+            'dataSummaryTable.html', u'base.html',
             u'pipeline/css.html', u'pipeline/js.html', u'menu.html',
             u'useraccounts/menu_content.html'
         ]

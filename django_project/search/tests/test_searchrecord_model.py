@@ -17,10 +17,33 @@ __version__ = '0.2'
 __date__ = '17/07/2013'
 __copyright__ = 'South African National Space Agency'
 
+from decimal import Decimal
+
 from django.test import TestCase
 
-from core.model_factories import UserF
-from catalogue.tests.model_factories import OrderF, GenericProductF
+from core.model_factories import (
+    UserF,
+    CurrencyF,
+    ExchangeRateF
+)
+from orders.tests.model_factories import OrderF
+from catalogue.tests.model_factories import (
+    GenericProductF,
+    OpticalProductF
+)
+
+from dictionaries.tests.model_factories import (
+    OpticalProductProfileF,
+    SpectralModeF,
+    SpectralModeProcessingCostsF,
+    ProcessingLevelF,
+    ProjectionF,
+    ProductProcessStateF,
+    InstrumentTypeF,
+    SatelliteInstrumentGroupF,
+    SatelliteInstrumentF,
+    InstrumentTypeProcessingLevelF
+)
 
 from .model_factories import SearchRecordF
 
@@ -48,13 +71,46 @@ class SearchRecordCRUD_Test(TestCase):
         """
         Tests SearchRecord model read
         """
+        tstUser = UserF.create(**{
+            'username': 'timlinux',
+            'password': 'password'
+        })
+
         myOrder = OrderF.create(notes='New Order')
-        myModel = SearchRecordF.create(order=myOrder)
+        tstCurrency = CurrencyF.create(**{
+            'name': 'SuperGold'
+        })
+
+        tstProduct = OpticalProductF.create()
+
+        tstProcLevel = ProcessingLevelF.create()
+
+        tstProjection = ProjectionF.create()
+
+        tstProdProcState = ProductProcessStateF.create()
+
+        myModel = SearchRecordF.create(**{
+            'user': tstUser,
+            'order': myOrder,
+            'product': tstProduct,
+            'internal_order_id': 98765,
+            'download_path': 'someplace/somewhere',
+            'product_ready': True,
+            'cost_per_scene': 123.12,
+            'rand_cost_per_scene': 321.21,
+            'currency': tstCurrency,
+            'processing_level': tstProcLevel,
+            'projection': tstProjection,
+            'product_process_state': tstProdProcState
+        })
 
         self.assertTrue(myModel.pk is not None)
-        self.assertTrue(myModel.order.notes == 'New Order')
-        self.assertTrue(myModel.product_ready is True)
-        self.assertTrue(myModel.internal_order_id is None)
+        self.assertEqual(
+            myModel.internal_order_id, 98765)
+        self.assertEqual(myModel.download_path, 'someplace/somewhere')
+        self.assertEqual(myModel.cost_per_scene, 123.12)
+        self.assertEqual(myModel.rand_cost_per_scene, 321.21)
+        self.assertEqual(myModel.product_ready, True)
 
     def test_SearchRecord_update(self):
         """
@@ -66,7 +122,9 @@ class SearchRecordCRUD_Test(TestCase):
         myNewModelData = {
             'order': myNewOrder,
             'download_path': 'Some path',
-            'product_ready': True
+            'product_ready': True,
+            'cost_per_scene': 123,
+            'rand_cost_per_scene': 123
         }
 
         myModel.__dict__.update(myNewModelData)
@@ -112,7 +170,7 @@ class SearchRecordCRUD_Test(TestCase):
 
     def test_SearchRecord_create_method(self):
         """
-        Tests SearchRecord model repr method
+        Tests SearchRecord model create method
         """
         myProduct = GenericProductF.create(original_product_id='123qwe')
         myUser = UserF.create(username='testuser')
@@ -122,3 +180,77 @@ class SearchRecordCRUD_Test(TestCase):
 
         self.assertEqual(unicode(myNewModel), '123qwe')
         self.assertEqual(myNewModel.user.username, 'testuser')
+
+    def test_SearchRecord_snapshot_price_and_currency_method(self):
+        """
+        Tests SearchRecord model snapshot_price_and_currency method
+        """
+
+        mySpecMode = SpectralModeF.create(**{
+            'name': 'New Spectral mode'
+        })
+
+        superRand = CurrencyF.create(**{
+            'name': 'SuperRand',
+            'code': 'ZAR'
+        })
+
+        myCurrency = CurrencyF.create(**{
+            'name': 'SuperGold',
+            'code': 'SG'
+        })
+
+        ExchangeRateF.create(**{
+            'source': myCurrency,
+            'target': superRand,
+            'rate': 2.0
+        })
+
+        tstProcLevel = ProcessingLevelF.create(**{})
+        tstInstType = InstrumentTypeF.create()
+
+        tstInsTypeProcLevel = InstrumentTypeProcessingLevelF.create(**{
+            'instrument_type': tstInstType,
+            'processing_level': tstProcLevel
+        })
+
+        SpectralModeProcessingCostsF.create(**{
+            'spectral_mode': mySpecMode,
+            'instrument_type_processing_level': tstInsTypeProcLevel,
+            'cost_per_scene': Decimal(123.45),
+            'currency': myCurrency
+        })
+
+        tstSatInstGrp = SatelliteInstrumentGroupF.create(**{
+            'instrument_type': tstInstType
+        })
+
+        tstSatInst = SatelliteInstrumentF.create(**{
+            'satellite_instrument_group': tstSatInstGrp
+        })
+        myOPP = OpticalProductProfileF.create(**{
+            'spectral_mode': mySpecMode,
+            'satellite_instrument': tstSatInst
+        })
+
+        myProduct = OpticalProductF.create(**{
+            'product_profile': myOPP
+        })
+        myUser = UserF.create(username='testuser')
+        myModel = SearchRecordF.create(**{
+            'processing_level': tstProcLevel,
+            'product': myProduct,
+            'user': myUser
+        })
+
+        # preform the snapshot
+        myModel._snapshot_cost_and_currency()
+
+        self.assertEqual(
+            myModel.cost_per_scene, Decimal(123.45).quantize(Decimal('.01'))
+        )
+        self.assertEqual(myModel.currency, myCurrency)
+        self.assertEqual(
+            myModel.rand_cost_per_scene,
+            Decimal(246.90).quantize(Decimal('.01'))
+        )

@@ -22,10 +22,10 @@ from django.test import TestCase
 
 from search.searcher import Searcher
 
-from catalogue.tests.model_factories import OpticalProductF, LicenseF
+from catalogue.tests.model_factories import OpticalProductF
 from dictionaries.tests.model_factories import (
     SatelliteF, SatelliteInstrumentGroupF, SatelliteInstrumentF,
-    OpticalProductProfileF
+    OpticalProductProfileF, LicenseF
 )
 from .model_factories import SearchF
 

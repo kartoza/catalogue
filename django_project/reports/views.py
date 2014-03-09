@@ -44,7 +44,6 @@ from django.db.models import Count  # for aggregate queries
 # Models and forms for our app
 from catalogue.models import (
     Visit,
-    TaskingRequest,
     GenericSensorProduct,
     OpticalProduct
 )
@@ -245,9 +244,6 @@ def sensorSummaryTable(theRequest, theSensorId):
     #       use count() rather
     #
     mySensor = get_object_or_404(SatelliteInstrumentGroup, id=theSensorId)
-    myTaskingSensorCount = TaskingRequest.objects.filter(
-        satellite_instrument_group=mySensor).count()
-    myTaskingTotalCount = TaskingRequest.objects.count()
     mySearchCount = Search.objects.all().count()
     mySearchForSensorCount = Search.objects.filter(
         satellite__satelliteinstrumentgroup=mySensor).count()
@@ -267,8 +263,6 @@ def sensorSummaryTable(theRequest, theSensorId):
         .count())
 
     myResults = SortedDict()
-    myResults['Tasking requests for this sensor'] = myTaskingSensorCount
-    myResults['Tasking requests all sensors'] = myTaskingTotalCount
     myResults['Searches for this sensor'] = mySearchForSensorCount
     myResults['Searches for all sensors'] = mySearchCount
     myResults['Total ordered products for this sensor'] = myProductOrdersForSensorCount
@@ -283,7 +277,7 @@ def sensorSummaryTable(theRequest, theSensorId):
     myCurrentYear = datetime.date.today().year
     # create a list of 'empty' records
     mySensorYearlyStatsAll = [
-        {'year': myYear, 'count':0}
+        {'year': myYear, 'count': 0}
         for myYear in range(myStartYear, myCurrentYear + 1)]
 
     # update records, replace with actual data

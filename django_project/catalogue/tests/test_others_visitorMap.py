@@ -117,11 +117,10 @@ class OthersViews_visitorMap_Tests(TestCase):
             myResp.context['myActiveBaseMap'], myExpActiveBaseMap)
         # check used templates
         myExpTemplates = [
-            'simpleMap.html', u'base.html', u'pipeline/css.html',
+            'simpleMap.html', u'base.html',
             u'pipeline/css.html', u'pipeline/js.html', u'menu.html',
             u'useraccounts/menu_content.html'
         ]
-
 
         myUsedTemplates = [tmpl.name for tmpl in myResp.templates]
         self.assertEqual(myUsedTemplates, myExpTemplates)

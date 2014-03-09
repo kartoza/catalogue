@@ -36,7 +36,7 @@ CREATE TABLE "dictionaries_satellite" (
     "status" text,
     "altitude_km" integer,
     "orbit" text,
-    "revist_time_days" integer,
+    "revisit_time_days" integer,
     "reference_url" varchar(200),
     "license_type_id" integer NOT NULL REFERENCES "catalogue_license" ("id") DEFERRABLE INITIALLY DEFERRED
 )
@@ -56,9 +56,10 @@ CREATE TABLE "dictionaries_instrumenttype" (
     "operator_abbreviation" varchar(255) NOT NULL UNIQUE,
     "is_radar" boolean NOT NULL,
     "is_taskable" boolean NOT NULL,
+    "is_searchable" boolean NOT NULL,
     "scanner_type_id" integer NOT NULL REFERENCES "dictionaries_scannertype" ("id") DEFERRABLE INITIALLY DEFERRED,
-    "base_processing_level_id" integer NOT NULL REFERENCES "dictionaries_processinglevel" ("id") DEFERRABLE INITIALLY DEFERRED,
-    "default_processing_level_id" integer NOT NULL REFERENCES "dictionaries_processinglevel" ("id") DEFERRABLE INITIALLY DEFERRED,
+    "base_processing_level_id" integer REFERENCES "dictionaries_processinglevel" ("id") DEFERRABLE INITIALLY DEFERRED,
+    "default_processing_level_id" integer REFERENCES "dictionaries_processinglevel" ("id") DEFERRABLE INITIALLY DEFERRED,
     "reference_system_id" integer,
     "swath_optical_km" integer,
     "band_count" integer,
@@ -151,7 +152,7 @@ CREATE TABLE "dictionaries_bandspectralmode" (
 CREATE TABLE "dictionaries_instrumenttypeprocessinglevel" (
     "id" serial NOT NULL PRIMARY KEY,
     "instrument_type_id" integer NOT NULL REFERENCES "dictionaries_instrumenttype" ("id") DEFERRABLE INITIALLY DEFERRED,
-    "processinglevel_id" integer NOT NULL REFERENCES "dictionaries_processinglevel" ("id") DEFERRABLE INITIALLY DEFERRED,
+    "processing_level_id" integer NOT NULL REFERENCES "dictionaries_processinglevel" ("id") DEFERRABLE INITIALLY DEFERRED,
     "operator_processing_level_name" varchar(50) NOT NULL,
     "operator_processing_level_abbreviation" varchar(4) NOT NULL
 )
@@ -159,10 +160,12 @@ CREATE TABLE "dictionaries_instrumenttypeprocessinglevel" (
 CREATE TABLE "dictionaries_spectralmodeprocessingcosts" (
     "id" serial NOT NULL PRIMARY KEY,
     "spectral_mode_id" integer NOT NULL REFERENCES "dictionaries_spectralmode" ("id") DEFERRABLE INITIALLY DEFERRED,
-    "instrumenttypeprocessinglevel_id" integer NOT NULL REFERENCES "dictionaries_instrumenttypeprocessinglevel" ("id") DEFERRABLE INITIALLY DEFERRED,
-    "cost_per_scene_in_rands" double precision NOT NULL,
-    "foreign_currency_id" integer,
-    "cost_per_scene_in_foreign" double precision
+    "instrument_type_processing_level_id" integer NOT NULL REFERENCES "dictionaries_instrumenttypeprocessinglevel" ("id") DEFERRABLE INITIALLY DEFERRED,
+    "cost_per_scene" numeric(10, 2) NOT NULL,
+    "currency_id" integer,
+    "cost_per_square_km" numeric(10, 2),
+    "minimum_square_km" double precision,
+    "sales_region_id" integer NOT NULL
 )
 ;
 CREATE TABLE "dictionaries_referencesystem" (
@@ -173,14 +176,30 @@ CREATE TABLE "dictionaries_referencesystem" (
 )
 ;
 ALTER TABLE "dictionaries_instrumenttype" ADD CONSTRAINT "reference_system_id_refs_id_4dbfe45f" FOREIGN KEY ("reference_system_id") REFERENCES "dictionaries_referencesystem" ("id") DEFERRABLE INITIALLY DEFERRED;
-CREATE TABLE "dictionaries_foreigncurrency" (
+
+
+CREATE TABLE "dictionaries_salesregion" (
     "id" serial NOT NULL PRIMARY KEY,
-    "abbreviation" varchar(20) NOT NULL,
-    "name" varchar(255) NOT NULL UNIQUE,
-    "conversion_rate" double precision
+    "name" varchar(50) NOT NULL,
+    "abbreviation" varchar(4) NOT NULL
 )
 ;
-ALTER TABLE "dictionaries_spectralmodeprocessingcosts" ADD CONSTRAINT "foreign_currency_id_refs_id_0d1260ea" FOREIGN KEY ("foreign_currency_id") REFERENCES "dictionaries_foreigncurrency" ("id") DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE "dictionaries_spectralmodeprocessingcosts" ADD CONSTRAINT "sales_region_id_refs_id_79172456" FOREIGN KEY ("sales_region_id") REFERENCES "dictionaries_salesregion" ("id") DEFERRABLE INITIALLY DEFERRED;
+
+
+CREATE TABLE "dictionaries_subsidytype" (
+    "id" serial NOT NULL PRIMARY KEY,
+    "name" varchar(50) NOT NULL,
+    "abbreviation" varchar(10) NOT NULL
+)
+;
+CREATE TABLE "dictionaries_productprocessstate" (
+    "id" serial NOT NULL PRIMARY KEY,
+    "name" varchar(30) NOT NULL
+)
+;
+
+
 CREATE INDEX "dictionaries_opticalproductprofile_satellite_instrument_id" ON "dictionaries_opticalproductprofile" ("satellite_instrument_id");
 CREATE INDEX "dictionaries_opticalproductprofile_spectral_mode_id" ON "dictionaries_opticalproductprofile" ("spectral_mode_id");
 CREATE INDEX "dictionaries_radarproductprofile_satellite_instrument_id" ON "dictionaries_radarproductprofile" ("satellite_instrument_id");
@@ -219,11 +238,10 @@ CREATE INDEX "dictionaries_spectralmode_spectralgroup_id" ON "dictionaries_spect
 CREATE INDEX "dictionaries_bandspectralmode_band_id" ON "dictionaries_bandspectralmode" ("band_id");
 CREATE INDEX "dictionaries_bandspectralmode_spectral_mode_id" ON "dictionaries_bandspectralmode" ("spectral_mode_id");
 CREATE INDEX "dictionaries_instrumenttypeprocessinglevel_instrument_type_id" ON "dictionaries_instrumenttypeprocessinglevel" ("instrument_type_id");
-CREATE INDEX "dictionaries_instrumenttypeprocessinglevel_processinglevel_id" ON "dictionaries_instrumenttypeprocessinglevel" ("processinglevel_id");
+CREATE INDEX "dictionaries_instrumenttypeprocessinglevel_processinglevel_id" ON "dictionaries_instrumenttypeprocessinglevel" ("processing_level_id");
 CREATE INDEX "dictionaries_spectralmodeprocessingcosts_spectral_mode_id" ON "dictionaries_spectralmodeprocessingcosts" ("spectral_mode_id");
-CREATE INDEX "dictionaries_spectralmodeprocessingcosts_instrumenttypeprocb4fb" ON "dictionaries_spectralmodeprocessingcosts" ("instrumenttypeprocessinglevel_id");
-CREATE INDEX "dictionaries_spectralmodeprocessingcosts_foreign_currency_id" ON "dictionaries_spectralmodeprocessingcosts" ("foreign_currency_id");
+CREATE INDEX "dictionaries_spectralmodeprocessingcosts_instrumenttypeprocb4fb" ON "dictionaries_spectralmodeprocessingcosts" ("instrument_type_processing_level_id");
+CREATE INDEX "dictionaries_spectralmodeprocessingcosts_currency_id" ON "dictionaries_spectralmodeprocessingcosts" ("currency_id");
 CREATE INDEX "dictionaries_referencesystem_name_like" ON "dictionaries_referencesystem" ("name" varchar_pattern_ops);
-CREATE INDEX "dictionaries_foreigncurrency_name_like" ON "dictionaries_foreigncurrency" ("name" varchar_pattern_ops);
 
 COMMIT;

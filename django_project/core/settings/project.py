@@ -19,6 +19,7 @@ INSTALLED_APPS += (
     'dictionaries',
     'useraccounts',
     'search',
+    'orders',
     'pycsw_integration',
     'reports',
 )
@@ -149,11 +150,12 @@ PIPELINE_JS = {
             'js/widget.sansaSearchCartLayer.js',
             'js/widget.sansaSearchSummary.js',
             'js/widget.sansaSearchesMap.js',
-            'js/lightbox-2.6.min.js'
+            'js/lightbox-2.6.min.js',
+            'js/bootstrap-switch.min.js'
         ),
         'output_filename': 'js/fluid.js',
     },
-    'addpage': {
+    'base': {
         'source_filenames': (
             'js/jquery/jquery-1.8.2.min.js',
             'js/init_project.js',
@@ -161,27 +163,25 @@ PIPELINE_JS = {
             'js/jquery.form.min.js',
             'js/csrf-ajax.js',
             'js/underscore-min.js',
-            'js/backbone-min.js',
-            'js/backbone-tastypie.js',
-            'js/backbone-pagination.js',
             'bootstrap/js/bootstrap.min.js',
             'datepicker/js/bootstrap-datepicker.js',
-            'js/bootstrap-modal.js',
-            'js/bootstrap-modalmanager.js',
-            'js/bootstrap-listTree.js',
-            'js/perfect-scrollbar-0.4.3.with-mousewheel.min.js',
             'js/jquery.blockUI.js',
-            'js/map_layers.js',
-            'js/openlayers-plugins/ScaleBar.js',
-            'js/date_utils.js',
-            'js/widget.daterange.js',
-            'js/widget.sansaMap.js',
-            'js/widget.sansaCartLayer.js',
-            'js/widget.sansaGeoSearchLayer.js',
-            'js/widget.deliveryform.js',
             'js/sansa-ui.js'
         ),
-        'output_filename': 'js/addpage.js',
+        'output_filename': 'js/base.js',
+    },
+    'orderpage': {
+        'source_filenames': (
+            'js/bootstrap-modal.js',
+            'js/bootstrap-modalmanager.js',
+            'js/map_layers.js',
+            'js/openlayers-plugins/ScaleBar.js',
+            'js/widget.sansaMap.js',
+            'js/widget.sansaCartLayer.js',
+            'js/widget.deliveryOptions.js',
+            'js/widget.nonSearchRecordsTable.js'
+        ),
+        'output_filename': 'js/orderpage.js',
     }
 
 }
@@ -209,23 +209,19 @@ PIPELINE_CSS = {
             'css/bootstrap-listTree.css',
             'css/perfect-scrollbar.css',
             'css/bootstrap-modal.css',
-            'css/lightbox.css'
+            'css/lightbox.css',
+            'css/bootstrap-switch.min.css'
         ),
         'output_filename': 'css/fluid.css',
         'extra_context': {
             'media': 'screen, projection',
         },
     },
-    'addpage': {
+    'orderpage': {
         'source_filenames': (
-            'css/add-page.css',
-            'css/tabs.css',
-            'css/flat-buttons.css',
-            'css/bootstrap-listTree.css',
-            'css/perfect-scrollbar.css',
-            'css/bootstrap-modal.css'
+            'css/order-page.css',
         ),
-        'output_filename': 'css/addpage.css',
+        'output_filename': 'css/orderpage.css',
         'extra_context': {
             'media': 'screen, projection',
         },

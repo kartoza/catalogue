@@ -67,14 +67,14 @@ class TestInstrumentTypeProcessingLevelCRUD(TestCase):
 
         myModel = InstrumentTypeProcessingLevelF.create(**{
             'instrument_type': myInstType,
-            'processinglevel': myProcLevel,
+            'processing_level': myProcLevel,
             'operator_processing_level_name': 'OP Name 1',
             'operator_processing_level_abbreviation': 'OPN1'
         })
 
         self.assertEqual(myModel.instrument_type.operator_abbreviation, 'NIS')
 
-        self.assertEqual(myModel.processinglevel.abbreviation, 'PL1')
+        self.assertEqual(myModel.processing_level.abbreviation, 'PL1')
 
         self.assertEqual(myModel.operator_processing_level_name, 'OP Name 1')
 
@@ -99,13 +99,13 @@ class TestInstrumentTypeProcessingLevelCRUD(TestCase):
             'operator_processing_level_abbreviation': 'OPN1'
         })
 
-        myModel.processinglevel = myProcLevel
+        myModel.processing_level = myProcLevel
         myModel.instrument_type = myInstType
         myModel.save()
 
         self.assertEqual(myModel.instrument_type.operator_abbreviation, 'NIS')
 
-        self.assertEqual(myModel.processinglevel.abbreviation, 'PL1')
+        self.assertEqual(myModel.processing_level.abbreviation, 'PL1')
 
         self.assertEqual(myModel.operator_processing_level_name, 'OP Name 1')
 
@@ -125,7 +125,7 @@ class TestInstrumentTypeProcessingLevelCRUD(TestCase):
 
         myModel = InstrumentTypeProcessingLevelF.create(**{
             'instrument_type': myInstType,
-            'processinglevel': myProcLevel
+            'processing_level': myProcLevel
         })
 
         self.assertEqual(unicode(myModel), u'IT name - PL1')

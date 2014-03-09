@@ -54,7 +54,7 @@ class OthersViews_about(TestCase):
         self.assertEqual(myResp.status_code, 200)
         # check used templates
         myExpTemplates = [
-            'about.html', u'base.html', u'pipeline/css.html',
+            'about.html', u'base.html',
             u'pipeline/css.html', u'pipeline/js.html', u'menu.html'
         ]
 

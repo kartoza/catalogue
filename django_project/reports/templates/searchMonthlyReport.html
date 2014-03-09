@@ -37,9 +37,9 @@
 <div class="row-fluid center gap-bottom">
   <button onclick='location="?pdf"' class="btn" id="download-btn"><i class="icon-download"></i></button>
   <div class="btn-group">
-    <button onclick='location="{% url 'searchMonthlyReport' myPrevDate|date:'Y' myPrevDate|date:'m' %}"' class="btn"><i class="icon-backward"></i></button>
+    <button onclick='location="{% url 'searchMonthlyReport' myPrevDate|date:'Y' myPrevDate|date:'m' %}"' class="btn"><i class="icon-chevron-left"></i></button>
     <button class="btn disabled btn-success">{{ myCurrentDate|date:'M, Y' }}</button>
-    <button onclick='location="{% url 'searchMonthlyReport' myNextDate|date:'Y' myNextDate|date:'m' %}"' class="btn"><i class="icon-forward"></i></button>
+    <button onclick='location="{% url 'searchMonthlyReport' myNextDate|date:'Y' myNextDate|date:'m' %}"' class="btn"><i class="icon-chevron-right"></i></button>
   </div>
 </div>
 

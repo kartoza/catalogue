@@ -17,6 +17,7 @@ __version__ = '0.1'
 __date__ = '09/09/2013'
 __copyright__ = 'South African National Space Agency'
 
+from tastypie import fields
 from tastypie.resources import ModelResource
 from tastypie.authorization import Authorization
 # from tastypie.authentication import SessionAuthentication
@@ -26,6 +27,8 @@ from .models import OpticalProduct
 
 
 class OpticalProductResource(ModelResource):
+    productName = fields.CharField(attribute='productName')
+
     class Meta:
         queryset = OpticalProduct.objects.all()
         resource_name = 'opticalproducts'
@@ -34,7 +37,10 @@ class OpticalProductResource(ModelResource):
         always_return_data = True
         include_resource_uri = False
         # allowed_methods = ['get']
-        fields = ['id', 'unique_product_id', 'product_date', 'cloud_cover', 'spatial_coverage']
+        fields = [
+            'id', 'unique_product_id', 'product_date', 'cloud_cover',
+            'spatial_coverage', 'productName'
+        ]
 
     def dehydrate_product_date(self, bundle):
         return bundle.data['product_date'].strftime('%d/%m/%Y %M:%H')

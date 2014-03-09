@@ -119,7 +119,7 @@ class ReportsViews_searchMonthlyReport_Tests(TestCase):
             myDate + datetime.timedelta(days=31))
         # check used templates
         myExpTemplates = [
-            'searchMonthlyReport.html', u'base.html', u'pipeline/css.html',
+            'searchMonthlyReport.html', u'base.html',
             u'pipeline/css.html', u'pipeline/js.html', u'menu.html',
             u'useraccounts/menu_content.html'
         ]
