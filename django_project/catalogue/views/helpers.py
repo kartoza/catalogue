@@ -333,7 +333,7 @@ def notifySalesStaff(theUser, theOrderId, theContext=None):
         #attach alternative payload - html
         myMsg.attach_alternative(myEmailMessage_html, 'text/html')
         # add required images, as inline attachments,
-        # accesed by 'name' in templates
+        # accessed by 'name' in templates
         myMsg.attach_related_file(
             os.path.join(
                 settings.STATIC_ROOT, 'images', 'sac_header_email.jpg'))

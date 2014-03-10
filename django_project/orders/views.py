@@ -557,7 +557,7 @@ def ordersSummary(theRequest):
     del theRequest
     #count orders by status
     myOrderStatus = OrderStatus.objects.annotate(num_orders=Count('order__id'))
-    # count orders by product type (misson sensor)
+    # count orders by product type (mission sensor)
     # TODO - refactoring
     myOrderInstrumentType = None
     myOrderSatellite = None
