@@ -10,6 +10,8 @@ SERVER_EMAIL = 'error@catalogue.sansa.org.za'
 
 ADMINS = (
     ('Tim Sutton', 'tim@linfiniti.com'),
+    ('George Irwin', 'george@linfiniti.com'),
+    ('Drazen Odobasic', 'dodobasic@gmail.com'),
     ('Linda Kleyn', 'lkleyn@sansa.org.za'),
 )
 

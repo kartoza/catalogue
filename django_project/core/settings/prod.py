@@ -1,6 +1,7 @@
 from .project import *
 
 SENTRY_DSN = ('http://a63c799050b94d72aae177153df32f46:998d4e6fe9a643a5bf270d8c65831216@sentry.linfiniti.com/9')
+#SENTRY_DSN = ('http://b9d2ddda3b8342f18681e94492bd6658:5dd1e2cfebe64e1f930de32a843629aa@sentry.linfiniti.com/9')
 
 MIDDLEWARE_CLASSES = (
     'raven.contrib.django.middleware.SentryResponseErrorIdMiddleware',
