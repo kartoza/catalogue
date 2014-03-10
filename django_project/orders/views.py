@@ -623,3 +623,21 @@ def convertPrice(theRequest):
     rand_price = "%0.2f" % (convert_value(price, currency, 'ZAR'),)
     resp = simplejson.dumps({"rand_price": rand_price})
     return HttpResponse(resp, mimetype="application/json")
+
+
+@login_required
+def viewOrderStatusEmail(theRequest, theId):
+
+    myOrder = get_object_or_404(Order, id=theId)
+    if not ((myOrder.user == theRequest.user) or (theRequest.user.is_staff)):
+        raise Http404
+    myRecords = SearchRecord.objects.all().filter(order=myOrder)
+    if (myRecords.count() == 0):
+        myRecords = NonSearchRecord.objects.all().filter(order=myOrder)
+
+    myHistory = OrderStatusHistory.objects.all().filter(order=myOrder)
+    myOptions = {
+        'myOrder': myOrder,
+        'myRecords': myRecords,
+        'myHistory': myHistory
+    }
