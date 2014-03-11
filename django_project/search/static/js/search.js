@@ -567,6 +567,8 @@ APP.ResultGridView = Backbone.View.extend({
         var cur_pag_el = this.$el.find('#resultsPosition');
         var page_info = this.collection.pageInfo();
         var paginator = this._createSelectPaginator(page_info.current_page, page_info.pages);
+        var showing = page_info.limit;
+        if (page_info.total < page_info.limit) showing = page_info.total;
         var text = 'Page <span id="paginator"></span> of ' + page_info.pages + ' ('+page_info.total+' records)';
         if (page_info.current_page > 1) {
             $('#searchPrev').show();
@@ -582,7 +584,7 @@ APP.ResultGridView = Backbone.View.extend({
         cur_pag_el.html(text);
         $('#paginator').html(paginator);
         if (page_info.current_page == 1) {
-            $('#main-content').prepend('<div class="alert alert-info alert-dismissable alert-search"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>'+page_info.total+' Records Returned. Displaying '+page_info.limit+'.</strong></div>');
+            $('#main-content').prepend('<div class="alert alert-info alert-dismissable alert-search"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>'+page_info.total+' Records Returned. Displaying '+showing+'.</strong></div>');
             window.setTimeout(function () {
                 $(".alert").alert('close');
             }, 6000);
