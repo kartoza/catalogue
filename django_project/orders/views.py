@@ -469,7 +469,7 @@ def updateOrderHistory(theRequest):
         return HttpResponse(resp, mimetype="application/json")
     myOrder.order_status = myNewStatus
     myOrder.save()
-    #notifySalesStaff(myOrder.user, myOrderId, myRequestContext)
+    notifySalesStaff(myOrder.user, myOrderId, myRequestContext)
     resp = simplejson.dumps({"saved": 'ok'})
     return HttpResponse(resp, mimetype="application/json")
 
@@ -529,7 +529,7 @@ def addOrder(theRequest):
                 myRecord.processing_level = proc
                 myRecord.save()
 
-            #notifySalesStaff(theRequest.user, myObject.id)
+            notifySalesStaff(theRequest.user, myObject.id)
             return HttpResponseRedirect(
                 reverse('viewOrder', kwargs={'theId': myObject.id}))
         else:
@@ -596,6 +596,7 @@ def addAdhocOrder(theRequest):
                 nonSearchRecord.rand_cost_per_scene = convert_value(prod_cost, prod_currency, 'ZAR')
                 nonSearchRecord.currency = Currency.objects.get(code=prod_currency)
                 nonSearchRecord.save()
+            notifySalesStaff(theRequest.user, myObject.id)
             return HttpResponseRedirect(
                 reverse('viewOrder', kwargs={'theId': myObject.id}))
         else:
