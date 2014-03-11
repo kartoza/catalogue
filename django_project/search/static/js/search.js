@@ -644,11 +644,11 @@ APP.ResultGridViewItem = Backbone.View.extend({
 
     blurItem: function() {
         if (typeof this.line != 'undefined') this.line.remove();
-        var selectedID = this.model.get('id');
+        var selectedID = this.model.get('original_product_id');
         if (APP.selectedFeatureID == selectedID) {
             $APP.trigger('highlightSearchRecord', {'original_product_id': selectedID, 'zoom': false});
         } else {
-            $APP.trigger('removeFocusFeature', {'id': selectedID});
+            $APP.trigger('removeFocusFeature', {'original_product_id': selectedID});
         }
     },
 
