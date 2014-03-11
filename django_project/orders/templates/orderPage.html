@@ -176,6 +176,7 @@
 	}
 
   	$( document ).ready(function() {
+  		APP.$modal = $('#ajax-modal');
   		$('.metadata').click(function() {
 			var id = $(this).data('id');
 	        APP.$modal.load('/metadata/'+id, '', function(){
