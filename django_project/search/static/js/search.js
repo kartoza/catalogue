@@ -790,13 +790,10 @@ APP.CartGridView = Backbone.View.extend({
     },
 
     deleteItem: function(event, data) {
-        var del = confirm('Are you sure?');
-        if (del) {
-            var exist = APP.Cart.find(function(item) {
-                return item.get("product").original_product_id == data.id;
-            });
-            exist.destroy({wait: true});
-        }
+        var exist = APP.Cart.find(function(item) {
+            return item.get("product").original_product_id == data.id;
+        });
+        exist.destroy({wait: true});
     },
 
     render: function() {
@@ -835,11 +832,8 @@ APP.CartGridViewItem = Backbone.View.extend({
         });
     },
     delete: function() {
-        var del = confirm('Are you sure?');
-        if (del) {
-            $APP.trigger('removedItemFromCartUpdateResults', {'original_product_id': this.model.get('product').original_product_id});
-            this.model.destroy({wait: true});
-        }
+        $APP.trigger('removedItemFromCartUpdateResults', {'original_product_id': this.model.get('product').original_product_id});
+        this.model.destroy({wait: true});
     },
     render: function() {
        $(this.el).html(_.template(templateCart, {model:this.model}));
