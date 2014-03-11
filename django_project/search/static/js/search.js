@@ -599,7 +599,8 @@ APP.ResultGridViewItem = Backbone.View.extend({
         'click': 'highlightResultItem',
         'click img': 'imagePopover',
         'mouseenter': 'focusItem',
-        'mouseleave': 'blurItem'
+        'mouseleave': 'blurItem',
+        'mouseleave span': function() {console.log('test');},
     },
     initialize: function() {
         $APP.on('highlightResultItem', $.proxy(this.highlightResultItem, this));
@@ -741,9 +742,9 @@ var template = [
               '<% } else { %>UNK',
               '<% } %>',
             '</p></div>',
-            '<span class="button metadata-button btn btn-default" data-toggle="tooltip" data-title="View Metadata"><i class="icon-list-alt"></i></span>',
-            '<span class="button cart-button btn btn-default" data-toggle="tooltip" data-title="Add to Cart"><i class="icon-shopping-cart"></i></span>',
-            '<span class="button cart-remove-button btn btn-danger hide" data-toggle="tooltip" data-title="Remove From Cart"><i class="icon-remove"></i></span>',
+            '<span class="button metadata-button btn btn-default" data-title="View Metadata"><i class="icon-list-alt"></i></span>',
+            '<span class="button cart-button btn btn-default" data-title="Add to Cart"><i class="icon-shopping-cart"></i></span>',
+            '<span class="button cart-remove-button btn btn-danger hide" data-title="Remove From Cart"><i class="icon-remove"></i></span>',
           '</div>'
           ].join('');
 
