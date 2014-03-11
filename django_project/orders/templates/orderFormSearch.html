@@ -125,7 +125,7 @@
 					<th>Thumb</th>
 					<th>Product</th>
 					<th>Date</th>
-					<th>Cloud</th>
+					<th>Cloud (%)</th>
 					<th>Metadata</th>
 					<th>Projection</th>
 					<th>Processing level</th>
@@ -179,7 +179,9 @@
 								widget_product.id_processing
 							{% endcomment %}
 							<script>
-								document.write(APP['widget_{{ record.product.id }}_processing'].getCost());
+								var _price_to_write = APP['widget_{{ record.product.id }}_processing'].getCost();
+								if (_price_to_write == 0) _price_to_write += ' <i>(TBC)</i>';
+								document.write(_price_to_write);
 							</script>
 						</td>
 						<td><button class="btn btn-small btn-danger remove" data-id="{{ record.id }}" type="button"><i class="icon-trash"></i></button></td>

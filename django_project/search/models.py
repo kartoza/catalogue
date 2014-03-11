@@ -23,6 +23,7 @@ import json
 from datetime import datetime
 
 from django.contrib.gis.db import models
+from django.core.exceptions import ObjectDoesNotExist
 
 from exchange.conversion import convert_value
 
@@ -109,15 +110,11 @@ class SearchRecord(models.Model):
         user in order page for populating available product processing
         options
         """
-        """levels = (
-            self.product.getConcreteInstance().availableProcessingLevels().
-            values_list('id', 'name')
-        )"""
-        test = (
+        availableLevels = (
             self.product.getConcreteInstance().availableProcessingLevels()
         )
         levels = list()
-        for lvl in test:
+        for lvl in availableLevels:
             insTypeProcLevel = InstrumentTypeProcessingLevel.objects.filter(
             processing_level=lvl,
             instrument_type=(
@@ -126,19 +123,41 @@ class SearchRecord(models.Model):
                 .instrument_type
             )
             ).get()
-            spectralModeProcCosts = SpectralModeProcessingCosts.objects.filter(
-            spectral_mode=(
-                self.product.getConcreteInstance().product_profile
-                .spectral_mode
-            ),
-            instrument_type_processing_level=insTypeProcLevel
-            ).get()
-            rand_cost_per_scene = convert_value(
-            spectralModeProcCosts.cost_per_scene,
-            spectralModeProcCosts.currency.code, 'ZAR'
-            )
+            try:
+                spectralModeProcCosts = SpectralModeProcessingCosts.objects.filter(
+                spectral_mode=(
+                    self.product.getConcreteInstance().product_profile
+                    .spectral_mode
+                ),
+                instrument_type_processing_level=insTypeProcLevel
+                ).get()
+                rand_cost_per_scene = convert_value(
+                spectralModeProcCosts.cost_per_scene,
+                spectralModeProcCosts.currency.code, 'ZAR'
+                )
+            except ObjectDoesNotExist:
+                rand_cost_per_scene = 0;
             levels.append([lvl.id, lvl.name, int(rand_cost_per_scene)])
-        levels.append([14, 'Level 0 Raw instrument data', 0])
+        # add base level and cost
+        try:
+            instrumentType = self.product.getConcreteInstance().product_profile.satellite_instrument.satellite_instrument_group.instrument_type
+            baseinsTypeProcLevel = InstrumentTypeProcessingLevel.objects.filter(
+                processing_level=instrumentType.base_processing_level,
+                instrument_type=instrumentType).get()
+            basespectralModeProcCosts = SpectralModeProcessingCosts.objects.filter(
+                spectral_mode=(
+                    self.product.getConcreteInstance().product_profile
+                    .spectral_mode
+                ),
+                instrument_type_processing_level=baseinsTypeProcLevel
+                ).get()
+            rand_cost_per_scene = convert_value(
+                basespectralModeProcCosts.cost_per_scene,
+                basespectralModeProcCosts.currency.code, 'ZAR'
+                )
+        except ObjectDoesNotExist:
+                rand_cost_per_scene = 0;
+        levels.append([14, 'Level 0 Raw instrument data', rand_cost_per_scene])
         return json.dumps([list(level) for level in levels])
 
     def create(self, theUser, theProduct):
