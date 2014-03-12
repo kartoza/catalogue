@@ -539,10 +539,13 @@ def addOrder(theRequest):
                 context_instance=RequestContext(theRequest))
     else:  # new order
         myOrderForm = OrderForm(
-            {
-            'user': theRequest.user.id,
-            'file_format': 1,
-            'delivery_method': 2 })
+            initial={
+                'market_sector': None,
+                'user': theRequest.user.id,
+                'file_format': 1,
+                'delivery_method': 2
+            }
+        )
         myOptions = {
             'myOrderForm': myOrderForm,
         }
