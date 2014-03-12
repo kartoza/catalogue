@@ -44,15 +44,18 @@
 </div>
 <div class="row" style="margin-top:20px;">
   <p class="text-center">
-    Click on a sensor name for a detailed summary for that sensor. For the
-    sensor dictionary report click
-    <a href="#" onclick='loadContent("{% url 'dictionaryReport' %}");'>here</a>
+    Click on a sensor name for a detailed summary for that sensor.
   </p>
 </div>
 <div style="width: 860px; margin: auto;">
   <table class="table table-striped">
     <thead>
-      <tr><th>Sensor</th><th>Count</th></tr>
+      <tr>
+        <th>Sensor</th>
+        <th>Abbreviation</th>
+        <th>Count</th>
+{#        <th>Info</th>#}
+      </tr>
     </thead>
     <tbody>
       {% for myRecord in myResultSet %}
@@ -62,11 +65,18 @@
           <a href="#" onclick="loadSummaryTable({{myRecord.id}});">
             {{myRecord}}</a>
         </td>
+        <td></td>
         <td><script> document.write(numberWithCommas({{myRecord.id__count}}));</script></td>
+{#        <td></td>#}
       </tr>
       {% endif %}
       {% endfor %}
-      <tr><th>Total</th><th><script> document.write(numberWithCommas({{myTotal}}));</script></th></tr>
+      <tr>
+        <th>Total</th>
+        <th></th>
+        <th><script> document.write(numberWithCommas({{myTotal}}));</script></th>
+{#        <th></th>#}
+      </tr>
     </tbody>
   </table>
 </div>
