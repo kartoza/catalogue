@@ -36,7 +36,7 @@ from PIL import Image, ImageFilter, ImageOps
 
 from dictionaries.models import ProcessingLevel
 
-from catalogue.utmzonecalc import utmZoneFromLatLon
+from catalogue.utmzonecalc import utmZoneOverlap
 from catalogue.dims_lib import dimsWriter
 
 # for thumb georeferencer
@@ -723,15 +723,11 @@ class GenericProduct(models.Model):
         myNewString = " ".join(myUsedTokens).replace("-", "")
         return myNewString
 
-    def getUTMZones(self, theBuffer=0):
-        """ return UTM zones which overlap this product
-        theBuffer - specifies how many adjecent zones to return"""
-
-        return set(
-            utmZoneFromLatLon(
-                *self.spatial_coverage.extent[:2], theBuffer=theBuffer)
-            + utmZoneFromLatLon(
-                *self.spatial_coverage.extent[2:], theBuffer=theBuffer))
+    def getUTMZones(self):
+        """
+        return UTM zones which overlap this product
+        """
+        return utmZoneOverlap(*self.spatial_coverage.extent)
 
     def toHtml(self, theImageIsLocal=False):
         """

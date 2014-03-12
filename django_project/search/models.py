@@ -102,7 +102,7 @@ class SearchRecord(models.Model):
         used in order page for populating available product UTM zones
         """
         return json.dumps(
-            [list(zone) for zone in self.product.getUTMZones(theBuffer=1)])
+            [list(zone) for zone in self.product.getUTMZones()])
 
     def availableProcessingLevelsJSON(self):
         """

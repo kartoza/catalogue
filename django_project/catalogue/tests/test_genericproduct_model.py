@@ -62,7 +62,7 @@ class TestGenericProductCRUD(TestCase):
         """
 
         myModel = GenericProductF.create(**{
-            u'product_date':  datetime.strptime(
+            u'product_date': datetime.strptime(
                 '1987-04-28 08:46:32', '%Y-%m-%d %H:%M:%S'),
             u'spatial_coverage': (
                 u'POLYGON ((21.3566000000000145 -27.2013999999999783, '
@@ -134,7 +134,7 @@ class TestGenericProductCRUD(TestCase):
         """
 
         myModel = GenericProductF.create(**{
-            u'product_date':  datetime.strptime(
+            u'product_date': datetime.strptime(
                 '1987-04-28 08:46:32', '%Y-%m-%d %H:%M:%S'),
             u'spatial_coverage': (
                 u'POLYGON ((21.3566000000000145 -27.2013999999999783, '
@@ -158,7 +158,7 @@ class TestGenericProductCRUD(TestCase):
         Tests GenericProduct model tidySacId
         """
         myModel = GenericProductF.create(**{
-            u'product_date':  datetime.strptime(
+            u'product_date': datetime.strptime(
                 '1987-04-28 08:46:32', '%Y-%m-%d %H:%M:%S'),
             u'spatial_coverage': (
                 u'POLYGON ((21.3566000000000145 -27.2013999999999783, '
@@ -182,7 +182,7 @@ class TestGenericProductCRUD(TestCase):
         """
 
         myModel = GenericProductF.create(**{
-            u'product_date':  datetime.strptime(
+            u'product_date': datetime.strptime(
                 '1987-04-28 08:46:32', '%Y-%m-%d %H:%M:%S'),
             u'spatial_coverage': (
                 u'POLYGON ((21.3566000000000145 -27.2013999999999783, '
@@ -196,18 +196,5 @@ class TestGenericProductCRUD(TestCase):
             u'original_product_id': u'11204048606190846322X',
         })
 
-        #overlapping
-        myBufferParm = [0, 1, 5]
-        myExpResults = [
-            set([('32734', 'UTM34S')]),
-            set([('32734', 'UTM34S'), ('32733', 'UTM33S'),
-                ('32735', 'UTM35S')]),
-            set([('32735', 'UTM35S'), ('32734', 'UTM34S'),
-                ('32739', 'UTM39S'), ('32730', 'UTM30S'), ('32732', 'UTM32S'),
-                ('32729', 'UTM29S'), ('32738', 'UTM38S'), ('32737', 'UTM37S'),
-                ('32733', 'UTM33S'), ('32736', 'UTM36S'), ('32731', 'UTM31S')])
-        ]
-
-        for idx, param in enumerate(myBufferParm):
-            myRes = myModel.getUTMZones(param)
-            self.assertEqual(myRes, myExpResults[idx])
+        myRes = myModel.getUTMZones()
+        self.assertEqual(myRes, [('32734', 'UTM34S')])
