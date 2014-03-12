@@ -51,7 +51,7 @@
           <td>{{ myRecord.ip_address }}</td>
           <td>{{ myRecord.country}}</td>
           <td>{{ myRecord.city }}</td>
-          <td>{{ myRecord.visit_date }}</td>
+          <td>{{ myRecord.visit_date|date:"jS F Y" }}</td>
         </tr>
         {% endfor %}
       </tbody>
