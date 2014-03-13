@@ -63,9 +63,9 @@
       <tr>
         <td>
           <a href="#" onclick="loadSummaryTable({{myRecord.id}});">
-            {{myRecord}}</a>
+            {{ myRecord.satellite.name }}</a>
         </td>
-        <td></td>
+        <td>{{ myRecord.instrument_type.abbreviation }}</td>
         <td><script> document.write(numberWithCommas({{myRecord.id__count}}));</script></td>
 {#        <td></td>#}
       </tr>
