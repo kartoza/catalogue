@@ -400,3 +400,27 @@ class OpticalProductCRUD_Test(TestCase):
         })
         # satellite instrument_type path row spectral_mode
         self.assertEqual(myModel.productName(), u'L5 HRF 135 078 TM')
+
+        myModel = OpticalProductF.create(**{
+            'product_profile': myOPP,
+            'path': None,
+            'row': None
+        })
+        # satellite instrument_type path row spectral_mode
+        self.assertEqual(myModel.productName(), u'L5 HRF UNK UNK TM')
+
+        myModel = OpticalProductF.create(**{
+            'product_profile': myOPP,
+            'path': 135,
+            'row': None
+        })
+        # satellite instrument_type path row spectral_mode
+        self.assertEqual(myModel.productName(), u'L5 HRF 135 UNK TM')
+
+        myModel = OpticalProductF.create(**{
+            'product_profile': myOPP,
+            'path': None,
+            'row': 78
+        })
+        # satellite instrument_type path row spectral_mode
+        self.assertEqual(myModel.productName(), u'L5 HRF UNK 078 TM')

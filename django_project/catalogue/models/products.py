@@ -1180,7 +1180,16 @@ class OpticalProduct(GenericSensorProduct):
         """
         Returns product name as specified
         """
-        return '{0} {1} {2:03d} {3:03d} {4}'.format(
+        if self.path and self.row:
+            format_string = '{0} {1} {2:03d} {3:03d} {4}'
+        elif self.path and self.row is None:
+            format_string = '{0} {1} {2:03d} UNK {4}'
+        elif self.path is None and self.row:
+            format_string = '{0} {1} UNK {3:03d} {4}'
+        else:
+            format_string = '{0} {1} UNK UNK {4}'
+
+        return format_string.format(
             (
                 self.product_profile.satellite_instrument
                 .satellite_instrument_group.satellite.abbreviation
