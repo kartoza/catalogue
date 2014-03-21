@@ -198,9 +198,9 @@ def whereAmI(theRequest):
            //map.setCenter(new OpenLayers.LonLat(point.x, point.y), 5);
                         """)
         myLayerDefinitions = [
-            WEB_LAYERS['ZaSpot10mMosaic2010'], WEB_LAYERS['ZaRoadsBoundaries'],
+            WEB_LAYERS['TMSOverlay'],
             myLayerString]
-        myLayersList = "[zaSpot10mMosaic2010,zaRoadsBoundaries,myLayer]"
+        myLayersList = "[TMSOverlay,myLayer]"
         return ({
             'myGoogleFlag': 'true',
             'myExtent': myExtent,
