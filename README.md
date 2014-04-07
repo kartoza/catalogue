@@ -12,6 +12,24 @@ Or copy ``django_project/core/jenkins.py`` to e.g.
 ``django_project/core/jenkins_timlinux.py`` and use it in place of jenkins
 below.
 
+## Collect static
+
+You need to have node-venv, npm and yuglify installed in your venv. Note
+that if you are behind a proxy you also need to do:
+
+```
+venv/bin/activate
+npm config set proxy http://192.168.2.2:3128
+npm config set https-proxy http://192.168.2.2:3128
+```
+
+Then do:
+
+```
+cd django_project
+python manage.py collectstatic --settings=core.settings.dev_timlinux
+```
+
 ## Jenkins
 
 To run the full test suite using the jenkins runner:

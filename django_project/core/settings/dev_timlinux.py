@@ -6,8 +6,8 @@ DATABASES = {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
         'NAME': 'catalogue',
         'USER': 'timlinux',
-        'PASSWORD': '',
-        'HOST': '',
+        'PASSWORD': 'pumpkin',
+        'HOST': '192.168.2.159',
         'PORT': '5432',
         'TEST_NAME': 'sac_unittest_master',
     }
