@@ -39,7 +39,7 @@ class OpticalProductResource(ModelResource):
         # allowed_methods = ['get']
         fields = [
             'id', 'unique_product_id', 'product_date', 'cloud_cover',
-            'spatial_coverage', 'productName', 'original_product_id'
+            'spatial_coverage', 'productName'
         ]
 
     def dehydrate_product_date(self, bundle):

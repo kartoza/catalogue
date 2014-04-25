@@ -151,7 +151,6 @@ class ImagingModeAdmin(admin.ModelAdmin):
         'swath_width_km',
         'number_of_looks',
         'polarization']
-
 admin.site.register(ImagingMode, ImagingModeAdmin)
 
 
@@ -193,7 +192,8 @@ class SpectralModeAdmin(admin.ModelAdmin):
         'name',
         'instrument_type',
         'spectralgroup',
-        'description']
+        'description'
+    ]
 admin.site.register(SpectralMode, SpectralModeAdmin)
 
 

@@ -22,7 +22,7 @@ __copyright__ = 'South African National Space Agency'
 UTMZONES = [x * 6 + 3 for x in range(-30, 30)]
 
 
-def utmZoneFromLatLon(theLon, theLat):
+def utmZoneFromLatLon(theLon, theLat, theBuffer=0):
     """
     Returns textual representation of UTMZone for specified (lon, lat) pair
     """
@@ -34,62 +34,27 @@ def utmZoneFromLatLon(theLon, theLat):
     #look up zone using simple calculation, add 1 because lists are 0 based
     myZone = UTMZONES.index(int(theLon / 6) * 6 + 3) + 1
 
-    if theLat > 0:
-        myHemisphere = 'N'
-        myPrefix = '326'
+    if theBuffer:
+        myZones = []
+        for buf in range(-theBuffer, theBuffer + 1):
+            tmp = myZone + buf
+            #account for zones on the edges
+            if tmp > 60:
+                tmp = tmp - 60
+            if tmp < 1:
+                tmp = tmp + 60
+            myZones.append(tmp)
     else:
-        myHemisphere = 'S'
-        myPrefix = '327'
-    mySuffix = '%02d' % myZone
+        myZones = [myZone]
 
-    return (myPrefix + mySuffix, 'UTM' + mySuffix + myHemisphere)
-
-
-def utmZoneOverlap(west, south, east, north):
-    """
-    calculates overlapping UTMZones for a product
-
-    if a product spans several UTMZones then we need to calcualte an zone
-    intersection set
-    """
-
-    def overlapOnEdge(zoneIndex):
-        """
-        Account for zones on the edges
-        """
-
-        if zoneIndex > 60:
-            zoneIndex -= 60
-        if zoneIndex < 1:
-            zoneIndex += 60
-
-        return zoneIndex
-
-    lowerLeftZone = UTMZONES.index(int(west / 6) * 6 + 3) + 1
-    upperRightZone = UTMZONES.index(int(east / 6) * 6 + 3) + 1
-
-    overlap = upperRightZone - lowerLeftZone
-
-    llZones = set()
-    urZones = set()
-    for buf in xrange(-overlap, overlap + 1):
-        llTmp = overlapOnEdge(lowerLeftZone + buf)
-        urTmp = overlapOnEdge(upperRightZone + buf)
-        llZones.update([llTmp])
-        urZones.update([urTmp])
-
-    overlapingZones = llZones & urZones
-
-    if south > 0:
-        myHemisphere = 'N'
-        myPrefix = '326'
-    else:
-        myHemisphere = 'S'
-        myPrefix = '327'
-
-    return [(
-        myPrefix + '%02d' % zone,
-        'UTM' + '%02d' % zone + myHemisphere
-    )
-        for zone in overlapingZones
-    ]
+    myResult = []
+    for zone in myZones:
+        if theLat > 0:
+            myHemisphere = 'N'
+            myPrefix = '326'
+        else:
+            myHemisphere = 'S'
+            myPrefix = '327'
+        mySuffix = '%02d' % zone
+        myResult.append((myPrefix + mySuffix, 'UTM' + mySuffix + myHemisphere))
+    return myResult

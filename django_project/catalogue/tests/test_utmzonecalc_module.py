@@ -20,12 +20,12 @@ __copyright__ = 'South African National Space Agency'
 
 from django.test import TestCase
 
-from catalogue.utmzonecalc import utmZoneFromLatLon, utmZoneOverlap
+from catalogue.utmzonecalc import utmZoneFromLatLon
 
 
 class utmZoneFromLatLon_Test(TestCase):
     """
-    Tests utmzonecalc module, utmZoneFromLatLon function
+    Tests utmzonecalc module
     """
 
     def test_inputValues(self):
@@ -42,12 +42,12 @@ class utmZoneFromLatLon_Test(TestCase):
 
     def test_returnResult(self):
         """
-        Tests if utmZoneFromLatLon with correct input values
+        Tests if utmZoneFromLatLon will throw an exception on wrong input
         """
         myTestValues = [(-179, 0), (0, -80), (179, 89), (0, 0)]
         myExpectedResults = [
-            ('32701', 'UTM01S'), ('32731', 'UTM31S'),
-            ('32660', 'UTM60N'), ('32731', 'UTM31S')
+            [('32701', 'UTM01S')], [('32731', 'UTM31S')],
+            [('32660', 'UTM60N')], [('32731', 'UTM31S')]
         ]
 
         for idx, testVal in enumerate(myTestValues):
@@ -56,33 +56,20 @@ class utmZoneFromLatLon_Test(TestCase):
 
             self.assertEqual(myRes, myExpRes)
 
-
-class utmZoneOverlap_Test(TestCase):
-    """
-    Tests utmzonecalc module, utmZoneOverlap function
-    """
-
-    def test_utmZoneOverlap(self):
+    def test_returnResultWithBuffer(self):
         """
         Tests if utmZoneFromLatLon will throw an exception on wrong input
         """
-        myTestValues = [
-            (-34, -64, -35, -52), (-34, -64, -30, -62), (-40, -64, -30, -52),
-            (-80, -64, -30, -52)]
+        myTestValues = [(-32, -64, 0), (-32, -64, 1), (-32, -64, 2)]
         myExpectedResults = [
             [('32725', 'UTM25S')],
-            [('32725', 'UTM25S'), ('32726', 'UTM26S')],
             [('32724', 'UTM24S'), ('32725', 'UTM25S'), ('32726', 'UTM26S')],
-            [
-                ('32717', 'UTM17S'), ('32718', 'UTM18S'), ('32719', 'UTM19S'),
-                ('32720', 'UTM20S'), ('32721', 'UTM21S'), ('32722', 'UTM22S'),
-                ('32723', 'UTM23S'), ('32724', 'UTM24S'), ('32725', 'UTM25S'),
-                ('32726', 'UTM26S')
-            ]
+            [('32723', 'UTM23S'), ('32724', 'UTM24S'), ('32725', 'UTM25S'),
+                ('32726', 'UTM26S'), ('32727', 'UTM27S')]
         ]
 
         for idx, testVal in enumerate(myTestValues):
-            myRes = utmZoneOverlap(*testVal)
+            myRes = utmZoneFromLatLon(*testVal)
             myExpRes = myExpectedResults[idx]
 
             self.assertEqual(myRes, myExpRes)

@@ -26,7 +26,7 @@
     {% for mySearch in mySearches %}
     <tr>
       <td>
-        {{ mySearch.search_date|date:"jS F Y" }}
+        {{ mySearch.search_date|date:"D, d M Y, H:m" }}
       </td>
       <td>
         {{ mySearch.sensorsAsString }}

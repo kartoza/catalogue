@@ -33,24 +33,20 @@
     </thead>
     <tbody>
       {% for myDataPage in mySensorYearyStats %}
-        <tr>
-          {% for myData in myDataPage %}
-            {% if not myData.count == 0 %}
-              <th>
-                  {{ myData.year }}
-              </th>
-            {% endif %}
-          {% endfor %}
-        </tr>
-        <tr>
-          {% for myData in myDataPage %}
-            {% if not myData.count == 0 %}
-              <td>
-                  {{ myData.count }}
-              </td>
-            {% endif %}
-          {% endfor %}
-        </tr>
+      <tr>
+        {% for myData in myDataPage %}
+        <th>
+            {{ myData.year }}
+        </th>
+        {% endfor %}
+      </tr>
+      <tr>
+        {% for myData in myDataPage %}
+        <td>
+            {{ myData.count }}
+        </td>
+        {% endfor %}
+      </tr>
       {% endfor %}
     </tbody>
   </table>

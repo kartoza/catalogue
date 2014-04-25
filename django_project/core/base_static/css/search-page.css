@@ -348,13 +348,13 @@
     height: 16px;
     position: absolute;
     top: 6px;
-    right: 428px;
+    right: 8px;
 }
 
 .result-item .result-item-info {
     position: absolute;
     top: 6px;
-    left: 30px;
+    left: 0px;
     width: 170px;
     padding-left: 5px;
 }

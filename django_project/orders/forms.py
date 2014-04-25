@@ -40,12 +40,6 @@ class OrderForm(forms.ModelForm):
         model = Order
         exclude = ('order_status',)
 
-    def __init__(self, *args, **kwargs):
-      super(OrderForm, self).__init__(*args, **kwargs)
-      self.fields['market_sector'].empty_label = "--- Please select ---"
-      # following line needed to refresh widget copy of choice list
-      self.fields['market_sector'].widget.choices = self.fields['market_sector'].choices
-
 
 class OrderFormNonSearchRecords(forms.ModelForm):
     class Meta:

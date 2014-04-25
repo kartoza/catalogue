@@ -469,7 +469,7 @@ def updateOrderHistory(theRequest):
         return HttpResponse(resp, mimetype="application/json")
     myOrder.order_status = myNewStatus
     myOrder.save()
-    notifySalesStaff(myOrder.user, myOrderId, myRequestContext)
+    #notifySalesStaff(myOrder.user, myOrderId, myRequestContext)
     resp = simplejson.dumps({"saved": 'ok'})
     return HttpResponse(resp, mimetype="application/json")
 
@@ -529,23 +529,16 @@ def addOrder(theRequest):
                 myRecord.processing_level = proc
                 myRecord.save()
 
-            notifySalesStaff(theRequest.user, myObject.id)
+            #notifySalesStaff(theRequest.user, myObject.id)
             return HttpResponseRedirect(
                 reverse('viewOrder', kwargs={'theId': myObject.id}))
         else:
             logger.info('Add Order: form is NOT valid')
             return render_to_response(
-                'orderForm.html', myOptions,
+                'myOrderForm.html', myOptions,
                 context_instance=RequestContext(theRequest))
     else:  # new order
-        myOrderForm = OrderForm(
-            initial={
-                'market_sector': None,
-                'user': theRequest.user.id,
-                'file_format': 1,
-                'delivery_method': 2
-            }
-        )
+        myOrderForm = OrderForm({'user': theRequest.user.id })
         myOptions = {
             'myOrderForm': myOrderForm,
         }
@@ -564,7 +557,7 @@ def ordersSummary(theRequest):
     del theRequest
     #count orders by status
     myOrderStatus = OrderStatus.objects.annotate(num_orders=Count('order__id'))
-    # count orders by product type (mission sensor)
+    # count orders by product type (misson sensor)
     # TODO - refactoring
     myOrderInstrumentType = None
     myOrderSatellite = None
@@ -599,7 +592,6 @@ def addAdhocOrder(theRequest):
                 nonSearchRecord.rand_cost_per_scene = convert_value(prod_cost, prod_currency, 'ZAR')
                 nonSearchRecord.currency = Currency.objects.get(code=prod_currency)
                 nonSearchRecord.save()
-            notifySalesStaff(theRequest.user, myObject.id)
             return HttpResponseRedirect(
                 reverse('viewOrder', kwargs={'theId': myObject.id}))
         else:
@@ -627,21 +619,3 @@ def convertPrice(theRequest):
     rand_price = "%0.2f" % (convert_value(price, currency, 'ZAR'),)
     resp = simplejson.dumps({"rand_price": rand_price})
     return HttpResponse(resp, mimetype="application/json")
-
-
-@login_required
-def viewOrderStatusEmail(theRequest, theId):
-
-    myOrder = get_object_or_404(Order, id=theId)
-    if not ((myOrder.user == theRequest.user) or (theRequest.user.is_staff)):
-        raise Http404
-    myRecords = SearchRecord.objects.all().filter(order=myOrder)
-    if (myRecords.count() == 0):
-        myRecords = NonSearchRecord.objects.all().filter(order=myOrder)
-
-    myHistory = OrderStatusHistory.objects.all().filter(order=myOrder)
-    myOptions = {
-        'myOrder': myOrder,
-        'myRecords': myRecords,
-        'myHistory': myHistory
-    }

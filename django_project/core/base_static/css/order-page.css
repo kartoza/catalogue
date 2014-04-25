@@ -16,15 +16,14 @@
 
 #map-controls3 {
     width: 200px;
-    height: 25px;
+    height: 53px;
     z-index: 100;
-    position: absolute;
-    bottom: 10px;
+    position: fixed;
+    bottom: 50px;
     left: 10px;
     color: #ffffff;
     font-size: 10px;
     padding-left: 5px;
-    z-index: 1000;
 }
 
 #map-control-position {
@@ -49,7 +48,7 @@
     position: absolute;
     bottom: 10px;
     left: 50%;
-    margin-left: -150px;
+    margin-left: -225px;
     color: #ffffff;
     padding-top: 12px;
     padding-left: 3px;
@@ -125,10 +124,4 @@
     /*max-width: inherit;*/
     backface-visibility: inherit !important;
     transform: inherit !important;
-}
-
-.staffonly {
-    color: red;
-    font-size: 10px;
-    font-style: italic;
 }

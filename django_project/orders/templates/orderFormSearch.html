@@ -4,11 +4,11 @@
 			<div class="span4">
 				<div class="control-group">
 					<label class="control-label">Projection</label>
-				  	<label class="controls radio inline" style="margin-left: 20px;">
+				  	<label class="controls radio">
 				    	<input type="radio" name="projectionRadio" id="projectionRadio1" value="0" checked>
 				    	UTM
 				  	</label>
-				  	<label class="controls radio inline">
+				  	<label class="controls radio">
 				    	<input type="radio" name="projectionRadio" id="projectionRadio1" value="1">
 				    	Geographic
 				  	</label>
@@ -32,11 +32,11 @@
 			<div class="span4">
 				<div class="control-group">
 					<label class="control-label">Processing level</label>
-				  	<label class="controls radio inline"  style="margin-left: 20px;">
+				  	<label class="controls radio">
 				    	<input type="radio" name="processingRadio" id="processingRadio1" value="1">
 				    	Raw
 				  	</label>
-				  	<label class="controls radio inline">
+				  	<label class="controls radio">
 				    	<input type="radio" name="processingRadio" id="processingRadio1" value="0" checked>
 				    	Standard default
 				  	</label>
@@ -72,11 +72,10 @@
 					</div>
 				</div>
 				<hr />
-				<div class="control-group {% if myOrderForm.market_sector.errors %}error{% endif %}">
+				<div class="control-group">
 					<label class="control-label" for="{{ myOrderForm.market_sector.auto_id }}">{{ myOrderForm.market_sector.label }}</label>
 					<div class="controls">
 						{{ myOrderForm.market_sector }}
-						<span class="help-inline">{{ myOrderForm.market_sector.errors }}</span>
 					</div>
 				</div>
 				<div class="control-group">
@@ -87,19 +86,13 @@
 				</div>
 				{% if user.is_staff %}
 				<div class="control-group">
-					<label class="control-label" for="{{ myOrderForm.subsidy_type_assigned.auto_id }}">{{ myOrderForm.subsidy_type_assigned.label }}
-					<br /><span class="staffonly">Staff only
-					</span>
-					</label>
+					<label class="control-label" for="{{ myOrderForm.subsidy_type_assigned.auto_id }}">{{ myOrderForm.subsidy_type_assigned.label }}</label>
 					<div class="controls">
 						{{ myOrderForm.subsidy_type_assigned }}
 					</div>
 				</div>
 				<div class="control-group">
-					<label class="control-label" for="{{ myOrderForm.user.auto_id }}">{{ myOrderForm.user.label }}
-					<br /><span class="staffonly">Staff only
-					</span>
-					</label>
+					<label class="control-label" for="{{ myOrderForm.user.auto_id }}">{{ myOrderForm.user.label }}</label>
 					<div class="controls">
 						{{ myOrderForm.user }}
 					</div>
@@ -125,7 +118,7 @@
 					<th>Thumb</th>
 					<th>Product</th>
 					<th>Date</th>
-					<th>Cloud (%)</th>
+					<th>Cloud</th>
 					<th>Metadata</th>
 					<th>Projection</th>
 					<th>Processing level</th>
@@ -171,7 +164,7 @@
 							</script>
 						</td>
 						{% endautoescape %}
-						<td id="{{ record.product.id }}_cost" name="{{ record.product.id }}_cost" data-id="{{ record.product.id }}">R 
+						<td id="{{ record.product.id }}_cost" name="{{ record.product.id }}_cost" data-id="{{ record.product.id }}">
 							{% comment %}
 								As we are displaying initial cost during render while DOM is not ready
 								we are hooking via id to previously created widget to extract the price
@@ -179,25 +172,23 @@
 								widget_product.id_processing
 							{% endcomment %}
 							<script>
-								var _price_to_write = APP['widget_{{ record.product.id }}_processing'].getCost();
-								if (_price_to_write == 0) _price_to_write += ' <i>(TBC)</i>';
-								document.write(_price_to_write);
+								document.write(APP['widget_{{ record.product.id }}_processing'].getCost());
 							</script>
 						</td>
 						<td><button class="btn btn-small btn-danger remove" data-id="{{ record.id }}" type="button"><i class="icon-trash"></i></button></td>
 					</tr>
 				{% endfor %}
-				<tr>
-					<td colspan="6"></td>
-					<td><b>Total cost:</b></td>
-					<td colspan="2"><span id="product_total_cost">R 0</span></td>
-				</tr>
 				</table>
 			</div>
 		</div>
 		<div class="row">
-			<div class="span2 offset10" style="padding-top: 20px;">
-				<button type="submit" class="btn">Order now</button>
+			<div class="span12">
+				<div class="pull-right">Total cost: <span id="product_total_cost">0</span></div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="span12">
+				<button type="submit" class="btn">Submit</button>
 			</div>
 		</div>
   </form>

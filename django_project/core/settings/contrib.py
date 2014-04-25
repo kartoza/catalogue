@@ -18,8 +18,7 @@ INSTALLED_APPS += (
 )
 
 # Added by George for webodt
-#WEBODT_CONVERTER = 'webodt.converters.abiword.AbiwordODFConverter'
-WEBODT_CONVERTER = 'webodt.converters.openoffice.OpenOfficeODFConverter'
+WEBODT_CONVERTER = 'webodt.converters.abiword.AbiwordODFConverter'
 WEBODT_TEMPLATE_PATH = ABS_PATH('reports', 'report-templates')
 WEBODT_ODF_TEMPLATE_PREPROCESSORS = [
     'webodt.preprocessors.xmlfor_preprocessor',

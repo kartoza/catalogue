@@ -56,7 +56,7 @@
 		// for process level widget we must set on change trigger to update cost
 		if (options.type == 'processing') {
 			$('#'+options.id + suffix).on('change', function() {
-				$('#'+options.id+'_cost').html('R ' + options.data[this.selectedIndex][2])
+				$('#'+options.id+'_cost').html(options.data[this.selectedIndex][2])
 				setTotalCost();
 			})
 		}

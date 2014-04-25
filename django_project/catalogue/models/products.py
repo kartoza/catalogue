@@ -36,7 +36,7 @@ from PIL import Image, ImageFilter, ImageOps
 
 from dictionaries.models import ProcessingLevel
 
-from catalogue.utmzonecalc import utmZoneOverlap
+from catalogue.utmzonecalc import utmZoneFromLatLon
 from catalogue.dims_lib import dimsWriter
 
 # for thumb georeferencer
@@ -723,11 +723,15 @@ class GenericProduct(models.Model):
         myNewString = " ".join(myUsedTokens).replace("-", "")
         return myNewString
 
-    def getUTMZones(self):
-        """
-        return UTM zones which overlap this product
-        """
-        return utmZoneOverlap(*self.spatial_coverage.extent)
+    def getUTMZones(self, theBuffer=0):
+        """ return UTM zones which overlap this product
+        theBuffer - specifies how many adjecent zones to return"""
+
+        return set(
+            utmZoneFromLatLon(
+                *self.spatial_coverage.extent[:2], theBuffer=theBuffer)
+            + utmZoneFromLatLon(
+                *self.spatial_coverage.extent[2:], theBuffer=theBuffer))
 
     def toHtml(self, theImageIsLocal=False):
         """
@@ -1180,16 +1184,7 @@ class OpticalProduct(GenericSensorProduct):
         """
         Returns product name as specified
         """
-        if self.path and self.row:
-            format_string = '{0} {1} {2:03d} {3:03d} {4}'
-        elif self.path and self.row is None:
-            format_string = '{0} {1} {2:03d} UNK {4}'
-        elif self.path is None and self.row:
-            format_string = '{0} {1} UNK {3:03d} {4}'
-        else:
-            format_string = '{0} {1} UNK UNK {4}'
-
-        return format_string.format(
+        return '{0} {1} {2:03d} {3:03d} {4}'.format(
             (
                 self.product_profile.satellite_instrument
                 .satellite_instrument_group.satellite.abbreviation
