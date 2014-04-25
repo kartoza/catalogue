@@ -21,13 +21,32 @@ from django.contrib.gis import admin
 from django import forms
 
 from .models import (
-    ProcessingLevel, Collection, Satellite, ScannerType, InstrumentType,
-    RadarBeam, ImagingMode, SatelliteInstrumentGroup, SatelliteInstrument,
-    Band, SpectralGroup, SpectralMode, BandSpectralMode,
-    InstrumentTypeProcessingLevel, SpectralModeProcessingCosts,
-    OpticalProductProfile, RadarProductProfile, ReferenceSystem,
-    Projection, Institution, License, Quality, SalesRegion, SubsidyType,
-    ProductProcessState
+    ProcessingLevel,
+    Collection,
+    Satellite,
+    ScannerType,
+    InstrumentType,
+    RadarBeam,
+    ImagingMode,
+    SatelliteInstrumentGroup,
+    SatelliteInstrument,
+    Band,
+    SpectralGroup,
+    SpectralMode,
+    BandSpectralMode,
+    InstrumentTypeProcessingLevel,
+    SpectralModeProcessingCosts,
+    OpticalProductProfile,
+    RadarProductProfile,
+    ReferenceSystem,
+    Projection, 
+    Institution, 
+    License, 
+    Quality, 
+    SalesRegion, 
+    SubsidyType,
+    ProductProcessState,
+    ForeignCurrency,
 )
 
 
@@ -107,8 +126,7 @@ class InstrumentTypeAdmin(admin.ModelAdmin):
         'band_count',
         'pixel_size_list_m',
         'spatial_resolution_range',
-        'image_size_km'
-    ]
+        'image_size_km']
 admin.site.register(InstrumentType, InstrumentTypeAdmin)
 
 
@@ -118,8 +136,8 @@ class RadarBeamAdmin(admin.ModelAdmin):
         'band_name',
         'wavelength_cm',
         'looking_distance',
-        'azimuth_direction'
-    ]
+        'azimuth_direction']
+
 admin.site.register(RadarBeam, RadarBeamAdmin)
 
 
@@ -132,15 +150,18 @@ class ImagingModeAdmin(admin.ModelAdmin):
         'approximate_resolution_m',
         'swath_width_km',
         'number_of_looks',
-        'polarization'
-    ]
+        'polarization']
 admin.site.register(ImagingMode, ImagingModeAdmin)
 
 
 class SatelliteInstrumentAdmin(admin.ModelAdmin):
     search_fields = ['name', 'abbreviation', 'description']
     list_filter = ['satellite_instrument_group']
-    list_display = ['name', 'abbreviation', 'description']
+    list_display = [
+        'name',
+        'abbreviation',
+        'description',
+        'satellite_instrument_group']
 admin.site.register(SatelliteInstrument, SatelliteInstrumentAdmin)
 
 
@@ -167,10 +188,10 @@ class SpectralModeAdmin(admin.ModelAdmin):
     search_fields = ['name', 'description']
     list_filter = ['instrument_type', 'spectralgroup']
     list_display = [
-        'instrument_type',
-        'spectralgroup',
         'abbreviation',
         'name',
+        'instrument_type',
+        'spectralgroup',
         'description'
     ]
 admin.site.register(SpectralMode, SpectralModeAdmin)
@@ -216,6 +237,12 @@ class RadarProductProfileAdmin(admin.ModelAdmin):
     list_filter = ['satellite_instrument', 'imaging_mode']
     list_display = ['satellite_instrument', 'imaging_mode']
 admin.site.register(RadarProductProfile, RadarProductProfileAdmin)
+
+
+class ForeignCurrencyAdmin(admin.ModelAdmin):
+    search_fields = ['name']
+    list_display = ['abbreviation', 'name', 'conversion_rate']
+admin.site.register(ForeignCurrency, ForeignCurrencyAdmin)
 
 
 class ReferenceSystemAdmin(admin.ModelAdmin):

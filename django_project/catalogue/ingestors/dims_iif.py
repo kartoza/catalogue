@@ -45,7 +45,7 @@ from dictionaries.models import (
 from catalogue.models import OpticalProduct
 
 
-def parseDateTime(theDate):
+def parse_date_time(theDate):
     """A helper method to create a date object from a landsat time stamp.
 
     :param theDate: Date in this format:
@@ -57,25 +57,25 @@ def parseDateTime(theDate):
     :rtype: datetime
     """
     #print 'Parsing Date: %s\n' % theDate
-    myStartYear = theDate[0:4]
-    myStartMonth = theDate[5:7]
-    myStartDay = theDate[8:10]
-    myStartTime = theDate[11:19]
-    myTokens = myStartTime.split(':')
-    myStartHour = myTokens[0]
-    myStartMinute = myTokens[1]
-    myStartSeconds = myTokens[2]
+    start_year = theDate[0:4]
+    start_month = theDate[5:7]
+    start_day = theDate[8:10]
+    start_time = theDate[11:19]
+    tokens = start_time.split(':')
+    start_hour = tokens[0]
+    start_minute = tokens[1]
+    start_seconds = tokens[2]
     #print "%s-%s-%sT%s:%s:%s" % (
-    #    myStartYear, myStartMonth, myStartDay,
-    #    myStartHour, myStartMinute, myStartSeconds)
-    myDateTime = datetime(
-        int(myStartYear),
-        int(myStartMonth),
-        int(myStartDay),
-        int(myStartHour),
-        int(myStartMinute),
-        int(myStartSeconds))
-    return myDateTime
+    #    start_year, start_month, start_day,
+    #    start_hour, start_minute, start_seconds)
+    parsed_date_time = datetime(
+        int(start_year),
+        int(start_month),
+        int(start_day),
+        int(start_hour),
+        int(start_minute),
+        int(start_seconds))
+    return parsed_date_time
 
 
 def get_parameters_element(dom):
@@ -183,17 +183,17 @@ def get_dates(log_message, dom):
 
     start_element = coverage.getElementsByTagName('startTime')[0]
     start_date = start_element.firstChild.nodeValue
-    start_date = parseDateTime(start_date)
+    start_date = parse_date_time(start_date)
     log_message('Product Start Date: %s' % start_date, 2)
 
     center_element = dom.getElementsByTagName('centerTime')[0]
     center_date = center_element.firstChild.nodeValue
-    center_date = parseDateTime(center_date)
+    center_date = parse_date_time(center_date)
     log_message('Product Date: %s' % center_date, 2)
 
     end_element = dom.getElementsByTagName('stopTime')[0]
     end_date = end_element.firstChild.nodeValue
-    end_date = parseDateTime(end_date)
+    end_date = parse_date_time(end_date)
     log_message('Product End Date: %s' % end_date, 2)
 
     return start_date, center_date, end_date
@@ -365,7 +365,7 @@ def get_product_profile(log_message, dom):
             satellite=satellite, instrument_type=instrument_type)
     except Exception, e:
         print e.message
-        satellite_instrument_group = None
+        raise e
     log_message('Satellite Instrument Group %s' %
                 satellite_instrument_group, 2)
 
@@ -379,7 +379,7 @@ def get_product_profile(log_message, dom):
             satellite_instrument_group=satellite_instrument_group)
     except Exception, e:
         print e.message
-        satellite_instrument = None
+        raise e
     log_message('Satellite Instrument %s' % satellite_instrument, 2)
 
     try:
@@ -387,7 +387,7 @@ def get_product_profile(log_message, dom):
             instrument_type=instrument_type)
     except Exception, e:
         print e.message
-        spectral_modes = None
+        raise
     log_message('Spectral Modes %s' % spectral_modes, 2)
 
     try:
@@ -399,7 +399,7 @@ def get_product_profile(log_message, dom):
         print 'Searched for satellite instrument: %s and spectral modes %s' % (
             satellite_instrument, spectral_modes
         )
-        product_profile = None
+        raise e
     log_message('Product Profile %s' % product_profile, 2)
 
     return product_profile
@@ -440,6 +440,8 @@ def get_projection(specific_parameters):
     The project is always expressed as an EPSG code and we fetch the related
     Projection model for that code.
 
+    In IIF we only get 'UTM' for the CRS which is basically unusable for
+    us (since we need the zone too) so we will always fail and return EPSG:4326
 
     :param specific_parameters: Dom Document containing the bounds of the scene.
     :type specific_parameters: DOM document.
@@ -450,13 +452,16 @@ def get_projection(specific_parameters):
 
     try:
         projection_element = get_feature(
-            'projectionInfo', specific_parameters)
+            'projectionName', specific_parameters)
         projection = get_feature_value('code', projection_element)
         projection = Projection.objects.get(epsg_code=int(projection))
     except:
         # If projection not found default to WGS84 - some IIF files
         # may not have a projection if they are 'scene identifying IIF's'
         # and the data is raw / unprocessed.
+        # Discussion with Linda 29 Jan 2014 - eventually we should probably
+        # just remove projection from GenericProduct and only worry about
+        # CRS on deliver of the product.
         projection = Projection.objects.get(epsg_code=4326)
     return projection
 
@@ -482,30 +487,23 @@ def ingest(
     """
     Ingest a collection of Landsat metadata folders.
 
-    Args:
-        * test_only_flag - (Optional) Defaults to False. Whether to do a dummy
-           run (database will not be updated).
-        * source_path - (Required) A DIMS created IIF metadata xml file and
-          thumbnail
-        * verbosity_level - (Optional) Defaults to 1. How verbose the logging
-           output should be. 0-2 where 2 is very very very very verbose!
-        * myLicense - (Optional) Defaults to 'SANSA Free License',
-            License holder of the product.
-        * theOwner - (Optional) Defaults to 'USGS', Original provider / owner
-           of the data.
-        * theSoftware - (Optional) Defaults to 'LPGS', The software used to
-            create / extract the product.
-        * theSoftwareVersion - str (Optional) Defaults to 11.6.0.
-        * theQuality - (Optional) Defaults to 'Unknown', A quality assessment
-            for these images defined in the IIF file.
-        * halt_on_error_flag: bool - set to True if we should stop processing
-            when the first error is encountered.
-    Returns:
-        None
-    Exceptions:
-        Any unhandled exceptions will be raised.
+    :param test_only_flag: Whether to do a dummy run ( database will not be
+        updated. Default False.
+
+    :param source_path: A DIMS created IIF metadata xml file and thumbnail.
+
+    :param verbosity_level: How verbose the logging output should be. 0-2
+        where 2 is very very very very verbose! Default is 1.
+
+    :param halt_on_error_flag: Whather we should stop processing when the first
+        error is encountered. Default is True.
     """
     def log_message(message, level=1):
+        """Log a message for a given leven.
+
+        :param message: A message.
+        :param level: A log level.
+        """
         if verbosity_level >= level:
             print message
 
@@ -535,7 +533,8 @@ def ingest(
     for myFolder in glob.glob(os.path.join(source_path, '*')):
         record_count += 1
         try:
-
+            log_message('', 2)
+            log_message('---------------', 2)
             # Get the folder name
             product_folder = os.path.split(myFolder)[-1]
             log_message(product_folder, 2)
@@ -560,6 +559,11 @@ def ingest(
 
             # Now get all sensor specific metadata
             specific_parameters = get_specific_parameters_element(dom)
+
+            # projection for GenericProduct
+            #print specific_parameters.toxml()
+            projection = get_projection(specific_parameters)
+            log_message('Projection: %s' % projection, 2)
 
             # Orbit number for GenericSensorProduct
             orbit_number = get_feature_value(
@@ -598,10 +602,6 @@ def ingest(
                 resolution_element)
             log_message(
                 'Radiometric resolution: %s' % radiometric_resolution, 2)
-
-            # projection for GenericProduct
-            projection = get_projection(specific_parameters)
-            log_message('Projection: %s' % projection, 2)
 
             # path for GenericSensorProduct
             path = get_feature_value('path', specific_parameters)
@@ -655,7 +655,6 @@ def ingest(
             metadata = metadata_file.readlines()
             metadata_file.close()
             log_message('Metadata retrieved', 2)
-
 
             keys = get_administration_keys_element(dom)
             dims_product_id = get_feature_value('productID', keys)
@@ -789,6 +788,8 @@ def ingest(
                 transaction.commit()
                 log_message('Imported scene : %s' % product_folder, 1)
         except Exception, e:
+            log_message('Record import failed. AAAAAAARGH! : %s' %
+                        product_folder, 1)
             failed_record_count += 1
             if halt_on_error_flag:
                 print e.message
@@ -797,7 +798,10 @@ def ingest(
                 continue
 
     # To decide: should we remove ingested product folders?
+
+    print '==============================='
     print 'Products processed : %s ' % record_count
     print 'Products updated : %s ' % updated_record_count
     print 'Products imported : %s ' % created_record_count
     print 'Products failed to import : %s ' % failed_record_count
+    print '==============================='

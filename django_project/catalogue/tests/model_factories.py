@@ -21,10 +21,16 @@ import factory
 from datetime import datetime
 
 from ..models import (
-    GenericProduct, GenericImageryProduct, GenericSensorProduct,
-    OpticalProduct, RadarProduct, GeospatialProduct, OrdinalProduct,
-    ContinuousProduct, Visit, WorldBorders
-)
+    GenericProduct,
+    GenericImageryProduct,
+    GenericSensorProduct,
+    OpticalProduct,
+    RadarProduct,
+    GeospatialProduct,
+    OrdinalProduct,
+    ContinuousProduct,
+    Visit,
+    WorldBorders)
 
 
 class GenericProductF(factory.django.DjangoModelFactory):
