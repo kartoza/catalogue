@@ -137,7 +137,7 @@ class RadarBeamAdmin(admin.ModelAdmin):
         'wavelength_cm',
         'looking_distance',
         'azimuth_direction']
-    pass
+
 admin.site.register(RadarBeam, RadarBeamAdmin)
 
 
@@ -151,6 +151,7 @@ class ImagingModeAdmin(admin.ModelAdmin):
         'swath_width_km',
         'number_of_looks',
         'polarization']
+
 admin.site.register(ImagingMode, ImagingModeAdmin)
 
 
@@ -208,7 +209,8 @@ class InstrumentTypeProcessingLevelAdmin(admin.ModelAdmin):
         'instrument_type',
         'processing_level',
         'operator_processing_level_name',
-        'operator_processing_level_abbreviation']
+        'operator_processing_level_abbreviation'
+    ]
 admin.site.register(
     InstrumentTypeProcessingLevel, InstrumentTypeProcessingLevelAdmin)
 
@@ -217,10 +219,10 @@ class SpectralModeProcessingCostsAdmin(admin.ModelAdmin):
     list_filter = ['spectral_mode']
     list_display = [
         'spectral_mode',
-        'instrumenttypeprocessinglevel',
-        'cost_per_scene_in_rands',
-        'foreign_currency',
-        'cost_per_scene_in_foreign']
+        'instrument_type_processing_level',
+        'cost_per_scene',
+        'currency'
+    ]
 admin.site.register(
     SpectralModeProcessingCosts, SpectralModeProcessingCostsAdmin)
 
