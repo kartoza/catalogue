@@ -26,7 +26,6 @@ import unittest
 from django.core.management import call_command
 from catalogue.models import (
     GenericProduct, OpticalProduct)
-from .model_factories import ProjectionF, QualityF
 from dictionaries.tests.model_factories import (
     SatelliteF,
     SatelliteInstrumentF,
@@ -35,9 +34,9 @@ from dictionaries.tests.model_factories import (
     InstrumentTypeF,
     SatelliteInstrumentGroupF,
     OpticalProductProfileF,
-)
+    ProjectionF,
+    QualityF)
 from catalogue.ingestors import spot
-from catalogue.models import Institution
 
 SHAPEFILE_NAME = os.path.join(
     os.path.dirname(__file__),

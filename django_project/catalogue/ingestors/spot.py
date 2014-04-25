@@ -76,12 +76,11 @@ from dictionaries.models import (
     OpticalProductProfile,
     InstrumentType,
     Satellite,
-    SatelliteInstrumentGroup)
-
-from ..models import (
-    OpticalProduct,
+    SatelliteInstrumentGroup,
     Projection,
     Quality)
+
+from ..models import OpticalProduct
 
 
 def get_dates(log_message, feature):
