@@ -11,6 +11,7 @@ from .views import (
     data_summary_table,
     dictionary_report,
     sensor_summary_table,
+    sensor_fact_sheet
 )
 
 
@@ -34,4 +35,6 @@ urlpatterns = patterns(
     url(r'^sensorSummaryTable/(?P<sensor_id>[0-9]+)/$',
         sensor_summary_table, name='sensorSummaryTable'
         ),
+    url(r'^sensor-fact-sheet/(?P<sat_abbr>[\w-]+)/$',
+        sensor_fact_sheet, name='fact-sheet')
 )

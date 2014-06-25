@@ -12,6 +12,7 @@ Contact : lkleyn@sansa.org.za
    of Linfiniti Consulting CC.
 
 """
+
 __author__ = 'tim@linfiniti.com'
 __version__ = '0.1'
 __date__ = '17/08/2012'
@@ -27,6 +28,7 @@ logger = logging.getLogger(__name__)
 
 # Django helpers for forming html pages
 from django.shortcuts import get_object_or_404
+from django.http import HttpResponseNotFound
 # from django.http import HttpResponseRedirect, HttpResponse
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
 # from django.contrib.gis.shortcuts import render_to_kml, render_to_kmz
@@ -328,7 +330,6 @@ def search_monthly_report_aoi(request, year, month):
     })
 
 
-@staff_member_required
 #renderWithContext is explained in renderWith.py
 @renderWithContext('dataSummaryTable.html')
 def data_summary_table(request):
@@ -435,4 +436,26 @@ def dictionary_report(request):
 
     return ({
         "myResults": report
+    })
+
+
+@renderWithContext('sensor-fact-sheet.html')
+def sensor_fact_sheet(request, sat_abbr):
+    """
+    The view to render a Sensor's fact sheet
+
+    :param sat_abbr: SatelliteInstrumentGroup.satellite.operator_abbreviation
+    :param request: HttpRequest
+    :return: HttpResponse
+    """
+    try:
+        sat_group = SatelliteInstrumentGroup.objects.get(
+            satellite__operator_abbreviation=sat_abbr
+        )
+    except SatelliteInstrumentGroup.DoesNotExist:
+        return HttpResponseNotFound(
+            'Sorry! No fact sheet matches the requested sensor.'
+        )
+    return ({
+        'sat_group': sat_group
     })

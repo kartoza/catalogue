@@ -12,6 +12,8 @@ Contact : lkleyn@sansa.org.za
    of Linfiniti Consulting CC.
 
 """
+from django.core.urlresolvers import reverse
+from django.utils.safestring import mark_safe
 import django_tables2 as tables
 
 from catalogue.models import Visit
@@ -100,16 +102,35 @@ class SatelliteInstrumentTable(tables.Table):
     """
     Renders a SatelliteInstrumentTable
     """
-    sensor = tables.Column(accessor='satellite.name')
+    sensor = tables.Column(
+        accessor='satellite.name',
+        verbose_name='Satellite'
+    )
     instrument_type = tables.Column(
         accessor='instrument_type.name',
-        verbose_name='Instrument Type'
+        verbose_name='Sensor'
     )
     abbreviation = tables.Column(accessor='satellite.abbreviation')
     count = tables.Column(
         accessor='id__count',
-        verbose_name='Search Count'
+        verbose_name='Scene Count'
     )
+    info = tables.Column(empty_values=())
+
+    # noinspection PyMethodMayBeStatic
+    def render_info(self, record):
+        """
+        Render the row's Info column with a link to the Sensor's Summary Fact
+            Sheet
+        :param record: The record being rendered in this row
+        """
+        return mark_safe(
+            '<a href="%s"><i class="icon-question-sign"></i></a>' % reverse(
+                'fact-sheet',
+                kwargs={'sat_abbr': record.satellite.operator_abbreviation}
+            )
+        )
+
 
 
 class VisitorTable(tables.Table):
