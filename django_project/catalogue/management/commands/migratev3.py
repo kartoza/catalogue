@@ -44,6 +44,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         self.db = settings.DATABASES['default']['NAME']
+        self.port = settings.DATABASES['default']['PORT']
         myMigrations = options.get('migrations').split(',')
 
         if 'all' in myMigrations:
@@ -101,7 +102,7 @@ class Command(BaseCommand):
         origWD = os.getcwd()
         os.chdir(os.path.join(origWD, '..', 'resources', 'sql', 'new_master'))
         print '* Executing backup tasks scripts...'
-        subprocess.call(['sh', '000_backup_tasks.sh', self.db])
+        subprocess.call(['sh', '000_backup_tasks.sh', self.db, '-p', self.port])
         os.chdir(origWD)
 
     def migrate_product_models(self):
@@ -109,7 +110,7 @@ class Command(BaseCommand):
         origWD = os.getcwd()
         os.chdir(os.path.join(origWD, '..', 'resources', 'sql', 'new_master'))
         print '* Executing product schema change scripts...'
-        subprocess.call(['sh', '020_product_schema_changes.sh', self.db])
+        subprocess.call(['sh', '020_product_schema_changes.sh', self.db, '-p', self.port])
         os.chdir(origWD)
 
     def migrate_new_dicts(self):
@@ -117,7 +118,7 @@ class Command(BaseCommand):
         origWD = os.getcwd()
         os.chdir(os.path.join(origWD, '..', 'resources', 'sql', 'new_master'))
         print '* Executing database migration scripts...'
-        subprocess.call(['sh', '001_new_dicts.sh', self.db])
+        subprocess.call(['sh', '001_new_dicts.sh', self.db, '-p', self.port])
         os.chdir(origWD)
 
     def migrate_userprofiles(self):
@@ -125,7 +126,7 @@ class Command(BaseCommand):
         origWD = os.getcwd()
         os.chdir(os.path.join(origWD, '..', 'resources', 'sql', 'new_master'))
         print '* Executing database migration scripts...'
-        subprocess.call(['sh', '002_profile_migration.sh', self.db])
+        subprocess.call(['sh', '002_profile_migration.sh', self.db, '-p', self.port])
         os.chdir(origWD)
         print '* Checking user permission (might take awhile)...'
         call_command('check_permissions')
@@ -135,7 +136,7 @@ class Command(BaseCommand):
         origWD = os.getcwd()
         os.chdir(os.path.join(origWD, '..', 'resources', 'sql', 'new_master'))
         print '* Executing database migration scripts...'
-        subprocess.call(['sh', '003_search_migration.sh', self.db])
+        subprocess.call(['sh', '003_search_migration.sh', self.db, '-p', self.port])
         os.chdir(origWD)
 
     def migrate_remove_spot(self):
@@ -143,7 +144,7 @@ class Command(BaseCommand):
         origWD = os.getcwd()
         os.chdir(os.path.join(origWD, '..', 'resources', 'sql', 'new_master'))
         print '* Executing database migration scripts...'
-        subprocess.call(['sh', '008_remove_spot_migration.sh', self.db])
+        subprocess.call(['sh', '008_remove_spot_migration.sh', self.db, '-p', self.port])
         os.chdir(origWD)
 
     def migrate_pycsw(self):
@@ -151,7 +152,7 @@ class Command(BaseCommand):
         origWD = os.getcwd()
         os.chdir(os.path.join(origWD, '..', 'resources', 'sql', 'new_master'))
         print '* Executing database migration scripts...'
-        subprocess.call(['sh', '100_pycsw_integration.sh', self.db])
+        subprocess.call(['sh', '100_pycsw_integration.sh', self.db, '-p', self.port])
         os.chdir(origWD)
 
     def migrate_proc_levels(self):
@@ -159,7 +160,7 @@ class Command(BaseCommand):
         origWD = os.getcwd()
         os.chdir(os.path.join(origWD, '..', 'resources', 'sql', 'new_master'))
         print '* Executing database migration scripts...'
-        subprocess.call(['sh', '010_processing_level.sh', self.db])
+        subprocess.call(['sh', '010_processing_level.sh', self.db, '-p', self.port])
         os.chdir(origWD)
 
     def migrate_unique_product_ids(self):
@@ -167,7 +168,7 @@ class Command(BaseCommand):
         origWD = os.getcwd()
         os.chdir(os.path.join(origWD, '..', 'resources', 'sql', 'new_master'))
         print '* Executing database migration scripts...'
-        subprocess.call(['sh', '015_unique_product_id.sh', self.db])
+        subprocess.call(['sh', '015_unique_product_id.sh', self.db, '-p', self.port])
         os.chdir(origWD)
 
     def migrate_cleanup(self):
@@ -175,7 +176,7 @@ class Command(BaseCommand):
         origWD = os.getcwd()
         os.chdir(os.path.join(origWD, '..', 'resources', 'sql', 'new_master'))
         print '* Executing database migration scripts...'
-        subprocess.call(['sh', '999_cleanup.sh', self.db])
+        subprocess.call(['sh', '999_cleanup.sh', self.db, '-p', self.port])
         os.chdir(origWD)
 
     def migrate_orders(self):
@@ -183,7 +184,7 @@ class Command(BaseCommand):
         origWD = os.getcwd()
         os.chdir(os.path.join(origWD, '..', 'resources', 'sql', 'new_master'))
         print '* Executing database migration scripts...'
-        subprocess.call(['sh', '200_orders.sh', self.db])
+        subprocess.call(['sh', '200_orders.sh', self.db, '-p', self.port])
         os.chdir(origWD)
 
     def migrate_exchange(self):
@@ -191,5 +192,5 @@ class Command(BaseCommand):
         origWD = os.getcwd()
         os.chdir(os.path.join(origWD, '..', 'resources', 'sql', 'new_master'))
         print '* Executing database migration scripts...'
-        subprocess.call(['sh', '250_exchange.sh', self.db])
+        subprocess.call(['sh', '250_exchange.sh', self.db, '-p', self.port])
         os.chdir(origWD)
