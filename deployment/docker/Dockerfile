@@ -8,7 +8,7 @@ MAINTAINER Tim Sutton<tim@kartoza.com>
 # Use local cached debs from host (saves your bandwidth!)
 # Change ip below to that of your apt-cacher-ng host
 # Or comment this line out if you do not with to use caching
-ADD 71-apt-cacher-ng /etc/apt/apt.conf.d/71-apt-cacher-ng
+# ADD 71-apt-cacher-ng /etc/apt/apt.conf.d/71-apt-cacher-ng
 
 
 # Pandoc needed to generate rst dumps
@@ -19,9 +19,10 @@ RUN wget http://download.osgeo.org/gdal/gdal-1.9.0.tar.gz
 RUN tar xvfz gdal-1.9.0.tar.gz
 WORKDIR "/tmp/gdal-1.9.0"
 RUN ./configure --with-python && make && make install
-RUN apt-get -y install python-uno libpq5 python-geoip
+RUN apt-get -y install python-uno libpq5 python-geoip abiword
 
-
+RUN ln -s /usr/lib/python2.7/dist-packages/uno.py /usr/local/lib/python2.7/site-packages/uno.py
+RUN ln -s /usr/lib/python2.7/dist-packages/unohelper.py /usr/local/lib/python2.7/site-packages/unohelper.py
 ADD REQUIREMENTS.txt /REQUIREMENTS.txt
 RUN pip install -r /REQUIREMENTS.txt
 RUN pip install uwsgi
