@@ -1,3 +1,4 @@
+import datetime
 from datetime import date
 import factory
 
@@ -18,7 +19,7 @@ class SearchF(factory.django.DjangoModelFactory):
     guid = None
     record_count = None
     deleted = False
-    search_date = None
+    search_date = factory.LazyAttribute(lambda o: datetime.datetime.utcnow())
 
     k_orbit_path = None
     j_frame_row = None

@@ -18,6 +18,8 @@ __date__ = '01/02/2014'
 __copyright__ = 'South African National Space Agency'
 
 import factory
+import datetime
+
 
 from ..models import (
     Order,
@@ -98,7 +100,7 @@ class OrderF(factory.django.DjangoModelFactory):
     order_status = factory.SubFactory(OrderStatusF)
     delivery_method = factory.SubFactory(DeliveryMethodF)
     market_sector = factory.SubFactory(MarketSectorF)
-    order_date = None
+    order_date = factory.LazyAttribute(lambda o: datetime.datetime.utcnow())
     datum = factory.SubFactory(DatumF)
     resampling_method = factory.SubFactory(ResamplingMethodF)
     file_format = factory.SubFactory(FileFormatF)
