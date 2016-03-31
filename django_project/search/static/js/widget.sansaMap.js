@@ -129,6 +129,9 @@
       [myZoomInControl,myZoomOutControl, myNavigationControl, myHistoryControl.previous, myHistoryControl.next]
     );
 
+    // Make the pan navigation button default selected
+    this.mNavigationPanel.activateControl(myNavigationControl);
+
     this.refreshLayerSwitcher();
 
     this.map.addControl(new OpenLayers.Control.MousePosition({'div': document.getElementById("map-control-position")}));
