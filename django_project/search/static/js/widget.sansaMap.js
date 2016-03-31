@@ -43,7 +43,6 @@
       var layerMapnik = new OpenLayers.Layer.OSM("Open Street Map");
 
       var myLayersList = [
-            TMSOverlay,
             layerMapnik
         ];
         this.map.addLayers(myLayersList);
