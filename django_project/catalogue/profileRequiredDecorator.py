@@ -70,15 +70,14 @@ def requireProfile(theView):
                         myJscriptRelocate = """
                             <script>
                             window.location.replace(
-                                "/accounts/profile/edit/personal/?next=/%s/");
-                            </script>""" % theView
+                                "/accounts/{0}/edit/?next=/{1}/");
+                            </script>""".format(myProfile.user, theView)
                         return HttpResponse(
                             myJscriptRelocate,
                             mimetype='application/javascript')
                     else:
                         return HttpResponseRedirect(
-                            "/accounts/profile/edit/personal/?next=/%s/" %
-                            theView)
+                            "/accounts/{0}/edit/?next=/{1}/".format(myProfile.user, theView))
 
         return wraps(theFunction)(inner_decorator)
     return decorator

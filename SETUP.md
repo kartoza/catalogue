@@ -34,6 +34,14 @@ python setup.py build_ext --include-dirs=/usr/include/gdal/
 pip install --no-download GDAL
 ```
 
+Installing uno
+```
+apt-get install python-uno
+# copy system install over to venv
+.../venv/lib/python2.7/site-packages ln -s /usr/lib/python2.7/dist-packages/uno.py
+.../venv/lib/python2.7/site-packages ln -s /usr/lib/python2.7/dist-packages/unohelper.py
+```
+
 
 # Development database configuration
 

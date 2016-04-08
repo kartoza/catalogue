@@ -26,6 +26,7 @@ import datetime
 import logging
 logger = logging.getLogger(__name__)
 
+from django.core.urlresolvers import reverse
 # Django helpers for forming html pages
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponseNotFound
@@ -56,7 +57,7 @@ from search.models import (
     SearchRecord,
 )
 
-from dictionaries.models import SatelliteInstrumentGroup
+from dictionaries.models import SatelliteInstrumentGroup, Band, SpectralMode, InstrumentTypeProcessingLevel, ProcessingLevel
 from reports.tables import (
     table_sort_settings,
     CountryTable,
@@ -240,7 +241,7 @@ def recent_searches(request):
     table = SearchesTable(search_history_objs)
     table.orderable = False
     return ({
-        'mySearches': search_history,
+        'mySearches': search_history_objs,
         'myCurrentMonth': datetime.date.today(),
         'table': table
     })
@@ -344,13 +345,31 @@ def data_summary_table(request):
     total = 0
     for result in result_set:
         total += result.id__count
-    table = SatelliteInstrumentTable(result_set)
-    RequestConfig(request, paginate=False).configure(table)
-    return {
+    if 'pdf' in request.GET:
+        # Django's pagination is only required for the PDF view as
+        # django-tables2 handles pagination for the table
+        table = None
+        page_size = result_set.count()
+        try:
+            page = int(request.GET.get('page', '1'))
+        except ValueError:
+            page = 1
+        paginator = Paginator(result_set, page_size)
+        try:
+            records = paginator.page(page)
+        except (EmptyPage, InvalidPage):
+            records = paginator.page(paginator.num_pages)
+    else:
+        table = SatelliteInstrumentTable(result_set)
+        RequestConfig(request, paginate={
+            'per_page': settings.PAGE_SIZE
+        }).configure(table)
+    return ({
+        'myUrl': reverse('dataSummaryTable'),
         'table': table,
         'total': total,
         'myResultSet': result_set
-    }
+    })
 
 
 @staff_member_required
@@ -440,7 +459,7 @@ def dictionary_report(request):
 
 
 @renderWithContext('sensor-fact-sheet.html')
-def sensor_fact_sheet(request, sat_abbr):
+def sensor_fact_sheet(request, sat_abbr, instrument_type):
     """
     The view to render a Sensor's fact sheet
 
@@ -450,12 +469,22 @@ def sensor_fact_sheet(request, sat_abbr):
     """
     try:
         sat_group = SatelliteInstrumentGroup.objects.get(
-            satellite__operator_abbreviation=sat_abbr
+            satellite__operator_abbreviation=sat_abbr,
+                instrument_type__operator_abbreviation=instrument_type
         )
     except SatelliteInstrumentGroup.DoesNotExist:
         return HttpResponseNotFound(
             'Sorry! No fact sheet matches the requested sensor.'
         )
+    bands = Band.objects.filter(
+        instrument_type__operator_abbreviation=instrument_type
+    ).order_by('band_number')
+
+    processing_levels = ProcessingLevel.objects.all()
+
     return ({
+        'bands' : bands,
+        'processing_levels': processing_levels,
+        'dataSummaryTable' : reverse('dataSummaryTable'),
         'sat_group': sat_group
     })

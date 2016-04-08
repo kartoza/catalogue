@@ -626,6 +626,19 @@ def ordersSummary(theRequest):
         myOrderInstrumentType=myOrderInstrumentType,
         myOrderSatellite=myOrderSatellite)
 
+@login_required
+#renderWithContext is explained in renderWith.py
+@renderWithContext('order-summary.html')
+def orderSummaryMail(theRequest):
+    myOrder = get_object_or_404(Order, id=643)
+    myRecords = SearchRecord.objects.filter(order=myOrder).select_related()
+    myHistory = OrderStatusHistory.objects.filter(order=myOrder)
+    return ({
+        'myOrder': myOrder,
+        'myRecords': myRecords,
+        'myHistory': myHistory,
+        'domain': settings.DOMAIN
+    })
 
 @staff_member_required
 def addAdhocOrder(theRequest):

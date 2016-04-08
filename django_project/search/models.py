@@ -34,6 +34,7 @@ from dictionaries.models import (
     SpectralModeProcessingCosts,
     InstrumentTypeProcessingLevel
 )
+from exchange.models import Currency
 
 ###############################################################################
 
@@ -221,30 +222,37 @@ class SearchRecord(models.Model):
 
         This method is invoked by a post_save signal on Order model
         """
-        # identify InstrumentTypeProcessingLevel
-        insTypeProcLevel = InstrumentTypeProcessingLevel.objects.filter(
-            processing_level=self.processing_level,
-            instrument_type=(
-                self.product.getConcreteInstance().product_profile
-                .satellite_instrument.satellite_instrument_group
-                .instrument_type
+        try:
+            # identify InstrumentTypeProcessingLevel
+            insTypeProcLevel = InstrumentTypeProcessingLevel.objects.filter(
+                processing_level=self.processing_level,
+                instrument_type=(
+                    self.product.getConcreteInstance().product_profile
+                    .satellite_instrument.satellite_instrument_group
+                    .instrument_type
+                )
+            ).get()
+            # retrieve the processing mode costs
+            mode = self.product.getConcreteInstance().product_profile.spectral_mode
+            spectralModeProcCosts = SpectralModeProcessingCosts.objects.filter(
+                spectral_mode=(
+                    self.product.getConcreteInstance().product_profile
+                    .spectral_mode
+                ),
+                instrument_type_processing_level=insTypeProcLevel
+            ).get()
+            self.currency = spectralModeProcCosts.get_currency()
+            self.cost_per_scene = spectralModeProcCosts.cost_per_scene
+            self.rand_cost_per_scene = convert_value(
+                spectralModeProcCosts.cost_per_scene,
+                self.currency.code, 'ZAR'
             )
-        ).get()
-        # retrieve the processing mode costs
-        spectralModeProcCosts = SpectralModeProcessingCosts.objects.filter(
-            spectral_mode=(
-                self.product.getConcreteInstance().product_profile
-                .spectral_mode
-            ),
-            instrument_type_processing_level=insTypeProcLevel
-        ).get()
+        except ObjectDoesNotExist:
+            self.currency = Currency.objects.get(code='ZAR')
+            self.cost_per_scene = 0
+            self.rand_cost_per_scene = 0
+
         # snapshot current values
-        self.cost_per_scene = spectralModeProcCosts.cost_per_scene
-        self.currency = spectralModeProcCosts.get_currency()
-        self.rand_cost_per_scene = convert_value(
-            spectralModeProcCosts.cost_per_scene,
-            self.currency.code, 'ZAR'
-        )
 
         # invoke model save method - default behaviour
         if save is True:

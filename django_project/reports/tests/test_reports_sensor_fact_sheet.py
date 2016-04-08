@@ -46,16 +46,16 @@ class ReportsViewsSensorFactSheetTests(TestCase):
                 'fact-sheet', kwargs=kwarg_test
             )
 
-    def test_no_group(self):
+    def test_group(self):
         """
-        Test that a correct URL format returns a 404 error for a non-existent
+        Test that a correct URL format returns a 200 error for a exist
             SatelliteInstrumentGroup
         """
         client = Client()
-        test_kwargs = [{'sat_abbr': 'Thunderbird-5'}]
+        test_kwargs = [{'sat_abbr': 'LS-5', 'instrument_type': 'TM'}]
 
         for kwarg_test in test_kwargs:
             response = client.get(
                 reverse('fact-sheet', kwargs=kwarg_test)
             )
-            self.assertEqual(response.status_code, 404)
+            self.assertEqual(response.status_code, 200)

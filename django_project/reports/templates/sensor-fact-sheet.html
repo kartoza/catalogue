@@ -1,131 +1,169 @@
 {% extends "base.html" %}
 {% load staticfiles %}
 {% block content %}
-  <div class="row">
-    <div class="span12">
-      <h1 class="text-center">
-        Sensor Summary Fact Sheet for {{ sat_group.satellite.name }} {{ sat_group.instrument_type.name }}
-      </h1>
+    <div class="row">
+        <div class="span12">
+            <h1 class="text-center">
+                Sensor Summary Fact Sheet for {{ sat_group.satellite.name }} {{ sat_group.instrument_type.name }}
+            </h1>
+        </div>
     </div>
-  </div>
-  <div class="row">
-    <div class="span12">
-      <h3>Collection: {{ sat_group.satellite.collection.name }}</h3>
-      <hr/>
+    <div class="row">
+        <div class="span12">
+            <h3>Collection: {{ sat_group.satellite.collection.name }}</h3>
+            <hr/>
+        </div>
     </div>
-  </div>
-  <div class="row">
-    <div class="span12">
-      <h5>Description</h5>
-      <p>{{ sat_group.satellite.collection.description }}</p>
+    <div class="row">
+        <div class="span12">
+            <h5>Description</h5>
+            <p>{{ sat_group.satellite.collection.description }}</p>
+        </div>
     </div>
-  </div>
-  <div class="row">
-    <div class="span12">
-      <h5>Owner</h5>
-      <p>{{ sat_group.satellite.collection.institution.name }}</p>
+    <div class="row">
+        <div class="span12">
+            <h5>Owner</h5>
+            <p>{{ sat_group.satellite.collection.institution.name }}</p>
+        </div>
     </div>
-  </div>
-  <div class="row">
-    <div class="span12">
-      <h3>Satellite: {{ sat_group.satellite.name }}</h3>
-      <hr/>
+    <div class="row">
+        <div class="span12">
+            <h3>Satellite: {{ sat_group.satellite.name }}</h3>
+            <hr/>
+        </div>
     </div>
-  </div>
-  <div class="row">
-    <div class="span8">
-      <h5>Description</h5>
-      <p>{{ sat_group.satellite.description }}</p>
+    <div class="row">
+        <div class="span8">
+            <h5>Description</h5>
+            <p>{{ sat_group.satellite.description }}</p>
+        </div>
+        <div class="span4">
+            <h5>Reference</h5>
+            <p>
+                <a href="{{ sat_group.satellite.reference_url }}" target="_blank">
+                    {{ sat_group.satellite.reference_url }}
+                </a>
+            </p>
+        </div>
     </div>
-    <div class="span4">
-      <h5>Reference</h5>
-      <p>
-        <a href="{{ sat_group.satellite.reference_url }}" target="_blank">
-          {{ sat_group.satellite.reference_url }}
-        </a>
-      </p>
+    <div class="row">
+        <div class="span2">
+            <h5>Launch Date</h5>
+            <p>{{ sat_group.satellite.launch_date }}</p>
+        </div>
+        <div class="span2">
+            <h5>Status</h5>
+            <p>{{ sat_group.satellite.status }}</p>
+        </div>
+        <div class="span2">
+            <h5>Altitude</h5>
+            <p>{{ sat_group.satellite.altitude_km }} km</p>
+        </div>
+        <div class="span2">
+            <h5>Orbit</h5>
+            <p>{{ sat_group.satellite.orbit_km }} km</p>
+        </div>
+        <div class="span2">
+            <h5>Revisit Time</h5>
+            <p>{{ sat_group.satellite.revisit_time_days }} days</p>
+        </div>
     </div>
-  </div>
-  <div class="row">
-    <div class="span2">
-      <h5>Launch Date</h5>
-      <p>{{ sat_group.satellite.launch_date }}</p>
+    <div class="row">
+        <div class="span12">
+            <h3>Sensor: {{ sat_group.instrument_type.name }}</h3>
+            <hr/>
+        </div>
     </div>
-    <div class="span2">
-      <h5>Status</h5>
-      <p>{{ sat_group.satellite.status }}</p>
+    <div class="row">
+        <div class="span12">
+            <h5>Description</h5>
+            <p>{{ sat_group.instrument_type.description }}</p>
+        </div>
     </div>
-    <div class="span2">
-      <h5>Altitude</h5>
-      <p>{{ sat_group.satellite.altitude_km }} km</p>
+    <div class="row">
+        <div class="span2">
+            <h5>Sensor Type</h5>
+            <p>{% if sat_group.instrument_type.is_radar %}Radar{% else %}Optical{% endif %}</p>
+        </div>
+        <div class="span2">
+            <h5>Reference System</h5>
+            <p>{{ sat_group.instrument_type.reference_system.description }}</p>
+        </div>
+        <div class="span2">
+            <h5>Scanner Type</h5>
+            <p>{{ sat_group.instrument_type.scanner_type.description }}</p>
+        </div>
+        <div class="span2">
+            <h5>Swath</h5>
+            <p>{{ sat_group.instrument_type.swath_optical_km }} km</p>
+        </div>
+        <div class="span2">
+            <h5>Bands</h5>
+            <p>{{ sat_group.instrument_type.band_count }}</p>
+        </div>
+        <div class="span2">
+            <h5>Band Type</h5>
+            <p>{{ sat_group.instrument_type.band_type }}</p>
+        </div>
     </div>
-    <div class="span2">
-      <h5>Orbit</h5>
-      <p>{{ sat_group.satellite.orbit_km }} km</p>
+    <div class="row">
+        <div class="span2">
+            <h5>Spectral Range</h5>
+            <p>{{ sat_group.instrument_type.spectral_range_list_nm }}</p>
+        </div>
+        <div class="span2">
+            <h5>Spatial Resolution</h5>
+            <p>{{ sat_group.instrument_type.spatial_resolution_range }}</p>
+        </div>
+        <div class="span2">
+            <h5>Quantization</h5>
+            <p>{{ sat_group.instrument_type.quantization_bits }}</p>
+        </div>
+        <div class="span2">
+            <h5>Image Size</h5>
+            <p>{{ sat_group.instrument_type.image_size_km }} km</p>
+        </div>
+        <div class="span4">
+            <h5>Keywords</h5>
+            <p>{{ sat_group.instrument_type.keywords }}</p>
+        </div>
     </div>
-    <div class="span2">
-      <h5>Revisit Time</h5>
-      <p>{{ sat_group.satellite.revisit_time_days }} days</p>
+    <div class="row">
+        <div class="span12">
+            <h3>Yearly catalogue product overview for {{ sat_group.satellite.name }}</h3>
+            <hr/>
+        </div>
     </div>
-  </div>
-  <div class="row">
-    <div class="span12">
-      <h3>Sensor: {{ sat_group.instrument_type.name }}</h3>
-      <hr/>
+    <div class="row">
+        <div class="span8">
+            <table class="table table-striped">
+                <tbody>
+                <tr>
+                    {% for items in sat_group.products_per_year %}
+                        <th>{{ items.year }}</th>
+                    {% endfor %}
+                </tr>
+                <tr>
+                    {% for items in sat_group.products_per_year %}
+
+                        <td>{{ items.count }}</td>
+                    {% endfor %}
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
-  </div>
-  <div class="row">
-    <div class="span12">
-      <h5>Description</h5>
-      <p>{{ sat_group.instrument_type.description }}</p>
+
+    <div class="row-fluid center gap-right">
+        <button class="btn btn-success"
+                onclick='location="{{ dataSummaryTable }}"'>
+            Back
+        </button>
+        <div id="order-list-buttonset" class="btn-group">
+            <button id="download-btn" class="btn"
+                    onclick='location="{{ myUrl }}?page=&pdf"'>
+                <i class="icon-download"></i> Download as PDF
+            </button>
+        </div>
     </div>
-  </div>
-  <div class="row">
-    <div class="span2">
-      <h5>Sensor Type</h5>
-      <p>{% if sat_group.instrument_type.is_radar %}Radar{% else %}Optical{% endif %}</p>
-    </div>
-    <div class="span2">
-      <h5>Reference System</h5>
-      <p>{{ sat_group.instrument_type.reference_system.description }}</p>
-    </div>
-    <div class="span2">
-      <h5>Scanner Type</h5>
-      <p>{{ sat_group.instrument_type.scanner_type.description }}</p>
-    </div>
-    <div class="span2">
-      <h5>Swath</h5>
-      <p>{{ sat_group.instrument_type.swath_optical_km }} km</p>
-    </div>
-    <div class="span2">
-      <h5>Bands</h5>
-      <p>{{ sat_group.instrument_type.band_count }}</p>
-    </div>
-    <div class="span2">
-      <h5>Band Type</h5>
-      <p>{{ sat_group.instrument_type.band_type }}</p>
-    </div>
-  </div>
-  <div class="row">
-    <div class="span2">
-      <h5>Spectral Range</h5>
-      <p>{{ sat_group.instrument_type.spectral_range_list_nm }}</p>
-    </div>
-    <div class="span2">
-      <h5>Spatial Resolution</h5>
-      <p>{{ sat_group.instrument_type.spatial_resolution_range }}</p>
-    </div>
-    <div class="span2">
-      <h5>Quantization</h5>
-      <p>{{ sat_group.instrument_type.quantization_bits }}</p>
-    </div>
-    <div class="span2">
-      <h5>Image Size</h5>
-      <p>{{ sat_group.instrument_type.image_size_km }} km</p>
-    </div>
-    <div class="span4">
-      <h5>Keywords</h5>
-      <p>{{ sat_group.instrument_type.keywords }}</p>
-    </div>
-  </div>
 {% endblock %}

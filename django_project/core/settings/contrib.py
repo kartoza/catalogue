@@ -19,14 +19,13 @@ INSTALLED_APPS += (
 )
 
 # Added by George for webodt
-#WEBODT_CONVERTER = 'webodt.converters.abiword.AbiwordODFConverter'
-WEBODT_CONVERTER = 'webodt.converters.openoffice.OpenOfficeODFConverter'
+WEBODT_CONVERTER = 'webodt.converters.abiword.AbiwordODFConverter'
+WEBODT_ABIWORD_COMMAND = ['/usr/bin/abiword', '--plugin', 'AbiCommand']
 WEBODT_TEMPLATE_PATH = ABS_PATH('reports', 'report-templates')
 WEBODT_ODF_TEMPLATE_PREPROCESSORS = [
     'webodt.preprocessors.xmlfor_preprocessor',
     'webodt.preprocessors.unescape_templatetags_preprocessor',
 ]
-WEBODT_OPENOFFICE_SERVER = ('127.0.0.1', 2002)
 WEBODT_DEFAULT_FORMAT = 'pdf'
 
 # Added by Tim for registration app

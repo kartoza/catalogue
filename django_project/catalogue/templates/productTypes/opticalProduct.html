@@ -1,5 +1,8 @@
 {% extends 'productTypes/genericSensorProduct.html' %}
 {% block header %}
+<button type="button" class="close" id="close-metadata" title="Close">
+  <span aria-hidden="true" data-dismiss="modal">&times;</span>
+</button>
 <h3 class="centered prepend-1 append-1 ">Optical Product details for</h3>
 <p class="centered"><b>{{myObject.product_id}}</b></p>
 {% endblock %}
@@ -18,4 +21,7 @@
 <tr><td class="loud">Solar Zenith Angle</td><td class="quiet">{{ myObject.solar_zenith_angle }}</td></tr>
 <tr><td class="loud">Solar Azimuth Angle</td><td class="quiet">{{ myObject.solar_azimuth_angle }}</td></tr>
 <tr><td class="loud">Earth Sun Distance</td><td class="quiet">{{ myObject.earth_sun_distance }}</td></tr>
+
 {% endblock %}
+
+

@@ -248,11 +248,6 @@ def notifySalesStaff(theUser, theOrderId, theContext=None):
     A helper method to notify sales staff who are subscribed to a sensor
     Example usage from the console / doctest:
 
-
-       >>> from catalogue.views import *
-       >>> myUser = User.objects.get(id=1)
-       >>> myUser
-       >>> notifySalesStaff(myUser, 16)
     Args:
         theUser obj - Required. Django user object
         theOrderId int - Required. ID of the Order which has changed

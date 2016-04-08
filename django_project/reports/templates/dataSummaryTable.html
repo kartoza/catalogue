@@ -57,4 +57,13 @@
       <p><strong>Total Scenes: {{ total }}</strong></p>
     </div>
   </div>
+
+    <div class="row-fluid center gap-bottom">
+  <div id="order-list-buttonset" class="btn-group">
+    <button id="download-btn" class="btn"
+            onclick='location="{{ myUrl }}?page=&pdf"'>
+      <i class="icon-download"></i> Download as PDF
+    </button>
+  </div>
+</div>
 {% endblock %}

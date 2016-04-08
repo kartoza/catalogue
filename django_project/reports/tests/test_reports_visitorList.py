@@ -96,12 +96,13 @@ class ReportsViews_visitorList_Tests(TestCase):
         myResp = myClient.get(reverse('visitorList', kwargs={}))
 
         self.assertEqual(myResp.status_code, 200)
-        self.assertEqual(len(myResp.context['myRecords'].object_list), 1)
+        self.assertEqual(len(myResp.context['records']), 1)
         # check used templates
         myExpTemplates = [
             'visitors.html', u'base.html',
             u'pipeline/css.html', u'pipeline/js.html', u'menu.html',
-            u'useraccounts/menu_content.html'
+            u'useraccounts/menu_content.html',
+            u'django_tables2/custom-table.html'
         ]
 
         myUsedTemplates = [tmpl.name for tmpl in myResp.templates]
@@ -125,7 +126,7 @@ class ReportsViews_visitorList_Tests(TestCase):
 
         self.assertEqual(myResp.status_code, 200)
         self.assertEqual(
-            len(myResp.context['myRecords'].object_list), 1)
+            len(myResp.context['records']), 1)
         # check used templates
         myExpTemplates = [u'<Unknown Template>']
 
@@ -159,12 +160,13 @@ class ReportsViews_visitorList_Tests(TestCase):
                 kwargs={}), {'page': 'this is a new page!'})
         self.assertEqual(myResp.status_code, 200)
         self.assertEqual(
-            len(myResp.context['myRecords'].object_list), 1)
+            len(myResp.context['records']), 1)
         # check used templates
         myExpTemplates = [
             'visitors.html', u'base.html',
             u'pipeline/css.html', u'pipeline/js.html', u'menu.html',
-            u'useraccounts/menu_content.html'
+            u'useraccounts/menu_content.html',
+            u'django_tables2/custom-table.html'
         ]
 
         myUsedTemplates = [tmpl.name for tmpl in myResp.templates]
@@ -191,12 +193,13 @@ class ReportsViews_visitorList_Tests(TestCase):
                 kwargs={}), {'page': '10001'})
         self.assertEqual(myResp.status_code, 200)
         self.assertEqual(
-            len(myResp.context['myRecords'].object_list), 1)
+            len(myResp.context['records']), 1)
         # check used templates
         myExpTemplates = [
             'visitors.html', u'base.html',
             u'pipeline/css.html', u'pipeline/js.html', u'menu.html',
-            u'useraccounts/menu_content.html'
+            u'useraccounts/menu_content.html',
+            u'django_tables2/custom-table.html'
         ]
 
         myUsedTemplates = [tmpl.name for tmpl in myResp.templates]

@@ -121,7 +121,8 @@ class ReportsViews_searchMonthlyReportAOI_Tests(TestCase):
         myExpTemplates = [
             'searchMonthlyReportAOI.html', u'base.html',
             u'pipeline/css.html', u'pipeline/js.html', u'menu.html',
-            u'useraccounts/menu_content.html'
+            u'useraccounts/menu_content.html',
+            u'django_tables2/custom-table.html'
         ]
 
         myUsedTemplates = [tmpl.name for tmpl in myResp.templates]

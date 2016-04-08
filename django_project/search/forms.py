@@ -188,9 +188,9 @@ class AdvancedSearchForm(forms.ModelForm):
 
         # calculate initial search_date (today - 1 month)
         # we use a constant -> 1 month = 31 days
-        myPrevoiusMonthDate = (
+        myPreviousMonthDate = (
             datetime.date.today() - datetime.timedelta(days=31))
-        self.fields['start_datepicker'].initial = myPrevoiusMonthDate
+        self.fields['start_datepicker'].initial = myPreviousMonthDate
 
     def clean_guid(self):
         """Custom validator for guid"""

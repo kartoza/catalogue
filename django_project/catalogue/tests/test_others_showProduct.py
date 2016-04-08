@@ -19,13 +19,14 @@ __date__ = '08/08/2012'
 __copyright__ = 'South African National Space Agency'
 
 
+import unittest
 from django.core.urlresolvers import reverse, NoReverseMatch
 from django.test import TestCase
 from django.test.client import Client
 
 from core.model_factories import UserF
 
-from .model_factories import OpticalProductF
+from .model_factories import GenericProductF
 
 
 class OthersViews_showProduct_Tests(TestCase):
@@ -37,10 +38,6 @@ class OthersViews_showProduct_Tests(TestCase):
         """
         Set up before each test
         """
-        UserF.create(**{
-            'username': 'pompies',
-            'password': 'password'
-        })
 
     def test_showProduct_badURL(self):
         """
@@ -53,42 +50,20 @@ class OthersViews_showProduct_Tests(TestCase):
                 NoReverseMatch, reverse, 'showProduct',
                 kwargs=myKwargTest)
 
-    def test_showProduct_nologin(self):
+    @unittest.skip("Currently not used anymore")
+    def test_showProduct(self):
         """
-        Test view if user is not logged in
+        Test view show product and product id is found
         """
+
+        GenericProductF.create(**{'unique_product_id': 'XY1234'})
         myClient = Client()
-        myResp = myClient.get(
-            reverse(
-                'showProduct',
-                kwargs={
-                    'theProductId': 'XY1234'
-                }
-            )
-        )
-        self.assertEqual(myResp.status_code, 302)
-        self.assertEqual(
-            myResp['Location'], (
-                'http://testserver/accounts/signin/?next=/showProduct/XY1234/'
-            )
-        )
-
-    def test_showProduct_userlogin(self):
-        """
-        Test view if user is logged as user and product id is found
-        """
-
-        OpticalProductF.create(**{'unique_product_id': 'XY1234'})
-
-        myClient = Client()
-        myClient.login(username='pompies', password='password')
         myResp = myClient.get(
             reverse('showProduct', kwargs={'theProductId': 'XY1234'})
         )
         self.assertEqual(myResp.status_code, 200)
-
+        
         self.assertEqual(myResp.context['messages'], ['Product found'])
-
         self.assertEqual(
             myResp.context['myProduct'].unique_product_id,
             'XY1234'
@@ -108,12 +83,11 @@ class OthersViews_showProduct_Tests(TestCase):
         myUsedTemplates = [tmpl.name for tmpl in myResp.templates]
         self.assertEqual(myUsedTemplates, myExpTemplates)
 
-    def test_showProduct_userlogin_bad_product(self):
+    def test_showProduct_bad_product(self):
         """
-        Test view if user is logged as user and product id is not found
+        Test view product id is not found
         """
         myClient = Client()
-        myClient.login(username='pompies', password='password')
         myResp = myClient.get(
             reverse('showProduct', kwargs={'theProductId': 'XY1234'})
         )

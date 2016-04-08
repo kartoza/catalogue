@@ -553,11 +553,11 @@ function setupBaseMap()
 
     var myHistoryControl = new OpenLayers.Control.NavigationHistory({
   nextOptions: {
-      title : "Next view: quickly jump to the next map view, works only with prevoius view.",
+      title : "Next view: quickly jump to the next map view, works only with previous view.",
       displayClass:'right icon-chevron-right icon-2x olControlNavigationHistoryNext',
     },
   previousOptions: {
-      title : "Previous view: quickly jump to the prevoius map view.",
+      title : "Previous view: quickly jump to the previous map view.",
       displayClass:'right icon-chevron-left icon-2x olControlNavigationHistoryPrevious',
     }
   });

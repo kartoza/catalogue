@@ -93,15 +93,15 @@ class ReportsViews_recentSearches_Tests(TestCase):
         myResp = myClient.get(
             reverse('recentSearches', kwargs={}))
         self.assertEqual(myResp.status_code, 200)
-        self.assertEqual(
-            len(myResp.context['mySearches']), 1)
+        self.assertEqual(len(myResp.context['mySearches']), 1)
         self.assertEqual(
             myResp.context['myCurrentMonth'], datetime.date.today())
         # check used templates
         myExpTemplates = [
             'recentSearches.html', u'base.html',
             u'pipeline/css.html', u'pipeline/js.html', u'menu.html',
-            u'useraccounts/menu_content.html'
+            u'useraccounts/menu_content.html',
+            u'django_tables2/custom-table.html'
         ]
 
         myUsedTemplates = [tmpl.name for tmpl in myResp.templates]

@@ -84,13 +84,14 @@ class OrdersViews_myOrders_Tests(TestCase):
         myExpTemplates = [
             'orderListPage.html', u'base.html',
             u'pipeline/css.html', u'pipeline/js.html', u'menu.html',
-            u'useraccounts/menu_content.html', u'orderList.html'
+            u'useraccounts/menu_content.html', u'orderList.html',
+            u'django_tables2/custom-table.html'
         ]
 
         myUsedTemplates = [tmpl.name for tmpl in myResp.templates]
         self.assertEqual(myUsedTemplates, myExpTemplates)
 
-        self.assertEqual(len(myResp.context['myRecords'].object_list), 1)
+        self.assertEqual(len(myResp.context['myRecords']), 1)
 
     def test_myOrders_login_user_page_param_existant(self):
         """
@@ -121,14 +122,15 @@ class OrdersViews_myOrders_Tests(TestCase):
         myExpTemplates = [
             'orderListPage.html', u'base.html',
             u'pipeline/css.html', u'pipeline/js.html', u'menu.html',
-            u'useraccounts/menu_content.html', u'orderList.html'
+            u'useraccounts/menu_content.html', u'orderList.html',
+            u'django_tables2/custom-table.html'
         ]
 
         myUsedTemplates = [tmpl.name for tmpl in myResp.templates]
         self.assertEqual(myUsedTemplates, myExpTemplates)
 
         self.assertEqual(
-            len(myResp.context['myRecords'].object_list), 1)
+            len(myResp.context['myRecords']), 1)
 
     def test_myOrders_login_user_page_param_nonexistant(self):
         """
@@ -159,14 +161,15 @@ class OrdersViews_myOrders_Tests(TestCase):
         myExpTemplates = [
             'orderListPage.html', u'base.html',
             u'pipeline/css.html', u'pipeline/js.html', u'menu.html',
-            u'useraccounts/menu_content.html', u'orderList.html'
+            u'useraccounts/menu_content.html', u'orderList.html',
+            u'django_tables2/custom-table.html'
         ]
 
         myUsedTemplates = [tmpl.name for tmpl in myResp.templates]
         self.assertEqual(myUsedTemplates, myExpTemplates)
 
         self.assertEqual(
-            len(myResp.context['myRecords'].object_list), 1)
+            len(myResp.context['myRecords']), 1)
 
     def test_myOrders_login_page_param_invalid_input(self):
         """
@@ -196,14 +199,15 @@ class OrdersViews_myOrders_Tests(TestCase):
         myExpTemplates = [
             'orderListPage.html', u'base.html',
             u'pipeline/css.html', u'pipeline/js.html', u'menu.html',
-            u'useraccounts/menu_content.html', u'orderList.html'
+            u'useraccounts/menu_content.html', u'orderList.html',
+            u'django_tables2/custom-table.html'
         ]
 
         myUsedTemplates = [tmpl.name for tmpl in myResp.templates]
         self.assertEqual(myUsedTemplates, myExpTemplates)
 
         self.assertEqual(
-            len(myResp.context['myRecords'].object_list), 1)
+            len(myResp.context['myRecords']), 1)
 
     def test_myOrders_pdf_pageSize(self):
         """

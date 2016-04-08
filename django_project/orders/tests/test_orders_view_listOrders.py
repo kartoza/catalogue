@@ -90,14 +90,15 @@ class OrdersViews_listOrders_Tests(TestCase):
         myExpTemplates = [
             'orderListPage.html', u'base.html',
             u'pipeline/css.html', u'pipeline/js.html', u'menu.html',
-            u'useraccounts/menu_content.html', u'orderList.html'
+            u'useraccounts/menu_content.html', u'orderList.html',
+            u'django_tables2/custom-table.html'
         ]
 
         myUsedTemplates = [tmpl.name for tmpl in myResp.templates]
         self.assertEqual(myUsedTemplates, myExpTemplates)
 
         self.assertEqual(
-            len(myResp.context['myRecords'].object_list), 2)
+            len(myResp.context['myRecords']), 2)
 
     def test_listOrders_login_user(self):
         """
@@ -127,14 +128,15 @@ class OrdersViews_listOrders_Tests(TestCase):
         myExpTemplates = [
             'orderListPage.html', u'base.html',
             u'pipeline/css.html', u'pipeline/js.html', u'menu.html',
-            u'useraccounts/menu_content.html', u'orderList.html'
+            u'useraccounts/menu_content.html', u'orderList.html',
+            u'django_tables2/custom-table.html'
         ]
 
         myUsedTemplates = [tmpl.name for tmpl in myResp.templates]
         self.assertEqual(myUsedTemplates, myExpTemplates)
 
         self.assertEqual(
-            len(myResp.context['myRecords'].object_list), 1)
+            len(myResp.context['myRecords']), 1)
 
     def test_listOrders_login_user_page_param_existant(self):
         """
@@ -166,14 +168,15 @@ class OrdersViews_listOrders_Tests(TestCase):
         myExpTemplates = [
             'orderListPage.html', u'base.html',
             u'pipeline/css.html', u'pipeline/js.html', u'menu.html',
-            u'useraccounts/menu_content.html', u'orderList.html'
+            u'useraccounts/menu_content.html', u'orderList.html',
+            u'django_tables2/custom-table.html'
         ]
 
         myUsedTemplates = [tmpl.name for tmpl in myResp.templates]
         self.assertEqual(myUsedTemplates, myExpTemplates)
 
         self.assertEqual(
-            len(myResp.context['myRecords'].object_list), 1)
+            len(myResp.context['myRecords']), 1)
 
     def test_listOrders_login_user_page_param_nonexistant(self):
         """
@@ -205,53 +208,54 @@ class OrdersViews_listOrders_Tests(TestCase):
         myExpTemplates = [
             'orderListPage.html', u'base.html',
             u'pipeline/css.html', u'pipeline/js.html', u'menu.html',
-            u'useraccounts/menu_content.html', u'orderList.html'
+            u'useraccounts/menu_content.html', u'orderList.html', u'django_tables2/custom-table.html'
         ]
 
         myUsedTemplates = [tmpl.name for tmpl in myResp.templates]
         self.assertEqual(myUsedTemplates, myExpTemplates)
 
         self.assertEqual(
-            len(myResp.context['myRecords'].object_list), 1)
+            len(myResp.context['myRecords']), 1)
 
     def test_listOrders_login_page_param_invalid_input(self):
-        """
-        Test view if user is logged in, specifying invalid page parameter
-        View will default to page 1
-        """
-        myUser = UserF.create(**{
-            'username': 'pompies',
-            'password': 'password',
-        })
+         """
+         Test view if user is logged in, specifying invalid page parameter
+         View will default to page 1
+         """
+         myUser = UserF.create(**{
+             'username': 'pompies',
+             'password': 'password',
+         })
 
-        OrderF.create(**{'user': myUser})
-        OrderF.create()
+         OrderF.create(**{'user': myUser})
+         OrderF.create()
 
-        myClient = Client()
-        myClient.login(username='pompies', password='password')
-        myResp = myClient.get(
-            reverse('listOrders', kwargs={}),
-            {'page': 'this is a new page!'})
-        self.assertEqual(myResp.status_code, 200)
+         myClient = Client()
+         myClient.login(username='pompies', password='password')
+         myResp = myClient.get(
+             reverse('listOrders', kwargs={}),
+             {'page': 'this is a new page!'})
+         self.assertEqual(myResp.status_code, 200)
 
-        # check response object
-        self.assertEqual(
-            myResp.context['myUrl'], '/listorders/')
+         # check response object
+         self.assertEqual(
+             myResp.context['myUrl'], '/listorders/')
 
-        self.assertEqual(
-            myResp.context['myCurrentMonth'], date.today())
-        # check used templates
-        myExpTemplates = [
-            'orderListPage.html', u'base.html',
-            u'pipeline/css.html', u'pipeline/js.html', u'menu.html',
-            u'useraccounts/menu_content.html', u'orderList.html'
-        ]
+         self.assertEqual(
+             myResp.context['myCurrentMonth'], date.today())
+         # check used templates
+         myExpTemplates = [
+             'orderListPage.html', u'base.html',
+             u'pipeline/css.html', u'pipeline/js.html', u'menu.html',
+             u'useraccounts/menu_content.html', u'orderList.html',
+             u'django_tables2/custom-table.html'
+         ]
 
-        myUsedTemplates = [tmpl.name for tmpl in myResp.templates]
-        self.assertEqual(myUsedTemplates, myExpTemplates)
+         myUsedTemplates = [tmpl.name for tmpl in myResp.templates]
+         self.assertEqual(myUsedTemplates, myExpTemplates)
 
-        self.assertEqual(
-            len(myResp.context['myRecords'].object_list), 1)
+         self.assertEqual(
+             len(myResp.context['myRecords']), 1)
 
     def test_myOrders_pdf_pageSize(self):
         """
@@ -291,3 +295,4 @@ class OrdersViews_listOrders_Tests(TestCase):
         self.assertEqual(
             myResp['content-disposition'],
             'attachment; filename="orderListPage.pdf"')
+

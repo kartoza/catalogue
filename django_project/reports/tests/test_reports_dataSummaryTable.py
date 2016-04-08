@@ -61,7 +61,7 @@ class ReportsViews_dataSummaryTable_Tests(TestCase):
                     kwargs={}))
         self.assertEqual(myResp.status_code, 200)
         self.assertEqual(
-            myResp.context['app_path'], u'/dataSummaryTable/')
+            myResp.context['myUrl'], u'/dataSummaryTable/')
 
     def test_myReports_userlogin(self):
         """
@@ -79,7 +79,7 @@ class ReportsViews_dataSummaryTable_Tests(TestCase):
                     kwargs={}))
         self.assertEqual(myResp.status_code, 200)
         self.assertEqual(
-            myResp.context['app_path'], u'/dataSummaryTable/')
+            myResp.context['myUrl'], u'/dataSummaryTable/')
 
     def test_myReports_stafflogin(self):
         """
@@ -91,30 +91,20 @@ class ReportsViews_dataSummaryTable_Tests(TestCase):
             'is_staff': True
         })
 
-        mySatInsGroup = SatelliteInstrumentGroupF.create()
-        mySatInst = SatelliteInstrumentF.create(**{
-            'satellite_instrument_group': mySatInsGroup
-        })
-        myOPP = OpticalProductProfileF.create(**{
-            'satellite_instrument': mySatInst
-        })
-        OpticalProductF.create(**{
-            'product_profile': myOPP
-        })
-
         myClient = Client()
         myClient.login(username='timlinux', password='password')
         myResp = myClient.get(
             reverse('dataSummaryTable',
                     kwargs={}))
         self.assertEqual(myResp.status_code, 200)
-        self.assertEqual(len(myResp.context['myResultSet']), 1)
-        self.assertEqual(myResp.context['myTotal'], 1)
+        self.assertEqual(len(myResp.context['myResultSet']), 0)
+        self.assertEqual(myResp.context['total'], 0)
         # check used templates
         myExpTemplates = [
             'dataSummaryTable.html', u'base.html',
             u'pipeline/css.html', u'pipeline/js.html', u'menu.html',
-            u'useraccounts/menu_content.html'
+            u'useraccounts/menu_content.html',
+            u'django_tables2/custom-table.html'
         ]
 
         myUsedTemplates = [tmpl.name for tmpl in myResp.templates]

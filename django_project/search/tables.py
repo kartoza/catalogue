@@ -15,7 +15,7 @@ class SearchesTable(tables.Table):
     """
     Renders a table of Search objects
     """
-    searched_by = tables.Column(empty_values=())
+    searched_by = tables.Column(empty_values=(), orderable=False)
     search_date = SANSADateColumn()
     satellites = tables.Column(empty_values=(), orderable=False)
     sensors = tables.Column(empty_values=(), orderable=False)

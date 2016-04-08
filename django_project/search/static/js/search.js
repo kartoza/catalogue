@@ -847,13 +847,13 @@ APP.CartGridViewItem = Backbone.View.extend({
 
 var templateCart = [
         '<div class="cart-item">',
-          '<img src="/thumbnail/<%= model.get("product").original_product_id %>/mini/" />',
+          '<img src="/thumbnail/<%= model.get("product").id %>/mini/" />',
           '<div class="cart-item-info">',
             '<p><%= model.get("product").productName %></p>',
           '</div>',
-          //'<div class="cart-item-info-date">',
-          //  '<p><%= model.get("product").product_date %></p>',
-          //'</div>',
+          '<div class="cart-item-info-date">',
+            '<p><%= model.get("product").product_date %></p>',
+          '</div>',
           '<div class="cart-item-buttons">',
               '<span class="button metadata-button btn btn-default" data-toggle="tooltip" data-title="View Metadata"><i class="icon-list-alt"></i></span>',
               '<span class="button delete-button btn btn-danger" data-toggle="tooltip" data-title="Remove From Cart"><i class="icon-remove"></i></span>',

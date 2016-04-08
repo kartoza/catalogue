@@ -495,6 +495,12 @@ class SatelliteInstrumentGroup(models.Model):
             self.instrument_type.operator_abbreviation
         )
 
+    def min_year(self):
+        return self.products_per_year()[1]['year']
+
+    def max_year(self):
+        return self.products_per_year()[-1]['year']
+
     def products_per_year(self):
         myStats = executeRAWSQL("""
 SELECT count(*) as count, extract(YEAR from gp.product_date)::int as year
