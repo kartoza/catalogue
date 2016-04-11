@@ -14,7 +14,7 @@ ADD 71-apt-cacher-ng /etc/apt/apt.conf.d/71-apt-cacher-ng
 # Pandoc needed to generate rst dumps
 RUN apt-get update -y; apt-get -y --force-yes install yui-compressor pandoc
 RUN apt-get -y install build-essential python-all-dev
-RUN sed -i '1ideb http://ftp.de.debian.org/debian jessie main' /etc/apt/sources.list
+RUN sed -i '1ideb http://ftp.us.debian.org/debian jessie main' /etc/apt/sources.list
 RUN apt-get update -y;
 RUN apt-get install -y abiword --fix-missing
 WORKDIR "/tmp"
