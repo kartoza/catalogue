@@ -23,7 +23,7 @@ class SearchF(factory.django.DjangoModelFactory):
     k_orbit_path = None
     j_frame_row = None
     use_cloud_cover = False
-    cloud_mean = 5
+    cloud_max = 5
     band_count = None
     spatial_resolution = None
     sensor_inclination_angle_start = None

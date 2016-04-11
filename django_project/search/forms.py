@@ -159,8 +159,8 @@ class AdvancedSearchForm(forms.ModelForm):
         help_text=(
             'e.g. "10,20,30" or "20-40"'))
 
-    cloud_mean = forms.IntegerField(
-        label=u'Cloud Percentage',
+    cloud_max = forms.IntegerField(
+        label=u'Cloud Max Percentage',
         min_value=0, max_value=100, initial=100,
         help_text=(
             'Range 0 - 100')

@@ -435,7 +435,7 @@ class Search(BaseSearch):
             'If you want to limit searches to optical products with a certain '
             'cloud cover, enable this.')
     )
-    cloud_mean = models.IntegerField(
+    cloud_max = models.IntegerField(
         null=True, blank=True, max_length=3,
         verbose_name="Max Clouds"
     )

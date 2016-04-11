@@ -144,13 +144,13 @@ class Searcher:
             logger.debug('Spatial resolution filter %s', mySpatialRes)
 
         # filter cloud cover
-        if self.mSearch.cloud_min is not None and self.mSearch.cloud_mean is not None:
+        if self.mSearch.cloud_min is not None and self.mSearch.cloud_max is not None:
             myCloudQuery = (
                 Q(cloud_cover__gte=self.mSearch.cloud_min) &
-                Q(cloud_cover__lte=self.mSearch.cloud_mean) |
+                Q(cloud_cover__lte=self.mSearch.cloud_max) |
                 Q(cloud_cover__isnull=True))
             self.mQuerySet = self.mQuerySet.filter(myCloudQuery)
-            logger.debug('Cloud mean filter: %s - %s', self.mSearch.cloud_min, self.mSearch.cloud_mean)
+            logger.debug('Cloud mean filter: %s - %s', self.mSearch.cloud_min, self.mSearch.cloud_max)
 
         # filter band_count
         if self.mSearch.band_count is not None:
