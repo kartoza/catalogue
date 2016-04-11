@@ -14,6 +14,10 @@
     width: 150px;
 }
 
+.cloud-cover-search input {
+    width: 50px !important;
+}
+
 .accordion-inner .controls select {
     width: 160px;
 }

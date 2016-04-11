@@ -266,7 +266,8 @@ function resetSearchForm() {
         $(this).val('');
     });
     // set cloud back to 100
-    $('#id_cloud_mean').val(100);
+    $('#id_cloud_min').val(0);
+    $('#id_cloud_max').val(100);
     // clear checkboxes
     $('input:checkbox').each(function() {
         $(this).attr('checked', false);
@@ -363,20 +364,45 @@ APP.handlePathorRow = function(e) {
     }
 }
 
-APP.handleCloudMean = function(e) {
+APP.handleCloudMax = function(e) {
     var error_msg = 'Enter a valid value, number between 0 and 100.';
     APP.removeErrorNotification(e);
-    if (e.target.value != '') {
-        if (!APP.isNumber(e.target.value)) {
-            APP.addErrorNotifiction(e,error_msg);
-            return;
-        }
-        if (e.target.value < 0 || e.target.value > 100) {
-            APP.addErrorNotifiction(e,error_msg);
-            return;
-        }
-
+    if(!isValidCloud(e.target.value) || !isValidCloud($('#id_cloud_min').val())) {
+        APP.addErrorNotifiction(e,error_msg);
+        return;
     }
+    if($('#id_cloud_min').val() - e.target.value > 0) {
+        error_msg = 'Range is incorrect';
+        APP.addErrorNotifiction(e,error_msg);
+    }
+}
+
+APP.handleCloudMin = function(e) {
+    var error_msg = 'Enter a valid value, number between 0 and 100.';
+    APP.removeErrorNotification(e);
+
+    if(!isValidCloud(e.target.value) || !isValidCloud($('#id_cloud_max').val())) {
+        APP.addErrorNotifiction(e,error_msg);
+        return;
+    }
+
+    if($('#id_cloud_max').val() - e.target.value < 0) {
+        error_msg = 'Range is incorrect';
+        APP.addErrorNotifiction(e,error_msg);
+    }
+}
+
+function isValidCloud(cloud) {
+    if (cloud != '') {
+        if (!APP.isNumber(cloud)) {
+            return false;
+        }
+        if (cloud < 0 || cloud > 100) {
+            return false;
+        }
+        return true;
+    }
+    return false;
 }
 
 APP.handleAngle = function(e) {
@@ -417,7 +443,8 @@ $(document).on("sansaDateRangeChanged", APP.checkDateRange);
 $('#id_aoi_geometry').on("keyup", APP.handleAoiGeometry);
 $('#id_k_orbit_path').on("keyup", APP.handlePathorRow);
 $('#id_j_frame_row').on("keyup", APP.handlePathorRow);
-$('#id_cloud_mean').on("keyup", APP.handleCloudMean);
+$('#id_cloud_max').on("keyup", APP.handleCloudMax);
+$('#id_cloud_min').on("keyup", APP.handleCloudMin);
 $('#id_sensor_inclination_angle_start').on("keyup", APP.handleAngle);
 $('#id_sensor_inclination_angle_end').on("keyup", APP.handleAngle);
 $('#id_geometry_file').on("change", function() {

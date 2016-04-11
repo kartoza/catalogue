@@ -44,7 +44,7 @@ $.widget("linfinity.searchcriteria", {
         $('#search_form').on('change', '#id_spectral_group', $.proxy(this._update_spectral_group_text, this));
         $('#search_form').on('change', '#id_license_type', $.proxy(this._update_license_type_text, this));
 
-        $('#search_form').on('blur', '#id_cloud_mean', $.proxy(this._update_cloud_mean_text, this));
+        $('#search_form').on('blur', '#id_cloud_max', $.proxy(this._update_cloud_max_text, this));
         $('#search_form').on('blur', '#id_k_orbit_path', $.proxy(this._update_path_text, this));
         $('#search_form').on('blur', '#id_j_frame_row', $.proxy(this._update_row_text, this));
 
@@ -58,7 +58,7 @@ $.widget("linfinity.searchcriteria", {
         this._update_sensors_text('#id_instrumenttype', false);
         this._update_spectral_group_text('#id_spectral_group', false);
         this._update_license_type_text('#id_license_type', false);
-        this._update_cloud_mean_text('#id_cloud_mean', false);
+        this._update_cloud_max_text('#id_cloud_max', false);
         this._update_path_text('#id_k_orbit_path', false);
         this._update_row_text('#id_j_frame_row', false);
         this._render_string();
@@ -192,9 +192,9 @@ $.widget("linfinity.searchcriteria", {
         }
     },
 
-    _update_cloud_mean_text: function (evt, render) {
+    _update_cloud_max_text: function (evt, render) {
         var self = this;
-        this.cloud_mean_text = '';
+        this.cloud_max_text = '';
 
         var triggerRender = typeof render === 'boolean' ? render : true;
         var target = typeof evt !== "string" ? evt.target : evt;
@@ -202,7 +202,7 @@ $.widget("linfinity.searchcriteria", {
         var myValue = this._get_int_value(target);
 
         if (!_.isNaN(myValue) && myValue !== 100) {
-            this.cloud_mean_text = ' <b>Cloud mean:</b> ' + myValue;
+            this.cloud_max_text = ' <b>Cloud mean:</b> ' + myValue;
         }
 
         // update search string
@@ -256,7 +256,7 @@ $.widget("linfinity.searchcriteria", {
             'sensors_text': this.sensors_text,
             'spectral_group_text': this.spectral_group_text,
             'license_type_text': this.license_type_text,
-            'cloud_mean_text': this.cloud_mean_text,
+            'cloud_max_text': this.cloud_max_text,
             'path_text': this.path_text,
             'row_text': this.row_text,
             'aoi_text': this.aoi_text
