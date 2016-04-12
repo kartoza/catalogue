@@ -23,7 +23,7 @@ logger = logging.getLogger(__name__)
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, Http404
 # For shopping cart and ajax product id search
-from django.utils import simplejson
+import json as simplejson
 from django.conf import settings
 #Dane Springmeyer's django-shapes app for exporting results as a shpfile
 from shapes.views import ShpResponder

@@ -48,7 +48,7 @@ from django.contrib.gis.gdal import (
     SpatialReference,
     CoordTransform)
 
-from django.utils import simplejson
+import json as simplejson
 from exchange.models import Currency
 from exchange.conversion import convert_value
 # Models and forms for our app

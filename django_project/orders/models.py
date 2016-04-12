@@ -162,7 +162,7 @@ class Order(models.Model):
     market_sector = models.ForeignKey(
         MarketSector, null=False, blank=False, default=1)
     order_date = models.DateTimeField(
-        verbose_name='Order Date', auto_now=True, auto_now_add=True,
+        verbose_name='Order Date', auto_now_add=True,
         help_text='When the order was placed - not shown to users')
     datum = models.ForeignKey(Datum, verbose_name='Datum', default=1)
     resampling_method = models.ForeignKey(
@@ -241,7 +241,7 @@ class OrderStatusHistory(models.Model):
     user = models.ForeignKey(User)
     order = models.ForeignKey(Order)
     order_change_date = models.DateTimeField(
-        verbose_name='Date', auto_now=True, auto_now_add=True,
+        verbose_name='Date', auto_now_add=True,
         help_text='When the order status was changed')
     notes = models.TextField()
     old_order_status = models.ForeignKey(

@@ -88,7 +88,7 @@ TEMPLATE_LOADERS = (
 
 TEMPLATE_CONTEXT_PROCESSORS = (
     'django.contrib.auth.context_processors.auth',
-    'django.core.context_processors.request'
+    'django.template.context_processors.request'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -118,4 +118,5 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.admin',
     'django.contrib.gis',
+    'django.contrib.sites',
 )

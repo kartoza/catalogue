@@ -29,7 +29,7 @@ from itertools import chain
 from django.conf import settings
 
 # For shopping cart and ajax product id search
-from django.utils import simplejson
+import json as simplejson
 
 # Django helpers for forming html pages
 from django.shortcuts import get_object_or_404
@@ -88,8 +88,8 @@ class Http500(Exception):
     pass
 
 DateRangeInlineFormSet = inlineformset_factory(
-    Search, SearchDateRange, extra=0, max_num=0, formset=DateRangeFormSet,
-    form=DateRangeForm)
+    Search, SearchDateRange, fields='__all__', extra=0, max_num=0,
+    formset=DateRangeFormSet,form=DateRangeForm)
 
 
 #@login_required

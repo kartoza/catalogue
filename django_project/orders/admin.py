@@ -48,6 +48,7 @@ class OrderNotificationRecipientsAdminForm(forms.ModelForm):
     class Meta:
         """Meta class implementation."""
         model = OrderNotificationRecipients
+        fields = '__all__'
 
     def clean(self):
         """

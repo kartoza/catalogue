@@ -19,7 +19,7 @@ __date__ = '01/01/2011'
 __copyright__ = 'South African National Space Agency'
 
 from django.contrib.gis.db.models.fields import GeometryField
-from django.utils import simplejson
+import json as simplejson
 from django.http import HttpResponse
 
 

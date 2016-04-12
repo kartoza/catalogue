@@ -159,6 +159,13 @@ dbshell:
 	@echo "------------------------------------------------------------------"
 	@docker exec -t -i $(PROJECT_ID)-db psql -U docker -h localhost gis
 
+dbbash:
+	@echo
+	@echo "------------------------------------------------------------------"
+	@echo "Bashing in to production database"
+	@echo "------------------------------------------------------------------"
+	@docker exec -t -i $(PROJECT_ID)-db /bin/bash
+
 dbrestore:
 	@echo
 	@echo "------------------------------------------------------------------"
@@ -237,3 +244,11 @@ devweb: db
 	@echo "Running in DEVELOPMENT mode"
 	@echo "------------------------------------------------------------------"
 	@docker-compose -p $(PROJECT_ID) up --no-deps -d devweb
+
+check-permission:
+	@echo
+	@echo "------------------------------------------------------------------"
+	@echo "Fix permission query error. "
+	@echo "Happens when userena get’s implemented in an already existing project"
+	@echo "------------------------------------------------------------------"
+	@docker-compose -p $(PROJECT_ID) run uwsgi python manage.py check_permissions
