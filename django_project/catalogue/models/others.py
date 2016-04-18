@@ -21,6 +21,7 @@ __copyright__ = 'South African National Space Agency'
 
 from django.contrib.gis.db import models
 #for user id foreign keys
+from django.utils import timezone
 from django.contrib.auth.models import User
 
 from offline_messages.models import OfflineMessage
@@ -106,7 +107,7 @@ class Visit(models.Model):
     ip_address = models.IPAddressField('IP Address')
     ip_position = models.PointField('IP Lat/Long', srid=4326)
     visit_date = models.DateTimeField(
-        'DateAdded', auto_now=True, auto_now_add=False
+        'DateAdded', default=timezone.now, editable=False
     )
     user = models.ForeignKey(User, null=True, blank=True)
     objects = models.GeoManager()
@@ -166,7 +167,7 @@ world_borders_mapping = {
 class AllUsersMessage(models.Model):
     """A simple model for creating messages to broadcase to all users."""
     message = models.TextField()
-    created = models.DateTimeField(auto_now_add=True)
+    created = models.DateTimeField(default=timezone.now, editable=False)
 
     class Meta:
         # Specifies which database this model ORM goes to

@@ -24,6 +24,7 @@ import json
 from datetime import datetime
 
 from django.contrib.gis.db import models
+from django.utils import timezone
 from django.core.exceptions import ObjectDoesNotExist
 
 from exchange.conversion import convert_value
@@ -277,7 +278,7 @@ class BaseSearch(models.Model):
 
     ip_position = models.PointField(srid=4326, null=True, blank=True)
     search_date = models.DateTimeField(
-        'Search Date', auto_now=True, auto_now_add=True,
+        'Search Date', default=timezone.now, editable=False,
         help_text='When the search was made - not shown to users')
     # e.g. 16fd2706-8baf-433b-82eb-8c7fada847da
     guid = models.CharField(max_length=40, unique=True)
@@ -582,7 +583,7 @@ class Clip(models.Model):
     guid = models.CharField(max_length=40)
     owner = models.ForeignKey('auth.User')
     date = models.DateTimeField(
-        verbose_name='Date', auto_now=True, auto_now_add=True,
+        verbose_name='Date', default=timezone.now, editable=True,
         help_text='Not shown to users')
     ## provisory hardcoded choices for clipped image source.
     image = models.CharField(
