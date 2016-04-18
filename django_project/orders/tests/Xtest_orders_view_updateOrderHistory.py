@@ -64,7 +64,7 @@ class OrdersViews_updateOrderHistory_Tests(TestCase):
         self.assertEqual(myResp.status_code, 302)
         self.assertEqual(
             myResp['Location'],
-            'http://testserver/accounts/signin/?next=/updateorderhistory/')
+            '/accounts/signin/?next=/updateorderhistory/')
 
     def test_updateOrderHistory_login_staff(self):
         """

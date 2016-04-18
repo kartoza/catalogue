@@ -82,7 +82,7 @@
       self.layerSearch.removeAllFeatures();
       _.each(payload.data, function (feature) {
         var feat = new OpenLayers.Feature.Vector(
-          self.map_object.transformGeometry(OpenLayers.Geometry.fromWKT(feature.attributes.spatial_coverage)),
+          self.map_object.transformGeometry(OpenLayers.Geometry.fromWKT( feature.attributes.spatial_coverage.split(';')[1])),
           feature.attributes
         );
         // check if item is in cart

@@ -510,12 +510,12 @@ def updateOrderHistory(theRequest):
         myOrderStatusHistory.save()
     except:
         resp = simplejson.dumps({"saved": 'failed'})
-        return HttpResponse(resp, mimetype="application/json")
+        return HttpResponse(resp, content_type="application/json")
     myOrder.order_status = myNewStatus
     myOrder.save()
     notifySalesStaff(myOrder.user, myOrderId)
     resp = simplejson.dumps({"saved": 'ok'})
-    return HttpResponse(resp, mimetype="application/json")
+    return HttpResponse(resp, content_type="application/json")
 
 
 
@@ -683,7 +683,7 @@ def convertPrice(theRequest):
     price = Decimal(theRequest.POST.get('price'))
     rand_price = "%0.2f" % (convert_value(price, currency, 'ZAR'),)
     resp = simplejson.dumps({"rand_price": rand_price})
-    return HttpResponse(resp, mimetype="application/json")
+    return HttpResponse(resp, content_type="application/json")
 
 
 @login_required

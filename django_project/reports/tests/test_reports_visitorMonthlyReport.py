@@ -57,9 +57,7 @@ class ReportsViews_visitorMonthlyReport_Tests(TestCase):
             reverse(
                 'visitorMonthlyReport',
                 kwargs={'year': '2010', 'month': '11'}))
-        self.assertEqual(myResp.status_code, 200)
-        self.assertEqual(
-            myResp.context['app_path'], u'/visitormonthlyreport/2010/11/')
+        self.assertEqual(myResp.status_code, 302)
 
     def test_myReports_userlogin(self):
         """
@@ -76,9 +74,7 @@ class ReportsViews_visitorMonthlyReport_Tests(TestCase):
             reverse(
                 'visitorMonthlyReport',
                 kwargs={'year': '2010', 'month': '11'}))
-        self.assertEqual(myResp.status_code, 200)
-        self.assertEqual(
-            myResp.context['app_path'], u'/visitormonthlyreport/2010/11/')
+        self.assertEqual(myResp.status_code, 302)
 
     def test_myReports_stafflogin(self):
         """

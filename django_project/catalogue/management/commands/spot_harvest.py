@@ -83,7 +83,7 @@ class Command(BaseCommand):
             parameter = False
         return parameter
 
-    @transaction.commit_manually
+    @transaction.atomic
     def handle(self, *args, **options):
         """ command execution
         :param args:

@@ -81,3 +81,5 @@ ACCEPTABLE_COLUMNS = [
 ACCEPTABLE_SORTS = [
     'ASC', 'DESC'
 ]
+
+MESSAGE_STORAGE = 'offline_messages.storage.OfflineStorageEngine'

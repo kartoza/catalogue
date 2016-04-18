@@ -24,7 +24,7 @@ from django.http import HttpResponse
 
 
 def render_to_geojson(
-        query_set, geom_field=None, mimetype='text/plain', pretty_print=False):
+        query_set, geom_field=None, content_type='text/plain', pretty_print=False):
     """
     Shortcut to render a GeoJson FeatureCollection from a Django QuerySet.
     Currently computes a bbox and adds a crs member as a sr.org link
@@ -85,5 +85,5 @@ def render_to_geojson(
     else:
         response.write('%s' % simplejson.dumps(collection))
     response['Content-length'] = str(len(response.content))
-    response['Content-Type'] = mimetype
+    response['Content-Type'] = content_type
     return response

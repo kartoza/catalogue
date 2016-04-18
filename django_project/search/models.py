@@ -195,7 +195,7 @@ class SearchRecord(models.Model):
                 self.product_ready = False
         # if order is null and searchrecord is updated, make snapshot at the
         # time of placing order
-        if (self.pk and self._cached_data.get('order_id') is None and
+        if (self.pk is None and
                 self.order_id is not None):
             # snapshot data and suppress save (we are in a save method)
             self._snapshot_cost_and_currency(save=False)

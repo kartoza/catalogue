@@ -23,7 +23,7 @@
 {% endif %}
 {% block table %}
 <table{% if table.attrs %} {{ table.attrs.as_html }}{% endif %} class="table table-striped">
-    {% nospaceless %}
+
     {% block table.thead %}
     <thead>
         <tr>
@@ -59,7 +59,7 @@
     {% block table.tfoot %}
     <tfoot></tfoot>
     {% endblock table.tfoot %}
-    {% endnospaceless %}
+
 </table>
 {% endblock table %}
 

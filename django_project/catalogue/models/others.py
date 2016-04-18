@@ -103,7 +103,7 @@ class Visit(models.Model):
 
     city = models.CharField('City', max_length=255)
     country = models.CharField('Country', max_length=255)
-    ip_address = models.IPAddressField('IP Address')
+    ip_address = models.GenericIPAddressField('IP Address')
     ip_position = models.PointField('IP Lat/Long', srid=4326)
     visit_date = models.DateTimeField(
         'DateAdded', auto_now=True, auto_now_add=False

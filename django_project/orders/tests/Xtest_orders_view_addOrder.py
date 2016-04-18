@@ -90,7 +90,7 @@ class OrdersViews_addOrder_Tests(TestCase):
         self.assertEqual(myResp.status_code, 302)
         self.assertEqual(
             myResp['Location'],
-            'http://testserver/accounts/signin/?next=/addorder/')
+            '/accounts/signin/?next=/addorder/')
 
     def test_addOrder_login_user_noprofile(self):
         """
@@ -109,7 +109,7 @@ class OrdersViews_addOrder_Tests(TestCase):
         self.assertEqual(myResp.status_code, 302)
         self.assertEqual(
             myResp['Location'], (
-                'http://testserver/accounts/profile/edit/personal/'
+                '/accounts/profile/edit/personal/'
                 '?next=/addorder/'))
 
     def test_addOrder_login_staff(self):
@@ -181,7 +181,7 @@ class OrdersViews_addOrder_Tests(TestCase):
 
         self.assertEqual(myResp.status_code, 302)
         self.assertEqual(
-            myResp['Location'], 'http://testserver/emptyCartHelp/')
+            myResp['Location'], '/emptyCartHelp/')
 
     def test_addOrder_login_staff_valid_post(self):
         """
@@ -294,7 +294,7 @@ class OrdersViews_addOrder_Tests(TestCase):
         self.assertEqual(myResp.status_code, 302)
         self.assertTrue(
             re.match(
-                'http://testserver/vieworder/(\d+)/',
+                '/vieworder/(\d+)/',
                 myResp['Location']) is not None
         )
 

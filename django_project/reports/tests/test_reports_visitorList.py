@@ -56,9 +56,7 @@ class ReportsViews_visitorList_Tests(TestCase):
             reverse(
                 'visitorList',
                 kwargs={}))
-        self.assertEqual(myResp.status_code, 200)
-        self.assertEqual(
-            myResp.context['app_path'], u'/visitorlist/')
+        self.assertEqual(myResp.status_code, 302)
 
     def test_myReports_userlogin(self):
         """
@@ -75,9 +73,7 @@ class ReportsViews_visitorList_Tests(TestCase):
             reverse(
                 'visitorList',
                 kwargs={}))
-        self.assertEqual(myResp.status_code, 200)
-        self.assertEqual(
-            myResp.context['app_path'], u'/visitorlist/')
+        self.assertEqual(myResp.status_code, 302)
 
     def test_myReports_stafflogin(self):
         """

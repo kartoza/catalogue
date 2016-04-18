@@ -24,8 +24,6 @@ from django.db.models.query import QuerySet
 from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 
-from model_utils.managers import PassThroughManager
-
 # ABP: unused ? from catalogue.geoiputils import *
 from catalogue.nosubclassmanager import NoSubclassManager
 
@@ -181,7 +179,7 @@ class Order(models.Model):
         related_name='subsidy_type+'
     )
     #default manager
-    objects = PassThroughManager.for_queryset_class(OrderQuerySet)()
+    objects = OrderQuerySet.as_manager()
     # A model can have more than one manager. Above will be used as default
     # see: http://docs.djangoproject.com/en/dev/topics/db/managers/
     # Also use a custom manager so that we can get

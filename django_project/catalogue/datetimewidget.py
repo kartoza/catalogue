@@ -43,7 +43,7 @@ from dateutil.relativedelta import relativedelta
 
 from django import forms
 from django.utils.safestring import mark_safe
-from django.forms.util import flatatt
+from django.forms.utils import flatatt
 
 # Support dmy formats
 # (see http://dantallis.blogspot.com/2008/11/date-validation-in-django.html )

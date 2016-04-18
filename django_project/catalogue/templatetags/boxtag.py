@@ -18,6 +18,7 @@ __date__ = '16/08/2012'
 __copyright__ = 'South African National Space Agency'
 
 from django import template
+from django.utils.safestring import mark_safe
 import logging
 logger = logging.getLogger(__name__)
 register = template.Library()
@@ -80,28 +81,28 @@ def box_start(parser, token):
 
 @register.simple_tag
 def box_end():
-    return '''
+    return mark_safe('''
         </div>
       </div>
-    '''
+    ''')
 
 
 @register.simple_tag
 def error_message_start(heading):
-    return '''
+    return mark_safe('''
       <div class="ui-widget">
         <div class="ui-state-error ui-corner-all" style="padding: 0 .7em;">
           <p><span class="ui-icon ui-icon-alert" style="float: left; margin-right: .3em;"></span>
           ''' + heading + '''
           </p>
           <div>
-          '''
+          ''')
 
 
 @register.simple_tag
 def error_message_end():
-    return '''
+    return mark_safe('''
           </div>
         </div>
       </div>
-      '''
+      ''')

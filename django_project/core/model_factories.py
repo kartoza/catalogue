@@ -15,13 +15,16 @@ from exchange.models import Currency, ExchangeRate
 
 
 class ContentTypeF(factory.django.DjangoModelFactory):
-    FACTORY_FOR = ct_models.ContentType
+    # FACTORY_FOR = ct_models.ContentType
+    class Meta:
+        model = ct_models.ContentType
 
     name = factory.Sequence(lambda n: "content type %s" % n)
 
 
 class PermissionF(factory.django.DjangoModelFactory):
-    FACTORY_FOR = Permission
+    class Meta:
+        model = Permission
 
     name = factory.Sequence(lambda n: "permission%s" % n)
     content_type = factory.SubFactory(ContentTypeF)
@@ -29,29 +32,31 @@ class PermissionF(factory.django.DjangoModelFactory):
 
 
 class GroupF(factory.django.DjangoModelFactory):
-    FACTORY_FOR = Group
 
-    @classmethod
-    def _setup_next_sequence(cls):
-        try:
-            return cls._associated_class.objects.values_list(
-                'id', flat=True).order_by('-id')[0] + 1
-        except IndexError:
-            return 0
+    class Meta:
+        model = Group
+    # @classmethod
+    # def _setup_next_sequence(cls):
+    #     try:
+    #         return cls._associated_class.objects.values_list(
+    #             'id', flat=True).order_by('-id')[0] + 1
+    #     except IndexError:
+    #         return 0
 
     name = factory.Sequence(lambda n: "group%s" % n)
 
 
 class UserF(factory.django.DjangoModelFactory):
-    FACTORY_FOR = User
 
-    @classmethod
-    def _setup_next_sequence(cls):
-        try:
-            return cls._associated_class.objects.values_list(
-                'id', flat=True).order_by('-id')[0] + 1
-        except IndexError:
-            return 0
+    class Meta:
+        model = User
+    # @classmethod
+    # def _setup_next_sequence(cls):
+    #     try:
+    #         return cls._associated_class.objects.values_list(
+    #             'id', flat=True).order_by('-id')[0] + 1
+    #     except IndexError:
+    #         return 0
 
     username = factory.Sequence(lambda n: "username%s" % n)
     first_name = factory.Sequence(lambda n: "first_name%s" % n)
@@ -84,7 +89,8 @@ class CurrencyF(factory.django.DjangoModelFactory):
     """
     Factory for exchange.Currency
     """
-    FACTORY_FOR = Currency
+    class Meta:
+        model = Currency
 
     code = factory.Sequence(lambda n: "%s" % n)
     name = factory.Sequence(lambda n: "Currency %s" % n)
@@ -94,7 +100,8 @@ class ExchangeRateF(factory.django.DjangoModelFactory):
     """
     Factory for exchange.ExchangeRate
     """
-    FACTORY_FOR = ExchangeRate
+    class Meta:
+        model = ExchangeRate
 
     source = factory.SubFactory(CurrencyF)
     target = factory.SubFactory(CurrencyF)

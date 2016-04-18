@@ -38,7 +38,7 @@ def render_to_pdf(template_src, context_dict):
 
     if not pdf.err:
         response = http.HttpResponse(
-            result.getvalue(), mimetype='application/pdf')
+            result.getvalue(), content_type='application/pdf')
         #set content to 'attachment', so browsers download it
         response['Content-Disposition'] = 'attachment; filename=report.pdf'
         return response

@@ -1,5 +1,5 @@
 {% load staticfiles %}
-{% load compressed %}
+{% load pipeline %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -18,8 +18,8 @@
     {# Be very careful about changing the order of these css includes as it can have unintended side effects #}
     <link href="{% url 'logVisit' %}" rel="stylesheet" type="text/css" />
 
-    {% compressed_css 'contrib' %}
-    {% compressed_css 'fluid' %}
+    {% stylesheet 'contrib' %}
+    {% stylesheet 'fluid' %}
 
     {% endblock %}
 
@@ -66,7 +66,7 @@
       <script type="text/javascript" charset="utf-8" src="/static/js/openlayers/OpenLayers.js"></script>
 
 
-    {% compressed_js 'fluid' %}
+    {% javascript 'fluid' %}
 
     {% endblock %}
   </body>

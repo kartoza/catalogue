@@ -357,7 +357,7 @@ def fetch_features(shapefile, area_of_interest):
 
 
 # noinspection PyDeprecation
-@transaction.commit_manually
+@transaction.atomic
 def ingest(
         shapefile,
         download_thumbs_flag=False,

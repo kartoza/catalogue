@@ -1,4 +1,4 @@
-{% load compressed %} {# django-pipeline compressor tag #}
+{% load pipeline %} {# django-pipeline compressor tag #}
 {% load staticfiles %}
 <!DOCTYPE html>
 <html lang="en">
@@ -17,8 +17,8 @@
     {# Be very careful about changing the order of these css includes as it can have unintended side effects #}
     <link href="{% url 'logVisit' %}" rel="stylesheet" type="text/css" />
 
-    {% compressed_css 'contrib' %}
-    {% compressed_css 'base' %}
+    {% stylesheet 'contrib' %}
+    {% stylesheet 'base' %}
 
     {% endblock %}
 
@@ -29,7 +29,8 @@
     {# the end result is a broken path for the style.css, which subtly brakes the page #}
     <script type="text/javascript" charset="utf-8" src="/static/js/openlayers/OpenLayers.js"></script>
 
-    {% compressed_js 'base' %}
+    {% javascript 'contrib' %}
+    {% javascript 'base' %}
 
     {% endblock %}
 

@@ -70,7 +70,7 @@ class SearchViews_searchGuid_Tests(TestCase):
         self.assertEqual(myResp.status_code, 302)
         self.assertEqual(
             myResp['Location'], (
-                'http://testserver/accounts/signin/?next=/search/'
+                '/accounts/signin/?next=/search/'
                 '69d814b7-3164-42b9-9530-50ae77806da9/')
         )
 

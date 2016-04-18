@@ -475,7 +475,7 @@ def get_quality():
     return quality
 
 
-@transaction.commit_manually
+@transaction.atomic
 def ingest(
         test_only_flag=True,
         source_path=(

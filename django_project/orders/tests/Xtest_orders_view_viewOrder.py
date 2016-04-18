@@ -63,7 +63,7 @@ class OrdersViews_viewOrder_Tests(TestCase):
         self.assertEqual(myResp.status_code, 302)
         self.assertEqual(
             myResp['Location'],
-            'http://testserver/accounts/signin/?next=/vieworder/1/')
+            '/accounts/signin/?next=/vieworder/1/')
 
     def test_viewOrder_login_staff(self):
         """

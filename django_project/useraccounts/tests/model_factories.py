@@ -25,7 +25,8 @@ class SansaUserProfileF(factory.django.DjangoModelFactory):
     """
     SansaUserProfile model factory
     """
-    FACTORY_FOR = SansaUserProfile
+    class Meta:
+        model = SansaUserProfile
 
     user = factory.SubFactory('core.model_factories.UserF')
     strategic_partner = False

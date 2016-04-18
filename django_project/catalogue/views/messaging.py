@@ -174,7 +174,7 @@ def userMessages(theRequest):
             msg['message'] = messg.message
             messages.append(msg)
     myResponse = HttpResponse(
-        simplejson.dumps(messages), mimetype='application/json')
+        simplejson.dumps(messages), content_type='application/json')
     for myMessage in myMessages:
         myMessage.delete()
 

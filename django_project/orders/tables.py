@@ -19,7 +19,7 @@ class OrderListTable(tables.Table):
     user = tables.Column()
     view = tables.URLColumn(
         empty_values=(),
-        sortable=False,
+        orderable=False,
         verbose_name='View Order'
     )
 

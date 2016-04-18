@@ -56,9 +56,7 @@ class OrdersViews_downloadClipGeometry_Tests(TestCase):
         myClient = Client()
         myResp = myClient.get(
             reverse('downloadClipGeometry', kwargs={'theId': 1}))
-        self.assertEqual(myResp.status_code, 200)
-        self.assertEqual(
-            myResp.context['app_path'], u'/downloadclipgeometry/1/')
+        self.assertEqual(myResp.status_code, 302)
 
     def test_downloadClipGeometry_login_staff_shp(self):
         """

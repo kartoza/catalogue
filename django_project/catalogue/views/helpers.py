@@ -82,39 +82,39 @@ class EmailMultiRelated(EmailMultiAlternatives):
             subject, body, from_email, to, bcc, connection, attachments,
             headers, alternatives)
 
-    def attach_related(self, filename=None, content=None, mimetype=None):
+    def attach_related(self, filename=None, content=None, content_type=None):
         """
         Attaches a file with the given filename and content. The filename can
-        be omitted and the mimetype is guessed, if not provided.
+        be omitted and the content_type is guessed, if not provided.
 
         If the first parameter is a MIMEBase subclass it is inserted directly
         into the resulting message attachments.
         """
 
         if isinstance(filename, MIMEBase):
-            assert content == mimetype is None
+            assert content == content_type is None
             self.related_attachments.append(filename)
         else:
             assert content is not None
-            self.related_attachments.append((filename, content, mimetype))
+            self.related_attachments.append((filename, content, content_type))
 
-    def attach_related_file(self, path, mimetype=None):
+    def attach_related_file(self, path, content_type=None):
         """Attaches a file from the filesystem."""
         filename = os.path.basename(path)
         content = open(path, 'rb').read()
-        self.attach_related(filename, content, mimetype)
+        self.attach_related(filename, content, content_type)
 
     def _create_message(self, msg):
         return self._create_attachments(
             self._create_related_attachments(self._create_alternatives(msg)))
 
     def _create_alternatives(self, msg):
-        for i, (content, mimetype) in enumerate(self.alternatives):
-            if mimetype == 'text/html':
+        for i, (content, content_type) in enumerate(self.alternatives):
+            if content_type == 'text/html':
                 for filename, _, _ in self.related_attachments:
                     content = re.sub(r'(?<!cid:)%s' % re.escape(filename),
                                      'cid:%s' % filename, content)
-                    self.alternatives[i] = (content, mimetype)
+                    self.alternatives[i] = (content, content_type)
 
             return super(EmailMultiRelated, self)._create_alternatives(msg)
 
@@ -130,21 +130,21 @@ class EmailMultiRelated(EmailMultiAlternatives):
                     msg.attach(self._create_related_attachment(*related))
         return msg
 
-    def _create_related_attachment(self, filename, content, mimetype=None):
+    def _create_related_attachment(self, filename, content, content_type=None):
         """
-        Convert the filename, content, mimetype triple into a MIME attachment
+        Convert the filename, content, content_type triple into a MIME attachment
         object. Adjust headers to use Content-ID where applicable.
         Taken from http://code.djangoproject.com/ticket/4771
         """
         attachment = super(EmailMultiRelated, self)._create_attachment(
-            filename, content, mimetype)
+            filename, content, content_type)
         if filename:
-            mimetype = attachment['Content-Type']
+            content_type = attachment['Content-Type']
             del(attachment['Content-Type'])
             del(attachment['Content-Disposition'])
             attachment.add_header('Content-Disposition', 'inline',
                                   filename=filename)
-            attachment.add_header('Content-Type', mimetype, name=filename)
+            attachment.add_header('Content-Type', content_type, name=filename)
             attachment.add_header('Content-ID', '<%s>' % filename)
         return attachment
 

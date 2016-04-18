@@ -9,11 +9,11 @@ from django.conf import settings
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('catalogue', '0001_initial'),
+        ('orders', '0001_initial'),
         ('dictionaries', '0001_initial'),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
         ('exchange', '__first__'),
-        ('orders', '__first__'),
+        ('catalogue', '0002_auto_20160415_0440'),
     ]
 
     operations = [
