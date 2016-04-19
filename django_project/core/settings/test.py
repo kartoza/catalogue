@@ -6,7 +6,7 @@ INSTALLED_APPS += (
 )
 
 
-TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
+TEST_RUNNER = 'django.test.runner.DiscoverRunner'
 
 NOSE_ARGS = (
     '--with-coverage',
@@ -14,12 +14,12 @@ NOSE_ARGS = (
     '--cover-html',
     '--cover-html-dir=xmlrunner/html',
     '--cover-inclusive',
-    '--cover-package=catalogue',
-    '--cover-package=useraccounts',
-    '--cover-package=search',
-    '--cover-package=dictionaries',
-    '--cover-package=reports',
-    '--cover-package=orders',
+    # '--cover-package=catalogue',
+    # '--cover-package=useraccounts',
+    # '--cover-package=search',
+    # '--cover-package=dictionaries',
+    # '--cover-package=reports',
+    # '--cover-package=orders',
     '--nocapture',
     '--nologcapture',
     #  default test settings don't include any specific tests (see jenkins.py)
@@ -35,15 +35,15 @@ LOGGING = {
     # internal dictConfig version - DON'T CHANGE
     'version': 1,
     'disable_existing_loggers': True,
-    # default root logger - handle with sentry
-    'root': {
-        'level': 'DEBUG',
-        'handlers': ['nullhandler'],
-    },
     'handlers': {
         'nullhandler': {
             'class': 'logging.NullHandler',
         },
+    },
+    # default root logger
+    'root': {
+        'level': 'DEBUG',
+        'handlers': ['nullhandler'],
     }
 }
 

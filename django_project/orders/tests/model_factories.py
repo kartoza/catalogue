@@ -37,7 +37,8 @@ class OrderStatusF(factory.django.DjangoModelFactory):
     """
     OrderStatus model factory
     """
-    FACTORY_FOR = OrderStatus
+    class Meta:
+        model = OrderStatus
 
     name = factory.Sequence(lambda n: "Status {}".format(n))
 
@@ -46,7 +47,8 @@ class DeliveryMethodF(factory.django.DjangoModelFactory):
     """
     DeliveryMethod model factory
     """
-    FACTORY_FOR = DeliveryMethod
+    class Meta:
+        model = DeliveryMethod
 
     name = factory.Sequence(lambda n: "Delivery method {}".format(n))
 
@@ -55,7 +57,8 @@ class DatumF(factory.django.DjangoModelFactory):
     """
     Datum model factory
     """
-    FACTORY_FOR = Datum
+    class Meta:
+        model = Datum
 
     name = factory.Sequence(lambda n: "Datum {}".format(n))
 
@@ -64,7 +67,8 @@ class ResamplingMethodF(factory.django.DjangoModelFactory):
     """
     ResamplingMethod model factory
     """
-    FACTORY_FOR = ResamplingMethod
+    class Meta:
+        model = ResamplingMethod
 
     name = factory.Sequence(lambda n: "Resampling method {}".format(n))
 
@@ -73,7 +77,8 @@ class FileFormatF(factory.django.DjangoModelFactory):
     """
     FileFormat model factory
     """
-    FACTORY_FOR = FileFormat
+    class Meta:
+        model = FileFormat
 
     name = factory.Sequence(lambda n: "File format {}".format(n))
 
@@ -82,7 +87,8 @@ class MarketSectorF(factory.django.DjangoModelFactory):
     """
     MarketSector model factory
     """
-    FACTORY_FOR = MarketSector
+    class Meta:
+        model = MarketSector
 
     name = factory.Sequence(lambda n: "Market sector {}".format(n))
 
@@ -91,7 +97,8 @@ class OrderF(factory.django.DjangoModelFactory):
     """
     Order model factory
     """
-    FACTORY_FOR = Order
+    class Meta:
+        model = Order
 
     user = factory.SubFactory('core.model_factories.UserF')
     notes = ''
@@ -112,7 +119,8 @@ class OrderStatusHistoryF(factory.django.DjangoModelFactory):
     """
     OrderStatusHistory model factory
     """
-    FACTORY_FOR = OrderStatusHistory
+    class Meta:
+        model = OrderStatusHistory
 
     user = factory.SubFactory('core.model_factories.UserF')
     order = factory.SubFactory(OrderF)
@@ -125,7 +133,8 @@ class OrderNotificationRecipientsF(factory.django.DjangoModelFactory):
     """
     OrderNotificationRecipients model factory
     """
-    FACTORY_FOR = OrderNotificationRecipients
+    class Meta:
+        model = OrderNotificationRecipients
 
     user = factory.SubFactory('core.model_factories.UserF')
 
@@ -156,7 +165,8 @@ class NonSearchRecordF(factory.django.DjangoModelFactory):
     """
     NonSearchRecord model factory
     """
-    FACTORY_FOR = NonSearchRecord
+    class Meta:
+        model = NonSearchRecord
 
     user = factory.SubFactory('core.model_factories.UserF')
     order = factory.SubFactory(OrderF)

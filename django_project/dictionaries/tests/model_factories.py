@@ -55,7 +55,8 @@ class CollectionF(factory.django.DjangoModelFactory):
     """
     Collection model factory
     """
-    FACTORY_FOR = Collection
+    class Meta:
+        model = Collection
 
     name = factory.Sequence(lambda n: 'Collection {0}'.format(n))
     description = 'None'
@@ -68,7 +69,8 @@ class ProcessingLevelF(factory.django.DjangoModelFactory):
     """
     Processing level factory
     """
-    FACTORY_FOR = ProcessingLevel
+    class Meta:
+        model = ProcessingLevel
 
     abbreviation = factory.Sequence(lambda n: 'A{0}'.format(n))
     name = factory.Sequence(lambda n: 'Processing level {0}'.format(n))
@@ -80,7 +82,8 @@ class SatelliteF(factory.django.DjangoModelFactory):
     """
     Satellite factory
     """
-    FACTORY_FOR = Satellite
+    class Meta:
+        model = Satellite
 
     name = factory.Sequence(lambda n: 'Satellite {0}'.format(n))
     description = ''
@@ -103,7 +106,8 @@ class ScannerTypeF(factory.django.DjangoModelFactory):
     """
     ScannerType factory
     """
-    FACTORY_FOR = ScannerType
+    class Meta:
+        model = ScannerType
 
     name = factory.Sequence(lambda n: 'ScannerType {0}'.format(n))
     description = ''
@@ -114,7 +118,8 @@ class ReferenceSystemF(factory.django.DjangoModelFactory):
     """
     ReferenceSystem factory
     """
-    FACTORY_FOR = ReferenceSystem
+    class Meta:
+        model = ReferenceSystem
 
     name = factory.Sequence(lambda n: 'ReferenceSystem {0}'.format(n))
     description = ''
@@ -125,7 +130,8 @@ class InstrumentTypeF(factory.django.DjangoModelFactory):
     """
     InstrumentType factory
     """
-    FACTORY_FOR = InstrumentType
+    class Meta:
+        model = InstrumentType
 
     name = factory.Sequence(lambda n: 'InstrumentType {0}'.format(n))
     description = ''
@@ -155,7 +161,8 @@ class RadarBeamF(factory.django.DjangoModelFactory):
     """
     RadarBeam factory
     """
-    FACTORY_FOR = RadarBeam
+    class Meta:
+        model = RadarBeam
 
     instrument_type = factory.SubFactory(InstrumentTypeF)
     band_name = factory.Sequence(lambda n: 'Band name {0}'.format(n))
@@ -168,7 +175,8 @@ class ImagingModeF(factory.django.DjangoModelFactory):
     """
     ImagingMode factory
     """
-    FACTORY_FOR = ImagingMode
+    class Meta:
+        model = ImagingMode
 
     radarbeam = factory.SubFactory(RadarBeamF)
     name = factory.Sequence(lambda n: 'ImagingMode {0}'.format(n))
@@ -185,7 +193,8 @@ class SatelliteInstrumentGroupF(factory.django.DjangoModelFactory):
     """
     SatelliteInstrumentGroup factory
     """
-    FACTORY_FOR = SatelliteInstrumentGroup
+    class Meta:
+        model = SatelliteInstrumentGroup
 
     satellite = factory.SubFactory(SatelliteF)
     instrument_type = factory.SubFactory(InstrumentTypeF)
@@ -195,7 +204,8 @@ class SatelliteInstrumentF(factory.django.DjangoModelFactory):
     """
     SatelliteInstrument factory
     """
-    FACTORY_FOR = SatelliteInstrument
+    class Meta:
+        model = SatelliteInstrument
 
     name = factory.Sequence(lambda n: 'SatelliteInstrument {0}'.format(n))
     description = ''
@@ -209,7 +219,8 @@ class BandF(factory.django.DjangoModelFactory):
     """
     Band factory
     """
-    FACTORY_FOR = Band
+    class Meta:
+        model = Band
 
     instrument_type = factory.SubFactory(InstrumentTypeF)
     band_name = factory.Sequence(lambda n: 'Band {0}'.format(n))
@@ -225,7 +236,8 @@ class SpectralGroupF(factory.django.DjangoModelFactory):
     """
     SpectralGroup factory
     """
-    FACTORY_FOR = SpectralGroup
+    class Meta:
+        model = SpectralGroup
 
     name = factory.Sequence(lambda n: 'SpectralGroup {0}'.format(n))
     description = ''
@@ -236,7 +248,8 @@ class SpectralModeF(factory.django.DjangoModelFactory):
     """
     SpectralMode factory
     """
-    FACTORY_FOR = SpectralMode
+    class Meta:
+        model = SpectralMode
 
     name = factory.Sequence(lambda n: 'SpectralMode {0}'.format(n))
     description = ''
@@ -249,7 +262,8 @@ class BandSpectralModeF(factory.django.DjangoModelFactory):
     """
     BandSpectralMode factory
     """
-    FACTORY_FOR = BandSpectralMode
+    class Meta:
+        model = BandSpectralMode
 
     band = factory.SubFactory(BandF)
     spectral_mode = factory.SubFactory(SpectralModeF)
@@ -259,7 +273,8 @@ class InstrumentTypeProcessingLevelF(factory.django.DjangoModelFactory):
     """
     InstrumentTypeProcessingLevel factory
     """
-    FACTORY_FOR = InstrumentTypeProcessingLevel
+    class Meta:
+        model = InstrumentTypeProcessingLevel
 
     instrument_type = factory.SubFactory(InstrumentTypeF)
     processing_level = factory.SubFactory(ProcessingLevelF)
@@ -271,7 +286,8 @@ class SpectralModeProcessingCostsF(factory.django.DjangoModelFactory):
     """
     SpectralModeProcessingCosts factory
     """
-    FACTORY_FOR = SpectralModeProcessingCosts
+    class Meta:
+        model = SpectralModeProcessingCosts
 
     spectral_mode = factory.SubFactory(SpectralModeF)
     instrument_type_processing_level = factory.SubFactory(
@@ -286,7 +302,8 @@ class RadarProductProfileF(factory.django.DjangoModelFactory):
     """
     RadarProductProfile factory
     """
-    FACTORY_FOR = RadarProductProfile
+    class Meta:
+        model = RadarProductProfile
 
     satellite_instrument = factory.SubFactory(SatelliteInstrumentF)
     imaging_mode = factory.SubFactory(ImagingModeF)
@@ -296,7 +313,8 @@ class OpticalProductProfileF(factory.django.DjangoModelFactory):
     """
     OpticalProductProfile factory
     """
-    FACTORY_FOR = OpticalProductProfile
+    class Meta:
+        model = OpticalProductProfile
 
     satellite_instrument = factory.SubFactory(SatelliteInstrumentF)
     spectral_mode = factory.SubFactory(SpectralModeF)
@@ -306,7 +324,8 @@ class ProjectionF(factory.django.DjangoModelFactory):
     """
     Projection model factory
     """
-    FACTORY_FOR = Projection
+    class Meta:
+        model = Projection
 
     name = factory.Sequence(lambda n: "Projection {}".format(n))
     epsg_code = factory.Sequence(lambda n: n)
@@ -316,7 +335,8 @@ class InstitutionF(factory.django.DjangoModelFactory):
     """
     Institution model factory
     """
-    FACTORY_FOR = Institution
+    class Meta:
+        model = Institution
 
     name = factory.Sequence(lambda n: 'Institution {0}'.format(n))
     address1 = 'Blank'
@@ -329,7 +349,8 @@ class LicenseF(factory.django.DjangoModelFactory):
     """
     License model factory
     """
-    FACTORY_FOR = License
+    class Meta:
+        model = License
 
     name = factory.Sequence(lambda n: 'License {0}'.format(n))
     details = ''
@@ -341,7 +362,8 @@ class QualityF(factory.django.DjangoModelFactory):
     """
     Quality model factory
     """
-    FACTORY_FOR = Quality
+    class Meta:
+        model = Quality
 
     name = factory.Sequence(lambda n: "Quality {}".format(n))
 
@@ -350,7 +372,8 @@ class TopicF(factory.django.DjangoModelFactory):
     """
     Topic model factory
     """
-    FACTORY_FOR = Topic
+    class Meta:
+        model = Topic
 
     abbreviation = factory.Sequence(lambda n: "T{}".format(n))
     name = factory.Sequence(lambda n: "Topic {}".format(n))
@@ -360,7 +383,8 @@ class PlaceTypeF(factory.django.DjangoModelFactory):
     """
     PlaceType model factory
     """
-    FACTORY_FOR = PlaceType
+    class Meta:
+        model = PlaceType
 
     name = factory.Sequence(lambda n: "PlaceType {}".format(n))
 
@@ -369,7 +393,8 @@ class PlaceF(factory.django.DjangoModelFactory):
     """
     Place model factory
     """
-    FACTORY_FOR = Place
+    class Meta:
+        model = Place
 
     name = factory.Sequence(lambda n: "Place {}".format(n))
     place_type = factory.SubFactory(
@@ -381,7 +406,8 @@ class UnitF(factory.django.DjangoModelFactory):
     """
     Unit model factory
     """
-    FACTORY_FOR = Unit
+    class Meta:
+        model = Unit
 
     abbreviation = factory.Sequence(lambda n: "U{}".format(n))
     name = factory.Sequence(lambda n: "Unit {}".format(n))
@@ -391,7 +417,8 @@ class SalesRegionF(factory.django.DjangoModelFactory):
     """
     SalesRegion model factory
     """
-    FACTORY_FOR = SalesRegion
+    class Meta:
+        model = SalesRegion
 
     name = factory.Sequence(lambda n: "SalesRegion {}".format(n))
     abbreviation = factory.Sequence(lambda n: "SR{}".format(n))
@@ -401,7 +428,8 @@ class SubsidyTypeF(factory.django.DjangoModelFactory):
     """
     SubsidyType model factory
     """
-    FACTORY_FOR = SubsidyType
+    class Meta:
+        model = SubsidyType
 
     name = factory.Sequence(lambda n: "SubsidyType {}".format(n))
     abbreviation = factory.Sequence(lambda n: "ST{}".format(n))
@@ -411,6 +439,7 @@ class ProductProcessStateF(factory.django.DjangoModelFactory):
     """
     ProductProcessState model factory
     """
-    FACTORY_FOR = ProductProcessState
+    class Meta:
+        model = ProductProcessState
 
     name = factory.Sequence(lambda n: "ProductProcessState {}".format(n))

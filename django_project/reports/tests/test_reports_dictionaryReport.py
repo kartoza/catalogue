@@ -55,9 +55,7 @@ class ReportsViews_dictionaryReport_Tests(TestCase):
         myResp = myClient.get(
             reverse('dictionaryReport',
                     kwargs={}))
-        self.assertEqual(myResp.status_code, 200)
-        self.assertEqual(
-            myResp.context['app_path'], u'/dictionaryReport/')
+        self.assertEqual(myResp.status_code, 302)
 
     def test_myReports_userlogin(self):
         """
@@ -74,9 +72,7 @@ class ReportsViews_dictionaryReport_Tests(TestCase):
         myResp = myClient.get(
             reverse('dictionaryReport',
                     kwargs={}))
-        self.assertEqual(myResp.status_code, 200)
-        self.assertEqual(
-            myResp.context['app_path'], u'/dictionaryReport/')
+        self.assertEqual(myResp.status_code, 302)
 
     def test_myReports_stafflogin(self):
         """

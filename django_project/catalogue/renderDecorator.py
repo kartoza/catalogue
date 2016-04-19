@@ -19,7 +19,7 @@ __date__ = '01/01/2011'
 __copyright__ = 'South African National Space Agency'
 
 
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, render
 from django.template import RequestContext
 from webodt.shortcuts import render_to_response as renderReport
 
@@ -59,18 +59,23 @@ class renderWithContext(object):
                 render_template = self.template_name
 
             items = func(request, *args, **kwargs)
-            #check for PDF arg
-            if 'pdf' in request.GET:
-                template_name = self.template_name.split('.')[0]
-                odt_template = '%s.odt' % template_name
-                return renderReport(odt_template,
-                                    context_instance=RequestContext(request),
-                                    format='pdf',
-                                    filename='{}.pdf'.format(template_name),
-                                    dictionary=items)
+            #check for PDF
+            if isinstance(items, dict):
+                if 'pdf' in request.GET:
+                    template_name = self.template_name.split('.')[0]
+                    odt_template = '%s.odt' % template_name
+                    return renderReport(odt_template,
+                                        context_instance=RequestContext(request),
+                                        format='pdf',
+                                        filename='{}.pdf'.format(template_name),
+                                        dictionary=items)
 
-            return render_to_response(
-                render_template, items,
-                context_instance=RequestContext(request))
+                return render_to_response(
+                    render_template, items,
+                    context_instance=RequestContext(request))
+
+            return render(
+                request, render_template
+            )
 
         return rendered_func

@@ -104,5 +104,6 @@ admin.site.register(GeospatialProduct, GeospatialProductAdmin)
 #################################################
 
 admin.site.register(Visit, VisitAdmin)
-admin.site.register(OfflineMessage, OfflineMessageAdmin)
+# Error : The model OfflineMessage is already registered
+# admin.site.register(OfflineMessage, OfflineMessageAdmin)
 admin.site.register(AllUsersMessage, AllUsersMessageAdmin)

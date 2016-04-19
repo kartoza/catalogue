@@ -63,7 +63,10 @@ class SearchRecordCRUD_Test(TestCase):
         """
         Tests SearchRecord model creation
         """
-        myModel = SearchRecordF.create()
+        myModel = SearchRecordF.create(
+            currency=CurrencyF.create(code='ZAR'),
+        )
+
         #check if PK exists
         self.assertTrue(myModel.pk is not None)
 
@@ -71,19 +74,54 @@ class SearchRecordCRUD_Test(TestCase):
         """
         Tests SearchRecord model read
         """
+        mySpecMode = SpectralModeF.create(**{
+            'name': 'New Spectral mode'
+        })
+
         tstUser = UserF.create(**{
             'username': 'timlinux',
             'password': 'password'
         })
 
-        myOrder = OrderF.create(notes='New Order')
         tstCurrency = CurrencyF.create(**{
+            'code': 'ZAR',
             'name': 'SuperGold'
         })
 
-        tstProduct = OpticalProductF.create()
+        tstProcLevel = ProcessingLevelF.create(**{})
+        tstInstType = InstrumentTypeF.create()
 
-        tstProcLevel = ProcessingLevelF.create()
+        tstInsTypeProcLevel = InstrumentTypeProcessingLevelF.create(**{
+            'instrument_type': tstInstType,
+            'processing_level': tstProcLevel
+        })
+
+        SpectralModeProcessingCostsF.create(**{
+            'spectral_mode': mySpecMode,
+            'instrument_type_processing_level': tstInsTypeProcLevel,
+            'cost_per_scene': Decimal(123.12),
+            'currency': tstCurrency
+        })
+
+        tstSatInstGrp = SatelliteInstrumentGroupF.create(**{
+            'instrument_type': tstInstType
+        })
+
+        tstSatInst = SatelliteInstrumentF.create(**{
+            'satellite_instrument_group': tstSatInstGrp
+        })
+        myOPP = OpticalProductProfileF.create(**{
+            'spectral_mode': mySpecMode,
+            'satellite_instrument': tstSatInst
+        })
+
+        tstProduct = OpticalProductF.create(**{
+            'product_profile': myOPP
+        })
+
+        myOrder = OrderF.create(notes='New Order')
+
+        # tstProcLevel = ProcessingLevelF.create(**{})
 
         tstProjection = ProjectionF.create()
 
@@ -96,8 +134,7 @@ class SearchRecordCRUD_Test(TestCase):
             'internal_order_id': 98765,
             'download_path': 'someplace/somewhere',
             'product_ready': True,
-            'cost_per_scene': 123.12,
-            'rand_cost_per_scene': 321.21,
+            # 'rand_cost_per_scene': 321.21,
             'currency': tstCurrency,
             'processing_level': tstProcLevel,
             'projection': tstProjection,
@@ -108,16 +145,20 @@ class SearchRecordCRUD_Test(TestCase):
         self.assertEqual(
             myModel.internal_order_id, 98765)
         self.assertEqual(myModel.download_path, 'someplace/somewhere')
-        self.assertEqual(myModel.cost_per_scene, 123.12)
-        self.assertEqual(myModel.rand_cost_per_scene, 321.21)
+        self.assertEqual(myModel.cost_per_scene, Decimal(123.12).quantize(Decimal('.01')))
+        # self.assertEqual(myModel.rand_cost_per_scene, 321.21)
         self.assertEqual(myModel.product_ready, True)
 
     def test_SearchRecord_update(self):
         """
         Tests SearchRecord model update
         """
-        myModel = SearchRecordF.create()
+        myModel = SearchRecordF.create(
+            currency=CurrencyF.create(code='ZAR'),
+        )
+
         myNewOrder = OrderF()
+
 
         myNewModelData = {
             'order': myNewOrder,
@@ -138,7 +179,9 @@ class SearchRecordCRUD_Test(TestCase):
         """
         Tests SearchRecord model delete
         """
-        myModel = SearchRecordF.create()
+        myModel = SearchRecordF.create(
+            currency=CurrencyF.create(code='ZAR'),
+        )
 
         myModel.delete()
 
@@ -154,7 +197,10 @@ class SearchRecordCRUD_Test(TestCase):
           <east>20.83</east>
           <west>17.54</west>"""
 
-        myModel = SearchRecordF.create()
+        myModel = SearchRecordF.create(
+            currency=CurrencyF.create(code='ZAR'),
+        )
+
         myRes = myModel.kmlExtents()
         self.assertEqual(myRes, myExpResult)
 
@@ -163,7 +209,10 @@ class SearchRecordCRUD_Test(TestCase):
         Tests SearchRecord model repr method
         """
         myProduct = GenericProductF.create(original_product_id='123qwe')
-        myModel = SearchRecordF.create(product=myProduct)
+        myModel = SearchRecordF.create(
+            product=myProduct,
+            currency=CurrencyF.create(code='ZAR'),
+        )
 
         myExpResult = '123qwe'
         self.assertEqual(unicode(myModel), myExpResult)
@@ -174,7 +223,9 @@ class SearchRecordCRUD_Test(TestCase):
         """
         myProduct = GenericProductF.create(original_product_id='123qwe')
         myUser = UserF.create(username='testuser')
-        myModel = SearchRecordF.create()
+        myModel = SearchRecordF.create(
+            currency=CurrencyF.create(code='ZAR'),
+        )
 
         myNewModel = myModel.create(myUser, myProduct)
 

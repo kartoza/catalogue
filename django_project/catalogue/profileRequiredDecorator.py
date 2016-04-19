@@ -52,7 +52,7 @@ def requireProfile(theView):
         def inner_decorator(theRequest, *args, **kwargs):
             myProfile = None
             try:
-                myProfile = theRequest.user.get_profile()
+                myProfile = theRequest.user.sansauserprofile
             except ObjectDoesNotExist:
                 logger.info('User Profile exception - redirecting')
                 logger.debug('User Profile exception - redirecting')
@@ -74,7 +74,7 @@ def requireProfile(theView):
                             </script>""".format(myProfile.user, theView)
                         return HttpResponse(
                             myJscriptRelocate,
-                            mimetype='application/javascript')
+                            content_type='application/javascript')
                     else:
                         return HttpResponseRedirect(
                             "/accounts/{0}/edit/?next=/{1}/".format(myProfile.user, theView))

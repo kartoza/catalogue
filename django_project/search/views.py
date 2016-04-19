@@ -29,7 +29,7 @@ from itertools import chain
 from django.conf import settings
 
 # For shopping cart and ajax product id search
-from django.utils import simplejson
+import json as simplejson
 
 # Django helpers for forming html pages
 from django.shortcuts import get_object_or_404
@@ -88,8 +88,8 @@ class Http500(Exception):
     pass
 
 DateRangeInlineFormSet = inlineformset_factory(
-    Search, SearchDateRange, extra=0, max_num=0, formset=DateRangeFormSet,
-    form=DateRangeForm)
+    Search, SearchDateRange, fields='__all__', extra=0, max_num=0,
+    formset=DateRangeFormSet,form=DateRangeForm)
 
 
 #@login_required
@@ -339,7 +339,7 @@ def submitSearch(theRequest):
 
                 return HttpResponse(simplejson.dumps({
                     "guid": mySearch.guid
-                }), mimetype='application/json')
+                }), content_type='application/json')
 
             else:
                 myFormErrors.update({
@@ -356,7 +356,7 @@ def submitSearch(theRequest):
         myFormErrors.update(myForm.errors)
         return HttpResponse(
             simplejson.dumps(myFormErrors),
-            mimetype='application/json', status=404)
+            content_type='application/json', status=404)
     # we can only process POST requests
     return HttpResponse('Not a POST!', status=404)
 
@@ -373,7 +373,7 @@ def upload_geo(theRequest):
                 myExtension == 'kmz'):
             return HttpResponse(
                 simplejson.dumps({"error": "File needs to be KML/KMZ/ZIP"}),
-                mimetype='application/json', status=500)
+                content_type='application/json', status=500)
 
         destination = tempfile.NamedTemporaryFile(
             delete=False, suffix='.{0}'.format(myExtension))
@@ -395,9 +395,9 @@ def upload_geo(theRequest):
         if len(extractedGeometries) == 0:
             return HttpResponse(
                 simplejson.dumps({"error": "No geometries found..."}),
-                mimetype='application/json', status=500)
+                content_type='application/json', status=500)
         else:
             return HttpResponse(
                 simplejson.dumps({
                     "wkt": processGeometriesType(extractedGeometries).wkt}),
-                mimetype='application/json', status=200)
+                content_type='application/json', status=200)

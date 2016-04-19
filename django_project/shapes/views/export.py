@@ -34,12 +34,12 @@ except ImportError:
 class ShpResponder(object):
     def __init__(
             self, queryset, readme=None, geo_field=None, proj_transform=None,
-            mimetype='application/zip', file_name='shp_download'):
+            content_type='application/zip', file_name='shp_download'):
         self.queryset = queryset
         self.readme = readme
         self.geo_field = geo_field
         self.proj_transform = proj_transform
-        self.mimetype = mimetype
+        self.content_type = content_type
         self.file_name = smart_str(file_name)
 
     def __call__(self, *args, **kwargs):
@@ -62,7 +62,7 @@ class ShpResponder(object):
 
         tmp = self.write_shapefile_to_tmp_file(self.queryset)
         return self.zip_response(
-            tmp, self.file_name, self.mimetype, self.readme)
+            tmp, self.file_name, self.content_type, self.readme)
 
     def get_attributes(self):
         # Todo: control field order as param
@@ -112,7 +112,7 @@ class ShpResponder(object):
 
         return tmp.name
 
-    def zip_response(self, shapefile_path, file_name, mimetype, readme=None):
+    def zip_response(self, shapefile_path, file_name, content_type, readme=None):
         buffer = StringIO()
         zip = zipfile.ZipFile(buffer, 'w', zipfile.ZIP_DEFLATED)
         files = ['shp', 'shx', 'prj', 'dbf']
@@ -129,12 +129,12 @@ class ShpResponder(object):
         buffer.close()
 
         # Stick it all in a django HttpResponse
-        response = HttpResponse('', mimetype)
+        response = HttpResponse('', content_type)
         response['Content-Disposition'] = (
             'attachment; filename=%s.zip' % file_name.replace('.shp', '')
         )
         response['Content-length'] = str(len(zip_stream))
-        response['Content-Type'] = mimetype
+        response['Content-Type'] = content_type
         response.write(zip_stream)
         return response
 
@@ -423,8 +423,8 @@ class ShpResponder(object):
         # Next line for debugging only if you want to see log info in
         # debugtoolbar
         #return HttpResponse("<html><head></head><body>Done</body></html>")
-        mimetype = 'application/zip'
-        return self.zip_response(tmp.name, self.file_name, mimetype)
+        content_type = 'application/zip'
+        return self.zip_response(tmp.name, self.file_name, content_type)
 
     def write_request_records(self, recordsArray):
         """
@@ -499,8 +499,8 @@ class ShpResponder(object):
             check_err(layer.CreateFeature(feat))
 
         ds.Destroy()
-        mimetype = 'application/zip'
-        return self.zip_response(tmp.name, self.file_name, mimetype)
+        content_type = 'application/zip'
+        return self.zip_response(tmp.name, self.file_name, content_type)
 
     def write_delivery_details(self, theOrder):
         """
@@ -561,8 +561,8 @@ class ShpResponder(object):
         check_err(layer.CreateFeature(feat))
 
         ds.Destroy()
-        mimetype = 'application/zip'
-        return self.zip_response(tmp.name, self.file_name, mimetype)
+        content_type = 'application/zip'
+        return self.zip_response(tmp.name, self.file_name, content_type)
 
     def write_order_products(self, theRecordsArray):
         """
@@ -662,5 +662,5 @@ class ShpResponder(object):
         # Next line for debugging only if you want to see log info in
         # debugtoolbar
         # return HttpResponse("<html><head></head><body>Done</body></html>")
-        mimetype = 'application/zip'
-        return self.zip_response(tmp.name, self.file_name, mimetype)
+        content_type = 'application/zip'
+        return self.zip_response(tmp.name, self.file_name, content_type)

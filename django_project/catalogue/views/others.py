@@ -38,7 +38,7 @@ from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
 from django.template import RequestContext
-from django.forms.util import ErrorList
+from django.forms.utils import ErrorList
 from django.contrib.gis.geos import Point
 
 
@@ -104,7 +104,7 @@ def logVisit(theRequest):
                     myVisit.user = theRequest.user
             except:
                 return HttpResponse(
-                    '/** Error in geoip */', mimetype='text/css')
+                    '/** Error in geoip */', content_type='text/css')
             myVisit.save()
             # If user is logged in, store their IP lat lon to their profile
             try:
@@ -115,17 +115,17 @@ def logVisit(theRequest):
                     myProfile.save()
             except:
                     #user has no profile ...
-                return HttpResponse('/** No Profile */', mimetype='text/css')
+                return HttpResponse('/** No Profile */', content_type='text/css')
         else:
             logger.info(
                 'GEOIP capture failed to retrieve valid position info')
             return HttpResponse(
-                '/** No valid position */', mimetype='text/css')
+                '/** No valid position */', content_type='text/css')
     else:
         logger.info('GEOIP capture disabled in settings')
         return HttpResponse(
-            '/** Geoip disabled in settings */', mimetype='text/css')
-    return HttpResponse('', mimetype='text/css')
+            '/** Geoip disabled in settings */', content_type='text/css')
+    return HttpResponse('', content_type='text/css')
 
 
 @login_required
@@ -450,7 +450,7 @@ def showThumb(theRequest, theId, theSize):
     if (isinstance(myImage, str)):
         return HttpResponse('Thumbnail for %s could not be found' % theId)
     else:
-        myResponse = HttpResponse(mimetype='image/png')
+        myResponse = HttpResponse(content_type='image/png')
         myImage.save(myResponse, 'PNG')
         return (myResponse)
 
@@ -499,10 +499,10 @@ def deleteSearch(theRequest, theId):
     except Exception, myError:
         return HttpResponse(
             '{"success" : False,"reason" : "' + myError + '"}',
-            mimetype='text/plain')
+            content_type='text/plain')
 
     #return a simple json object
-    return HttpResponse("{'success' : True}", mimetype="text/plain")
+    return HttpResponse("{'success' : True}", content_type="text/plain")
 
 
 @login_required

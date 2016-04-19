@@ -32,6 +32,7 @@ from .models import (
 
 class OrderStatusForm(forms.ModelForm):
     class Meta:
+        fields = '__all__'
         model = OrderStatus
 
 

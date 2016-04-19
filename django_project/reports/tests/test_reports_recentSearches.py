@@ -55,9 +55,7 @@ class ReportsViews_recentSearches_Tests(TestCase):
         myClient = Client()
         myResp = myClient.get(
             reverse('recentSearches', kwargs={}))
-        self.assertEqual(myResp.status_code, 200)
-        self.assertEqual(
-            myResp.context['app_path'], u'/recentsearches/')
+        self.assertEqual(myResp.status_code, 302)
 
     def test_myReports_userlogin(self):
         """
@@ -72,9 +70,7 @@ class ReportsViews_recentSearches_Tests(TestCase):
         myClient.login(username='pompies', password='password')
         myResp = myClient.get(
             reverse('recentSearches', kwargs={}))
-        self.assertEqual(myResp.status_code, 200)
-        self.assertEqual(
-            myResp.context['app_path'], u'/recentsearches/')
+        self.assertEqual(myResp.status_code, 302)
 
     def test_myReports_stafflogin(self):
         """

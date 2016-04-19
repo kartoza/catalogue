@@ -31,7 +31,8 @@ class GenericProductF(factory.django.DjangoModelFactory):
     """
     GenericProduct model factory
     """
-    FACTORY_FOR = GenericProduct
+    class Meta:
+        model = GenericProduct
 
     product_date = factory.LazyAttribute(lambda d: datetime.now())
     spatial_coverage = (
@@ -54,7 +55,8 @@ class GenericImageryProductF(GenericProductF):
     """
     GenericImageryProduct model factory
     """
-    FACTORY_FOR = GenericImageryProduct
+    class Meta:
+        model = GenericImageryProduct
 
     spatial_resolution = 0.0
     spatial_resolution_x = 0.0
@@ -67,7 +69,8 @@ class GenericSensorProductF(GenericImageryProductF):
     """
     GenericSensorProduct model factory
     """
-    FACTORY_FOR = GenericSensorProduct
+    class Meta:
+        model = GenericSensorProduct
 
     product_acquisition_start = datetime(2008, 1, 1, 12, 00)
     product_acquisition_end = datetime(2008, 1, 1, 13, 00)
@@ -90,7 +93,8 @@ class OpticalProductF(GenericSensorProductF):
     """
     OpticalProduct model factory
     """
-    FACTORY_FOR = OpticalProduct
+    class Meta:
+        model = OpticalProduct
 
     product_profile = factory.SubFactory(
         'dictionaries.tests.model_factories.OpticalProductProfileF')
@@ -110,7 +114,8 @@ class RadarProductF(GenericSensorProductF):
     """
     RadarProduct model factory
     """
-    FACTORY_FOR = RadarProduct
+    class Meta:
+        model = RadarProduct
 
     product_profile = factory.SubFactory(
         'dictionaries.tests.model_factories.RadarProductProfileF'
@@ -135,7 +140,8 @@ class GeospatialProductF(GenericProductF):
     """
     GeospatialProduct model factory
     """
-    FACTORY_FOR = GeospatialProduct
+    class Meta:
+        model = GeospatialProduct
 
     name = factory.Sequence(lambda n: "GeospatialProduct {}".format(n))
     description = ''
@@ -157,7 +163,8 @@ class OrdinalProductF(GenericProductF):
     """
     OrdinalProduct model factory
     """
-    FACTORY_FOR = OrdinalProduct
+    class Meta:
+        model = OrdinalProduct
 
     class_count = 0
     confusion_matrix = '1,2,3'
@@ -168,7 +175,8 @@ class ContinuousProductF(GenericProductF):
     """
     ContinuousProduct model factory
     """
-    FACTORY_FOR = ContinuousProduct
+    class Meta:
+        model = ContinuousProduct
 
     range_min = 0.0
     range_max = 0.0
@@ -179,7 +187,8 @@ class VisitF(factory.django.DjangoModelFactory):
     """
     Visit model factory
     """
-    FACTORY_FOR = Visit
+    class Meta:
+        model = Visit
 
     city = ''
     country = ''
@@ -192,7 +201,8 @@ class WorldBordersF(factory.django.DjangoModelFactory):
     """
     OrderNotificationRecipients model factory
     """
-    FACTORY_FOR = WorldBorders
+    class Meta:
+        model = WorldBorders
 
     iso2 = 'ZA'
     iso3 = 'ZAF'

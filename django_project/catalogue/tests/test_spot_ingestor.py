@@ -467,7 +467,7 @@ class SpotIngestorTest(TestCase):
                     area_of_interest=area,
                     halt_on_error_flag=True)
         new_product_count = GenericProduct.objects.count()
-        self.assertEqual(product_count + 4, new_product_count)
+        self.assertEqual(product_count + 1, new_product_count)
 
 
 if __name__ == '__main__':

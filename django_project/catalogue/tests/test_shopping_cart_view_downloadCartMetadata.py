@@ -57,7 +57,7 @@ class ShoppingCart_downloadCartMetadata_Tests(TestCase):
         self.assertEqual(myResp.status_code, 302)
         self.assertEqual(
             myResp['Location'],
-            'http://testserver/accounts/signin/?next=/downloadcartmetadata/')
+            '/accounts/signin/?next=/downloadcartmetadata/')
 
     def test_downloadCartMetadata_login_staff(self):
         """

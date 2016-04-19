@@ -23,7 +23,7 @@ logger = logging.getLogger(__name__)
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, Http404
 # For shopping cart and ajax product id search
-from django.utils import simplejson
+import json as simplejson
 from django.conf import settings
 #Dane Springmeyer's django-shapes app for exporting results as a shpfile
 from shapes.views import ShpResponder
@@ -125,22 +125,22 @@ def addToCart(theRequest, theId):
             myResponse = HttpResponse(
                 'Successfully added %s to your myCart' % (
                     myRecord.product.product_id,),
-                mimetype='text/html')
+                content_type='text/html')
         else:
             myDict = {'Item': theId, 'Status': 'Added'}
             myResponse = HttpResponse(
-                simplejson.dumps(myDict), mimetype='application/json')
+                simplejson.dumps(myDict), content_type='application/json')
     else:
         logger.info('Adding item %s Cart failed (its a duplicate):' % (
             myGenericProduct.product_id,))
         if not myAjaxFlag:
             myResponse = HttpResponse(
                 'alert("Item already exists in your cart!");',
-                mimetype='application/javascript')
+                content_type='application/javascript')
         else:
             myResponse = HttpResponse(
                 'Item already exists in your cart!',
-                mimetype='application/json', status='480')
+                content_type='application/json', status='480')
     return myResponse
 
 
@@ -151,11 +151,11 @@ def removeFromCart(theRequest, theId):
         myRecord.delete()
         response = HttpResponse(
             'Successfully removed item from your basket',
-            mimetype='text/plain')
+            content_type='text/plain')
     else:
         response = HttpResponse(
             'You don\'t own this record so you can not delete it!',
-            mimetype='text/plain')
+            content_type='text/plain')
     return response
 
 

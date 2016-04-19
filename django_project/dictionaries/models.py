@@ -17,7 +17,6 @@ __author__ = 'tim@linfiniti.com, lkleyn@sansa.org.za'
 __date__ = '01/11/2012'
 __copyright__ = 'South African National Space Agency'
 
-from model_utils.managers import PassThroughManager
 from django.db.models.query import QuerySet
 
 from django.contrib.gis.db import models
@@ -76,8 +75,7 @@ class OpticalProductProfile(models.Model):
     spectral_mode = models.ForeignKey('SpectralMode')
 
     # define model passthrough manager
-    objects = PassThroughManager.for_queryset_class(
-        OpticalProductProfileQuerySet)()
+    objects = OpticalProductProfileQuerySet.as_manager()
 
     def __unicode__(self):
         return u'{0} -- {1}'.format(
@@ -786,7 +784,7 @@ class Quality(models.Model):
     A dictionary to define Product Quality, e.g. Unknown
     """
 
-    name = models.CharField(max_length="255", unique=True)
+    name = models.CharField(max_length=255, unique=True)
 
     def __unicode__(self):
         return self.name

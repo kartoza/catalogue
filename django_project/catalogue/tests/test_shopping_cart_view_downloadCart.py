@@ -57,7 +57,7 @@ class ShoppingCart_downloadCart_Tests(TestCase):
         self.assertEqual(myResp.status_code, 302)
         self.assertEqual(
             myResp['Location'],
-            'http://testserver/accounts/signin/?next=/downloadcart/')
+            '/accounts/signin/?next=/downloadcart/')
 
     def test_downloadCart_login_staff_shp(self):
         """

@@ -39,7 +39,8 @@ from django.contrib.admin.views.decorators import staff_member_required
 # from django.template import RequestContext
 # from django.forms.util import ErrorList
 #for sorted, useful when rendering templates
-from django.utils.datastructures import SortedDict
+from collections import OrderedDict
+# from django.utils.datastructures import SortedDict
 
 # for aggregate queries
 from django.db.models import Count  # for aggregate queries
@@ -405,7 +406,7 @@ def sensor_summary_table(request, sensor_id):
         .filter(product__genericimageryproduct__genericsensorproduct__opticalproduct__product_profile__satellite_instrument__satellite_instrument_group__exact=sensor)
         .count())
 
-    results = SortedDict()
+    results = OrderedDict()
     results['Searches for this sensor'] = search_for_sensor_count
     results['Searches for all sensors'] = search_count
     results['Total ordered products for this sensor'] = \

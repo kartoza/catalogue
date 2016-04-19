@@ -23,7 +23,7 @@ from dictionaries.tests.model_factories import SubsidyTypeF
 
 from search.tests.model_factories import SearchRecordF
 from .model_factories import OrderF
-
+from core.model_factories import CurrencyF
 
 class OrderCRUD_Test(TestCase):
     """
@@ -97,10 +97,12 @@ class OrderCRUD_Test(TestCase):
         tstOrder = OrderF.create()
 
         SearchRecordF.create(**{
+            'currency': CurrencyF.create(code='ZAR'),
             'rand_cost_per_scene': 120.49,
             'order': tstOrder
         })
         SearchRecordF.create(**{
+            'currency': CurrencyF.create(code='USD'),
             'rand_cost_per_scene': 101.51,
             'order': tstOrder
         })
@@ -121,10 +123,12 @@ class OrderCRUD_Test(TestCase):
         })
 
         SearchRecordF.create(**{
+            'currency': CurrencyF.create(code='ZAR'),
             'rand_cost_per_scene': 120.49,
             'order': tstOrder
         })
         SearchRecordF.create(**{
+            'currency': CurrencyF.create(code='USD'),
             'rand_cost_per_scene': 101.51,
             'order': tstOrder
         })
@@ -145,10 +149,12 @@ class OrderCRUD_Test(TestCase):
         })
 
         SearchRecordF.create(**{
+            'currency': CurrencyF.create(code='ZAR'),
             'rand_cost_per_scene': 120.49,
             'order': tstOrder
         })
         SearchRecordF.create(**{
+            'currency': CurrencyF.create(code='USD'),
             'rand_cost_per_scene': 101.51,
             'order': tstOrder
         })

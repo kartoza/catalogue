@@ -55,9 +55,9 @@ class OthersViews_searchesMap(TestCase):
             reverse(
                 'searchesMap',
                 kwargs={}))
-        self.assertEqual(myResp.status_code, 200)
+        self.assertEqual(myResp.status_code, 302)
         self.assertEqual(
-            myResp.context['app_path'], u'/searchesmap/')
+            myResp.wsgi_request.path, u'/searchesmap/')
 
     def test_searchesMap_userlogin(self):
         """
@@ -65,7 +65,8 @@ class OthersViews_searchesMap(TestCase):
         """
         UserF.create(**{
             'username': 'pompies',
-            'password': 'password'
+            'password': 'password',
+            'is_active': True
         })
 
         myClient = Client()
@@ -74,9 +75,9 @@ class OthersViews_searchesMap(TestCase):
             reverse(
                 'searchesMap',
                 kwargs={}))
-        self.assertEqual(myResp.status_code, 200)
+        self.assertEqual(myResp.status_code, 302)
         self.assertEqual(
-            myResp.context['app_path'], u'/searchesmap/')
+                myResp.wsgi_request.path, u'/searchesmap/')
 
     def test_searchesMap_stafflogin(self):
         """

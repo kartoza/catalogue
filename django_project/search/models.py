@@ -195,7 +195,7 @@ class SearchRecord(models.Model):
                 self.product_ready = False
         # if order is null and searchrecord is updated, make snapshot at the
         # time of placing order
-        if (self.pk and self._cached_data.get('order_id') is None and
+        if (self.pk is None and
                 self.order_id is not None):
             # snapshot data and suppress save (we are in a save method)
             self._snapshot_cost_and_currency(save=False)
@@ -277,7 +277,7 @@ class BaseSearch(models.Model):
 
     ip_position = models.PointField(srid=4326, null=True, blank=True)
     search_date = models.DateTimeField(
-        'Search Date', auto_now=True, auto_now_add=True,
+        'Search Date', auto_now_add=True,
         help_text='When the search was made - not shown to users')
     # e.g. 16fd2706-8baf-433b-82eb-8c7fada847da
     guid = models.CharField(max_length=40, unique=True)
@@ -578,7 +578,7 @@ class Clip(models.Model):
     guid = models.CharField(max_length=40)
     owner = models.ForeignKey('auth.User')
     date = models.DateTimeField(
-        verbose_name='Date', auto_now=True, auto_now_add=True,
+        verbose_name='Date', auto_now_add=True,
         help_text='Not shown to users')
     ## provisory hardcoded choices for clipped image source.
     image = models.CharField(

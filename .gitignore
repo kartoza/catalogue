@@ -61,3 +61,10 @@ venv
 .vagrant
 *.bak
 .idea
+
+# Working data not intended to be versioned
+data_for_import
+scrap.html
+.pycharm_helpers
+.sudo_as_admin_successful
+

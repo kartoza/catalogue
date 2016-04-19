@@ -335,7 +335,7 @@ class TestOpticalProductProfileCRUD(TestCase):
         })
 
         OpticalProductProfileF(**{
-            'id': 1, u'satellite_instrument': satelliteinstrument_1
+            'id': 2, u'satellite_instrument': satelliteinstrument_1
         })
 
         myResult = OpticalProductProfile.objects.only_searchable()
