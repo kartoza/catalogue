@@ -10,7 +10,7 @@ coverage==3.6
 virtualenv==14.0.1
 django-crispy-forms==1.6.0
 django-extensions==1.6.1
-django-model-utils==2.4
+django-model-utils==2.5
 django-nose==1.4.3
 django-offline-messages==0.3.6
 django-pipeline==1.6.8
@@ -54,3 +54,4 @@ raven==5.12.0
 reportlab==3.3.0
 selenium==2.53.0
 django-tables2==1.1.6
+jsmin

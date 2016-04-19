@@ -62,11 +62,16 @@ USERENA_USE_MESSAGES = False
 # use underscore template function
 PIPELINE_TEMPLATE_FUNC = '_.template'
 
+# add pipelinefinders to statistic_finders
+STATICFILES_FINDERS += (
+    'pipeline.finders.PipelineFinder',
+)
+
 # enable cached storage - requires uglify.js (node.js)
 STATICFILES_STORAGE = 'pipeline.storage.PipelineCachedStorage'
 
 # we use some of the libraries which use global namespace (OL, Proj4JS, ...)
-PIPELINE_DISABLE_WRAPPER = True
+DISABLE_WRAPPER = True
 
 # django-exchange openexchangerates API Key
 OPENEXCHANGERATES_API_KEY = 'db63cb9bdc5f4199a9302fea8b173f41'

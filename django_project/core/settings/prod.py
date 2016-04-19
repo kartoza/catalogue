@@ -85,5 +85,9 @@ DATABASES = {
 }
 
 #PIPELINE_YUGLIFY_BINARY = ABS_PATH('node_modules', 'yuglify', 'bin', 'yuglify')
+PIPELINE_ENABLED = True
 PIPELINE_YUGLIFY_BINARY = '/usr/local/bin/yuglify'
+PIPELINE['JS_COMPRESSOR'] = 'pipeline.compressors.jsmin.JSMinCompressor'
+PIPELINE['CSS_COMPRESSOR'] = 'pipeline.compressors.yuglify.YuglifyCompressor'
+# Pipeline - for production we want to compress resources
 
