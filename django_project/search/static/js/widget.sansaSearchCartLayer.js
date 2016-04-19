@@ -22,7 +22,7 @@
         self.cartLayer.removeAllFeatures();
         _.each(payload.data, function (feature) {
           var feat = new OpenLayers.Feature.Vector(
-            self.map_object.transformGeometry(OpenLayers.Geometry.fromWKT(feature.attributes.product.spatial_coverage)),
+            self.map_object.transformGeometry(OpenLayers.Geometry.fromWKT(feature.attributes.product.spatial_coverage.split(';')[1])),
             feature.attributes
           );
           self.cartLayer.addFeatures([feat]);

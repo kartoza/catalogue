@@ -12,10 +12,11 @@ django-crispy-forms==1.6.0
 django-extensions==1.6.1
 django-model-utils==2.5
 django-nose==1.4.3
-django-offline-messages==0.3.6
+# django-offline-messages==0.3.6
+git+https://github.com/dimasciput/django-offline-messages.git@catalogue
 django-pipeline==1.6.8
 django-guardian==1.4.4
-django-tastypie==0.13.3
+django-tastypie==0.13.0
 django-userena==2.0.1
 # django-webodt==0.3.1
 # fix for django 1.9
