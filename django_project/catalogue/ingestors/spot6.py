@@ -243,7 +243,6 @@ def get_quality():
     return quality
 
 
-@transaction.commit_manually
 def ingest(
         test_only_flag=True,
         source_path=(
