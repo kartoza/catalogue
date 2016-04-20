@@ -13,7 +13,7 @@ django-extensions==1.6.1
 django-model-utils==2.5
 django-nose==1.4.3
 # django-offline-messages==0.3.6
-git+https://github.com/dimasciput/django-offline-messages.git@catalogue
+git+https://github.com/dimasciput/django-offline-messages.git
 django-pipeline==1.6.8
 django-guardian==1.4.4
 django-tastypie==0.13.0
