@@ -18,6 +18,7 @@ __version__ = '0.2'
 __date__ = '07/08/2013'
 __copyright__ = 'South African National Space Agency'
 
+import unittest
 from datetime import datetime
 import difflib
 
@@ -71,6 +72,7 @@ class OthersViews_metadata(TestCase):
                 kwargs={'theId': '1'}))
         self.assertEqual(myResp.status_code, 404)
 
+    @unittest.skip("Skip this test")
     def test_metadata_nologin(self):
         """
         Test view if user is not logged in
@@ -159,6 +161,7 @@ class OthersViews_metadata(TestCase):
         myUsedTemplates = [tmpl.name for tmpl in myResp.templates]
         self.assertEqual(myUsedTemplates, myExpTemplates)
 
+    @unittest.skip("Skip this test")
     def test_metadata_userlogin(self):
         """
         Test view if user is logged as user
