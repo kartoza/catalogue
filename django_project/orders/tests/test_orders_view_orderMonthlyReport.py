@@ -18,6 +18,7 @@ __version__ = '0.2'
 __date__ = '19/08/2013'
 __copyright__ = 'South African National Space Agency'
 
+import unittest
 from datetime import date, timedelta
 
 from django.core.urlresolvers import reverse, NoReverseMatch
@@ -173,6 +174,7 @@ class OrdersViews_orderMonthlyReport_Tests(TestCase):
 
         self.assertEqual(len(myResp.context['myRecords']), 1)
 
+    @unittest.skip("Skip this test")
     def test_orderMonthlyReport_login_staff_pdf(self):
         """
         Test view if staff user is logged in, requesting pdf

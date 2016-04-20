@@ -82,7 +82,7 @@ class OrdersViews_ordersSummary_Tests(TestCase):
         # check used templates
         myExpTemplates = [
             'ordersSummary.html', u'base.html',
-            u'pipeline/css.html', None, u'pipeline/js.html', u'menu.html',
+            u'pipeline/css.html', u'pipeline/js.html', u'menu.html',
             u'useraccounts/menu_content.html'
         ]
 
