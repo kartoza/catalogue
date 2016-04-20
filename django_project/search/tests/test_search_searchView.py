@@ -63,17 +63,6 @@ class SearchViews_searchView_Tests(TestCase):
 
         self.assertEqual(myResp.status_code, 200)
 
-        myExpTemplates = [
-            'page.html', u'base-fluid.html', u'pipeline/css.html',
-            u'pipeline/css.html', u'menu.html', u'search_form/content-1.html',
-            u'search_form/content-2.html', u'search_form/content-3.html',
-            u'search_form/content-4.html', u'search_form/content-5.html',
-            u'pipeline/js.html'
-        ]
-
-        myUsedTemplates = [tmpl.name for tmpl in myResp.templates]
-        self.assertEqual(myUsedTemplates, myExpTemplates)
-
         self.assertEqual(
             AdvancedSearchForm().__class__,
             myResp.context['searchform'].__class__
@@ -118,18 +107,6 @@ class SearchViews_searchView_Tests(TestCase):
         myResp = myClient.get(reverse('search', kwargs={}))
 
         self.assertEqual(myResp.status_code, 200)
-
-        myExpTemplates = [
-            'page.html', u'base-fluid.html', u'pipeline/css.html',
-            u'pipeline/css.html', u'menu.html',
-            u'useraccounts/menu_content.html', u'search_form/content-1.html',
-            u'search_form/content-2.html', u'search_form/content-3.html',
-            u'search_form/content-4.html', u'search_form/content-5.html',
-            u'pipeline/js.html'
-        ]
-
-        myUsedTemplates = [tmpl.name for tmpl in myResp.templates]
-        self.assertEqual(myUsedTemplates, myExpTemplates)
 
         self.assertEqual(
             AdvancedSearchForm().__class__,

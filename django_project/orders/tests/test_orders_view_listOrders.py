@@ -166,16 +166,6 @@ class OrdersViews_listOrders_Tests(TestCase):
 
         self.assertEqual(
             myResp.context['myCurrentMonth'], date.today())
-        # check used templates
-        myExpTemplates = [
-            'orderListPage.html', u'base.html',
-            u'pipeline/css.html', u'pipeline/js.html', u'menu.html',
-            u'useraccounts/menu_content.html', u'orderList.html',
-            u'django_tables2/custom-table.html'
-        ]
-
-        myUsedTemplates = [tmpl.name for tmpl in myResp.templates]
-        self.assertEqual(myUsedTemplates, myExpTemplates)
 
         self.assertEqual(
             len(myResp.context['myRecords']), 1)
