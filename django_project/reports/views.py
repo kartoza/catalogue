@@ -177,13 +177,28 @@ def visitor_list(request):
     records = Visit.objects.all().order_by('-visit_date')
     if 'pdf' in request.GET:
         table = None
-        page_size = records.count()
-        paginator = Paginator(records, page_size)
+        page = request.GET.get('page')
+        get_all_records = False
+
         # Make sure page request is an int. If not, deliver first page.
         try:
-            page = int(request.GET.get('page', '1'))
+            page = int(page)
         except ValueError:
+            if page == 'all':
+                get_all_records = True
             page = 1
+
+        # Check if records sorted
+        sort_method = request.GET.get('sort')
+
+        if sort_method is not None:
+            records = records.extra(order_by=[sort_method])
+
+        if get_all_records:
+            paginator = Paginator(records, records.count())
+        else:
+            paginator = Paginator(records, settings.PAGE_SIZE)
+
         # If page request (9999) is out of range, deliver last page of results.
         try:
             records = paginator.page(page)

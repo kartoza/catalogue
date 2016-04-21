@@ -9,7 +9,8 @@
     <h2>Visitor List</h2>
   </div>
   <div class="row-fluid gap-bottom center">
-    <button onclick="location='?pdf'" class="btn" id="download-btn"><i class="icon-download"></i> Download as PDF</button>
+    <button  class="btn" id="download-btn-1"><i class="icon-download"></i> Download this page as PDF</button>
+    <button onclick="location='?pdf&page=all'" class="btn" id="download-btn-2"><i class="icon-download"></i> Download all pages as PDF</button>
   </div>
   <div class="row-fluid">
     {% render_table table 'django_tables2/custom-table.html' %}
@@ -25,5 +26,31 @@ $('#download-btn').popover({
   content:'Click to download the entire list of visitors in PDF format',
   title:'Download as PDF'
 });
+$('#download-btn-1').click(function () {
+    var page = $.urlParam('page');
+    var sort_method = $.urlParam('sort');
+    var sort_string = '';
+
+    if(sort_method != null) {
+        sort_string = '&sort='+sort_method;
+    }
+
+    if(page == null) {
+        page = '1';
+    }
+
+    window.location = '?pdf&page='+page+sort_string;
+    // onclick="location='?pdf&page=2'"
+
+});
+$.urlParam = function(name){
+    var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+    if (results==null){
+       return null;
+    }
+    else{
+       return results[1] || 0;
+    }
+}
 </script>
 {% endblock %}
