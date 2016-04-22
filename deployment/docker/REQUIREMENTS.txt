@@ -23,7 +23,7 @@ django-userena==2.0.1
 git+https://github.com/dimasciput/django-webodt.git
 # django-exchange==0.7.1
 # fix for django 1.9
-git+https://github.com/FundedByMe/django-exchange.git@support-django-1.9
+git+https://github.com/dimasciput/django-exchange.git@support1.9
 docutils==0.12
 #elementsoap==0.6-20071224
 factory-boy==2.6.1
