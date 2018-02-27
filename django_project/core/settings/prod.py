@@ -1,12 +1,28 @@
+"""Project level settings."""
+from os.path import exists, dirname, join
+
 from .project import *
+try:
+    from .secret import SENTRY_KEY
+except ImportError:
+    SENTRY_KEY = None
 
 # Sentry config
-if 'raven.contrib.django.raven_compat' in INSTALLED_APPS:
+if 'raven.contrib.django.raven_compat' in INSTALLED_APPS and SENTRY_KEY:
     # noinspection PyUnresolvedReferences
     import raven  # noqa
 
+    # The .version file is made by the tag_and_deploy script
+    version_file = join(dirname(dirname(dirname(__file__))), '.version')
+    if exists(version_file):
+        with open(version_file, 'r') as version:
+            release = version.read()
+    else:
+        release = 'unknown'
+
     RAVEN_CONFIG = {
-    'dsn': 'http://840958b39a464c88aa9b3751891a6b4b:d8abb7bca77d49c0a24a08ea4fba4988@sentry.kartoza.com/9',
+        'dsn': SENTRY_KEY,
+        'release': release,
     }
 
     MIDDLEWARE_CLASSES = (
