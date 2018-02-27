@@ -1,6 +1,6 @@
 #DateUtils==0.6.6
 Django==1.9.5
-GDAL==1.9.0
+GDAL==1.10.0
 #PIL==1.1.7
 pillow
 Pygments==1.4

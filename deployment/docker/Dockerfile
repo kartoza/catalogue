@@ -18,9 +18,9 @@ RUN sed -i '1ideb http://ftp.de.debian.org/debian jessie main' /etc/apt/sources.
 RUN apt-get update -y;
 RUN apt-get install -y abiword --fix-missing
 WORKDIR "/tmp"
-RUN wget http://download.osgeo.org/gdal/gdal-1.9.0.tar.gz
-RUN tar xvfz gdal-1.9.0.tar.gz
-WORKDIR "/tmp/gdal-1.9.0"
+RUN wget http://download.osgeo.org/gdal/1.10.0/gdal-1.10.0.tar.gz
+RUN tar xvfz gdal-1.10.0.tar.gz
+WORKDIR "/tmp/gdal-1.10.0"
 RUN ./configure --with-python && make && make install
 RUN apt-get -y install python-uno libpq5 python-geoip
 
