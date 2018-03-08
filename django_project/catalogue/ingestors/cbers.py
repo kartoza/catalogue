@@ -16,6 +16,8 @@ from django.core.management.base import CommandError
 from django.core.exceptions import ObjectDoesNotExist
 from django.conf import settings
 
+from raven import Client
+
 from dictionaries.models import (
     SpectralMode,
     SatelliteInstrument,
@@ -355,6 +357,7 @@ def ingest(
         if verbosity_level >= level:
             print message
 
+    client = Client(settings.SENTRY_KEY)
     log_message((
         'Running CBERS 04 Importer with these options:\n'
         'Test Only Flag: %s\n'
@@ -562,6 +565,11 @@ def ingest(
                 continue
 
     # To decide: should we remove ingested product folders?
+    client.captureMessage(
+        'CBERS ingestion done with %s total products comprised of products updated: %s'
+        ', products imported: %s, '
+        'products failed to import %s'
+        % (record_count, updated_record_count, created_record_count, failed_record_count))
 
     print '==============================='
     print 'Products processed : %s ' % record_count
