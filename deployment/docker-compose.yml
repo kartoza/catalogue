@@ -41,6 +41,9 @@ db:
     - USERNAME=docker
     - PASS=docker
   restart: on-failure:5
+  ports:
+    - "0.0.0.0:5432:5432"
+
 
 rabbitmq:
   image: library/rabbitmq
@@ -181,3 +184,15 @@ devweb:
     - "62088:8080"
     # for ssh
     - "62022:22"
+
+pycsw:
+    build: docker-pycsw
+    #image: geopython/pycsw
+    container_name: catalogue-pycsw
+    volumes:
+    - ./pycsw.cfg:/etc/pycsw/pycsw.cfg
+    - ./pycsw:/home/pycsw
+    links:
+    - db:db
+    ports:
+    - "8000:8000"
