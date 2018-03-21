@@ -319,132 +319,131 @@ def ingest(
             # Find the first and only xml file in the folder
             search_path = os.path.join(str(myFolder), '*.xml')
             log_message(search_path, 2)
-            xml_file = glob.glob(search_path)[0]
-            log_message(xml_file, 2)
+            for xml_file in glob.glob(search_path):
+                log_message(xml_file, 2)
+                # Create a DOM document from the file
+                dom = parse(xml_file)
+                #
+                # First grab all the generic properties that any spot will have...
+                geometry = get_geometry(log_message, dom)
+                start_date_time, center_date_time = get_dates(
+                    log_message, dom)
+                # projection for GenericProduct
+                projection = get_projection()
+                original_product_id = get_original_product_id(dom)
+                # Band count for GenericImageryProduct
+                band_count = get_band_count()
+                orbit_number = get_orbit_number(dom)
+                # # Spatial resolution x for GenericImageryProduct
+                spatial_resolution_x = float(get_spatial_resolution_x())
+                # # Spatial resolution y for GenericImageryProduct
+                spatial_resolution_y = float(
+                    get_spatial_resolution_y())
+                log_message('Spatial resolution y: %s' % spatial_resolution_y, 2)
+                #
+                # # Spatial resolution for GenericImageryProduct calculated as (x+y)/2
+                spatial_resolution = (spatial_resolution_x + spatial_resolution_y) / 2
+                log_message('Spatial resolution: %s' % spatial_resolution, 2)
+                radiometric_resolution = get_radiometric_resolution()
+                log_message('Radiometric resolution: %s' % radiometric_resolution, 2)
+                quality = get_quality()
+                # ProductProfile for OpticalProduct
+                product_profile = get_product_profile(log_message, dom)
+                # Get the original text file metadata
+                metadata_file = file(xml_file, 'rt')
+                metadata = metadata_file.readlines()
+                metadata_file.close()
+                log_message('Metadata retrieved', 2)
 
-            # Create a DOM document from the file
-            dom = parse(xml_file)
-            #
-            # First grab all the generic properties that any spot will have...
-            geometry = get_geometry(log_message, dom)
-            start_date_time, center_date_time = get_dates(
-                log_message, dom)
-            # projection for GenericProduct
-            projection = get_projection()
-            original_product_id = get_original_product_id(dom)
-            # Band count for GenericImageryProduct
-            band_count = get_band_count()
-            orbit_number = get_orbit_number(dom)
-            # # Spatial resolution x for GenericImageryProduct
-            spatial_resolution_x = float(get_spatial_resolution_x())
-            # # Spatial resolution y for GenericImageryProduct
-            spatial_resolution_y = float(
-                get_spatial_resolution_y())
-            log_message('Spatial resolution y: %s' % spatial_resolution_y, 2)
-            #
-            # # Spatial resolution for GenericImageryProduct calculated as (x+y)/2
-            spatial_resolution = (spatial_resolution_x + spatial_resolution_y) / 2
-            log_message('Spatial resolution: %s' % spatial_resolution, 2)
-            radiometric_resolution = get_radiometric_resolution()
-            log_message('Radiometric resolution: %s' % radiometric_resolution, 2)
-            quality = get_quality()
-            # ProductProfile for OpticalProduct
-            product_profile = get_product_profile(log_message, dom)
-            # Get the original text file metadata
-            metadata_file = file(xml_file, 'rt')
-            metadata = metadata_file.readlines()
-            metadata_file.close()
-            log_message('Metadata retrieved', 2)
+                unique_product_id = original_product_id
+                # Check if there is already a matching product based
+                # on original_product_id
 
-            unique_product_id = original_product_id
-            # Check if there is already a matching product based
-            # on original_product_id
-
-            # Do the ingestion here...
-            data = {
-                'metadata': metadata,
-                'spatial_coverage': geometry,
-                'radiometric_resolution': radiometric_resolution,
-                'band_count': band_count,
-                'original_product_id': original_product_id,
-                'unique_product_id': unique_product_id,
-                'spatial_resolution_x': spatial_resolution_x,
-                'spatial_resolution_y': spatial_resolution_y,
-                'spatial_resolution': spatial_resolution,
-                'product_profile': product_profile,
-                'product_acquisition_start': start_date_time,
-                'product_date': center_date_time,
-                'orbit_number': orbit_number,
-                'projection': projection,
-                'quality': quality
-            }
-            log_message(data, 3)
-            # Check if it's already in catalogue:
-            try:
-                today = datetime.today()
-                time_stamp = today.strftime("%Y-%m-%d")
-                log_message('Time Stamp: %s' % time_stamp, 2)
-            except Exception, e:
-                print e.message
-
-            update_mode = True
-            try:
-                log_message('Trying to update')
-                #original_product_id is not necessarily unique
-                #so we use product_id
-                product = OpticalProduct.objects.get(
-                    original_product_id=original_product_id
-                ).getConcreteInstance()
-                log_message(('Already in catalogue: updating %s.'
-                            % original_product_id), 2)
-                new_record_flag = False
-                message = product.ingestion_log
-                message += '\n'
-                message += '%s : %s - updating record' % (
-                    time_stamp, ingestor_version)
-                data['ingestion_log'] = message
-                product.__dict__.update(data)
-            except ObjectDoesNotExist:
-                log_message('Not in catalogue: creating.', 2)
-                update_mode = False
-                message = '%s : %s - creating record' % (
-                    time_stamp, ingestor_version)
-                data['ingestion_log'] = message
+                # Do the ingestion here...
+                data = {
+                    'metadata': metadata,
+                    'spatial_coverage': geometry,
+                    'radiometric_resolution': radiometric_resolution,
+                    'band_count': band_count,
+                    'original_product_id': original_product_id,
+                    'unique_product_id': unique_product_id,
+                    'spatial_resolution_x': spatial_resolution_x,
+                    'spatial_resolution_y': spatial_resolution_y,
+                    'spatial_resolution': spatial_resolution,
+                    'product_profile': product_profile,
+                    'product_acquisition_start': start_date_time,
+                    'product_date': center_date_time,
+                    'orbit_number': orbit_number,
+                    'projection': projection,
+                    'quality': quality
+                }
+                log_message(data, 3)
+                # Check if it's already in catalogue:
                 try:
-                    product = OpticalProduct(**data)
-                    log_message('Product: %s' % product)
-
+                    today = datetime.today()
+                    time_stamp = today.strftime("%Y-%m-%d")
+                    log_message('Time Stamp: %s' % time_stamp, 2)
                 except Exception, e:
-                    log_message(e.message, 2)
+                    print e.message
 
-                new_record_flag = True
-            except Exception, e:
-                print e.message
+                update_mode = True
+                try:
+                    log_message('Trying to update')
+                    #original_product_id is not necessarily unique
+                    #so we use product_id
+                    product = OpticalProduct.objects.get(
+                        original_product_id=original_product_id
+                    ).getConcreteInstance()
+                    log_message(('Already in catalogue: updating %s.'
+                                % original_product_id), 2)
+                    new_record_flag = False
+                    message = product.ingestion_log
+                    message += '\n'
+                    message += '%s : %s - updating record' % (
+                        time_stamp, ingestor_version)
+                    data['ingestion_log'] = message
+                    product.__dict__.update(data)
+                except ObjectDoesNotExist:
+                    log_message('Not in catalogue: creating.', 2)
+                    update_mode = False
+                    message = '%s : %s - creating record' % (
+                        time_stamp, ingestor_version)
+                    data['ingestion_log'] = message
+                    try:
+                        product = OpticalProduct(**data)
+                        log_message('Product: %s' % product)
 
-            log_message('Saving product and setting thumb', 2)
-            try:
-                product.save()
-                if update_mode:
-                    updated_record_count += 1
+                    except Exception, e:
+                        log_message(e.message, 2)
+
+                    new_record_flag = True
+                except Exception, e:
+                    print e.message
+
+                log_message('Saving product and setting thumb', 2)
+                try:
+                    product.save()
+                    if update_mode:
+                        updated_record_count += 1
+                    else:
+                        created_record_count += 1
+                    if new_record_flag:
+                        log_message('Product %s imported.' % record_count, 2)
+                        pass
+                    else:
+                        log_message('Product %s updated.' % updated_record_count, 2)
+                        pass
+                except Exception, e:
+                    traceback.print_exc(file=sys.stdout)
+                    raise CommandError('Cannot import: %s' % e)
+
+                if test_only_flag:
+                    transaction.rollback()
+                    log_message('Imported scene : %s' % product_folder, 1)
+                    log_message('Testing only: transaction rollback.', 1)
                 else:
-                    created_record_count += 1
-                if new_record_flag:
-                    log_message('Product %s imported.' % record_count, 2)
-                    pass
-                else:
-                    log_message('Product %s updated.' % updated_record_count, 2)
-                    pass
-            except Exception, e:
-                traceback.print_exc(file=sys.stdout)
-                raise CommandError('Cannot import: %s' % e)
-
-            if test_only_flag:
-                transaction.rollback()
-                log_message('Imported scene : %s' % product_folder, 1)
-                log_message('Testing only: transaction rollback.', 1)
-            else:
-                transaction.commit()
-                log_message('Imported scene : %s' % product_folder, 1)
+                    transaction.commit()
+                    log_message('Imported scene : %s' % product_folder, 1)
         except Exception, e:
             log_message('Record import failed. AAAAAAARGH! : %s' %
                         product_folder, 1)
