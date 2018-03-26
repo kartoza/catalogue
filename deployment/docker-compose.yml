@@ -42,7 +42,7 @@ db:
     - PASS=docker
   restart: on-failure:5
   ports:
-    - "0.0.0.0:5432:5432"
+    - "5432:5432"
 
 
 rabbitmq:
@@ -99,7 +99,7 @@ uwsgi:
     - ./reports:/home/web/reports
     - ./logs:/var/log/
     - ./data:/home/web/django_project/data
-    - ./thumbs_out:/home/web/django_project/thumbs_out
+    - /EOSHARE/Karabo/CATALOGUE/thumbnails_cat3:/home/web/django_project/thumbs_out
   links:
     - smtp:smtp
     - db:db
