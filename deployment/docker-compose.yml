@@ -99,7 +99,7 @@ uwsgi:
     - ./reports:/home/web/reports
     - ./logs:/var/log/
     - ./data:/home/web/django_project/data
-    - /EOSHARE/Karabo/CATALOGUE/thumbnails_cat3:/home/web/django_project/thumbs_out
+    - ./thumbs_out:/home/web/django_project/thumbs_out
   links:
     - smtp:smtp
     - db:db
@@ -189,8 +189,13 @@ pycsw:
     build: docker-pycsw
     #image: geopython/pycsw
     container_name: catalogue-pycsw
+    environment:
+    - DATABASE_NAME=gis
+    - DATABASE_USERNAME=docker
+    - DATABASE_PASSWORD=docker
+    - DATABASE_HOST=db
     volumes:
-    - ./pycsw.cfg:/etc/pycsw/pycsw.cfg
+    - ./docker-pycsw/default.cfg:/etc/pycsw/default.cfg
     - ./pycsw:/home/pycsw
     links:
     - db:db

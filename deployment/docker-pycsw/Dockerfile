@@ -24,7 +24,7 @@ RUN pip install -e .
 RUN pip install -r requirements-standalone.txt
 RUN pip install -r requirements-pg.txt
 
-COPY pycsw.cfg pycsw.cfg
+COPY default.cfg default.cfg
 
 EXPOSE 8000
 CMD ["python", "/pycsw/pycsw/wsgi.py"]

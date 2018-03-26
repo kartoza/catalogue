@@ -22,12 +22,6 @@ build:
 	@echo "------------------------------------------------------------------"
 	@docker-compose -p $(PROJECT_ID) build uwsgi
 
-build-pycsw:
-	@echo
-	@echo "------------------------------------------------------------------"
-	@echo "Building in production mode"
-	@echo "------------------------------------------------------------------"
-	@docker-compose -p $(PROJECT_ID) build pycsw
 
 web:
 	@echo
@@ -40,14 +34,36 @@ web:
 	@# We add --no-recreate so that it does not destroy & recreate the db container
 	@docker-compose -p $(PROJECT_ID) up --no-recreate --no-deps -d dbbackups
 
+setup-pycsw:
+	@echo
+	@echo "------------------------------------------------------------------"
+	@echo "Setting up pycsw in production mode"
+	@echo "------------------------------------------------------------------"
+	build-pycsw
+	run-pycsw
+	@echo "Add catalogue_pycswextrafield table into the database"
+	update-migrations
+	migrate
+	@echo "Add a trigger function related to catalogue_pycswextrafield table into the database"
+	@docker-compose cp ./setup_db.sql:/docker-entrypoint-initdb.d/setup_db.sql
+	@docker-compose cp ./create_trigger.sql:/docker-entrypoint-initdb.d/create_trigger.sql
+	@docker-compose exec db -U DATABASE_USERNAME -d DATABASE_NAME -h localhost -f docker-entrypoint-initdb.d/create_trigger.sql
+
+build-pycsw:
+	@echo
+	@echo "------------------------------------------------------------------"
+	@echo "Building in production mode"
+	@echo "------------------------------------------------------------------"
+	@docker-compose -p $(PROJECT_ID) build pycsw
+
 run-pycsw:
 	@echo
 	@echo "------------------------------------------------------------------"
 	@echo "Running pycsw"
 	@echo "------------------------------------------------------------------"
 	@docker-compose -p $(PROJECT_ID) up -d pycsw
-	@pycsw-admin.py -c setup_db -f pycsw.cfg
-	@pycsw-admin.py -c load_records -f pycsw.cfg -p /pycsw/XML/
+#	@pycsw-admin.py -c setup_db -f default.cfg
+#	@pycsw-admin.py -c load_records -f default.cfg -p /pycsw/XML/
 
 permissions:
 	# Probably we want something more granular here....
