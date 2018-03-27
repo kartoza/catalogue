@@ -27,6 +27,7 @@ from dictionaries.models import (
     Quality
 )
 from catalogue.models import OpticalProduct
+from catalogue.models.pycsw import PycswExtraFields
 
 
 def parse_date_time(date_stamp):
@@ -346,6 +347,7 @@ def ingest(
         if we find we are missing a thumbnails. Default is False.
     :type ignore_missing_thumbs: bool
     """
+
     def log_message(message, level=1):
         """Log a message for a given leven.
 
@@ -388,7 +390,7 @@ def ingest(
             log_message(product_folder, 2)
 
             # Find the first and only xml file in the folder
-            #search_path = os.path.join(str(myFolder), '*.XML')
+            # search_path = os.path.join(str(myFolder), '*.XML')
             log_message(myFolder, 2)
             xml_file = glob.glob(myFolder)[0]
             file = os.path.basename(xml_file)
@@ -459,13 +461,13 @@ def ingest(
             update_mode = True
             try:
                 log_message('Trying to update')
-                #original_product_id is not necessarily unique
-                #so we use product_id
+                # original_product_id is not necessarily unique
+                # so we use product_id
                 product = OpticalProduct.objects.get(
                     original_product_id=original_product_id
                 ).getConcreteInstance()
                 log_message(('Already in catalogue: updating %s.'
-                            % original_product_id), 2)
+                             % original_product_id), 2)
                 new_record_flag = False
                 message = product.ingestion_log
                 message += '\n'
@@ -490,9 +492,95 @@ def ingest(
             except Exception, e:
                 print e.message
 
+            # now try to fill in the metadata
+            # populate metadata into temp pycsw table here
+            identifier = original_product_id
+            sensor_id = original_product_id[4:7]
+            satellite_id = original_product_id[0:4]
+            data_pycsw = {
+                'identifier': identifier,
+                'type_name': 'pycsw:CoreMetadata',
+                'schema': 'http://www.opengis.net/cat/csw/2.0.2',
+                'mdsource': 'local',
+                'insert_date': today,
+                'xml': myFolder,
+                'any_text': myFolder,
+                'language': 'EN',
+                # 'title': '',
+                # 'abstract': '',
+                # 'keywords': '',
+                # 'keyword_type': '',
+                'format': 'jpg',
+                # 'source': '',
+                'date': start_date_time,
+                'modified_date': today,
+                # 'type': '',
+                'bounding_box': '[%s,%s]' % (spatial_resolution_x, spatial_resolution_y),
+                'crs': projection.epsg_code,
+                # 'alternate_title': '',
+                'revision_date': today,
+                'creation_date': today,
+                'publication_date': today,
+                # 'organization_name': 'SANSA',
+                # 'security_constraints': '',
+                # 'parent_identifier': '',
+                # 'topic_category': '',
+                # 'resource_language': '',
+                # 'geo_desc_code': '',
+                # 'denominator': '',
+                # 'distance_value': '',
+                # 'distance_uom': '',
+                'temp_extent_begin': today,
+                'temp_extent_end': today,
+                # 'service_type': '',
+                # 'service_type_version': '',
+                # 'operation': '',
+                # 'coupling_type': '',
+                # 'operates_on': '',
+                # 'operates_on_identifier': '',
+                # 'operates_on_name': '',
+                # 'degree': '',
+                # 'access_constraints': '',
+                # 'other_constraints': '',
+                # 'classification': '',
+                # # 'condition_applying_tau': '',
+                # 'lineage': '',
+                # 'responsible_party_role': '',
+                # 'spec_title': '',
+                #'spec_date': today,
+                # 'spec_date_type': '',
+                'creator': 'admin',
+                'publisher': 'SANSA',
+                'sensor_abbreviation': sensor_id,
+                'satellite_abbreviation': satellite_id
+                # 'contributor': '',
+                # 'relation': '',
+                # 'links': ''
+            }
+            try:
+                # populate ingested_pycsw so it can be transferred to catalogue_pycsw later
+                # ingested_pycsw = PycswCbers.objects.get(identifier=identifier)
+                ingested_pycsw = PycswExtraFields.objects.get(identifier=identifier)
+
+
+                # pycsw part
+                ingested_pycsw.__dict__.update(data_pycsw)
+
+            except ObjectDoesNotExist:
+                # pycsw part
+                try:
+                    # ingested_pycsw = PycswCbers(**data_pycsw)
+                    ingested_pycsw = PycswExtraFields(**data_pycsw)
+
+                except Exception, e:
+                    # log_message(e.message, 2)
+                    log_message(e.message)
+
             log_message('Saving product and setting thumb', 2)
             try:
                 product.save()
+                ingested_pycsw.save()
+
                 if update_mode:
                     updated_record_count += 1
                 else:
@@ -513,8 +601,8 @@ def ingest(
                         pass
 
                     jpeg_path = os.path.join(str(myFolder))
-                    #log_message(jpeg_path, 2)
-                    jpeg_path = jpeg_path.replace(".XML","-THUMB.JPG")
+                    # log_message(jpeg_path, 2)
+                    jpeg_path = jpeg_path.replace(".XML", "-THUMB.JPG")
 
                     if jpeg_path:
                         print jpeg_path
@@ -533,7 +621,7 @@ def ingest(
                     # elif ignore_missing_thumbs:
                     #         log_message('IGNORING missing thumb:')
                     else:
-                        raise Exception('Missing thumbnail in %s' %jpeg_path)
+                        raise Exception('Missing thumbnail in %s' % jpeg_path)
                 if new_record_flag:
                     log_message('Product %s imported.' % record_count, 2)
                     pass

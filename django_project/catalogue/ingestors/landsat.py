@@ -30,6 +30,7 @@ from dictionaries.models import (
     Quality
 )
 from catalogue.models import OpticalProduct
+from catalogue.models.pycsw import PycswExtraFields
 
 
 def parse_date_time(date_stamp):
@@ -180,6 +181,19 @@ def get_spatial_resolution_y(filename):
     else:
         return 30
 
+
+def get_sensor_abbreviation(dom):
+    mission_index = dom.getElementsByTagName('PLATFORMNAME')[0]
+    mission_index_value = mission_index.firstChild.nodeValue
+
+    if mission_index_value == 'Landsat-7':
+        mission_value = 'L7'
+    elif mission_index_value == 'Landsat-8':
+        mission_value = 'L8'
+    else:
+        raise Exception('Unknown mission in Landsat')
+    return mission_value
+    
 
 def get_product_profile(log_message, dom):
     """Find the product_profile for this record.
@@ -529,9 +543,91 @@ def ingest(
             except Exception, e:
                 print e.message
 
+            # now try to fill in the metadata
+            # populate metadata into temp pycsw table here
+            identifier = original_product_id
+            data_pycsw = {
+                'identifier': identifier,
+                'type_name': 'pycsw:CoreMetadata',
+                'schema': 'http://www.opengis.net/cat/csw/2.0.2',
+                'mdsource': 'local',
+                'insert_date': today,
+                'xml': myFolder,
+                'any_text': myFolder,
+                'language': 'EN',
+                # 'title': '',
+                # 'abstract': '',
+                # 'keywords': '',
+                # 'keyword_type': '',
+                'format': 'jpg',
+                # 'source': '',
+                'date': start_date_time,
+                'modified_date': today,
+                # 'type': '',
+                'bounding_box': '[%s,%s]' % (spatial_resolution_x, spatial_resolution_y),
+                'crs': projection.epsg_code,
+                # 'alternate_title': '',
+                'revision_date': today,
+                'creation_date': today,
+                'publication_date': today,
+                # 'organization_name': 'SANSA',
+                # 'security_constraints': '',
+                # 'parent_identifier': '',
+                # 'topic_category': '',
+                # 'resource_language': '',
+                # 'geo_desc_code': '',
+                # 'denominator': '',
+                # 'distance_value': '',
+                # 'distance_uom': '',
+                'temp_extent_begin': today,
+                'temp_extent_end': today,
+                # 'service_type': '',
+                # 'service_type_version': '',
+                # 'operation': '',
+                # 'coupling_type': '',
+                # 'operates_on': '',
+                # 'operates_on_identifier': '',
+                # 'operates_on_name': '',
+                # 'degree': '',
+                # 'access_constraints': '',
+                # 'other_constraints': '',
+                # 'classification': '',
+                # 'condition_applying_tau': '',
+                # 'lineage': '',
+                # 'responsible_party_role': '',
+                # 'spec_title': '',
+                # 'spec_date': today,
+                # 'spec_date_type': '',
+                'creator': 'admin',
+                'publisher': 'SANSA',
+                'sensor_abbreviation': get_sensor_abbreviation(dom),
+                'satellite_abbreviation': product_profile.satellite_instrument.abbreviation
+                # 'contributor': '',
+                # 'relation': '',
+                # 'links': ''
+            }
+            try:
+                # populate ingested_pycsw so it can be transferred to catalogue_pycsw later
+                # ingested_pycsw = PycswCbers.objects.get(identifier=identifier)
+                ingested_pycsw = PycswExtraFields.objects.get(identifier=identifier)
+
+                # pycsw part
+                ingested_pycsw.__dict__.update(data_pycsw)
+
+            except ObjectDoesNotExist:
+                # pycsw part
+                try:
+                    # ingested_pycsw = PycswCbers(**data_pycsw)
+                    ingested_pycsw = PycswExtraFields(**data_pycsw)
+
+                except Exception, e:
+                    # log_message(e.message, 2)
+                    log_message(e.message)
+
             log_message('Saving product and setting thumb', 2)
             try:
                 product.save()
+                ingested_pycsw.save()
                 if update_mode:
                     updated_record_count += 1
                 else:
