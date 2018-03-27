@@ -22,6 +22,7 @@ build:
 	@echo "------------------------------------------------------------------"
 	@docker-compose -p $(PROJECT_ID) build uwsgi
 
+
 web:
 	@echo
 	@echo "------------------------------------------------------------------"
@@ -32,6 +33,29 @@ web:
 	@# This one runs the postgis-backup cron container
 	@# We add --no-recreate so that it does not destroy & recreate the db container
 	@docker-compose -p $(PROJECT_ID) up --no-recreate --no-deps -d dbbackups
+
+setup-pycsw: web build-pycsw run-pycsw update-migrations
+	@echo
+	@echo "------------------------------------------------------------------"
+	@echo "Setting up pycsw in production mode"
+	@echo "------------------------------------------------------------------"
+	@docker-compose -p $(PROJECT_ID) run uwsgi python manage.py migrate catalogue
+
+build-pycsw:
+	@echo
+	@echo "------------------------------------------------------------------"
+	@echo "Building in production mode"
+	@echo "------------------------------------------------------------------"
+	@docker-compose -p $(PROJECT_ID) build pycsw
+
+run-pycsw:
+	@echo
+	@echo "------------------------------------------------------------------"
+	@echo "Running pycsw"
+	@echo "------------------------------------------------------------------"
+	@docker-compose -p $(PROJECT_ID) up -d pycsw
+#	@pycsw-admin.py -c setup_db -f default.cfg
+#	@pycsw-admin.py -c load_records -f default.cfg -p /pycsw/XML/
 
 permissions:
 	# Probably we want something more granular here....
