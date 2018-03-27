@@ -39,7 +39,17 @@ setup-pycsw: web build-pycsw run-pycsw update-migrations
 	@echo "------------------------------------------------------------------"
 	@echo "Setting up pycsw in production mode"
 	@echo "------------------------------------------------------------------"
+	@echo "If create_trigger.sql and setup_db.sql can't be found"
+	@echo "Build using: build-pycsw, then run with: run-pycsw"
+	@echo "------------------------------------------------------------------"
 	@docker-compose -p $(PROJECT_ID) run uwsgi python manage.py migrate catalogue
+	@echo "Create a new table and add a trigger function related to catalogue_pycswextrafield table into the database"
+	@docker cp ./docker-pycsw/setup_db.sql catalogue-db:/tmp/setup_db.sql
+	@docker cp ./docker-pycsw/create_trigger.sql catalogue-db:/tmp/create_trigger.sql
+	@echo "Execute the scripts"
+	@docker exec -it $(PROJECT_ID)-db su - postgres -c "psql gis -f /tmp/setup_db.sql"
+	@docker exec -it $(PROJECT_ID)-db su - postgres -c "psql gis -f /tmp/create_trigger.sql"
+
 
 build-pycsw:
 	@echo
@@ -54,8 +64,6 @@ run-pycsw:
 	@echo "Running pycsw"
 	@echo "------------------------------------------------------------------"
 	@docker-compose -p $(PROJECT_ID) up -d pycsw
-#	@pycsw-admin.py -c setup_db -f default.cfg
-#	@pycsw-admin.py -c load_records -f default.cfg -p /pycsw/XML/
 
 permissions:
 	# Probably we want something more granular here....
