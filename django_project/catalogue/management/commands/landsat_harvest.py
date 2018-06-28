@@ -22,6 +22,13 @@ class Command(BaseCommand):
             help='Just test, nothing will be written into the DB.',
             default=False),
         make_option(
+            '--use_txt',
+            '-u',
+            dest='use_txt_flag',
+            action='store_true',
+            help='Use text file to ingest.',
+            default=False),
+        make_option(
             '--source_dir',
             '-d',
             dest='source_dir',
@@ -43,7 +50,7 @@ class Command(BaseCommand):
             '--ignore-missing-thumbs',
             '-i',
             dest='ignore_missing_thumbs_flag',
-            action='store',
+            action='store_true',
             help=(
                 'Continue with importing records even if they miss their'
                 'thumbnails.'),
@@ -62,6 +69,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         """ command execution """
         test_only = self._parameter_to_bool(options.get('test_only_flag'))
+        use_txt = options.get('use_txt_flag')
         source_dir = options.get('source_dir')
         verbose = int(options.get('verbosity'))
         halt_on_error = self._parameter_to_bool(
@@ -72,6 +80,7 @@ class Command(BaseCommand):
         landsat.ingest(
             source_path=source_dir,
             test_only_flag=test_only,
+            use_txt_flag=use_txt,
             verbosity_level=verbose,
             halt_on_error_flag=halt_on_error,
             ignore_missing_thumbs=ignore_missing_thumbs
