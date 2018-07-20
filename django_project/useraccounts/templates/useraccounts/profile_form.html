@@ -1,0 +1,43 @@
+{% extends 'userena/base_userena.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "Account setup" %}{% endblock %}
+{% block content_title %}<h2>{% blocktrans with profile.user.username as username %}Account &raquo; {{ username }}{% endblocktrans %}</h2>{% endblock %}
+
+{% block content %}
+    <div id="content" class="center row-fluid gap-bottom">
+        <h3>{% trans "Edit Your Profile" %}</h3>
+    </div>
+    <div class="row-fluid center">
+        <form action="" enctype="multipart/form-data" method="post" class="form-horizontal span12">
+            {% csrf_token %}
+            <!--fieldset-->
+            <div class="row-fluid">
+                {% for field in form %}
+                    {% if forloop.counter == 1 or forloop.counter == 5 %}
+                        <div class="span5">
+                    {% endif %}
+                <div class="control-group">
+                    <label class="control-label" for=" {{ field.auto_id }}"> {{ field.label }}</label>
+                    <div class="controls">
+                        {{ field }}
+                    </div>
+                    {% if field.errors %}
+                        <ul>
+                            {% for error in field.errors %}
+                                <li style="list-style-type: none;">{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+                    {% if forloop.counter == 4 or forloop.counter == 11 %}
+                        </div>
+                    {% endif %}
+                {% endfor %}
+
+            </div>
+            <!-- /fieldset-->
+            <input class="btn btn-success" value="{% trans "Save changes" %}" type="submit"/>
+        </form>
+    </div>
+{% endblock %}
