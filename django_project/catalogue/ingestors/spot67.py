@@ -1,7 +1,6 @@
 __author__ = 'rischan - <--rischan@kartoza.com-->'
 __date__ = '4/28/16'
 
-
 import os
 import sys
 import glob
@@ -140,10 +139,14 @@ def get_original_product_id(dom):
     dataset_name = dom.getElementsByTagName('DATASET_NAME')[0]
     product_name_full = dataset_name.firstChild.nodeValue
     tokens = product_name_full.split('_')
-    if tokens[1] == "SPOT6":
-        constant = "S6"
-    else: constant = "S7"
-    product_name = constant + tokens[0] + tokens[2] + tokens[3]
+    # change according to Maite's explanation in kartoza/catalogue#496, constant always THUMBNAIL
+    # if tokens[1] == "SPOT6":
+    #    constant = "S6"
+    # else: constant = "S7"
+    constant = "THUMBNAIL_"
+    # change according to Maite's explanation in kartoza/catalogue#496
+    # product_name = constant + tokens[0] + tokens[2] + tokens[3]
+    product_name = constant + tokens[2]
     return product_name
 
 def get_spatial_resolution_x():
@@ -229,6 +232,7 @@ def get_radiometric_resolution():
     """Get the radiometric resolution for the supplied product record."""
     return 12  # static value based on client information
 
+
 def get_projection():
     # If projection not found default to WGS84
     projection = Projection.objects.get(epsg_code=4326)
@@ -308,20 +312,24 @@ def ingest(
     log_message('Starting directory scan...', 2)
 
     for myFolder in glob.glob(os.path.join(source_path, '*')):
-        record_count += 1
         try:
-            log_message('', 2)
-            log_message('---------------', 2)
+            log_message('', 1)
+            log_message('---------------', 1)
             # Get the folder name
             product_folder = os.path.split(myFolder)[-1]
-            log_message(product_folder, 2)
+            log_message(product_folder, 1)
 
             # Find the first and only xml file in the folder
             search_path = os.path.join(str(myFolder), '*.xml')
-            log_message(search_path, 2)
+            log_message('search path: %s' % search_path, 1)
+            # xml_file = glob.glob(search_path)[0]
             for xml_file in glob.glob(search_path):
-                log_message(xml_file, 2)
+                record_count += 1
+                log_message(xml_file, 1)
                 # Create a DOM document from the file
+                file_path = os.path.basename(xml_file)
+                filename = os.path.splitext(file_path)[0]
+
                 dom = parse(xml_file)
                 #
                 # First grab all the generic properties that any spot will have...
@@ -334,6 +342,7 @@ def ingest(
                 # Band count for GenericImageryProduct
                 band_count = get_band_count()
                 orbit_number = get_orbit_number(dom)
+
                 # # Spatial resolution x for GenericImageryProduct
                 spatial_resolution_x = float(get_spatial_resolution_x())
                 # # Spatial resolution y for GenericImageryProduct
@@ -395,7 +404,7 @@ def ingest(
                         original_product_id=original_product_id
                     ).getConcreteInstance()
                     log_message(('Already in catalogue: updating %s.'
-                                % original_product_id), 2)
+                                % original_product_id), 1)
                     new_record_flag = False
                     message = product.ingestion_log
                     message += '\n'
@@ -404,7 +413,7 @@ def ingest(
                     data['ingestion_log'] = message
                     product.__dict__.update(data)
                 except ObjectDoesNotExist:
-                    log_message('Not in catalogue: creating.', 2)
+                    log_message('Not in catalogue: creating.', 1)
                     update_mode = False
                     message = '%s : %s - creating record' % (
                         time_stamp, ingestor_version)
@@ -420,13 +429,59 @@ def ingest(
                 except Exception, e:
                     print e.message
 
-                log_message('Saving product and setting thumb', 2)
+                log_message('Saving product and setting thumb', 1)
                 try:
                     product.save()
                     if update_mode:
                         updated_record_count += 1
                     else:
                         created_record_count += 1
+
+                    if test_only_flag:
+                        log_message('Testing: image not saved.', 2)
+                        pass
+                    else:
+                        # Store thumbnail
+                        thumbs_folder = os.path.join(
+                            settings.THUMBS_ROOT,
+                            product.thumbnailDirectory())
+                        try:
+                            os.makedirs(thumbs_folder)
+                        except OSError:
+                            # TODO: check for creation failure rather than
+                            # attempt to  recreate an existing dir
+                            pass
+
+                        jpeg_path = os.path.join(str(myFolder))
+                        log_message(jpeg_path, 1)
+                        jpeg_path = jpeg_path.replace(".XML", "-THUMB.jpg")
+
+                        if jpeg_path:
+                            try:
+                                new_name = '%s.jpg' % product.original_product_id
+                                log_message(new_name, 1)
+                                shutil.copyfile(
+                                    os.path.join(jpeg_path, new_name),
+                                    os.path.join(thumbs_folder, new_name))
+                            except IOError as e:
+                                if ignore_missing_thumbs:
+                                    failed_record_count += 1
+                                    continue
+                                else:
+                                    raise Exception('Missing thumbnail in %s' % jpeg_path)
+
+                            # Transform and store .wld file
+                        #     log_message('Referencing thumb', 2)
+                        #     try:
+                        #         path = product.georeferencedThumbnail()
+                        #         log_message('Georeferenced Thumb: %s' % path, 2)
+                        #     except:
+                        #         traceback.print_exc(file=sys.stdout)
+                        # elif ignore_missing_thumbs:
+                        #         log_message('IGNORING missing thumb:')
+                        else:
+                            raise Exception('Missing thumbnail in %s' % jpeg_path)
+
                     if new_record_flag:
                         log_message('Product %s imported.' % record_count, 2)
                         pass
@@ -439,14 +494,14 @@ def ingest(
 
                 if test_only_flag:
                     transaction.rollback()
-                    log_message('Imported scene : %s' % product_folder, 1)
+                    log_message('Imported scene : %s' % xml_file, 1)
                     log_message('Testing only: transaction rollback.', 1)
                 else:
                     transaction.commit()
-                    log_message('Imported scene : %s' % product_folder, 1)
-        except Exception, e:
+                    log_message('Imported scene : %s' % xml_file, 1) 
+        except Exception as e:
             log_message('Record import failed. AAAAAAARGH! : %s' %
-                        product_folder, 1)
+                        e, 1)
             failed_record_count += 1
             if halt_on_error_flag:
                 print e.message

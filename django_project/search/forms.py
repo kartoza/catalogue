@@ -241,7 +241,7 @@ class AdvancedSearchForm(forms.ModelForm):
                     int(b) for b in a.split('|')
                 ] for a in myCleanedData.get('selected_sensors').split(',')])
             self.cleaned_data['satellite'] = mySatellites
-            self.cleaned_data['instrumenttype'] = myInstTypes
+            self.cleaned_data['instrument_type'] = myInstTypes
 
         # check free_imagery
         if myCleanedData.get('free_imagery'):
