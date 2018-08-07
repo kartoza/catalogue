@@ -241,7 +241,7 @@ def searchView(theRequest):
             # only select instrument_types which are searchable
             if sig.instrument_type.is_searchable)
             for sat in col.satellite_set.all().exclude(name__in=sat_names))))
-             } for col in collections
+            } for col in collections
     ]
 
     myListTreeOptions = simplejson.dumps(data)
