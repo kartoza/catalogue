@@ -69,13 +69,33 @@ def get_geometry(log_message, dom):
 
     :return: geoemtry
     """
-    polygon = 'POLYGON((' '%s %s, ' \
-              '%s %s, %s %s, %s %s, %s %s' '))' % (
-        10.175218, -26.205927,
-        11.655573, -26.186210,
-        11.684172, -27.406972,
-        10.187890, -27.427757,
-        10.175218, -26.205927 )
+    img_tie_points = dom.getElementsByTagName('imageTiePoint')
+    num_tie_points = len(img_tie_points)
+
+    try:
+        first_el = img_tie_points[0].getElementsByTagName('geodeticCoordinate')[0]
+        first_latitude = float(first_el.getElementsByTagName('latitude')[0].firstChild.data)
+        first_longitude = float(first_el.getElementsByTagName('longitude')[0].firstChild.data)
+        second_el = img_tie_points[20].getElementsByTagName('geodeticCoordinate')[0]
+        second_latitude = float(second_el.getElementsByTagName('latitude')[0].firstChild.data)
+        second_longitude = float(second_el.getElementsByTagName('longitude')[0].firstChild.data)
+        before_last_el = img_tie_points[num_tie_points - 22].getElementsByTagName('geodeticCoordinate')[0]
+        before_last_latitude = float(before_last_el.getElementsByTagName('latitude')[0].firstChild.data)
+        before_last_longitude = float(before_last_el.getElementsByTagName('longitude')[0].firstChild.data)
+        last_el = img_tie_points[num_tie_points - 1].getElementsByTagName('geodeticCoordinate')[0]
+        last_latitude = float(last_el.getElementsByTagName('latitude')[0].firstChild.data)
+        last_longitude = float(last_el.getElementsByTagName('longitude')[0].firstChild.data)
+
+        polygon = 'POLYGON((' '%s %s, %s %s, %s %s, %s %s, %s %s' '))' % (
+            first_longitude, first_latitude,
+            second_longitude, second_latitude,
+            last_longitude, last_latitude,
+            before_last_longitude, before_last_latitude,
+            first_longitude, first_latitude
+        )
+    except Exception as e:
+        log_message('error on geometry: %s' % e, 2)
+
     log_message('polygon: %s' % polygon, 2)
 
     myReader = WKTReader()
@@ -437,12 +457,14 @@ def ingest(
                             # attempt to  recreate an existing dir
                             pass
 
-                        # the thumbnail names are expected to be BrowseImage.tif
-                        jpeg_path = os.path.join(dirName, "BrowseImage.tif")
+                        # the thumbnail names are expected to be BrowseImage_<PRODUCT ID>.tif
+                        cleaned_dir_name = dirName.split('/')[-1]
+                        file_name = "BrowseImage_" + cleaned_dir_name + ".tif"
+                        jpeg_path = os.path.join(dirName, file_name)
 
                         if jpeg_path:
                             print jpeg_path
-                            new_name = '%s.JPG' % product.original_product_id
+                            new_name = '%s.jpg' % product.original_product_id
                             shutil.copyfile(
                                 jpeg_path,
                                 os.path.join(thumbs_folder, new_name))
