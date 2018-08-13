@@ -140,10 +140,14 @@ def get_original_product_id(dom):
     dataset_name = dom.getElementsByTagName('DATASET_NAME')[0]
     product_name_full = dataset_name.firstChild.nodeValue
     tokens = product_name_full.split('_')
-    if tokens[1] == "SPOT6":
-        constant = "S6"
-    else: constant = "S7"
-    product_name = constant + tokens[0] + tokens[2] + tokens[3]
+    # change according to Maite's explanation in kartoza/catalogue#496, constant always THUMBNAIL
+    # if tokens[1] == "SPOT6":
+    #    constant = "S6"
+    # else: constant = "S7"
+    constant = "THUMBNAIL_"
+    # change according to Maite's explanation in kartoza/catalogue#496
+    # product_name = constant + tokens[0] + tokens[2] + tokens[3]
+    product_name = constant + tokens[2]
     return product_name
 
 def get_spatial_resolution_x():
@@ -428,6 +432,34 @@ def ingest(
                     updated_record_count += 1
                 else:
                     created_record_count += 1
+
+                    if test_only_flag:
+                        log_message('Testing: image not saved.', 2)
+                        pass
+                    else:
+                        # Store thumbnail
+                        thumbs_folder = os.path.join(
+                            settings.THUMBS_ROOT,
+                            product.thumbnailDirectory())
+                        try:
+                            os.makedirs(thumbs_folder)
+                        except OSError:
+                            # TODO: check for creation failure rather than
+                            # attempt to  recreate an existing dir
+                            pass
+
+                        jpeg_path = os.path.join(str(myFolder))
+                        jpeg_path = jpeg_path.replace(".XML", "-THUMB.JPG")
+
+                        if jpeg_path:
+                            new_name = '%s.JPG' % product.original_product_id
+                            shutil.copyfile(
+                                os.path.join(jpeg_path, new_name),
+                                os.path.join(thumbs_folder,new_name))
+                            print new_name
+                        else:
+                            raise Exception('Missing thumbnail in %s' % jpeg_path)
+
                 if new_record_flag:
                     log_message('Product %s imported.' % record_count, 2)
                     pass
