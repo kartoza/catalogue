@@ -5,7 +5,7 @@ from .project import *
 try:
     from .secret import SENTRY_DSN
 except ImportError:
-    SENTRY_KEY = None
+    SENTRY_DSN = None
 
 # Sentry config
 if 'raven.contrib.django.raven_compat' in INSTALLED_APPS and SENTRY_DSN:
