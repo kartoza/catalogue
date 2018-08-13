@@ -3,12 +3,12 @@ from os.path import exists, dirname, join
 
 from .project import *
 try:
-    from .secret import SENTRY_KEY
+    from .secret import SENTRY_DSN
 except ImportError:
     SENTRY_KEY = None
 
 # Sentry config
-if 'raven.contrib.django.raven_compat' in INSTALLED_APPS and SENTRY_KEY:
+if 'raven.contrib.django.raven_compat' in INSTALLED_APPS and SENTRY_DSN:
     # noinspection PyUnresolvedReferences
     import raven  # noqa
 
@@ -21,7 +21,7 @@ if 'raven.contrib.django.raven_compat' in INSTALLED_APPS and SENTRY_KEY:
         release = 'unknown'
 
     RAVEN_CONFIG = {
-        'dsn': SENTRY_KEY,
+        'dsn': SENTRY_DSN,
         'release': release,
     }
 

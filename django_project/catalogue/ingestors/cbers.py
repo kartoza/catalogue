@@ -357,7 +357,7 @@ def ingest(
         if verbosity_level >= level:
             print message
 
-    client = Client(settings.SENTRY_KEY)
+    client = Client(settings.SENTRY_DSN)
     log_message((
         'Running CBERS 04 Importer with these options:\n'
         'Test Only Flag: %s\n'
@@ -545,6 +545,7 @@ def ingest(
                     pass
             except Exception, e:
                 traceback.print_exc(file=sys.stdout)
+                client.captureException()
                 raise CommandError('Cannot import: %s' % e)
 
             if test_only_flag:
@@ -559,21 +560,20 @@ def ingest(
                         product_folder, 1)
             failed_record_count += 1
             if halt_on_error_flag:
+                client.captureException()
                 print e.message
                 break
             else:
                 continue
 
     # To decide: should we remove ingested product folders?
-    client.captureMessage(
-        'CBERS ingestion done with %s total products comprised of products updated: %s'
-        ', products imported: %s, '
-        'products failed to import %s'
-        % (record_count, updated_record_count, created_record_count, failed_record_count))
 
-    print '==============================='
-    print 'Products processed : %s ' % record_count
-    print 'Products updated : %s ' % updated_record_count
-    print 'Products imported : %s ' % created_record_count
-    print 'Products failed to import : %s ' % failed_record_count
-    print '==============================='
+    msg = 'CBERS Ingestion Summary \n'
+    msg += '=============================== \n'
+    msg += 'Products processed : %s \n' % record_count
+    msg += 'Products updated : %s \n' % updated_record_count
+    msg += 'Products imported : %s \n' % created_record_count
+    msg += 'Products failed to import : %s \n' % failed_record_count
+    msg += '==============================='
+    print msg
+    client.captureMessage('raven.events.Message %s' % msg)

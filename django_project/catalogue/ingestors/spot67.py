@@ -17,6 +17,8 @@ from django.core.management.base import CommandError
 from django.core.exceptions import ObjectDoesNotExist
 from django.conf import settings
 
+from raven import Client
+
 from dictionaries.models import (
     SpectralMode,
     SatelliteInstrument,
@@ -288,6 +290,8 @@ def ingest(
         if verbosity_level >= level:
             print message
 
+    client = Client(settings.SENTRY_DSN)
+
     log_message((
         'Running SPOT 6/7 Importer with these options:\n'
         'Test Only Flag: %s\n'
@@ -468,6 +472,7 @@ def ingest(
                     pass
             except Exception, e:
                 traceback.print_exc(file=sys.stdout)
+                client.captureException()
                 raise CommandError('Cannot import: %s' % e)
 
             if test_only_flag:
@@ -483,15 +488,19 @@ def ingest(
             failed_record_count += 1
             if halt_on_error_flag:
                 print e.message
+                client.captureException()
                 break
             else:
                 continue
 
     # To decide: should we remove ingested product folders?
 
-    print '==============================='
-    print 'Products processed : %s ' % record_count
-    print 'Products updated : %s ' % updated_record_count
-    print 'Products imported : %s ' % created_record_count
-    print 'Products failed to import : %s ' % failed_record_count
-    print '==============================='
+    msg = 'SPOT67 Ingestion Summary \n'
+    msg += '=============================== \n'
+    msg += 'Products processed : %s \n' % record_count
+    msg += 'Products updated : %s \n' % updated_record_count
+    msg += 'Products imported : %s \n' % created_record_count
+    msg += 'Products failed to import : %s \n' % failed_record_count
+    msg += '==============================='
+    print msg
+    client.captureMessage(msg)
