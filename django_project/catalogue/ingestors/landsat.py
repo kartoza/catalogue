@@ -181,9 +181,13 @@ def get_spatial_resolution_y(filename):
 
 
 def get_mission_value(filename):
-    if 'L07' in filename or 'LC07' in filename:
+    if 'LO7' in filename \
+            or 'LC7' in filename \
+            or 'LT07' in filename:
         return 'L7'
-    else:
+    elif 'LO8' in filename \
+            or 'LC8' in filename \
+            or 'LT08' in filename:
         return 'L8'
 
 
@@ -433,10 +437,9 @@ def ingest(
                 log_message('---------------', 1)
                 # Get the folder name
                 product_folder = os.path.split(myFolder)[-1]
-                log_message('product folder: %s ' % product_folder, 1)
+                log_message('product folder: %s ' % product_folder, 2)
 
                 xml_file = glob.glob(myFolder)[0]
-                #for xml_file in glob.glob(search_path):
                 log_message('xml_file: %s ' % xml_file, 2)
 
                 if use_txt_flag:
@@ -589,7 +592,7 @@ def ingest(
 
                     jpeg_path = os.path.join(str(xml_file))
                     # reconstruct jpeg path and file name
-                    jpeg_file = jpeg_path.split('/')[-1].split('_')[0] + "_THUMB.png"
+                    jpeg_file = product_folder.split('_')[0] + "_THUMB.png"
                     jpeg_path = os.path.join(jpeg_path.rsplit('/', 1)[0], jpeg_file)
 
                     log_message('jpeg_path: %s' % jpeg_path, 2)
@@ -670,7 +673,8 @@ list_keywords = ['CORNER_UL_LAT_PRODUCT',
                  'FILE_DATE',
                  'CLOUD_COVER',
                  'SENSOR_ID',
-                 'UTM_ZONE'
+                 'UTM_ZONE',
+                 'LANDSAT_SCENE_ID'
                  ]
 
 
@@ -715,21 +719,8 @@ def get_dates_txt(list_values):
     return parsed_date_time
 
 
-def get_original_product_id_txt(filename):
-    constant = 'JSA00'
-    product_name_file = filename[0:3]
-    splitted_filename = filename.split('_')
-    if len(splitted_filename) > 3:
-        # example filename: LC08_L1TP_170083_20180111_20180119_01_T1_MTL
-        product_filename = splitted_filename[1] + splitted_filename[2] + \
-                           splitted_filename[3] + splitted_filename[4]
-    else:
-        # example filename: LO81750672017347JSA00_MTL
-        product_filename = filename[3:16]
-
-    # Get part of product name from filename.
-    product_name = product_name_file + product_filename + constant
-    return product_name
+def get_original_product_id_txt(list_values):
+    return list_values['LANDSAT_SCENE_ID']
 
 
 def get_product_profile_txt(list_values, filename):
@@ -852,6 +843,16 @@ def get_radiometric_resolution_txt(filename):
         return 8
     elif mission_index_value == 'LO8':
         return 16
+    # detect LC
+    elif mission_index_value == 'LC7':
+        return 8
+    elif mission_index_value == 'LC8':
+        return 16
+    # detect LC ONLY IF IT HAS DIFFERENT FILE NAME
+    elif filename[0:4] == 'LC07':
+        return 8
+    elif filename[0:4] == 'LC08':
+        return 16
 
 
 def ingest_txt(search_path):
@@ -894,7 +895,8 @@ def ingest_txt(search_path):
 
         geometry = get_geometry_txt(list_values)
         radiometric_resolution = get_radiometric_resolution_txt(filename)
-        original_product_id = get_original_product_id_txt(filename)
+        # original_product_id = get_original_product_id_txt(filename)
+        original_product_id = get_original_product_id_txt(list_values)
         unique_product_id = original_product_id
 
         cloud_cover = get_cloud_cover_txt(list_values)
