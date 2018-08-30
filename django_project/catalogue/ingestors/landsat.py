@@ -403,7 +403,7 @@ def ingest(
     # Scan the source folder and look for any sub-folders
     # The sub-folder names should be e.g.
     # L5-_TM-_HRF_SAM-_0176_00_0078_00_920606_080254_L0Ra_UTM34S
-    log_message('Scanning folders in %s' % source_path, 1)
+    log_message('Scanning folders in %s' % source_path, 2)
     # Loop through each folder found
 
     ingestor_version = 'Landsat7/8 ingestor version 1.2'
@@ -411,27 +411,33 @@ def ingest(
     updated_record_count = 0
     created_record_count = 0
     failed_record_count = 0
-    log_message('Starting directory scan...', 2)
+    log_message('Starting directory scan...', 1)
 
-    for myFolder in glob.glob(os.path.join(source_path, '*')):
-        try:
-            log_message('', 2)
-            log_message('---------------', 2)
-            # Get the folder name
-            product_folder = os.path.split(myFolder)[-1]
-            log_message('product folder: %s ' % product_folder, 2)
+    # loop on subfolders
+    for dirName, subdirlist, fileList in os.walk(source_path):
 
-            # Find the first and only xml file in the folder
-            if use_txt_flag:
-                search_path = os.path.join(str(myFolder), '*.txt')
-            else:
-                search_path = os.path.join(str(myFolder), '*.xml')
-            log_message('search path: %s ' % search_path, 2)
+        # Check flag: find xml or txt
+        full_path = os.path.join(source_path, dirName)
+        if use_txt_flag:
+            search_path = os.path.join(full_path, '*.txt')
+        else:
+            search_path = os.path.join(full_path, '*.xml')
+        log_message('search path: %s ' % search_path, 2)
 
-            # xml_file = glob.glob(search_path)[0]
-            for xml_file in glob.glob(search_path):
+        # for each sub folder, search metadata and thumbnail
+        for myFolder in glob.glob(search_path):
+            record_count += 1
+
+            try:
+                log_message('', 2)
+                log_message('---------------', 1)
+                # Get the folder name
+                product_folder = os.path.split(myFolder)[-1]
+                log_message('product folder: %s ' % product_folder, 1)
+
+                xml_file = glob.glob(myFolder)[0]
+                #for xml_file in glob.glob(search_path):
                 log_message('xml_file: %s ' % xml_file, 2)
-                record_count += 1
 
                 if use_txt_flag:
                     log_message('processing txt metadata', 2)
@@ -544,13 +550,13 @@ def ingest(
                         log_message('Product: %s' % product)
 
                     except Exception, e:
-                        log_message(e.message, 1)
+                        log_message(e.message, 2)
 
                     new_record_flag = True
                 except Exception, e:
                     print e.message
 
-                log_message('Saving product and setting thumb', 1)
+                log_message('Saving product and setting thumb', 2)
                 try:
                     product.save()
                     if update_mode:
@@ -568,7 +574,7 @@ def ingest(
                     raise CommandError('Cannot import: %s' % e)
 
                 if test_only_flag:
-                    log_message('Testing: image not saved.', 1)
+                    log_message('Testing: image not saved.', 2)
                     pass
                 else:
                     thumbs_folder = os.path.join(
@@ -582,10 +588,10 @@ def ingest(
                         pass
 
                     jpeg_path = os.path.join(str(xml_file))
-                    if use_txt_flag:
-                        jpeg_path = jpeg_path[:-7] + 'BQA.TIF'
-                    else:
-                       jpeg_path = jpeg_path.replace(".XML", "-THUMB.jpg")
+                    # reconstruct jpeg path and file name
+                    jpeg_file = jpeg_path.split('/')[-1].split('_')[0] + "_THUMB.png"
+                    jpeg_path = os.path.join(jpeg_path.rsplit('/', 1)[0], jpeg_file)
+
                     log_message('jpeg_path: %s' % jpeg_path, 2)
 
                     new_name = '%s.jpg' % product.original_product_id
@@ -606,8 +612,8 @@ def ingest(
                                 continue
                             else:
                                 raise Exception('Missing thumbnail in %s' % jpeg_path)
-                        # Transform and store .wld file
-                    #     log_message('Referencing thumb', 2)
+                                # Transform and store .wld file
+                    # log_message('Referencing thumb', 2)
                     #     try:
                     #         path = product.georeferencedThumbnail()
                     #         log_message('Georeferenced Thumb: %s' % path, 2)
@@ -633,15 +639,15 @@ def ingest(
                     transaction.commit()
                     log_message('Imported scene : %s' % product_folder, 2)
 
-        except Exception as e:
-            log_message('Record import failed. AAAAAAARGH! : %s %s' %
-                        (product_folder, e), 1)
-            failed_record_count += 1
-            if halt_on_error_flag:
-                print e.message
-                break
-            else:
-                continue
+            except Exception as e:
+                log_message('Record import failed. AAAAAAARGH! : %s %s' %
+                            (product_folder, e), 2)
+                failed_record_count += 1
+                if halt_on_error_flag:
+                    print e.message
+                    break
+                else:
+                    continue
 
     # To decide: should we remove ingested product folders?
 
@@ -842,9 +848,9 @@ def get_radiometric_resolution_txt(filename):
     :rtype: integer.
     """
     mission_index_value = filename[0:3]
-    if mission_index_value == 'L07':
+    if mission_index_value == 'LO7':
         return 8
-    elif mission_index_value == 'L08':
+    elif mission_index_value == 'LO8':
         return 16
 
 
@@ -870,7 +876,7 @@ def ingest_txt(search_path):
             print log_message_content
 
     try:
-        log_message('Processing txt files', 1)
+        log_message('Processing txt files', 2)
         file_path = os.path.basename(search_path)
         filename = os.path.splitext(file_path)[0]
 
@@ -926,5 +932,5 @@ def ingest_txt(search_path):
         }
         log_message(data, 3)
     except Exception as e:
-        log_message('Error on ingest_txt: %s' % e, 1)
+        log_message('Error on ingest_txt: %s' % e, 2)
     return data

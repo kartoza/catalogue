@@ -38,7 +38,7 @@ class Command(BaseCommand):
                 'thumbnail to import.'),
             default=(
                 '/home/web/django_project'
-                '/data/landsat/')),
+                '/data/Landsat/')),
         make_option(
             '--halt_on_error', '-e', dest='halt_on_error_flag',
             action='store',
