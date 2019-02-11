@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load pipeline %}
+{% load staticfiles %}
 
 {% block extracss %}
 	{{ block.super }}
@@ -36,7 +37,9 @@
 
 {% block extrajs %}
   {{ block.super }}
+  {% javascript 'base' %}
   {% javascript 'orderpage' %}
+  <script type="text/javascript" charset="utf-8" src="{% static 'js/sansa-ui.js' %}"></script>
   <script>
   	var LayerSwitcherState = false;
     function toggleLayerSwitcher() {
@@ -111,7 +114,7 @@
 	        APP.$modal.load('/metadata/'+id, '', function(){
 	            APP.$modal.modal();
 	        });
-		})
+		});
 
 		$('.remove').click(function() {
 			if (confirm('You are about to remove product from cart, are you sure?')) {
