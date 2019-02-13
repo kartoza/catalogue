@@ -37,7 +37,7 @@ from django.http import (
     HttpResponse,
     Http404)
 from django.contrib.auth.decorators import login_required
-#from django.contrib.admin.views.decorators import staff_member_required
+from django.contrib.admin.views.decorators import staff_member_required
 #from django.db.models import Count, Min, Max  # for aggregate queries
 from django.forms.models import inlineformset_factory
 
@@ -401,3 +401,10 @@ def upload_geo(theRequest):
                 simplejson.dumps({
                     "wkt": processGeometriesType(extractedGeometries).wkt}),
                 content_type='application/json', status=200)
+
+
+@staff_member_required
+#renderWithContext is explained in renderWith.py
+@renderWithContext('showall.html')
+def showAll(theRequest):
+    """Show a map of all searches"""

@@ -6,7 +6,8 @@ from .views import (
     searchView,
     searchguid,
     submitSearch,
-    upload_geo
+    upload_geo,
+    showAll
 )
 
 urlpatterns = patterns(
@@ -22,5 +23,7 @@ urlpatterns = patterns(
     url(r'^submitsearch/$', submitSearch,
         name='submitSearch'),
     url(r'^upload_geo/$', upload_geo,
-        name='upload_geo')
+        name='upload_geo'),
+    url(r'^showall/$', showAll, name='showAll'),
+
 )
