@@ -108,7 +108,7 @@ class Searcher:
             if sig.start_date and sig.end_date:
                 sigEndDate = sig.end_date - timedelta(hours=1)
                 myAllowedDate = (
-                myAllowedDate | Q(product_date__range=(sig.start_date, sigEndDate)))
+                    myAllowedDate | Q(product_date__range=(sig.start_date, sigEndDate)))
         self.mQuerySet = self.mQuerySet.exclude(myAllowedDate)
 
         # filter date ranges
