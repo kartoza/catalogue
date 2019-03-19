@@ -224,7 +224,7 @@ def searchView(theRequest):
             'val': '{}|{}'.format(sat.pk, sig.instrument_type.pk)
             } for sig in sat.satelliteinstrumentgroup_set.all()
             # only select instrument_types which are searchable
-            if sig.instrument_type.is_searchable)
+            if sig.instrument_type.is_searchable and sig.is_searchable)
             for sat in col.satellite_set.all())))
     } for col in collections
     ]

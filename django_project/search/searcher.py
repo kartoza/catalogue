@@ -28,6 +28,7 @@ from django.db.models import Q
 # Models and forms for our app
 
 from dictionaries.models import OpticalProductProfile
+from dictionaries.models import SatelliteInstrumentGroup
 
 from catalogue.fields import IntegersCSVIntervalsField
 from catalogue.models import OpticalProduct
@@ -97,6 +98,18 @@ class Searcher:
         self.mQuerySet = OpticalProduct.objects.filter(
             product_profile__in=myOPP)
         logger.info('Selected product profiles: %s', myOPP.values_list('pk'))
+
+        # eliminate specific dates as specified in dictionaries_satelliteinstrumentgroup
+        myAllowedDate = Q()
+        for sig in SatelliteInstrumentGroup.objects.filter(
+            satellite_id__in=self.mSearch.satellite.values_list('pk')).filter(
+                instrument_type__in=self.mSearch.instrument_type.values_list('pk')):
+
+            if sig.start_date and sig.end_date:
+                sigEndDate = sig.end_date - timedelta(hours=1)
+                myAllowedDate = (
+                myAllowedDate | Q(product_date__range=(sig.start_date, sigEndDate)))
+        self.mQuerySet = self.mQuerySet.exclude(myAllowedDate)
 
         # filter date ranges
         if self.mSearch.searchdaterange_set.count():

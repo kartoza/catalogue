@@ -479,6 +479,13 @@ class SatelliteInstrumentGroup(models.Model):
     """
     satellite = models.ForeignKey('Satellite')
     instrument_type = models.ForeignKey('InstrumentType')
+    is_searchable = models.BooleanField(default=True)
+    start_date = models.DateField(
+        blank=True, null=True,
+        help_text='The beginning date to hide the data from the user in the search page')
+    end_date = models.DateField(
+        blank=True, null=True,
+        help_text = 'The end date to hide the data from the user in the search page')
 
     class Meta:
         unique_together = (
