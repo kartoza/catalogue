@@ -494,7 +494,7 @@ class SatelliteInstrumentGroup(models.Model):
         )
 
     def min_year(self):
-        return self.products_per_year()[1]['year']
+        return self.products_per_year()[0]['year']
 
     def max_year(self):
         return self.products_per_year()[-1]['year']

@@ -141,17 +141,26 @@ def list_orders(request):
     :param request: HttpRequest dict
     :return: orderListPage and orderList :rtype: HttpResponse
     """
+    order_id = request.GET.get('order_id')
     if not request.user.is_staff:
         '''Non staff users can only see their own orders listed'''
-        records = Order.base_objects.filter(
-            user=request.user).order_by('-order_date')
+        if order_id:
+            records = Order.base_objects.filter(
+                user=request.user, id=order_id).order_by('-order_date')
+        else:
+            records = Order.base_objects.filter(
+                user=request.user).order_by('-order_date')
     else:
         '''This view is strictly for staff only'''
         # This view uses the NoSubclassManager
         # base_objects is defined in the model and
         # will exclude all tasking requests or other
         # derived classes
-        records = Order.base_objects.all().order_by('-order_date')
+        if order_id:
+            records = Order.base_objects.filter(id=order_id).order_by(
+                '-order_date')
+        else:
+            records = Order.base_objects.all().order_by('-order_date')
     if 'pdf' in request.GET:
         # Django's pagination is only required for the PDF view as
         # django-tables2 handles pagination for the table

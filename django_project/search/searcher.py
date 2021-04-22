@@ -102,10 +102,10 @@ class Searcher:
         if self.mSearch.searchdaterange_set.count():
             myDateQuery = Q()
             for date_range in self.mSearch.searchdaterange_set.all():
-                # add one day to end date to search in the last day
+                # add one hour to end date to search in the last day
                 # search for 01-03-2012 -> 01-03-2012 yields no results
                 # because range only compares dates
-                myEndDate = date_range.end_date + timedelta(days=1)
+                myEndDate = date_range.end_date + timedelta(hours=1)
                 myDateQuery = (
                     myDateQuery | Q(product_date__range=(
                         date_range.start_date, myEndDate))

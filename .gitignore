@@ -68,3 +68,6 @@ scrap.html
 .pycharm_helpers
 .sudo_as_admin_successful
 
+deployment/static
+deployment/pg
+latest.sql.gz
