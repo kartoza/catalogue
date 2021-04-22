@@ -8,176 +8,186 @@
 
 # Our main nginx service - this is for testing only - normally
 # You would use a standalone nginx instance running on the host!
-nginx:
-  # Note you cannot scale if you use conteiner_name
-  container_name: catalogue-nginx
-  image: nginx
-  hostname: nginx
-  volumes:
-    - ./nginx-conf:/etc/nginx/conf.d
-  ports:
-    - "0.0.0.0:80:80"
-  restart: on-failure:5
+version: "3.4"
+services:
+  nginx:
+    # Note you cannot scale if you use conteiner_name
+    container_name: catalogue-nginx
+    image: nginx
+    hostname: nginx
+    volumes:
+      - ./nginx-conf:/etc/nginx/conf.d
+    ports:
+      - "0.0.0.0:80:80"
+    restart: on-failure:5
 
-smtp:
-  # Note you cannot scale if you use conteiner_name
-  container_name: catalogue-smtp
-  image: catatnight/postfix
-  hostname: postfix
-  environment:
-    # You could change this to something more suitable
-    - maildomain=kartoza.com
-    - smtp_user=noreply:docker
-  restart: on-failure:5
+  smtp:
+    # Note you cannot scale if you use conteiner_name
+    container_name: catalogue-smtp
+    image: catatnight/postfix
+    hostname: postfix
+    environment:
+      # You could change this to something more suitable
+      - maildomain=kartoza.com
+      - smtp_user=noreply:docker
+    restart: on-failure:5
 
-db:
-  # Note you cannot scale if you use conteiner_name
-  container_name: catalogue-db
-  image: kartoza/postgis:9.4-2.1
-  volumes:
-    #- ./pg/postgres_data:/var/lib/postgresql
-    - ./backups:/backups
-  environment:
-    - USERNAME=docker
-    - PASS=docker
-  restart: on-failure:5
+  db:
+    # Note you cannot scale if you use conteiner_name
+    container_name: catalogue-db
+    image: kartoza/postgis:9.4-2.1
+    volumes:
+      #- ./pg/postgres_data:/var/lib/postgresql
+      - ./backups:/backups
+    environment:
+      - USERNAME=docker
+      - PASS=docker
+    restart: on-failure:5
 
-rabbitmq:
-  image: library/rabbitmq
-  hostname: rabbitmq
-  environment:
-     - RABBIT_PASSWORD=rabbit_test_password
-     - USER=rabbit_user
-     - RABBITMQ_NODENAME=rabbit
+  rabbitmq:
+    image: library/rabbitmq
+    hostname: rabbitmq
+    environment:
+       - RABBIT_PASSWORD=rabbit_test_password
+       - USER=rabbit_user
+       - RABBITMQ_NODENAME=rabbit
 
-worker:
-  build: docker
-  hostname: worker
-  command: celery worker -A catalogue.celery -l info  --beat
-  environment:
-    - DATABASE_NAME=gis
-    - DATABASE_USERNAME=docker
-    - DATABASE_PASSWORD=docker
-    - DATABASE_HOST=db
-    - RABBITMQ_HOST=rabbitmq
-    - DJANGO_SETTINGS_MODULE=core.settings.prod_docker
-    - VIRTUAL_HOST=catalogue.kartoza.org
-    - VIRTUAL_PORT=8080
-    - C_FORCE_ROOT=true
-  volumes:
-    - ../django_project:/home/web/django_project
-    - ./static:/home/web/static
-    - ./media:/home/web/media
-    - ./reports:/home/web/reports
-    - ./logs:/var/log/
-  links:
-    - smtp:smtp
-    - db:db
-    - rabbitmq:rabbitmq
+  worker:
+    build:
+      context: ..
+      dockerfile: deployment/docker/Dockerfile
+      target: dev_image
+    hostname: worker
+    command: celery worker -A catalogue.celery -l info  --beat
+    environment:
+      - DATABASE_NAME=gis
+      - DATABASE_USERNAME=docker
+      - DATABASE_PASSWORD=docker
+      - DATABASE_HOST=db
+      - RABBITMQ_HOST=rabbitmq
+      - DJANGO_SETTINGS_MODULE=core.settings.prod_docker
+      - VIRTUAL_HOST=catalogue.kartoza.org
+      - VIRTUAL_PORT=8080
+      - C_FORCE_ROOT=true
+    volumes:
+      - ../django_project:/home/web/django_project
+      - ./static:/home/web/static
+      - ./media:/home/web/media
+      - ./reports:/home/web/reports
+      - ./logs:/var/log/
+    links:
+      - smtp:smtp
+      - db:db
+      - rabbitmq:rabbitmq
 
-uwsgi:
-  # Note you cannot scale if you use conteiner_name
-  container_name: catalogue-uwsgi
-  build: docker
-  hostname: uwsgi
-  environment:
-    - DATABASE_NAME=gis
-    - DATABASE_USERNAME=docker
-    - DATABASE_PASSWORD=docker
-    - DATABASE_HOST=db
-    - RABBITMQ_HOST=rabbitmq
-    - DJANGO_SETTINGS_MODULE=core.settings.prod_docker
-    - VIRTUAL_HOST=catalogue.kartoza.com
-    - VIRTUAL_PORT=8080
-  volumes:
-    - ../django_project:/home/web/django_project
-    - ./static:/home/web/static
-    - ./media:/home/web/media
-    - ./reports:/home/web/reports
-    - ./logs:/var/log/
-    - ./data:/home/web/django_project/data
-    - /EOSHARE/Karabo/CATALOGUE/thumbnails_cat3:/home/web/django_project/thumbs_out
-  links:
-    - smtp:smtp
-    - db:db
-    - rabbitmq:rabbitmq
-    - worker:worker
-  restart: on-failure:5
+  uwsgi:
+    # Note you cannot scale if you use conteiner_name
+    container_name: catalogue-uwsgi
+    build:
+      context: ..
+      dockerfile: deployment/docker/Dockerfile
+      target: base_image
+    hostname: uwsgi
+    environment:
+      - DATABASE_NAME=gis
+      - DATABASE_USERNAME=docker
+      - DATABASE_PASSWORD=docker
+      - DATABASE_HOST=db
+      - RABBITMQ_HOST=rabbitmq
+      - DJANGO_SETTINGS_MODULE=core.settings.prod_docker
+      - VIRTUAL_HOST=catalogue.kartoza.com
+      - VIRTUAL_PORT=8080
+    volumes:
+      - ../django_project:/home/web/django_project
+      - ./static:/home/web/static
+      - ./media:/home/web/media
+      - ./reports:/home/web/reports
+      - ./logs:/var/log/
+      - ./data:/home/web/django_project/data
+      - /EOSHARE/Karabo/CATALOGUE/thumbnails_cat3:/home/web/django_project/thumbs_out
+    links:
+      - smtp:smtp
+      - db:db
+      - rabbitmq:rabbitmq
+      - worker:worker
+    restart: on-failure:5
 
-dbbackups:
-  # Note you cannot scale if you use conteiner_name
-  container_name: catalogue-db-backups
-  build: docker-backup
-  hostname: pg-backups
-  volumes:
-    - ./backups:/backups
-    - ./static/visitor:/visitor
-  links:
-    - db:db
-  environment:
-    # take care to let the project name below match that
-    # declared in the top of the makefile
-    - DUMPPREFIX=PG_catalogue
-    # These are all defaults anyway, but setting explicitly in
-    # case we ever want to ever use different credentials
-    - PGUSER=docker
-    - PGPASSWORD=docker
-    - PGPORT=5432
-    - PGHOST=db
-    - PGDATABASE=gis
-  restart: on-failure:5
+  dbbackups:
+    # Note you cannot scale if you use conteiner_name
+    container_name: catalogue-db-backups
+    build: docker-backup
+    hostname: pg-backups
+    volumes:
+      - ./backups:/backups
+      - ./static/visitor:/visitor
+    links:
+      - db:db
+    environment:
+      # take care to let the project name below match that
+      # declared in the top of the makefile
+      - DUMPPREFIX=PG_catalogue
+      # These are all defaults anyway, but setting explicitly in
+      # case we ever want to ever use different credentials
+      - PGUSER=docker
+      - PGPASSWORD=docker
+      - PGPORT=5432
+      - PGHOST=db
+      - PGDATABASE=gis
+    restart: on-failure:5
 
-# This is normally the main entry point for a production server
-web:
-  # Note you cannot scale if you use conteiner_name
-  container_name: catalogue-web
-  image: nginx
-  hostname: nginx
-  volumes:
-    - ./sites-enabled:/etc/nginx/conf.d:ro
-    # I dont use volumes_from as I want to use the ro modifier
-    - ./static:/home/web/static:ro
-    - ./media:/home/web/media:ro
-    - ./logs:/var/log/nginx
-  links:
-    - uwsgi:uwsgi
-  ports:
-    - "62080:8080"
-  restart: on-failure:5
+  # This is normally the main entry point for a production server
+  web:
+    # Note you cannot scale if you use conteiner_name
+    container_name: catalogue-web
+    image: nginx
+    hostname: nginx
+    volumes:
+      - ./sites-enabled:/etc/nginx/conf.d:ro
+      # I dont use volumes_from as I want to use the ro modifier
+      - ./static:/home/web/static:ro
+      - ./media:/home/web/media:ro
+      - ./logs:/var/log/nginx
+    links:
+      - uwsgi:uwsgi
+    ports:
+      - "62080:8080"
+    restart: on-failure:5
 
-# This is the entry point for a development server.
-# Run with --no-deps to run attached to the services
-# from produ environment if wanted
-devweb:
-  # Note you cannot scale if you use conteiner_name
-  container_name: catalogue-dev-web
-  build: docker
-  dockerfile: Dockerfile-dev
-  hostname: uwsgi
-  environment:
-    - DATABASE_NAME=gis
-    - DATABASE_USERNAME=docker
-    - DATABASE_PASSWORD=docker
-    - DATABASE_HOST=db
-    - RABBITMQ_HOST=rabbitmq
-    - DJANGO_SETTINGS_MODULE=core.settings.prod_docker
-    - PYTHONPATH=/home/web/django_project
-    - VIRTUAL_HOST=catalogue.kartoza.com
-    - VIRTUAL_PORT=8080
-  volumes:
-    - ../django_project:/home/web/django_project
-    - ./static:/home/web/static
-    - ./media:/home/web/media
-    - ./reports:/home/web/reports
-    - ./logs:/var/log/
-    - ./data:/home/web/django_project/data
-  links:
-    - smtp:smtp
-    - db:db
-    - rabbitmq:rabbitmq
-    - worker:worker
-  ports:
-    # for django test server
-    - "62088:8080"
-    # for ssh
-    - "62022:22"
+  # This is the entry point for a development server.
+  # Run with --no-deps to run attached to the services
+  # from produ environment if wanted
+  devweb:
+    # Note you cannot scale if you use conteiner_name
+    container_name: catalogue-dev-web
+    build:
+      context: ..
+      dockerfile: deployment/docker/Dockerfile
+      target: dev_image
+    hostname: uwsgi
+    environment:
+      - DATABASE_NAME=gis
+      - DATABASE_USERNAME=docker
+      - DATABASE_PASSWORD=docker
+      - DATABASE_HOST=db
+      - RABBITMQ_HOST=rabbitmq
+      - DJANGO_SETTINGS_MODULE=core.settings.prod_docker
+      - PYTHONPATH=/home/web/django_project
+      - VIRTUAL_HOST=catalogue.kartoza.com
+      - VIRTUAL_PORT=8080
+    volumes:
+      - ../django_project:/home/web/django_project
+      - ./static:/home/web/static
+      - ./media:/home/web/media
+      - ./reports:/home/web/reports
+      - ./logs:/var/log/
+      - ./data:/home/web/django_project/data
+    links:
+      - smtp:smtp
+      - db:db
+      - rabbitmq:rabbitmq
+      - worker:worker
+    ports:
+      # for django test server
+      - "62088:8080"
+      # for ssh
+      - "62022:22"
