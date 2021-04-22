@@ -1,3 +1,13 @@
+# Setup for Development Instances:
+
+1. Get a database backup file. Call it `latest.sql.gz`
+2. Run `make setup`
+3. To run the django server run: `make run`
+4. In your browser go to <http://localhost:8080>
+
+
+# Previous Content:
+
 Setup notes on a fresh server:
 
 # Virtualenv and pip

@@ -6,7 +6,7 @@ OPTS :=
 help: ## Print this help
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort  | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
-setup: build up migrate ## first setup
+setup: build up db-restore migrate ## first setup
 
 build:  ## Build base images
 	docker-compose pull
@@ -47,4 +47,7 @@ db-backup:  ## Create a database backup
 	docker-compose exec db su - postgres -c "pg_dumpall" | gzip -9 > latest.sql.gz
 
 db-restore:  ## Restore a database backup
-	gzip -cd latest.sql.gz | docker exec -i $(PROJECT_ID)-db bash -c 'PGPASSWORD=docker psql -U docker -h localhost postgres'
+	gzip -cd latest.sql.gz | docker exec -i $(PROJECT_ID)-db bash -c 'PGPASSWORD=docker psql -U docker -h localhost gis'
+
+db-shell:
+	docker-compose exec db bash

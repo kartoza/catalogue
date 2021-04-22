@@ -69,3 +69,5 @@ scrap.html
 .sudo_as_admin_successful
 
 deployment/static
+deployment/pg
+latest.sql.gz
