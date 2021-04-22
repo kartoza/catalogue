@@ -22,6 +22,8 @@ ADD deployment/docker/REQUIREMENTS.txt /REQUIREMENTS.txt
 RUN pip install -r /REQUIREMENTS.txt
 RUN pip install uwsgi
 
+RUN sed -i "s/ver = geos_version().decode()/ver = geos_version().decode().split(' ')[0]/" /usr/local/lib/python2.7/site-packages/django/contrib/gis/geos/libgeos.py
+
 ADD deployment/docker/uwsgi.conf /uwsgi.conf
 
 
