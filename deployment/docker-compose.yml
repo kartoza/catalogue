@@ -188,9 +188,9 @@ services:
       - worker:worker
     ports:
       # for django test server
-      - "62088:8080"
+      - "8080:8080"
       # for ssh
-      - "62022:22"
+      - "8001:22"
   check_db:
     image: schaffdev/port_check:latest
     environment:
