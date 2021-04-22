@@ -191,3 +191,8 @@ services:
       - "62088:8080"
       # for ssh
       - "62022:22"
+  check_db:
+    image: schaffdev/port_check:latest
+    environment:
+      - CHECK_HOST=db
+      - CHECK_PORT=5432

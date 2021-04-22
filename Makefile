@@ -10,4 +10,9 @@ build:  ## Build base images
 	docker-compose build
 
 up:  ## Bring the containers up
+	docker-compose up -d db
+	docker-compose run check_db
 	docker-compose up -d devweb
+
+down:  ## Bring down the containers
+	docker-compose down
