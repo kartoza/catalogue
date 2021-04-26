@@ -21,7 +21,7 @@ __copyright__ = 'South African National Space Agency'
 from django.contrib.gis.geoip import GeoIP
 from django.conf import settings
 import re  # regex support
-import urllib2
+import urllib.request, urllib.error, urllib.parse
 
 # python logging support to django logging middleware
 import logging
@@ -46,7 +46,7 @@ class GeoIpUtils:
         """
         remote_ip = request.META['REMOTE_ADDR']
         if remote_ip == '127.0.0.1':
-            checkip = urllib2.urlopen('http://checkip.dyndns.org/').read()
+            checkip = urllib.request.urlopen('http://checkip.dyndns.org/').read()
             matcher = re.compile(r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}')
             try:
                 remote_ip = matcher.search(checkip).group()

@@ -177,7 +177,7 @@ def get_product_profile(log_message, dom):
     try:
         instrument_type = InstrumentType.objects.get(
             operator_abbreviation=sensor_value)  # e.g. OLI_TIRS
-    except Exception, e:
+    except Exception as e:
         #print e.message
         raise e
     log_message('Instrument Type %s' % instrument_type, 2)
@@ -193,24 +193,24 @@ def get_product_profile(log_message, dom):
     try:
         satellite_instrument_group = SatelliteInstrumentGroup.objects.get(
             satellite=satellite, instrument_type=instrument_type)
-    except Exception, e:
-        print e.message
+    except Exception as e:
+        print(e.message)
         raise e
     log_message('Satellite Instrument Group %s' %
                 satellite_instrument_group, 2)
     try:
         satellite_instrument = SatelliteInstrument.objects.get(
             satellite_instrument_group=satellite_instrument_group)
-    except Exception, e:
-        print e.message
+    except Exception as e:
+        print(e.message)
         raise e
     log_message('Satellite Instrument %s' % satellite_instrument, 2)
 
     try:
         spectral_modes = SpectralMode.objects.filter(
             instrument_type=instrument_type)
-    except Exception, e:
-        print e.message
+    except Exception as e:
+        print(e.message)
         raise
     log_message('Spectral Modes %s' % spectral_modes, 2)
 
@@ -218,11 +218,11 @@ def get_product_profile(log_message, dom):
         product_profile = OpticalProductProfile.objects.get(
             satellite_instrument=satellite_instrument,
             spectral_mode__in=spectral_modes)
-    except Exception, e:
-        print e.message
-        print 'Searched for satellite instrument: %s and spectral modes %s' % (
+    except Exception as e:
+        print(e.message)
+        print('Searched for satellite instrument: %s and spectral modes %s' % (
             satellite_instrument, spectral_modes
-        )
+        ))
         raise e
     log_message('Product Profile %s' % product_profile, 2)
 
@@ -286,7 +286,7 @@ def ingest(
         :param level: A log level.
         """
         if verbosity_level >= level:
-            print message
+            print(message)
 
     log_message((
         'Running SPOT 6/7 Importer with these options:\n'
@@ -388,8 +388,8 @@ def ingest(
                 today = datetime.today()
                 time_stamp = today.strftime("%Y-%m-%d")
                 log_message('Time Stamp: %s' % time_stamp, 2)
-            except Exception, e:
-                print e.message
+            except Exception as e:
+                print(e.message)
 
             update_mode = True
             try:
@@ -418,12 +418,12 @@ def ingest(
                     product = OpticalProduct(**data)
                     log_message('Product: %s' % product)
 
-                except Exception, e:
+                except Exception as e:
                     log_message(e.message, 2)
 
                 new_record_flag = True
-            except Exception, e:
-                print e.message
+            except Exception as e:
+                print(e.message)
 
             log_message('Saving product and setting thumb', 2)
             try:
@@ -456,7 +456,7 @@ def ingest(
                             shutil.copyfile(
                                 os.path.join(jpeg_path, new_name),
                                 os.path.join(thumbs_folder,new_name))
-                            print new_name
+                            print(new_name)
                         else:
                             raise Exception('Missing thumbnail in %s' % jpeg_path)
 
@@ -466,7 +466,7 @@ def ingest(
                 else:
                     log_message('Product %s updated.' % updated_record_count, 2)
                     pass
-            except Exception, e:
+            except Exception as e:
                 traceback.print_exc(file=sys.stdout)
                 raise CommandError('Cannot import: %s' % e)
 
@@ -477,21 +477,21 @@ def ingest(
             else:
                 transaction.commit()
                 log_message('Imported scene : %s' % product_folder, 1)
-        except Exception, e:
+        except Exception as e:
             log_message('Record import failed. AAAAAAARGH! : %s' %
                         product_folder, 1)
             failed_record_count += 1
             if halt_on_error_flag:
-                print e.message
+                print(e.message)
                 break
             else:
                 continue
 
     # To decide: should we remove ingested product folders?
 
-    print '==============================='
-    print 'Products processed : %s ' % record_count
-    print 'Products updated : %s ' % updated_record_count
-    print 'Products imported : %s ' % created_record_count
-    print 'Products failed to import : %s ' % failed_record_count
-    print '==============================='
+    print('===============================')
+    print('Products processed : %s ' % record_count)
+    print('Products updated : %s ' % updated_record_count)
+    print('Products imported : %s ' % created_record_count)
+    print('Products failed to import : %s ' % failed_record_count)
+    print('===============================')

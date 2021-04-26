@@ -62,7 +62,7 @@ class SearchViews_upload_geo_Tests(TestCase):
         myClient = Client()
 
         myPostData = {
-            u'file_upload': ''
+            'file_upload': ''
         }
 
         self.assertRaises(
@@ -80,7 +80,7 @@ class SearchViews_upload_geo_Tests(TestCase):
         myClient = Client()
 
         myPostData = {
-            u'file_upload': myUploadFile
+            'file_upload': myUploadFile
         }
 
         myResp = myClient.post(reverse('upload_geo', kwargs={}), myPostData)
@@ -107,7 +107,7 @@ class SearchViews_upload_geo_Tests(TestCase):
         myClient = Client()
 
         myPostData = {
-            u'file_upload': myUploadFile
+            'file_upload': myUploadFile
         }
 
         myResp = myClient.post(reverse('upload_geo', kwargs={}), myPostData)
@@ -133,7 +133,7 @@ class SearchViews_upload_geo_Tests(TestCase):
         myClient = Client()
 
         myPostData = {
-            u'file_upload': myUploadFile
+            'file_upload': myUploadFile
         }
 
         myResp = myClient.post(reverse('upload_geo', kwargs={}), myPostData)
@@ -154,7 +154,7 @@ class SearchViews_upload_geo_Tests(TestCase):
         myClient = Client()
 
         myPostData = {
-            u'file_upload': myUploadFile
+            'file_upload': myUploadFile
         }
 
         self.assertRaises(

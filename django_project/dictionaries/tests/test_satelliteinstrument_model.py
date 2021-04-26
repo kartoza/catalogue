@@ -111,4 +111,4 @@ class TestSatelliteInstrumentCRUD(TestCase):
         })
 
         self.assertEqual(
-            unicode(myModel), u'SatInstOperator1')
+            str(myModel), 'SatInstOperator1')

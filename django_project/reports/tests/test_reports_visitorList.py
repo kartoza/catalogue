@@ -96,10 +96,10 @@ class ReportsViews_visitorList_Tests(TestCase):
         self.assertEqual(len(myResp.context['records']), 1)
         # check used templates
         myExpTemplates = [
-            'visitors.html', u'base.html',
-            u'pipeline/css.html', u'pipeline/js.html', u'menu.html',
-            u'useraccounts/menu_content.html',
-            u'django_tables2/custom-table.html'
+            'visitors.html', 'base.html',
+            'pipeline/css.html', 'pipeline/js.html', 'menu.html',
+            'useraccounts/menu_content.html',
+            'django_tables2/custom-table.html'
         ]
 
         myUsedTemplates = [tmpl.name for tmpl in myResp.templates]
@@ -126,7 +126,7 @@ class ReportsViews_visitorList_Tests(TestCase):
         self.assertEqual(
             len(myResp.context['records']), 1)
         # check used templates
-        myExpTemplates = [u'<Unknown Template>']
+        myExpTemplates = ['<Unknown Template>']
 
         myUsedTemplates = [tmpl.name for tmpl in myResp.templates]
         self.assertEqual(myUsedTemplates, myExpTemplates)
@@ -161,10 +161,10 @@ class ReportsViews_visitorList_Tests(TestCase):
             len(myResp.context['records']), 1)
         # check used templates
         myExpTemplates = [
-            'visitors.html', u'base.html',
-            u'pipeline/css.html', u'pipeline/js.html', u'menu.html',
-            u'useraccounts/menu_content.html',
-            u'django_tables2/custom-table.html'
+            'visitors.html', 'base.html',
+            'pipeline/css.html', 'pipeline/js.html', 'menu.html',
+            'useraccounts/menu_content.html',
+            'django_tables2/custom-table.html'
         ]
 
         myUsedTemplates = [tmpl.name for tmpl in myResp.templates]
@@ -194,10 +194,10 @@ class ReportsViews_visitorList_Tests(TestCase):
             len(myResp.context['records']), 1)
         # check used templates
         myExpTemplates = [
-            'visitors.html', u'base.html',
-            u'pipeline/css.html', u'pipeline/js.html', u'menu.html',
-            u'useraccounts/menu_content.html',
-            u'django_tables2/custom-table.html'
+            'visitors.html', 'base.html',
+            'pipeline/css.html', 'pipeline/js.html', 'menu.html',
+            'useraccounts/menu_content.html',
+            'django_tables2/custom-table.html'
         ]
 
         myUsedTemplates = [tmpl.name for tmpl in myResp.templates]

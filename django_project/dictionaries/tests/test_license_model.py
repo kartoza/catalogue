@@ -94,4 +94,4 @@ class LicenseCRUD_Test(TestCase):
             'name': 'SAC License'
         })
 
-        self.assertEqual(unicode(myModel), 'SAC License')
+        self.assertEqual(str(myModel), 'SAC License')

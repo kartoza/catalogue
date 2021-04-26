@@ -172,7 +172,7 @@ class SearchRecordCRUD_Test(TestCase):
         myModel.save()
 
         #check if updated
-        for key, val in myNewModelData.items():
+        for key, val in list(myNewModelData.items()):
             self.assertEqual(myModel.__dict__.get(key), val)
 
     def test_SearchRecord_delete(self):
@@ -215,7 +215,7 @@ class SearchRecordCRUD_Test(TestCase):
         )
 
         myExpResult = '123qwe'
-        self.assertEqual(unicode(myModel), myExpResult)
+        self.assertEqual(str(myModel), myExpResult)
 
     def test_SearchRecord_create_method(self):
         """
@@ -229,7 +229,7 @@ class SearchRecordCRUD_Test(TestCase):
 
         myNewModel = myModel.create(myUser, myProduct)
 
-        self.assertEqual(unicode(myNewModel), '123qwe')
+        self.assertEqual(str(myNewModel), '123qwe')
         self.assertEqual(myNewModel.user.username, 'testuser')
 
     def test_SearchRecord_snapshot_price_and_currency_method(self):

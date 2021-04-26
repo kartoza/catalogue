@@ -262,7 +262,7 @@ def downloadOrder(theRequest, theId):
 
     if 'shp' in theRequest.GET:
         myResponder = ShpResponder(myOrder)
-        myResponder.file_name = u'products_for_order_%s' % myOrder.id
+        myResponder.file_name = 'products_for_order_%s' % myOrder.id
         return myResponder.write_order_products(
             myOrder.searchrecord_set.all())
     elif 'kml' in theRequest.GET:
@@ -270,14 +270,14 @@ def downloadOrder(theRequest, theId):
             'mySearchRecords': myOrder.searchrecord_set.all(),
             'external_site_url': settings.DOMAIN,
             'transparentStyle': True
-        }, u'products_for_order_%s' % myOrder.id)
+        }, 'products_for_order_%s' % myOrder.id)
     elif 'kmz' in theRequest.GET:
         return render_to_kmz('kml/searchRecords.kml', {
             'mySearchRecords': myOrder.searchrecord_set.all(),
             'external_site_url': settings.DOMAIN,
             'transparentStyle': True,
             'myThumbsFlag': True
-        }, u'products_for_order_%s' % myOrder.id)
+        }, 'products_for_order_%s' % myOrder.id)
     else:
         logger.info(
             'Request cannot be proccesed, unsupported download file type')
@@ -292,7 +292,7 @@ def downloadClipGeometry(theRequest, theId):
 
     if 'shp' in theRequest.GET:
         myResponder = ShpResponder(myOrder)
-        myResponder.file_name = u'clip_geometry_order_%s' % myOrder.id
+        myResponder.file_name = 'clip_geometry_order_%s' % myOrder.id
         return myResponder.write_delivery_details(myOrder)
     elif 'kml' in theRequest.GET:
         return render_to_kml(
@@ -300,7 +300,7 @@ def downloadClipGeometry(theRequest, theId):
                 'order': myOrder,
                 'external_site_url': settings.DOMAIN,
                 'transparentStyle': True
-            }, u'clip_geometry_order_%s' % myOrder.id)
+            }, 'clip_geometry_order_%s' % myOrder.id)
     elif 'kmz' in theRequest.GET:
         return render_to_kmz(
             'kml/clipGeometry.kml', {
@@ -308,7 +308,7 @@ def downloadClipGeometry(theRequest, theId):
                 'external_site_url': settings.DOMAIN,
                 'transparentStyle': True,
                 'myThumbsFlag': True
-            }, u'clip_geometry_order_%s' % myOrder.id)
+            }, 'clip_geometry_order_%s' % myOrder.id)
     else:
         logger.info(
             'Request cannot be processed, unsupported download file type')
@@ -493,7 +493,7 @@ def coverageForOrder(theOrder, theSearchRecords):
             myCoverage['ProductArea'] = 'Error calculating area of products'
             myCoverage['CentroidZone'] = (
                 'Error calculating centroid of products')
-    except Exception, e:
+    except Exception as e:
         logger.info('Error calculating coverage for order %s' % e.message)
         pass
     return myCoverage

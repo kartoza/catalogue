@@ -123,7 +123,7 @@ class AOIGeometryField(forms.CharField):
                         'AOI geometry: unexpected number of arguments: (%i),%s'
                         % (len(myFields), theValue))
                     raise
-            except Exception, e:
+            except Exception as e:
                 logger.info(str(e))
                 raise forms.ValidationError(
                     'Area of interest geometry is not valid.')

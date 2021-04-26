@@ -88,7 +88,7 @@ class OrderCRUD_Test(TestCase):
             'id': 1
         })
 
-        self.assertEqual(unicode(myModel), '1')
+        self.assertEqual(str(myModel), '1')
 
     @unittest.skip("Skiping this test")
     def test_Order_value(self):

@@ -23,7 +23,7 @@ import logging
 logger = logging.getLogger(__name__)
 
 import os
-import urllib2
+import urllib.request, urllib.error, urllib.parse
 from functools import wraps
 
 from django.contrib.gis.db import models
@@ -260,7 +260,7 @@ class GenericProduct(models.Model):
         #db_table = 'sample_genericproduct'
 
     def __unicode__(self):
-        return u'{}'.format(self.unique_product_id)
+        return '{}'.format(self.unique_product_id)
 
     @runconcrete
     def getAbstract(self):
@@ -502,14 +502,14 @@ class GenericProduct(models.Model):
         # Note the above logic makes some assumptions about the oreintation of
         # the swath which may not hold true for every sensor.
         #
-        print myExtents
+        print(myExtents)
         myImageXDim = myImage.size[0]
         myImageYDim = myImage.size[1]
         myCandidates = []
         #should only be a single arc in our case!
         coverage_coords = self.spatial_coverage.coords
         myArc = coverage_coords[0]  # first arc
-        print coverage_coords
+        print(coverage_coords)
         try:
             for myCoord in myArc[:-1]:
                 if coordIsOnBounds(myCoord, myExtents):
@@ -517,8 +517,8 @@ class GenericProduct(models.Model):
         except:
             raise
 
-        print "Candidates on bounds intersection: %s %s " % (
-            len(myCandidates), str(myCandidates))
+        print("Candidates on bounds intersection: %s %s " % (
+            len(myCandidates), str(myCandidates)))
 
         # If the image footprint is not truly rectangular we wont find 4
         # vertices that touch the bbox. In that case we use the rule that
@@ -527,8 +527,8 @@ class GenericProduct(models.Model):
         if len(myCandidates) < 4:
             myCandidates = list(myArc[1:])  # convert from tuple to list
 
-        print "Candidates Before: %s %s " % (
-            len(myCandidates), str(myCandidates))
+        print("Candidates Before: %s %s " % (
+            len(myCandidates), str(myCandidates)))
         myCentroid = self.spatial_coverage.centroid
         try:
             myCandidates = sortCandidates(myCandidates, myExtents, myCentroid)
@@ -808,7 +808,7 @@ class GenericImageryProduct(GenericProduct):
             vertical_cs=self.projection.name,
             processing_level_code=(
                 self.product_profile.baseProcessingLevel().abbreviation),
-            md_data_identification=unicode(self.product_profile),
+            md_data_identification=str(self.product_profile),
             md_product_date=self.product_date.isoformat(),
             md_abstract=self.getAbstract(),
             bbox_west=self.spatial_coverage.extent[0],
@@ -1122,7 +1122,7 @@ class OpticalProduct(GenericSensorProduct):
             processing_level_code=(
                 self.product_profile.baseProcessingLevel().abbreviation),
             cloud_cover_percentage=self.cloud_cover,  # OpticalProduct only
-            md_data_identification=unicode(self.product_profile),
+            md_data_identification=str(self.product_profile),
             md_product_date=self.product_date.isoformat(),
             md_abstract=self.getAbstract(),
             bbox_west=self.spatial_coverage.extent[0],

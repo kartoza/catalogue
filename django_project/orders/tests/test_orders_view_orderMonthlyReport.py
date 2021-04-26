@@ -112,9 +112,9 @@ class OrdersViews_orderMonthlyReport_Tests(TestCase):
 
         # check used templates
         myExpTemplates = [
-            'orderMonthlyReport.html', u'base.html',
-            u'pipeline/css.html', u'pipeline/js.html', u'menu.html',
-            u'useraccounts/menu_content.html', u'django_tables2/custom-table.html'
+            'orderMonthlyReport.html', 'base.html',
+            'pipeline/css.html', 'pipeline/js.html', 'menu.html',
+            'useraccounts/menu_content.html', 'django_tables2/custom-table.html'
         ]
 
         myUsedTemplates = [tmpl.name for tmpl in myResp.templates]
@@ -164,9 +164,9 @@ class OrdersViews_orderMonthlyReport_Tests(TestCase):
 
         # check used templates
         myExpTemplates = [
-            'orderMonthlyReport.html', u'base.html',
-            u'pipeline/css.html', u'pipeline/js.html', u'menu.html',
-            u'useraccounts/menu_content.html', u'django_tables2/custom-table.html'
+            'orderMonthlyReport.html', 'base.html',
+            'pipeline/css.html', 'pipeline/js.html', 'menu.html',
+            'useraccounts/menu_content.html', 'django_tables2/custom-table.html'
         ]
 
         myUsedTemplates = [tmpl.name for tmpl in myResp.templates]

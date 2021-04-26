@@ -91,4 +91,4 @@ class TestSalesRegionCRUD(TestCase):
             'abbreviation': 'SR'
         })
 
-        self.assertEqual(unicode(myModel), u'SR')
+        self.assertEqual(str(myModel), 'SR')

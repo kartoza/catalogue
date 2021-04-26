@@ -89,10 +89,10 @@ class OrdersViews_listOrders_Tests(TestCase):
             myResp.context['myCurrentMonth'], date.today())
         # check used templates
         myExpTemplates = [
-            'orderListPage.html', u'base.html',
-            u'pipeline/css.html', u'pipeline/js.html', u'menu.html',
-            u'useraccounts/menu_content.html', u'orderList.html',
-            u'django_tables2/custom-table.html'
+            'orderListPage.html', 'base.html',
+            'pipeline/css.html', 'pipeline/js.html', 'menu.html',
+            'useraccounts/menu_content.html', 'orderList.html',
+            'django_tables2/custom-table.html'
         ]
 
         myUsedTemplates = [tmpl.name for tmpl in myResp.templates]
@@ -128,10 +128,10 @@ class OrdersViews_listOrders_Tests(TestCase):
             myResp.context['myCurrentMonth'], date.today())
         # check used templates
         myExpTemplates = [
-            'orderListPage.html', u'base.html',
-            u'pipeline/css.html', u'pipeline/js.html', u'menu.html',
-            u'useraccounts/menu_content.html', u'orderList.html',
-            u'django_tables2/custom-table.html'
+            'orderListPage.html', 'base.html',
+            'pipeline/css.html', 'pipeline/js.html', 'menu.html',
+            'useraccounts/menu_content.html', 'orderList.html',
+            'django_tables2/custom-table.html'
         ]
 
         myUsedTemplates = [tmpl.name for tmpl in myResp.templates]
@@ -198,9 +198,9 @@ class OrdersViews_listOrders_Tests(TestCase):
             myResp.context['myCurrentMonth'], date.today())
         # check used templates
         myExpTemplates = [
-            'orderListPage.html', u'base.html',
-            u'pipeline/css.html', u'pipeline/js.html', u'menu.html',
-            u'useraccounts/menu_content.html', u'orderList.html', u'django_tables2/custom-table.html'
+            'orderListPage.html', 'base.html',
+            'pipeline/css.html', 'pipeline/js.html', 'menu.html',
+            'useraccounts/menu_content.html', 'orderList.html', 'django_tables2/custom-table.html'
         ]
 
         myUsedTemplates = [tmpl.name for tmpl in myResp.templates]
@@ -237,10 +237,10 @@ class OrdersViews_listOrders_Tests(TestCase):
              myResp.context['myCurrentMonth'], date.today())
          # check used templates
          myExpTemplates = [
-             'orderListPage.html', u'base.html',
-             u'pipeline/css.html', u'pipeline/js.html', u'menu.html',
-             u'useraccounts/menu_content.html', u'orderList.html',
-             u'django_tables2/custom-table.html'
+             'orderListPage.html', 'base.html',
+             'pipeline/css.html', 'pipeline/js.html', 'menu.html',
+             'useraccounts/menu_content.html', 'orderList.html',
+             'django_tables2/custom-table.html'
          ]
 
          myUsedTemplates = [tmpl.name for tmpl in myResp.templates]

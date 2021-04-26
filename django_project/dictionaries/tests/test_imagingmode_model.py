@@ -137,4 +137,4 @@ class TestImagingModeCRUD(TestCase):
         })
 
         self.assertEqual(
-            unicode(myModel), u'New Imaging Mode (HV)')
+            str(myModel), 'New Imaging Mode (HV)')

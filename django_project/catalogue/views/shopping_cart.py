@@ -54,7 +54,7 @@ def downloadCart(theRequest):
     myRecords = SearchRecord.objects.all().filter(
         user=theRequest.user).filter(order__isnull=True)
 
-    myFilename = u'%s-cart' % theRequest.user.username
+    myFilename = '%s-cart' % theRequest.user.username
     if 'shp' in theRequest.GET:
         myResponder = ShpResponder(myRecords)
         myResponder.file_name = myFilename

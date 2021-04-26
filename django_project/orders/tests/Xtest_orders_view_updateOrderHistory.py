@@ -140,8 +140,8 @@ class OrdersViews_updateOrderHistory_Tests(TestCase):
         myClient = Client()
         myClient.login(username='timlinux', password='password')
         myPostData = {
-            u'new_order_status': [u'1'], u'notes': [u'simple notes'],
-            u'order': [1]
+            'new_order_status': ['1'], 'notes': ['simple notes'],
+            'order': [1]
         }
         myResp = myClient.post(
             reverse('updateOrderHistory', kwargs={}), myPostData)
@@ -168,13 +168,13 @@ class OrdersViews_updateOrderHistory_Tests(TestCase):
 
         # check used templates
         myExpTemplates = [
-            u'<Unknown Template>', 'mail/order.txt', u'mail/base.txt',
-            'mail/order.html', u'mail/base.html', 'orderPage.html',
-            u'base.html', u'pipeline/css.html',
-            u'pipeline/js.html', u'menu.html',
-            u'useraccounts/menu_content.html', u'order.html',
-            u'cartContents.html', u'recordHeader.html', u'record.html',
-            u'orderStatusHistory.html'
+            '<Unknown Template>', 'mail/order.txt', 'mail/base.txt',
+            'mail/order.html', 'mail/base.html', 'orderPage.html',
+            'base.html', 'pipeline/css.html',
+            'pipeline/js.html', 'menu.html',
+            'useraccounts/menu_content.html', 'order.html',
+            'cartContents.html', 'recordHeader.html', 'record.html',
+            'orderStatusHistory.html'
         ]
 
         myUsedTemplates = [tmpl.name for tmpl in myResp.templates]
@@ -210,8 +210,8 @@ class OrdersViews_updateOrderHistory_Tests(TestCase):
         myClient = Client()
         myClient.login(username='timlinux', password='password')
         myPostData = {
-            u'new_order_status': [u'1'], u'notes': [u'simple notes'],
-            u'order': [1]
+            'new_order_status': ['1'], 'notes': ['simple notes'],
+            'order': [1]
         }
         myResp = myClient.post(
             reverse('updateOrderHistory', kwargs={}), myPostData,
@@ -239,8 +239,8 @@ class OrdersViews_updateOrderHistory_Tests(TestCase):
 
         # check used templates
         myExpTemplates = [
-            u'<Unknown Template>', 'mail/order.txt', u'mail/base.txt',
-            'mail/order.html', u'mail/base.html', 'orderStatusHistory.html'
+            '<Unknown Template>', 'mail/order.txt', 'mail/base.txt',
+            'mail/order.html', 'mail/base.html', 'orderStatusHistory.html'
         ]
 
         myUsedTemplates = [tmpl.name for tmpl in myResp.templates]
@@ -262,8 +262,8 @@ class OrdersViews_updateOrderHistory_Tests(TestCase):
         myClient = Client()
         myClient.login(username='timlinux', password='password')
         myPostData = {
-            u'new_order_status': [u'1'], u'notes': [u'simple notes'],
-            u'order': [1331]
+            'new_order_status': ['1'], 'notes': ['simple notes'],
+            'order': [1331]
         }
         myResp = myClient.post(
             reverse('updateOrderHistory', kwargs={}), myPostData)
@@ -289,8 +289,8 @@ class OrdersViews_updateOrderHistory_Tests(TestCase):
         myClient = Client()
         myClient.login(username='timlinux', password='password')
         myPostData = {
-            u'new_order_status': [-1], u'notes': [u'simple notes'],
-            u'order': [1331]
+            'new_order_status': [-1], 'notes': ['simple notes'],
+            'order': [1331]
         }
         myResp = myClient.post(
             reverse('updateOrderHistory', kwargs={}), myPostData)

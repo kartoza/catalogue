@@ -118,4 +118,4 @@ class TestRadarProductProfileCRUD(TestCase):
         })
 
         self.assertEqual(
-            unicode(myModel), u'SATIN 1 -- Temp Imaging mode (VV)')
+            str(myModel), 'SATIN 1 -- Temp Imaging mode (VV)')

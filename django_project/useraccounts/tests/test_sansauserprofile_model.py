@@ -141,4 +141,4 @@ class SansaUserProfileCRUD_Test(TestCase):
             'user': myUser
         })
 
-        self.assertEqual(unicode(myModel), 'tcetina, (Tim Cetina)')
+        self.assertEqual(str(myModel), 'tcetina, (Tim Cetina)')

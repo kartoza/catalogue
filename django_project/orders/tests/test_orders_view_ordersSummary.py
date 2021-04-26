@@ -81,9 +81,9 @@ class OrdersViews_ordersSummary_Tests(TestCase):
 
         # check used templates
         myExpTemplates = [
-            'ordersSummary.html', u'base.html',
-            u'pipeline/css.html', u'pipeline/js.html', u'menu.html',
-            u'useraccounts/menu_content.html'
+            'ordersSummary.html', 'base.html',
+            'pipeline/css.html', 'pipeline/js.html', 'menu.html',
+            'useraccounts/menu_content.html'
         ]
 
         myUsedTemplates = [tmpl.name for tmpl in myResp.templates]

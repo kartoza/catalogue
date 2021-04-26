@@ -25,7 +25,7 @@ import logging
 logger = logging.getLogger(__name__)
 
 # for get feature info
-import urllib2
+import urllib.request, urllib.error, urllib.parse
 
 # for error logging
 import traceback
@@ -278,7 +278,7 @@ def clip(theRequest):
                 logger.info(traceback.format_exc())
             if not myObject.geometry:
                 myErrors = myForm._errors.setdefault('geometry', ErrorList())
-                myErrors.append(u'No valid geometry provided')
+                myErrors.append('No valid geometry provided')
                 logger.info(
                     'Form is NOT valid - at least a file or digitised geom is '
                     'needed')
@@ -498,7 +498,7 @@ def deleteSearch(theRequest, theId):
             mySearch.save()
         else:
             raise('Search not owned by you!')
-    except Exception, myError:
+    except Exception as myError:
         return HttpResponse(
             '{"success" : False,"reason" : "' + myError + '"}',
             content_type='text/plain')
@@ -558,8 +558,8 @@ def getFeatureInfo(theRequest,
     myHeaders = {'Content-Type': 'text/plain'}
     myBody = 'foo body'
     try:
-        myRequest = urllib2.Request(myUrl, myBody, myHeaders)
-        myResponse = urllib2.urlopen(myRequest)
+        myRequest = urllib.request.Request(myUrl, myBody, myHeaders)
+        myResponse = urllib.request.urlopen(myRequest)
 
         # logger.debug(content type header)
         myInfo = myResponse.info()
@@ -572,7 +572,7 @@ def getFeatureInfo(theRequest,
 
         myResponse.close()
 
-    except Exception, e:
+    except Exception as e:
         logger.debug('Status: 500 Unexpected Error')
         logger.debug('Content-Type: text/plain')
         logger.debug()

@@ -98,5 +98,5 @@ class TestProcessingLevelCRUD(TestCase):
         })
 
         self.assertEqual(
-            unicode(myModel),
-            u'TST1 Test Processing Level 1')
+            str(myModel),
+            'TST1 Test Processing Level 1')

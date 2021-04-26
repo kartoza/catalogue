@@ -85,4 +85,4 @@ class ResamplingMethodCRUD_Test(TestCase):
             'name': 'Nearest Neighbour'
         })
 
-        self.assertEqual(unicode(myModel), 'Nearest Neighbour')
+        self.assertEqual(str(myModel), 'Nearest Neighbour')

@@ -62,7 +62,7 @@ class SearchCollection_Test(TestCase):
         })
 
         myOPP = OpticalProductProfileF.create(**{
-            u'satellite_instrument': mySatInst
+            'satellite_instrument': mySatInst
         })
 
         OpticalProductF.create(**{

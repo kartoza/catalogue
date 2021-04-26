@@ -51,7 +51,7 @@ class Search_Only_Searchable_Test(TestCase):
 
         mySatInstGroup = SatelliteInstrumentGroupF.create(**{
             'satellite': mySat,
-            u'instrument_type': myInstrumentType
+            'instrument_type': myInstrumentType
         })
 
         mySatInst = SatelliteInstrumentF.create(**{
@@ -60,7 +60,7 @@ class Search_Only_Searchable_Test(TestCase):
         })
 
         myOPP = OpticalProductProfileF.create(**{
-            u'satellite_instrument': mySatInst
+            'satellite_instrument': mySatInst
         })
 
         # create a test product which should not be searchable

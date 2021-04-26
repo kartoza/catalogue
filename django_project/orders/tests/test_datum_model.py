@@ -83,4 +83,4 @@ class DatumCRUD_Test(TestCase):
         myModel = DatumF.create(**{
             'name': 'WGS84'
         })
-        self.assertEqual(unicode(myModel), 'WGS84')
+        self.assertEqual(str(myModel), 'WGS84')

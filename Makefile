@@ -6,10 +6,12 @@ OPTS :=
 help: ## Print this help
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort  | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
-setup: build up db-restore migrate ## first setup
+setup: pull build up db-restore migrate ## first setup
+
+pull:  ## Pull pre-built images
+	docker-compose pull
 
 build:  ## Build base images
-	docker-compose pull
 	docker-compose build
 
 up:  ## Bring the containers up

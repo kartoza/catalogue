@@ -98,4 +98,4 @@ class TestSpectralGroupCRUD(TestCase):
         })
 
         self.assertEqual(
-            unicode(myModel), u'New Spectral Group')
+            str(myModel), 'New Spectral Group')

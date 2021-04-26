@@ -72,7 +72,7 @@ def utmZoneOverlap(west, south, east, north):
 
     llZones = set()
     urZones = set()
-    for buf in xrange(-overlap, overlap + 1):
+    for buf in range(-overlap, overlap + 1):
         llTmp = overlapOnEdge(lowerLeftZone + buf)
         urTmp = overlapOnEdge(upperRightZone + buf)
         llZones.update([llTmp])

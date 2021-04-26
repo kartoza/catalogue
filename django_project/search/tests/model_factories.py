@@ -105,8 +105,8 @@ class SearchDateRangeF(factory.django.DjangoModelFactory):
         model = SearchDateRange
 
     search = factory.SubFactory(SearchF)
-    start_date = date(2010, 07, 15)
-    end_date = date(2012, 07, 15)
+    start_date = date(2010, 0o7, 15)
+    end_date = date(2012, 0o7, 15)
 
 
 class ClipF(factory.django.DjangoModelFactory):

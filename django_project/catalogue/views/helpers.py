@@ -19,10 +19,10 @@ __copyright__ = 'South African National Space Agency'
 
 # for kmz
 import zipfile
-from cStringIO import StringIO
+from io import StringIO
 import os.path
 import re
-from email.MIMEBase import MIMEBase
+from email.mime.base import MIMEBase
 
 import logging
 logger = logging.getLogger(__name__)
@@ -174,10 +174,10 @@ def update_related_field(obj, value, field):
     # Collect all related objects.
     collected_objs = Collector()
     obj._collect_sub_objects(collected_objs)
-    classes = collected_objs.keys()
+    classes = list(collected_objs.keys())
     # Bulk update the objects for performance
     for cls in classes:
-        items = collected_objs[cls].items()
+        items = list(collected_objs[cls].items())
         pk_list = [pk for pk, instance in items]
         cls._default_manager.filter(id__in=pk_list).update(**{field: value})
         del instance
@@ -201,7 +201,7 @@ def duplicate(obj, value=None, field=None, duplicate_order=None):
     """
     collected_objs = Collector()
     obj._collect_sub_objects(collected_objs)
-    related_models = collected_objs.keys()
+    related_models = list(collected_objs.keys())
     root_obj = None
 
     # Sometimes it's good enough just to save in reverse deletion order.
@@ -218,7 +218,7 @@ def duplicate(obj, value=None, field=None, duplicate_order=None):
         if model not in collected_objs:
             continue
         sub_obj = collected_objs[model]
-        for pk_val, obj in sub_obj.iteritems():
+        for pk_val, obj in sub_obj.items():
             for fk in fks:
                 fk_value = getattr(obj, '%s_id' % fk.name)
                 # If this FK has been duplicated then point to the duplicate.

@@ -123,4 +123,4 @@ class TestSatelliteCRUD(TestCase):
             'operator_abbreviation': 'SatOp1'
         })
 
-        self.assertEqual(unicode(myModel), u'SatOp1')
+        self.assertEqual(str(myModel), 'SatOp1')

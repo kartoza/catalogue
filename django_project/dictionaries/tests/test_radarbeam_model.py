@@ -106,4 +106,4 @@ class TestRadarBeamCRUD(TestCase):
             'wavelength_cm': 20
         })
 
-        self.assertEqual(unicode(myModel), u'New Band (20)')
+        self.assertEqual(str(myModel), 'New Band (20)')

@@ -29,9 +29,9 @@ logger = logging.getLogger(__name__)
 from django.contrib.gis.geos import Polygon
 
 try:
-    import cStringIO as StringIO
+    import io as StringIO
 except ImportError:
-    import StringIO
+    import io
 
 # Use faster lxml if available, fallback on pure python implementation
 try:
@@ -148,11 +148,9 @@ class dimsReader(dimsBase):
         self._tar_index = self._tar.getnames()
 
         # Scan for DIMS products
-        for product_path in filter(
-                lambda x: re.search(
+        for product_path in [x for x in self._tar_index if re.search(
                     self._tar_index[0] + '/' +
-                    'Metadata/ISOMetadata/[^/]+/[^\.]+\.xml$', x),
-                self._tar_index):
+                    'Metadata/ISOMetadata/[^/]+/[^\.]+\.xml$', x)]:
             m = re.search('ISOMetadata/([^/]+)/([^/]+)\.xml$', product_path)
             processing_level_code, product = m.groups()
             logger.info("reading %s" % product)
@@ -178,9 +176,9 @@ class dimsReader(dimsBase):
                 # Extract coordinates
                 myCoordinatesList = re.findall(
                     '(-?[\.0-9]+)', metadata['spatial_coverage'])
-                coordinates = zip(*[
+                coordinates = list(zip(*[
                     [float(j) for j in myCoordinatesList]
-                    [i::2] for i in range(2)])
+                    [i::2] for i in range(2)]))
                 # Build tuple for polygon
                 coordinates = coordinates + coordinates[0:1]
                 # Builds polygon
@@ -198,7 +196,7 @@ class dimsReader(dimsBase):
         """
         tree = etree.parse(self._read_file(product_path))
         metadata = {}
-        for md_name, md_xpath in self.METADATA.items():
+        for md_name, md_xpath in list(self.METADATA.items()):
             logger.info('searching for %s in path %s' % (md_name, md_xpath))
             try:
                 metadata[md_name] = tree.find(md_xpath.format(**self.NS)).text
@@ -301,12 +299,12 @@ class dimsWriter(dimsBase):
         Returns ISOMetadata.xml content as a string
         """
         tree = etree.parse(template_xml)
-        for md_name, md_xpath in dimsBase.METADATA.items():
+        for md_name, md_xpath in list(dimsBase.METADATA.items()):
             logger.info('searching for %s in path %s' % (md_name, md_xpath))
             try:
                 try:
                     #convert any value to unicode
-                    _val = unicode(metadata[md_name])
+                    _val = str(metadata[md_name])
                     tree.find(md_xpath.format(**dimsBase.NS)).text = _val
                     logger.info("adding %s = %s" % (md_name, _val))
                 except (KeyError, AttributeError):
@@ -387,7 +385,7 @@ class dimsWriter(dimsBase):
 
         See: tests for example usage.
         """
-        for product_code, product_data in products_info.items():
+        for product_code, product_data in list(products_info.items()):
             self._add_product(product_code, product_data)
 
     def _get_tarball_name(self):

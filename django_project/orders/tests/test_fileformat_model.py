@@ -84,4 +84,4 @@ class FileFormatCRUD_Test(TestCase):
             'name': 'GeoTiff'
         })
 
-        self.assertEqual(unicode(myModel), 'GeoTiff')
+        self.assertEqual(str(myModel), 'GeoTiff')

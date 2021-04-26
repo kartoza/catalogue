@@ -57,7 +57,7 @@ class OrderNotificationRecipientsAdminForm(forms.ModelForm):
         if (not self.cleaned_data['classes'] and
                 not self.cleaned_data['satellites']):
             raise ValidationError(
-                u'Classes and sensors cannot be simultaneously blank')
+                'Classes and sensors cannot be simultaneously blank')
         return self.cleaned_data
 
 

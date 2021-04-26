@@ -97,10 +97,10 @@ class ReportsViews_visitorReport_Tests(TestCase):
             len(myResp.context['myScores']), 1)
         # check used templates
         myExpTemplates = [
-            'visitorReport.html', u'base.html',
-            u'pipeline/css.html', u'pipeline/js.html', u'menu.html',
-            u'useraccounts/menu_content.html',
-            u'django_tables2/custom-table.html'
+            'visitorReport.html', 'base.html',
+            'pipeline/css.html', 'pipeline/js.html', 'menu.html',
+            'useraccounts/menu_content.html',
+            'django_tables2/custom-table.html'
         ]
 
         myUsedTemplates = [tmpl.name for tmpl in myResp.templates]

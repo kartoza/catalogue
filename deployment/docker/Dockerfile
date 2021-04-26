@@ -1,6 +1,6 @@
 #--------- Generic stuff all our Dockerfiles should start with so we get caching ------------
 # Note this base image is based on debian
-FROM python:2.7.18-buster AS base_image
+FROM python:3.8-buster AS base_image
 MAINTAINER Tim Sutton<tim@kartoza.com>
 
 # Pandoc needed to generate rst dumps
@@ -9,20 +9,23 @@ RUN apt-get update -y && \
         yui-compressor \
         pandoc \
         build-essential \
-        python-all-dev \
+        python3-all-dev \
         abiword \
         libreoffice-script-provider-python \
         libpq5 \
-        python-geoip \
+        python3-geoip \
+        python3-pyproj \
+        python3-lxml \
         gdal-bin gdal-data libgdal-dev \
-        python-gdal --fix-missing
+        python3-gdal --fix-missing
 
-
+ADD libs /libs
 ADD deployment/docker/REQUIREMENTS.txt /REQUIREMENTS.txt
-RUN pip install -r /REQUIREMENTS.txt
-RUN pip install uwsgi
+RUN pip install pyproj && pip install -r /REQUIREMENTS.txt && pip install uwsgi
 
-RUN sed -i "s/ver = geos_version().decode()/ver = geos_version().decode().split(' ')[0]/" /usr/local/lib/python2.7/site-packages/django/contrib/gis/geos/libgeos.py
+RUN sed -i "/        new_class = super_new(cls, name, bases, {'__module__': module})/a\        new_attrs = {'__module__': module}\n        classcell = attrs.pop('__classcell__', None)\n        if classcell is not None:\n            new_attrs['__classcell__'] = classcell\n        new_class = super_new(cls, name, bases, new_attrs)" /usr/local/lib/python3.8/site-packages/django/db/models/base.py
+
+RUN sed -i "s/ver = geos_version().decode()/ver = geos_version().decode().split(' ')[0]/" /usr/local/lib/python3.8/site-packages/django/contrib/gis/geos/libgeos.py
 
 ADD deployment/docker/uwsgi.conf /uwsgi.conf
 

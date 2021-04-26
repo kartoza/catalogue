@@ -54,7 +54,7 @@ import os
 import sys
 from datetime import datetime
 import traceback
-import urllib2
+import urllib.request, urllib.error, urllib.parse
 from mercurial import lock, error
 from django.core.management.base import CommandError
 from django.conf import settings
@@ -180,8 +180,8 @@ def get_product_profile(log_message, feature):
     try:
         satellite_instrument_group = SatelliteInstrumentGroup.objects.get(
             satellite=satellite, instrument_type=instrument_type)
-    except Exception, e:
-        print e.message
+    except Exception as e:
+        print(e.message)
         raise e
     log_message(
         'Satellite Instrument Group %s' %
@@ -201,8 +201,8 @@ def get_product_profile(log_message, feature):
         satellite_instrument = SatelliteInstrument.objects.get(
             satellite_instrument_group=satellite_instrument_group,
             operator_abbreviation=satellite_instrument_abbreviation)
-    except Exception, e:
-        print e.message
+    except Exception as e:
+        print(e.message)
         log_message('Abbreviation: %s' % satellite_instrument_abbreviation, 2)
         raise e
     log_message('Satellite Instrument %s' % satellite_instrument, 2)
@@ -219,8 +219,8 @@ def get_product_profile(log_message, feature):
         spectral_modes = SpectralMode.objects.filter(
             instrument_type=instrument_type,
             abbreviation=spectral_mode_string)
-    except Exception, e:
-        print e.message
+    except Exception as e:
+        print(e.message)
         raise
     log_message('Spectral Modes %s' % spectral_modes, 2)
 
@@ -230,11 +230,11 @@ def get_product_profile(log_message, feature):
         product_profile = OpticalProductProfile.objects.get(
             satellite_instrument=satellite_instrument,
             spectral_mode__in=spectral_modes)
-    except Exception, e:
-        print e.message
-        print 'Searched for satellite instrument: %s and spectral modes %s' % (
+    except Exception as e:
+        print(e.message)
+        print('Searched for satellite instrument: %s and spectral modes %s' % (
             satellite_instrument, spectral_modes
-        )
+        ))
         raise e
 
     return product_profile
@@ -343,9 +343,9 @@ def fetch_features(shapefile, area_of_interest):
 
     """
     try:
-        print('Opening %s' % shapefile)
+        print(('Opening %s' % shapefile))
         data_source = DataSource(shapefile)
-    except Exception, e:
+    except Exception as e:
         raise CommandError('Loading index failed %s' % e)
 
     for feature in data_source[0]:
@@ -420,7 +420,7 @@ def ingest(
         :param level: A log level.
         """
         if verbosity_level >= level:
-            print message
+            print(message)
 
     try:
         lock_file = lock.lock('/tmp/spot_harvest.lock', timeout=60)
@@ -453,7 +453,7 @@ def ingest(
                 raise CommandError(
                     'Unable to create the area of interest'
                     ' polygon: not a polygon.')
-        except Exception, e:
+        except Exception as e:
             raise CommandError(
                 'Unable to create the area of interest'
                 ' polygon: %s.' % e)
@@ -470,9 +470,9 @@ def ingest(
         record_count += 1
 
         if record_count % 10000 == 0 and record_count > 0:
-            print 'Products processed : %s ' % record_count
-            print 'Products updated : %s ' % updated_record_count
-            print 'Products imported : %s ' % created_record_count
+            print('Products processed : %s ' % record_count)
+            print('Products updated : %s ' % updated_record_count)
+            print('Products imported : %s ' % created_record_count)
             transaction.commit()
 
         original_product_id = feature.get('A21')
@@ -618,8 +618,8 @@ def ingest(
                 today = datetime.today()
                 time_stamp = today.strftime("%Y-%m-%d")
                 log_message('Time Stamp: %s' % time_stamp, 2)
-            except Exception, e:
-                print e.message
+            except Exception as e:
+                print(e.message)
 
             update_mode = True
             try:
@@ -650,14 +650,14 @@ def ingest(
                     product = OpticalProduct(**data)
                     log_message('Creating %s' % original_product_id, 1)
 
-                except Exception, e:
+                except Exception as e:
                     log_message(e.message, 2)
 
                 new_record_flag = True
-            except MultipleObjectsReturned, e:
-                print (
+            except MultipleObjectsReturned as e:
+                print((
                     'There are more than one products with '
-                    'original_product_id of %s' % original_product_id)
+                    'original_product_id of %s' % original_product_id))
                 raise e
 
             log_message('Saving product and setting thumb', 2)
@@ -687,7 +687,7 @@ def ingest(
                         # creates a thumbnail
                         new_name = '%s.jpg' % product.original_product_id
                         handle = open(new_name, 'wb+')
-                        thumbnail = urllib2.urlopen(feature.get('URL_QL'))
+                        thumbnail = urllib.request.urlopen(feature.get('URL_QL'))
                         handle.write(thumbnail.read())
                         thumbnail.close()
                         handle.close()
@@ -715,7 +715,7 @@ def ingest(
                 else:
                     log_message('Product %s updated' % updated_record_count, 2)
                     pass
-            except Exception, e:
+            except Exception as e:
                 traceback.print_exc(file=sys.stdout)
                 raise CommandError('Cannot import: %s' % e)
 
@@ -726,7 +726,7 @@ def ingest(
             else:
                 transaction.commit()
 
-        except Exception, e:
+        except Exception as e:
             # if original_product_id == '51194111302060828412B':
             #     print e
             #     raise e
@@ -735,28 +735,28 @@ def ingest(
                 original_product_id, 0)
             failed_record_count += 1
             if halt_on_error_flag is True:
-                print 'Halt on error flag was set to %s ' % halt_on_error_flag
-                print str(e)
+                print('Halt on error flag was set to %s ' % halt_on_error_flag)
+                print(str(e))
                 tb = traceback.format_exc()
-                print tb
-                print e.message
+                print(tb)
+                print(e.message)
                 break
             else:
                 continue
 
     lock_file.release()
-    print '==============================='
-    print 'Products processed : %s ' % record_count
-    print 'Products skipped (H and COLOR T): %s ' % skipped_record_count
-    print 'Products updated : %s ' % updated_record_count
-    print 'Products imported : %s ' % created_record_count
-    print 'Products failed to import : %s ' % failed_record_count
-    print '==============================='
-    print 'Notes:'
-    print 'The SPOT IMAGE Catalog shapefile may contain duplicate products'
-    print 'For example 51174181401200819562J (from 2014 shapefile) has'
-    print 'two MODE COLOR, TYPE J images. There are small differences between'
-    print 'the geometries of the duplicate records for this scene but'
-    print 'the scenes are the same. For this reason it is quite likely to get'
-    print 'updated records in the report above even if you have never imported'
-    print 'records from this time period before.'
+    print('===============================')
+    print('Products processed : %s ' % record_count)
+    print('Products skipped (H and COLOR T): %s ' % skipped_record_count)
+    print('Products updated : %s ' % updated_record_count)
+    print('Products imported : %s ' % created_record_count)
+    print('Products failed to import : %s ' % failed_record_count)
+    print('===============================')
+    print('Notes:')
+    print('The SPOT IMAGE Catalog shapefile may contain duplicate products')
+    print('For example 51174181401200819562J (from 2014 shapefile) has')
+    print('two MODE COLOR, TYPE J images. There are small differences between')
+    print('the geometries of the duplicate records for this scene but')
+    print('the scenes are the same. For this reason it is quite likely to get')
+    print('updated records in the report above even if you have never imported')
+    print('records from this time period before.')

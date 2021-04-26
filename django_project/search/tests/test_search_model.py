@@ -72,7 +72,7 @@ class TestSearchCRUD(TestCase):
             collections=[CollectionF.create(), CollectionF.create()]
         )
         #check if data is correct
-        for key, val in myExpectedModelData.items():
+        for key, val in list(myExpectedModelData.items()):
             self.assertEqual(myModel.__dict__.get(key), val)
 
         self.assertEqual(
@@ -108,7 +108,7 @@ class TestSearchCRUD(TestCase):
         myModel.save()
 
         #check if updated
-        for key, val in myNewModelData.items():
+        for key, val in list(myNewModelData.items()):
             self.assertEqual(myModel.__dict__.get(key), val)
 
     def test_Search_delete(self):
@@ -164,6 +164,6 @@ class TestSearchCRUD(TestCase):
         )
 
         self.assertEqual(
-            unicode(mySearch),
-            u'15-07-2010 Guid: 69d814b7-3164-42b9-9530-50ae77806da9 User: '
+            str(mySearch),
+            '15-07-2010 Guid: 69d814b7-3164-42b9-9530-50ae77806da9 User: '
             'test user')

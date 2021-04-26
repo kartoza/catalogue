@@ -71,13 +71,13 @@ class OthersViews_showProduct_Tests(TestCase):
 
         # check used templates
         myExpTemplates = [
-            'productView.html', u'base.html',
-            u'pipeline/css.html', u'pipeline/js.html', u'menu.html',
-            u'useraccounts/menu_content.html',
+            'productView.html', 'base.html',
+            'pipeline/css.html', 'pipeline/js.html', 'menu.html',
+            'useraccounts/menu_content.html',
             'productTypes/opticalProduct.html',
-            u'productTypes/genericSensorProduct.html',
-            u'productTypes/genericImageryProduct.html',
-            u'productTypes/genericProduct.html'
+            'productTypes/genericSensorProduct.html',
+            'productTypes/genericImageryProduct.html',
+            'productTypes/genericProduct.html'
         ]
 
         myUsedTemplates = [tmpl.name for tmpl in myResp.templates]

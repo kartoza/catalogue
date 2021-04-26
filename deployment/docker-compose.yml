@@ -40,8 +40,8 @@ services:
       - ./pg/postgres_data:/var/lib/postgresql
       - ./backups:/backups
     environment:
-      - USERNAME=docker
-      - PASS=docker
+      - POSTGRES_USER=docker
+      - POSTGRES_PASS=docker
       - ALLOW_IP_RANGE=0.0.0.0/0
     restart: on-failure:5
 
@@ -166,10 +166,6 @@ services:
       target: dev_image
     hostname: uwsgi
     environment:
-      - DATABASE_NAME=gis
-      - DATABASE_USERNAME=docker
-      - DATABASE_PASSWORD=docker
-      - DATABASE_HOST=db
       - RABBITMQ_HOST=rabbitmq
       - DJANGO_SETTINGS_MODULE=core.settings.dev_docker
       - PYTHONPATH=/home/web/django_project

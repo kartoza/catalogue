@@ -411,7 +411,7 @@ class Search(BaseSearch):
     # so we explicitly have to use verbose_name for the user friendly name
     instrument_type = models.ManyToManyField(
         'dictionaries.InstrumentType',
-        verbose_name=u'Sensors', null=True, blank=True,
+        verbose_name='Sensors', null=True, blank=True,
         help_text=(
             'Choosing one or more instrument types is required. Use ctrl-click'
             ' to select more than one.')

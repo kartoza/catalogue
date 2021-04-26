@@ -68,5 +68,5 @@ class Command(BaseCommand):
             json_file.close()
 
         except IOError:
-                print 'Error: can\'t find or read file'
+                print('Error: can\'t find or read file')
 

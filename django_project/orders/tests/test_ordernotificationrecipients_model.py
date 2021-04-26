@@ -107,7 +107,7 @@ class OrderNotificationRecipientsCRUD_Test(TestCase):
             'user': myUser
         })
 
-        self.assertEqual(unicode(myModel), 'Samsung')
+        self.assertEqual(str(myModel), 'Samsung')
 
     def test_OrderNotificationRecipients_getUsersForProduct(self):
         """

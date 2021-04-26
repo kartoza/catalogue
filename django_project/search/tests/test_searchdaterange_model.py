@@ -48,12 +48,12 @@ class SearchDateRangeCRUD_Test(TestCase):
         Tests SearchDateRange model read
         """
         myExpectedModelData = {
-            'start_date': date(2010, 07, 15),
-            'end_date': date(2012, 07, 15)
+            'start_date': date(2010, 0o7, 15),
+            'end_date': date(2012, 0o7, 15)
         }
         myModel = SearchDateRangeF.create()
         #check if data is correct
-        for key, val in myExpectedModelData.items():
+        for key, val in list(myExpectedModelData.items()):
             self.assertEqual(myModel.__dict__.get(key), val)
 
     def test_SearchDateRange_update(self):
@@ -70,7 +70,7 @@ class SearchDateRangeCRUD_Test(TestCase):
         myModel.save()
 
         #check if updated
-        for key, val in myNewModelData.items():
+        for key, val in list(myNewModelData.items()):
             self.assertEqual(myModel.__dict__.get(key), val)
 
     def test_SearchDateRange_delete(self):
@@ -119,7 +119,7 @@ class SearchDateRangeCRUD_Test(TestCase):
         myModel = SearchDateRangeF.create(search=mySearch)
 
         self.assertEqual(
-            unicode(myModel), (
-                u'15-07-2010 : 15-07-2012 '
+            str(myModel), (
+                '15-07-2010 : 15-07-2012 '
                 'Guid: 69d814b7-3164-42b9-9530-50ae77806da9')
         )

@@ -1,6 +1,6 @@
 from django.conf.urls import patterns, url
 
-from views import csw
+from .views import csw
 
 urlpatterns = patterns(
     '',

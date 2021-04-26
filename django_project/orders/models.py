@@ -194,7 +194,7 @@ class Order(models.Model):
         ordering = ['-order_date']
 
     def __unicode__(self):
-        return unicode(self.id)
+        return str(self.id)
 
     def get_recent_history_date(self):
         current_status = OrderStatus.objects.get(name=self.order_status)
@@ -363,4 +363,4 @@ class NonSearchRecord(models.Model):
     )
 
     def __unicode__(self):
-        return unicode(self.id)
+        return str(self.id)

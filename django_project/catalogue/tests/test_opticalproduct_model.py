@@ -149,7 +149,7 @@ class OpticalProductCRUD_Test(TestCase):
         })
 
         myProjection = ProjectionF.create(**{
-            u'name': u'UTM37S', u'epsg_code': 32737
+            'name': 'UTM37S', 'epsg_code': 32737
         })
 
         myInstitution = InstitutionF.create(**{
@@ -184,7 +184,7 @@ class OpticalProductCRUD_Test(TestCase):
         })
 
         myOPP = OpticalProductProfileF.create(**{
-            u'spectral_mode': mySpecMode, u'satellite_instrument': mySatInst
+            'spectral_mode': mySpecMode, 'satellite_instrument': mySatInst
         })
 
         myQuality = QualityF.create(**{'name': 'SuperQuality'})
@@ -211,7 +211,7 @@ class OpticalProductCRUD_Test(TestCase):
         myExpResult = {
             'product_date': '2012-12-12T00:00:00',
             'institution_address': 'Hartebeeshoek', 'institution_region': '',
-            'image_quality_code': 'SuperQuality', 'vertical_cs': u'UTM37S',
+            'image_quality_code': 'SuperQuality', 'vertical_cs': 'UTM37S',
             'processing_level_code': 'L1A', 'cloud_cover_percentage': 5,
             'file_identifier': '123 Product ID 123',
             'spatial_coverage': (
@@ -223,7 +223,7 @@ class OpticalProductCRUD_Test(TestCase):
             'institution_name': 'SANSA', 'institution_country': 'South Africa',
             'bbox_west': 17.54, 'institution_postcode': '0000',
             'md_data_identification': (
-                u'SATIN 1 -- Temp Spectral mode - INSTYPE1'),
+                'SATIN 1 -- Temp Spectral mode - INSTYPE1'),
             'bbox_south': -35.17
         }
 
@@ -249,7 +249,7 @@ class OpticalProductCRUD_Test(TestCase):
         })
 
         myOPP = OpticalProductProfileF.create(**{
-            u'satellite_instrument': mySatInst
+            'satellite_instrument': mySatInst
         })
 
         myModel = OpticalProductF.create(**{
@@ -290,7 +290,7 @@ class OpticalProductCRUD_Test(TestCase):
         })
 
         myOPP = OpticalProductProfileF.create(**{
-            u'satellite_instrument': mySatInst
+            'satellite_instrument': mySatInst
         })
 
         myModel = OpticalProductF.create(**{
@@ -348,7 +348,7 @@ class OpticalProductCRUD_Test(TestCase):
         })
 
         myOPP = OpticalProductProfileF.create(**{
-            u'satellite_instrument': mySatInst
+            'satellite_instrument': mySatInst
         })
 
         myModel = OpticalProductF.create(**{
@@ -389,8 +389,8 @@ class OpticalProductCRUD_Test(TestCase):
         })
 
         myOPP = OpticalProductProfileF.create(**{
-            u'satellite_instrument': mySatInst,
-            u'spectral_mode': mySpecMode
+            'satellite_instrument': mySatInst,
+            'spectral_mode': mySpecMode
         })
 
         myModel = OpticalProductF.create(**{
@@ -399,7 +399,7 @@ class OpticalProductCRUD_Test(TestCase):
             'row': 78
         })
         # satellite instrument_type path row spectral_mode
-        self.assertEqual(myModel.productName(), u'L5 HRF 135 078 TM')
+        self.assertEqual(myModel.productName(), 'L5 HRF 135 078 TM')
 
         myModel = OpticalProductF.create(**{
             'product_profile': myOPP,
@@ -407,7 +407,7 @@ class OpticalProductCRUD_Test(TestCase):
             'row': None
         })
         # satellite instrument_type path row spectral_mode
-        self.assertEqual(myModel.productName(), u'L5 HRF UNK UNK TM')
+        self.assertEqual(myModel.productName(), 'L5 HRF UNK UNK TM')
 
         myModel = OpticalProductF.create(**{
             'product_profile': myOPP,
@@ -415,7 +415,7 @@ class OpticalProductCRUD_Test(TestCase):
             'row': None
         })
         # satellite instrument_type path row spectral_mode
-        self.assertEqual(myModel.productName(), u'L5 HRF 135 UNK TM')
+        self.assertEqual(myModel.productName(), 'L5 HRF 135 UNK TM')
 
         myModel = OpticalProductF.create(**{
             'product_profile': myOPP,
@@ -423,4 +423,4 @@ class OpticalProductCRUD_Test(TestCase):
             'row': 78
         })
         # satellite instrument_type path row spectral_mode
-        self.assertEqual(myModel.productName(), u'L5 HRF UNK 078 TM')
+        self.assertEqual(myModel.productName(), 'L5 HRF UNK 078 TM')

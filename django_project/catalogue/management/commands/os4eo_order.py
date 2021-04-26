@@ -32,14 +32,14 @@ class Command(BaseCommand):
             lockfile = lock.lock("/tmp/os4eo_order.lock", timeout=60)
         except error.LockHeld:
             # couldn't take the lock
-            raise CommandError, 'Could not acquire lock.'
+            raise CommandError('Could not acquire lock.')
 
         test_only             = options.get('test_only')
         verbose               = int(options.get('verbosity'))
 
         def verblog(msg, level=1):
             if verbose >= level:
-                print msg
+                print(msg)
 
         verblog('Getting verbose (level=%s)... ' % verbose, 2)
         if test_only:
@@ -71,7 +71,7 @@ class Command(BaseCommand):
                             os4eo_id, os4eo_submit_status = os4eo.Submit(sr.product.getConcreteInstance().online_storage_medium_id, sr.pk)
                             sr.internal_order_id = os4eo_id
                             sr.save()
-                        except SoapFault, e:
+                        except SoapFault as e:
                             verblog('SoapFault error placing OS4EO order for %s' % sr)
                         finally:
                             if os4eo_submit_status != 'success':
@@ -93,11 +93,11 @@ class Command(BaseCommand):
                                         sr.order.order_status = OrderStatus.objects.get(name='Completed')
                                         sr.order.save()
                                         verblog('Marking order %s as completed.' % sr.order)
-                                except SoapFault, e:
+                                except SoapFault as e:
                                     verblog('OS4EO order %s is not completed (DescribeResultAccess)' % (sr, e))
                             else:
                                 verblog('OS4EO order %s is not completed (GetStatus)' % sr)
-                        except SoapFault, e:
+                        except SoapFault as e:
                             verblog('Cannot check OS4EO order for %s: %s' % (sr, e))
                     if test_only:
                         transaction.rollback()
@@ -105,9 +105,9 @@ class Command(BaseCommand):
                     else:
                         transaction.commit()
                         verblog("Committing transaction.", 2)
-                except Exception, e:
+                except Exception as e:
                     raise CommandError('Uncaught exception: %s' % e)
-        except Exception, e:
+        except Exception as e:
             verblog('Rolling back transaction due to exception.')
             if test_only:
                 from django.db import connection

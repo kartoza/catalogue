@@ -147,10 +147,10 @@ class OrdersViews_addOrder_Tests(TestCase):
 
         # check used templates
         myExpTemplates = [
-            'addPage.html', u'base.html', u'pipeline/css.html',
-            u'pipeline/css.html', u'pipeline/js.html', u'menu.html',
-            u'useraccounts/menu_content.html', u'add.html',
-            u'cartContents.html', u'recordHeader.html', u'record.html'
+            'addPage.html', 'base.html', 'pipeline/css.html',
+            'pipeline/css.html', 'pipeline/js.html', 'menu.html',
+            'useraccounts/menu_content.html', 'add.html',
+            'cartContents.html', 'recordHeader.html', 'record.html'
         ]
 
         myUsedTemplates = [tmpl.name for tmpl in myResp.templates]
@@ -281,12 +281,12 @@ class OrdersViews_addOrder_Tests(TestCase):
         myClient.login(username='timlinux', password='password')
 
         myPostData = {
-            u'projection': [u'86'], u'file_format': [u'1'], u'notes': [u''],
-            u'datum': [u'1'], u'resampling_method': [u'1'],
-            u'market_sector': [u'1'], u'delivery_method': [u'1'],
-            u'ref_id': [u'6'], u'6-file_format': [u'1'], u'6-datum': [u'1'],
-            u'6-ref_id': [u'6'], u'6-resampling_method': [u'1'],
-            u'6-projection': [u'86']
+            'projection': ['86'], 'file_format': ['1'], 'notes': [''],
+            'datum': ['1'], 'resampling_method': ['1'],
+            'market_sector': ['1'], 'delivery_method': ['1'],
+            'ref_id': ['6'], '6-file_format': ['1'], '6-datum': ['1'],
+            '6-ref_id': ['6'], '6-resampling_method': ['1'],
+            '6-projection': ['86']
         }
 
         myResp = myClient.post(reverse('addOrder', kwargs={}), myPostData)
@@ -348,9 +348,9 @@ class OrdersViews_addOrder_Tests(TestCase):
         myClient.login(username='timlinux', password='password')
 
         myPostData = {
-            u'projection': [u'100'], u'file_format': [u'1'], u'notes': [u''],
-            u'datum': [u'1'], u'resampling_method': [u'1'],
-            u'market_sector': [u'1'], u'ref_id': [u'6']
+            'projection': ['100'], 'file_format': ['1'], 'notes': [''],
+            'datum': ['1'], 'resampling_method': ['1'],
+            'market_sector': ['1'], 'ref_id': ['6']
         }
 
         myResp = myClient.post(reverse('addOrder', kwargs={}), myPostData)
@@ -395,10 +395,10 @@ class OrdersViews_addOrder_Tests(TestCase):
 
         # check used templates
         myExpTemplates = [
-            'addPage.html', u'base.html', u'pipeline/css.html',
-            u'pipeline/css.html', u'pipeline/js.html', u'menu.html',
-            u'useraccounts/menu_content.html', u'add.html',
-            u'cartContents.html', u'recordHeader.html', u'record.html'
+            'addPage.html', 'base.html', 'pipeline/css.html',
+            'pipeline/css.html', 'pipeline/js.html', 'menu.html',
+            'useraccounts/menu_content.html', 'add.html',
+            'cartContents.html', 'recordHeader.html', 'record.html'
         ]
 
         myUsedTemplates = [tmpl.name for tmpl in myResp.templates]

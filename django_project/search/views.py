@@ -99,7 +99,7 @@ def downloadSearchResult(theRequest, theGuid):
     mySearcher = Searcher(mySearch)
     mySearchView = SearchView(theRequest, mySearcher)
 
-    myFilename = u'%s-imagebounds' % theGuid
+    myFilename = '%s-imagebounds' % theGuid
     if 'shp' in theRequest.GET:
         myResponder = ShpResponder(SearchRecord)
         myResponder.file_name = myFilename

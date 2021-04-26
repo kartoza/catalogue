@@ -135,7 +135,7 @@ class VisitorReport(models.Model):
 
     class Meta:
         app_label = 'catalogue'
-        db_table = u'vw_visitor_report'
+        db_table = 'vw_visitor_report'
         #requires django 1.1
         managed = False
         ordering = ['visit_count']

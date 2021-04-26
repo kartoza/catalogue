@@ -91,4 +91,4 @@ class TestSubsidyTypeCRUD(TestCase):
             'abbreviation': 'NS'
         })
 
-        self.assertEqual(unicode(myModel), u'NS')
+        self.assertEqual(str(myModel), 'NS')

@@ -53,7 +53,7 @@ class SearchSpectralGroup_Test(TestCase):
         })
 
         myOPP = OpticalProductProfileF.create(**{
-            u'spectral_mode': mySpecMode
+            'spectral_mode': mySpecMode
         })
 
         OpticalProductF.create(**{

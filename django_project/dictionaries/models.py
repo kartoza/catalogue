@@ -78,7 +78,7 @@ class OpticalProductProfile(models.Model):
     objects = OpticalProductProfileQuerySet.as_manager()
 
     def __unicode__(self):
-        return u'{0} -- {1}'.format(
+        return '{0} -- {1}'.format(
             self.satellite_instrument,
             self.spectral_mode
         )
@@ -148,7 +148,7 @@ class RadarProductProfile(models.Model):
     imaging_mode = models.ForeignKey('ImagingMode')
 
     def __unicode__(self):
-        return u'{0} -- {1}'.format(
+        return '{0} -- {1}'.format(
             self.satellite_instrument,
             self.imaging_mode
         )
@@ -172,7 +172,7 @@ class ProcessingLevel(models.Model):
         help_text='A detailed description of the processing level.')
 
     def __unicode__(self):
-        return u'{0} {1}'.format(self.abbreviation, self.name)
+        return '{0} {1}'.format(self.abbreviation, self.name)
 
     class Meta:
         """Meta class implementation."""
@@ -243,7 +243,7 @@ class Satellite(models.Model):
 
     def __unicode__(self):
         """Return 'operator_abbreviation' as model representation."""
-        return u'{0}'.format(self.operator_abbreviation)
+        return '{0}'.format(self.operator_abbreviation)
 
     class Meta:
         """Meta class implementation."""
@@ -377,7 +377,7 @@ class RadarBeam(models.Model):
     )
 
     def __unicode__(self):
-        return u'{0} ({1})'.format(self.band_name, self.wavelength_cm)
+        return '{0} ({1})'.format(self.band_name, self.wavelength_cm)
 
     class Meta:
         """Meta class implementation."""
@@ -420,7 +420,7 @@ class ImagingMode(models.Model):
     )
 
     def __unicode__(self):
-        return u'{0} ({1})'.format(self.name, self.polarization)
+        return '{0} ({1})'.format(self.name, self.polarization)
 
     class Meta:
         """Meta class implementation."""
@@ -488,7 +488,7 @@ class SatelliteInstrumentGroup(models.Model):
         ordering = ['satellite', 'instrument_type']
 
     def __unicode__(self):
-        return u'{0} - {1}'.format(
+        return '{0} - {1}'.format(
             self.satellite.operator_abbreviation,
             self.instrument_type.operator_abbreviation
         )
@@ -536,7 +536,7 @@ class SatelliteInstrument(models.Model):
 
     def __unicode__(self):
         """Return 'operator_abbreviation' as model representation."""
-        return u'{0}'.format(self.operator_abbreviation)
+        return '{0}'.format(self.operator_abbreviation)
 
     class Meta:
         """Meta class implementation."""
@@ -564,7 +564,7 @@ class Band(models.Model):
         help_text='Pixel size in m (resolution) acquired')
 
     def __unicode__(self):
-        return u'{0} ({1} {2}) {3}'.format(
+        return '{0} ({1} {2}) {3}'.format(
             self.band_name, self.min_wavelength_nm, self.max_wavelength_nm,
             self.pixelsize_resampled_m)
 
@@ -611,7 +611,7 @@ class SpectralMode(models.Model):
     spectralgroup = models.ForeignKey(SpectralGroup)
 
     def __unicode__(self):
-        return u'{0} - {1}'.format(self.name, self.instrument_type.name)
+        return '{0} - {1}'.format(self.name, self.instrument_type.name)
 
     class Meta:
         """Meta class implementation."""
@@ -630,7 +630,7 @@ class BandSpectralMode(models.Model):
         ordering = ['band', 'spectral_mode']
 
     def __unicode__(self):
-        return u'{0} ({1})'.format(
+        return '{0} ({1})'.format(
             self.band.band_name, self.spectral_mode.name)
 
 
@@ -650,7 +650,7 @@ class InstrumentTypeProcessingLevel(models.Model):
     )
 
     def __unicode__(self):
-        return u'{0} - {1}'.format(
+        return '{0} - {1}'.format(
             self.instrument_type.name, self.processing_level.abbreviation)
 
     class Meta:
@@ -687,7 +687,7 @@ class SpectralModeProcessingCosts(models.Model):
     sales_region = models.ForeignKey('SalesRegion', default=1)
 
     def __unicode__(self):
-        return u'{0} {1} ({2} - {3})'.format(
+        return '{0} {1} ({2} - {3})'.format(
             self.cost_per_scene,
             self.get_currency().code,
             self.spectral_mode.name, self.instrument_type_processing_level)

@@ -84,4 +84,4 @@ class MarketSectorCRUD_Test(TestCase):
             'name': 'Decline to say'
         })
 
-        self.assertEqual(unicode(myModel), 'Decline to say')
+        self.assertEqual(str(myModel), 'Decline to say')

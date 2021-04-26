@@ -103,7 +103,7 @@ def getFeaturesFromZipFile(zipfile, geometry, numFeatures="all"):
         logger.debug('Extracting...%s' % zipfile)
         zippedShape = ZipFile(zipfile)
         logger.debug('extract done...')
-    except Exception, e:
+    except Exception as e:
         logger.debug(traceback.format_exc())
         logger.debug("ZipFile Failed: %s" % e)
     # check if the contents of the archive are the usual 3 files with no
@@ -140,7 +140,7 @@ def getFeaturesFromZipFile(zipfile, geometry, numFeatures="all"):
     try:
         logger.debug('loading shapes as a datasource...')
         dataSource = DataSource(shpFileOnDiskPath)
-    except Exception, e:
+    except Exception as e:
         logger.debug(str(traceback.format_exc()))
         logger.debug('datasource loading failed :-(')
         logger.debug('Failed: %s' % e)
@@ -153,7 +153,7 @@ def getFeaturesFromZipFile(zipfile, geometry, numFeatures="all"):
         logger.debug('Extracting poly')
         try:
             firstLayer = dataSource[0]
-        except Exception, e:
+        except Exception as e:
             logger.debug(traceback.format_exc())
             logger.debug('')
             logger.debug('Crashed: %s' % e)
@@ -206,7 +206,7 @@ def getFeaturesFromKMLFile(zipfile, geometry, numFeatures='all'):
             #read first file in unzipped kmz, which is kml
             myGeomFile = tmp_zip.read(tmp_zip.namelist()[0])
             logger.debug('extract done...')
-        except Exception, e:
+        except Exception as e:
             logger.debug(traceback.format_exc())
             logger.debug('ZipFile Failed: %s' % e)
     else:
@@ -225,7 +225,7 @@ def getFeaturesFromKMLFile(zipfile, geometry, numFeatures='all'):
     try:
         logger.debug('loading KML as a datasource...')
         dataSource = DataSource(destinationFile)
-    except Exception, e:
+    except Exception as e:
         logger.debug(str(traceback.format_exc()))
         logger.debug('datasource loading failed :-(')
         logger.debug('Failed: %s' % e)
@@ -242,7 +242,7 @@ def getFeaturesFromKMLFile(zipfile, geometry, numFeatures='all'):
         logger.debug('Extracting poly')
         try:
             firstLayer = poly_layer[0]
-        except Exception, e:
+        except Exception as e:
             logger.debug(traceback.format_exc())
             logger.debug('')
             logger.debug('Crashed: %s' % e)

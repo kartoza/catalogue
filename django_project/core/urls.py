@@ -13,7 +13,7 @@ admin.autodiscover()
    #  "template_object_name" : "myOrders",
 #    }
 
-from api import v1_API
+from .api import v1_API
 
 # Here are our patterns
 urlpatterns = patterns('',

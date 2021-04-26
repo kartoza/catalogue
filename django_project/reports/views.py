@@ -88,7 +88,7 @@ def slice_for_display(the_list, page_size=10):
     """
     #calculate number of rows
     num_rows = (len(the_list) / page_size) + 1
-    for myX in xrange(num_rows):
+    for myX in range(num_rows):
         yield the_list[myX * page_size:myX * page_size + page_size]
 
 
@@ -367,7 +367,7 @@ def data_summary_table(request):
         json_data = json.load(json_file)
         json_file.close()
     except IOError:
-        print 'File not found'
+        print('File not found')
         json_data = []
 
     for result in json_data:

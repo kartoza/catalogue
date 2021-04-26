@@ -97,4 +97,4 @@ class TestReferenceSystemCRUD(TestCase):
             'name': 'New Reference System'
         })
 
-        self.assertEqual(unicode(myModel), u'New Reference System')
+        self.assertEqual(str(myModel), 'New Reference System')

@@ -81,15 +81,15 @@ class DateRangeFormSet(BaseInlineFormSet):
             if not(start_date and end_date) or self._should_delete_form(form):
                 empty_forms.append(i)
             elif start_date > end_date:
-                raise forms.ValidationError, (
-                    'Start date must be before or equal to end date.')
+                raise forms.ValidationError((
+                    'Start date must be before or equal to end date.'))
         # Delete empty/deleted forms
         empty_forms.reverse()
         for i in empty_forms:
             del(self.forms[i])
         self.management_form.cleaned_data['TOTAL_FORMS'] = len(self.forms)
         if not len(self.forms):
-            raise forms.ValidationError, 'At least one date range is required.'
+            raise forms.ValidationError('At least one date range is required.')
 
 
 class AdvancedSearchForm(forms.ModelForm):
@@ -141,7 +141,7 @@ class AdvancedSearchForm(forms.ModelForm):
             'KML/KMZ file less than 1MB.'))
 
     aoi_geometry = AOIGeometryField(
-        label=u'Bounding Box/Circle',
+        label='Bounding Box/Circle',
         widget=forms.TextInput(attrs={'title': (
             'Upper left and lower right coordinates e.g. (20,-32,22,-34). Or '
             'circle center and radius e.g. (20,-32,100000).')
@@ -149,25 +149,25 @@ class AdvancedSearchForm(forms.ModelForm):
         required=False)
 
     k_orbit_path = IntegersCSVIntervalsField(
-        label=u'Path (K/orbit)',
+        label='Path (K/orbit)',
         required=False,
         help_text=(
             'e.g."10,20,30" or  "20-40"'))
     j_frame_row = IntegersCSVIntervalsField(
-        label=u'Row (J/frame)',
+        label='Row (J/frame)',
         required=False,
         help_text=(
             'e.g. "10,20,30" or "20-40"'))
 
     cloud_max = forms.IntegerField(
-        label=u'Cloud Max Percentage',
+        label='Cloud Max Percentage',
         min_value=0, max_value=100, initial=100,
         help_text=(
             'Range 0 - 100')
     )
 
     cloud_min = forms.IntegerField(
-        label=u'Cloud Min Percentage',
+        label='Cloud Min Percentage',
         min_value=0, max_value=100, initial=0,
         help_text=(
             'Range 0 - 100'
@@ -236,10 +236,10 @@ class AdvancedSearchForm(forms.ModelForm):
                 ' sensor angle!')
         if myCleanedData.get('selected_sensors'):
             # we use the list unpack operatror to make a reverse zip
-            mySatellites, myInstTypes = zip(
+            mySatellites, myInstTypes = list(zip(
                 *[[
                     int(b) for b in a.split('|')
-                ] for a in myCleanedData.get('selected_sensors').split(',')])
+                ] for a in myCleanedData.get('selected_sensors').split(',')]))
             self.cleaned_data['satellite'] = mySatellites
             self.cleaned_data['instrument_type'] = myInstTypes
 

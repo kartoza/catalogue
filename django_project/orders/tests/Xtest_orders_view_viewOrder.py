@@ -112,11 +112,11 @@ class OrdersViews_viewOrder_Tests(TestCase):
 
         # check used templates
         myExpTemplates = [
-            'orderPage.html', u'base.html',
-            u'pipeline/css.html', u'pipeline/js.html', u'menu.html',
-            u'useraccounts/menu_content.html', u'order.html',
-            u'cartContents.html', u'recordHeader.html', u'record.html',
-            u'orderStatusHistory.html'
+            'orderPage.html', 'base.html',
+            'pipeline/css.html', 'pipeline/js.html', 'menu.html',
+            'useraccounts/menu_content.html', 'order.html',
+            'cartContents.html', 'recordHeader.html', 'record.html',
+            'orderStatusHistory.html'
         ]
 
         myUsedTemplates = [tmpl.name for tmpl in myResp.templates]
@@ -168,11 +168,11 @@ class OrdersViews_viewOrder_Tests(TestCase):
 
         # check used templates
         myExpTemplates = [
-            'orderPage.html', u'base.html',
-            u'pipeline/css.html', u'pipeline/js.html', u'menu.html',
-            u'useraccounts/menu_content.html', u'order.html',
-            u'cartContents.html', u'recordHeader.html', u'record.html',
-            u'orderStatusHistory.html'
+            'orderPage.html', 'base.html',
+            'pipeline/css.html', 'pipeline/js.html', 'menu.html',
+            'useraccounts/menu_content.html', 'order.html',
+            'cartContents.html', 'recordHeader.html', 'record.html',
+            'orderStatusHistory.html'
         ]
 
         myUsedTemplates = [tmpl.name for tmpl in myResp.templates]
@@ -242,9 +242,9 @@ class OrdersViews_viewOrder_Tests(TestCase):
         })
         # check used templates
         myExpTemplates = [
-            'orderPageAjax.html', u'emptytemplate.html', u'order.html',
-            u'cartContents.html', u'recordHeader.html', u'record.html',
-            u'orderStatusHistory.html'
+            'orderPageAjax.html', 'emptytemplate.html', 'order.html',
+            'cartContents.html', 'recordHeader.html', 'record.html',
+            'orderStatusHistory.html'
         ]
 
         myUsedTemplates = [tmpl.name for tmpl in myResp.templates]

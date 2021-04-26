@@ -181,5 +181,5 @@ class TestSpectralModeProcessingCostsCRUD(TestCase):
         })
 
         self.assertEqual(
-            unicode(myModel),
-            u'200.94 USD (New Spectral mode - IT name - PL1)')
+            str(myModel),
+            '200.94 USD (New Spectral mode - IT name - PL1)')

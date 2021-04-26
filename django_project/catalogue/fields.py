@@ -28,7 +28,7 @@ from django import forms
 
 def validateIntegerRange(theValue):
     if not theValue[1] > theValue[0]:
-        raise forms.ValidationError, (
+        raise forms.ValidationError(
             'First value in range (%d) must be lower then second (%d)'
             % theValue)
 

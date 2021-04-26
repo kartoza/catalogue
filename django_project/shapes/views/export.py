@@ -10,9 +10,9 @@ import logging
 logger = logging.getLogger(__name__)
 
 try:
-    from cStringIO import StringIO
+    from io import StringIO
 except ImportError:
-    from StringIO import StringIO
+    from io import StringIO
 
 try:
     # a mysterious bug with ctypes and python26 causes crashes
@@ -190,7 +190,7 @@ class ShpResponder(object):
                 value = getattr(item, field.name)
                 try:
                     string_value = str(value)
-                except UnicodeEncodeError, E:
+                except UnicodeEncodeError as E:
                     string_value = ''
                 feat.SetField(str(field.name), string_value)
 
@@ -284,7 +284,7 @@ class ShpResponder(object):
                 value = getattr(item, field.name)
                 try:
                     string_value = str(value)
-                except UnicodeEncodeError, E:
+                except UnicodeEncodeError as E:
                     # pass for now....
                     # http://trac.osgeo.org/gdal/ticket/882
                     string_value = ''
@@ -399,7 +399,7 @@ class ShpResponder(object):
                 logger.info("Shape writer: Setting %s to %s" % (field, value))
                 try:
                     string_value = str(value)
-                except UnicodeEncodeError, E:
+                except UnicodeEncodeError as E:
                     string_value = ''
                     logger.info("Unicode conversion error")
                 #truncate field name to 10 letters to deal with shp limitations
@@ -481,7 +481,7 @@ class ShpResponder(object):
                 value = getattr(item, field)
                 try:
                     string_value = str(value)
-                except UnicodeEncodeError, E:
+                except UnicodeEncodeError as E:
                     string_value = ''
                 feat.SetField(str(field), string_value)
 
@@ -638,7 +638,7 @@ class ShpResponder(object):
                 logger.info("Shape writer: Setting %s to %s" % (field, value))
                 try:
                     string_value = str(value)
-                except UnicodeEncodeError, E:
+                except UnicodeEncodeError as E:
                     string_value = ''
                     logger.info("Unicode conversion error")
                 #truncate field name to 10 letters to deal with shp limitations

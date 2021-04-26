@@ -53,8 +53,8 @@ class OthersViews_emptyCartHelp(TestCase):
         self.assertEqual(myResp.status_code, 200)
         # check used templates
         myExpTemplates = [
-            'emptyCartHelp.html', u'base.html',
-            u'pipeline/css.html', u'pipeline/js.html', u'menu.html'
+            'emptyCartHelp.html', 'base.html',
+            'pipeline/css.html', 'pipeline/js.html', 'menu.html'
         ]
 
         myUsedTemplates = [tmpl.name for tmpl in myResp.templates]

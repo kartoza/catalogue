@@ -19,7 +19,7 @@ __copyright__ = 'South African National Space Agency'
 
 from django.test import TestCase
 
-from model_factories import UnitF
+from .model_factories import UnitF
 
 
 class UnitCRUD_Test(TestCase):
@@ -88,4 +88,4 @@ class UnitCRUD_Test(TestCase):
             'abbreviation': 'SMPUNT'
         })
 
-        self.assertEqual(unicode(myModel), 'Sample Unit')
+        self.assertEqual(str(myModel), 'Sample Unit')

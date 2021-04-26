@@ -84,4 +84,4 @@ class OrderStatusHistoryCRUD_Test(TestCase):
             'notes': 'Order Status changed Order Status changed'
         })
 
-        self.assertEqual(unicode(myModel), 'Order Status changed Orde')
+        self.assertEqual(str(myModel), 'Order Status changed Orde')

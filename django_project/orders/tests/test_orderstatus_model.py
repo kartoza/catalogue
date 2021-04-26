@@ -83,4 +83,4 @@ class OrderStatusCRUD_Test(TestCase):
             'name': 'Placed'
         })
 
-        self.assertEqual(unicode(myModel), 'Placed')
+        self.assertEqual(str(myModel), 'Placed')

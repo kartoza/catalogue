@@ -109,4 +109,4 @@ class TestBandSpectralModeCRUD(TestCase):
             'spectral_mode': mySpectralMode,
         })
 
-        self.assertEqual(unicode(myModel), u'Band 1 (New Spectral mode)')
+        self.assertEqual(str(myModel), 'Band 1 (New Spectral mode)')

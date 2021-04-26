@@ -18,7 +18,7 @@ __date__ = '01/01/2011'
 __copyright__ = 'South African National Space Agency'
 
 import cgi
-import cStringIO as StringIO
+import io as StringIO
 try:
     import ho.pisa as pisa
 except:

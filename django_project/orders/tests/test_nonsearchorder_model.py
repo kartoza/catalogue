@@ -103,7 +103,7 @@ class NonSearchRecordCRUD_Test(TestCase):
         myModel.save()
 
         #check if updated
-        for key, val in myNewModelData.items():
+        for key, val in list(myNewModelData.items()):
             self.assertEqual(myModel.__dict__.get(key), val)
 
     def test_NonSearchRecord_repr(self):
@@ -114,4 +114,4 @@ class NonSearchRecordCRUD_Test(TestCase):
             'id': 12321
         })
 
-        self.assertEqual(unicode(myModel), '12321')
+        self.assertEqual(str(myModel), '12321')

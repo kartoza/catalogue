@@ -85,4 +85,4 @@ class DeliveryMethodCRUD_Test(TestCase):
             'name': 'Courier + External Hard Disk'
         })
 
-        self.assertEqual(unicode(myModel.name), 'Courier + External Hard Disk')
+        self.assertEqual(str(myModel.name), 'Courier + External Hard Disk')
