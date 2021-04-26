@@ -27,6 +27,7 @@ restart: down up
 
 clean:  ## Cleanup local docker files for this project
 	docker-compose down --rmi all -v
+	-sudo rm -rf deployment/backups deployment/data deployment/logs deployment/media deployment/pg deployment/reports deployment/static
 
 shell:  ## Get into the django shell
 	docker-compose exec devweb bash
@@ -47,7 +48,7 @@ db-backup:  ## Create a database backup
 	docker-compose exec db su - postgres -c "pg_dumpall" | gzip -9 > latest.sql.gz
 
 db-restore:  ## Restore a database backup
-	gzip -cd latest.sql.gz | docker exec -i $(PROJECT_ID)-db bash -c 'PGPASSWORD=docker psql -U docker -h localhost gis'
+	gzip -cd latest.sql.gz | docker exec -i $(PROJECT_ID)-db bash -c 'PGPASSWORD=docker psql -U docker -h localhost postgres'
 
 db-shell:
 	docker-compose exec db bash
