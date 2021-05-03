@@ -1,5 +1,6 @@
 dateutils
-Django==1.9.13
+Django>=2.0,<3.0
+GDAL==2.4.0
 pillow
 Pygments
 SQLAlchemy

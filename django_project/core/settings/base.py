@@ -1,6 +1,8 @@
 # Django settings
 
 from os.path import join, abspath, dirname
+from .utils import absolute_path  # noqa
+
 
 LOCAL_PATH = lambda *x: join(abspath(dirname(__file__)), *x)
 PROJECT_ROOT = LOCAL_PATH("..", "..")
@@ -77,8 +79,9 @@ STATICFILES_FINDERS = (
     # 'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
 
-# Make this unique, and don't share it with anybody.
-SECRET_KEY = 'c(x1$mngg*&#re1shf2r3(j&1&rl528_ubo2#x_)ljabk2*cly'
+# import SECRET_KEY into current namespace
+# noinspection PyUnresolvedReferences
+from .secret import SECRET_KEY  # noqa
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
@@ -92,22 +95,22 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.template.context_processors.debug',
 )
 
-MIDDLEWARE_CLASSES = (
+MIDDLEWARE = (
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
+    # 'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'pipeline.middleware.MinifyHTMLMiddleware',
 )
 
 ROOT_URLCONF = 'core.urls'
 
 # Python dotted path to the WSGI application used by Django's runserver.
 WSGI_APPLICATION = 'core.wsgi.application'
-
 
 TEMPLATE_DIRS = (
     ABS_PATH('core', 'templates'),
@@ -122,4 +125,5 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.gis',
     'django.contrib.sites',
+    'django.contrib.messages'
 )

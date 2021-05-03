@@ -69,5 +69,11 @@ scrap.html
 .sudo_as_admin_successful
 
 deployment/static
+deployment/media
+deployment/backups
+deployment/data
 deployment/pg
+deployment/logs
+deployment/sites-enabled
 latest.sql.gz
+django_project/core/settings/secret.py

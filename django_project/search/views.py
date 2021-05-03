@@ -286,7 +286,7 @@ def submitSearch(theRequest):
                         'SRID=4326;POINT(' + str(myLatLong['longitude']) + ' '
                         + str(myLatLong['latitude']) + ')')
                 #if user is anonymous set to None
-                if theRequest.user.is_anonymous():
+                if theRequest.user.is_anonymous:
                     mySearch.user = None
                 else:
                     mySearch.user = theRequest.user

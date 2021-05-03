@@ -72,7 +72,7 @@ class renderWithContext(object):
 
                 return render_to_response(
                     render_template, items,
-                    context_instance=RequestContext(request))
+                    RequestContext(request))
 
             return render(
                 request, render_template

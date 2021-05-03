@@ -1,10 +1,12 @@
 #from django.conf.urls.defaults import *
-from django.conf.urls import patterns, include, url
+from django.conf.urls import include, url
 #from django.views.generic import list_detail
 from catalogue.views import *
 from django.conf import settings
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
+from django.urls import re_path
+
 admin.autodiscover()
 
 # These are used for our generic views
@@ -16,20 +18,20 @@ admin.autodiscover()
 from .api import v1_API
 
 # Here are our patterns
-urlpatterns = patterns('',
+urlpatterns = [
     # Uncomment the next line to enable the admin:
-    url(r'^eo-catalogue-backend/', include(admin.site.urls)),
+    url(r'^eo-catalogue-backend/', admin.site.urls),
     # Usually you would do this using apache but since
     # I have deployed the app to the root of the server
     # we need to do it here
-    url(r'^admin_media/(.*)$','django.views.static.serve',
-      {'document_root': "/usr/share/python-support/python-django/django/contrib/admin/media/"
-        , 'show_indexes': True}),
+    # url(r'^admin_media/(.*)$','django.views.static.serve',
+    #   {'document_root': "/usr/share/python-support/python-django/django/contrib/admin/media/"
+    #     , 'show_indexes': True}),
     #(r'^sentry/', include('sentry.web.urls')),
-    url(r'^media/(.*)$','django.views.static.serve',
-      {'document_root': settings.MEDIA_ROOT, 'show_indexes': True}),
-    url(r'^thumbnails/(.*)$','django.views.static.serve',
-      {'document_root': settings.THUMBS_ROOT, 'show_indexes': False}),
+    # url(r'^media/(.*)$','django.views.static.serve',
+    #   {'document_root': settings.MEDIA_ROOT, 'show_indexes': True}),
+    # url(r'^thumbnails/(.*)$','django.views.static.serve',
+    #   {'document_root': settings.THUMBS_ROOT, 'show_indexes': False}),
     url(r'^$', index, name='index'),
     url(r'^video/$', video, name='video'),
     url(r'^about/$', about, name='about'),
@@ -42,7 +44,7 @@ urlpatterns = patterns('',
     url(r'^sceneidhelp/$', sceneIdHelp, name='sceneIdHelp'),
 
     # match a product id - its not needed to give teh full id, just enough to be semi unique
-    url(r'^showProduct/(?P<theProductId>[A-Za-z0-9]+)/$', showProduct, name='showProduct'),
+    url(r'^showProduct/(?P<theProductId>.*)/$', showProduct, name='showProduct'),
     url(r'^clip/$', clip),
     # is this used?
     url(r'^myclips/$', clipHistory),
@@ -99,4 +101,4 @@ urlpatterns = patterns('',
 
     # api urls
     url(r'^api/', include(v1_API.urls)),
-)
+]

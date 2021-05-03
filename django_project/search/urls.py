@@ -1,4 +1,4 @@
-from django.conf.urls import patterns, url
+from django.conf.urls import url
 
 from .views import (
     downloadSearchResult,
@@ -9,8 +9,7 @@ from .views import (
     upload_geo
 )
 
-urlpatterns = patterns(
-    '',
+urlpatterns = [
     # return the results of a search as a shapefile
     url(r'^downloadsearchresults/(?P<theGuid>[a-h0-9\-]{36})/$',
         downloadSearchResult, name='downloadSearchResult'),
@@ -23,4 +22,4 @@ urlpatterns = patterns(
         name='submitSearch'),
     url(r'^upload_geo/$', upload_geo,
         name='upload_geo')
-)
+]

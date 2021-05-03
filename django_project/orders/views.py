@@ -17,8 +17,6 @@ __date__ = '01/01/2011'
 __copyright__ = 'South African National Space Agency'
 
 import logging
-logger = logging.getLogger(__name__)
-
 import datetime
 import traceback
 import json
@@ -34,7 +32,7 @@ from django.core.paginator import (
     Paginator,
     EmptyPage,
     InvalidPage)
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
 from django.shortcuts import get_object_or_404, render_to_response
@@ -88,6 +86,8 @@ from orders.tables import OrderListTable
 # Ordering related views
 #
 ###########################################################
+
+logger = logging.getLogger(__name__)
 
 
 @login_required
@@ -360,8 +360,10 @@ def viewOrder(theRequest, theId):
                     reverse('viewOrder', kwargs={'theId': myObject.id}))
             else:
                 return render_to_response(
-                    'orderPage.html', myOptions,
-                    context_instance=RequestContext(theRequest))
+                    'orderPage.html',
+                    myOptions,
+                    RequestContext(theRequest)
+                )
         else:
             if (theRequest.user.is_staff):
                 myOrderForm = OrderForm(instance=myOrder)
@@ -373,8 +375,10 @@ def viewOrder(theRequest, theId):
                     'myStatusForm': myStatusForm
                 }
                 return render_to_response(
-                    'orderPage.html', myOptions,
-                    context_instance=RequestContext(theRequest))
+                    'orderPage.html',
+                    myOptions,
+                    RequestContext(theRequest)
+                )
             else:
                 myOptions = {
                     'myOrder': myOrder,
@@ -382,8 +386,10 @@ def viewOrder(theRequest, theId):
                     'myHistory': myHistory
                 }
                 return render_to_response(
-                    'orderPageUser.html', myOptions,
-                    context_instance=RequestContext(theRequest))
+                    'orderPageUser.html',
+                    myOptions,
+                    RequestContext(theRequest)
+                )
     else:
         myRecords = NonSearchRecord.objects.all().filter(order=myOrder)
         myStatusForm = OrderStatusHistoryForm()
@@ -420,8 +426,10 @@ def viewOrder(theRequest, theId):
                     reverse('viewOrder', kwargs={'theId': myObject.id}))
             else:
                 return render_to_response(
-                    'orderAdHocForm.html', myOptions,
-                    context_instance=RequestContext(theRequest))
+                    'orderAdHocForm.html',
+                    myOptions,
+                    RequestContext(theRequest)
+                )
         else:
             if (theRequest.user.is_staff):
                 myOrderForm = OrderFormNonSearchRecords(instance=myOrder)
@@ -434,8 +442,10 @@ def viewOrder(theRequest, theId):
                     'myCurrency': myCurrency
                 }
                 return render_to_response(
-                    'orderAdHocPage.html', myOptions,
-                    context_instance=RequestContext(theRequest))
+                    'orderAdHocPage.html',
+                    myOptions,
+                    RequestContext(theRequest)
+                )
             else:
                 mySum = 0
                 for record in myRecords:
@@ -447,8 +457,10 @@ def viewOrder(theRequest, theId):
                     'mySum': mySum
                 }
                 return render_to_response(
-                    'orderAdHocPageUser.html', myOptions,
-                    context_instance=RequestContext(theRequest))
+                    'orderAdHocPageUser.html',
+                    myOptions,
+                    RequestContext(theRequest)
+                )
 
 
 def coverageForOrder(theOrder, theSearchRecords):
@@ -588,8 +600,10 @@ def addOrder(theRequest):
         else:
             logger.info('Add Order: form is NOT valid')
             return render_to_response(
-                'orderForm.html', myOptions,
-                context_instance=RequestContext(theRequest))
+                'orderForm.html',
+                myOptions,
+                RequestContext(theRequest)
+            )
     else:  # new order
         myOrderForm = OrderForm(
             initial={
@@ -606,8 +620,10 @@ def addOrder(theRequest):
         myOptions.update(myExtraOptions),
         logger.info('Add Order: new object requested')
         return render_to_response(
-            'orderForm.html', myOptions,
-            context_instance=RequestContext(theRequest))
+            'orderForm.html',
+            myOptions,
+            RequestContext(theRequest)
+        )
 
 
 @login_required
@@ -670,8 +686,10 @@ def addAdhocOrder(theRequest):
                 reverse('viewOrder', kwargs={'theId': myObject.id}))
         else:
             return render_to_response(
-                'orderAdHocForm.html', myOptions,
-                context_instance=RequestContext(theRequest))
+                'orderAdHocForm.html',
+                myOptions,
+                RequestContext(theRequest)
+            )
     else:
         myOrderForm = OrderFormNonSearchRecords()
         listCurrency = Currency.objects.all().values_list('code', 'name')
@@ -683,8 +701,10 @@ def addAdhocOrder(theRequest):
         # shortcut to join two dicts
         logger.info('Add Order: new object requested')
         return render_to_response(
-            'orderAdHocForm.html', myOptions,
-            context_instance=RequestContext(theRequest))
+            'orderAdHocForm.html',
+            myOptions,
+            RequestContext(theRequest)
+        )
 
 
 def convertPrice(theRequest):

@@ -19,13 +19,12 @@ __copyright__ = 'South African National Space Agency'
 
 # for kmz
 import zipfile
-from io import StringIO
+from io import BytesIO
 import os.path
 import re
 from email.mime.base import MIMEBase
 
 import logging
-logger = logging.getLogger(__name__)
 
 from django.template import RequestContext
 # for rendering template to email
@@ -63,6 +62,7 @@ CATALOGUE_DEFAULT_NOTIFICATION_RECIPIENTS = getattr(
 #                     -images-in-django/
 #
 ###########################################################
+logger = logging.getLogger(__name__)
 
 
 class EmailMultiRelated(EmailMultiAlternatives):
@@ -760,7 +760,7 @@ def render_to_kmz(theTemplate, theContext, filename):
     #try to get MAX_METADATA_RECORDS from settings, default to 500
     myMaxMetadataRecords = getattr(settings, 'MAX_METADATA_RECORDS', 500)
     myKml = render_to_string(theTemplate, theContext)
-    myZipData = StringIO()
+    myZipData = BytesIO()
     myZip = zipfile.ZipFile(myZipData, 'w', zipfile.ZIP_DEFLATED)
     myZip.writestr('%s.kml' % filename, myKml)
     if 'mySearchRecords' in theContext:
@@ -778,7 +778,7 @@ def render_to_kmz(theTemplate, theContext, filename):
 def downloadISOMetadata(theSearchRecords, theName):
     """ returns ZIPed XML metadata files for each product """
     response = HttpResponse()
-    myZipData = StringIO()
+    myZipData = BytesIO()
     myZip = zipfile.ZipFile(myZipData, 'w', zipfile.ZIP_DEFLATED)
     #try to get MAX_METADATA_RECORDS from settings, default to 500
     myMaxMetadataRecords = getattr(settings, 'MAX_METADATA_RECORDS', 500)
@@ -804,7 +804,7 @@ def downloadISOMetadata(theSearchRecords, theName):
 def downloadHtmlMetadata(theSearchRecords, theName):
     """ returns ZIPed html metadata files for each product """
     response = HttpResponse()
-    myZipData = StringIO()
+    myZipData = BytesIO()
     myZip = zipfile.ZipFile(myZipData, 'w', zipfile.ZIP_DEFLATED)
     #try to get MAX_METADATA_RECORDS from settings, default to 500
     myMaxMetadataRecords = getattr(settings, 'MAX_METADATA_RECORDS', 500)

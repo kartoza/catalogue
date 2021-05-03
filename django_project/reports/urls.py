@@ -1,4 +1,4 @@
-from django.conf.urls import patterns, url
+from django.conf.urls import url
 
 from .views import (
     search_history,
@@ -15,8 +15,7 @@ from .views import (
 )
 
 
-urlpatterns = patterns(
-    '',
+urlpatterns = [
     url(r'^mysearches/$', search_history, name='searchHistory'),
     url(r'^recentsearches/$', recent_searches, name='recentSearches'),
     url(r'^searchmonthlyreport/(?P<year>\d{4})/(?P<month>\d{1,2})/$',
@@ -34,4 +33,4 @@ urlpatterns = patterns(
     url(r'^dictionaryReport/$', dictionary_report, name='dictionaryReport'),
     url(r'^sensor-fact-sheet/(?P<sat_abbr>[\w-]+)/(?P<instrument_type>[\w-]+)/$',
         sensor_fact_sheet, name='fact-sheet')
-)
+]

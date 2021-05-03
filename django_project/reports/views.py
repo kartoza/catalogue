@@ -26,9 +26,8 @@ import traceback
 import datetime
 # python logging support to django logging middleware
 import logging
-logger = logging.getLogger(__name__)
 
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 # Django helpers for forming html pages
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponseNotFound
@@ -71,6 +70,8 @@ from django.conf import settings
 from django_tables2 import RequestConfig
 from search.tables import SearchesTable
 from core.settings.base import STATIC_ROOT
+
+logger = logging.getLogger(__name__)
 
 
 # in case you need to slice ResultSet (paginate) for display

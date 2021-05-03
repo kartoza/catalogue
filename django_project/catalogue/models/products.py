@@ -20,14 +20,12 @@ __copyright__ = 'South African National Space Agency'
 import sys
 import shutil
 import logging
-logger = logging.getLogger(__name__)
-
 import os
 import urllib.request, urllib.error, urllib.parse
 from functools import wraps
-
 from django.contrib.gis.db import models
 from django.conf import settings
+from django.core.validators import validate_comma_separated_integer_list
 from django.template.loader import render_to_string
 #for translation
 from django.core.exceptions import ObjectDoesNotExist
@@ -41,6 +39,8 @@ from catalogue.dims_lib import dimsWriter
 
 # for thumb georeferencer
 #from osgeo.gdalconst import *
+logger = logging.getLogger(__name__)
+
 
 # Read from settings
 CATALOGUE_ISO_METADATA_XML_TEMPLATE = getattr(
@@ -204,12 +204,17 @@ class GenericProduct(models.Model):
     product_date = models.DateTimeField(db_index=True)
     spatial_coverage = models.PolygonField(
         srid=4326, help_text='Image footprint')
-    projection = models.ForeignKey('dictionaries.Projection')
+    projection = models.ForeignKey(
+        'dictionaries.Projection',
+        on_delete=models.CASCADE
+    )
     quality = models.ForeignKey(
         'dictionaries.Quality',
         help_text=(
             'A quality assessment describing the amount of dropouts etc.'
-            'and how usable the entire scene is.'))
+            'and how usable the entire scene is.'),
+        on_delete=models.CASCADE
+    )
     original_product_id = models.CharField(
         help_text='Original id assigned to the product by the vendor/operator',
         max_length=255,
@@ -245,7 +250,7 @@ class GenericProduct(models.Model):
     # classes for OrderNotificationRecipients
     concrete = False
 
-    objects = models.GeoManager()
+    objects = models.Manager()
 
     class Meta:
         """
@@ -785,7 +790,7 @@ class GenericImageryProduct(GenericProduct):
     # We need a flag to tell if this Product class can have instances (if it is
     # not abstract)
     concrete = True
-    objects = models.GeoManager()
+    objects = models.Manager()
 
     class Meta:
         app_label = 'catalogue'
@@ -880,7 +885,7 @@ class GenericSensorProduct(GenericImageryProduct):
     # We need a flag to tell if this Product class can have instances (if it is
     # not abstract)
     concrete = False
-    objects = models.GeoManager()
+    objects = models.Manager()
 
     class Meta:
         """
@@ -1073,7 +1078,8 @@ class OpticalProduct(GenericSensorProduct):
     ##Descriptors for optical products
     # new dicts
     product_profile = models.ForeignKey(
-        'dictionaries.OpticalProductProfile'
+        'dictionaries.OpticalProductProfile',
+        on_delete=models.CASCADE
     )
     #TODO: all cloud cover values should be normalized to percentages
     # see http://tracker.sansa.org.za/issues/475
@@ -1105,7 +1111,7 @@ class OpticalProduct(GenericSensorProduct):
     # We need a flag to tell if this Product class can have instances (if it is
     # not abstract)
     concrete = True
-    objects = models.GeoManager()
+    objects = models.Manager()
 
     class Meta:
         app_label = 'catalogue'
@@ -1229,7 +1235,8 @@ class RadarProduct(GenericSensorProduct):
 
     # new dicts
     product_profile = models.ForeignKey(
-        'dictionaries.RadarProductProfile'
+        'dictionaries.RadarProductProfile',
+        on_delete=models.CASCADE
     )
     imaging_mode = models.CharField(max_length=200, null=True, blank=True)
     look_direction = models.CharField(
@@ -1254,7 +1261,7 @@ class RadarProduct(GenericSensorProduct):
     # We need a flag to tell if this Product class can have instances (if it is
     # not abstract)
     concrete = True
-    objects = models.GeoManager()
+    objects = models.Manager()
 
     class Meta:
         app_label = 'catalogue'
@@ -1325,22 +1332,28 @@ class GeospatialProduct(GenericProduct):
     place_type = models.ForeignKey(
         'dictionaries.PlaceType',
         help_text=(
-            'Select the type of geographic region covered by this dataset'))
+            'Select the type of geographic region covered by this dataset'),
+        on_delete=models.CASCADE
+    )
     place = models.ForeignKey(
         'dictionaries.Place',
-        help_text='Nearest place, town, country region etc. to this product')
+        help_text='Nearest place, town, country region etc. to this product',
+        on_delete=models.CASCADE
+    )
     primary_topic = models.ForeignKey(
         'dictionaries.Topic',
         help_text=(
             'Select the most appopriate topic for this dataset. You can add '
-            'additional keywords in the tags box.'))  # e.g. Landuse etc
+            'additional keywords in the tags box.'),
+        on_delete=models.CASCADE
+    )  # e.g. Landuse etc
     #
     # elpaso to implement tagging support please....
     #
     # We need a flag to tell if this Product class can have instances (if it is
     # not abstract)
     concrete = False
-    objects = models.GeoManager()
+    objects = models.Manager()
 
     class Meta:
         app_label = 'catalogue'
@@ -1366,11 +1379,16 @@ class OrdinalProduct(GenericProduct):
     """
     class_count = models.IntegerField(
         help_text='Number of spectral bands in product')
-    confusion_matrix = models.CommaSeparatedIntegerField(
-        max_length=80, null=True, unique=False, blank=True,
+    confusion_matrix = models.CharField(
+        max_length=80,
+        null=True,
+        unique=False,
+        blank=True,
         help_text=(
             'Confusion matrix in the format: true positive, false negative, '
-            'false positive,true negative'))
+            'false positive,true negative'),
+        validators=[validate_comma_separated_integer_list]
+    )
     kappa_score = models.FloatField(
         null=True, blank=True,
         help_text=(
@@ -1379,7 +1397,7 @@ class OrdinalProduct(GenericProduct):
     # We need a flag to tell if this Product class can have instances
     # (if it is not abstract)
     concrete = True
-    objects = models.GeoManager()
+    objects = models.Manager()
 
     class Meta:
         # Specifies which database this model ORM goes to
@@ -1417,11 +1435,13 @@ class ContinuousProduct(GenericProduct):
             'dataset.'))
     unit = models.ForeignKey(
         'dictionaries.Unit',
-        help_text='Units for the values represented in this dataset.')
+        help_text='Units for the values represented in this dataset.',
+        on_delete=models.CASCADE
+    )
     # We need a flag to tell if this Product class can have instances (if it is
     # not abstract)
     concrete = True
-    objects = models.GeoManager()
+    objects = models.Manager()
 
     class Meta:
         app_label = 'catalogue'

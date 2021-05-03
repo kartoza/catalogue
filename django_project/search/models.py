@@ -54,10 +54,22 @@ class SearchRecord(models.Model):
     When the user creates a new order, all current search records that do not
     havean order id should be added to it.
     """
-    user = models.ForeignKey('auth.User')
-    order = models.ForeignKey('orders.Order', null=True, blank=True)
+    user = models.ForeignKey(
+        'auth.User',
+        on_delete=models.CASCADE
+    )
+    order = models.ForeignKey(
+        'orders.Order',
+        null=True,
+        blank=True,
+        on_delete=models.CASCADE
+    )
     product = models.ForeignKey(
-        'catalogue.GenericProduct', null=False, blank=False)
+        'catalogue.GenericProduct',
+        null=False,
+        blank=False,
+        on_delete=models.CASCADE
+    )
     # DIMS ordering related fields
     internal_order_id = models.IntegerField(null=True, blank=True)
     download_path = models.CharField(
@@ -75,21 +87,33 @@ class SearchRecord(models.Model):
         max_digits=10, decimal_places=2, null=True, blank=True
     )
     currency = models.ForeignKey(
-        'exchange.Currency', null=True, blank=True
+        'exchange.Currency',
+        null=True,
+        blank=True,
+        on_delete=models.CASCADE
     )
     processing_level = models.ForeignKey(
-        'dictionaries.ProcessingLevel', verbose_name='Processing Level',
-        null=True, blank=True
+        'dictionaries.ProcessingLevel',
+        verbose_name='Processing Level',
+        null=True,
+        blank=True,
+        on_delete=models.CASCADE
     )
     projection = models.ForeignKey(
-        'dictionaries.Projection', verbose_name='Projection',
-        null=True, blank=True
+        'dictionaries.Projection',
+        verbose_name='Projection',
+        null=True,
+        blank=True,
+        on_delete=models.CASCADE
     )
     product_process_state = models.ForeignKey(
-        'dictionaries.ProductProcessState', null=True, blank=True
+        'dictionaries.ProductProcessState',
+        null=True,
+        blank=True,
+        on_delete=models.CASCADE
     )
     # Required because genericproduct fkey references a table with geometry
-    objects = models.GeoManager()
+    objects = models.Manager()
 
     class Meta:
         verbose_name = 'Record'
@@ -269,7 +293,12 @@ class BaseSearch(models.Model):
     """
     ABC Search model, generic search fields
     """
-    user = models.ForeignKey('auth.User', null=True, blank=True)
+    user = models.ForeignKey(
+        'auth.User',
+        null=True,
+        blank=True,
+        on_delete=models.CASCADE
+    )
     geometry = models.PolygonField(
         srid=4326, null=True, blank=True,
         help_text=
@@ -297,7 +326,7 @@ class BaseSearch(models.Model):
         super(BaseSearch, self).save(*args, **kwargs)
 
 
-class SearchHelpersManager(models.GeoManager):
+class SearchHelpersManager(models.Manager):
     """
     Search model helper methods
     """
@@ -411,13 +440,17 @@ class Search(BaseSearch):
     # so we explicitly have to use verbose_name for the user friendly name
     instrument_type = models.ManyToManyField(
         'dictionaries.InstrumentType',
-        verbose_name='Sensors', null=True, blank=True,
+        verbose_name='Sensors',
+        null=True,
+        blank=True,
         help_text=(
             'Choosing one or more instrument types is required. Use ctrl-click'
             ' to select more than one.')
     )
     satellite = models.ManyToManyField(
-        'dictionaries.Satellite', null=True, blank=True,
+        'dictionaries.Satellite',
+        null=True,
+        blank=True,
         help_text='Select satellite mission.'
     )  # e.g. S5
 
@@ -487,7 +520,7 @@ class Search(BaseSearch):
         help_text='Select one or more satellite collections.'
     )
     # Use the geo manager to handle geometry
-    objects = models.GeoManager()
+    objects = models.Manager()
     helpers = SearchHelpersManager()
 
     class Meta:
@@ -544,7 +577,10 @@ class SearchDateRange(models.Model):
         help_text='Product date is required. DD-MM-YYYY.')
     end_date = models.DateField(
         help_text='Product date is required. DD-MM-YYYY.')
-    search = models.ForeignKey(Search)
+    search = models.ForeignKey(
+        Search,
+        on_delete=models.CASCADE
+    )
 
     def __unicode__(self):
         return "%s Guid: %s" % (self.local_format(), self.search.guid)
@@ -580,7 +616,10 @@ class Clip(models.Model):
     status.
     """
     guid = models.CharField(max_length=40)
-    owner = models.ForeignKey('auth.User')
+    owner = models.ForeignKey(
+        'auth.User',
+        on_delete=models.CASCADE
+    )
     date = models.DateTimeField(
         verbose_name='Date', auto_now_add=True,
         help_text='Not shown to users')
@@ -603,7 +642,7 @@ class Clip(models.Model):
     # to the user
     result_url = models.URLField(max_length=1024)
 
-    objects = models.GeoManager()
+    objects = models.Manager()
 
     def save(self, *args, **kwargs):
         #makes a random globally unique id

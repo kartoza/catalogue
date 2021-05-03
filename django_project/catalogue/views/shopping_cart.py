@@ -18,8 +18,6 @@ __date__ = '01/01/2011'
 __copyright__ = 'South African National Space Agency'
 
 import logging
-logger = logging.getLogger(__name__)
-
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, Http404
 # For shopping cart and ajax product id search
@@ -46,7 +44,7 @@ from search.models import SearchRecord
 # Shopping cart stuff
 #
 ###########################################################
-
+logger = logging.getLogger(__name__)
 
 @login_required
 def downloadCart(theRequest):

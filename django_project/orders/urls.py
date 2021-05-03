@@ -1,4 +1,4 @@
-from django.conf.urls import patterns, url
+from django.conf.urls import url
 
 from .views import (
     list_orders,
@@ -16,8 +16,7 @@ from .views import (
     my_orders
 )
 # Here are our patterns
-urlpatterns = patterns(
-    '',
+urlpatterns = [
     url(r'^addorder/', addOrder, name='addOrder'),
     url(r'^downloadclipgeometry/(?P<theId>\d*)/$',
         downloadClipGeometry, name='downloadClipGeometry'),
@@ -36,4 +35,4 @@ urlpatterns = patterns(
     url(r'^order-summary/$', orderSummaryMail, name='order-Summary'),
     url(r'^addadhocorder/', addAdhocOrder, name='addAdhocOrder'),
     url(r'^convertprice/', convertPrice, name='convertPrice'),
-)
+]

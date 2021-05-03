@@ -22,7 +22,6 @@ import os
 
 # python logging support to django logging middleware
 import logging
-logger = logging.getLogger(__name__)
 
 # for get feature info
 import urllib.request, urllib.error, urllib.parse
@@ -31,7 +30,6 @@ import urllib.request, urllib.error, urllib.parse
 import traceback
 
 # Django helpers for forming html pages
-from django.core.urlresolvers import reverse
 from django.shortcuts import render_to_response, get_object_or_404
 from django.http import HttpResponseRedirect, HttpResponse
 from django.conf import settings
@@ -71,7 +69,7 @@ from search.models import (
     # SearchRecord,
     Clip,
 )
-
+logger = logging.getLogger(__name__)
 
 #### VIEW FUNCTIONS ####
 
@@ -593,7 +591,7 @@ def index(theRequest):
     #render_to_response is done by the renderWithContext decorator
     return ({
         'myPartnerFlag': isStrategicPartner(theRequest),
-        'slider' : Slider.objects.all()
+        'slider': Slider.objects.all()
     })
 
 
