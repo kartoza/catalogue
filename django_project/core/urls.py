@@ -1,11 +1,46 @@
-#from django.conf.urls.defaults import *
+# from django.conf.urls.defaults import *
 from django.conf.urls import include, url
-#from django.views.generic import list_detail
-from catalogue.views import *
+# from django.views.generic import list_detail
 from django.conf import settings
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
-from django.urls import re_path
+from catalogue.views.others import (
+    index,
+    video,
+    about,
+    searchFormHelp,
+    contact,
+    deleteSearch,
+    visitorsKml,
+    mapHelp,
+    emptyCartHelp,
+    sceneIdHelp,
+    showProduct,
+    clip,
+    clipHistory,
+    logVisit,
+    visitorMap,
+    whereAmI,
+    searchesMap,
+    showThumbPage,
+    showThumb,
+    showPreview,
+    metadata,
+    getFeatureInfo
+)
+from catalogue.views.shopping_cart import (
+    addToCart,
+    removeFromCart,
+    downloadCart,
+    downloadCartMetadata,
+    showCartContents,
+    showMiniCartContents,
+)
+from catalogue.views.messaging import (
+    userMessages,
+    sendMessageToUser,
+    sendMessageToAllUsers
+)
 
 admin.autodiscover()
 
@@ -37,7 +72,7 @@ urlpatterns = [
     url(r'^about/$', about, name='about'),
     url(r'^searchformhelp/$', searchFormHelp, name='searchformhelp'),
     url(r'^contact/$', contact, name='contact'),
-    url(r'^deletesearch/(?P<theId>[0-9]+)/$', deleteSearch, name='deleteSearch'),
+    url(r'^deletesearch/(?P<pk>[0-9]+)/$', deleteSearch, name='deleteSearch'),
     url(r'^kml/$', visitorsKml, name='visitorsKml'),
     url(r'^mapHelp/$', mapHelp, name='mapHelp'),
     url(r'^emptyCartHelp/$', emptyCartHelp, name='emptyCartHelp'),
@@ -79,11 +114,11 @@ urlpatterns = [
 
     url(r'^getFeatureInfo/(?P<theLon>[-]*\d+.\d+)/(?P<theLat>[-]*\d+.\d+)/(?P<theBoundingBox>[0-9\-,.]*)/(?P<thePixelX>\d+)/(?P<thePixelY>\d+)/(?P<theMapWidth>\d+)/(?P<theMapHeight>\d+)/$', getFeatureInfo),
 
-    url(r'^getUserMessages/$', messaging.userMessages),
+    url(r'^getUserMessages/$', userMessages),
     #need to be staff to use this
-    url(r'^sendMessageToUser/$', messaging.sendMessageToUser),
+    url(r'^sendMessageToUser/$', sendMessageToUser),
     #need to be staff to use this
-    url(r'^sendMessageToAllUsers/$', messaging.sendMessageToAllUsers),
+    url(r'^sendMessageToAllUsers/$', sendMessageToAllUsers),
 
     # New dictionaries
     url(r'', include('dictionaries.urls')),
