@@ -4,6 +4,9 @@ GDAL==2.4.0
 pillow
 Pygments
 SQLAlchemy
+
+django-allauth==0.41.0
+
 Sphinx
 coverage
 django-crispy-forms==1.7.0
@@ -12,9 +15,9 @@ django-model-utils
 django-nose
 git+https://github.com/dimasciput/django-offline-messages.git
 django-pipeline
-django-guardian
+django-guardian==2.3.0
 django-tastypie
-django-userena
+django-userena-ce
 /libs/django-webodt-0.3.1.tar.gz
 /libs/django-exchange-0.7.4.tar.gz
 docutils
@@ -45,3 +48,4 @@ selenium
 django-tables2
 jsmin
 celery==3.1.25
+geoip2==4.1.0

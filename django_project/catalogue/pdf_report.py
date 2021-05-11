@@ -18,30 +18,25 @@ __date__ = '01/01/2011'
 __copyright__ = 'South African National Space Agency'
 
 import cgi
-import io as StringIO
-try:
-    import ho.pisa as pisa
-except:
-    import xhtml2pdf.pisa as pisa
+from io import BytesIO
+from xhtml2pdf import pisa
 
-from django import http
+from django.http import HttpResponse
 from django.template.loader import get_template
-from django.template import Context
 
 
-def render_to_pdf(template_src, context_dict):
+def render_to_pdf(template_src, context_dict={}):
     template = get_template(template_src)
-    context = Context(context_dict)
-    html = template.render(context)
-    result = StringIO.StringIO()
-    pdf = pisa.pisaDocument(StringIO.StringIO(html.encode('UTF-8')), result)
+    html = template.render(context_dict)
+    result = BytesIO()
+    pdf = pisa.pisaDocument(BytesIO(html.encode("ISO-8859-1")), result)
 
     if not pdf.err:
-        response = http.HttpResponse(
-            result.getvalue(), content_type='application/pdf')
-        #set content to 'attachment', so browsers download it
+        response = HttpResponse(result.getvalue(),
+                                content_type='application/pdf')
+        # set content to 'attachment', so browsers download it
         response['Content-Disposition'] = 'attachment; filename=report.pdf'
         return response
 
-    return http.HttpResponse(
+    return HttpResponse(
         'We had some errors<pre>%s</pre>' % cgi.escape(html))
