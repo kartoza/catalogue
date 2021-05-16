@@ -133,7 +133,7 @@ class VisitorReport(models.Model):
     geometry = models.PointField(srid=4326, null=True, blank=True)
     country = models.CharField(max_length=64)
     city = models.CharField(max_length=64)
-    # objects = models.Manager()
+    objects = models.Manager()
 
     def __unicode(self):
         return str(self.city)
@@ -154,7 +154,7 @@ class WorldBorders(models.Model):
     name = models.CharField(max_length=100)
     geometry = models.MultiPolygonField(srid=4326)
 
-    objects = models.Manager()
+    # objects = models.Manager()
 
     class Meta:
         app_label = 'catalogue'

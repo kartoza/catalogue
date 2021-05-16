@@ -17,10 +17,10 @@ __version__ = '0.1'
 __date__ = '09/08/2012'
 __copyright__ = 'South African National Space Agency'
 
+from dictionaries.models import SubsidyType
 from django.contrib.gis.db import models
 from django.db.models.query import QuerySet
-
-#for user id foreign keys
+# for user id foreign keys
 from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 
@@ -50,6 +50,9 @@ class Datum(models.Model):
     def __unicode__(self):
         return self.name
 
+    def __str__(self):
+        return self.name
+
 
 class ResamplingMethod(models.Model):
     """
@@ -64,6 +67,9 @@ class ResamplingMethod(models.Model):
         ordering = ['name']
 
     def __unicode__(self):
+        return self.name
+
+    def __str__(self):
         return self.name
 
 
@@ -81,6 +87,8 @@ class FileFormat(models.Model):
     def __unicode__(self):
         return self.name
 
+    def __str__(self):
+        return self.name
 
 class OrderStatus(models.Model):
     """
@@ -97,6 +105,9 @@ class OrderStatus(models.Model):
     def __unicode__(self):
         return self.name
 
+    def __str__(self):
+        return self.name
+
 
 class DeliveryMethod(models.Model):
     """
@@ -110,7 +121,10 @@ class DeliveryMethod(models.Model):
         ordering = ['name']
 
     def __unicode__(self):
-        return self.name
+        return u'%s' % self.name
+
+    def __str__(self):
+        return '{}'.format(self.name)
 
 
 class MarketSector(models.Model):
@@ -123,7 +137,10 @@ class MarketSector(models.Model):
         ordering = ['name']
 
     def __unicode__(self):
-        return str(self.name)
+        return u'%s' % str(self.name)
+
+    def __str__(self):
+        return '{}'.format(self.name)
 
 
 class OrderQuerySet(QuerySet):
@@ -198,20 +215,20 @@ class Order(models.Model):
     )
     # if related_name ends with +, Django will not create backwards relation
     subsidy_type_requested = models.ForeignKey(
-        'dictionaries.SubsidyType',
+        SubsidyType,
         null=True,
         blank=True,
         related_name='subsidy_type+',
         on_delete=models.CASCADE
     )
     subsidy_type_assigned = models.ForeignKey(
-        'dictionaries.SubsidyType',
+        SubsidyType,
         null=True,
         blank=True,
         related_name='subsidy_type+',
         on_delete=models.CASCADE
     )
-    #default manager
+    # default manager
     objects = OrderQuerySet.as_manager()
     # A model can have more than one manager. Above will be used as default
     # see: http://docs.djangoproject.com/en/dev/topics/db/managers/
@@ -229,6 +246,9 @@ class Order(models.Model):
     def __unicode__(self):
         return str(self.id)
 
+    def __str__(self):
+        return '{}'.format(self.name)
+
     def get_recent_history_date(self):
         current_status = OrderStatus.objects.get(name=self.order_status)
         recent_history = (
@@ -239,7 +259,7 @@ class Order(models.Model):
         return recent_history.order_change_date
 
     def day_in_process(self):
-        if (self.get_recent_history_date().date() == self.order_date.date()):
+        if self.get_recent_history_date().date() == self.order_date.date():
             return "less than one day"
         else:
             return abs(self.get_recent_history_date().date() - self.order_date.date())
@@ -260,7 +280,7 @@ class Order(models.Model):
         else:
             return 0
 
-    def orderNumber(self):
+    def order_number(self):
         """
         return descriptive order number EOYYMMDDId where:
         EO is the suffix for Earth Observation,
@@ -301,6 +321,9 @@ class OrderStatusHistory(models.Model):
     )
 
     def __unicode__(self):
+        return self.notes[:25]
+
+    def __str__(self):
         return self.notes[:25]
 
     class Meta:
@@ -345,8 +368,11 @@ class OrderNotificationRecipients(models.Model):
     def __unicode__(self):
         return str(self.user.username)
 
+    def __str__(self):
+        return str(self.user.username)
+
     @staticmethod
-    def getUsersForProduct(theProduct):
+    def get_users_for_product(product):
         """
         Returns all users registered to this product class or sensors
 
@@ -359,7 +385,7 @@ class OrderNotificationRecipients(models.Model):
         """
         # Determines the product concrete class, should raise an error if does
         # not exists
-        instance = theProduct.getConcreteInstance()
+        instance = product.getConcreteInstance()
         # Get class listeners
         listeners = set([o.user for o in (
             OrderNotificationRecipients.objects
