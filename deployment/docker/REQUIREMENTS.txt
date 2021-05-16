@@ -13,13 +13,14 @@ django-crispy-forms==1.7.0
 django-extensions==1.7.9
 django-model-utils
 django-nose
-git+https://github.com/dimasciput/django-offline-messages.git
-django-pipeline
+git+https://github.com/Fanevanjanahary/django-offline-messages.git
+# fix for django 2
+git+https://github.com/Fanevanjanahary/django-exchange.git@django-2
+django-pipeline==2.0.6
 django-guardian==2.3.0
 django-tastypie
 django-userena-ce
 /libs/django-webodt-0.3.1.tar.gz
-/libs/django-exchange-0.7.4.tar.gz
 docutils
 factory-boy
 gdata
@@ -49,3 +50,4 @@ django-tables2
 jsmin
 celery==3.1.25
 geoip2==4.1.0
+xhtml2pdf==0.2.5
