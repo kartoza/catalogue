@@ -55,8 +55,8 @@ USE_GEOIP = True
 GEOIP_PATH = ABS_PATH('core', 'geoip_data')
 # Hack to make geoip work on OSX
 # See https://code.djangoproject.com/ticket/19168
-GEOIP_COUNTRY = 'GeoIP.mmdb'
-GEOIP_CITY = 'GeoLiteCity.dat'
+GEOIP_COUNTRY = 'GeoLite2-Country.mmdb'
+GEOIP_CITY = 'GeoLite2-City.mmdb'
 
 # this is the public domain name or IP address of this django instance.
 # get ip address logic provided in utils.py

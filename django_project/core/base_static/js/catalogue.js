@@ -948,10 +948,10 @@ function setupRowClickCallback()
 
 function addOrderClicked()
 {
-  var myRowCount = $("#cart-contents-table tr").length;
+  const myRowCount = $("#cart-contents-table tr").length;
   if ( myRowCount < 2 ) // The header row will always be there...
   {
-    var myOptions =
+    const myOptions =
     {
       modal: true,
       show: "blind",
@@ -968,6 +968,7 @@ function addOrderClicked()
   }
   else
   {
+    console.log(myOptions)
     window.location.replace("/addorder/");
   }
   return false;

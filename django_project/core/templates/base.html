@@ -1,4 +1,4 @@
-{% load pipeline %} {# django-pipeline compressor tag #}
+{% load pipeline %}
 {% load staticfiles %}
 <!DOCTYPE html>
 <html lang="en">
@@ -41,7 +41,7 @@
 
     </head>
     <body {% block body_load %}{% endblock %}>
-      {% include "menu.html" %}
+      {% include "navigation_bar.html" %}
       <div id="main-content" class="container main-content well">
         {% if messages %}
         <div id="system-messages">
