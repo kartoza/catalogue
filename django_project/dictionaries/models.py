@@ -230,6 +230,9 @@ class SubsidyType(models.Model):
     def __unicode__(self):
         return self.name
 
+    def __str__(self):
+        return self.name
+
 
 class Collection(models.Model):
     """Collection of satellites managed by a single operator."""
@@ -249,6 +252,9 @@ class Collection(models.Model):
         help_text='Organisation that owns this satellite collection.')
 
     def __unicode__(self):
+        return self.name
+
+    def __str__(self):
         return self.name
 
     class Meta:
@@ -303,6 +309,9 @@ class Satellite(models.Model):
         """Return 'operator_abbreviation' as model representation."""
         return '{0}'.format(self.operator_abbreviation)
 
+    def __str__(self):
+        return '{0}'.format(self.operator_abbreviation)
+
     class Meta:
         """Meta class implementation."""
         ordering = ['name']
@@ -317,6 +326,9 @@ class ScannerType(models.Model):
     abbreviation = models.CharField(max_length=20, unique=True)
 
     def __unicode__(self):
+        return self.abbreviation
+
+    def __str__(self):
         return self.abbreviation
 
     class Meta:
@@ -339,6 +351,9 @@ class ProcessingLevel(models.Model):
 
     def __unicode__(self):
         return '{0} {1}'.format(self.abbreviation, self.name)
+
+    def __str__(self):
+        return self.abbreviation
 
     class Meta:
         """Meta class implementation."""
@@ -672,8 +687,17 @@ class Band(models.Model):
 
     def __unicode__(self):
         return '{0} ({1} {2}) {3}'.format(
-            self.band_name, self.min_wavelength_nm, self.max_wavelength_nm,
-            self.pixelsize_resampled_m)
+            self.band_name, self.min_wavelength_nm,
+            self.max_wavelength_nm,
+            self.pixelsize_resampled_m
+        )
+
+    def __str__(self):
+        return '{0} ({1} {2}) {3}'.format(
+            self.band_name, self.min_wavelength_nm,
+            self.max_wavelength_nm,
+            self.pixelsize_resampled_m
+        )
 
     class Meta:
         """Meta class implementation."""
@@ -700,6 +724,9 @@ class SpectralGroup(models.Model):
     def __unicode__(self):
         return self.name
 
+    def __str__(self):
+        return '{}'.format(self.name)
+
     class Meta:
         """Meta class implementation."""
         ordering = ['abbreviation', 'name']
@@ -724,6 +751,9 @@ class SpectralMode(models.Model):
     )
 
     def __unicode__(self):
+        return '{0} - {1}'.format(self.name, self.instrument_type.name)
+
+    def __str__(self):
         return '{0} - {1}'.format(self.name, self.instrument_type.name)
 
     class Meta:
