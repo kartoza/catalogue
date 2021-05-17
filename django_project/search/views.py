@@ -20,8 +20,6 @@ __copyright__ = 'South African National Space Agency'
 # python logger support to django logger middleware
 import logging
 # Get an instance of a logger
-logger = logging.getLogger(__name__)
-
 import traceback
 import tempfile
 
@@ -37,16 +35,16 @@ from django.http import (
     HttpResponse,
     Http404)
 from django.contrib.auth.decorators import login_required
-#from django.contrib.admin.views.decorators import staff_member_required
-#from django.db.models import Count, Min, Max  # for aggregate queries
+# from django.contrib.admin.views.decorators import staff_member_required
+# from django.db.models import Count, Min, Max  # for aggregate queries
 from django.forms.models import inlineformset_factory
 
 # Helper classes
 
-#Dane Springmeyer's django-shapes app for exporting results as a shpfile
+# Dane Springmeyer's django-shapes app for exporting results as a shpfile
 from shapes.views import ShpResponder
 
-from catalogue.renderDecorator import renderWithContext
+from catalogue.render_decorator import RenderWithContext
 
 from catalogue.views.helpers import (
     render_to_kml,
@@ -65,7 +63,6 @@ from catalogue.views.geoiputils import GeoIpUtils
 
 from dictionaries.models import Collection
 
-
 # modularized app dependencies
 from .searcher import Searcher
 
@@ -83,89 +80,94 @@ from .forms import (
 
 from .utils import SearchView
 
+logger = logging.getLogger(__name__)
+
 
 class Http500(Exception):
     pass
 
+
 DateRangeInlineFormSet = inlineformset_factory(
     Search, SearchDateRange, fields='__all__', extra=0, max_num=0,
-    formset=DateRangeFormSet,form=DateRangeForm)
+    formset=DateRangeFormSet, form=DateRangeForm)
 
 
-#@login_required
-def downloadSearchResult(theRequest, theGuid):
+# @login_required
+def downloadSearchResult(request, guid_id):
     """Dispaches request and returns searchresults in desired file format"""
-    mySearch = get_object_or_404(Search, guid=theGuid)
-    mySearcher = Searcher(mySearch)
-    mySearchView = SearchView(theRequest, mySearcher)
+    search = get_object_or_404(Search, guid=guid_id)
+    searcher = Searcher(search)
+    search_view = SearchView(request, searcher)
 
-    myFilename = '%s-imagebounds' % theGuid
-    if 'shp' in theRequest.GET:
-        myResponder = ShpResponder(SearchRecord)
-        myResponder.file_name = myFilename
-        return myResponder.write_search_records(mySearchView.mSearchRecords)
-    elif 'kml' in theRequest.GET:
+    filename = '%s-imagebounds' % guid_id
+    if 'shp' in request.GET:
+        responder = ShpResponder(SearchRecord)
+        responder.file_name = filename
+        return responder.write_search_records(search_view.mSearchRecords)
+    elif 'kml' in request.GET:
         return render_to_kml(
             'kml/searchRecords.kml', {
-                'mySearchRecords': mySearchView.mSearchRecords,
+                'mySearchRecords': search_view.mSearchRecords,
                 'external_site_url': settings.DOMAIN,
                 'transparentStyle': True},
-            myFilename)
-    elif 'kmz' in theRequest.GET:
-        #next two lines for debugging only since we
-        #cant catch exceptions when these methods are called in templates
-        #mySearcher.mSearchRecords[0].kmlExtents()
-        #mySearcher.mSearchRecords[0].product.georeferencedThumbnail()
+            filename
+        )
+    elif 'kmz' in request.GET:
+        # next two lines for debugging only since we
+        # cant catch exceptions when these methods are called in templates
+        # mySearcher.mSearchRecords[0].kmlExtents()
+        # mySearcher.mSearchRecords[0].product.georeferencedThumbnail()
         return render_to_kmz(
             'kml/searchRecords.kml', {
-                'mySearchRecords': mySearchView.mSearchRecords,
+                'mySearchRecords': search_view.mSearchRecords,
                 'external_site_url': settings.DOMAIN,
                 'transparentStyle': True,
                 'myThumbsFlag': True},
-            myFilename)
+            filename
+        )
     else:
         logger.info(
             'Request cannot be proccesed, unsupported download file type')
         raise Http404
 
 
-#@login_required
-def downloadSearchResultMetadata(theRequest, theGuid):
+# @login_required
+def downloadSearchResultMetadata(request, guid_id):
     """
     Returns ISO 19115 metadata for searchresults. I t defaults to xml format
     unless a ?html is appended to the url
     """
 
-    mySearch = get_object_or_404(Search, guid=theGuid)
-    mySearcher = Searcher(mySearch)
-    mySearchView = SearchView(theRequest, mySearcher)
+    search = get_object_or_404(Search, guid=guid_id)
+    searcher = Searcher(search)
+    search_view = SearchView(request, searcher)
 
-    if 'html' in theRequest.GET:
+    if 'html' in request.GET:
         return downloadHtmlMetadata(
-            mySearchView.mSearchRecords, 'Search-%s' % theGuid)
+            search_view.mSearchRecords, 'Search-%s' % guid_id)
     else:
         return downloadISOMetadata(
-            mySearchView.mSearchRecords, 'Search-%s' % theGuid)
+            search_view.mSearchRecords, 'Search-%s' % guid_id)
 
 
 @login_required
-@renderWithContext('page.html')
-def searchguid(theRequest, theGuid):
+@RenderWithContext('page.html')
+def searchguid(request, guid_id):
     """
     Given a search guid, give the user a form prepopulated with
     that search's criteria so they can modify their search easily.
     A new search will be created from the modified one.
     """
 
-    mySearch = get_object_or_404(Search, guid=theGuid)
-    myForm = AdvancedSearchForm(instance=mySearch)
-    myFormset = DateRangeInlineFormSet(instance=mySearch)
+    search = get_object_or_404(Search, guid=guid_id)
+    form = AdvancedSearchForm(instance=search)
+    form_set = DateRangeInlineFormSet(instance=search)
 
     collections = Collection.objects.all().prefetch_related('satellite_set')
 
-    sel_instrumenttypes = mySearch.instrument_type.all().values_list(
+    sel_instrument_types = search.instrument_type.all().values_list(
         'pk', flat=True)
-    sel_satellites = mySearch.satellite.all().values_list('pk', flat=True)
+    sel_satellites = search.satellite.all().values_list('pk', flat=True)
 
     data = [{
         'key': col.name,
@@ -175,7 +177,7 @@ def searchguid(theRequest, theGuid):
         'values': list(chain.from_iterable((({
             'key': '{} {}'.format(sat.name, sig.instrument_type.name),
             'val': '{}|{}'.format(sat.pk, sig.instrument_type.pk)
-            } for sig in sat.satelliteinstrumentgroup_set.all()
+        } for sig in sat.satelliteinstrumentgroup_set.all()
             # only select instrument_types which are searchable
             if sig.instrument_type.is_searchable)
             for sat in col.satellite_set.all())))
@@ -192,24 +194,26 @@ def searchguid(theRequest, theGuid):
             'key': '{} {}'.format(sat.name, sig.instrument_type.name),
             'val': '{}|{}'.format(sat.pk, sig.instrument_type.pk)
         } for sig in sat.satelliteinstrumentgroup_set.all()
-            if sig.instrument_type.pk in sel_instrumenttypes)
+            if sig.instrument_type.pk in sel_instrument_types)
             for sat in col.satellite_set.all() if sat.pk in sel_satellites)))
     } for col in collections
     ]
 
-    myListTreeOptions = simplejson.dumps(data)
-    myListTreeSelected = simplejson.dumps(selected_data)
+    list_tree_options = simplejson.dumps(data)
+    list_tree_selected = simplejson.dumps(selected_data)
 
     return {
-        'mysearch': mySearch, 'searchform': myForm, 'dateformset': myFormset,
-        'listreeoptions': myListTreeOptions,
-        'selected_options': myListTreeSelected,
+        'mysearch': search,
+        'searchform': form,
+        'dateformset': form_set,
+        'listreeoptions': list_tree_options,
+        'selected_options': list_tree_selected,
         'searchlistnumber': settings.RESULTS_NUMBER
     }
 
 
-@renderWithContext('page.html')
-def searchView(theRequest):
+@RenderWithContext('page.html')
+def searchView(request):
     """
     Perform an attribute and spatial search for imagery
     """
@@ -222,32 +226,34 @@ def searchView(theRequest):
         'values': list(chain.from_iterable((({
             'key': '{} {}'.format(sat.name, sig.instrument_type.name),
             'val': '{}|{}'.format(sat.pk, sig.instrument_type.pk)
-            } for sig in sat.satelliteinstrumentgroup_set.all()
+        } for sig in sat.satelliteinstrumentgroup_set.all()
             # only select instrument_types which are searchable
             if sig.instrument_type.is_searchable)
             for sat in col.satellite_set.all())))
     } for col in collections
     ]
 
-    myListTreeOptions = simplejson.dumps(data)
+    list_tree_options = simplejson.dumps(data)
 
     # add forms
-    myForm = AdvancedSearchForm()
-    myFormset = DateRangeInlineFormSet()
+    form = AdvancedSearchForm()
+    form_set = DateRangeInlineFormSet()
     return {
-        'searchform': myForm, 'dateformset': myFormset,
-        'listreeoptions': myListTreeOptions,
-        'selected_options': [], 'searchlistnumber': settings.RESULTS_NUMBER
+        'searchform': form,
+        'dateformset': form_set,
+        'listreeoptions': list_tree_options,
+        'selected_options': [],
+        'searchlistnumber': settings.RESULTS_NUMBER
     }
 
 
-def submitSearch(theRequest):
+def submitSearch(request):
     """
     Perform an attribute and spatial search for imagery
     """
-    myFormErrors = {}
-    if theRequest.method == 'POST':
-        post_values = theRequest.POST
+    form_errors = {}
+    if request.method == 'POST':
+        post_values = request.POST
         # if the request.POST is not 'multipart/form-data' then QueryDict that
         # holds POST values is not mutable, however, we need it to be mutable
         # because 'save_as_new' on inlineformset directly changes values
@@ -256,46 +262,47 @@ def submitSearch(theRequest):
         post_values._mutable = True
 
         logger.debug('Post vars: %s', str(post_values))
-        myForm = AdvancedSearchForm(post_values, theRequest.FILES)
-        logger.debug('Uploaded files: %s', theRequest.FILES)
+        form = AdvancedSearchForm(post_values, request.FILES)
+        logger.debug('Uploaded files: %s', request.FILES)
 
-        if myForm.is_valid():
+        if form.is_valid():
             logger.info('AdvancedForm is VALID')
-            mySearch = myForm.save(commit=False)
+            search = form.save(commit=False)
             # ABP: save_as_new is necessary due to the fact that a new Search
             # object is always
             # created even on Search modify pages
-            myFormset = DateRangeInlineFormSet(
-                post_values, theRequest.FILES, instance=mySearch,
+            form_set = DateRangeInlineFormSet(
+                post_values,
+                request.FILES,
+                instance=search,
                 save_as_new=True)
-            if myFormset.is_valid():
+            if form_set.is_valid():
                 logger.info('Daterange formset is VALID')
-                myLatLong = {'longitude': 0, 'latitude': 0}
+                lat_long = {'longitude': 0, 'latitude': 0}
 
                 if settings.USE_GEOIP:
                     try:
-                        myGeoIpUtils = GeoIpUtils()
-                        myLatLong = myGeoIpUtils.getMyLatLong(theRequest)
+                        lat_long = GeoIpUtils().getMyLatLong(request)
                     except:
                         # raise forms.ValidationError( "Could not get geoip for
                         # for this request" + traceback.format_exc() )
                         # do nothing - better in a production environment
                         pass
-                if myLatLong:
-                    mySearch.ip_position = (
-                        'SRID=4326;POINT(' + str(myLatLong['longitude']) + ' '
-                        + str(myLatLong['latitude']) + ')')
-                #if user is anonymous set to None
-                if theRequest.user.is_anonymous:
-                    mySearch.user = None
+                if lat_long:
+                    search.ip_position = (
+                            'SRID=4326;POINT(' + str(lat_long['longitude']) + ' '
+                            + str(lat_long['latitude']) + ')')
+                # if user is anonymous set to None
+                if request.user.is_anonymous:
+                    search.user = None
                 else:
-                    mySearch.user = theRequest.user
-                mySearch.deleted = False
+                    search.user = request.user
+                search.deleted = False
                 try:
-                    myGeometry = getGeometryFromUploadedFile(
-                        theRequest, myForm, 'geometry_file')
-                    if myGeometry:
-                        mySearch.geometry = myGeometry
+                    geometry = getGeometryFromUploadedFile(
+                        request, form, 'geometry_file')
+                    if geometry:
+                        search.geometry = geometry
                     else:
                         logger.info(
                             'Failed to set search area from uploaded geometry '
@@ -307,13 +314,13 @@ def submitSearch(theRequest):
                     logger.info(
                         'An error occurred trying to set search area from '
                         'uploaded geometry file')
-                #check if aoi_geometry exists
-                myAOIGeometry = myForm.cleaned_data.get('aoi_geometry')
-                if myAOIGeometry:
+                # check if aoi_geometry exists
+                aoi_geometry = form.cleaned_data.get('aoi_geometry')
+                if aoi_geometry:
                     logger.info('Using AOI geometry, specified by user')
-                    mySearch.geometry = myAOIGeometry
+                    search.geometry = aoi_geometry
                 # else use the on-the-fly digitised geometry
-                mySearch.save()
+                search.save()
                 """
                 Another side effect of using commit=False is seen when your
                 model has a many-to-many relation with another model. If your
@@ -332,72 +339,72 @@ def submitSearch(theRequest):
                 ref: http://docs.djangoproject.com/en/dev/topics/forms
                             /modelforms/#the-save-method
                 """
-                myForm.save_m2m()
-                logger.debug('Search: ' + str(mySearch))
+                form.save_m2m()
+                logger.debug('Search: ' + str(search))
                 logger.info('form is VALID after editing')
-                myFormset.save()
+                form_set.save()
 
                 return HttpResponse(simplejson.dumps({
-                    "guid": mySearch.guid
+                    "guid": search.guid
                 }), content_type='application/json')
 
             else:
-                myFormErrors.update({
-                    'daterange': myFormset._non_form_errors
+                form_errors.update({
+                    'daterange': form_set._non_form_errors
                 })
-                myFormErrors.update(myFormset.errors)
-                logger.debug('%s' % myFormset.errors)
+                form_errors.update(form_set.errors)
+                logger.debug('%s' % form_set.errors)
 
         # if we got to this point, then the form is invalid
         logger.info('form is INVALID after editing')
-        logger.debug('%s' % myForm.errors)
+        logger.debug('%s' % form.errors)
 
         # form was not valid return 404
-        myFormErrors.update(myForm.errors)
+        form_errors.update(form.errors)
         return HttpResponse(
-            simplejson.dumps(myFormErrors),
+            simplejson.dumps(form_errors),
             content_type='application/json', status=404)
     # we can only process POST requests
     return HttpResponse('Not a POST!', status=404)
 
 
-def upload_geo(theRequest):
+def upload_geo(request):
     """
     Extract geometry from uploaded geometry
     """
-    if theRequest.FILES and theRequest.FILES.get('file_upload'):
-        f = theRequest.FILES.get('file_upload')
+    if request.FILES and request.FILES.get('file_upload'):
+        f = request.FILES.get('file_upload')
 
-        myExtension = (f.name.split('.')[-1].lower())
-        if not(myExtension == 'zip' or myExtension == 'kml' or
-                myExtension == 'kmz'):
+        extension = (f.name.split('.')[-1].lower())
+        if not (extension == 'zip' or extension == 'kml' or
+                extension == 'kmz'):
             return HttpResponse(
                 simplejson.dumps({"error": "File needs to be KML/KMZ/ZIP"}),
                 content_type='application/json', status=500)
 
         destination = tempfile.NamedTemporaryFile(
-            delete=False, suffix='.{0}'.format(myExtension))
+            delete=False, suffix='.{0}'.format(extension))
         # get the filename
-        myOutFile = destination.name
+        out_file = destination.name
         # write the file
         for chunk in f.chunks():
             destination.write(chunk)
         destination.close()
 
-        myExtension = (f.name.split('.')[-1].lower())
+        extension = (f.name.split('.')[-1].lower())
 
-        if myExtension == 'zip':
-            extractedGeometries = getFeaturesFromZipFile(
-                myOutFile, 'Polygon', 1)
+        if extension == 'zip':
+            extracted_geometries = getFeaturesFromZipFile(
+                out_file, 'Polygon', 1)
         else:
-            extractedGeometries = getFeaturesFromKMLFile(
-                myOutFile, 'Polygon', 1)
-        if len(extractedGeometries) == 0:
+            extracted_geometries = getFeaturesFromKMLFile(
+                out_file, 'Polygon', 1)
+        if len(extracted_geometries) == 0:
             return HttpResponse(
                 simplejson.dumps({"error": "No geometries found..."}),
                 content_type='application/json', status=500)
         else:
             return HttpResponse(
                 simplejson.dumps({
-                    "wkt": processGeometriesType(extractedGeometries).wkt}),
+                    "wkt": processGeometriesType(extracted_geometries).wkt}),
                 content_type='application/json', status=200)

@@ -11,12 +11,12 @@ from .views import (
 
 urlpatterns = [
     # return the results of a search as a shapefile
-    url(r'^downloadsearchresults/(?P<theGuid>[a-h0-9\-]{36})/$',
+    url(r'^downloadsearchresults/(?P<guid_id>[a-h0-9\-]{36})/$',
         downloadSearchResult, name='downloadSearchResult'),
-    url(r'^downloadsearchmetadata/(?P<theGuid>[a-h0-9\-]{36})/$',
+    url(r'^downloadsearchmetadata/(?P<guid_id>[a-h0-9\-]{36})/$',
         downloadSearchResultMetadata, name='downloadSearchResultMetadata'),
     url(r'^search/$', searchView, name='search'),
-    url(r'^search/(?P<theGuid>[a-h0-9\-]{36})/$',
+    url(r'^search/(?P<guid_id>[a-h0-9\-]{36})/$',
         searchguid, name='searchGuid'),
     url(r'^submitsearch/$', submitSearch,
         name='submitSearch'),
