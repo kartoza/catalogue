@@ -66,15 +66,14 @@ class RenderWithContext(object):
                 if 'pdf' in request.GET:
                     template_name = self.template_name.split('.')[0]
                     html_template = '%s.html' % template_name
-                    # logging.error('hehhahahhahaa', type(items))
                     pdf = render_to_pdf(html_template, items)
                     if pdf:
                         response = HttpResponse(pdf, content_type='application/pdf')
-                        filename = "%s.pdf" % template_name
-                        content = "inline; filename='%s'" % filename
+                        filename = '%s.pdf' % template_name
+                        content = "inline; filename=%s" % filename
                         download = request.GET.get("download")
                         if download:
-                            content = "attachment; filename='%s'" % filename
+                            content = "attachment; filename=%s" % filename
                         response['Content-Disposition'] = content
                         return response
                     return HttpResponse("Not found")

@@ -18,16 +18,17 @@ __version__ = '0.1'
 __date__ = '01/01/2011'
 __copyright__ = 'South African National Space Agency'
 
+import logging
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponse, HttpResponseRedirect
-import logging
-logger = logging.getLogger(__name__)
-# for error logging
 import traceback
 from functools import wraps
 
+# for error logging
+logger = logging.getLogger(__name__)
 
-def requireProfile(theView):
+
+def require_profile(view):
     """
     This is a decorator that when used will ensure that the user
     has filled in all their personal details before being allowed
@@ -48,7 +49,7 @@ def requireProfile(theView):
         existance. It relies on the user profile form to ensure sufficient
         details are collected
     """
-    def decorator(theFunction):
+    def decorator(function):
         def inner_decorator(request, *args, **kwargs):
             profile = None
             try:
@@ -61,7 +62,7 @@ def requireProfile(theView):
                 # finally always executes, so we can safely redirect here
                 if profile and check_profile(profile):
                     logger.info('User Profile is populated')
-                    return theFunction(request, *args, **kwargs)
+                    return function(request, *args, **kwargs)
                 else:
                     logger.info('User Profile is NOT populated - redirecting')
                     if request.is_ajax():
@@ -71,16 +72,16 @@ def requireProfile(theView):
                             <script>
                             window.location.replace(
                                 "/accounts/{0}/edit/?next=/{1}/");
-                            </script>""".format(profile.user, theView)
+                            </script>""".format(profile.user, view)
                         return HttpResponse(
                             script_relocate,
                             content_type='application/javascript'
                         )
                     else:
                         return HttpResponseRedirect(
-                            "/accounts/{0}/edit/?next=/{1}/".format(profile.user, theView))
+                            "/accounts/{0}/edit/?next=/{1}/".format(profile.user, view))
 
-        return wraps(theFunction)(inner_decorator)
+        return wraps(function)(inner_decorator)
     return decorator
 
 

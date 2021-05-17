@@ -34,7 +34,6 @@ from django.core import mail
 from django.conf import settings
 from django.core.mail import EmailMultiAlternatives, SafeMIMEMultipart
 
-
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render_to_response, get_object_or_404
 from django.http import HttpResponseRedirect, HttpResponse
@@ -140,8 +139,8 @@ class EmailMultiRelated(EmailMultiAlternatives):
             filename, content, content_type)
         if filename:
             content_type = attachment['Content-Type']
-            del(attachment['Content-Type'])
-            del(attachment['Content-Disposition'])
+            del (attachment['Content-Type'])
+            del (attachment['Content-Disposition'])
             attachment.add_header('Content-Disposition', 'inline',
                                   filename=filename)
             attachment.add_header('Content-Type', content_type, name=filename)
@@ -236,6 +235,7 @@ def duplicate(obj, value=None, field=None, duplicate_order=None):
             del pk_val
     return root_obj
 
+
 ###########################################################
 #
 # Email notification of orders to SANSA sales staff
@@ -267,87 +267,87 @@ def notifySalesStaff(theUser, theOrderId, theContext=None):
         logger.info('Email sending disabled, set EMAIL_NOTIFICATIONS_ENABLED '
                     'in settings')
         return
-    myOrder = get_object_or_404(Order, id=theOrderId)
-    myRecords = SearchRecord.objects.filter(user=theUser,
-                                            order=myOrder).select_related()
-    myHistory = OrderStatusHistory.objects.filter(order=myOrder)
-    theOrderPDF = render_to(template_name='order-summary.odt',
-                            dictionary={
-                                'myOrder': myOrder,
-                                'myRecords': myRecords,
-                                'myHistory': myHistory
-                            },
-                            format='pdf')
-    myEmailSubject = ('SANSA Order ' + str(myOrder.id) + ' status update (' +
-                      myOrder.order_status.name + ')')
+    order = get_object_or_404(Order, id=theOrderId)
+    records = SearchRecord.objects.filter(user=theUser,
+                                          order=order).select_related()
+    history = OrderStatusHistory.objects.filter(order=order)
+    order_pdf = render_to(template_name='order-summary.odt',
+                          dictionary={
+                              'myOrder': order,
+                              'myRecords': records,
+                              'myHistory': history
+                          },
+                          format='pdf')
+    email_subject = ('SANSA Order ' + str(order.id) + ' status update (' +
+                     order.order_status.name + ')')
 
     # Get a list of staff user's email addresses
     # we will use mass_mail to prevent users seeing who other recipients are
-    myMessagesList = []
+    messages = []
 
-    myRecipients = set()
-    myRecipients.update([theUser])
-    logger.info('User recipient added: %s' % str(myRecipients))
+    recipients = set()
+    recipients.update([theUser])
+    logger.info('User recipient added: %s' % str(recipients))
     # get the list of recipients
-    for myProduct in [s.product for s in myRecords]:
-        myRecipients.update(
-            OrderNotificationRecipients.getUsersForProduct(myProduct))
+    for product in [s.product for s in records]:
+        recipients.update(
+            OrderNotificationRecipients.get_users_for_product(product))
 
     # Add default recipients
-    if not myRecipients and CATALOGUE_DEFAULT_NOTIFICATION_RECIPIENTS:
+    if not recipients and CATALOGUE_DEFAULT_NOTIFICATION_RECIPIENTS:
         logger.info('Sending notice to default recipients : %s' %
                     CATALOGUE_DEFAULT_NOTIFICATION_RECIPIENTS)
-        myRecipients.update(list(CATALOGUE_DEFAULT_NOTIFICATION_RECIPIENTS))
+        recipients.update(list(CATALOGUE_DEFAULT_NOTIFICATION_RECIPIENTS))
 
-    for myRecipient in myRecipients:
-        #txt email template
-        myEmailMessage_txt = render_to_string(
+    for recipient in recipients:
+        # txt email template
+        email_message_txt = render_to_string(
             'mail/order.txt', {
-                'myOrder': myOrder,
-                'myRecords': myRecords,
-                'myHistory': myHistory,
-                'myRecipient': myRecipient,
+                'myOrder': order,
+                'myRecords': records,
+                'myHistory': history,
+                'myRecipient': recipient,
                 'domain': settings.DOMAIN
             }, theContext)
-        #html email template
-        myEmailMessage_html = render_to_string(
+        # html email template
+        email_message_html = render_to_string(
             'mail/order.html', {
-                'myOrder': myOrder,
-                'myRecords': myRecords,
-                'myHistory': myHistory,
-                'myRecipient': myRecipient,
+                'myOrder': order,
+                'myRecords': records,
+                'myHistory': history,
+                'myRecipient': recipient,
                 'domain': settings.DOMAIN
             }, theContext)
-        myAddress = myRecipient.email
-        myMsg = EmailMultiRelated(
-            myEmailSubject,
-            myEmailMessage_txt,
-            'dontreply@' + settings.DOMAIN, [myAddress])
-        logger.info('Sending notice to : %s' % myAddress)
+        address = recipient.email
+        msg = EmailMultiRelated(
+            email_subject,
+            email_message_txt,
+            'dontreply@' + settings.DOMAIN, [address])
+        logger.info('Sending notice to : %s' % address)
 
-        #attach alternative payload - html
-        myMsg.attach_alternative(myEmailMessage_html, 'text/html')
+        # attach alternative payload - html
+        msg.attach_alternative(email_message_html, 'text/html')
         # add required images, as inline attachments,
         # accessed by 'name' in templates
-        myMsg.attach_related_file(
+        msg.attach_related_file(
             os.path.join(
                 settings.STATIC_ROOT, 'images', 'sac_header_email.jpg'))
         # get the filename of a PDF, ideally we should reuse theOrderPDF object
-        myMsg.attach_related_file(theOrderPDF.name)
-        #add message
-        myMessagesList.append(myMsg)
+        msg.attach_related_file(order_pdf.name)
+        # add message
+        messages.append(msg)
 
-    logger.info('Sending messages: \n%s' % myMessagesList)
+    logger.info('Sending messages: \n%s' % messages)
     # initiate email connection, and send messages in bulk
-    myEmailConnection = mail.get_connection()
-    myEmailConnection.send_messages(myMessagesList)
+    email = mail.get_connection()
+    email.send_messages(messages)
     return
 
 
 """Layer definitions for use in conjunction with open layers"""
 WEB_LAYERS = {
-            'TMSOverlay':
-                """var tmsoverlay = new OpenLayers.Layer.TMS(
+    'TMSOverlay':
+        """var tmsoverlay = new OpenLayers.Layer.TMS(
                 "TMS Overlay", "", {   // url: '', serviceVersion: '.',
                 layername: '.', type: 'png', getURL: overlay_getTileURL,
                 alpha: true, isBaseLayer: false
@@ -356,10 +356,10 @@ WEB_LAYERS = {
                 { tmsoverlay.setOpacity(0.7); }
                 """,
 
-          'ZaRoadsBoundaries':
-               """var zaRoadsBoundaries = new OpenLayers.Layer.WMS(
+    'ZaRoadsBoundaries':
+        """var zaRoadsBoundaries = new OpenLayers.Layer.WMS(
                'SA Vector', 'http://""" + settings.WMS_SERVER +
-               """/cgi-bin/tilecache.cgi?',
+        """/cgi-bin/tilecache.cgi?',
           {
              VERSION: '1.1.1',
              EXCEPTIONS: 'application/vnd.ogc.se_inimage',
@@ -375,9 +375,9 @@ WEB_LAYERS = {
            },
            {isBaseLayer: true});
            """,
-            # Map of all search footprints that have been made.
-            # Transparent: true will make a wms layer into an overlay
-            'Searches': """var searches = new OpenLayers.Layer.WMS(
+    # Map of all search footprints that have been made.
+    # Transparent: true will make a wms layer into an overlay
+    'Searches': """var searches = new OpenLayers.Layer.WMS(
                 'Searches', 'http://""" + settings.WMS_SERVER +
                 """/cgi-bin/mapserv?map=SEARCHES',
           {
@@ -393,11 +393,11 @@ WEB_LAYERS = {
            },
            {isBaseLayer: false});
            """,
-        # Map of site visitors
-        # Transparent: true will make a wms layer into an overlay
-        'Visitors': """var visitors = new OpenLayers.Layer.WMS(
+    # Map of site visitors
+    # Transparent: true will make a wms layer into an overlay
+    'Visitors': """var visitors = new OpenLayers.Layer.WMS(
           'Visitors', 'http://""" + settings.WMS_SERVER +
-          """/cgi-bin/mapserv?map=VISITORS',
+                """/cgi-bin/mapserv?map=VISITORS',
           {
              VERSION: '1.1.1',
              EXCEPTIONS: 'application/vnd.ogc.se_inimage',
@@ -413,11 +413,11 @@ WEB_LAYERS = {
            {isBaseLayer: false}
        );
         """,
-        # Nasa Blue marble directly from mapserver
-            'BlueMarble':
-            """var BlueMarble = new OpenLayers.Layer.WMS('BlueMarble',
+    # Nasa Blue marble directly from mapserver
+    'BlueMarble':
+        """var BlueMarble = new OpenLayers.Layer.WMS('BlueMarble',
                 'http://""" + settings.WMS_SERVER +
-                """/cgi-bin/mapserv?map=WORLD',
+        """/cgi-bin/mapserv?map=WORLD',
             {
              VERSION: '1.1.1',
              EXCEPTIONS: 'application/vnd.ogc.se_inimage',
@@ -426,41 +426,41 @@ WEB_LAYERS = {
             });
             BlueMarble.setVisibility(false);
             """,
-        #
-        # Google
-        #
-       'GooglePhysical': """var gphy = new OpenLayers.Layer.Google(
+    #
+    # Google
+    #
+    'GooglePhysical': """var gphy = new OpenLayers.Layer.Google(
            'Google Physical',
            {type: G_PHYSICAL_MAP}
           );
        """,
-        #
-        # Google streets
-        #
-        'GoogleStreets': """var gmap = new OpenLayers.Layer.Google(
+    #
+    # Google streets
+    #
+    'GoogleStreets': """var gmap = new OpenLayers.Layer.Google(
            'Google Streets' // the default
           );
         """,
-        #
-        # Google hybrid
-        #
-        'GoogleHybrid': """ var ghyb = new OpenLayers.Layer.Google(
+    #
+    # Google hybrid
+    #
+    'GoogleHybrid': """ var ghyb = new OpenLayers.Layer.Google(
            'Google Hybrid',
            {type: G_HYBRID_MAP}
           );
         """,
-        #
-        # Google Satellite
-        #
-        'GoogleSatellite': """var gsat = new OpenLayers.Layer.Google(
+    #
+    # Google Satellite
+    #
+    'GoogleSatellite': """var gsat = new OpenLayers.Layer.Google(
            'Google Satellite',
            {type: G_SATELLITE_MAP}
           );
         """,
-        #
-        # Heatmap - all
-        #
-        'Heatmap-total': """var heatmap_total = new OpenLayers.Layer.Image(
+    #
+    # Heatmap - all
+    #
+    'Heatmap-total': """var heatmap_total = new OpenLayers.Layer.Image(
                 'Heatmap total',
                 '/media/heatmaps/heatmap-total.png',
                 new OpenLayers.Bounds(-20037508.343,
@@ -473,11 +473,11 @@ WEB_LAYERS = {
                 }
            );
         """,
-        #
-        # Heatmap - last3month
-        #
-        'Heatmap-last3month':
-            """var heatmap_last3month = new OpenLayers.Layer.Image(
+    #
+    # Heatmap - last3month
+    #
+    'Heatmap-last3month':
+        """var heatmap_last3month = new OpenLayers.Layer.Image(
                 'Heatmap last 3 months',
                 '/media/heatmaps/heatmap-last3month.png',
                 new OpenLayers.Bounds(-20037508.343,
@@ -490,11 +490,11 @@ WEB_LAYERS = {
                 }
            );
         """,
-        #
-        # Heatmap - last month
-        #
-        'Heatmap-lastmonth':
-            """var heatmap_lastmonth = new OpenLayers.Layer.Image(
+    #
+    # Heatmap - last month
+    #
+    'Heatmap-lastmonth':
+        """var heatmap_lastmonth = new OpenLayers.Layer.Image(
                 'Heatmap last month',
                 '/media/heatmaps/heatmap-lastmonth.png',
                 new OpenLayers.Bounds(-20037508.343,
@@ -507,11 +507,11 @@ WEB_LAYERS = {
                 }
            );
         """,
-        #
-        # Heatmap - last week
-        #
-        'Heatmap-lastweek':
-            """var heatmap_lastweek = new OpenLayers.Layer.Image(
+    #
+    # Heatmap - last week
+    #
+    'Heatmap-lastweek':
+        """var heatmap_lastweek = new OpenLayers.Layer.Image(
                 'Heatmap last week',
                 '/media/heatmaps/heatmap-lastweek.png',
                 new OpenLayers.Bounds(-20037508.343,
@@ -524,12 +524,12 @@ WEB_LAYERS = {
                 }
            );
         """,
-        # Note for this layer to be used you need to regex replace
-        # USERNAME with theRequest.user.username
-        'CartLayer':
-            """var cartLayer = new OpenLayers.Layer.WMS('Cart', 'http://""" +
-            settings.WMS_SERVER + """/cgi-bin/mapserv?map=""" +
-            settings.CART_LAYER + """&user=USERNAME',
+    # Note for this layer to be used you need to regex replace
+    # USERNAME with theRequest.user.username
+    'CartLayer':
+        """var cartLayer = new OpenLayers.Layer.WMS('Cart', 'http://""" +
+        settings.WMS_SERVER + """/cgi-bin/mapserv?map=""" +
+        settings.CART_LAYER + """&user=USERNAME',
           {
              version: '1.1.1',
              width: '800',
@@ -541,7 +541,7 @@ WEB_LAYERS = {
            },
            {isBaseLayer: false});
            """,
-        }
+}
 
 mLayerJs = {
     'VirtualEarth': (
@@ -591,7 +591,7 @@ def genericAdd(
             'myForm': myForm,
             'myTitle': theTitle
         }
-        #shortcut to join two dicts
+        # shortcut to join two dicts
         myOptions.update(theOptions),
         logger.info('Add : new object requested')
         return render_to_response(
@@ -608,8 +608,8 @@ def genericDelete(theRequest, theObject):
 
 
 def getObject(theClass):
-    #Create an object instance using reflection
-    #from http://stackoverflow.com/questions/452969/does-python-have-an
+    # Create an object instance using reflection
+    # from http://stackoverflow.com/questions/452969/does-python-have-an
     #           -equivalent-to-java-class-forname/452981
     myParts = theClass.split('.')
     myModule = '.'.join(myParts[:-1])
@@ -716,14 +716,14 @@ def writeThumbToZip(theImagePath, theProductId, theZip):
         if os.path.isfile(theImagePath):
             with open(theImagePath, 'rb') as myFile:
                 theZip.writestr('%s.jpg' % theProductId,
-                               myFile.read())
+                                myFile.read())
                 logger.debug('Adding thumbnail image to archive.')
         else:
             raise Exception('Thumbnail image not found: %s' % theImagePath)
         if os.path.isfile(myWLDFile):
             with open(myWLDFile, 'rb') as myFile:
                 theZip.writestr('%s.wld' % theProductId,
-                               myFile.read())
+                                myFile.read())
                 logger.debug('Adding worldfile to archive.')
         else:
             raise Exception('World file not found: %s' % myWLDFile)
@@ -746,7 +746,8 @@ def writeSearchRecordThumbToZip(theSearchRecord, theZip):
                            theSearchRecord.product.product_id,
                            theZip)
 
-#render_to_kml helpers
+
+# render_to_kml helpers
 def render_to_kml(theTemplate, theContext, filename):
     response = HttpResponse(render_to_string(theTemplate, theContext))
     response['Content-Type'] = 'application/vnd.google-earth.kml+xml'
@@ -757,7 +758,7 @@ def render_to_kml(theTemplate, theContext, filename):
 def render_to_kmz(theTemplate, theContext, filename):
     """Render a kmz file. If search records are supplied, their georeferenced
     thumbnails will be bundled into the kmz archive."""
-    #try to get MAX_METADATA_RECORDS from settings, default to 500
+    # try to get MAX_METADATA_RECORDS from settings, default to 500
     myMaxMetadataRecords = getattr(settings, 'MAX_METADATA_RECORDS', 500)
     myKml = render_to_string(theTemplate, theContext)
     myZipData = BytesIO()
@@ -780,7 +781,7 @@ def downloadISOMetadata(theSearchRecords, theName):
     response = HttpResponse()
     myZipData = BytesIO()
     myZip = zipfile.ZipFile(myZipData, 'w', zipfile.ZIP_DEFLATED)
-    #try to get MAX_METADATA_RECORDS from settings, default to 500
+    # try to get MAX_METADATA_RECORDS from settings, default to 500
     myMaxMetadataRecords = getattr(settings, 'MAX_METADATA_RECORDS', 500)
     for mySearchRecord in theSearchRecords[:myMaxMetadataRecords]:
         myMetadata = mySearchRecord.product.getXML()
@@ -792,7 +793,7 @@ def downloadISOMetadata(theSearchRecords, theName):
     myZip.close()
     response.content = myZipData.getvalue()
     myZipData.close()
-    #get ORGANISATION_ACRONYM from settings, default to 'SANSA'
+    # get ORGANISATION_ACRONYM from settings, default to 'SANSA'
     myOrganisationAcronym = getattr(settings, 'ORGANISATION_ACRONYM', 'SANSA')
     filename = '%s-%s-Metadata.zip' % (myOrganisationAcronym, theName)
     response['Content-Type'] = 'application/zip'
@@ -806,7 +807,7 @@ def downloadHtmlMetadata(theSearchRecords, theName):
     response = HttpResponse()
     myZipData = BytesIO()
     myZip = zipfile.ZipFile(myZipData, 'w', zipfile.ZIP_DEFLATED)
-    #try to get MAX_METADATA_RECORDS from settings, default to 500
+    # try to get MAX_METADATA_RECORDS from settings, default to 500
     myMaxMetadataRecords = getattr(settings, 'MAX_METADATA_RECORDS', 500)
     # used to tell html renderer not to prepend server path
     myThumbIsLocalFlag = True
@@ -821,7 +822,7 @@ def downloadHtmlMetadata(theSearchRecords, theName):
     myZip.close()
     response.content = myZipData.getvalue()
     myZipData.close()
-    #get ORGANISATION_ACRONYM from settings, default to 'SANSA'
+    # get ORGANISATION_ACRONYM from settings, default to 'SANSA'
     myOrganisationAcronym = getattr(settings, 'ORGANISATION_ACRONYM', 'SANSA')
     filename = '%s-%s-Metadata.zip' % (myOrganisationAcronym, theName)
     response['Content-Type'] = 'application/zip'

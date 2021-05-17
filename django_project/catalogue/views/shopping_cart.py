@@ -27,7 +27,7 @@ from django.conf import settings
 from shapes.views import ShpResponder
 
 # Models and forms for our app
-from catalogue.renderDecorator import renderWithContext
+from catalogue.render_decorator import RenderWithContext
 from catalogue.models import (
     GenericProduct)
 
@@ -47,24 +47,24 @@ from search.models import SearchRecord
 logger = logging.getLogger(__name__)
 
 @login_required
-def downloadCart(theRequest):
+def downloadCart(request):
     """Dispaches request and returns products in cart in desired file format"""
     myRecords = SearchRecord.objects.all().filter(
-        user=theRequest.user).filter(order__isnull=True)
+        user=request.user).filter(order__isnull=True)
 
-    myFilename = '%s-cart' % theRequest.user.username
-    if 'shp' in theRequest.GET:
+    myFilename = '%s-cart' % request.user.username
+    if 'shp' in request.GET:
         myResponder = ShpResponder(myRecords)
         myResponder.file_name = myFilename
         return  myResponder.write_order_products(myRecords)
-    elif 'kml' in theRequest.GET:
+    elif 'kml' in request.GET:
         return render_to_kml(
             'kml/searchRecords.kml', {
                 'mySearchRecords': myRecords,
                 'external_site_url': settings.DOMAIN,
                 'transparentStyle': True},
             myFilename)
-    elif 'kmz' in theRequest.GET:
+    elif 'kmz' in request.GET:
         return render_to_kmz(
             'kml/searchRecords.kml', {
                 'mySearchRecords': myRecords,
@@ -79,23 +79,23 @@ def downloadCart(theRequest):
 
 
 @login_required
-def downloadCartMetadata(theRequest):
+def downloadCartMetadata(request):
     """
     Returns ISO 19115 metadata for products in cart, unless request is
     suffixed with html
     """
     myRecords = SearchRecord.objects.all().filter(
-        user=theRequest.user).filter(order__isnull=True)
-    if 'html' in theRequest.GET:
+        user=request.user).filter(order__isnull=True)
+    if 'html' in request.GET:
         return downloadHtmlMetadata(
-            myRecords, 'Cart-%s' % theRequest.user.username)
+            myRecords, 'Cart-%s' % request.user.username)
     else:
         return downloadISOMetadata(
-            myRecords, 'Cart-%s' % theRequest.user.username)
+            myRecords, 'Cart-%s' % request.user.username)
 
 
 @login_required
-def addToCart(theRequest, theId):
+def addToCart(request, theId):
     """
     Optionally we can return the response as json for ajax clients. We still
     keep normal html response to support clients with no ajax support. see
@@ -107,16 +107,16 @@ def addToCart(theRequest, theId):
     # does not pass along the ajax request header to the redirect url
     # The redirected url needs to check for is_ajax or xhr to
     # decide how to respond# check if the post ended with /?xhr
-    myAjaxFlag = 'xhr' in theRequest.GET or theRequest.is_ajax()
+    myAjaxFlag = 'xhr' in request.GET or request.is_ajax()
 
     # construct a record by passing some params
     myGenericProduct = GenericProduct.objects.get(id=theId)
     myDuplicateRecords = (
         SearchRecord.objects.filter(product=myGenericProduct)
-        .filter(user=theRequest.user).filter(order__isnull=True))
+        .filter(user=request.user).filter(order__isnull=True))
     myResponse = None
     if len(myDuplicateRecords) == 0:
-        myRecord = SearchRecord().create(theRequest.user, myGenericProduct)
+        myRecord = SearchRecord().create(request.user, myGenericProduct)
         myRecord.save()
         logger.info('Adding item %s Cart :' + myRecord.product.product_id)
         if not myAjaxFlag:
@@ -143,9 +143,9 @@ def addToCart(theRequest, theId):
 
 
 @login_required
-def removeFromCart(theRequest, theId):
+def removeFromCart(request, theId):
     myRecord = SearchRecord.objects.get(id=theId)
-    if myRecord.user == theRequest.user:
+    if myRecord.user == request.user:
         myRecord.delete()
         response = HttpResponse(
             'Successfully removed item from your basket',
@@ -158,18 +158,18 @@ def removeFromCart(theRequest, theId):
 
 
 @login_required
-#renderWithContext is explained in renderWith.py
-@renderWithContext('cartContentsPage.html', 'cartContents.html')
-def showCartContents(theRequest):
+# RenderWithContext is explained in renderWith.py
+@RenderWithContext('cartContentsPage.html', 'cartContents.html')
+def showCartContents(request):
     """
     Returns a nice table showing cart contents. Second template in method sig.
     is used in ajax requests.
     """
     myAjaxFlag = False
-    if 'xhr' in theRequest.GET or theRequest.is_ajax():
+    if 'xhr' in request.GET or request.is_ajax():
         myAjaxFlag = True
     myRecords = (
-        SearchRecord.objects.all().filter(user=theRequest.user)
+        SearchRecord.objects.all().filter(user=request.user)
         .filter(order__isnull=True))
     logger.info('Cart contains : %s items' % str(myRecords.count()))
     return ({
@@ -199,17 +199,15 @@ def showCartContents(theRequest):
 
 
 @login_required
-#renderWithContext is explained in renderWith.py
-@renderWithContext('cartContents.html')
-def showMiniCartContents(theRequest):
+def showMiniCartContents(request):
     """Just returns a table element - meant for use with ajax"""
     myBaseTemplate = 'cartContentsPage.html'
-    myAjaxFlag = 'xhr' in theRequest.GET
-    if theRequest.is_ajax() or myAjaxFlag:
+    myAjaxFlag = 'xhr' in request.GET
+    if request.is_ajax() or myAjaxFlag:
         # so template can render full page if not an ajax load
         myBaseTemplate = 'emptytemplate.html'
     myRecords = SearchRecord.objects.all().filter(
-        user=theRequest.user).filter(order__isnull=True)
+        user=request.user).filter(order__isnull=True)
     logger.info('Cart contains : %s items' % str(myRecords.count()))
     return ({
         'myRecords': myRecords,
