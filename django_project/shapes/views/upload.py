@@ -1,5 +1,4 @@
-from django.shortcuts import render_to_response
-from django.template import RequestContext
+from django.shortcuts import render
 from shapes.forms import UploadForm
 
 
@@ -11,9 +10,9 @@ def upload(request):
         form = UploadForm(request.POST, request.FILES)
         if form.is_valid():
             form.handle(request.FILES['file_obj'])
-            #form.save() # if a modelform
-            #form.cleaned_data['user'] = request.user
-            return render_to_response('uploaded.html', RequestContext(request,{}))
+            # form.save() # if a modelform
+            # form.cleaned_data['user'] = request.user
+            return render(request, 'uploaded.html', {})
     else:
         form = UploadForm()
-    return render_to_response('upload.html', RequestContext(request,{'form': form}))
+    return render(request, 'upload.html', {'form': form})
