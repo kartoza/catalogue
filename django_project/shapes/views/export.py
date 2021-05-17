@@ -350,7 +350,7 @@ class ShpResponder(object):
         ogr_type = OGRGeomType('POLYGON').num
         layer = ds.CreateLayer('lyr', srs=output_srs, geom_type=ogr_type)
 
-        attributes = []
+        attributes= []
         attributes.append("product_id")
         attributes.append("satellite")
         attributes.append("instrument_type")

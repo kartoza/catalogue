@@ -8,16 +8,18 @@ from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
 from django.contrib.gis import gdal
 
-#http://docs.djangoproject.com/en/dev/topics/http/file-uploads/
-#http://www.neverfriday.com/sweetfriday/2008/09/-a-long-time-ago.html
+
+# http://docs.djangoproject.com/en/dev/topics/http/file-uploads/
+# http://www.neverfriday.com/sweetfriday/2008/09/-a-long-time-ago.html
+
 
 class UploadForm(forms.Form):
+    file_obj = forms.FileField(label=_('Upload a Zipped Shapefile'))
 
-    file_obj  = forms.FileField(label=_('Upload a Zipped Shapefile'))
     # TODO:
     # collect attribute info to stick in potential model
-    #title = forms.CharField(max_length=50,label=_('Title'))
-    #epsg = forms.IntegerField()
+    # title = forms.CharField(max_length=50,label=_('Title'))
+    # epsg = forms.IntegerField()
 
     def clean_file_obj(self):
         f = self.cleaned_data['file_obj']
@@ -25,7 +27,7 @@ class UploadForm(forms.Form):
         if not valid_shp:
             raise ValidationError("A problem occured: %s" % error)
 
-    def handle(self,filefield_data):
+    def handle(self, filefield_data):
         """ Upload the file data, in chunks, to the SHP_UPLOAD_DIR specified in settings.py.
         """
         # ensure the upload directory exists
@@ -40,13 +42,13 @@ class UploadForm(forms.Form):
         if os.path.exists(downloaded_file):
             name, ext = os.path.splitext(downloaded_file)
             append = datetime.datetime.now().strftime('%d%m%Y_%m')
-            downloaded_file = '%s_%s%s' % (name,append,ext)
+            downloaded_file = '%s_%s%s' % (name, append, ext)
 
         print(downloaded_file)
         # write the zip archive to final location
-        self.write_file(downloaded_file,filefield_data)
+        self.write_file(downloaded_file, filefield_data)
 
-    def write_file(self,filename,filefield_data):
+    def write_file(self, filename, filefield_data):
         destination = open(filename, 'wb+')
         for chunk in filefield_data.chunks():
             destination.write(chunk)
@@ -57,14 +59,14 @@ class UploadForm(forms.Form):
             return False
         return True
 
-    def validate(self,filefield_data):
+    def validate(self, filefield_data):
         """ Validate the uploaded, zipped shapefile by unpacking to a temporary sandbox.
         """
         # create a temporary file to write the zip archive to
-        tmp = tempfile.NamedTemporaryFile(suffix='.zip', mode = 'w')
+        tmp = tempfile.NamedTemporaryFile(suffix='.zip', mode='w')
 
         # write zip to tmp sandbox
-        self.write_file(tmp.name,filefield_data)
+        self.write_file(tmp.name, filefield_data)
 
         if not zipfile.is_zipfile(tmp.name):
             return False, 'That file is not a valid Zip Archive'
@@ -86,7 +88,7 @@ class UploadForm(forms.Form):
         tmp_dir = tempfile.gettempdir()
         for info in zfile.infolist():
             data = zfile.read(info.filename)
-            shp_part = '%s%s%s' % (tmp_dir,os.path.sep,info.filename)
+            shp_part = '%s%s%s' % (tmp_dir, os.path.sep, info.filename)
             fout = open(shp_part, "wb")
             fout.write(data)
             fout.close()
@@ -95,7 +97,7 @@ class UploadForm(forms.Form):
         ds_name = os.path.splitext(zfile.namelist()[0])[0]
 
         # ogr needs the full path to the unpacked 'file.shp'
-        ds = gdal.DataSource('%s%s%s.shp' % (tmp_dir,os.path.sep,ds_name))
+        ds = gdal.DataSource('%s%s%s.shp' % (tmp_dir, os.path.sep, ds_name))
 
         # shapefiles have just one layer, so grab the first...
         layer = ds[0]
