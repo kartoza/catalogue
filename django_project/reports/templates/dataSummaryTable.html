@@ -1,5 +1,4 @@
 {% extends "base.html" %}
-{% load staticfiles %}
 {% load render_table from django_tables2 %}
 {% block extrajs %}
     {{ block.super }}
@@ -69,7 +68,7 @@
     <div class="row-fluid center gap-bottom">
         <div id="order-list-buttonset" class="btn-group">
             <button id="download-btn" class="btn"
-                    onclick='location="{{ myUrl }}?page=&pdf"'>
+                    onclick='location="?pdf"'>
                 <i class="icon-download"></i> Download as PDF
             </button>
         </div>
