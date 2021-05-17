@@ -14,9 +14,9 @@
             <!-- Carousel items -->
             <div class="carousel-inner">
                 {% if slider %}
-                    {% for myItem in slider %}
+                    {% for item in slider %}
                         <div class="item">
-                            <img src="media/{{ myItem.slide }}" style="height:300px;width:1210px"/>
+                            <img src="static/{{item.slide}}" style="height:300px;width:1210px"/>
                         </div>
                     {% endfor %}
                 {% endif %}
