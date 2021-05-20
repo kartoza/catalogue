@@ -8,25 +8,25 @@ from catalogue.views.others import (
     index,
     video,
     about,
-    searchFormHelp,
+    search_form_help,
     contact,
-    deleteSearch,
-    visitorsKml,
-    mapHelp,
-    emptyCartHelp,
-    sceneIdHelp,
-    showProduct,
+    delete_search,
+    visitors_kml,
+    map_help,
+    empty_cart_help,
+    scene_id_help,
+    show_product,
     clip,
-    clipHistory,
-    logVisit,
-    visitorMap,
+    clip_history,
+    log_visit,
+    visitor_map,
     whereAmI,
-    searchesMap,
-    showThumbPage,
-    showThumb,
-    showPreview,
+    searches_map,
+    show_thumb_page,
+    show_thumb,
+    show_preview,
     metadata,
-    getFeatureInfo
+    get_feature_info
 )
 from catalogue.views.shopping_cart import (
     addToCart,
@@ -42,15 +42,18 @@ from catalogue.views.messaging import (
     sendMessageToAllUsers
 )
 
-admin.autodiscover()
 
 # These are used for our generic views
 # see http://docs.djangoproject.com/en/dev/intro/tutorial04/
-#myOrdersDict = { 'queryset': Order.objects.all(),
-   #  "template_object_name" : "myOrders",
+# myOrdersDict = { 'queryset': Order.objects.all(),
+#  "template_object_name" : "myOrders",
 #    }
 
 from .api import v1_API
+
+
+admin.autodiscover()
+
 
 # Here are our patterns
 urlpatterns = [
@@ -62,7 +65,7 @@ urlpatterns = [
     # url(r'^admin_media/(.*)$','django.views.static.serve',
     #   {'document_root': "/usr/share/python-support/python-django/django/contrib/admin/media/"
     #     , 'show_indexes': True}),
-    #(r'^sentry/', include('sentry.web.urls')),
+    # (r'^sentry/', include('sentry.web.urls')),
     # url(r'^media/(.*)$','django.views.static.serve',
     #   {'document_root': settings.MEDIA_ROOT, 'show_indexes': True}),
     # url(r'^thumbnails/(.*)$','django.views.static.serve',
@@ -70,54 +73,54 @@ urlpatterns = [
     url(r'^$', index, name='index'),
     url(r'^video/$', video, name='video'),
     url(r'^about/$', about, name='about'),
-    url(r'^searchformhelp/$', searchFormHelp, name='searchformhelp'),
+    url(r'^searchformhelp/$', search_form_help, name='searchformhelp'),
     url(r'^contact/$', contact, name='contact'),
-    url(r'^deletesearch/(?P<pk>[0-9]+)/$', deleteSearch, name='deleteSearch'),
-    url(r'^kml/$', visitorsKml, name='visitorsKml'),
-    url(r'^mapHelp/$', mapHelp, name='mapHelp'),
-    url(r'^emptyCartHelp/$', emptyCartHelp, name='emptyCartHelp'),
-    url(r'^sceneidhelp/$', sceneIdHelp, name='sceneIdHelp'),
+    url(r'^deletesearch/(?P<pk>[0-9]+)/$', delete_search, name='deleteSearch'),
+    url(r'^kml/$', visitors_kml, name='visitorsKml'),
+    url(r'^mapHelp/$', map_help, name='mapHelp'),
+    url(r'^emptyCartHelp/$', empty_cart_help, name='emptyCartHelp'),
+    url(r'^sceneidhelp/$', scene_id_help, name='sceneIdHelp'),
 
     # match a product id - its not needed to give teh full id, just enough to be semi unique
-    url(r'^showProduct/(?P<theProductId>.*)/$', showProduct, name='showProduct'),
+    url(r'^showProduct/(?P<theProductId>.*)/$', show_product, name='showProduct'),
     url(r'^clip/$', clip),
     # is this used?
-    url(r'^myclips/$', clipHistory),
-    url(r'^visit/$', logVisit, name='logVisit'),
-    url(r'^visitormap/$', visitorMap, name='visitorMap'),
+    url(r'^myclips/$', clip_history),
+    url(r'^visit/$', log_visit, name='logVisit'),
+    url(r'^visitormap/$', visitor_map, name='visitorMap'),
     url(r'^whereami/$', whereAmI, name='whereAmI'),
 
-    #show all searches that were made
-    url(r'^searchesmap/$', searchesMap, name='searchesMap'),
+    # show all searches that were made
+    url(r'^searchesmap/$', searches_map, name='searchesMap'),
 
     # show segment thumb for a segment by #
     # thumbnailpage is called only by itself?
-    url(r'^thumbnailpage/(?P<theId>[0-9]+)/$', showThumbPage, name='showThumbPage'),
+    url(r'^thumbnailpage/(?P<theId>[0-9]+)/$', show_thumb_page, name='showThumbPage'),
 
     # returns image mime type - show segment thumb info for a segment
-    url(r'^thumbnail/(?P<theId>[0-9]+)/(?P<theSize>[a-z]+)/$', showThumb, name='showThumb'),
+    url(r'^thumbnail/(?P<theId>[0-9]+)/(?P<theSize>[a-z]+)/$', show_thumb, name='showThumb'),
     # returns html mime type
-    url(r'^showpreview/(?P<theId>[0-9]+)/(?P<theSize>[a-z]+)/$', showPreview, name='showPreview'),
-    #show info for a scene or segment by #
+    url(r'^showpreview/(?P<theId>[0-9]+)/(?P<theSize>[a-z]+)/$', show_preview, name='showPreview'),
+    # show info for a scene or segment by #
     url(r'^metadata/(?P<theId>[0-9]+)/$', metadata, name="metadata"),
     url(r'^addtocart/(?P<theId>[0-9]+)/$', addToCart, name='addToCart'),
     url(r'^removefromcart/(?P<theId>[0-9]+)/$', removeFromCart, name='removeFromCart'),
     # cart contents for embedding into other pages
     url(r'^downloadcart/$', downloadCart, name='downloadCart'),
     url(r'^downloadcartmetadata/$', downloadCartMetadata, name='downloadCartMetadata'),
-    url(r'^showcartcontents/$', showCartContents, name='showCartContents'), #used by xhr requests
+    url(r'^showcartcontents/$', showCartContents, name='showCartContents'),  # used by xhr requests
     url(r'^showminicartcontents/$', showMiniCartContents, name='showMiniCartContents'),
 
-
     # upload polygon from zipped shapefile for search/clip
-    #( r'^uploadFeature/$', uploadFeature),
+    # ( r'^uploadFeature/$', uploadFeature),
 
-    url(r'^getFeatureInfo/(?P<theLon>[-]*\d+.\d+)/(?P<theLat>[-]*\d+.\d+)/(?P<theBoundingBox>[0-9\-,.]*)/(?P<thePixelX>\d+)/(?P<thePixelY>\d+)/(?P<theMapWidth>\d+)/(?P<theMapHeight>\d+)/$', getFeatureInfo),
+    url(r'^getFeatureInfo/(?P<theLon>[-]*\d+.\d+)/(?P<theLat>[-]*\d+.\d+)/(?P<theBoundingBox>[0-9\-,.]*)/(?P<thePixelX>\d+)/(?P<thePixelY>\d+)/(?P<theMapWidth>\d+)/(?P<theMapHeight>\d+)/$',
+        get_feature_info),
 
     url(r'^getUserMessages/$', userMessages),
-    #need to be staff to use this
+    # need to be staff to use this
     url(r'^sendMessageToUser/$', sendMessageToUser),
-    #need to be staff to use this
+    # need to be staff to use this
     url(r'^sendMessageToAllUsers/$', sendMessageToAllUsers),
 
     # New dictionaries
@@ -132,7 +135,6 @@ urlpatterns = [
     url(r'', include('reports.urls')),
     # new orders app
     url(r'', include('orders.urls')),
-
 
     # api urls
     url(r'^api/', include(v1_API.urls)),
