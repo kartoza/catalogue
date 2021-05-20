@@ -759,11 +759,11 @@ class GenericProduct(models.Model):
         return self.product_date.strftime('%d/%m/%Y')
 
     @property
-    def productName(self):
+    def product_name(self):
         """
         Return formated name for the product
         """
-        return self.getConcreteInstance().productName()
+        return self.getConcreteInstance().product_name()
 
 
 ###############################################################################
@@ -1182,7 +1182,7 @@ class OpticalProduct(GenericSensorProduct):
             )
         )
 
-    def productName(self):
+    def product_name(self):
         """
         Returns product name as specified
         """
