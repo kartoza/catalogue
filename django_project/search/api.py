@@ -37,7 +37,7 @@ from catalogue.models import OpticalProduct
 
 
 class SearchResultsResource(ModelResource):
-    productName = fields.CharField(attribute='productName')
+    product_name = fields.CharField(attribute='product_name')
 
     class Meta:
         queryset = OpticalProduct.objects.all()
