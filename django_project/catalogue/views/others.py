@@ -32,7 +32,8 @@ import traceback
 # Django helpers for forming html pages
 from django.contrib.gis.db.models.functions import AsKML
 from django.contrib.gis.gdal import OGRGeometry
-from django.shortcuts import render_to_response, get_object_or_404
+from django.db.models import Q
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect, HttpResponse
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
@@ -74,7 +75,7 @@ logger = logging.getLogger(__name__)
 #### VIEW FUNCTIONS ####
 
 
-def logVisit(request):
+def log_visit(request):
     """
     Silently log a visit and return an empty string. The best way to use this
     method is by adding it as a fake css reference at the top of your template
@@ -280,9 +281,11 @@ def clip(request):
                 logger.info(
                     'Form is NOT valid - at least a file or digitised geom is '
                     'needed')
-                return render_to_response(
-                    'addPage.html', myOptions,
-                    context_instance=RequestContext(request))
+                return render(
+                    request,
+                    'addPage.html',
+                    myOptions,
+                    )
 
                 # BUG: this code is unreachable, will never execute
                 myObject.save()
@@ -330,7 +333,7 @@ def clip(request):
 @staff_member_required
 # RenderWithContext is explained in renderWith.py
 @RenderWithContext('simpleMap.html')
-def visitorMap(request):
+def visitor_map(request):
     """Show a map of all visitors"""
     myGeoIpUtils = GeoIpUtils()
     myCount = Visit.objects.all()
@@ -376,7 +379,7 @@ def visitorMap(request):
 
 # RenderWithContext is explained in renderWith.py
 @RenderWithContext('productView.html')
-def showProduct(request, theProductId):
+def show_product(request, theProductId):
     """
     Renders a search results page including the map and all attendant html
     content - for a single product only identified by its sac product ID
@@ -400,7 +403,7 @@ def showProduct(request, theProductId):
 
 # @login_required
 @RenderWithContext('productPreview.html')
-def showPreview(request, theId, theSize):
+def show_preview(request, theId, theSize):
     """Show a segment or scene thumbnail details,
       returning the result as a scaled down image.
 
@@ -414,7 +417,7 @@ def showPreview(request, theId, theSize):
 # @login_required
 # RenderWithContext is explained in renderWith.py
 @RenderWithContext('thumbnail.html')
-def showThumbPage(request, theId):
+def show_thumb_page(request, theId):
     """Show a segment or scene thumbnail details in a popup dialog"""
     logger.info('showThumbPage : id ' + theId)
     myDetails = []
@@ -439,7 +442,7 @@ def showThumbPage(request, theId):
 
 
 # @login_required
-def showThumb(request, theId, theSize):
+def show_thumb(request, theId, theSize):
     """
     Show a scene thumbnail details,
     returning the result as a scaled down image.
@@ -447,12 +450,12 @@ def showThumb(request, theId, theSize):
     logger.info('showThumb : id ' + theId)
     myProduct = get_object_or_404(GenericProduct, id=theId)
     myImage = myProduct.thumbnail(theSize)
-    if (isinstance(myImage, str)):
+    if isinstance(myImage, str):
         return HttpResponse('Thumbnail for %s could not be found' % theId)
     else:
         myResponse = HttpResponse(content_type='image/png')
         myImage.save(myResponse, 'PNG')
-        return (myResponse)
+        return myResponse
 
 
 # @login_required
@@ -460,13 +463,13 @@ def metadata(request, theId):
     """Get the metadata for a product."""
     myGenericProduct = get_object_or_404(GenericProduct, id=theId)
     myObject, myType = myGenericProduct.getConcreteProduct()
-    return (HttpResponse(myObject.toHtml()))
+    return HttpResponse(myObject.toHtml())
 
 
 @staff_member_required
 # RenderWithContext is explained in renderWith.py
 @RenderWithContext('searchesmap.html')
-def searchesMap(request):
+def searches_map(request):
     """Show a map of all searches"""
 
 
@@ -475,7 +478,7 @@ def searchesMap(request):
 # IP and LatLong
 #
 @login_required()
-def visitorsKml(request):
+def visitors_kml(request):
     my_visits = VisitorReport.objects.kml
     return render_to_kml(
         "kml/visitorreport.kml",
@@ -486,7 +489,7 @@ def visitorsKml(request):
 
 
 @login_required
-def deleteSearch(request, pk):
+def delete_search(request, pk):
     """
     We don't ever actually delete a search since we need to see them all for
     site statistics. Rather we mark them as deleted so the user only sees his
@@ -512,10 +515,10 @@ def deleteSearch(request, pk):
 @login_required
 # RenderWithContext is explained in renderWith.py
 @RenderWithContext('myClips.html')
-def clipHistory(request):
+def clip_history(request):
     myClipHistory = Clip.objects.filter(
         owner=request.user).order_by('-date')
-    return ({'myClips': myClipHistory})
+    return {'myClips': myClipHistory}
 
 
 ###########################################################
@@ -526,7 +529,7 @@ def clipHistory(request):
 
 
 @login_required
-def getFeatureInfo(request,
+def get_feature_info(request,
                    theLon,
                    theLat,
                    theBoundingBox,
@@ -555,7 +558,6 @@ def getFeatureInfo(request,
             theMapWidth,
             theMapHeight))
 
-    myGeometryQuery = Q(frame_geometry__intersects=(self.mSearch.geometry))
     myUrl = "http://" + settings.WMS_SERVER
 
     myHeaders = {'Content-Type': 'text/plain'}
@@ -628,7 +630,7 @@ def contact(request):
 
 # RenderWithContext is explained in renderWith.py
 @RenderWithContext('mapHelp.html')
-def mapHelp(request):
+def map_help(request):
     # render_to_response is done by the RenderWithContext decorator
     if request.is_ajax():
         return ({'myTemplate': 'emptytemplate.html'})
@@ -638,7 +640,7 @@ def mapHelp(request):
 
 # RenderWithContext is explained in renderWith.py
 @RenderWithContext('emptyCartHelp.html')
-def emptyCartHelp(request):
+def empty_cart_help(request):
     # render_to_response is done by the RenderWithContext decorator
     return ()
 
@@ -648,12 +650,12 @@ def emptyCartHelp(request):
 # for firefix goes ballistic
 # RenderWithContext is explained in renderWith.py
 @RenderWithContext('sceneIdHelp.html')
-def sceneIdHelp(request):
+def scene_id_help(request):
     return
 
 
 # RenderWithContext is explained in renderWith.py
 @RenderWithContext('searchFormHelp.html')
-def searchFormHelp(request):
+def search_form_help(request):
     # render_to_response is done by the RenderWithContext decorator
     return ()
