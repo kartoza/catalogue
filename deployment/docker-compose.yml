@@ -35,7 +35,7 @@ services:
   db:
     # Note you cannot scale if you use conteiner_name
     container_name: catalogue-db
-    image: kartoza/postgis:9.6-2.4
+    image: kartoza/postgis:latest
     volumes:
       - ./pg/postgres_data:/var/lib/postgresql
       - ./backups:/backups
