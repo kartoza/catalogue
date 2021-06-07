@@ -22,7 +22,8 @@ import logging
 
 from django.shortcuts import render
 from django.http import HttpResponse
-from catalogue.pdf_report import render_to_pdf
+from django.template.loader import render_to_string
+from weasyprint import HTML
 
 
 class RenderWithContext(object):
@@ -65,18 +66,16 @@ class RenderWithContext(object):
             if isinstance(items, dict):
                 if 'pdf' in request.GET:
                     template_name = self.template_name.split('.')[0]
-                    html_template = '%s.html' % template_name
-                    pdf = render_to_pdf(html_template, items)
-                    if pdf:
-                        response = HttpResponse(pdf, content_type='application/pdf')
-                        filename = '%s.pdf' % template_name
-                        content = "inline; filename=%s" % filename
-                        download = request.GET.get("download")
-                        if download:
-                            content = "attachment; filename=%s" % filename
-                        response['Content-Disposition'] = content
-                        return response
-                    return HttpResponse("Not found")
+                    html_template = 'pdf/%s.html' % template_name
+                    html_string = render_to_string(html_template, items)
+                    pdf_response = HttpResponse(content_type='application/pdf')
+                    pdf_response['Content-Disposition'] = 'filename= %s.pdf' % template_name
+                    html_object = HTML(
+                        string=html_string,
+                        base_url='file://',
+                    )
+                    html_object.write_pdf(pdf_response)
+                    return pdf_response
 
                 return render(
                     request,
