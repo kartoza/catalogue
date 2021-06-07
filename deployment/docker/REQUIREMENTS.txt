@@ -51,3 +51,6 @@ jsmin
 celery==3.1.25
 geoip2==4.1.0
 xhtml2pdf==0.2.5
+djangorestframework==3.12.4
+weasyprint==52.5
+
