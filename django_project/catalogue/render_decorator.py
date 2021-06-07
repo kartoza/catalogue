@@ -18,13 +18,15 @@ __version__ = '0.1'
 __date__ = '01/01/2011'
 __copyright__ = 'South African National Space Agency'
 
+import logging
 
-from django.shortcuts import render_to_response, render
-from django.template import RequestContext
-from webodt.shortcuts import render_to_response as renderReport
+from django.shortcuts import render
+from django.http import HttpResponse
+from django.template.loader import render_to_string
+from weasyprint import HTML
 
 
-class renderWithContext(object):
+class RenderWithContext(object):
     """
     This is a decorator that when used will always pass the RequestContext
     over to the template. This is needed in tandem with the authentication
@@ -42,6 +44,7 @@ class renderWithContext(object):
     The template will then have the RequestContext passed to it along
     automatically,  along with any other parameters your view defines.
     """
+
     def __init__(self, template_name, ajax_template_name=None):
         self.template_name = template_name
         self.ajax_template_name = ajax_template_name
@@ -52,27 +55,33 @@ class renderWithContext(object):
                 if self.ajax_template_name:
                     render_template = self.ajax_template_name
                 else:
-                    #if request is really ajax and uses single template,
-                    #use template_name
+                    # if request is really ajax and uses single template,
+                    # use template_name
                     render_template = self.template_name
             else:
                 render_template = self.template_name
-
             items = func(request, *args, **kwargs)
-            #check for PDF
+            logging.error(isinstance(items, dict))
+            # check for PDF
             if isinstance(items, dict):
                 if 'pdf' in request.GET:
                     template_name = self.template_name.split('.')[0]
-                    odt_template = '%s.odt' % template_name
-                    return renderReport(odt_template,
-                                        context_instance=RequestContext(request),
-                                        format='pdf',
-                                        filename='{}.pdf'.format(template_name),
-                                        dictionary=items)
+                    html_template = 'pdf/%s.html' % template_name
+                    html_string = render_to_string(html_template, items)
+                    pdf_response = HttpResponse(content_type='application/pdf')
+                    pdf_response['Content-Disposition'] = 'filename= %s.pdf' % template_name
+                    html_object = HTML(
+                        string=html_string,
+                        base_url='file://',
+                    )
+                    html_object.write_pdf(pdf_response)
+                    return pdf_response
 
-                return render_to_response(
-                    render_template, items,
-                    context_instance=RequestContext(request))
+                return render(
+                    request,
+                    render_template,
+                    items
+                )
 
             return render(
                 request, render_template

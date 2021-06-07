@@ -1,13 +1,15 @@
-{% extends "pdfpage.html" %}
+{% extends "pdf_base.html" %}
 
 {% load graphtag %}
 
+{% block title %}
+    Searches by country of user origin for {{ myCurrentDate|date:'F, Y' }}
+{% endblock %}
 
 {% block content %}
 
 {% if myScores %}
 
-<div class="h2">Searches by country of user origin for {{ myCurrentDate|date:'F, Y' }}</div>
 <center>
   <img src="{% gPieChart myScores myGraphLabel 0 %}" />
 </center>

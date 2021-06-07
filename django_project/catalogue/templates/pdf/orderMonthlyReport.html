@@ -1,8 +1,10 @@
-{% extends "pdfpage.html" %}
+{% extends "pdf_base.html" %}
 
+{% block title %}
+    Monthly orders report for {{ myCurrentDate|date:'F Y' }}
+{% endblock %}
 {% block content %}
 {% if myRecords %}
-  <div class="h2">Monthly orders report for {{ myCurrentDate|date:'F Y' }}</div>
   <table>
     <thead>
       <tr>

@@ -10,9 +10,9 @@ import logging
 logger = logging.getLogger(__name__)
 
 try:
-    from io import StringIO
+    from io import BytesIO
 except ImportError:
-    from io import StringIO
+    from io import BytesIO
 
 try:
     # a mysterious bug with ctypes and python26 causes crashes
@@ -20,7 +20,7 @@ try:
     # using the native python bindings to ogr/gdal if they exist
     # thanks Jared K, for reporting this bug and submitting an alternative
     # approach
-    from osgeo import ogr, osr
+    from osgeo import gdal, ogr, osr
     HAS_NATIVE_BINDINGS = True
 except ImportError:
     HAS_NATIVE_BINDINGS = False
@@ -113,7 +113,7 @@ class ShpResponder(object):
         return tmp.name
 
     def zip_response(self, shapefile_path, file_name, content_type, readme=None):
-        buffer = StringIO()
+        buffer = BytesIO()
         zip = zipfile.ZipFile(buffer, 'w', zipfile.ZIP_DEFLATED)
         files = ['shp', 'shx', 'prj', 'dbf']
         for item in files:
@@ -350,7 +350,7 @@ class ShpResponder(object):
         ogr_type = OGRGeomType('POLYGON').num
         layer = ds.CreateLayer('lyr', srs=output_srs, geom_type=ogr_type)
 
-        attributes = []
+        attributes= []
         attributes.append("product_id")
         attributes.append("satellite")
         attributes.append("instrument_type")

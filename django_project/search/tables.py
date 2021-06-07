@@ -2,7 +2,7 @@
 """
 ${NAME}
 """
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.utils.safestring import mark_safe
 import django_tables2 as tables
 from reports.tables import SANSADateColumn, render_user_names

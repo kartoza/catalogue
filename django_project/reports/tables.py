@@ -12,7 +12,7 @@ Contact : lkleyn@sansa.org.za
    of Linfiniti Consulting CC.
 
 """
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.utils.safestring import mark_safe
 import django_tables2 as tables
 

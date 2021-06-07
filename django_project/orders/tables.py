@@ -16,7 +16,9 @@ class OrderListTable(tables.Table):
     id = tables.Column()
     order_date = SANSADateColumn()
     last_status_changed = tables.Column(accessor='get_recent_history_date')
-    order_status = tables.Column()
+    order_status__name = tables.Column(
+        verbose_name='Status'
+    )
     day_in_process = tables.Column(accessor='day_in_process')
     user = tables.Column()
     view = tables.URLColumn(

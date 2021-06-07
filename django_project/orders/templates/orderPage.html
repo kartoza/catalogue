@@ -14,7 +14,7 @@
   </div>
   <div class="row">
   	<div class="span8">
-  		<p><b>Order no.</b> {{ myOrder.orderNumber }}</p>
+  		<p><b>Order no.</b> {{ myOrder.order_number }}</p>
   	</div>
   	<div class="span4">
   		<p><b>Status:</b> {{ myOrder.order_status.name }}
@@ -93,10 +93,10 @@
 			<div class="row">
 				<div class="span4">
 					<b>Old status</b> 
-					{{ myRecord.old_order_status }}</div>
+					{{ myRecord.old_order_status.name }}</div>
 				<div class="span4">
 					<b>New status</b> 
-					{{ myRecord.new_order_status }}</div>
+					{{ myRecord.new_order_status.name }}</div>
 			</div>
 			<div class="row">
 				<div class="span2">
@@ -113,7 +113,7 @@
   		<form id="updateStatusForm" method="POST">
 	  		<div class="span4">
 	  			<b>New status: </b>
-	  			{{ myStatusForm.new_order_status }}
+	  			{{ myStatusForm.new_order_status.name }}
 	  		</div>
 	  		<div class="span1">
 	  			<b>Notes: </b>

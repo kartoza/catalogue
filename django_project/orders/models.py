@@ -17,10 +17,10 @@ __version__ = '0.1'
 __date__ = '09/08/2012'
 __copyright__ = 'South African National Space Agency'
 
+from dictionaries.models import SubsidyType
 from django.contrib.gis.db import models
 from django.db.models.query import QuerySet
-
-#for user id foreign keys
+# for user id foreign keys
 from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 
@@ -50,6 +50,9 @@ class Datum(models.Model):
     def __unicode__(self):
         return self.name
 
+    def __str__(self):
+        return self.name
+
 
 class ResamplingMethod(models.Model):
     """
@@ -64,6 +67,9 @@ class ResamplingMethod(models.Model):
         ordering = ['name']
 
     def __unicode__(self):
+        return self.name
+
+    def __str__(self):
         return self.name
 
 
@@ -81,6 +87,8 @@ class FileFormat(models.Model):
     def __unicode__(self):
         return self.name
 
+    def __str__(self):
+        return self.name
 
 class OrderStatus(models.Model):
     """
@@ -97,6 +105,9 @@ class OrderStatus(models.Model):
     def __unicode__(self):
         return self.name
 
+    def __str__(self):
+        return self.name
+
 
 class DeliveryMethod(models.Model):
     """
@@ -110,7 +121,10 @@ class DeliveryMethod(models.Model):
         ordering = ['name']
 
     def __unicode__(self):
-        return self.name
+        return u'%s' % self.name
+
+    def __str__(self):
+        return '{}'.format(self.name)
 
 
 class MarketSector(models.Model):
@@ -123,7 +137,10 @@ class MarketSector(models.Model):
         ordering = ['name']
 
     def __unicode__(self):
-        return str(self.name)
+        return u'%s' % str(self.name)
+
+    def __str__(self):
+        return '{}'.format(self.name)
 
 
 class OrderQuerySet(QuerySet):
@@ -144,7 +161,10 @@ class Order(models.Model):
     """
     Order model, records orders placed by users
     """
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE
+    )
     notes = models.TextField(
         null=True, blank=True,
         help_text=(
@@ -154,31 +174,61 @@ class Order(models.Model):
             'be supplied with default options.'
         ))
     order_status = models.ForeignKey(
-        OrderStatus, verbose_name='Order Status', default=1)
+        OrderStatus,
+        verbose_name='Order Status',
+        default=1,
+        on_delete=models.CASCADE
+    )
     delivery_method = models.ForeignKey(
-        DeliveryMethod, verbose_name='Delivery Method', default=1)
+        DeliveryMethod,
+        verbose_name='Delivery Method',
+        default=1,
+        on_delete=models.CASCADE
+    )
     market_sector = models.ForeignKey(
-        MarketSector, null=False, blank=False, default=1)
+        MarketSector,
+        null=False,
+        blank=False,
+        default=1,
+        on_delete=models.CASCADE
+    )
     order_date = models.DateTimeField(
         verbose_name='Order Date', auto_now_add=True,
         help_text='When the order was placed - not shown to users')
-    datum = models.ForeignKey(Datum, verbose_name='Datum', default=1)
+    datum = models.ForeignKey(
+        Datum,
+        verbose_name='Datum',
+        default=1,
+        on_delete=models.CASCADE
+    )
     resampling_method = models.ForeignKey(
-        ResamplingMethod, verbose_name='Resampling Method', default=2
+        ResamplingMethod,
+        verbose_name='Resampling Method',
+        default=2,
+        on_delete=models.CASCADE
     )  # cubic conv#cubic conv
     file_format = models.ForeignKey(
-        FileFormat, verbose_name="File Format", default=1
+        FileFormat,
+        verbose_name="File Format",
+        default=1,
+        on_delete=models.CASCADE
     )
     # if related_name ends with +, Django will not create backwards relation
     subsidy_type_requested = models.ForeignKey(
-        'dictionaries.SubsidyType', null=True, blank=True,
-        related_name='subsidy_type+'
+        SubsidyType,
+        null=True,
+        blank=True,
+        related_name='subsidy_type+',
+        on_delete=models.CASCADE
     )
     subsidy_type_assigned = models.ForeignKey(
-        'dictionaries.SubsidyType', null=True, blank=True,
-        related_name='subsidy_type+'
+        SubsidyType,
+        null=True,
+        blank=True,
+        related_name='subsidy_type+',
+        on_delete=models.CASCADE
     )
-    #default manager
+    # default manager
     objects = OrderQuerySet.as_manager()
     # A model can have more than one manager. Above will be used as default
     # see: http://docs.djangoproject.com/en/dev/topics/db/managers/
@@ -196,6 +246,9 @@ class Order(models.Model):
     def __unicode__(self):
         return str(self.id)
 
+    def __str__(self):
+        return '{}'.format(self.name)
+
     def get_recent_history_date(self):
         current_status = OrderStatus.objects.get(name=self.order_status)
         recent_history = (
@@ -206,7 +259,7 @@ class Order(models.Model):
         return recent_history.order_change_date
 
     def day_in_process(self):
-        if (self.get_recent_history_date().date() == self.order_date.date()):
+        if self.get_recent_history_date().date() == self.order_date.date():
             return "less than one day"
         else:
             return abs(self.get_recent_history_date().date() - self.order_date.date())
@@ -222,12 +275,12 @@ class Order(models.Model):
         """
         Determine actual cost of an order, based on subsidy_type
         """
-        if self.subsidy_type_assigned.name is 'None':
+        if self.subsidy_type_assigned.name is None:
             return self.value()
         else:
             return 0
 
-    def orderNumber(self):
+    def order_number(self):
         """
         return descriptive order number EOYYMMDDId where:
         EO is the suffix for Earth Observation,
@@ -242,20 +295,35 @@ class OrderStatusHistory(models.Model):
     """
     Used to maintain provenance of all status changes that happen to an order
     """
-    user = models.ForeignKey(User)
-    order = models.ForeignKey(Order)
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE
+    )
+    order = models.ForeignKey(
+        Order,
+        on_delete=models.CASCADE
+    )
     order_change_date = models.DateTimeField(
         verbose_name='Date', auto_now_add=True,
         help_text='When the order status was changed')
     notes = models.TextField()
     old_order_status = models.ForeignKey(
-        OrderStatus, verbose_name='Old Order Status',
-        related_name='old_order_status')
+        OrderStatus,
+        verbose_name='Old Order Status',
+        related_name='old_order_status',
+        on_delete=models.CASCADE
+    )
     new_order_status = models.ForeignKey(
-        OrderStatus, verbose_name='New Order Status',
-        related_name='new_order_status')
+        OrderStatus,
+        verbose_name='New Order Status',
+        related_name='new_order_status',
+        on_delete=models.CASCADE
+    )
 
     def __unicode__(self):
+        return self.notes[:25]
+
+    def __str__(self):
         return self.notes[:25]
 
     class Meta:
@@ -271,10 +339,14 @@ class OrderNotificationRecipients(models.Model):
     orders are placed/updated etc are targeted to the correct
     individuals
     """
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE
+    )
     satellite_instrument_group = models.ManyToManyField(
         'dictionaries.SatelliteInstrumentGroup',
-        verbose_name='SatelliteInstrument', null=True, blank=True,
+        verbose_name='SatelliteInstrument',
+        blank=True,
         help_text=(
             'Please choose one or more SatelliteInstrument. Use ctrl-click'
             'to select more than one.'
@@ -282,7 +354,7 @@ class OrderNotificationRecipients(models.Model):
     )
     classes = models.ManyToManyField(
         ContentType,
-        null=True, blank=True,
+        blank=True,
         verbose_name='Product classes',
         help_text=(
             'Please subscribe to one or more product class. Use ctrl-click to '
@@ -297,8 +369,11 @@ class OrderNotificationRecipients(models.Model):
     def __unicode__(self):
         return str(self.user.username)
 
+    def __str__(self):
+        return str(self.user.username)
+
     @staticmethod
-    def getUsersForProduct(theProduct):
+    def get_users_for_product(product):
         """
         Returns all users registered to this product class or sensors
 
@@ -311,7 +386,7 @@ class OrderNotificationRecipients(models.Model):
         """
         # Determines the product concrete class, should raise an error if does
         # not exists
-        instance = theProduct.getConcreteInstance()
+        instance = product.getConcreteInstance()
         # Get class listeners
         listeners = set([o.user for o in (
             OrderNotificationRecipients.objects
@@ -340,8 +415,16 @@ class NonSearchRecord(models.Model):
     upstream vendor's products but give us the ability to keep statistics on
     sales.
     """
-    user = models.ForeignKey('auth.User')
-    order = models.ForeignKey('orders.Order', null=True, blank=True)
+    user = models.ForeignKey(
+        'auth.User',
+        on_delete=models.CASCADE
+    )
+    order = models.ForeignKey(
+        'orders.Order',
+        null=True,
+        blank=True,
+        on_delete=models.CASCADE
+    )
     product_description = models.CharField(
         max_length=100,
         help_text='Description of an ordered product'
@@ -359,7 +442,10 @@ class NonSearchRecord(models.Model):
         max_digits=10, decimal_places=2, null=True, blank=True
     )
     currency = models.ForeignKey(
-        'exchange.Currency', null=True, blank=True
+        'exchange.Currency',
+        null=True,
+        blank=True,
+        on_delete=models.CASCADE
     )
 
     def __unicode__(self):

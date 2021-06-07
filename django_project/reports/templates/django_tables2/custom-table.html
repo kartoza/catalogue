@@ -1,4 +1,3 @@
-{% spaceless %}
 {% load django_tables2 %}
 {% load i18n %}
 {% if table.page.has_previous or table.page.has_next %}
@@ -87,7 +86,6 @@
 {% endwith %}
 </div>
 {% endif %}
-{% endspaceless %}
 <script>
 {% if table.page.has_previous %}
 $('.previous-btn').tooltip({

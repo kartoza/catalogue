@@ -18,17 +18,23 @@ __date__ = '01/01/2011'
 __copyright__ = 'South African National Space Agency'
 
 import logging
-logger = logging.getLogger(__name__)
-from django.contrib.auth.models import User
 
+from dictionaries.models import SubsidyType
+from django.contrib.auth.models import User
 from django import forms
 
-from .models import (
-    OrderStatus,
+from orders.models import (
     Order,
     OrderStatusHistory,
-    NonSearchRecord
+    NonSearchRecord,
+    OrderStatus,
+    MarketSector,
+    Datum,
+    DeliveryMethod,
+    FileFormat
 )
+
+logger = logging.getLogger(__name__)
 
 
 class OrderStatusForm(forms.ModelForm):
@@ -38,18 +44,51 @@ class OrderStatusForm(forms.ModelForm):
 
 
 class OrderForm(forms.ModelForm):
+    market_sector = forms.ModelChoiceField(
+        queryset=MarketSector.objects.order_by('name'),
+        label='Market sector'
+    )
+    subsidy_type_assigned = forms.ModelChoiceField(
+        queryset=SubsidyType.objects.order_by('name'),
+        empty_label=None
+    )
+
+    subsidy_type_requested = forms.ModelChoiceField(
+        queryset=SubsidyType.objects.order_by('name'),
+        empty_label=None
+    )
+    datum = forms.ModelChoiceField(
+        queryset=Datum.objects.order_by('name'),
+        empty_label=None
+    )
+    file_format = forms.ModelChoiceField(
+        queryset=FileFormat.objects.order_by('name'),
+        empty_label=None
+    )
+    delivery_method = forms.ModelChoiceField(
+        queryset=DeliveryMethod.objects.order_by('name'),
+        empty_label=None,
+        to_field_name='name',
+    )
+    user = forms.ModelChoiceField(
+        queryset=User.objects.order_by('username'),
+        # label='User'
+        empty_label='Select user'
+    )
+
     class Meta:
         model = Order
         exclude = ('order_status',)
-
-    def __init__(self, *args, **kwargs):
-      super(OrderForm, self).__init__(*args, **kwargs)
-      self.fields['market_sector'].empty_label = "--- Please select ---"
-      # following line needed to refresh widget copy of choice list
-      self.fields['market_sector'].widget.choices = self.fields['market_sector'].choices
-      self.fields['subsidy_type_assigned'].empty_label = None
-      self.fields['subsidy_type_requested'].empty_label = None
-      self.fields['user'].queryset = User.objects.order_by('username')
+        fields = (
+            'datum',
+            'market_sector',
+            'subsidy_type_assigned',
+            'subsidy_type_requested',
+            'user',
+            'file_format',
+            'delivery_method',
+            'notes'
+        )
 
 
 class OrderFormNonSearchRecords(forms.ModelForm):
@@ -58,12 +97,13 @@ class OrderFormNonSearchRecords(forms.ModelForm):
         exclude = ('order_status', 'file_format', 'datum', 'resampling_method', 'delivery_method')
 
     def __init__(self, *args, **kwargs):
-      super(OrderFormNonSearchRecords, self).__init__(*args, **kwargs)
-      self.fields['subsidy_type_assigned'].empty_label = None
-      self.fields['subsidy_type_requested'].empty_label = None
-      users = User.objects.all()
-      User._meta.ordering = ['first_name','last_name','username']
-      self.fields['user'].choices = [(user.pk, (user.username if user.get_full_name() == "" else user.get_full_name())) for user in users]
+        super(OrderFormNonSearchRecords, self).__init__(*args, **kwargs)
+        self.fields['subsidy_type_assigned'].empty_label = "--- Please select ---"
+        self.fields['subsidy_type_requested'].empty_label = "--- Please select ---"
+        users = User.objects.all()
+        User._meta.ordering = ['first_name', 'last_name', 'username']
+        self.fields['user'].choices = [
+            (user.pk, (user.username if user.get_full_name() == "" else user.get_full_name())) for user in users]
 
 
 class OrderStatusHistoryForm(forms.ModelForm):

@@ -55,8 +55,8 @@ USE_GEOIP = True
 GEOIP_PATH = ABS_PATH('core', 'geoip_data')
 # Hack to make geoip work on OSX
 # See https://code.djangoproject.com/ticket/19168
-GEOIP_COUNTRY = 'GeoIP.dat'
-GEOIP_CITY = 'GeoLiteCity.dat'
+GEOIP_COUNTRY = 'GeoLite2-Country.mmdb'
+GEOIP_CITY = 'GeoLite2-City.mmdb'
 
 # this is the public domain name or IP address of this django instance.
 # get ip address logic provided in utils.py
@@ -81,10 +81,10 @@ SHP_UPLOAD_DIR = '/tmp/'
 EMAIL_NOTIFICATIONS_ENABLED = True
 
 # extra middleware classes
-MIDDLEWARE_CLASSES += (
-    'catalogue.middleware.stripwhitespace'
-    '.StripWhitespaceMiddleware',
-)
+# MIDDLEWARE += (
+#     'catalogue.middleware.stripwhitespace'
+#    '.StripWhitespaceMiddleware',
+# )
 
 CATALOGUE_ISO_METADATA_XML_TEMPLATE = ABS_PATH('..', (
     'resources/PackageTemplate/Metadata/'

@@ -31,7 +31,7 @@ from catalogue.dbhelpers import executeRAWSQL
 
 ###############################################################################
 
-class VisitHelpersManager(models.GeoManager):
+class VisitHelpersManager(models.Manager):
     """
     Visit model helper methods
     """
@@ -108,8 +108,13 @@ class Visit(models.Model):
     visit_date = models.DateTimeField(
         'DateAdded', auto_now=True, auto_now_add=False
     )
-    user = models.ForeignKey(User, null=True, blank=True)
-    objects = models.GeoManager()
+    user = models.ForeignKey(
+        User,
+        null=True,
+        blank=True,
+        on_delete=models.CASCADE
+    )
+    objects = models.Manager()
     helpers = VisitHelpersManager()
 
     class Meta:
@@ -128,7 +133,7 @@ class VisitorReport(models.Model):
     geometry = models.PointField(srid=4326, null=True, blank=True)
     country = models.CharField(max_length=64)
     city = models.CharField(max_length=64)
-    objects = models.GeoManager()
+    objects = models.Manager()
 
     def __unicode(self):
         return str(self.city)
@@ -149,7 +154,7 @@ class WorldBorders(models.Model):
     name = models.CharField(max_length=100)
     geometry = models.MultiPolygonField(srid=4326)
 
-    objects = models.GeoManager()
+    # objects = models.Manager()
 
     class Meta:
         app_label = 'catalogue'
