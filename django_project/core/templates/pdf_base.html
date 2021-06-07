@@ -1,36 +1,74 @@
-{{ loa }}
+{% load staticfiles %}
+{% load rangetag %}
 <html>
 <head>
 <style>
     @page {
         size: a4 portrait;
-        @frame header_frame {           /* Static Frame */
-            -pdf-frame-content: header_content;
-            left: 50pt; width: 512pt; top: 50pt; height: 40pt;
-        }
-        @frame content_frame {          /* Content Frame */
-            left: 50pt; width: 512pt; top: 90pt; height: 632pt;
-        }
-        @frame footer_frame {           /* Another static Frame */
-            -pdf-frame-content: footer_content;
-            left: 50pt; width: 512pt; top: 772pt; height: 20pt;
-        }
+        margin: 20mm;
     }
+    body {
+        font-size: 11px;
+    }
+    header {
+        display: inline-block;
+        width: 100%;
+    }
+    header img {
+        width:auto;
+        height: auto;
+        max-height:80px;
+        float: left;
+    }
+    header table {
+        display: inline-block;
+        float: right;
+        text-align: right;
+    }
+    .date {
+        margin-top: 15px;
+        float: right;
+    }
+    .bold {
+        font-weight: bold;
+    }
+    #container{
+        margin-top: 40px;
+        position: relative;
+    }
+     #title {
+        font-size: 14px;
+    }
+    #content {
+        margin-top: 20px;
+        width: 100%;
+    }
+
 </style>
 </head>
 
 <body>
     <!-- Content for Static Frame 'header_frame' -->
-    <div id="header_content">
-        <img src="">
-    </div>
+    <header>
+        <img src="{{ 'sansa-logos/SANSA-logo.png' | local_static_filepath }}" />
+        <table >
+            <tr><td class="bold">SANSA Earth Observation Online Catalogue</td></tr>
+            <tr><td><a href="http://catalogue.sansa.org.za">http://catalogue.sansa.org.za</a></td></tr>
+            <tr><td>Email <a href="customers-eo@sansa.org.za">customers-eo@sansa.org.za</a></td></tr>
+            <tr><td>Tel +27 12 844 0386/0370</td></tr>
+        </table>
+    </header>
+    <section>
+        <div class="date"><span>{% now "F j, Y" %}</span></div>
+    </section>
+    <section id="container">
+        <div id="title" class="bold">{% block title %} Page title {% endblock %}</div>
+        <div id="content">
+        {% block content %}
+            Content
+        {% endblock %}
+        </div>
+    </section>
 
-    <!-- Content for Static Frame 'footer_frame' -->
-    <div id="footer_content">(c) - page <pdf:pagenumber>
-        of <pdf:pagecount>
-    </div>
-
-    <!-- HTML Content -->
-    To PDF or not to PDF
 </body>
 </html>
