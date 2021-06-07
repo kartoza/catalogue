@@ -1,5 +1,6 @@
 from django.conf.urls import url
 
+from .api import SearchRecordView, AddSearchRecordView
 from .views import (
     downloadSearchResult,
     downloadSearchResultMetadata,
@@ -21,5 +22,7 @@ urlpatterns = [
     url(r'^submitsearch/$', submitSearch,
         name='submitSearch'),
     url(r'^upload_geo/$', upload_geo,
-        name='upload_geo')
+        name='upload_geo'),
+    url('api/searchrecords', AddSearchRecordView.as_view()),
+    url('api/searchrecords/<int:pk>', SearchRecordView.as_view()),
 ]
