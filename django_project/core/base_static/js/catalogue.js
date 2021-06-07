@@ -314,13 +314,13 @@ function showErrorAddToCart(request) {
   unblock();
 }
 
-function addToCart( theId )
+function addToCart( pk )
 {
   // Show a wait image before we hit our ajax call
   block();
   //$.get("/addtocart/" + theId + "/?xhr");
   $.ajax({
-    url: "/addtocart/" + theId + "/?xhr",
+    url: "/addtocart/" + pk + "/?xhr",
     dataType: "json",
     success: showMiniCart,
     error: showErrorAddToCart

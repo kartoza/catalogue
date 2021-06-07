@@ -1,14 +1,8 @@
-{% extends "base.html" %}
-{% block content %}
-    <div class="row-fluid text-center">
-        <h2>Your Order Summary Mail Notification</h2>
-        <button onclick='location="{% url 'order-Summary' %}?pdf"' class="btn">
-            <i class="icon-download"></i> Download as PDF
-        </button>
-    </div>
-
+{% extends "pdf_base.html" %}
+{% block title %}
     ORDER NOTIFICATION
-    <p></p>
+{% endblock %}
+{% block content %}
     <p style="text-align:center;font-size:1.1em">
         Order Number: {{ myOrder.id }}
         <br/>
@@ -41,7 +35,6 @@
         <br/><br/>
         The SANSA-Earth Observation team.
     </p>
-
 
     <h2>Product List</h2>
     {% for myRecord in myRecords %}

@@ -26,6 +26,7 @@ from email.mime.base import MIMEBase
 
 import logging
 
+from django.core.files.storage import FileSystemStorage
 from django.template import RequestContext
 # for rendering template to email
 from django.template.loader import render_to_string
@@ -45,7 +46,7 @@ from orders.models import (
 )
 
 from search.models import SearchRecord
-from webodt.shortcuts import render_to
+from weasyprint import HTML
 
 # Read default notification recipients from settings
 CATALOGUE_DEFAULT_NOTIFICATION_RECIPIENTS = getattr(
@@ -124,6 +125,7 @@ class EmailMultiRelated(EmailMultiAlternatives):
             msg = SafeMIMEMultipart(_subtype=self.related_subtype,
                                     encoding=encoding)
             if self.body:
+                logging.error(msg)
                 msg.attach(body_msg)
                 for related in self.related_attachments:
                     msg.attach(self._create_related_attachment(*related))
@@ -271,13 +273,17 @@ def notifySalesStaff(theUser, theOrderId, theContext=None):
     records = SearchRecord.objects.filter(user=theUser,
                                           order=order).select_related()
     history = OrderStatusHistory.objects.filter(order=order)
-    order_pdf = render_to(template_name='order-summary.odt',
-                          dictionary={
-                              'myOrder': order,
-                              'myRecords': records,
-                              'myHistory': history
-                          },
-                          format='pdf')
+    dictionary = {
+        'myOrder': order,
+        'myRecords': records,
+        'myHistory': history
+    }
+    html_template = 'pdf/order-summary.html'
+    html_string = render_to_string(html_template, dictionary)
+    html_object = HTML(
+        string=html_string,
+    )
+    html_object.write_pdf(target='/tmp/order-summary.pdf')
     email_subject = ('SANSA Order ' + str(order.id) + ' status update (' +
                      order.order_status.name + ')')
 
@@ -333,7 +339,8 @@ def notifySalesStaff(theUser, theOrderId, theContext=None):
             os.path.join(
                 settings.STATIC_ROOT, 'images', 'sac_header_email.jpg'))
         # get the filename of a PDF, ideally we should reuse theOrderPDF object
-        msg.attach_related_file(order_pdf.name)
+
+        msg.attach_related_file('/tmp/order-summary.pdf')
         # add message
         messages.append(msg)
 
@@ -620,12 +627,12 @@ def getObject(theClass):
 
 
 @login_required
-def isStrategicPartner(theRequest):
+def isStrategicPartner(request):
     """Returns true if the current user is a CSIR strategic partner
     otherwise false"""
     myProfile = None
     try:
-        myProfile = theRequest.user.get_profile()
+        myProfile = request.user.get_profile()
     except:
         logger.debug('Profile does not exist')
     myPartnerFlag = False
@@ -634,7 +641,7 @@ def isStrategicPartner(theRequest):
     return myPartnerFlag
 
 
-def standardLayers(theRequest):
+def standardLayers(request):
     """Helper methods used to return standard layer defs for the openlayers
        control
        .. note:: intended to be published as a view in urls.py
@@ -654,7 +661,7 @@ def standardLayers(theRequest):
     myLayerDefinitions = None
     myActiveBaseMap = None
     try:
-        myProfile = theRequest.user.get_profile()
+        myProfile = request.user.get_profile()
     except:
         logger.debug('Profile does not exist')
     if myProfile and myProfile.strategic_partner:
@@ -670,7 +677,7 @@ def standardLayers(theRequest):
     return myLayersList, myLayerDefinitions, myActiveBaseMap
 
 
-def standardLayersWithCart(theRequest):
+def standardLayersWithCart(request):
     """Helper methods used to return standard layer defs for the openlayers
        control
        .. note:: intended to be published as a view in urls.py
@@ -686,10 +693,10 @@ def standardLayersWithCart(theRequest):
         myActiveLayer will be the name of the active base map
       """
     (myLayersList,
-     myLayerDefinitions, myActiveBaseMap) = standardLayers(theRequest)
+     myLayerDefinitions, myActiveBaseMap) = standardLayers(request)
     myLayersList = myLayersList.replace(']', ',cartLayer]')
     myLayerDefinitions.append(
-        WEB_LAYERS['CartLayer'].replace('USERNAME', theRequest.user.username))
+        WEB_LAYERS['CartLayer'].replace('USERNAME', request.user.username))
     return myLayersList, myLayerDefinitions, myActiveBaseMap
 
 
@@ -748,24 +755,24 @@ def writeSearchRecordThumbToZip(theSearchRecord, theZip):
 
 
 # render_to_kml helpers
-def render_to_kml(theTemplate, theContext, filename):
-    response = HttpResponse(render_to_string(theTemplate, theContext))
+def render_to_kml(template, context, filename):
+    response = HttpResponse(render_to_string(template, context))
     response['Content-Type'] = 'application/vnd.google-earth.kml+xml'
     response['Content-Disposition'] = 'attachment; filename=%s.kml' % filename
     return response
 
 
-def render_to_kmz(theTemplate, theContext, filename):
+def render_to_kmz(template, context, filename):
     """Render a kmz file. If search records are supplied, their georeferenced
     thumbnails will be bundled into the kmz archive."""
     # try to get MAX_METADATA_RECORDS from settings, default to 500
     myMaxMetadataRecords = getattr(settings, 'MAX_METADATA_RECORDS', 500)
-    myKml = render_to_string(theTemplate, theContext)
+    myKml = render_to_string(template, context)
     myZipData = BytesIO()
     myZip = zipfile.ZipFile(myZipData, 'w', zipfile.ZIP_DEFLATED)
     myZip.writestr('%s.kml' % filename, myKml)
-    if 'mySearchRecords' in theContext:
-        for myRecord in theContext['mySearchRecords'][:myMaxMetadataRecords]:
+    if 'mySearchRecords' in context:
+        for myRecord in context['mySearchRecords'][:myMaxMetadataRecords]:
             writeSearchRecordThumbToZip(myRecord, myZip)
     myZip.close()
     response = HttpResponse()

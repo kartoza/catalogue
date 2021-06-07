@@ -111,10 +111,10 @@ function showCartDownloadOptions() {
 }
 
 function toggleSearchShare() {
-    var btn = $("#SearchShare");
-    var content = $('#SearchShare-content');
-    var div = $('#SearchShare-input-container');
-    var input = '<input type="text" value="http://' + window.location.host + '/search/' + APP.guid + '/" onclick="this.select();"/>';
+    const btn = $("#SearchShare");
+    const content = $('#SearchShare-content');
+    const div = $('#SearchShare-input-container');
+    const input = '<input type="text" value="http://' + window.location.host + '/search/' + APP.guid + '/" onclick="this.select();"/>';
     if (!searchShareOpen) {
         div.html(input);
         content.fadeIn('fast');
@@ -182,9 +182,9 @@ function toggleLayerSwitcher() {
 }
 
 function validate_form(){
-  var form_ok = false;
-  var myDateRange = $('#date_range .date_range_row');
-  if (myDateRange.length === 0) {
+    let form_ok = false;
+    const myDateRange = $('#date_range .date_range_row');
+    if (myDateRange.length === 0) {
         var helpElem = '<span class="error-block">You have to select at least 1 date range!</span>'
         $('#date_range').parent().prepend(helpElem);
         $('#content-2').collapse('show');
@@ -362,7 +362,7 @@ APP.handleAoiGeometry = function(e) {
 }
 
 APP.handlePathorRow = function(e) {
-    var error_msg = 'Enter a valid value.';
+    const error_msg = 'Enter a valid value.';
     APP.removeErrorNotification(e);
     if (e.target.value != '') {
         if (e.target.value.length == 1) {
@@ -380,7 +380,7 @@ APP.handlePathorRow = function(e) {
 }
 
 APP.handleCloudMax = function(e) {
-    var error_msg = 'Enter a valid value, number between 0 and 100.';
+    let error_msg = 'Enter a valid value, number between 0 and 100.';
     APP.removeErrorNotification(e);
     if(!isValidCloud(e.target.value) || !isValidCloud($('#id_cloud_min').val())) {
         APP.addErrorNotifiction(e,error_msg);
@@ -393,7 +393,7 @@ APP.handleCloudMax = function(e) {
 }
 
 APP.handleCloudMin = function(e) {
-    var error_msg = 'Enter a valid value, number between 0 and 100.';
+    let error_msg = 'Enter a valid value, number between 0 and 100.';
     APP.removeErrorNotification(e);
 
     if(!isValidCloud(e.target.value) || !isValidCloud($('#id_cloud_max').val())) {
@@ -421,7 +421,7 @@ function isValidCloud(cloud) {
 }
 
 APP.handleAngle = function(e) {
-    var error_msg = 'Enter a number.';
+    const error_msg = 'Enter a number.';
     APP.removeErrorNotification(e);
     if (e.target.value != '') {
         if (!APP.isNumber(e.target.value)) {
@@ -436,7 +436,7 @@ APP.upload_image = function(field, upload_url) {
         return;
     }
     file = field.files[0];
-    var formdata = new FormData();
+    const formdata = new FormData();
     formdata.append('file_upload', file);
     $.ajax({
         url: upload_url,
@@ -557,7 +557,7 @@ APP.ResultGridView = Backbone.View.extend({
             this.cont.empty();
             $('#results-container').perfectScrollbar('destroy');
             this.cont.append('<div class="result-items-header"><div class="result-item-info">Product</div><div class="result-item-info-date">Date</div><div class="cloud-cover">Cloud cover</div></div>');
-            var self=this;
+            const self = this;
             _(this.collection.models).each(function(item){
                 self.renderItem(item);
             },this);
@@ -568,15 +568,15 @@ APP.ResultGridView = Backbone.View.extend({
         return this;
     },
     renderItem: function(item) {
-        var myItem = new APP.ResultGridViewItem({
-            model:item,
-            collection:this.collection
+        const myItem = new APP.ResultGridViewItem({
+            model: item,
+            collection: this.collection
         });
-        var el = myItem.render().el;
+        const el = myItem.render().el;
         this.cont.append(el);
         // check if result item if is in cart
-        var id = myItem.model.get('id');
-        var exist = APP.Cart.filter(function(item) {
+        const id = myItem.model.get('id');
+        const exist = APP.Cart.filter(function(item) {
             return item.get("product").id == id;
         });
         // if it is, color it differently
@@ -588,13 +588,13 @@ APP.ResultGridView = Backbone.View.extend({
     },
 
     _createSelectPaginator: function(current, end) {
-        var select = document.createElement("select");
+        const select = document.createElement("select");
         select.style.width = "50px";
-        var self = this;
+        const self = this;
         select.onchange = function(event) {
             self.jumpToPage(event.target.value);
         };
-        var option;
+        let option;
         for (var i = 1; i < end+1; i++) {
             option = document.createElement("option");
             option.setAttribute("value", i);
@@ -659,7 +659,7 @@ APP.ResultGridViewItem = Backbone.View.extend({
             varPopover = [{'id': 0}];
         } else {
             if (varPopover[0].id != 0) varPopover.popover('destroy');
-            var src = event.currentTarget.src.replace('mini','large');
+            const src = event.currentTarget.src.replace('mini', 'large');
             varPopover = $(event.currentTarget).parent();
             $.loadImage(src).done(function(image) {
                 var src = image.src.replace('large','raw');
@@ -675,12 +675,12 @@ APP.ResultGridViewItem = Backbone.View.extend({
     },
 
     focusItem: function() {
-        var selectedID = this.model.get('original_product_id');
-        var pos2 = $("#result_item_"+ selectedID).offset();
-        var targetFeature = searchLayer.getFeatureElementRecordId(selectedID);
+        const selectedID = this.model.get('original_product_id');
+        const pos2 = $("#result_item_" + selectedID).offset();
+        const targetFeature = searchLayer.getFeatureElementRecordId(selectedID);
         if (targetFeature.onScreen()) {
-            var point = targetFeature.geometry.getCentroid();
-            var pos = myMap.map.getPixelFromLonLat(new OpenLayers.LonLat(point.x, point.y));
+            const point = targetFeature.geometry.getCentroid();
+            const pos = myMap.map.getPixelFromLonLat(new OpenLayers.LonLat(point.x, point.y));
             this.line = APP.s.line(pos.x, pos.y + 35, pos2.left+2, pos2.top+9);
             this.line.animate({stroke: "#2f96b4", strokeWidth: "4"}, 500);
         }
@@ -689,7 +689,7 @@ APP.ResultGridViewItem = Backbone.View.extend({
 
     blurItem: function() {
         if (typeof this.line != 'undefined') this.line.remove();
-        var selectedID = this.model.get('original_product_id');
+        const selectedID = this.model.get('original_product_id');
         if (APP.selectedFeatureID == selectedID) {
             $APP.trigger('highlightSearchRecord', {'original_product_id': selectedID, 'zoom': false});
         } else {
@@ -734,14 +734,14 @@ APP.ResultGridViewItem = Backbone.View.extend({
     },
     addToCart: function(event) {
         if (UserLoged) {
-            var id = this.model.get('id');
+            const id = this.model.get('id');
             var exist = APP.Cart.filter(function(item) {
                 return item.get("product").id == id;
             });
             if (exist.length > 0) {
                 alert('Product already in cart!');
             } else {
-                APP.Cart.create({'product': {'id':id}},{wait: true});
+                APP.Cart.create({'product':id},{wait: true});
                 $APP.trigger('colorCartFeature', {'original_product_id': this.model.get('original_product_id')});
                 $("#result_item_"+ this.model.get('original_product_id')).addClass('cartResultRow');
                 $("#result_item_"+ this.model.get('original_product_id')).children('.cart-remove-button').removeClass('hide');
@@ -773,37 +773,42 @@ APP.ResultGridViewItem = Backbone.View.extend({
     },
 });
 
-var template = [
-            '<div class="result-item" id="result_item_<%= model.get("original_product_id") %>">',
-            '<img class="result-img" src="/thumbnail/<%= model.get("id") %>/mini/" />',
-            '<div class="result-item-info">',
-              '<p><%= model.get("productName") %></p>',
-            '</div>',
-            '<div class="result-item-info-date">',
-              '<p><%= model.get("product_date") %></p>',
-            '</div>',
-            '<div class="cloud-cover"><p>',
-              '<% if(model.get("cloud_cover") != -1) { %><%= model.get("cloud_cover") %>%',
-              '<% } else { %>UNK',
-              '<% } %>',
-            '</p></div>',
-            '<span class="button metadata-button btn btn-default" data-title="View Metadata"><i class="icon-list-alt"></i></span>',
-            '<span class="button cart-button btn btn-default" data-title="Add to Cart"><i class="icon-shopping-cart"></i></span>',
-            '<span class="button cart-remove-button btn btn-danger hide" data-title="Remove From Cart"><i class="icon-remove"></i></span>',
-          '</div>'
-          ].join('');
+const template = [
+    '<div class="result-item" id="result_item_<%= model.get("original_product_id") %>">',
+    '<img class="result-img" src="/thumbnail/<%= model.get("id") %>/mini/" />',
+    '<div class="result-item-info">',
+    '<p><%= model.get("product_name") %></p>',
+    '</div>',
+    '<div class="result-item-info-date">',
+    '<p><%= model.get("product_date") %></p>',
+    '</div>',
+    '<div class="cloud-cover"><p>',
+    '<% if(model.get("cloud_cover") != -1) { %><%= model.get("cloud_cover") %>%',
+    '<% } else { %>UNK',
+    '<% } %>',
+    '</p></div>',
+    '<span class="button metadata-button btn btn-default" data-title="View Metadata"><i class="icon-list-alt"></i></span>',
+    '<span class="button cart-button btn btn-default" data-title="Add to Cart"><i class="icon-shopping-cart"></i></span>',
+    '<span class="button cart-remove-button btn btn-danger hide" data-title="Remove From Cart"><i class="icon-remove"></i></span>',
+    '</div>'
+].join('');
 
-var ResultgridViewHtml = new APP.ResultGridView({
-        'collection': APP.Results});
+const ResultgridViewHtml = new APP.ResultGridView({
+    'collection': APP.Results
+});
 
 
 APP.CartItem = Backbone.Model.extend({
-    urlRoot: '/api/v1/searchrecords/',
+    urlRoot: '/api/searchrecords/',
     idAttribute: 'id',
     url: function () {
-        var urlRoot;
-        if (_.isFunction(this.urlRoot)) { urlRoot = this.urlRoot(); } else { urlRoot = this.urlRoot; }
-        var id;
+        let urlRoot;
+        if (_.isFunction(this.urlRoot)) {
+            urlRoot = this.urlRoot();
+        } else {
+            urlRoot = this.urlRoot;
+        }
+        let id;
         if (typeof this.id === 'undefined') {
             id = '';
         } else {
@@ -815,9 +820,9 @@ APP.CartItem = Backbone.Model.extend({
 
 APP.CartItemCollection = Backbone.Collection.extend({
     //urlRoot: '/api/v1/searchresults/6cfa079f-8be1-4029-a1eb-f80875a4e27c/',
-    urlRoot: '/api/v1/searchrecords/',
+    urlRoot: '/api/searchrecords/',
     model: APP.CartItem,
-    limit: 100
+    limit: 100,
 });
 
 APP.Cart = new APP.CartItemCollection();
@@ -836,7 +841,7 @@ APP.CartGridView = Backbone.View.extend({
     },
 
     deleteItem: function(event, data) {
-        var exist = APP.Cart.find(function(item) {
+        const exist = APP.Cart.find(function (item) {
             return item.get('product').original_product_id == data.id;
         });
         if (exist) {
@@ -882,7 +887,7 @@ APP.CartGridViewItem = Backbone.View.extend({
     },
 
     showMetadata: function() {
-        var id = this.model.get('product').id;
+        const id = this.model.get('product').id;
         APP.$modal.load('/metadata/'+id, '', function(){
             APP.$modal.modal();
         });
@@ -898,26 +903,26 @@ APP.CartGridViewItem = Backbone.View.extend({
 });
 
 
-var templateCart = [
-        '<div class="cart-item">',
-          '<img src="/thumbnail/<%= model.get("product").id %>/mini/" />',
-          '<div class="cart-item-info">',
-            '<p><%= model.get("product").productName %></p>',
-          '</div>',
-          '<div class="cart-item-info-date">',
-            '<p><%= model.get("product").product_date %></p>',
-          '</div>',
-          '<div class="cart-item-buttons">',
-              '<span class="button metadata-button btn btn-default" data-toggle="tooltip" data-title="View Metadata"><i class="icon-list-alt"></i></span>',
-              '<span class="button delete-button btn btn-danger" data-toggle="tooltip" data-title="Remove From Cart"><i class="icon-remove"></i></span>',
-          '</div>',
-          '<div class="cart-item-cloud-cover"><p>',
-            '<% if(model.get("product").cloud_cover != -1) { %><%= model.get("product").cloud_cover %>%',
-              '<% } else { %>UNK',
-              '<% } %>',
-          '</p></div>',
-        '</div>'
-        ].join('');
+const templateCart = [
+    '<div class="cart-item">',
+    '<img src="/thumbnail/<%= model.get("product").id %>/mini/" />',
+    '<div class="cart-item-info">',
+    '<p><%= model.get("product").product_name %></p>',
+    '</div>',
+    '<div class="cart-item-info-date">',
+    '<p><%= model.get("product").product_date %></p>',
+    '</div>',
+    '<div class="cart-item-buttons">',
+    '<span class="button metadata-button btn btn-default" data-toggle="tooltip" data-title="View Metadata"><i class="icon-list-alt"></i></span>',
+    '<span class="button delete-button btn btn-danger" data-toggle="tooltip" data-title="Remove From Cart"><i class="icon-remove"></i></span>',
+    '</div>',
+    '<div class="cart-item-cloud-cover"><p>',
+    '<% if(model.get("product").cloud_cover != -1) { %><%= model.get("product").cloud_cover %>%',
+    '<% } else { %>UNK',
+    '<% } %>',
+    '</p></div>',
+    '</div>'
+].join('');
 
 var CartgridViewHtml = new APP.CartGridView({
         'collection': APP.Cart});

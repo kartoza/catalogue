@@ -23,7 +23,7 @@ from django.http import HttpResponse, Http404
 # For shopping cart and ajax product id search
 import json as simplejson
 from django.conf import settings
-#Dane Springmeyer's django-shapes app for exporting results as a shpfile
+# Dane Springmeyer's django-shapes app for exporting results as a shpfile
 from shapes.views import ShpResponder
 
 # Models and forms for our app
@@ -39,6 +39,7 @@ from catalogue.views.helpers import (
     downloadISOMetadata)
 
 from search.models import SearchRecord
+
 ###########################################################
 #
 # Shopping cart stuff
@@ -46,32 +47,33 @@ from search.models import SearchRecord
 ###########################################################
 logger = logging.getLogger(__name__)
 
+
 @login_required
-def downloadCart(request):
+def download_cart(request):
     """Dispaches request and returns products in cart in desired file format"""
-    myRecords = SearchRecord.objects.all().filter(
+    records = SearchRecord.objects.all().filter(
         user=request.user).filter(order__isnull=True)
 
-    myFilename = '%s-cart' % request.user.username
+    filename = '%s-cart' % request.user.username
     if 'shp' in request.GET:
-        myResponder = ShpResponder(myRecords)
-        myResponder.file_name = myFilename
-        return  myResponder.write_order_products(myRecords)
+        responder = ShpResponder(records)
+        responder.file_name = filename
+        return responder.write_order_products(records)
     elif 'kml' in request.GET:
         return render_to_kml(
             'kml/searchRecords.kml', {
-                'mySearchRecords': myRecords,
+                'mySearchRecords': records,
                 'external_site_url': settings.DOMAIN,
                 'transparentStyle': True},
-            myFilename)
+            filename)
     elif 'kmz' in request.GET:
         return render_to_kmz(
             'kml/searchRecords.kml', {
-                'mySearchRecords': myRecords,
+                'mySearchRecords': records,
                 'external_site_url': settings.DOMAIN,
                 'transparentStyle': True,
                 'myThumbsFlag': True},
-            myFilename)
+            filename)
     else:
         logger.info(
             'Request cannot be proccesed, unsupported download file type')
@@ -95,14 +97,14 @@ def downloadCartMetadata(request):
 
 
 @login_required
-def addToCart(request, theId):
+def addToCart(request, pk):
     """
     Optionally we can return the response as json for ajax clients. We still
     keep normal html response to support clients with no ajax support. see
     http://www.b-list.org/weblog/2006/jul/31/django-tips-simple-ajax
         -example-part-1/
     """
-    logger.info('addToCart : id ' + theId)
+    logger.info('addToCart : id ' + pk)
     # we need to check for the xhr param because response redirect
     # does not pass along the ajax request header to the redirect url
     # The redirected url needs to check for is_ajax or xhr to
@@ -110,10 +112,10 @@ def addToCart(request, theId):
     myAjaxFlag = 'xhr' in request.GET or request.is_ajax()
 
     # construct a record by passing some params
-    myGenericProduct = GenericProduct.objects.get(id=theId)
+    myGenericProduct = GenericProduct.objects.get(id=pk)
     myDuplicateRecords = (
         SearchRecord.objects.filter(product=myGenericProduct)
-        .filter(user=request.user).filter(order__isnull=True))
+            .filter(user=request.user).filter(order__isnull=True))
     myResponse = None
     if len(myDuplicateRecords) == 0:
         myRecord = SearchRecord().create(request.user, myGenericProduct)
@@ -125,7 +127,7 @@ def addToCart(request, theId):
                     myRecord.product.product_id,),
                 content_type='text/html')
         else:
-            myDict = {'Item': theId, 'Status': 'Added'}
+            myDict = {'Item': pk, 'Status': 'Added'}
             myResponse = HttpResponse(
                 simplejson.dumps(myDict), content_type='application/json')
     else:
@@ -170,7 +172,7 @@ def showCartContents(request):
         myAjaxFlag = True
     myRecords = (
         SearchRecord.objects.all().filter(user=request.user)
-        .filter(order__isnull=True))
+            .filter(order__isnull=True))
     logger.info('Cart contains : %s items' % str(myRecords.count()))
     return ({
         'myRecords': myRecords,

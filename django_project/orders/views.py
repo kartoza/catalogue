@@ -541,7 +541,7 @@ def update_order_history(request):
 
 
 @login_required
-@require_profile('addorder')
+@require_profile('add_order')
 def add_order(request):
     logger.debug('Order called')
     logger.info('Preparing order for user ' + str(request.user))
@@ -564,7 +564,7 @@ def add_order(request):
             logger.debug('Cart has records')
             logger.info('Cart contains : %i items', my_records.count())
     extra_options = {
-        'my_records': my_records,
+        'myRecords': my_records,
     }
     logger.info('Add Order called')
     if request.method == 'POST':
@@ -573,7 +573,7 @@ def add_order(request):
         my_order_form = OrderForm(request.POST, request.FILES)
 
         context = {
-            'my_orderForm': my_order_form,
+            'myOrderForm': my_order_form,
         }
         # shortcut to join two dicts
         context.update(extra_options)
@@ -613,7 +613,7 @@ def add_order(request):
             }
         )
         context = {
-            'my_orderForm': my_order_form,
+            'myOrderForm': my_order_form,
         }
         # shortcut to join two dicts
         context.update(extra_options),

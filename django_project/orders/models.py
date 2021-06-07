@@ -345,7 +345,8 @@ class OrderNotificationRecipients(models.Model):
     )
     satellite_instrument_group = models.ManyToManyField(
         'dictionaries.SatelliteInstrumentGroup',
-        verbose_name='SatelliteInstrument', null=True, blank=True,
+        verbose_name='SatelliteInstrument',
+        blank=True,
         help_text=(
             'Please choose one or more SatelliteInstrument. Use ctrl-click'
             'to select more than one.'
@@ -353,7 +354,7 @@ class OrderNotificationRecipients(models.Model):
     )
     classes = models.ManyToManyField(
         ContentType,
-        null=True, blank=True,
+        blank=True,
         verbose_name='Product classes',
         help_text=(
             'Please subscribe to one or more product class. Use ctrl-click to '

@@ -136,7 +136,7 @@
 				{% for record in myRecords %}
 					<tr>
 						<td><img src="/thumbnail/{{ record.product.id }}/small/"></td>
-						<td>{{ record.product.productName }}</td>
+						<td>{{ record.product.product_name }}</td>
 						<td>{{ record.product.formated_date }}</td>
 						<td>{{ record.product.getConcreteInstance.cloud_cover }}</td>
 						<td><button class="btn btn-small metadata" data-id="{{ record.product.id }}" type="button"><i class="icon-list-alt"></i></button></td>

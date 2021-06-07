@@ -21,7 +21,9 @@ INSTALLED_APPS += (
     'pipeline',
     'exchange',
     'django_tables2',
-    'celery'
+    'celery',
+    # django rest
+    'rest_framework',
 )
 
 # Added by George for webodt

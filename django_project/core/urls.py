@@ -31,7 +31,7 @@ from catalogue.views.others import (
 from catalogue.views.shopping_cart import (
     addToCart,
     removeFromCart,
-    downloadCart,
+    download_cart,
     downloadCartMetadata,
     showCartContents,
     showMiniCartContents,
@@ -103,10 +103,10 @@ urlpatterns = [
     url(r'^showpreview/(?P<theId>[0-9]+)/(?P<theSize>[a-z]+)/$', show_preview, name='showPreview'),
     # show info for a scene or segment by #
     url(r'^metadata/(?P<theId>[0-9]+)/$', metadata, name="metadata"),
-    url(r'^addtocart/(?P<theId>[0-9]+)/$', addToCart, name='addToCart'),
+    url(r'^addtocart/(?P<pk>[0-9]+)/$', addToCart, name='addToCart'),
     url(r'^removefromcart/(?P<theId>[0-9]+)/$', removeFromCart, name='removeFromCart'),
     # cart contents for embedding into other pages
-    url(r'^downloadcart/$', downloadCart, name='downloadCart'),
+    url(r'^downloadcart/$', download_cart, name='downloadCart'),
     url(r'^downloadcartmetadata/$', downloadCartMetadata, name='downloadCartMetadata'),
     url(r'^showcartcontents/$', showCartContents, name='showCartContents'),  # used by xhr requests
     url(r'^showminicartcontents/$', showMiniCartContents, name='showMiniCartContents'),
