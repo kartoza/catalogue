@@ -31,7 +31,6 @@ DEBUG = TEMPLATE_DEBUG = False
 # No terminating slash
 EXTERNAL_SITE_URL = 'http://catalogue.sansa.org.za'
 
-
 # Url that holds directories of thumbnails...
 THUMBS_ROOT = ABS_PATH('thumbs_out')
 
@@ -41,7 +40,6 @@ IMAGERY_ROOT = ABS_PATH('imagery_mastercopies')
 # The public visible url that imagery should be
 # accessed from (include trailing /)
 IMAGERY_URL_ROOT = EXTERNAL_SITE_URL + '/imagery/'
-
 
 # Set to false if you want jquery to be loaded
 # on clients from google mirrors rather
@@ -60,7 +58,7 @@ GEOIP_CITY = 'GeoLite2-City.mmdb'
 
 # this is the public domain name or IP address of this django instance.
 # get ip address logic provided in utils.py
-#HOST = get_ip_address('eth1')
+# HOST = get_ip_address('eth1')
 HOST = '192.168.1.1'
 
 # used in various places including kml generator
@@ -90,10 +88,10 @@ CATALOGUE_ISO_METADATA_XML_TEMPLATE = ABS_PATH('..', (
     'resources/PackageTemplate/Metadata/'
     'ISOMetadata/ISOMetadata_template.xml'))
 
-#limit the number of returned metadata records
+# limit the number of returned metadata records
 MAX_METADATA_RECORDS = 500
 
-#number of search results per page
+# number of search results per page
 RESULTS_NUMBER = 50
 
 # For ingesting MISR data
@@ -101,9 +99,9 @@ MISR_ROOT = ''
 
 # These are optional - only set if you have wierd issues like DataSource
 # unknown
-#GEOS_LIBRARY_PATH='/usr/lib/libgeos_c.so.1'
-#GEOIP_LIBRARY_PATH='/usr/lib/libGeoIP.so.1'
-#GDAL_LIBRARY_PATH='/usr/local/lib/libgdal.so'
+# GEOS_LIBRARY_PATH='/usr/lib/libgeos_c.so.1'
+# GEOIP_LIBRARY_PATH='/usr/lib/libGeoIP.so.1'
+# GDAL_LIBRARY_PATH='/usr/local/lib/libgdal.so'
 
 PIPELINE = {
     'STYLESHEETS': {
