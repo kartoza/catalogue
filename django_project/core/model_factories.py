@@ -85,24 +85,4 @@ class UserF(factory.django.DjangoModelFactory):
         return user
 
 
-class CurrencyF(factory.django.DjangoModelFactory):
-    """
-    Factory for exchange.Currency
-    """
-    class Meta:
-        model = Currency
 
-    code = factory.Sequence(lambda n: "%s" % n)
-    name = factory.Sequence(lambda n: "Currency %s" % n)
-
-
-class ExchangeRateF(factory.django.DjangoModelFactory):
-    """
-    Factory for exchange.ExchangeRate
-    """
-    class Meta:
-        model = ExchangeRate
-
-    source = factory.SubFactory(CurrencyF)
-    target = factory.SubFactory(CurrencyF)
-    rate = 0.0
