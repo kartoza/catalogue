@@ -34,7 +34,9 @@ ADD deployment/docker/uwsgi.conf /uwsgi.conf
 EXPOSE 8080
 
 WORKDIR /home/web/django_project
+COPY django_project /home/web/django_project
 CMD ["uwsgi", "--ini", "/uwsgi.conf"]
+
 
 #--------- Generic stuff all our Dockerfiles should start with so we get caching ------------
 # Note this base image is based on debian

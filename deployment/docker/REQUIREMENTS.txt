@@ -48,7 +48,7 @@ reportlab
 selenium
 django-tables2
 jsmin
-celery==3.1.25
+celery==5.1.0
 geoip2==4.1.0
 xhtml2pdf==0.2.5
 djangorestframework==3.12.4

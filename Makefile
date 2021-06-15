@@ -8,6 +8,11 @@ help: ## Print this help
 
 setup: pull build up db-restore migrate ## first setup
 
+deploy:  ## Build and push the to the private repo
+	docker-compose build uwsgi
+	docker tag catalogue_uwsgi:latest cr.kartoza.com/sansa_catalogue
+	docker push cr.kartoza.com/sansa_catalogue
+
 pull:  ## Pull pre-built images
 	docker-compose pull
 
