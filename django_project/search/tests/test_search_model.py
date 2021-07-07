@@ -21,7 +21,7 @@ from django.test import TestCase
 
 from core.model_factories import UserF
 from dictionaries.tests.model_factories import CollectionF
-from .model_factories import SearchF, SearchDateRangeF
+from model_factories import SearchF, SearchDateRangeF
 
 
 class TestSearchCRUD(TestCase):
@@ -38,19 +38,19 @@ class TestSearchCRUD(TestCase):
         """
         Tests Search model creation
         """
-        myCollections = [CollectionF.create(), CollectionF.create()]
-        myModel = SearchF.create(collections=myCollections)
+        collections = [CollectionF.create(), CollectionF.create()]
+        model = SearchF.create(collections=collections)
 
-        #check if PK exists
-        self.assertTrue(myModel.pk is not None)
+        # check if PK exists
+        self.assertTrue(model.pk is not None)
 
-        self.assertTrue(myModel.collection.count() == 2)
+        self.assertTrue(model.collection.count() == 2)
 
     def test_Search_read(self):
         """
         Tests Search model read
         """
-        myExpectedModelData = {
+        data = {
             'record_count': None,
             'use_cloud_cover': False,
             'sensor_inclination_angle_end': None,
@@ -67,34 +67,34 @@ class TestSearchCRUD(TestCase):
             'cloud_mean': 5,
             'license_type': None
         }
-        myModel = SearchF.create(
+        model = SearchF.create(
             guid='69d814b7-3164-42b9-9530-50ae77806da9',
             collections=[CollectionF.create(), CollectionF.create()]
         )
-        #check if data is correct
-        for key, val in list(myExpectedModelData.items()):
-            self.assertEqual(myModel.__dict__.get(key), val)
+        # check if data is correct
+        for key, val in list(data.items()):
+            self.assertEqual(model.__dict__.get(key), val)
 
         self.assertEqual(
-            myModel.geometry.hex,
+            model.geometry.hex,
             '010300000001000000050000000AD7A3703D8A314066666666660640C014AE47E'
             '17AD4344014AE47E17A3440C0CDCCCCCCCC4C3440F6285C8FC29541C0D7A3703D'
             '0AD7314033333333335341C00AD7A3703D8A314066666666660640C0')
 
         self.assertEqual(
-            myModel.processing_level.count(), 0)
+            model.processing_level.count(), 0)
 
         self.assertEqual(
-            myModel.collection.count(), 2)
+            model.collection.count(), 2)
 
         self.assertTrue(
-            myModel.user.pk is not None)
+            model.user.pk is not None)
 
-    def test_Search_update(self):
+    def test_search_update(self):
         """
         Tests Search model update
         """
-        myModel = SearchF.create()
+        model = SearchF.create()
         myNewModelData = {
             'order_id': 1,
             'product_id': 1960810,
@@ -104,66 +104,66 @@ class TestSearchCRUD(TestCase):
             'product_ready': True
         }
 
-        myModel.__dict__.update(myNewModelData)
-        myModel.save()
+        model.__dict__.update(myNewModelData)
+        model.save()
 
-        #check if updated
+        # check if updated
         for key, val in list(myNewModelData.items()):
-            self.assertEqual(myModel.__dict__.get(key), val)
+            self.assertEqual(model.__dict__.get(key), val)
 
-    def test_Search_delete(self):
+    def test_search_delete(self):
         """
         Tests Search model delete
         """
-        myModel = SearchF.create(guid=None)
+        model = SearchF.create(guid=None)
 
-        myModel.delete()
+        model.delete()
 
-        #check if deleted
-        self.assertTrue(myModel.pk is None)
+        # check if deleted
+        self.assertTrue(model.pk is None)
 
     def test_Search_datesAsString_single(self):
         """
         Tests Search model dates_as_string method
         """
-        mySearch = SearchF.create()
-        SearchDateRangeF.create(search=mySearch)
+        search = SearchF.create()
+        SearchDateRangeF.create(search=search)
 
-        myExpResults = '15-07-2010 : 15-07-2012'
+        results = '15-07-2010 : 15-07-2012'
 
-        myRes = mySearch.dates_as_string()
-        self.assertEqual(myRes, myExpResults)
+        res = search.dates_as_string()
+        self.assertEqual(res, results)
 
     def test_Search_datesAsString_multiple(self):
         """
         Tests Search model dates_as_string method
         """
-        mySearch = SearchF.create()
+        search = SearchF.create()
         # add date ranges
-        SearchDateRangeF.create(search=mySearch)
-        SearchDateRangeF.create(search=mySearch, end_date='2013-07-16')
-        SearchDateRangeF.create(search=mySearch, end_date='2012-07-16')
+        SearchDateRangeF.create(search=search)
+        SearchDateRangeF.create(search=search, end_date='2013-07-16')
+        SearchDateRangeF.create(search=search, end_date='2012-07-16')
 
-        myExpResults = (
+        results = (
             '15-07-2010 : 15-07-2012, 15-07-2010 : 16-07-2013, '
             '15-07-2010 : 16-07-2012'
         )
 
-        myRes = mySearch.dates_as_string()
-        self.assertEqual(myRes, myExpResults)
+        res = search.dates_as_string()
+        self.assertEqual(res, results)
 
     def test_Search_model_repr(self):
         """
         Tests Search model repr
         """
-        myUser = UserF(username='test user')
-        mySearch = SearchF.build(
+        user = UserF(username='test user')
+        search = SearchF.build(
             search_date='15-07-2010',
-            user=myUser,
+            user=user,
             guid='69d814b7-3164-42b9-9530-50ae77806da9'
         )
 
         self.assertEqual(
-            str(mySearch),
+            str(search),
             '15-07-2010 Guid: 69d814b7-3164-42b9-9530-50ae77806da9 User: '
             'test user')

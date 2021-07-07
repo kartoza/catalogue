@@ -19,7 +19,7 @@ __date__ = '20/08/2013'
 __copyright__ = 'South African National Space Agency'
 
 
-from django.core.urlresolvers import reverse, NoReverseMatch
+from django.urls import reverse, NoReverseMatch
 from django.test import TestCase
 from django.test.client import Client
 
@@ -30,7 +30,7 @@ from dictionaries.tests.model_factories import (
 from catalogue.tests.model_factories import OpticalProductF
 
 
-class ReportsViews_dataSummaryTable_Tests(TestCase):
+class TestReportsViewsDataSummaryTable(TestCase):
     """
     Tests reports.py dataSummaryTable method/view
     """

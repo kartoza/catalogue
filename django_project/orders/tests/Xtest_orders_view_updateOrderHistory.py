@@ -18,14 +18,13 @@ __version__ = '0.2'
 __date__ = '19/08/2013'
 __copyright__ = 'South African National Space Agency'
 
-from django.core.urlresolvers import reverse, NoReverseMatch
+from django.urls import reverse, NoReverseMatch
 from django.test import TestCase
 from django.test.client import Client
 
-
-from ..forms import OrderStatusHistoryForm
-
 from core.model_factories import UserF
+from orders.forms import OrderStatusHistoryForm
+
 from .model_factories import (
     OrderF, OrderStatusHistoryF, OrderStatusF
 )
@@ -33,7 +32,7 @@ from .model_factories import (
 from search.tests.model_factories import SearchRecordF
 
 
-class OrdersViews_updateOrderHistory_Tests(TestCase):
+class TestOrdersViewsUpdateOrderHistory(TestCase):
     """
     Tests orders.py updateOrderHistory method/view
     """

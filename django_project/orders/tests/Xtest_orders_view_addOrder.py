@@ -20,7 +20,7 @@ __copyright__ = 'South African National Space Agency'
 
 import re
 
-from django.core.urlresolvers import reverse, NoReverseMatch
+from django.urls import reverse, NoReverseMatch
 from django.test import TestCase
 from django.test.client import Client
 
@@ -233,54 +233,54 @@ class OrdersViews_addOrder_Tests(TestCase):
             'rate': 2.0
         })
 
-        tstProcLevel = ProcessingLevelF.create(**{})
-        tstInstType = InstrumentTypeF.create()
+        proc_level = ProcessingLevelF.create(**{})
+        inst_type = InstrumentTypeF.create()
 
-        tstInsTypeProcLevel = InstrumentTypeProcessingLevelF.create(**{
-            'instrument_type': tstInstType,
-            'processinglevel': tstProcLevel
+        ins_type_proc_level = InstrumentTypeProcessingLevelF.create(**{
+            'instrument_type': inst_type,
+            'processinglevel': proc_level
         })
 
         SpectralModeProcessingCostsF.create(**{
             'spectral_mode': mySpecMode,
-            'instrumenttypeprocessinglevel': tstInsTypeProcLevel,
+            'instrumenttypeprocessinglevel': ins_type_proc_level,
             'cost_per_scene': 123.45,
             'currency': myCurrency
         })
 
-        tstSatInstGrp = SatelliteInstrumentGroupF.create(**{
-            'instrument_type': tstInstType
+        sat_inst_grp = SatelliteInstrumentGroupF.create(**{
+            'instrument_type': inst_type
         })
 
-        tstSatInst = SatelliteInstrumentF.create(**{
-            'satellite_instrument_group': tstSatInstGrp
+        sat_inst = SatelliteInstrumentF.create(**{
+            'satellite_instrument_group': sat_inst_grp
         })
-        myOPP = OpticalProductProfileF.create(**{
+        opp = OpticalProductProfileF.create(**{
             'spectral_mode': mySpecMode,
-            'satellite_instrument': tstSatInst
+            'satellite_instrument': sat_inst
         })
 
-        myOProduct = OpticalProductF.create(**{
+        product = OpticalProductF.create(**{
             'projection': myProjection,
-            'product_profile': myOPP
+            'product_profile': opp
         })
 
         SearchRecordF.create(**{
             'id': 6,
             'user': myUser,
             'order': None,
-            'product': myOProduct,
-            'processing_level': tstProcLevel
+            'product': product,
+            'processing_level': proc_level
         })
 
         OrderStatusF.create(**{'id': 1})
 
-        myOrdersCount = Order.objects.all().count()
+        orders_count = Order.objects.all().count()
 
-        myClient = Client()
-        myClient.login(username='timlinux', password='password')
+        client = Client()
+        client.login(username='timlinux', password='password')
 
-        myPostData = {
+        data = {
             'projection': ['86'], 'file_format': ['1'], 'notes': [''],
             'datum': ['1'], 'resampling_method': ['1'],
             'market_sector': ['1'], 'delivery_method': ['1'],
@@ -289,38 +289,38 @@ class OrdersViews_addOrder_Tests(TestCase):
             '6-projection': ['86']
         }
 
-        myResp = myClient.post(reverse('addOrder', kwargs={}), myPostData)
+        resp = client.post(reverse('addOrder', kwargs={}), data)
 
-        self.assertEqual(myResp.status_code, 302)
+        self.assertEqual(resp.status_code, 302)
         self.assertTrue(
             re.match(
                 '/vieworder/(\d+)/',
-                myResp['Location']) is not None
+                resp['Location']) is not None
         )
 
         myOrdersCount_new = Order.objects.all().count()
-        self.assertEqual(myOrdersCount_new, myOrdersCount + 1)
+        self.assertEqual(myOrdersCount_new, orders_count + 1)
 
     def test_addOrder_login_staff_invalid_post(self):
         """
         Test view if user is staff, and post is invalid (projection)
         """
 
-        myUser = UserF.create(**{
+        user = UserF.create(**{
             'username': 'timlinux',
             'password': 'password',
             'is_staff': True
         })
 
         SansaUserProfileF.create(**{
-            'user': myUser,
+            'user': user,
             'address1': '12321 kjk',
             'address2': 'kjkj',
             'post_code': '123',
             'organisation': 'None',
             'contact_no': '123123'
         })
-        myProjection = ProjectionF.create(**{
+        projection = ProjectionF.create(**{
             'id': 86,
             'epsg_code': '4326'
         })
@@ -331,59 +331,59 @@ class OrdersViews_addOrder_Tests(TestCase):
         MarketSectorF.create(**{'id': 1})
         DeliveryMethodF.create(**{'id': 1})
 
-        myOProduct = OpticalProductF.create(**{
-            'projection': myProjection
+        product = OpticalProductF.create(**{
+            'projection': projection
         })
 
         SearchRecordF.create(**{
             'id': 6,
-            'user': myUser,
+            'user': user,
             'order': None,
-            'product': myOProduct
+            'product': product
         })
 
         OrderStatusF.create(**{'id': 1})
 
-        myClient = Client()
-        myClient.login(username='timlinux', password='password')
+        client = Client()
+        client.login(username='timlinux', password='password')
 
-        myPostData = {
+        data = {
             'projection': ['100'], 'file_format': ['1'], 'notes': [''],
             'datum': ['1'], 'resampling_method': ['1'],
             'market_sector': ['1'], 'ref_id': ['6']
         }
 
-        myResp = myClient.post(reverse('addOrder', kwargs={}), myPostData)
+        res = client.post(reverse('addOrder', kwargs={}), data)
 
-        self.assertEqual(myResp.status_code, 200)
+        self.assertEqual(res.status_code, 200)
 
-        self.assertEqual(myResp.context['myShowSensorFlag'], False)
-        self.assertEqual(myResp.context['myShowSceneIdFlag'], True)
-        self.assertEqual(myResp.context['myShowDateFlag'], False)
-        self.assertEqual(myResp.context['myShowRemoveIconFlag'], True)
-        self.assertEqual(myResp.context['myShowRowFlag'], False)
-        self.assertEqual(myResp.context['myShowPathFlag'], False)
-        self.assertEqual(myResp.context['myShowCloudCoverFlag'], True)
-        self.assertEqual(myResp.context['myShowMetdataFlag'], False)
-        self.assertEqual(myResp.context['myShowCartFlag'], False)
-        self.assertEqual(myResp.context['myShowCartContentsFlag'], True)
-        self.assertEqual(myResp.context['myShowPreviewFlag'], False)
-        self.assertEqual(myResp.context['myShowDeliveryDetailsFlag'], False)
+        self.assertEqual(res.context['myShowSensorFlag'], False)
+        self.assertEqual(res.context['myShowSceneIdFlag'], True)
+        self.assertEqual(res.context['myShowDateFlag'], False)
+        self.assertEqual(res.context['myShowRemoveIconFlag'], True)
+        self.assertEqual(res.context['myShowRowFlag'], False)
+        self.assertEqual(res.context['myShowPathFlag'], False)
+        self.assertEqual(res.context['myShowCloudCoverFlag'], True)
+        self.assertEqual(res.context['myShowMetdataFlag'], False)
+        self.assertEqual(res.context['myShowCartFlag'], False)
+        self.assertEqual(res.context['myShowCartContentsFlag'], True)
+        self.assertEqual(res.context['myShowPreviewFlag'], False)
+        self.assertEqual(res.context['myShowDeliveryDetailsFlag'], False)
         self.assertEqual(
-            myResp.context['myShowDeliveryDetailsFormFlag'], True)
-        self.assertEqual(myResp.context['myCartTitle'], 'Order Product List')
-        self.assertEqual(len(myResp.context['myRecords']), 1)
+            res.context['myShowDeliveryDetailsFormFlag'], True)
+        self.assertEqual(res.context['myCartTitle'], 'Order Product List')
+        self.assertEqual(len(res.context['myRecords']), 1)
         self.assertEqual(
-            myResp.context['myBaseTemplate'], 'emptytemplate.html')
-        self.assertEqual(myResp.context['mySubmitLabel'], 'Submit Order')
+            res.context['myBaseTemplate'], 'emptytemplate.html')
+        self.assertEqual(res.context['mySubmitLabel'], 'Submit Order')
         # self.assertEqual(
         #     myResp.context['myLayerDefinitions'], myLayerDefinitions)
         # self.assertEqual(myResp.context['myLayersList'], myLayersList)
         # self.assertEqual(myResp.context['myActiveBaseMap'], myActiveBaseMap)
-        self.assertEqual(myResp.context['myOrderForm'].__class__, OrderForm)
-        self.assertEqual(myResp.context['myTitle'], 'Create a new order')
-        self.assertEqual(myResp.context['mySubmitLabel'], 'Submit Order')
-        self.assertEqual(myResp.context['myMessage'], (
+        self.assertEqual(res.context['myOrderForm'].__class__, OrderForm)
+        self.assertEqual(res.context['myTitle'], 'Create a new order')
+        self.assertEqual(res.context['mySubmitLabel'], 'Submit Order')
+        self.assertEqual(res.context['myMessage'], (
             ' <div>Please specify any details for your order'
             ' requirements below. If you need specific processing'
             ' steps taken on individual images, please use the notes'
@@ -394,12 +394,12 @@ class OrdersViews_addOrder_Tests(TestCase):
             ' input field below.</div>'))
 
         # check used templates
-        myExpTemplates = [
+        exp_templates = [
             'addPage.html', 'base.html', 'pipeline/css.html',
             'pipeline/css.html', 'pipeline/js.html', 'menu.html',
             'useraccounts/menu_content.html', 'add.html',
             'cartContents.html', 'recordHeader.html', 'record.html'
         ]
 
-        myUsedTemplates = [tmpl.name for tmpl in myResp.templates]
-        self.assertEqual(myUsedTemplates, myExpTemplates)
+        used_templates = [tmpl.name for tmpl in res.templates]
+        self.assertEqual(used_templates, exp_templates)

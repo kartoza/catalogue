@@ -22,7 +22,7 @@ from django.test import TestCase
 from .model_factories import DatumF
 
 
-class DatumCRUD_Test(TestCase):
+class TestDatumCRUD(TestCase):
     """
     Tests models.
     """

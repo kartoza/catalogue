@@ -18,8 +18,7 @@ __date__ = '17/07/2013'
 __copyright__ = 'South African National Space Agency'
 
 from django.test import TestCase
-
-from .model_factories import ClipF
+from model_factories import ClipF
 
 
 class TestClipCRUD(TestCase):

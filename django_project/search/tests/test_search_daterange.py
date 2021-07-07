@@ -19,20 +19,17 @@ __date__ = '23/01/2014'
 __copyright__ = 'South African National Space Agency'
 
 from datetime import datetime, date
-
 from django.test import TestCase
-
 from search.searcher import Searcher
-
 from catalogue.tests.model_factories import OpticalProductF
+from model_factories import SearchF, SearchDateRangeF
 
-from .model_factories import SearchF, SearchDateRangeF
 
-
-class SearchDateRange_Test(TestCase):
+class TestSearchDateRange(TestCase):
     """
     Tests Search Date ranges
     """
+
     def setUp(self):
         """
         Set up before each test
@@ -66,7 +63,7 @@ class SearchDateRange_Test(TestCase):
             'end_date': date(2012, 0o7, 15)
         })
 
-        #create Searcher object
+        # create Searcher object
         mySearcher = Searcher(mySearch)
         self.assertEqual(mySearcher.mQuerySet.count(), 2)
 
@@ -99,6 +96,6 @@ class SearchDateRange_Test(TestCase):
             'end_date': date(2010, 0o7, 15)
         })
 
-        #create Searcher object
+        # create Searcher object
         mySearcher = Searcher(mySearch)
         self.assertEqual(mySearcher.mQuerySet.count(), 2)

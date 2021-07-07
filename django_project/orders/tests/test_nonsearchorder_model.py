@@ -18,14 +18,11 @@ __date__ = '06/02/2014'
 __copyright__ = 'South African National Space Agency'
 
 from django.test import TestCase
-
-
-from core.model_factories import CurrencyF
 from core.model_factories import UserF
-from .model_factories import NonSearchRecordF, OrderF
+from model_factories import NonSearchRecordF, OrderF, CurrencyF
 
 
-class NonSearchRecordCRUD_Test(TestCase):
+class TestNonSearchRecordCRUD(TestCase):
     """
     Tests models.
     """
@@ -40,78 +37,78 @@ class NonSearchRecordCRUD_Test(TestCase):
         """
         Tests NonSearchRecord model creation
         """
-        myModel = NonSearchRecordF.create()
-        #check if PK exists
-        self.assertTrue(myModel.pk is not None)
+        model = NonSearchRecordF.create()
+        # check if PK exists
+        self.assertTrue(model.pk is not None)
 
     def test_NonSearchRecord_delete(self):
         """
         Tests NonSearchRecord model delete
         """
-        myModel = NonSearchRecordF.create()
+        model = NonSearchRecordF.create()
 
-        myModel.delete()
+        model.delete()
 
-        #check if deleted
-        self.assertTrue(myModel.pk is None)
+        # check if deleted
+        self.assertTrue(model.pk is None)
 
     def test_NonSearchRecord_read(self):
         """
         Tests NonSearchRecord model read
         """
-        tstUser = UserF.create(**{
+        user = UserF.create(**{
             'username': 'timlinux',
             'password': 'password'
         })
 
-        myOrder = OrderF.create(notes='New Order')
-        tstCurrency = CurrencyF.create(**{
+        order = OrderF.create(notes='New Order')
+        currency = CurrencyF.create(**{
             'name': 'SuperGold'
         })
 
-        myModel = NonSearchRecordF.create(**{
-            'user': tstUser,
-            'order': myOrder,
+        model = NonSearchRecordF.create(**{
+            'user': user,
+            'order': order,
             'product_description': 'A new product description',
             'download_path': 'someplace/somewhere',
             'cost_per_scene': 123.12,
-            'currency': tstCurrency,
+            'currency': currency,
             'rand_cost_per_scene': 321.21
         })
 
-        self.assertTrue(myModel.pk is not None)
+        self.assertTrue(model.pk is not None)
         self.assertEqual(
-            myModel.product_description, 'A new product description')
-        self.assertEqual(myModel.download_path, 'someplace/somewhere')
-        self.assertEqual(myModel.cost_per_scene, 123.12)
-        self.assertEqual(myModel.rand_cost_per_scene, 321.21)
+            model.product_description, 'A new product description')
+        self.assertEqual(model.download_path, 'someplace/somewhere')
+        self.assertEqual(model.cost_per_scene, 123.12)
+        self.assertEqual(model.rand_cost_per_scene, 321.21)
 
     def test_NonSearchRecord_update(self):
         """
         Tests NonSearchRecord model update
         """
-        myModel = NonSearchRecordF.create()
+        model = NonSearchRecordF.create()
 
-        myNewModelData = {
+        data = {
             'product_description': 'A new product description',
             'download_path': 'someplace/somewhere',
             'cost_per_scene': 123.12,
             'rand_cost_per_scene': 321.21
         }
 
-        myModel.__dict__.update(myNewModelData)
-        myModel.save()
+        model.__dict__.update(data)
+        model.save()
 
-        #check if updated
-        for key, val in list(myNewModelData.items()):
-            self.assertEqual(myModel.__dict__.get(key), val)
+        # check if updated
+        for key, val in list(data.items()):
+            self.assertEqual(model.__dict__.get(key), val)
 
     def test_NonSearchRecord_repr(self):
         """
         Tests NonSearchRecord model repr method
         """
-        myModel = NonSearchRecordF.create(**{
+        model = NonSearchRecordF.create(**{
             'id': 12321
         })
 
-        self.assertEqual(str(myModel), '12321')
+        self.assertEqual(str(model), '12321')

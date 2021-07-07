@@ -22,7 +22,7 @@ from django.test import TestCase
 from .model_factories import OrderStatusHistoryF
 
 
-class OrderStatusHistoryCRUD_Test(TestCase):
+class TestOrderStatusHistoryCRUD(TestCase):
     """
     Tests models.
     """
