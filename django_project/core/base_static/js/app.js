@@ -1,26 +1,15 @@
 require.config({
     paths: {
-        jquery: 'libs/jquery/jquery-3.3.1.min',
-        ol: 'libs/openlayers-4.6.4/ol',
-        underscore: 'libs/underscore-1.8.3/underscore-min',
-        backbone: 'libs/backbone-1.3.3/backbone-min',
-        bootstrap: 'libs/bootstrap-4.0.0/js/bootstrap.bundle.min',
+        jquery: 'libs/jquery/jquery-3.6.0.min',
+        ol: 'libs/openlayers-6.5.0/ol',
+        underscore: 'libs/underscore-1.13.1/underscore-min',
+        backbone: 'libs/backbone-1.4.0/backbone-min',
+        bootstrap: 'libs/bootstrap-5.0.2/js/bootstrap.bundle.min',
         jqueryUi: 'libs/jquery-ui-1.12.1/jquery-ui.min',
         layerSwitcher: 'libs/ol-layerswitcher/ol-layerswitcher',
-        olMapboxStyle: 'libs/ol-mapbox-style/olms',
-        noUiSlider: 'libs/noUiSlider.11.1.0/nouislider',
-        chartJs: 'libs/chart/Chart-2.7.2',
-        fileSaver: 'libs/FileSaver.js/1.3.3/FileSaver.min',
         htmlToCanvas: 'libs/htmlToCanvas/html2canvas.min',
-        gridStack: 'libs/gridstack-1.1.2/gridstack.min',
-        chosen: 'libs/chosen/chosen.jquery.min',
-        detectBrowser: 'utils/detect-browser',
-        'jquery-ui/ui/widget': 'libs/jquery-fileupload/vendor/jquery.ui.widget',
-        'jquery.iframe-transport': 'libs/jquery-fileupload/jquery.iframe-transport',
-        'jquery.fileupload': 'libs/jquery-fileupload/jquery.fileupload',
-        'jquery.fileupload-process': 'libs/jquery-fileupload/jquery.fileupload-process',
-        'jquery.fileupload-validate': 'libs/jquery-fileupload/jquery.fileupload-validate',
-        jqueryTouch: 'libs/jqueryui-touch-punch/jquery.ui.touch-punch.min'
+        jqueryTouch: 'libs/jqueryui-touch-punch/jquery.ui.touch-punch.min',
+        olMapboxStyle: 'libs/ol-mapbox-style/olms',
     },
     shim: {
         ol: {
@@ -45,10 +34,6 @@ require.config({
             deps: ['ol'],
             exports: 'LayerSwitcher'
         },
-        olMapboxStyle: {
-            deps: ['ol'],
-            exports: 'OlMapboxStyle'
-        },
         gridStack: {
             deps: [
                 'underscore',
@@ -72,7 +57,7 @@ require([
     Shared.Router = new Router();
 
     // Start Backbone history a necessary step for bookmarkable URL's
-    Backbone.history.start({hashChange: true, root: "/map/"});
+    // Backbone.history.start({hashChange: true, root: "/map/"});
 
     // A $( document ).ready() block.
     $(document).ready(function () {

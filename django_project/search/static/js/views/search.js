@@ -3,15 +3,10 @@ define([
     'underscore',
     'shared',
     'ol',
-    'noUiSlider',
-    'collections/search_result',
     'views/search_panel',
     'jquery',
-    'views/filter_panel/reference_category',
-    'views/filter_panel/spatial_filter',
-    'views/filter_panel/source_collection'
-], function (Backbone, _, Shared, ol, NoUiSlider, SearchResultCollection, SearchPanelView, $,
-             ReferenceCategoryView, SpatialFilterView, SourceCollectionView) {
+
+], function (Backbone, _, Shared, ol, SearchPanelView, $) {
 
     return Backbone.View.extend({
         template: _.template($('#map-search-container').html()),
@@ -124,7 +119,6 @@ define([
             this.spatialFilterView = new SpatialFilterView();
             this.$el.find('.spatial-filter-wrapper').append(this.spatialFilterView.render().$el);
 
-            this.sourceCollectionView = new SourceCollectionView({parent: this});
             this.$el.find('.source-collection-wrapper').append(this.sourceCollectionView.render().$el);
 
             var nativeOriginDropdown = self.$el.find('.native-origin-dropdown');

@@ -1,4 +1,4 @@
-define(['shared', 'backbone', 'underscore', 'jqueryUi', 'jquery', 'views/right_panel/validate_data_list'], function (Shared, Backbone, _, JqueryUI, $, ValidateDataListView) {
+define(['shared', 'backbone', 'underscore', 'jqueryUi', 'jquery'], function (Shared, Backbone, _, JqueryUI, $) {
     return Backbone.View.extend({
         template: _.template($('#side-panel-template').html()),
         className: 'panel-wrapper',
@@ -34,9 +34,6 @@ define(['shared', 'backbone', 'underscore', 'jqueryUi', 'jquery', 'views/right_p
             Shared.Dispatcher.on('sidePanel:closeValidateDataList', this.closeValidateDataList, this);
             Shared.Dispatcher.on('sidePanel:updateSiteDetailData', this.updateSiteDetailData, this);
 
-            this.validateDataListView = new ValidateDataListView({
-                parent: this
-            });
         },
         render: function () {
             this.$el.html(this.template());
@@ -56,15 +53,9 @@ define(['shared', 'backbone', 'underscore', 'jqueryUi', 'jquery', 'views/right_p
             this.clearSidePanel();
             this.openSidePanel();
             this.switchToSearchResultPanel();
-            this.validateDataListView.delegateEvents();
-            this.$el.find('#content-panel').append(this.validateDataListView.render().$el);
-            this.validateDataListView.show();
-            this.validationMode = true;
         },
         closeValidateDataList: function () {
             this.closeSidePanel();
-            this.validateDataListView.close();
-            this.validationMode = false;
         },
         isSidePanelOpen: function () {
             return this.rightPanel.is(":visible");
@@ -173,28 +164,6 @@ define(['shared', 'backbone', 'underscore', 'jqueryUi', 'jquery', 'views/right_p
             this.clearReturnButtonFunction();
             this.returnButton.hide();
         },
-        updateSiteDetailData: function (siteDetailData) {
-            this.siteDetailData = siteDetailData;
-        },
-        openDetailedSiteButton: function () {
-            if (this.siteDetailData) {
-                Shared.Dispatcher.trigger('map:showSiteDetailedDashboard', this.siteDetailData);
-            }
-        },
-        openFishDetailedSiteButton: function () {
-            filterParameters['modules'] = Shared.FishModuleID;
-            if (this.siteDetailData) {
-                Shared.Dispatcher.trigger('map:showSiteDetailedDashboard', this.siteDetailData);
-            }
-        },
-        openFishPanel: function () {
-            window.location.href = "/fish-form/?siteId=" + filterParameters['siteId'];
-        },
-        addSassPanel: function () {
-            window.location.href = "/sass/" + filterParameters['siteId'];
-        },
-        viewSassPanel: function () {
-            window.location.href = "/sass/dashboard/" + filterParameters['siteId'] + '/' + this.apiParameters(filterParameters);
-        }
+
     })
 });

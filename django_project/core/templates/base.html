@@ -12,36 +12,28 @@
   <meta name="robots" content="NONE,NOARCHIVE" />
   {# for Bootstrap responsive layout #}
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-      {% block extracss %}
+  {% block extracss %}{% endblock %}
     {# Be very careful about changing the order of these css includes as it can have unintended side effects #}
     <link href="{% url 'logVisit' %}" rel="stylesheet" type="text/css" />
-
+          <link href="{% static "css/navbar.css" %}" rel="stylesheet">
+          <link href="{% static "css/landing_page.css" %}" rel="stylesheet">
     {% stylesheet 'contrib' %}
     {% stylesheet 'base' %}
-
-    {% endblock %}
-
-  {% block extrajs %}
-    {# We can't use staticfiles template tag, because it will, in the combination with django-pipeline #}
-    {# it will generate a new OpenLayers.<insert_hash>.js filename which will break _getScriptLocation() -> https://github.com/openlayers/openlayers/blob/08327915d1f7f2add61e33c2092db211604a1921/lib/OpenLayers/SingleFile.js#L27 #}
-    {# which in the end breaks https://github.com/openlayers/openlayers/blob/08327915d1f7f2add61e33c2092db211604a1921/lib/OpenLayers/Map.js#L561 #}
-    {# the end result is a broken path for the style.css, which subtly brakes the page #}
-    <script type="text/javascript" charset="utf-8" src="/static/js/openlayers/OpenLayers.js"></script>
-
+  {% block extrajs %}{% endblock %}
     {% javascript 'base' %}
-
-    {% endblock %}
-
-      {% block extraHeaders %}
-      {% endblock %}
-
       <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}"/>
       <link rel="icon" href="{% static 'images/animated_favicon.gif' %}" type="image/gif" />
+      {% block extraHeaders %}{% endblock %}
 
     </head>
+    {% block navigation %}
+    <!-- Navigation -->
+        {% include "navigation_bar.html" %}
+    {% endblock %}
     <body {% block body_load %}{% endblock %}>
-      {% include "navigation_bar.html" %}
+    {% block header %}
+    {% endblock %}
+
       <div id="main-content" class="container main-content well">
         {% if messages %}
         <div id="system-messages">
@@ -56,29 +48,27 @@
           {% block content %}
           {% endblock %}
       </div>
-      <div id="main-footer" class="navbar navbar-fixed-bottom">
-        <div class="navbar-inner"  style="padding-left:10px;padding-right:10px;">
-          <div class="row-fluid">
-            <p id="dst-credits" class="navbar-text span4 footer-text"><img style="height:30px" src="{% static 'images/dst_logo_small.png' %}"/> This catalogue was funded by the <a href="http://www.dst.gov.za/">Department of Science and Technology.</a>
-            </p>
-            <p id="user-box" class="navbar-text span4 footer-text">
-            {% if user.is_authenticated %}
-              {% comment %}
-              {% load avatars %}
-              <img id="avatarimg" src="{% avatar 96 %}" class="left"/>
-              {% endcomment %}
-              You are logged in as {{user.first_name}} {{user.last_name}} ({{user}})
-            </p>
-            {% else %}
-              You are not logged in.
-            </p>
-            {% endif %}
-            <p id="legal" class="navbar-text span4 footer-text">Website &copy; 2010 SANSA, Earth Observation. &copy; 2008 CSIR, Satellite Applications Centre. All Rights Reserved. This catalogue was developed by <a href="http://kartoza.com">Kartoza (Pty) Ltd</a>
-            </p>
-          </div>
+
+    <div class="footer-wrapper footer">
+        <div id="inner-footer" class="wrap cf" style="width: 1040px; margin: 0 auto;">
+            <div class="-ft-content">
+                <div class="-ft-coorporate">
+                    <div class="-ft-logo">
+                        <span>Funded by the </span> <a href="https://www.gfdrr.org/" title="Department of Science and Technology" target="_blank"><img src="{% static 'images/logo-dsi.jpg' %}" alt="Department of Science and Technology logo"></a>
+                    </div>
+                </div>
+                <nav>
+                    <a href="{% url 'about' %}" class="-i-link">About</a>
+                    <a href="{% url 'contact' %}" class="-i-link">Contact</a>
+					<a href="http://www.dst.gov.za/" class="-i-link">DTS</a>
+					<a href="http://fundisa.sansa.org.za/" class="-i-link">Fundisa Student Portal</a>
+				</nav>
+            </div>
         </div>
-      </div>
-      <div id="recordtooltip">&nbsp;</div> {# used to display record tooltips #}
-      <div id="maptooltip">&nbsp;</div> {# used to display map tooltips #}
+        <center>
+            <div class="footer-item" style="padding-left: 15px"><span>Catalogue developed by</span></div>
+            <a class="footer-item" href="https://kartoza.com/" target="_blank"><img src="/static/images/kartoza-icon.png" alt="kartoza_logo" height="23"></a>
+        </center>
+    </div>
     </body>
   </html>

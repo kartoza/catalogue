@@ -1,38 +1,25 @@
 {% load i18n %}
-    <li class="dropdown">
-      <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user"></i> <span class="hidden-phone hidden-tablet custom-hide">Account</span><i class="icon-angle-down"></i></a>
-      <ul class="dropdown-menu">
+    <li class="nav-item  dropdown" class="dropdown">
+     <a class="dropdown-toggle" href="#"  id="dropdownMenuLink"
+           data-bs-toggle="dropdown" aria-expanded="false">Account</a>
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
       {% if user.is_authenticated %}
-        <li>
-          <a href="{% url "userena_profile_detail" user %}">{% trans "Personal information" %}</a>
-        </li>
-        <li>
-          <a href="{% url "userena_profile_edit" user %}">{% trans "Edit profile" %}</a>
-        </li>
+          <a class="dropdown-item" href="{% url "userena_profile_detail" user %}">{% trans "Personal information" %}</a>
+          <a class="dropdown-item" href="{% url "userena_profile_edit" user %}">{% trans "Edit profile" %}</a>
         {% comment %}
         <li>
           <a href="{% url profile_detail %}">{% trans "Avatar" %}</a>
         </li>
         {% endcomment %}
-        <li>
-          <a href="{% url "userena_password_change" user %}">{% trans "Change password" %}</a>
-        </li>
-        <li>
-          <a href="{% url "userena_email_change" user %}">
+          <a class="dropdown-item" href="{% url "userena_password_change" user %}">{% trans "Change password" %}</a>
+          <a class="dropdown-item" href="{% url "userena_email_change" user %}">
           {% if email %}{% trans "Change your e-mail address" %}{% else %}{% trans "Change your e-mail address" %}{% endif %}</a>
-        </li>
         {% if not validated and email %}
-        <li>
-          <a href="{% url "userena_email_confirm" %}">{% trans "Resend validation e-mail" %}</a>
-        </li>
+          <a class="dropdown-item" href="{% url "userena_email_confirm" %}">{% trans "Resend validation e-mail" %}</a>
         {% endif %}
-        <li>
-          <a href="{% url "userena_signout" %}">Logout</a>
-        </li>
+          <a class="dropdown-item" href="{% url "userena_signout" %}">Logout</a>
       {% else %}
-        <li>
-          <a href="{% url "userena_sigin" %}">Login</a>
-        </li>
+          <a class="dropdown-item" href="{% url "userena_sigin" %}">Login</a>
       {% endif %}
-      </ul>
+      </div>
     </li>

@@ -26,27 +26,27 @@
     },
 
     initLayers: function() {
-      const TMSOverlay =  ol.layer.TileLayer({
-          // "2012 Mosaic", "http://maps.sansa.org.za/SPOT2012-BM/", {
-            // layername: '.',
-            // type: 'png',
-            url: this.overlay_getTileURL,
-            // alpha: false,
-            // isBaseLayer: false,
-            // layer specific variables
-            // make sure we correctly transform bounds to the map projection
-            extent: ol.extent.boundingExtent(
-                [[16.0, -34.9999882412], [32.9999919763, -22.0]]),
-            minZoom: 1,
-            maxZoom: 15
-          });
+      // const TMSOverlay =  new ol.layer.TileLayer({
+      //     // "2012 Mosaic", "http://maps.sansa.org.za/SPOT2012-BM/", {
+      //       // layername: '.',
+      //       // type: 'png',
+      //       url: this.overlay_getTileURL,
+      //       // alpha: false,
+      //       // isBaseLayer: false,
+      //       // layer specific variables
+      //       // make sure we correctly transform bounds to the map projection
+      //       extent: ol.extent.boundingExtent(
+      //           [[16.0, -34.9999882412], [32.9999919763, -22.0]]),
+      //       minZoom: 1,
+      //       maxZoom: 15
+      //     });
 
       const layerMapnik = new ol.source.OSM();
 
       const myLayersList = [
         layerMapnik
       ];
-      this.map.addLayers(myLayersList);
+      // this.map.addLayers(myLayersList);
     },
 
     loadMap: function() {
@@ -55,9 +55,9 @@
 
       this.initLayers();
 
-    this.map.zoomToExtent(ol.extent.boundingExtent(
-        [[14.0,-35.0],[34.0,-21.0]])
-    );
+    // this.map.zoomToExtent(ol.extent.boundingExtent(
+    //     [[14.0,-35.0],[34.0,-21.0]])
+    // );
 
     // this.mNavigationPanel = new OpenLayers.Control.Panel({div : OpenLayers.Util.getElement('map-navigation'), allowDepress: true});
     // this.mNavigationPanel.allowDepress = true;
@@ -151,7 +151,7 @@
   },
 
   add_layer: function (theLayer) {
-    this.map.addLayers([theLayer]);
+    // this.map.addLayers([theLayer]);
     // refresh the layer switcher layers
     this.refreshLayerSwitcher();
   },

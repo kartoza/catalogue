@@ -6,14 +6,9 @@ define(
         'jquery',
         'ol',
         'views/search',
-        'views/locate',
-        'views/upload_data',
-        'views/data_downloader-modal',
-        'views/filter_panel/spatial_filter',
         'views/lasso_panel',
-        'views/control_panel/third_party_layer_panel'
     ],
-    function (Backbone, _, Shared, $, ol, SearchView, LocateView, UploadDataView, DataDownloader, SpatialFilter, LassoPanelView, ThirdPartyLayerPanelView) {
+    function (Backbone, _, Shared, $, ol, SearchView, LassoPanelView) {
         return Backbone.View.extend({
             template: _.template($('#map-control-panel').html()),
             locationControlActive: false,

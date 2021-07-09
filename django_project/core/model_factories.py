@@ -11,8 +11,6 @@ if DJANGO_VERSION[:2] >= (1, 4):
 
 import factory
 
-from exchange.models import Currency, ExchangeRate
-
 
 class ContentTypeF(factory.django.DjangoModelFactory):
     # FACTORY_FOR = ct_models.ContentType

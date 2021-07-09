@@ -12,11 +12,9 @@
   APP.SearchLayer.prototype = {
 
     _initialize: function() {
-      const defaultStyle = new ol.style.Style(
-          {
+      const defaultStyle = new ol.style.Style({
             store: new ol.style.Stroke({
               color: '${getColor}',
-
             }),
             fill: new ol.style.Fill({
               color: '#BAD696',
@@ -36,40 +34,61 @@
           }
       );
 
-      var selectStyle = new OpenLayers.Style({'strokeColor': '#2f96b4', 'fillOpacity': 0});
-      var tempStyle = new OpenLayers.Style({'strokeColor': '#9EE9FF', 'fillOpacity': 0});
-      var boundsStyle = new OpenLayers.Style({'strokeColor': '#FF0000', 'fillOpacity': 0});
+      const selectStyle = new ol.style.Style({
+        stroke: new ol.style.Stroke({
+          'color': '#2f96b4',
+          'width': 3
+        })
+      });
+      const tempStyle = new ol.style.Style({
+        stroke: new ol.style.Stroke({
+          'color': '#9EE9FF',
+          'width': 3
+        })
+      });
+      const boundsStyle = new ol.style.Style({
+        stroke: new ol.style.Stroke({
+          'color': '#FF0000',
+          'width': 3
+        })
+      });
 
-      var style = new OpenLayers.StyleMap({'default': defaultStyle, 'select': selectStyle, 'temporary': tempStyle});
-      var styleBounds = new OpenLayers.StyleMap({'default': boundsStyle});
+      // var style = new OpenLayers.StyleMap({'default': defaultStyle, 'select': selectStyle, 'temporary': tempStyle});
+      // var styleBounds = new OpenLayers.StyleMap({'default': boundsStyle});
 
-      this.layerSearch = new OpenLayers.Layer.Vector("Search geometry", {'displayInLayerSwitcher': false, styleMap: style } );
-      this.layerBounds = new OpenLayers.Layer.Vector("Search bounds", {'displayInLayerSwitcher': false, styleMap: styleBounds});
+      this.layerSearch = new ol.layer.Vector({
+        'className': "Search geometry",
+         'style': defaultStyle
+      });
+      this.layerBounds = new ol.layer.Vector({
+          'className': "Search bounds",
+          'syle': boundsStyle
+      });
       this.map_object.add_layer(this.layerSearch);
       this.map_object.add_layer(this.layerBounds);
 
-      this.myHighlightControl = new OpenLayers.Control.SelectFeature(
-      this.layerSearch , {
-        hover: false,
-        highlightOnly: true,
-        renderIntent: "temporary",
-        eventListeners: {
-            beforefeaturehighlighted: null,
-            featurehighlighted: null,
-            featureunhighlighted: null
-        }
-      });
-      this.mySelectControl = new OpenLayers.Control.SelectFeature(
-      this.layerSearch , {
-        hover: false,
-        onSelect: $.proxy(this.featureSelected,this),
-      });
-    this.map_object.map.addControl(this.myHighlightControl);
-    this.map_object.map.addControl(this.mySelectControl);
-    this.myHighlightControl.activate();
-    this.mySelectControl.activate();
-    this.layerSearch.highlightFeatureControl = this.myHighlightControl;
-    this.layerSearch.selectFeatureControl = this.mySelectControl;
+      // this.myHighlightControl = new OpenLayers.Control.SelectFeature(
+      // this.layerSearch , {
+      //   hover: false,
+      //   highlightOnly: true,
+      //   renderIntent: "temporary",
+      //   eventListeners: {
+      //       beforefeaturehighlighted: null,
+      //       featurehighlighted: null,
+      //       featureunhighlighted: null
+      //   }
+      // });
+      // this.mySelectControl = new OpenLayers.Control.SelectFeature(
+      // this.layerSearch , {
+      //   hover: false,
+      //   onSelect: $.proxy(this.featureSelected,this),
+      // });
+    // this.map_object.map.addControl(this.myHighlightControl);
+    // this.map_object.map.addControl(this.mySelectControl);
+    // this.myHighlightControl.activate();
+    // this.mySelectControl.activate();
+    // this.layerSearch.highlightFeatureControl = this.myHighlightControl;
+    // this.layerSearch.selectFeatureControl = this.mySelectControl;
 
     var self=this;
     $APP.on('toggleSearchLayer', function (evt, visibility) {
@@ -149,7 +168,7 @@
   },
 
   drawBox: function(x1,y1,x2,y2) {
-    var poly = this.map_object.transformBounds(new OpenLayers.Bounds(x1,y1,x2,y2)).toGeometry();
+    var poly = this.map_object.transformBounds(ol.extent.boundingExtent([[x1,y1],[x2,y2]]));
     var featurebox = new ol.Feature.Vector(poly);
     this.layerBounds.addFeatures([featurebox]);
     APP.BoundsFeature = featurebox;
@@ -164,13 +183,13 @@
 
   drawCircle: function(x,y,r) {
     this.layerBounds.removeAllFeatures();
-    var circle = this.map_object.transformGeometry(OpenLayers.Geometry.Polygon.createRegularPolygon
-      (
-          new OpenLayers.Geometry.Point(x, y),
-          r/111,
-          20,
-          0
-      ));
+    const circle = this.map_object.transformGeometry(ol.interaction.Draw.createRegularPolygon
+    (
+        new ol.geom.Point(ol.proj.fromLonLat([x, y])),
+        r / 111,
+        20,
+        0
+    ));
     const featureCircle = new ol.Feature({
       geometry: circle
     });

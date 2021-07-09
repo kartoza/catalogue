@@ -1,4 +1,4 @@
-var WMS_SERVER = 'maps.sansa.org.za';
+const WMS_SERVER = 'maps.sansa.org.za';
 
 WEB_LAYERS = {}
 WEB_LAYERS_IMAGE = {}

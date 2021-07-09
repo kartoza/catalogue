@@ -28,81 +28,15 @@ define(['backbone', 'underscore', 'jquery', 'ol', 'olMapboxStyle'], function (Ba
                     'OpenStreetMap contributors</a>';
             }
             return this.getVectorTileMapBoxStyle(
-                '/bims_proxy/https://api.maptiler.com/tiles/v3/{z}/{x}/{y}.pbf?key=' + mapTilerKey,
+                '/https://api.maptiler.com/tiles/v3/{z}/{x}/{y}.pbf?key=' + mapTilerKey,
                 styleUrl,
                 'openmaptiles',
                 attributions
             );
         },
-        getKlokantechTerrainBasemap: function () {
-            var attributions = 'Data from <a href="http://www.openstreetmap.org/copyright">' +
-                'OpenStreetMap</a> contributors; Tiles &copy; ' +
-                '<a href="http://KlokanTech.com">KlokanTech</a>\n';
-            var openMapTiles = this.getOpenMapTilesTile('/static/mapbox-style/klokantech-terrain-gl-style.json');
-            return new ol.layer.Group({
-                title: 'Terrain',
-                layers: [openMapTiles,]
-            });
-        },
-        getKartozaBaseMap: function () {
-            let layer_NGIOSMPhotos_0 = new ol.layer.Tile({
-                title: 'NGIOSMPhotos',
-                minZoom: 13,
-                maxZoom: 28,
-                opacity: 0.75,
-                source: new ol.source.XYZ({
-                    attributions: ['Data from <a href="http://www.ngi.gov.za/">NGI</a>; tiles from <a href="http://aerial.openstreetmap.org.za">OSM</a>, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>'],
-                    url: '/bims_proxy/http://c.aerial.openstreetmap.org.za/ngi-aerial/{z}/{x}/{y}.jpg',
-                    opacity: 0.75
-                })
-            });
-            let baseMapLayer = new ol.layer.Tile({
-                source: new ol.source.TileWMS({
-                    url: '/bims_proxy/https://maps.kartoza.com/geoserver/wms',
-                    params: {
-                        'layers': 'fbis:fbis_basemap',
-                        'uppercase': true,
-                        'transparent': true,
-                        'continuousWorld': true,
-                        'opacity': 1.0,
-                        'SRS': 'EPSG:3857',
-                        'format': 'image/png'
-                    }
-                })
-            });
-            return new ol.layer.Group({
-                title: 'Terrain',
-                layers: [layer_NGIOSMPhotos_0, baseMapLayer]
-            });
-        },
-        getDarkMatterBasemap: function () {
-            var layer = new ol.layer.Tile({
-                title: 'Plain B&W',
-                source: new ol.source.XYZ({
-                    attributions: ['<a id="home-link" target="_top" href="../">Map tiles</a> by ' +
-                    '<a target="_top" href="http://stamen.com">Stamen Design</a>, under <a target="_top" href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by ' +
-                    '<a target="_top" href="http://openstreetmap.org">OpenStreetMap</a>, under <a target="_top" href="http://creativecommons.org/licenses/by-sa/3.0">CC BY SA</a>'],
-                    url: '/bims_proxy/http://a.tile.stamen.com/toner/{z}/{x}/{y}.png'
-                })
-            });
-            layer.set('title', 'Plain B&W');
-            return layer
-        },
+
         getBaseMaps: function () {
-            var baseDefault = null;
             var baseSourceLayers = [];
-
-            // TOPOSHEET MAP
-            // var toposheet = new ol.layer.Tile({
-            //     title: 'Topography',
-            //     source: new ol.source.XYZ({
-            //         attributions: ['Data &copy; <a href="http://www.ngi.gov.za/">' +
-            //         'National Geospatial Information (NGI)</a>; Tiles from ' +
-            //         '<a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'],
-            //         url: '/bims_proxy/https://htonl.dev.openstreetmap.org/ngi-tiles/tiles/50k/{z}/{x}/{-y}.png'
-            //     })
-            // });
-
             let toposheet = new ol.layer.Tile({
                 title: 'Topography',
                 type: 'base',
@@ -110,34 +44,9 @@ define(['backbone', 'underscore', 'jquery', 'ol', 'olMapboxStyle'], function (Ba
                 source: new ol.source.XYZ({
                     attributions: ['Kartendaten: © <a href="https://openstreetmap.org/copyright">OpenStreetMap</a>-Mitwirkende, SRTM | Kartendarstellung: © <a href="http://opentopomap.org/">OpenTopoMap</a> ' +
                     '<a href="https://creativecommons.org/licenses/by-sa/3.0/">(CC-BY-SA)</a>'],
-                    url: '/bims_proxy/https://a.tile.opentopomap.org/{z}/{x}/{y}.png'
+                    url: 'https://a.tile.opentopomap.org/{z}/{x}/{y}.png'
                 })
             });
-
-            // NGI MAP
-            var ngiMap = new ol.layer.Tile({
-                title: 'Aerial photography',
-                source: new ol.source.XYZ({
-                    attributions: ['<a href="http://www.ngi.gov.za/">CD:NGI Aerial</a>'],
-                    url: '/bims_proxy/http://aerial.openstreetmap.org.za/ngi-aerial/{z}/{x}/{y}.jpg'
-                })
-            });
-
-            baseSourceLayers.push(this.getDarkMatterBasemap());
-
-            // add bing
-            if (bingMapKey) {
-                var bingMap = new ol.layer.Tile({
-                    title: 'Bing Satellite Hybrid',
-                    source: new ol.source.BingMaps({
-                        key: bingMapKey,
-                        imagerySet: 'AerialWithLabels'
-                    })
-                });
-                baseSourceLayers.push(bingMap);
-            }
-
-            // baseSourceLayers.push(ngiMap);
 
             // OSM
             let osm = new ol.layer.Tile({
@@ -170,39 +79,6 @@ define(['backbone', 'underscore', 'jquery', 'ol', 'olMapboxStyle'], function (Ba
             }
 
             let _baseMapLayers = [];
-            $.each(baseMapLayers.reverse(), function (index, baseMapData) {
-                let _baseMap = null;
-                if (baseMapData['source_type'] === "xyz") {
-                    _baseMap = new ol.layer.Tile({
-                        title: baseMapData['title'],
-                        source: new ol.source.XYZ({
-                            attributions: [baseMapData['attributions']],
-                            url: '/bims_proxy/' + baseMapData['url']
-                        })
-                    })
-                } else if (baseMapData['source_type'] === "bing") {
-                    _baseMap = new ol.layer.Tile({
-                        title: baseMapData['title'],
-                        source: new ol.source.BingMaps({
-                            key: baseMapData['key'],
-                            imagerySet: 'AerialWithLabels'
-                        })
-                    });
-                } else if (baseMapData['source_type'] === "stamen") {
-                    _baseMap = new ol.layer.Tile({
-                        title: baseMapData['title'],
-                        source: new ol.source.Stamen({
-                            layer: baseMapData['layer_name']
-                        })
-                    });
-                }
-                if (_baseMap) {
-                    _baseMap.set('visible', baseMapData['default_basemap']);
-                    _baseMap.set('type', 'base');
-                    _baseMap.set('preload', Infinity);
-                    _baseMapLayers.push(_baseMap);
-                }
-            });
             if (_baseMapLayers.length === 0) {
                 _baseMapLayers.push(
                     new ol.layer.Tile({
