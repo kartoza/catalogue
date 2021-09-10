@@ -19,10 +19,15 @@ pull:  ## Pull pre-built images
 build:  ## Build base images
 	docker-compose build
 
-up:  ## Bring the containers up
+db_up:
 	docker-compose up -d db
 	docker-compose run check_db
+
+up: db_up  ## Bring the containers up
 	docker-compose up -d devweb
+
+production_up: db_up
+	docker-compose up -d web
 
 down:  ## Bring down the containers
 	docker-compose down
