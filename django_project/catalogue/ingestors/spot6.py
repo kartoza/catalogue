@@ -40,7 +40,7 @@ def parse_date_time(date_stamp):
     :returns: A python datetime object.
     :rtype: datetime
     """
-    #print 'Parsing Date: %s\n' % date_stamp
+    # print 'Parsing Date: %s\n' % date_stamp
     start_year = date_stamp[0:4]
     start_month = date_stamp[5:7]
     start_day = date_stamp[8:10]
@@ -49,7 +49,7 @@ def parse_date_time(date_stamp):
     start_hour = tokens[0]
     start_minute = tokens[1]
     start_seconds = tokens[2]
-    #print "%s-%s-%sT%s:%s:%s" % (
+    # print "%s-%s-%sT%s:%s:%s" % (
     #    start_year, start_month, start_day,
     #    start_hour, start_minute, start_seconds)
     parsed_date_time = datetime(
@@ -60,6 +60,7 @@ def parse_date_time(date_stamp):
         int(start_minute),
         int(start_seconds))
     return parsed_date_time
+
 
 def get_geometry(log_message, dom):
     """Extract the bounding box as a geometry from the xml file.
@@ -96,7 +97,7 @@ def get_geometry(log_message, dom):
     # Now make a geometry object
     myReader = WKTReader()
     myGeometry = myReader.read(polygon)
-    #log_message('Geometry: %s' % myGeometry, 2)
+    # log_message('Geometry: %s' % myGeometry, 2)
     return myGeometry
 
 
@@ -127,8 +128,10 @@ def get_dates(log_message, dom):
 
     return start_date, center_date
 
+
 def get_band_count():
     return 5  # static value based on client information
+
 
 def get_original_product_id(dom):
     constant = 'S6'
@@ -138,16 +141,20 @@ def get_original_product_id(dom):
     product_name = constant + tokens[2] + tokens[3] + tokens[4]
     return product_name
 
+
 def get_spatial_resolution_x():
     return 1.5  # static value based on client information
 
+
 def get_spatial_resolution_y():
     return 1.5  # static value based on client information
+
 
 def get_solar_azimuth(dom):
     sun_azimuth = dom.getElementsByTagName('SUN_AZIMUTH')[0]
     solar_azimuth = sun_azimuth.firstChild.nodeValue
     return solar_azimuth
+
 
 def get_product_profile(log_message, dom):
     """Find the product_profile for this record.
@@ -171,7 +178,7 @@ def get_product_profile(log_message, dom):
         instrument_type = InstrumentType.objects.get(
             operator_abbreviation=sensor_value)  # e.g. HRV
     except Exception as e:
-        #print e.message
+        # print e.message
         raise e
     log_message('Instrument Type %s' % instrument_type, 2)
 
@@ -246,8 +253,8 @@ def get_quality():
 def ingest(
         test_only_flag=True,
         source_path=(
-            '/home/web/catalogue/django_project/catalogue/tests/sample_files/'
-            'landsat/'),
+                '/home/web/catalogue/django_project/catalogue/tests/sample_files/'
+                'landsat/'),
         verbosity_level=2,
         halt_on_error_flag=True,
         ignore_missing_thumbs=False):
@@ -273,6 +280,7 @@ def ingest(
         if we find we are missing a thumbnails. Default is False.
     :type ignore_missing_thumbs: bool
     """
+
     def log_message(message, level=1):
         """Log a message for a given leven.
 
@@ -283,14 +291,14 @@ def ingest(
             print(message)
 
     log_message((
-        'Running SPOT 6 Importer with these options:\n'
-        'Test Only Flag: %s\n'
-        'Source Dir: %s\n'
-        'Verbosity Level: %s\n'
-        'Halt on error: %s\n'
-        '------------------')
-        % (test_only_flag, source_path, verbosity_level,
-           halt_on_error_flag), 2)
+                    'Running SPOT 6 Importer with these options:\n'
+                    'Test Only Flag: %s\n'
+                    'Source Dir: %s\n'
+                    'Verbosity Level: %s\n'
+                    'Halt on error: %s\n'
+                    '------------------')
+                % (test_only_flag, source_path, verbosity_level,
+                   halt_on_error_flag), 2)
 
     # Scan the source folder and look for any sub-folders
     # The sub-folder names should be e.g.
@@ -357,7 +365,7 @@ def ingest(
                 log_message, dom)
 
             # Get the original text file metadata
-            metadata_file = file(xml_file, 'rt')
+            metadata_file = open(xml_file, 'rt')
             metadata = metadata_file.readlines()
             metadata_file.close()
             log_message('Metadata retrieved', 2)
@@ -380,7 +388,7 @@ def ingest(
                 'product_profile': product_profile,
                 'product_acquisition_start': start_date_time,
                 'product_date': center_date_time,
-                'solar_azimuth_angle' : solar_azimuth_angle,
+                'solar_azimuth_angle': solar_azimuth_angle,
                 'projection': projection,
                 'quality': quality
             }
@@ -396,13 +404,13 @@ def ingest(
             update_mode = True
             try:
                 log_message('Trying to update')
-                #original_product_id is not necessarily unique
-                #so we use product_id
+                # original_product_id is not necessarily unique
+                # so we use product_id
                 product = OpticalProduct.objects.get(
                     original_product_id=original_product_id
                 ).getConcreteInstance()
                 log_message(('Already in catalogue: updating %s.'
-                            % original_product_id), 2)
+                             % original_product_id), 2)
                 new_record_flag = False
                 message = product.ingestion_log
                 message += '\n'

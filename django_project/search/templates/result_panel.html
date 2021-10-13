@@ -1,0 +1,173 @@
+<script type='text/html' id='result-panel'>
+<div id="result-panel">
+        <div class="well well-small" style="height: 100%;">
+          <div class="navigation">
+            <div id="searchPrev" class="btn searchPrev"
+                 style="float:left; display: none;"
+                 data-toggle="tooltip"
+                 data-title="Previous Page"
+                 data-placement="top">
+              <i class="icon-chevron-left"></i>
+            </div>
+            <div style="float:left;" data-toggle="tooltip"
+                 data-title="Toggle Polygons">
+              <input type="checkbox" checked data-on="success" data-off="info" class="switch-small" id="switchSearchLayer">
+            </div>
+            <button id="resetZoom" style="float:left; display: none;"
+                 class="btn btn-info resetZoom"
+                 data-toggle="tooltip" data-title="Reset Zoom"
+                 data-placement="top">
+              <i class="icon-zoom-out"></i>
+            </button>
+            <div class="position" id="resultsPosition"></div>
+            <div id="searchNext" class="btn searchNext"
+                 style="float:right; display: none;"
+                 data-toggle="tooltip" data-title="Next Page"
+                 data-placement="top">
+              <i class="icon-chevron-right"></i>
+            </div>
+          </div>
+          <div id="results-container"></div>
+        </div>
+        <div id="result-sub-panel" class="well well-small text-center">
+          <button id="result-panel-download-button"
+                  class="btn btn-info">
+            <i class="icon-download-alt"></i> Download Results Data
+          </button>
+          <a class="btn btn-info" onclick="addOrderClicked(); return false;" href="/addorder/">
+            <i class="icon-plane" href=""></i> Order Now!
+          </a>
+          <div id="result-panel-btns">
+            <hr/>
+            <p>Please choose your download format</p>
+            <div class="btn-group">
+              <button id="result-panel-download-button-shp"
+                      class="btn btn-info" data-toggle="tooltip"
+                      data-title="Download as SHP"
+                      data-placement="top">SHP
+              </button>
+              <button id="result-panel-download-button-kml"
+                      class="btn btn-info" data-toggle="tooltip"
+                      data-title="Download as KML"
+                      data-placement="top">KML
+              </button>
+              <button id="result-panel-download-button-kmz"
+                      class="btn btn-info" data-toggle="tooltip"
+                      data-title="Download as KMZ"
+                      data-placement="top">KMZ
+              </button>
+              <button id="result-panel-download-button-xml"
+                      class="btn btn-info" data-toggle="tooltip"
+                      data-title="Download as XML"
+                      data-placement="top">XML
+              </button>
+              <button id="result-panel-download-button-htm"
+                      class="btn btn-info" data-toggle="tooltip"
+                      data-title="Download as HTM"
+                      data-placement="top">HTM
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+</script>
+
+<script type='text/html' id='panel-toggles'>
+<div id="panel-toggles" class="btn-group">
+          <button id="search-panel-toggle"
+                  class="btn btn-info btn-large btn-left-panel active"
+                  onclick="toggleSearchPanel();"
+                  data-toggle="tooltip" title="Toggle Search Panel"
+                  data-placement="bottom">
+            <i class="icon-search"></i>
+          </button>
+          <button id="cart-panel-toggle"
+                  class="btn btn-info btn-large btn-left-panel"
+                  onclick="toggleCartPanel();"
+                  data-toggle="tooltip" data-title="Toggle Cart Panel"
+                  data-placement="bottom">
+            <i class="icon-shopping-cart"></i>
+          </button>
+          <button id="map-help-button"
+                  class="btn btn-info btn-large"
+                  data-toggle="tooltip" title="Map Help"
+                  data-placement="bottom">
+            <i class="icon-question-sign"></i>
+          </button>
+        </div>
+          <div id="SearchShare-content">
+            <hr/>
+            <p class="text-center">
+              This is a permalink to these search results. The search will also
+              be recorded in your Search History for future reference.
+            </p>
+            <div id="SearchShare-input-container" class="text-center"></div>
+          </div>
+        </div>
+      </div>
+      <div id="cart-panel">
+        <div id="cart-container" class="well well-small"></div>
+        <div id="cart-sub-panel" class="well well-small text-center">
+          <button id="cart-show-map" class="btn btn-info"
+                  data-state="hidden"
+                  data-toggle="tooltip"
+                  data-title="Show on Map">
+            <i class="icon-globe"></i>
+          </button>
+          <button id="place_order" class="btn btn-success">
+            <i class="icon-ok"></i> Place Order
+          </button>
+          <button id="cart-panel-download-button"
+                  onclick="showCartDownloadOptions();"
+                  class="btn btn-info"
+                  data-toggle="tooltip"
+                  data-title="Download Order">
+            <i class="icon-download"></i>
+          </button>
+          <div id="cart-panel-btns">
+            <hr />
+            <p>Please choose your download format</p>
+            <div class="btn-group">
+              <button id="cart-panel-download-button-shp"
+                      class="btn btn-info"
+                      data-toggle="tooltip"
+                      data-title="Download as SHP"
+                      data-placement="top">SHP
+              </button>
+              <button id="cart-panel-download-button-kml"
+                      class="btn btn-info"
+                      data-toggle="tooltip"
+                      data-title="Download as KML"
+                      data-placement="top">KML
+              </button>
+              <button id="cart-panel-download-button-kmz"
+                      class="btn btn-info"
+                      data-toggle="tooltip"
+                      data-title="Download as KMZ"
+                      data-placement="top">KMZ
+              </button>
+              <button id="cart-panel-download-button-xml"
+                      class="btn btn-info"
+                      data-toggle="tooltip"
+                      data-title="Download as XML"
+                      data-placement="top">XML
+              </button>
+              <button id="cart-panel-download-button-htm"
+                      class="btn btn-info"
+                      data-toggle="tooltip"
+                      data-title="Download as HTM"
+                      data-placement="top">HTM
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="result-panel-toggle" class="hide">
+        <button class="btn btn-info btn-large"
+                onclick="toggleResultPanel();"
+                data-toggle="tooltip" data-placement="left"
+                title="Toggle Results Panel">
+          <i class="icon-list"></i>
+        </button>
+      </div>
+</script>

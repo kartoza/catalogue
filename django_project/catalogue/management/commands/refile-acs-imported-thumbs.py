@@ -1,3 +1,4 @@
+from catalogue.models import OpticalProduct
 from django.core.management.base import BaseCommand
 
 
@@ -5,6 +6,7 @@ class Command(BaseCommand):
 
     def init():
         pass
+
     def handle(self, *args, **options):
         """ command execution """
         # todo use a regext to match numeric only original ids

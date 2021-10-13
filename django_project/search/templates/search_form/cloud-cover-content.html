@@ -1,0 +1,13 @@
+<div id="panelsStayOpen-collapseFour" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingFour">
+    <div class="accordion-body">
+    <div class="control-group">
+      <label class="control-label" for="id_cloud_min">Cloud Cover %</label>
+      <div class="controls cloud-cover-search">
+        {{ search_form.cloud_min }}
+          <div id="cloud-cover-slider" class="noUiSlider"></div>
+        {{ search_form.cloud_max }}
+        <span class="help-block">{{ search_form.cloud_min.help_text }}</span>
+      </div>
+    </div>
+  </div>
+</div>

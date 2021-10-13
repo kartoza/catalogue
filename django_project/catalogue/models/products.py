@@ -27,7 +27,7 @@ from django.contrib.gis.db import models
 from django.conf import settings
 from django.core.validators import validate_comma_separated_integer_list
 from django.template.loader import render_to_string
-#for translation
+# for translation
 from django.core.exceptions import ObjectDoesNotExist
 # PIL and os needed for making small thumbs
 from PIL import Image, ImageFilter, ImageOps
@@ -38,9 +38,8 @@ from catalogue.utmzonecalc import utmZoneOverlap
 from catalogue.dims_lib import dimsWriter
 
 # for thumb georeferencer
-#from osgeo.gdalconst import *
+# from osgeo.gdalconst import *
 logger = logging.getLogger(__name__)
-
 
 # Read from settings
 CATALOGUE_ISO_METADATA_XML_TEMPLATE = getattr(
@@ -71,6 +70,7 @@ def coordIsOnBounds(theCoord, theExtents):
         return True  # ymin,ymax
     return False
 
+
 #######################################################
 
 
@@ -84,13 +84,13 @@ class SortCandidateException(Exception):
 
 def sortCandidates(theCandidates, theExtents, theCentroid):
     """Return the members of the array in order TL, TR, BR, BL"""
-    #for myCoord in theCandidates:
+    # for myCoord in theCandidates:
     #  print myCoord
     mySortedCandidates = []
     myTopLeft = None
-    #print "Defalt Candidate: %s" %  str(myTopLeft)
+    # print "Defalt Candidate: %s" %  str(myTopLeft)
     for myCoord in theCandidates:
-        #print "Evaluating: %s" % str(myCoord)
+        # print "Evaluating: %s" % str(myCoord)
         if myCoord[1] < theCentroid[1]:
             continue  # its in the bottom half so ignore
         if not myTopLeft:
@@ -98,7 +98,7 @@ def sortCandidates(theCandidates, theExtents, theCentroid):
             continue
         if myCoord[0] < myTopLeft[0]:
             myTopLeft = myCoord
-            #print "Computed Candidate: %s" %  str(myTopLeft)
+            # print "Computed Candidate: %s" %  str(myTopLeft)
 
     if not myTopLeft:
         raise SortCandidateException(
@@ -109,9 +109,9 @@ def sortCandidates(theCandidates, theExtents, theCentroid):
     theCandidates.remove(myTopLeft)
 
     myTopRight = None
-    #print "Defalt Candidate: %s" %  str(myTopRight)
+    # print "Defalt Candidate: %s" %  str(myTopRight)
     for myCoord in theCandidates:
-        #print "Evaluating: %s" % str(myCoord)
+        # print "Evaluating: %s" % str(myCoord)
         if myCoord[1] < theCentroid[1]:
             continue  # its in the bottom half so ignore
         if not myTopRight:
@@ -119,7 +119,7 @@ def sortCandidates(theCandidates, theExtents, theCentroid):
             continue
         if myCoord[0] > myTopRight[0]:
             myTopRight = myCoord
-            #print "Computed Candidate: %s" %  str(myTopRight)
+            # print "Computed Candidate: %s" %  str(myTopRight)
 
     if not myTopRight:
         raise SortCandidateException(
@@ -130,9 +130,9 @@ def sortCandidates(theCandidates, theExtents, theCentroid):
     theCandidates.remove(myTopRight)
 
     myBottomRight = None
-    #print "Defalt Candidate: %s" %  str(myBottomRight)
+    # print "Defalt Candidate: %s" %  str(myBottomRight)
     for myCoord in theCandidates:
-        #print "Evaluating: %s" % str(myCoord)
+        # print "Evaluating: %s" % str(myCoord)
         if myCoord[1] > theCentroid[1]:
             continue  # its in the top half so ignore
         if not myBottomRight:
@@ -140,7 +140,7 @@ def sortCandidates(theCandidates, theExtents, theCentroid):
             continue
         if myCoord[0] > myBottomRight[0]:
             myBottomRight = myCoord
-            #print "Computed Candidate: %s" %  str(myBottomRight)
+            # print "Computed Candidate: %s" %  str(myBottomRight)
 
     if not myBottomRight:
         raise SortCandidateException(
@@ -158,6 +158,7 @@ def sortCandidates(theCandidates, theExtents, theCentroid):
 
     return mySortedCandidates
 
+
 #####################################################3
 # End of georef helpers
 #####################################################3
@@ -169,27 +170,28 @@ def runconcrete(func):
     and raise an exception if the method is found only in a base
     abstract class (e.g. GenericProduct or GenericSensorProduct)
     """
+
     @wraps(func)
     def wrapper(self, *args, **kwargs):
         mySet = (
             set(self.getConcreteInstance().__class__.__mro__)
-            .difference([self.__class__])
+                .difference([self.__class__])
         )
         myProductClassList = [d for d in mySet if (
-            func.__name__ in d.__dict__ and getattr(d, 'concrete', False)
+                func.__name__ in d.__dict__ and getattr(d, 'concrete', False)
         )]
 
-        #check if there is at least one concrete Product class
+        # check if there is at least one concrete Product class
         if len(myProductClassList) > 0:
             return getattr(
                 self.getConcreteInstance(), func.__name__)(*args, **kwargs)
 
         raise NotImplementedError()
+
     return wrapper
 
 
 class GenericProduct(models.Model):
-
     """
     A generic model (following R-5.1-160 of DIMS system architecture document).
 
@@ -262,7 +264,7 @@ class GenericProduct(models.Model):
         app_label = 'catalogue'
         abstract = False
         ordering = ('-product_date',)
-        #db_table = 'sample_genericproduct'
+        # db_table = 'sample_genericproduct'
 
     def __unicode__(self):
         return '{}'.format(self.unique_product_id)
@@ -371,8 +373,8 @@ class GenericProduct(models.Model):
         # logger.info('Thumbnail path:   ' + str(settings.THUMBS_ROOT))
 
         if not os.path.isfile(myFileName):
-            #file does not exist so show an error icon
-            #return HttpResponse("%s not found" % myFileName)
+            # file does not exist so show an error icon
+            # return HttpResponse("%s not found" % myFileName)
             myFileName = os.path.join(
                 settings.ABS_PATH('core', 'base_static'), 'images',
                 'block_16.png')
@@ -382,7 +384,7 @@ class GenericProduct(models.Model):
         try:
             myImage = Image.open(myFileName)
         except:
-            #file is not valid for some reason so show an error icon
+            # file is not valid for some reason so show an error icon
             myFileName = os.path.join(
                 settings.ABS_PATH('core', 'base_static'), 'images',
                 'block_16.png')
@@ -422,8 +424,8 @@ class GenericProduct(models.Model):
             myOffset=(5, 5),
             theBackground=(49, 89, 125),
             theShadow=(0, 0, 0, 100),
-            theBorder = 8,
-            theIterations = 5
+            theBorder=8,
+            theIterations=5
     ):
 
         # Create the myBackgrounddrop image -- a box in the theBackground
@@ -439,7 +441,7 @@ class GenericProduct(models.Model):
         myBackground.paste(
             theShadow, [
                 theShadowLeft, theShadowTop, theShadowLeft + theImage.size[0],
-                theShadowTop + theImage.size[1]])
+                                             theShadowTop + theImage.size[1]])
 
         # Apply the filter to blur the edges of the theShadow.  Since a small
         # kernel is used, the filter must be applied repeatedly to get a decent
@@ -456,7 +458,7 @@ class GenericProduct(models.Model):
 
         return myBackground
 
-    def georeferencedThumbnail(self, theForceFlag=False):
+    def georeferencedThumbnail(self, force_flag=False):
         """
         Return the full path to the georeferenced thumb. Will actually do the
         georeferencing of the thumb if needed.
@@ -471,31 +473,31 @@ class GenericProduct(models.Model):
         imports from acs) are already georeferenced natively and referencing
         them again will give them an additional rotation.
         """
-        myInputImageFile = os.path.join(
+        input_image_file = os.path.join(
             settings.THUMBS_ROOT, self.thumbnailDirectory(),
             self.product_id + '.jpg')
         try:
-            myImage = Image.open(myInputImageFile)
+            image = Image.open(input_image_file)
             # We need to know the pixel dimensions of the segment so that we
             # can create GCP's
         except:
-            logger.info('File not found %s' % myInputImageFile)
+            logger.info('File not found %s' % input_image_file)
             return 'no file'
-        myTempTifFile = os.path.join('/tmp/', self.product_id + '.tif')
-        myTempReffedTifFile = os.path.join(
+        tmp_tif_file = os.path.join('/tmp/', self.product_id + '.tif')
+        tmp_tif_referenced = os.path.join(
             '/tmp/', self.product_id + 'reffed.tif')
-        myJpgFile = os.path.join(
+        jpg_file = os.path.join(
             settings.THUMBS_ROOT, self.thumbnailDirectory(),
             self.product_id + '-reffed.jpg')
 
-        myLogFile = file(os.path.join(
+        log_file = open(os.path.join(
             settings.THUMBS_ROOT, self.thumbnailDirectory(),
             self.product_id + '-reffed.log'), 'w')
-        if os.path.exists(myJpgFile) and not theForceFlag:
-            return myJpgFile
+        if os.path.exists(jpg_file) and not force_flag:
+            return jpg_file
             # Get the minima, maxima - used to test if we are on the edge
-        myExtents = self.spatial_coverage.extent
-        #print "Envelope: %s %s" % (len(myExtents), str(myExtents))
+        extents = self.spatial_coverage.extent
+        # print "Envelope: %s %s" % (len(extents), str(extents))
         # There should only be 4 vertices touching the edges of the
         # bounding box of the shape. If we assume that the top right
         # corner of the poly is on the right edge of the bbox, the
@@ -507,81 +509,81 @@ class GenericProduct(models.Model):
         # Note the above logic makes some assumptions about the oreintation of
         # the swath which may not hold true for every sensor.
         #
-        print(myExtents)
-        myImageXDim = myImage.size[0]
-        myImageYDim = myImage.size[1]
-        myCandidates = []
-        #should only be a single arc in our case!
+        print(extents)
+        image_x_dim = image.size[0]
+        image_y_dim = image.size[1]
+        candidates = []
+        # should only be a single arc in our case!
         coverage_coords = self.spatial_coverage.coords
-        myArc = coverage_coords[0]  # first arc
+        arc = coverage_coords[0]  # first arc
         print(coverage_coords)
         try:
-            for myCoord in myArc[:-1]:
-                if coordIsOnBounds(myCoord, myExtents):
-                    myCandidates.append(myCoord)
+            for coord in arc[:-1]:
+                if coordIsOnBounds(coord, extents):
+                    candidates.append(coord)
         except:
             raise
 
         print("Candidates on bounds intersection: %s %s " % (
-            len(myCandidates), str(myCandidates)))
+            len(candidates), str(candidates)))
 
         # If the image footprint is not truly rectangular we wont find 4
         # vertices that touch the bbox. In that case we use the rule that
         # if the feature has only 5 vertices (the 5th being the closer for
         # the polygon), we will use the first 4 vertices.
-        if len(myCandidates) < 4:
-            myCandidates = list(myArc[1:])  # convert from tuple to list
+        if len(candidates) < 4:
+            candidates = list(arc[1:])  # convert from tuple to list
 
         print("Candidates Before: %s %s " % (
-            len(myCandidates), str(myCandidates)))
-        myCentroid = self.spatial_coverage.centroid
+            len(candidates), str(candidates)))
+        centroid = self.spatial_coverage.centroid
         try:
-            myCandidates = sortCandidates(myCandidates, myExtents, myCentroid)
+            candidates = sortCandidates(candidates, extents, centroid)
         except:
             raise
             # print "Candidates After: %s %s " % (
-        #    len(myCandidates), str(myCandidates))
-        myTL = myCandidates[0]
-        myTR = myCandidates[1]
-        myBR = myCandidates[2]
-        myBL = myCandidates[3]
+        #    len(candidates), str(candidates))
+        tl = candidates[0]
+        tr = candidates[1]
+        br = candidates[2]
+        bl = candidates[3]
 
-        myString = (
-            'gdal_translate -a_srs "EPSG:4326" -gcp 0 0 %s %s -gcp %s 0 %s %s '
-            '-gcp %s %s %s %s -gcp 0 %s %s %s -of GTIFF -co COMPRESS=DEFLATE '
-            '-co TILED=YES %s %s' % (
-                myTL[0], myTL[1],
-                myImageXDim, myTR[0], myTR[1],
-                myImageXDim, myImageYDim, myBR[0], myBR[1],
-                myImageYDim, myBL[0], myBL[1],
-                myInputImageFile,
-                myTempTifFile))
-        os.system(myString)
-        myLogFile.write(myString + "\n")
+        string = (
+                'gdal_translate -a_srs "EPSG:4326" -gcp 0 0 %s %s -gcp %s 0 %s %s '
+                '-gcp %s %s %s %s -gcp 0 %s %s %s -of GTIFF -co COMPRESS=DEFLATE '
+                '-co TILED=YES %s %s' % (
+                    tl[0], tl[1],
+                    image_x_dim, tr[0], tr[1],
+                    image_x_dim, image_y_dim, br[0], br[1],
+                    image_y_dim, bl[0], bl[1],
+                    input_image_file,
+                    tmp_tif_file))
+        os.system(string)
+        log_file.write(string + "\n")
         # now gdalwarp the file onto itself so that the gcps are used to
         # georeference the file
-        myString = 'gdalwarp %s %s' % (myTempTifFile, myTempReffedTifFile)
-        myLogFile.write(myString + "\n")
-        os.system(myString)
+        string = 'gdalwarp %s %s' % (tmp_tif_file, tmp_tif_referenced)
+        log_file.write(string + "\n")
+        os.system(string)
         # TODO : nicer way to call gdal e.g.
-        #subprocess.check_call(["gdal_translate", "-q", "-co", "worldfile=on",
+        # subprocess.check_call(["gdal_translate", "-q", "-co", "worldfile=on",
         #                       "-of", "JPEG", downloaded_thumb, jpeg_thumb])
         # Now convert the tif to a jpg
-        myString = 'gdal_translate -of JPEG -co WORLDFILE=YES %s %s' % (
-            myTempReffedTifFile, myJpgFile)
-        myLogFile.write(myString + "\n")
-        os.system(myString)
-        myLogFile.close()
+        string = 'gdal_translate -of JPEG -co WORLDFILE=YES %s %s' % (
+            tmp_tif_referenced, jpg_file)
+        log_file.write(string + "\n")
+        os.system(string)
+        log_file.close()
         # Clean away the tiff and copy the referenced jpg over to the thumb dir
-        os.remove(myTempTifFile)
-        os.remove(myTempReffedTifFile)
-        #print "Image X size: %s" % myImageXDim
-        #print "Image Y size: %s" % myImageYDim
-        #print "Top left X: %s, Y:%s" %(myTL[0],myTL[1])
-        #print "Top right X: %s, Y:%s" %(myTR[0],myTR[1])
-        #print "Bottom left X: %s, Y:%s" %(myBL[0],myBL[1])
-        #print "Bottom right X: %s, Y:%s" %(myBR[0],myBR[1])
-        return myJpgFile
+        os.remove(tmp_tif_file)
+        os.remove(tmp_tif_referenced)
+        # print "Image X size: %s" % image_x_dim
+        # print "Image Y size: %s" % image_y_dim
+        # print "Top left X: %s, Y:%s" %(tl[0],tl[1])
+        # print "Top right X: %s, Y:%s" %(tr[0],tr[1])
+        # print "Bottom left X: %s, Y:%s" %(bl[0],bl[1])
+        # print "Bottom right X: %s, Y:%s" %(br[0],br[1])
+        return jpg_file
 
     @runconcrete
     def productDirectory(self):
@@ -604,8 +606,8 @@ class GenericProduct(models.Model):
 
         None will be returned"""
         myUrl = (
-            settings.IMAGERY_URL_ROOT + self.productDirectory() + '/' +
-            self.product_id + '.tif.bz2')
+                settings.IMAGERY_URL_ROOT + self.productDirectory() + '/' +
+                self.product_id + '.tif.bz2')
         myPath = os.path.join(
             settings.IMAGERY_ROOT, self.productDirectory(),
             self.product_id + '.tif.bz2')
@@ -633,8 +635,8 @@ class GenericProduct(models.Model):
         # since we want *RAW* image in this method set processing level to 1Aa
         myPath = myPath.replace(myLevel, '1Aa')
         myUrl = (
-            settings.IMAGERY_URL_ROOT + self.productDirectory() + '/' +
-            self.product_id + '.tar.bz2')
+                settings.IMAGERY_URL_ROOT + self.productDirectory() + '/' +
+                self.product_id + '.tar.bz2')
         myUrl = myUrl.replace(myLevel, '1Aa')
         # In some cases products may not be in bzipped tarballs so check if
         # that is present if the bz2 on its own isn't present
@@ -742,7 +744,7 @@ class GenericProduct(models.Model):
         """
         return render_to_string(
             'productTypes/genericProduct.html', {
-                'myObject': self, 'myImageIsLocalFlag': theImageIsLocal})
+                'myObject': self, 'imageIsLocalFlag': theImageIsLocal})
 
     @property
     def product_id(self):
@@ -794,7 +796,7 @@ class GenericImageryProduct(GenericProduct):
 
     class Meta:
         app_label = 'catalogue'
-        #db_table = 'sample_genericimageryproduct'
+        # db_table = 'sample_genericimageryproduct'
 
     def getAbstract(self):
         """
@@ -828,7 +830,7 @@ class GenericImageryProduct(GenericProduct):
             institution_city=self.product_profile.owner().address2,
             institution_region='',
             institution_postcode=self.product_profile.owner().post_code,
-            institution_country=self.product_profile.owner().address3,)
+            institution_country=self.product_profile.owner().address3, )
         return metadata
 
     def toHtml(self, theImageIsLocal=False):
@@ -839,7 +841,7 @@ class GenericImageryProduct(GenericProduct):
         """
         return render_to_string(
             'productTypes/genericImageryProduct.html', {
-                'myObject': self, 'myImageIsLocalFlag': theImageIsLocal})
+                'myObject': self, 'imageIsLocalFlag': theImageIsLocal})
 
 
 ###############################################################################
@@ -896,7 +898,7 @@ class GenericSensorProduct(GenericImageryProduct):
         """
         app_label = 'catalogue'
         abstract = False
-        #db_table = 'sample_genericsensorproduct'
+        # db_table = 'sample_genericsensorproduct'
 
     def _productDirectory(self):
         """
@@ -930,7 +932,7 @@ class GenericSensorProduct(GenericImageryProduct):
         """
         myPath = os.path.join(
             self.product_profile.satellite_instrument.
-            satellite_instrument_group.satellite.abbreviation,
+                satellite_instrument_group.satellite.abbreviation,
             str(self.product_acquisition_start.year),
             str(self.product_acquisition_start.month),
             str(self.product_acquisition_start.day))
@@ -960,7 +962,7 @@ class GenericSensorProduct(GenericImageryProduct):
             # This is a new record
             return
         if theOldId == self.product_id:
-            #it already has the correct name
+            # it already has the correct name
             return
 
         myNewImageryPath = os.path.join(
@@ -984,19 +986,19 @@ class GenericSensorProduct(GenericImageryProduct):
             myNewImageryPath = myNewImageryPath.replace('.tar.bz2', '.bz2')
             myOldImageryPath = myOldImageryPath.replace('.tar.bz2', '.bz2')
 
-        myImageryOutputPath = os.path.join(
+        imageryOutputPath = os.path.join(
             settings.IMAGERY_ROOT, self.productDirectory())
         myThumbOutputPath = os.path.join(
             settings.THUMBS_ROOT, self.thumbnailDirectory())
 
         # Create the imagery destination dir if it does not exist.
-        if not os.path.isdir(myImageryOutputPath):
+        if not os.path.isdir(imageryOutputPath):
             try:
-                os.makedirs(myImageryOutputPath)
+                os.makedirs(imageryOutputPath)
             except OSError:
                 logger.debug(
                     'Failed to make output directory (%s) ...quitting' % (
-                        myImageryOutputPath,))
+                        imageryOutputPath,))
                 return 'False'
 
         # Create the thumbnails destination dir if it does not exist.
@@ -1060,7 +1062,8 @@ class GenericSensorProduct(GenericImageryProduct):
         """
         return render_to_string(
             'productTypes/genericSensorProduct.html', {
-                'myObject': self, 'myImageIsLocalFlag': theImageIsLocal})
+                'myObject': self, 'imageIsLocalFlag': theImageIsLocal})
+
 
 ###############################################################################
 
@@ -1081,7 +1084,7 @@ class OpticalProduct(GenericSensorProduct):
         'dictionaries.OpticalProductProfile',
         on_delete=models.CASCADE
     )
-    #TODO: all cloud cover values should be normalized to percentages
+    # TODO: all cloud cover values should be normalized to percentages
     # see http://tracker.sansa.org.za/issues/475
     cloud_cover = models.IntegerField(
         null=True,
@@ -1116,7 +1119,7 @@ class OpticalProduct(GenericSensorProduct):
 
     class Meta:
         app_label = 'catalogue'
-        #db_table = 'sample_opticalproduct'
+        # db_table = 'sample_opticalproduct'
 
     def getMetadataDict(self):
         """
@@ -1144,7 +1147,7 @@ class OpticalProduct(GenericSensorProduct):
             institution_city=self.product_profile.owner().address2,
             institution_region='',
             institution_postcode=self.product_profile.owner().post_code,
-            institution_country=self.product_profile.owner().address3,)
+            institution_country=self.product_profile.owner().address3, )
         return metadata
 
     def productDirectory(self):
@@ -1169,7 +1172,7 @@ class OpticalProduct(GenericSensorProduct):
 
         return render_to_string(
             'productTypes/opticalProduct.html', {
-                'myObject': self, 'myImageIsLocalFlag': theImageIsLocal})
+                'myObject': self, 'imageIsLocalFlag': theImageIsLocal})
 
     def availableProcessingLevels(self):
         """
@@ -1179,7 +1182,7 @@ class OpticalProduct(GenericSensorProduct):
         return ProcessingLevel.objects.filter(
             instrumenttypeprocessinglevel__instrument_type=(
                 self.product_profile.satellite_instrument
-                .satellite_instrument_group.instrument_type
+                    .satellite_instrument_group.instrument_type
             )
         )
 
@@ -1199,11 +1202,11 @@ class OpticalProduct(GenericSensorProduct):
         return format_string.format(
             (
                 self.product_profile.satellite_instrument
-                .satellite_instrument_group.satellite.abbreviation
+                    .satellite_instrument_group.satellite.abbreviation
             ),
             (
                 self.product_profile.satellite_instrument
-                .satellite_instrument_group.instrument_type.abbreviation
+                    .satellite_instrument_group.instrument_type.abbreviation
             ),
             self.path,
             self.row,
@@ -1213,7 +1216,7 @@ class OpticalProduct(GenericSensorProduct):
 
 ###############################################################################
 
-#TODO use lookup tables rather?
+# TODO use lookup tables rather?
 
 class RadarProduct(GenericSensorProduct):
     """
@@ -1266,7 +1269,7 @@ class RadarProduct(GenericSensorProduct):
 
     class Meta:
         app_label = 'catalogue'
-        #db_table = 'sample_radarproduct'
+        # db_table = 'sample_radarproduct'
 
     def productDirectory(self):
         """
@@ -1290,7 +1293,7 @@ class RadarProduct(GenericSensorProduct):
         """
         return render_to_string(
             'productTypes/radarProduct.html', {
-                'myObject': self, 'myImageIsLocalFlag': theImageIsLocal})
+                'myObject': self, 'imageIsLocalFlag': theImageIsLocal})
     ###########################################################################
 
 
@@ -1316,7 +1319,7 @@ class GeospatialProduct(GenericProduct):
         help_text=(
             'The fractional part at the ideal maximum scale for this dataset. '
             'For example enter "50000" if it should not be used at scales '
-            'larger that 1:50 000'),)
+            'larger that 1:50 000'), )
     data_type = models.CharField(
         max_length=2, choices=GEOSPATIAL_GEOMETRY_TYPE_CHOICES, null=True,
         blank=True, help_text='Is this a vector or raster dataset?')
@@ -1367,7 +1370,7 @@ class GeospatialProduct(GenericProduct):
         """
         return render_to_string(
             'productTypes/geospatialProduct.html', {
-                'myObject': self, 'myImageIsLocalFlag': theImageIsLocal})
+                'myObject': self, 'imageIsLocalFlag': theImageIsLocal})
     ###########################################################################
 
 
@@ -1412,7 +1415,7 @@ class OrdinalProduct(GenericProduct):
         """
         return render_to_string(
             'productTypes/ordinalProduct.html', {
-                'myObject': self, 'myImageIsLocalFlag': theImageIsLocal})
+                'myObject': self, 'imageIsLocalFlag': theImageIsLocal})
     ###########################################################################
 
 
@@ -1455,4 +1458,4 @@ class ContinuousProduct(GenericProduct):
         """
         return render_to_string(
             'productTypes/continuousProduct.html', {
-                'myObject': self, 'myImageIsLocalFlag': theImageIsLocal})
+                'myObject': self, 'imageIsLocalFlag': theImageIsLocal})
