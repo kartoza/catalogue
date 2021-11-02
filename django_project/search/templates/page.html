@@ -1,495 +1,504 @@
 {% extends "base-fluid.html" %}
 {% load staticfiles %}
-{% block body_load %}{% endblock %}
-
+{% block extracss %}
+    <link href="{% static "js/libs/openlayers-6.5.0/ol.css" %}" rel="stylesheet">
+{% endblock %}
 {% block content%}
-      <div id="panel-toggles" class="btn-group">
-          <button id="search-panel-toggle"
-                  class="btn btn-info btn-large btn-left-panel active"
-                  onclick="toggleSearchPanel();"
-                  data-toggle="tooltip" title="Toggle Search Panel"
-                  data-placement="bottom">
-            <i class="icon-search"></i>
-          </button>
-          <button id="cart-panel-toggle"
-                  class="btn btn-info btn-large btn-left-panel"
-                  onclick="toggleCartPanel();"
-                  data-toggle="tooltip" data-title="Toggle Cart Panel"
-                  data-placement="bottom">
-            <i class="icon-shopping-cart"></i>
-          </button>
-          <button id="map-help-button"
-                  class="btn btn-info btn-large"
-                  data-toggle="tooltip" title="Map Help"
-                  data-placement="bottom">
-            <i class="icon-question-sign"></i>
-          </button>
-        </div>
-      <div id="search-panel">
-        <div id="search-panel-content" class="well well-small">
-          <form id="catalogueSearch" action="{% url 'submitSearch' %}"
-                class="accordion">
-            <h5 class="text-center">Set Your Search Parameters</h5>
-            <hr />
-            {% csrf_token %}
-            {{ searchform.geometry }}
-            {{ searchform.selected_sensors }}
-            <div class="accordion-group">
-              <div class="accordion-heading">
-                <a class="accordion-toggle" data-toggle="collapse"
-                   href="#content-1">
-                  <i class="icon-angle-down"></i> Choose Satellites
-                </a>
-              </div>
-              {% include 'search_form/content-1.html' %}
-            </div>
-            <div class="accordion-group">
-              <div class="accordion-heading">
-                <a id="daterange_heading" class="accordion-toggle" data-toggle="collapse"
-                   href="#content-2">
-                  <i class="icon-angle-down"></i> Add Date Ranges
-                </a>
-              </div>
-              {% include 'search_form/content-2.html' %}
-            </div>
-            <div class="accordion-group">
-              <div class="accordion-heading">
-                <a class="accordion-toggle" data-toggle="collapse"
-                   href="#content-3">
-                  <i class="icon-angle-down"></i> Define Search Area
-                </a>
-              </div>
-              {% include 'search_form/content-3.html' %}
-            </div>
-            <div class="accordion-group">
-              <div class="accordion-heading">
-                <a class="accordion-toggle" data-toggle="collapse"
-                   href="#content-4">
-                  <i class="icon-angle-down"></i> Set Cloud Cover Range
-                </a>
-              </div>
-              {% include 'search_form/content-6.html' %}
-            </div>
-            <div class="accordion-group">
-              <div class="accordion-heading">
-                <a class="accordion-toggle" data-toggle="collapse"
-                   href="#content-5">
-                  <i class="icon-angle-down"></i> Other Options
-                </a>
-              </div>
-              {% include 'search_form/content-5.html' %}
-            </div>
-          </form>
-        </div>
-        <div id="search-summary-container" class="well well-small">
-          <div id="search-buttons" class="text-center">
-            <button id="search_button" class="btn btn-success"
-                    data-toggle="tooltip" title="Run Search"
-                    data-placement="top">
-              <i class="icon-play"></i> Search
-            </button>
-            <button class="btn btn-warning"
-                    data-toggle="tooltip" title="Reset Search Parameters"
-                    onclick="resetSearchForm()"
-                    data-placement="top">
-              <i class="icon-refresh"></i> Reset
-            </button>
-            <button id="search-panel-help-button"
-                    class="btn btn-info"
-                    data-toggle="tooltip" title="Search Help"
-                    data-placement="top">
-              <i class="icon-question-sign"></i>
-            </button>
-            <button id="SearchShare"
-                 data-toggle="tooltip" title="Search Permalink"
-                 data-placement="top"
-                 class="btn btn-info">
-              <i class="icon-link"></i>
-            </button>
-          </div>
-          <div id="SearchShare-content">
-            <hr/>
-            <p class="text-center">
-              This is a permalink to these search results. The search will also
-              be recorded in your Search History for future reference.
-            </p>
-            <div id="SearchShare-input-container" class="text-center"></div>
-          </div>
-        </div>
-      </div>
-      <div id="cart-panel">
-        <div id="cart-container" class="well well-small"></div>
-        <div id="cart-sub-panel" class="well well-small text-center">
-          <button id="cart-show-map" class="btn btn-info"
-                  data-state="hidden"
-                  data-toggle="tooltip"
-                  data-title="Show on Map">
-            <i class="icon-globe"></i>
-          </button>
-          <button id="place_order" class="btn btn-success">
-            <i class="icon-ok"></i> Place Order
-          </button>
-          <button id="cart-panel-download-button"
-                  onclick="showCartDownloadOptions();"
-                  class="btn btn-info"
-                  data-toggle="tooltip"
-                  data-title="Download Order">
-            <i class="icon-download"></i>
-          </button>
-          <div id="cart-panel-btns">
-            <hr />
-            <p>Please choose your download format</p>
-            <div class="btn-group">
-              <button id="cart-panel-download-button-shp"
-                      class="btn btn-info"
-                      data-toggle="tooltip"
-                      data-title="Download as SHP"
-                      data-placement="top">SHP
-              </button>
-              <button id="cart-panel-download-button-kml"
-                      class="btn btn-info"
-                      data-toggle="tooltip"
-                      data-title="Download as KML"
-                      data-placement="top">KML
-              </button>
-              <button id="cart-panel-download-button-kmz"
-                      class="btn btn-info"
-                      data-toggle="tooltip"
-                      data-title="Download as KMZ"
-                      data-placement="top">KMZ
-              </button>
-              <button id="cart-panel-download-button-xml"
-                      class="btn btn-info"
-                      data-toggle="tooltip"
-                      data-title="Download as XML"
-                      data-placement="top">XML
-              </button>
-              <button id="cart-panel-download-button-htm"
-                      class="btn btn-info"
-                      data-toggle="tooltip"
-                      data-title="Download as HTM"
-                      data-placement="top">HTM
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div id="result-panel-toggle" class="hide">
-        <button class="btn btn-info btn-large"
-                onclick="toggleResultPanel();"
-                data-toggle="tooltip" data-placement="left"
-                title="Toggle Results Panel">
-          <i class="icon-list"></i>
-        </button>
-      </div>
-      <div id="result-panel">
-        <div class="well well-small" style="height: 100%;">
-          <div class="navigation">
-            <div id="searchPrev" class="btn searchPrev"
-                 style="float:left; display: none;"
-                 data-toggle="tooltip"
-                 data-title="Previous Page"
-                 data-placement="top">
-              <i class="icon-chevron-left"></i>
-            </div>
-            <div style="float:left;" data-toggle="tooltip"
-                 data-title="Toggle Polygons">
-              <input type="checkbox" checked data-on="success" data-off="info" class="switch-small" id="switchSearchLayer">
-            </div>
-            <button id="resetZoom" style="float:left; display: none;"
-                 class="btn btn-info resetZoom"
-                 data-toggle="tooltip" data-title="Reset Zoom"
-                 data-placement="top">
-              <i class="icon-zoom-out"></i>
-            </button>
-            <div class="position" id="resultsPosition"></div>
-            <div id="searchNext" class="btn searchNext"
-                 style="float:right; display: none;"
-                 data-toggle="tooltip" data-title="Next Page"
-                 data-placement="top">
-              <i class="icon-chevron-right"></i>
-            </div>
-          </div>
-          <div id="results-container"></div>
-        </div>
-        <div id="result-sub-panel" class="well well-small text-center">
-          <button id="result-panel-download-button"
-                  class="btn btn-info">
-            <i class="icon-download-alt"></i> Download Results Data
-          </button>
-          <a class="btn btn-info" onclick="addOrderClicked(); return false;" href="/addorder/">
-            <i class="icon-plane" href=""></i> Order Now!
-          </a>
-          <div id="result-panel-btns">
-            <hr/>
-            <p>Please choose your download format</p>
-            <div class="btn-group">
-              <button id="result-panel-download-button-shp"
-                      class="btn btn-info" data-toggle="tooltip"
-                      data-title="Download as SHP"
-                      data-placement="top">SHP
-              </button>
-              <button id="result-panel-download-button-kml"
-                      class="btn btn-info" data-toggle="tooltip"
-                      data-title="Download as KML"
-                      data-placement="top">KML
-              </button>
-              <button id="result-panel-download-button-kmz"
-                      class="btn btn-info" data-toggle="tooltip"
-                      data-title="Download as KMZ"
-                      data-placement="top">KMZ
-              </button>
-              <button id="result-panel-download-button-xml"
-                      class="btn btn-info" data-toggle="tooltip"
-                      data-title="Download as XML"
-                      data-placement="top">XML
-              </button>
-              <button id="result-panel-download-button-htm"
-                      class="btn btn-info" data-toggle="tooltip"
-                      data-title="Download as HTM"
-                      data-placement="top">HTM
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div id="map" class="search-map"></div>
-      <div id="svg_layer">
-        <svg id="svg" style="width:100%; height: 100%;"></svg>
-      </div>
-      <input type="hidden" id="id_geometry" />
-      <div id="map-controls">
-        <div id="map-layerswitcher-control">
-          <button class="btn btn-info btn-large right icon-globe" data-toggle="tooltip"
-                      data-title="Select layers"
-                      data-placement="top"></button>
-        </div>
-        <div id="map-navigation"></div>
-      </div>
-      <div id="map-controls3" class="blackalpha60">
-      </div>
-      <div id="map-controls2" class="blackalpha60">
-        <div id="map-control-position"></div>
-        <div id="map-control-scalebar"></div>
-      </div>
-      <div id="map-layerswitcher"></div>
-  <div id="ajax-modal" class="modal hide fade" tabindex="-1"></div>
-  <div id="imageBox" class="modal container hide fade text-center"  tabindex="-2">
-    <img id="imageBoximage" src="" />
-  </div>
-{% endblock%}
 
+{#      <div id="panel-toggles" class="btn-group">#}
+{#          <button id="search-panel-toggle"#}
+{#                  class="btn btn-info btn-large btn-left-panel active"#}
+{#                  onclick="toggleSearchPanel();"#}
+{#                  data-toggle="tooltip" title="Toggle Search Panel"#}
+{#                  data-placement="bottom">#}
+{#            <i class="icon-search"></i>#}
+{#          </button>#}
+{#          <button id="cart-panel-toggle"#}
+{#                  class="btn btn-info btn-large btn-left-panel"#}
+{#                  onclick="toggleCartPanel();"#}
+{#                  data-toggle="tooltip" data-title="Toggle Cart Panel"#}
+{#                  data-placement="bottom">#}
+{#            <i class="icon-shopping-cart"></i>#}
+{#          </button>#}
+{#          <button id="map-help-button"#}
+{#                  class="btn btn-info btn-large"#}
+{#                  data-toggle="tooltip" title="Map Help"#}
+{#                  data-placement="bottom">#}
+{#            <i class="icon-question-sign"></i>#}
+{#          </button>#}
+{#        </div>#}
+{#      <div id="search-panel">#}
+{#        <div id="search-panel-content" class="well well-small">#}
+{#          <form id="catalogueSearch" action="{% url 'submitSearch' %}"#}
+{#                class="accordion">#}
+{#            <h5 class="text-center">Set Your Search Parameters</h5>#}
+{#            <hr />#}
+{#            {% csrf_token %}#}
+{#            {{ searchform.geometry }}#}
+{#            {{ searchform.selected_sensors }}#}
+{#            <div class="accordion" id="accordionPanelsStayOpenExample">#}
+{#                <div class="accordion-item">#}
+{#                  <h2 class="accordion-header" id="panelsStayOpen-headingOne">#}
+{#                      <button class="accordion-button" type="button" data-bs-toggle="collapse"#}
+{#                              data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true"#}
+{#                              aria-controls="panelsStayOpen-collapseOne">Choose Satellites#}
+{#                      </button>#}
+{#                  </h2>#}
+{#                    {% include 'search_form/content-1.html' %}#}
+{#                </div>#}
+{#                <div class="accordion-item">#}
+{#                    <h2 class="accordion-header" id="panelsStayOpen-headingTwo">#}
+{#                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"#}
+{#                          data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false"#}
+{#                          aria-controls="panelsStayOpen-collapseTwo"> Add Date Ranges#}
+{#                        </button>#}
+{#                    </h2>#}
+{#                    {% include 'search_form/content-2.html' %}#}
+{#                </div>#}
+{#                <div class="accordion-item">#}
+{#                    <h2 class="accordion-header" id="panelsStayOpen-headingThree">#}
+{#                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"#}
+{#                            data-bs-target="#panelsStayOpen-collapseThree"#}
+{#                            aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">Define Search Area#}
+{#                        </button>#}
+{#                    </h2>#}
+{#                  {% include 'search_form/content-3.html' %}#}
+{#                </div>#}
+{#                <div class="accordion-item">#}
+{#                  <h2 class="accordion-header" id="panelsStayOpen-headingFour">#}
+{#                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"#}
+{#                            data-bs-target="#panelsStayOpen-collapseFour"#}
+{#                            aria-expanded="false" aria-controls="panelsStayOpen-collapseFour">Set Cloud Cover Range#}
+{#                        </button>#}
+{#                  </h2>#}
+{#                  {% include 'search_form/content-6.html' %}#}
+{#                </div>#}
+{#                <div class="accordion-item">#}
+{#                   <h2 class="accordion-header" id="panelsStayOpen-headingFive">#}
+{#                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"#}
+{#                            data-bs-target="#panelsStayOpen-collapseFive"#}
+{#                            aria-expanded="false" aria-controls="panelsStayOpen-collapseFive"> Other Options#}
+{#                        </button>#}
+{#                   </h2>#}
+{#                  {% include 'search_form/content-5.html' %}#}
+{#                </div>#}
+{#            </div>#}
+{#          </form>#}
+{#        </div>#}
+{#        <div id="search-summary-container" class="well well-small">#}
+{#          <div id="search-buttons" class="text-center">#}
+{#            <button id="search_button" class="btn btn-success"#}
+{#                    data-toggle="tooltip" title="Run Search"#}
+{#                    data-placement="top">#}
+{#              <i class="icon-play"></i> Search#}
+{#            </button>#}
+{#            <button class="btn btn-warning"#}
+{#                    data-toggle="tooltip" title="Reset Search Parameters"#}
+{#                    onclick="resetSearchForm()"#}
+{#                    data-placement="top">#}
+{#              <i class="icon-refresh"></i> Reset#}
+{#            </button>#}
+{#            <button id="search-panel-help-button"#}
+{#                    class="btn btn-info"#}
+{#                    data-toggle="tooltip" title="Search Help"#}
+{#                    data-placement="top">#}
+{#              <i class="icon-question-sign"></i>#}
+{#            </button>#}
+{#            <button id="SearchShare"#}
+{#                 data-toggle="tooltip" title="Search Permalink"#}
+{#                 data-placement="top"#}
+{#                 class="btn btn-info">#}
+{#              <i class="icon-link"></i>#}
+{#            </button>#}
+{#          </div>#}
+{#          <div id="SearchShare-content">#}
+{#            <hr/>#}
+{#            <p class="text-center">#}
+{#              This is a permalink to these search results. The search will also#}
+{#              be recorded in your Search History for future reference.#}
+{#            </p>#}
+{#            <div id="SearchShare-input-container" class="text-center"></div>#}
+{#          </div>#}
+{#        </div>#}
+{#      </div>#}
+{#      <div id="cart-panel">#}
+{#        <div id="cart-container" class="well well-small"></div>#}
+{#        <div id="cart-sub-panel" class="well well-small text-center">#}
+{#          <button id="cart-show-map" class="btn btn-info"#}
+{#                  data-state="hidden"#}
+{#                  data-toggle="tooltip"#}
+{#                  data-title="Show on Map">#}
+{#            <i class="icon-globe"></i>#}
+{#          </button>#}
+{#          <button id="place_order" class="btn btn-success">#}
+{#            <i class="icon-ok"></i> Place Order#}
+{#          </button>#}
+{#          <button id="cart-panel-download-button"#}
+{#                  onclick="showCartDownloadOptions();"#}
+{#                  class="btn btn-info"#}
+{#                  data-toggle="tooltip"#}
+{#                  data-title="Download Order">#}
+{#            <i class="icon-download"></i>#}
+{#          </button>#}
+{#          <div id="cart-panel-btns">#}
+{#            <hr />#}
+{#            <p>Please choose your download format</p>#}
+{#            <div class="btn-group">#}
+{#              <button id="cart-panel-download-button-shp"#}
+{#                      class="btn btn-info"#}
+{#                      data-toggle="tooltip"#}
+{#                      data-title="Download as SHP"#}
+{#                      data-placement="top">SHP#}
+{#              </button>#}
+{#              <button id="cart-panel-download-button-kml"#}
+{#                      class="btn btn-info"#}
+{#                      data-toggle="tooltip"#}
+{#                      data-title="Download as KML"#}
+{#                      data-placement="top">KML#}
+{#              </button>#}
+{#              <button id="cart-panel-download-button-kmz"#}
+{#                      class="btn btn-info"#}
+{#                      data-toggle="tooltip"#}
+{#                      data-title="Download as KMZ"#}
+{#                      data-placement="top">KMZ#}
+{#              </button>#}
+{#              <button id="cart-panel-download-button-xml"#}
+{#                      class="btn btn-info"#}
+{#                      data-toggle="tooltip"#}
+{#                      data-title="Download as XML"#}
+{#                      data-placement="top">XML#}
+{#              </button>#}
+{#              <button id="cart-panel-download-button-htm"#}
+{#                      class="btn btn-info"#}
+{#                      data-toggle="tooltip"#}
+{#                      data-title="Download as HTM"#}
+{#                      data-placement="top">HTM#}
+{#              </button>#}
+{#            </div>#}
+{#          </div>#}
+{#        </div>#}
+{#      </div>#}
+{#      <div id="result-panel-toggle" class="hide">#}
+{#        <button class="btn btn-info btn-large"#}
+{#                onclick="toggleResultPanel();"#}
+{#                data-toggle="tooltip" data-placement="left"#}
+{#                title="Toggle Results Panel">#}
+{#          <i class="icon-list"></i>#}
+{#        </button>#}
+{#      </div>#}
+{#      <div id="result-panel">#}
+{#        <div class="well well-small" style="height: 100%;">#}
+{#          <div class="navigation">#}
+{#            <div id="searchPrev" class="btn searchPrev"#}
+{#                 style="float:left; display: none;"#}
+{#                 data-toggle="tooltip"#}
+{#                 data-title="Previous Page"#}
+{#                 data-placement="top">#}
+{#              <i class="icon-chevron-left"></i>#}
+{#            </div>#}
+{#            <div style="float:left;" data-toggle="tooltip"#}
+{#                 data-title="Toggle Polygons">#}
+{#              <input type="checkbox" checked data-on="success" data-off="info" class="switch-small" id="switchSearchLayer">#}
+{#            </div>#}
+{#            <button id="resetZoom" style="float:left; display: none;"#}
+{#                 class="btn btn-info resetZoom"#}
+{#                 data-toggle="tooltip" data-title="Reset Zoom"#}
+{#                 data-placement="top">#}
+{#              <i class="icon-zoom-out"></i>#}
+{#            </button>#}
+{#            <div class="position" id="resultsPosition"></div>#}
+{#            <div id="searchNext" class="btn searchNext"#}
+{#                 style="float:right; display: none;"#}
+{#                 data-toggle="tooltip" data-title="Next Page"#}
+{#                 data-placement="top">#}
+{#              <i class="icon-chevron-right"></i>#}
+{#            </div>#}
+{#          </div>#}
+{#          <div id="results-container"></div>#}
+{#        </div>#}
+{#        <div id="result-sub-panel" class="well well-small text-center">#}
+{#          <button id="result-panel-download-button"#}
+{#                  class="btn btn-info">#}
+{#            <i class="icon-download-alt"></i> Download Results Data#}
+{#          </button>#}
+{#          <a class="btn btn-info" onclick="addOrderClicked(); return false;" href="/addorder/">#}
+{#            <i class="icon-plane" href=""></i> Order Now!#}
+{#          </a>#}
+{#          <div id="result-panel-btns">#}
+{#            <hr/>#}
+{#            <p>Please choose your download format</p>#}
+{#            <div class="btn-group">#}
+{#              <button id="result-panel-download-button-shp"#}
+{#                      class="btn btn-info" data-toggle="tooltip"#}
+{#                      data-title="Download as SHP"#}
+{#                      data-placement="top">SHP#}
+{#              </button>#}
+{#              <button id="result-panel-download-button-kml"#}
+{#                      class="btn btn-info" data-toggle="tooltip"#}
+{#                      data-title="Download as KML"#}
+{#                      data-placement="top">KML#}
+{#              </button>#}
+{#              <button id="result-panel-download-button-kmz"#}
+{#                      class="btn btn-info" data-toggle="tooltip"#}
+{#                      data-title="Download as KMZ"#}
+{#                      data-placement="top">KMZ#}
+{#              </button>#}
+{#              <button id="result-panel-download-button-xml"#}
+{#                      class="btn btn-info" data-toggle="tooltip"#}
+{#                      data-title="Download as XML"#}
+{#                      data-placement="top">XML#}
+{#              </button>#}
+{#              <button id="result-panel-download-button-htm"#}
+{#                      class="btn btn-info" data-toggle="tooltip"#}
+{#                      data-title="Download as HTM"#}
+{#                      data-placement="top">HTM#}
+{#              </button>#}
+{#            </div>#}
+{#          </div>#}
+{#        </div>#}
+{#      </div>#}
+{#      <div id="map" class="search-map"></div>#}
+{#      <div id="svg_layer">#}
+{#        <svg id="svg" style="width:100%; height: 100%;"></svg>#}
+{#      </div>#}
+{#      <input type="hidden" id="id_geometry" />#}
+{#      <div id="map-controls">#}
+{#        <div id="map-layerswitcher-control">#}
+{#          <button class="btn btn-info btn-large right icon-globe" data-toggle="tooltip"#}
+{#                      data-title="Select layers"#}
+{#                      data-placement="top"></button>#}
+{#        </div>#}
+{#        <div id="map-navigation"></div>#}
+{#      </div>#}
+{#      <div id="map-controls3" class="blackalpha60">#}
+{#      </div>#}
+{#      <div id="map-controls2" class="blackalpha60">#}
+{#        <div id="map-control-position"></div>#}
+{#        <div id="map-control-scalebar"></div>#}
+{#      </div>#}
+{#      <div id="map-layerswitcher"></div>#}
+{#  <div id="ajax-modal" class="modal hide fade" tabindex="-1"></div>#}
+{#  <div id="imageBox" class="modal container hide fade text-center"  tabindex="-2">#}
+{#    <img id="imageBoximage" src="" />#}
+{#  </div>#}
+    <div id="map-container"></div>
+{% endblock%}
+{% block footer %}
+    {% include 'map_templates.html' %}
+    {% include 'map_control_panel.html' %}
+    {% include 'side-panel-templates.html' %}
+
+{% endblock %}
 {% block extrajs %}
-  {{ block.super }}
+  <script data-main="/static/js/app" src="/static/js/libs/requirejs-2.3.6/require.js"></script>
   <script type="text/javascript">
-    APP.searchresults = {{ searchlistnumber|safe }};
+    {#APP.searchresults = {{ searchlistnumber|safe }};#}
     {% if user.is_authenticated %}
-      var UserLoged = true;
+        const UserLoged = true;
     {% else %}
-      var UserLoged = false;
+        const UserLoged = false;
     {% endif %}
+  const defaultBasemap = 'OpenStreetMap';
   </script>
-  <script type="text/javascript" src="{% static 'js/backbone-pagination.js' %}"></script>
-  <script type="text/javascript" src="{% static 'js/search.js' %}"></script>
-  <script type="text/javascript" src="{% static 'js/catalogue.js' %}"></script>
+{#  <script type="text/javascript" src="{% static 'js/backbone-pagination.js' %}"></script>#}
   <script>
   // set control variable for share link window
   // default false
-  var searchShareOpen = false;
-  $( document ).ready(function() {
-    // activate tooltips on all elements
-    $('[data-toggle="tooltip"]').tooltip();
-    // activate tooltips on new AJAX-loaded elements
-    $('body').bind('ajaxComplete', function(e, xhr, settings){
-       $('[data-toggle="tooltip"]').tooltip();
-    });
-    // activate help popovers
-    $('.help-popover').popover();
-    // initialize map widdget
-    myMap = new APP.SansaMap('map');
-    // initialize search layer widget
-    searchLayer = new APP.SearchLayer(myMap);
-    // initialize layer that holds custom geometry control
-    geoSearchLayer = new APP.GeoSearchLayer(myMap);
-    // initialize layer that holds cart geometry
-    searchCartLayer = new APP.SearchCartLayer(myMap);
-    // check if we are opening existing search from history
-    {% if mysearch %}
-      // set guid of loaded search
-      APP.guid = '{{ mysearch.guid }}';
-      // trigger load of search results
-      $APP.trigger('collectionSearch', {
-          offset: 0
-      });
-      // open panel with results (panel is hidden by default)
-      openResultPanel();
-    {% endif %}
-    // activate tooltip for map control buttons
-    $(".olButton").tooltip({"placement": "top"});
-    // hide search share button and widget
-    $('#SearchShare, #SearchShare-content').hide();
-    // set panels according to control variables
-    defaultPanelState();
-    // initialize listree widget
-    $('.listTree').listTree( {{ listreeoptions|safe }} , { "startCollapsed": true, "selected": {{ selected_options|safe }} });
-    // initialize nice scrollbar
-    $('#search-panel-content').perfectScrollbar( {wheelSpeed: 20, wheelPropogation: true } );
-    //$('#results-container').perfectScrollbar( { wheelSpeed: 20, wheelPropogation: true } );
-    $('#cart-container').perfectScrollbar( { wheelSpeed: 20, wheelPropogation: true } );
-    // if size of #catalogue serch has changes since page load, we need to
-    // update nice scroller to new height
-    $('#catalogueSearch').on('show', function(){
-      $('#search-panel-content').perfectScrollbar('update');
-    });
-    $('#catalogueSearch').on('hide', function () {
-      $('#search-panel-content').perfectScrollbar('update');
-    });
-    $('#result-panel').on('show', function(){
-      $('#results-container').perfectScrollbar('update');
-    });
-    $('#results-panel').on('hide', function () {
-      $('#results-container').perfectScrollbar('update');
-    });
-    // initialize datepicker widgets
-    $('#id_start_datepicker').datepicker({
-      autoclose: true,
-      startView: 2,
-      format: "dd/mm/yyyy",
-      endDate: Date()
-    });
-    $('#id_end_datepicker').datepicker({
-      autoclose: true,
-      startView: 2,
-      format: "dd/mm/yyyy",
-      endDate: Date()
-    });
-    $('#id_end_datepicker').datepicker('setDate',new Date())
-    // setup actions for events
-    $('#result-panel-download-button').click(function() {
-      toggleResultDownloadButton();
-    });
-    $('#search_button').click(function() {
-      if (!$(this).hasClass('disabled')) submitSearchForm();
-    });
-
-    $('#cart-panel-download-button').click(function() {
-      toggleCartDownloadButton();
-    });
-
-    $('#switchSearchLayer').bootstrapSwitch().bootstrapSwitch('setState', true);
-    $('#switchSearchLayer').on('switch-change', function (e, data) {
-        $APP.trigger('toggleSearchLayer', data.value);
-      });
-    $('#cart-show-map').click(function() {
-      // show cart products on map
-      var elem  = $(this);
-      if (elem.data('state') == 'hidden') {
-        $APP.trigger('SearchCartLayer_setVisibility', true);
-        elem.data('state','visible');
-        elem.html('Hide from map');
-      } else {
-        $APP.trigger('SearchCartLayer_setVisibility', false);
-        elem.data('state','hidden');
-        elem.html('Show on map');
-      }
-    });
-    $('#place_order').click(function() {
-      window.location.replace('/addorder');
-    });
-    $('#map-layerswitcher-control').click(function() {
-      toggleLayerSwitcher();
-    });
-    $('#result-panel-download-button-shp').click(function() {
-      window.open(
-        '/downloadsearchresults/' + APP.guid + '/?shp',
-        '_blank'
-      );
-    });
-    $('#result-panel-download-button-htm').click(function() {
-      window.open(
-        '/downloadsearchmetadata/' + APP.guid + '/?html',
-        '_blank'
-      );
-    });
-    $('#result-panel-download-button-kml').click(function() {
-      window.open(
-        '/downloadsearchresults/' + APP.guid + '/?kml',
-        '_blank'
-      );
-    });
-    $('#result-panel-download-button-kmz').click(function() {
-      window.open(
-        '/downloadsearchresults/' + APP.guid + '/?kmz',
-        '_blank'
-      );
-    });
-    $('#result-panel-download-button-xml').click(function() {
-      window.open(
-        '/downloadsearchmetadata/' + APP.guid + '/',
-        '_blank'
-      );
-    });
-
-    $('#cart-panel-download-button-shp').click(function() {
-      window.open(
-        '/downloadcart/?shp',
-        '_blank'
-      );
-    });
-    $('#cart-panel-download-button-htm').click(function() {
-      window.open(
-        '/downloadcartmetadata/?html',
-        '_blank'
-      );
-    });
-    $('#cart-panel-download-button-kml').click(function() {
-      window.open(
-        '/downloadcart/?kml',
-        '_blank'
-      );
-    });
-    $('#cart-panel-download-button-kmz').click(function() {
-      window.open(
-        '/downloadcart/?kmz',
-        '_blank'
-      );
-    });
-    $('#cart-panel-download-button-xml').click(function() {
-      window.open(
-        '/downloadcartmetadata/',
-        '_blank'
-      );
-    });
-    $('#search-panel-help-button').click(function() {
-      APP.$modal.load('/searchformhelp/', '', function(){
-        APP.$modal.modal();
-      });
-    });
-    $('#map-help-button').click(function() {
-      APP.$modal.load('/mapHelp/', '', function(){
-        APP.$modal.modal();
-      });
-    });
-    $("#SearchShare").click(function(){
-      toggleSearchShare();
-    });
-    // setup daterange widget
-    $('#date_range').daterange();
-    // setup search summary widget
-    //searchSummary = new APP.SearchSummary('#search-summary');
-    //searchSummary.force();
-    // ask daterange widget to notify us about dates, it will trigger state of search button
-    $('#date_range').daterange('notify');
-
-    // Hide popovers on click
-    $('body').on('click', function (e) {
-      $('.result-item').each(function () {
-          // hide any open popovers when the anywhere else in the body is clicked
-          if (!$(this).is(e.target) && $(this).has(e.target).length === 0 && $('.popover').has(e.target).length === 0) {
-              $(this).popover('hide');
-          }
-      });
-  });
-  });
-  </script>
+    const searchShareOpen = false;
+    {#$( document ).ready(function() {#}
+  {#  // activate tooltips on all elements#}
+  {#  $('[data-toggle="tooltip"]').tooltip();#}
+  {#  // activate tooltips on new AJAX-loaded elements#}
+  {#  $('body').bind('ajaxComplete', function(e, xhr, settings){#}
+  {#     $('[data-toggle="tooltip"]').tooltip();#}
+  {#  });#}
+  {#  // activate help popovers#}
+  {#  $('.help-popover').popover();#}
+  {#  // initialize map widdget#}
+  {#  myMap = new APP.SansaMap('map');#}
+  {#  // initialize search layer widget#}
+  {#  searchLayer = new APP.SearchLayer(myMap);#}
+  {#  // initialize layer that holds custom geometry control#}
+  {#  geoSearchLayer = new APP.GeoSearchLayer(myMap);#}
+  {#  // initialize layer that holds cart geometry#}
+  {#  searchCartLayer = new APP.SearchCartLayer(myMap);#}
+  {#  // check if we are opening existing search from history#}
+  {#  {% if mysearch %}#}
+  {#    // set guid of loaded search#}
+  {#    APP.guid = '{{ mysearch.guid }}';#}
+  {#    // trigger load of search results#}
+  {#    $APP.trigger('collectionSearch', {#}
+  {#        offset: 0#}
+  {#    });#}
+  {#    // open panel with results (panel is hidden by default)#}
+  {#    openResultPanel();#}
+  {#  {% endif %}#}
+  {#  // activate tooltip for map control buttons#}
+  {#  $(".olButton").tooltip({"placement": "top"});#}
+  {#  // hide search share button and widget#}
+  {#  $('#SearchShare, #SearchShare-content').hide();#}
+  {#  // set panels according to control variables#}
+  {#  defaultPanelState();#}
+  {#  // initialize listree widget#}
+  {#  $('.listTree').listTree( {{ listreeoptions|safe }} , { "startCollapsed": true, "selected": {{ selected_options|safe }} });#}
+  {#  // initialize nice scrollbar#}
+  {#  $('#search-panel-content').perfectScrollbar( {wheelSpeed: 20, wheelPropogation: true } );#}
+  {#  //$('#results-container').perfectScrollbar( { wheelSpeed: 20, wheelPropogation: true } );#}
+  {#  $('#cart-container').perfectScrollbar( { wheelSpeed: 20, wheelPropogation: true } );#}
+  {#  // if size of #catalogue serch has changes since page load, we need to#}
+  {#  // update nice scroller to new height#}
+  {#  $('#catalogueSearch').on('show', function(){#}
+  {#    $('#search-panel-content').perfectScrollbar('update');#}
+  {#  });#}
+  {#  $('#catalogueSearch').on('hide', function () {#}
+  {#    $('#search-panel-content').perfectScrollbar('update');#}
+  {#  });#}
+  {#  $('#result-panel').on('show', function(){#}
+  {#    $('#results-container').perfectScrollbar('update');#}
+  {#  });#}
+  {#  $('#results-panel').on('hide', function () {#}
+  {#    $('#results-container').perfectScrollbar('update');#}
+  {#  });#}
+  {#  // initialize datepicker widgets#}
+  {#  $('#id_start_datepicker').datepicker({#}
+  {#    autoclose: true,#}
+  {#    startView: 2,#}
+  {#    format: "dd/mm/yyyy",#}
+  {#    endDate: Date()#}
+  {#  });#}
+  {#  $('#id_end_datepicker').datepicker({#}
+  {#    autoclose: true,#}
+  {#    startView: 2,#}
+  {#    format: "dd/mm/yyyy",#}
+  {#    endDate: Date()#}
+  {#  });#}
+  {#  $('#id_end_datepicker').datepicker('setDate',new Date())#}
+  {#  // setup actions for events#}
+  {#  $('#result-panel-download-button').click(function() {#}
+  {#    toggleResultDownloadButton();#}
+  {#  });#}
+  {#  $('#search_button').click(function() {#}
+  {#    if (!$(this).hasClass('disabled')) submitSearchForm();#}
+  {#  });#}
+  {##}
+  {#  $('#cart-panel-download-button').click(function() {#}
+  {#    toggleCartDownloadButton();#}
+  {#  });#}
+  {##}
+  {#  $('#switchSearchLayer').bootstrapSwitch().bootstrapSwitch('setState', true);#}
+  {#  $('#switchSearchLayer').on('switch-change', function (e, data) {#}
+  {#      $APP.trigger('toggleSearchLayer', data.value);#}
+  {#    });#}
+  {#  $('#cart-show-map').click(function() {#}
+  {#    // show cart products on map#}
+  {#    var elem  = $(this);#}
+  {#    if (elem.data('state') == 'hidden') {#}
+  {#      $APP.trigger('SearchCartLayer_setVisibility', true);#}
+  {#      elem.data('state','visible');#}
+  {#      elem.html('Hide from map');#}
+  {#    } else {#}
+  {#      $APP.trigger('SearchCartLayer_setVisibility', false);#}
+  {#      elem.data('state','hidden');#}
+  {#      elem.html('Show on map');#}
+  {#    }#}
+  {#  });#}
+  {#  $('#place_order').click(function() {#}
+  {#    window.location.replace('/addorder');#}
+  {#  });#}
+  {#  $('#map-layerswitcher-control').click(function() {#}
+  {#    toggleLayerSwitcher();#}
+  {#  });#}
+  {#  $('#result-panel-download-button-shp').click(function() {#}
+  {#    window.open(#}
+  {#      '/downloadsearchresults/' + APP.guid + '/?shp',#}
+  {#      '_blank'#}
+  {#    );#}
+  {#  });#}
+  {#  $('#result-panel-download-button-htm').click(function() {#}
+  {#    window.open(#}
+  {#      '/downloadsearchmetadata/' + APP.guid + '/?html',#}
+  {#      '_blank'#}
+  {#    );#}
+  {#  });#}
+  {#  $('#result-panel-download-button-kml').click(function() {#}
+  {#    window.open(#}
+  {#      '/downloadsearchresults/' + APP.guid + '/?kml',#}
+  {#      '_blank'#}
+  {#    );#}
+  {#  });#}
+  {#  $('#result-panel-download-button-kmz').click(function() {#}
+  {#    window.open(#}
+  {#      '/downloadsearchresults/' + APP.guid + '/?kmz',#}
+  {#      '_blank'#}
+  {#    );#}
+  {#  });#}
+  {#  $('#result-panel-download-button-xml').click(function() {#}
+  {#    window.open(#}
+  {#      '/downloadsearchmetadata/' + APP.guid + '/',#}
+  {#      '_blank'#}
+  {#    );#}
+  {#  });#}
+  {##}
+  {#  $('#cart-panel-download-button-shp').click(function() {#}
+  {#    window.open(#}
+  {#      '/downloadcart/?shp',#}
+  {#      '_blank'#}
+  {#    );#}
+  {#  });#}
+  {#  $('#cart-panel-download-button-htm').click(function() {#}
+  {#    window.open(#}
+  {#      '/downloadcartmetadata/?html',#}
+  {#      '_blank'#}
+  {#    );#}
+  {#  });#}
+  {#  $('#cart-panel-download-button-kml').click(function() {#}
+  {#    window.open(#}
+  {#      '/downloadcart/?kml',#}
+  {#      '_blank'#}
+  {#    );#}
+  {#  });#}
+  {#  $('#cart-panel-download-button-kmz').click(function() {#}
+  {#    window.open(#}
+  {#      '/downloadcart/?kmz',#}
+  {#      '_blank'#}
+  {#    );#}
+  {#  });#}
+  {#  $('#cart-panel-download-button-xml').click(function() {#}
+  {#    window.open(#}
+  {#      '/downloadcartmetadata/',#}
+  {#      '_blank'#}
+  {#    );#}
+  {#  });#}
+  {#  $('#search-panel-help-button').click(function() {#}
+  {#    APP.$modal.load('/searchformhelp/', '', function(){#}
+  {#      APP.$modal.modal();#}
+  {#    });#}
+  {#  });#}
+  {#  $('#map-help-button').click(function() {#}
+  {#    APP.$modal.load('/mapHelp/', '', function(){#}
+  {#      APP.$modal.modal();#}
+  {#    });#}
+  {#  });#}
+  {#  $("#SearchShare").click(function(){#}
+  {#    toggleSearchShare();#}
+  {#  });#}
+  {#  // setup daterange widget#}
+  {#  $('#date_range').daterange();#}
+  {#  // setup search summary widget#}
+  {#  //searchSummary = new APP.SearchSummary('#search-summary');#}
+  {#  //searchSummary.force();#}
+  {#  // ask daterange widget to notify us about dates, it will trigger state of search button#}
+  {#  $('#date_range').daterange('notify');#}
+  {##}
+  {#  // Hide popovers on click#}
+  {#  $('body').on('click', function (e) {#}
+  {#    $('.result-item').each(function () {#}
+  {#        // hide any open popovers when the anywhere else in the body is clicked#}
+  {#        if (!$(this).is(e.target) && $(this).has(e.target).length === 0 && $('.popover').has(e.target).length === 0) {#}
+  {#            $(this).popover('hide');#}
+  {#        }#}
+  {#    });#}
+  {#});#}
+  {#});#}
+  {#</script>#}
 {% endblock %}

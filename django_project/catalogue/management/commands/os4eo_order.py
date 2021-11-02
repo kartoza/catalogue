@@ -15,13 +15,14 @@ from django.db import transaction
 from catalogue.models import *
 from catalogue.os4eo_client import OS4EOClient
 from elementsoap.ElementSOAP import SoapFault
+from search.models import SearchRecord
 
 
 class Command(BaseCommand):
     help = "Place orders"
     option_list = BaseCommand.option_list + (
         make_option('--test_only', '-t', dest='test_only', action='store_true',
-            help='Just test, nothing will be written into the DB.', default=False),
+                    help='Just test, nothing will be written into the DB.', default=False),
     )
 
     @transaction.commit_manually
@@ -34,8 +35,8 @@ class Command(BaseCommand):
             # couldn't take the lock
             raise CommandError('Could not acquire lock.')
 
-        test_only             = options.get('test_only')
-        verbose               = int(options.get('verbosity'))
+        test_only = options.get('test_only')
+        verbose = int(options.get('verbosity'))
 
         def verblog(msg, level=1):
             if verbose >= level:
@@ -51,13 +52,17 @@ class Command(BaseCommand):
             # Scan DB for pending orders
             # We must be sure they are GenericSensorProduct...
             pending_records = []
-            for sr in SearchRecord.objects.exclude(order__order_status__name__in=['Cancelled', 'Awaiting info from client', 'Completed']).filter(product_ready=False):
+            for sr in SearchRecord.objects.exclude(
+                    order__order_status__name__in=['Cancelled', 'Awaiting info from client', 'Completed']).filter(
+                product_ready=False):
                 verblog('Processing SearchRecord %s ...' % sr, 2)
                 try:
                     if sr.product.getConcreteInstance().online_storage_medium_id:
                         pending_records.append(sr)
                     else:
-                        verblog('Product %s has no online_storage_medium_id value (it is not a DIMS product).' % sr.product, 2)
+                        verblog(
+                            'Product %s has no online_storage_medium_id value (it is not a DIMS product).' % sr.product,
+                            2)
                 except:
                     verblog('Product %s is not a GenericSensorProduct,' % sr.product, 2)
 
@@ -68,7 +73,8 @@ class Command(BaseCommand):
                     # Case 1: order not placed
                     if not sr.internal_order_id:
                         try:
-                            os4eo_id, os4eo_submit_status = os4eo.Submit(sr.product.getConcreteInstance().online_storage_medium_id, sr.pk)
+                            os4eo_id, os4eo_submit_status = os4eo.Submit(
+                                sr.product.getConcreteInstance().online_storage_medium_id, sr.pk)
                             sr.internal_order_id = os4eo_id
                             sr.save()
                         except SoapFault as e:
@@ -82,12 +88,14 @@ class Command(BaseCommand):
                             if os4eo.GetStatus(order_record.internal_order_id) == 'Completed':
                                 verblog('OS4EO order %s is completed' % sr)
                                 try:
-                                    result_access_status, dowload_path = os4eo.DescribeResultAccess(order_record.internal_order_id)
+                                    result_access_status, dowload_path = os4eo.DescribeResultAccess(
+                                        order_record.internal_order_id)
                                     # Store dowload_path SearchRecord
                                     sr.dowload_path = dowload_path
                                     sr.save()
                                     # Check that the order is complete
-                                    if sr.order.searchrecord_set.filter(Q(internal_order_id__isnull=True) | Q(product_ready=False)).count():
+                                    if sr.order.searchrecord_set.filter(
+                                            Q(internal_order_id__isnull=True) | Q(product_ready=False)).count():
                                         verblog('Order %s has pending SearchRecords: cannot set completed', 2)
                                     else:
                                         sr.order.order_status = OrderStatus.objects.get(name='Completed')

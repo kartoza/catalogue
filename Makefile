@@ -64,3 +64,6 @@ db-restore:  ## Restore a database backup
 
 db-shell:
 	docker-compose exec db bash
+
+django-test:
+	@docker-compose exec devweb python manage.py test --noinput --verbosity 3 catalogue

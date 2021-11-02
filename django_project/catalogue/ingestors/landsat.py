@@ -451,7 +451,7 @@ def ingest(
             # ProductProfile for OpticalProduct
             product_profile = get_product_profile(log_message, dom)
             # Get the original text file metadata
-            metadata_file = file(xml_file, 'rt')
+            metadata_file = open(xml_file, 'rt')
             metadata = metadata_file.readlines()
             metadata_file.close()
             log_message('Metadata retrieved', 2)

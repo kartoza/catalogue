@@ -26,7 +26,7 @@ from catalogue.tests.model_factories import OpticalProductF
 from .model_factories import SearchF
 
 
-class SearchBandCount_Test(TestCase):
+class TestSearchBandCount(TestCase):
     """
     Tests Search Band Count
     """

@@ -1,7 +1,6 @@
 __author__ = 'rischan - <--rischan@kartoza.com-->'
 __date__ = '3/4/16'
 
-from optparse import make_option
 from django.core.management.base import BaseCommand
 from catalogue.ingestors import cbers
 
@@ -13,15 +12,16 @@ class Command(BaseCommand):
 
     # noinspection PyShadowingBuiltins
     help = 'Imports CBERS-4 records into the SANSA catalogue'
-    option_list = BaseCommand.option_list + (
-        make_option(
+
+    def add_arguments(self, parser):
+        parser.add_argument(
             '--test_only',
             '-t',
             dest='test_only_flag',
             action='store_true',
             help='Just test, nothing will be written into the DB.',
-            default=False),
-        make_option(
+            default=False)
+        parser.add_argument(
             '--source_dir',
             '-d',
             dest='source_dir',
@@ -31,15 +31,15 @@ class Command(BaseCommand):
                 'thumbnail to import.'),
             default=(
                 '/home/web/django_project'
-                '/data/CBERS/')),
-        make_option(
+                '/data/CBERS/'))
+        parser.add_argument(
             '--halt_on_error', '-e', dest='halt_on_error_flag',
             action='store',
             help=(
                 'Halt on first error that occurs and print a '
                 'stacktrace'),
             default=False),
-        make_option(
+        parser.add_argument(
             '--ignore-missing-thumbs',
             '-i',
             dest='ignore_missing_thumbs_flag',
@@ -48,7 +48,6 @@ class Command(BaseCommand):
                 'Continue with importing records even if they miss their'
                 'thumbnails.'),
             default=False)
-    )
 
     # noinspection PyDeprecation
     @staticmethod
@@ -61,13 +60,13 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         """ command execution """
-        test_only = self._parameter_to_bool(options.get('test_only_flag'))
-        source_dir = options.get('source_dir')
-        verbose = int(options.get('verbosity'))
+        test_only = self._parameter_to_bool(options['test_only_flag'])
+        source_dir = options['source_dir']
+        verbose = int(options['verbosity'])
         halt_on_error = self._parameter_to_bool(
-            options.get('halt_on_error_flag'))
+            options['halt_on_error_flag'])
         ignore_missing_thumbs = self._parameter_to_bool(
-            options.get('ignore_missing_thumbs_flag'))
+            options['ignore_missing_thumbs_flag'])
 
         cbers.ingest(
             source_path=source_dir,

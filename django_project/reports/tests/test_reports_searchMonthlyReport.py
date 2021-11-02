@@ -19,16 +19,17 @@ __date__ = '20/08/2013'
 __copyright__ = 'South African National Space Agency'
 
 import datetime
-from django.core.urlresolvers import reverse, NoReverseMatch
+
+from core.model_factories import UserF
+from django.urls import reverse, NoReverseMatch
 from django.test import TestCase
 from django.test.client import Client
 
-from core.model_factories import UserF
 from search.tests.model_factories import SearchF
 from catalogue.tests.model_factories import WorldBordersF
 
 
-class ReportsViews_searchMonthlyReport_Tests(TestCase):
+class TestReportsViewsSearchMonthlyReport(TestCase):
     """
     Tests reports.py visitor_report method/view
     """

@@ -1,0 +1,677 @@
+define([
+    'backbone',
+    'underscore',
+    'shared',
+    'views/map_control_panel',
+    // 'views/side_panel',
+    'views/lasso_panel',
+    'ol',
+    'jquery',
+    'layerSwitcher',
+    'views/olmap_basemap',
+    'views/olmap_layers',
+], function (Backbone, _, Shared, MapControlPanelView, LassoPanelView, ol, $, LayerSwitcher, Basemap, Layers) {
+    return Backbone.View.extend({
+        template: _.template($('#map-template').html()),
+        className: 'map-wrapper',
+        map: null,
+        uploadDataState: false,
+        isBoundaryEnabled: false,
+        // attributes
+        mapInteractionEnabled: false,
+        previousZoom: 0,
+        sidePanelView: null,
+        lassoPanelView: null,
+        initZoom: 8,
+        numInFlightTiles: 0,
+        scaleLineControl: null,
+        mapIsReady: false,
+        polygonDrawn: false,
+        initCenter: [22.948492328125, -31.12543669218031],
+        events: {
+            'click .zoom-in': 'zoomInMap',
+            'click .zoom-out': 'zoomOutMap',
+            'click .print-map-control': 'downloadMap',
+            'click .search-control': 'searchClicked',
+            'click .lasso-control': 'lassoClicked',
+        },
+        clusterLevel: {
+            5: 'country',
+            7: 'province',
+            8: 'district',
+            9: 'municipal'
+        }, // note that this is the max level for cluster level
+        initialize: function () {
+
+            // Ensure methods keep the `this` references to the view itself
+            _.bindAll(this, 'render');
+            this.layers = new Layers({parent: this});
+
+            Shared.CurrentState.FETCH_CLUSTERS = true;
+            Shared.Dispatcher.on('map:zoomToCoordinates', this.zoomToCoordinates, this);
+            Shared.Dispatcher.on('map:drawPoint', this.drawPoint, this);
+            Shared.Dispatcher.on('map:clearPoint', this.clearPoint, this);
+            Shared.Dispatcher.on('map:zoomToExtent', this.zoomToExtent, this);
+            Shared.Dispatcher.on('map:reloadXHR', this.reloadXHR, this);
+            Shared.Dispatcher.on('map:showPopup', this.showPopup, this);
+            Shared.Dispatcher.on('map:closePopup', this.hidePopup, this);
+            Shared.Dispatcher.on('map:closeHighlight', this.closeHighlight, this);
+            Shared.Dispatcher.on('map:addHighlightFeature', this.addHighlightFeature, this);
+            Shared.Dispatcher.on('map:switchHighlight', this.switchHighlight, this);
+            Shared.Dispatcher.on('map:addHighlightPinnedFeature', this.addHighlightPinnedFeature, this);
+            Shared.Dispatcher.on('map:removeHighlightPinnedFeature', this.removeHighlightPinnedFeature, this);
+            Shared.Dispatcher.on('map:switchHighlightPinned', this.switchHighlightPinned, this);
+            Shared.Dispatcher.on('map:closeHighlightPinned', this.closeHighlightPinned, this);
+            Shared.Dispatcher.on('map:zoomToHighlightPinnedFeatures', this.zoomToHighlightPinnedFeatures, this);
+            Shared.Dispatcher.on('map:boundaryEnabled', this.boundaryEnabled, this);
+            Shared.Dispatcher.on('map:zoomToDefault', this.zoomToDefault, this);
+            Shared.Dispatcher.on('map:clearAllLayers', this.clearAllLayers, this);
+            Shared.Dispatcher.on('map:addLayer', this.addLayer, this);
+            Shared.Dispatcher.on('map:removeLayer', this.removeLayer, this);
+            Shared.Dispatcher.on('map:downloadMap', this.downloadMap, this);
+            Shared.Dispatcher.on('map:resetSitesLayer', this.resetSitesLayer, this);
+            Shared.Dispatcher.on('map:toggleMapInteraction', this.toggleMapInteraction, this);
+            Shared.Dispatcher.on('map:setPolygonDrawn', this.setPolygonDrawn, this);
+            Shared.Dispatcher.on('mapControlPanel:lassoClicked', this.lassoClicked, this);
+
+            this.render();
+            this.mapControlPanel.searchView.initDateFilter();
+            this.showInfoPopup();
+
+            this.pointVectorSource = new ol.source.Vector({});
+            this.pointLayer = new ol.layer.Vector({
+                source: this.pointVectorSource,
+                style: [
+                    new ol.style.Style({
+                        stroke: new ol.style.Stroke({
+                            color: 'blue',
+                            width: 3
+                        }),
+                        fill: new ol.style.Fill({
+                            color: 'rgba(0, 0, 255, 0.1)'
+                        })
+                    })]
+            });
+            this.pointLayer.setZIndex(1000);
+            this.map.addLayer(this.pointLayer);
+        },
+        hidePopOver: function (e) {
+                if (!e.hasClass('sub-control-panel')) {
+                    e = e.parent();
+                }
+                for (var i = 0; i < this.closedPopover.length; i++) {
+                    this.closedPopover[i].popover('enable');
+                    this.closedPopover[i].splice(i, 1);
+                }
+                e.popover('hide');
+                this.closedPopover.push(e);
+        },
+        zoomInMap: function (e) {
+            var view = this.map.getView();
+            var zoom = view.getZoom();
+            view.animate({
+                zoom: zoom - 1,
+                duration: 250
+            })
+        },
+        searchClicked: function (e) {
+            if (!this.searchView.isOpen()) {
+                this.hidePopOver($(e.target));
+                this.resetAllControlState();
+                this.openSearchPanel();
+                this.closeFilterPanel();
+                this.closeLassoPanel();
+                this.closeLocatePanel();
+                this.closeSpatialFilterPanel();
+                this.closeValidateData();
+                this.closeThirdPartyPanel();
+            } else {
+                this.closeSearchPanel();
+                }
+        },
+        lassoClicked: function (e) {
+            if(!this.lassoPanelView.isDisplayed()) {
+                this.hidePopOver($(e.target));
+                this.resetAllControlState();
+                this.openLassoPanel();
+                this.closeSearchPanel();
+                this.closeFilterPanel();
+                this.closeLocatePanel();
+                this.closeSpatialFilterPanel();
+                this.closeValidateData();
+                this.closeThirdPartyPanel();
+            } else {
+                this.closeLassoPanel();
+            }
+        },
+        boundaryEnabled: function (value) {
+            this.isBoundaryEnabled = value;
+        },
+        zoomOutMap: function (e) {
+            var view = this.map.getView();
+            var zoom = view.getZoom();
+            view.animate({
+                zoom: zoom + 1,
+                duration: 250
+            })
+        },
+        zoomToCoordinates: function (coordinates, zoomLevel) {
+            this.previousZoom = this.getCurrentZoom();
+            this.map.getView().setCenter(coordinates);
+            if (typeof zoomLevel !== 'undefined') {
+                this.map.getView().setZoom(zoomLevel);
+            }
+        },
+        drawPoint: function (coordinates, zoomLevel) {
+            this.zoomToCoordinates(coordinates, zoomLevel);
+            var circle = new ol.geom.Circle(coordinates, 1000);
+            var circleFeature = new ol.Feature(circle);
+            this.pointVectorSource.addFeature(circleFeature);
+        },
+        clearPoint: function () {
+            this.pointVectorSource.clear();
+        },
+
+        zoomToExtent: function (coordinates, shouldTransform=true, updateZoom=true) {
+            if (this.isBoundaryEnabled) {
+                this.fetchingRecords();
+                return false;
+            }
+            this.previousZoom = this.getCurrentZoom();
+            let ext = coordinates;
+            if (shouldTransform) {
+                ext = ol.proj.transformExtent(coordinates, ol.proj.get('EPSG:4326'), ol.proj.get('EPSG:3857'));
+            }
+            if (this.polygonDrawn) {
+                ext = this.polygonDrawn;
+            }
+            this.map.getView().fit(ext, {
+                size: this.map.getSize(), padding: [
+                    0, $('.right-panel').width(), 0, 250
+                ]
+            });
+            if (updateZoom && !this.polygonDrawn) {
+                if (this.map.getView().getZoom() > 8) {
+                    this.map.getView().setZoom(8);
+                }
+            }
+        },
+        setPolygonDrawn: function (polygon) {
+           this.polygonDrawn = polygon
+        },
+        mapClicked: function (e) {
+            // Event handler when the map is clicked
+            const self = this;
+            if (this.mapInteractionEnabled) {
+                return;
+            }
+            this.layers.highlightVectorSource.clear();
+            this.hidePopup();
+
+            // Get lat and long map
+            let lonlat = ol.proj.transform(e.coordinate, 'EPSG:3857', 'EPSG:4326');
+            let lon = lonlat[0];
+            let lat = lonlat[1];
+
+            let layer = this.layers.layers['Sites'];
+            let siteVisible = layer['layer'].getVisible();
+
+            // If default bims site layer is visible then check whether user click on the
+            // site point or not
+            if (siteVisible) {
+                let view = this.map.getView();
+                let queryLayer = layer['layer'].getSource().getParams()['LAYERS'];
+                let layerSource = layer['layer'].getSource().getGetFeatureInfoUrl(
+                    e.coordinate,
+                    view.getResolution(),
+                    view.getProjection(),
+                    {'INFO_FORMAT': 'application/json'}
+                );
+                layerSource += '&QUERY_LAYERS=' + queryLayer;
+                $.ajax({
+                    type: 'POST',
+                    url: '/get_feature/',
+                    data: {
+                        'layerSource': layerSource
+                    },
+                    success: function (data) {
+                        let objectData = {};
+                        if (data.constructor === Object) {
+                            objectData = data;
+                        } else {
+                            try {
+                                objectData = JSON.parse(data);
+                            } catch (e) {
+                                console.log(e)
+                                return
+                            }
+                        }
+                        let features = objectData['features'];
+                        if (features.length === 0) {
+                            self.showFeature(self.map.getFeaturesAtPixel(e.pixel), lon, lat);
+                            return;
+                        }
+                        let count = features[0]['properties']['count'];
+                        if (count > 1) {
+                            self.zoomToCoordinates(
+                                e.coordinate,
+                                self.getCurrentZoom() + 2
+                            );
+                        } else if (count === 1) {
+                            // Check if the feature is a single location site point
+                            if (features[0]['id'].includes('location_site_view')) {
+                                // Get location site id
+                                let siteId = '';
+                                if (features[0]['id'].indexOf('fid') > -1) {
+                                    siteId = features[0]['properties']['site_id'];
+                                } else {
+                                    siteId = features[0]['id'].split('.')[1];
+                                }
+                                Shared.Dispatcher.trigger('siteDetail:show', siteId, '');
+                            }
+                            let initialRadius = 5;
+                            self.getSiteByCoordinate(lat, lon, initialRadius, function () {
+                                self.showFeature(self.map.getFeaturesAtPixel(e.pixel), lon, lat, true);
+                            });
+                        } else {
+                            // Check if the feature is single location site marker
+                            if (features[0]['id'].includes('location_site_view')) {
+                                // Get location site id
+                                 // Get location site id
+                                let siteId = '';
+                                if (features[0]['id'].indexOf('fid') > -1) {
+                                    siteId = features[0]['properties']['site_id'];
+                                } else {
+                                    siteId = features[0]['id'].split('.')[1];
+                                }
+                                Shared.Dispatcher.trigger('siteDetail:show', siteId, '');
+                            } else {
+                                self.showFeature(self.map.getFeaturesAtPixel(e.pixel), lon, lat);
+                            }
+                        }
+                    }
+                });
+            } else {
+                self.showFeature(self.map.getFeaturesAtPixel(e.pixel), lon, lat);
+            }
+        },
+
+        showFeature: function (features, lon, lat, siteExist = false) {
+            let featuresClickedResponseData = [];
+            const self = this;
+            // Point of interest flag
+            let poiFound = false;
+            let featuresData = '';
+            if (features) {
+                $.each(features, function (index, feature) {
+                    const geometry = feature.getGeometry();
+                    const geometryType = geometry.getType();
+
+                    if (geometryType === 'Point') {
+                        featuresClickedResponseData = self.featureClicked(
+                            feature, self.uploadDataState);
+                        poiFound = featuresClickedResponseData[0];
+                        featuresData = featuresClickedResponseData[1];
+                        self.zoomToCoordinates(geometry.getCoordinates());
+                        // increase zoom level if it is clusters
+                        if (feature.getProperties()['count'] &&
+                            feature.getProperties()['count'] > 1) {
+                            self.map.getView().setZoom(self.getCurrentZoom() + 1);
+                            poiFound = true;
+                        }
+                        if (feature.getProperties().hasOwnProperty('features')) {
+                            if (feature.getProperties()['features'].length > 0) {
+                                poiFound = true;
+                            }
+                        }
+                    }
+                });
+            }
+        },
+        featureClicked: function (feature, uploadDataState) {
+            var properties = feature.getProperties();
+            if (properties.hasOwnProperty('station')) {
+                return [false, feature];
+            }
+
+            if (properties.hasOwnProperty('features')) {
+                if (properties['features'].length > 1) {
+
+                    this.zoomToCoordinates(
+                        feature.getGeometry().getCoordinates(),
+                        this.getCurrentZoom() + 2
+                    );
+                } else {
+                    var _properties = properties['features'][0].getProperties();
+                    Shared.Dispatcher.trigger('locationSite-' + _properties.id + ':clicked');
+                }
+            }
+
+            if (!properties.hasOwnProperty('record_type')) {
+                return [false, ''];
+            }
+
+            if (uploadDataState) {
+                return [false, feature];
+            }
+
+            if (properties['record_type'] === 'site') {
+                Shared.Dispatcher.trigger('locationSite-' + properties.id + ':clicked');
+            } else {
+                Shared.Dispatcher.trigger('cluster-biology' + properties.id + ':clicked');
+            }
+            this.layers.highlightVectorSource.clear();
+            if (this.layers.layerStyle.isIndividialCluster(feature)) {
+                this.addHighlightFeature(feature);
+            }
+            return [true, properties];
+        },
+        hidePopup: function () {
+            this.popup.setPosition(undefined);
+        },
+        showPopup: function (coordinates, html) {
+            $('#popup').html(html);
+            this.popup.setPosition(coordinates);
+        },
+        layerControlClicked: function (e) {
+        },
+
+        getCurrentZoom: function () {
+            return this.map.getView().getZoom();
+        },
+        getCurrentBbox: function () {
+            var ext = this.map.getView().calculateExtent(this.map.getSize());
+            return ol.proj.transformExtent(ext, ol.proj.get('EPSG:3857'), ol.proj.get('EPSG:4326'));
+        },
+        render: function () {
+            var self = this;
+            this.$el.html(this.template());
+            $('#map-container').append(this.$el);
+            this.loadMap();
+
+            this.map.on('click', function (e) {
+                self.mapClicked(e);
+            });
+
+            // this.sidePanelView = new SidePanelView();
+            this.mapControlPanel = new MapControlPanelView({
+                parent: this
+            });
+            this.lassoPanelView = new LassoPanelView({
+                    parent: this
+            });
+
+            this.$el.append(this.mapControlPanel.render().$el);
+            this.$el.append(this.lassoPanelView.render().$el);
+
+            // add layer switcher
+            var layerSwitcher = new LayerSwitcher();
+            this.map.addControl(layerSwitcher);
+            $(layerSwitcher.element).addClass('layer-switcher-custom');
+            $(layerSwitcher.element).attr('data-toggle', 'popover');
+            $(layerSwitcher.element).attr('data-placement', 'right');
+            $(layerSwitcher.element).attr('data-trigger', 'hover');
+            $(layerSwitcher.element).attr('data-content', 'Change Basemap');
+            $(layerSwitcher.element).removeClass('ol-control');
+            $('.layer-switcher-custom').click(function () {
+                $(this).popover('hide');
+            });
+            $('.layer-switcher-custom .panel').mouseenter(function () {
+                $('.layer-switcher-custom').popover('disable');
+            }).mouseleave(function () {
+                $('.layer-switcher-custom').popover('enable');
+            });
+            this.mapControlPanel.addPanel($(layerSwitcher.element));
+
+            this.map.on('moveend', function (evt) {
+                self.mapMoved();
+            });
+
+            this.map.getLayers().forEach(function (layer) {
+                try {
+                    var source = layer.getSource();
+                    if (source instanceof ol.source.TileImage) {
+                        source.on('tileloadstart', function () {
+                            ++self.numInFlightTiles
+                        });
+                        source.on('tileloadend', function () {
+                            --self.numInFlightTiles
+                        });
+                    }
+                } catch (err) {
+                }
+            });
+
+            this.map.on('postrender', function (evt) {
+                if (!evt.frameState)
+                    return;
+
+                var numHeldTiles = 0;
+                var wanted = evt.frameState.wantedTiles;
+                for (var layer in wanted)
+                    if (wanted.hasOwnProperty(layer))
+                        numHeldTiles += Object.keys(wanted[layer]).length;
+
+                var ready = self.numInFlightTiles === 0 && numHeldTiles === 0;
+                if (self.mapIsReady !== ready)
+                    self.mapIsReady = ready;
+            });
+
+            return this;
+        },
+        mapMoved: function () {
+            let self = this;
+            let administrative = self.checkAdministrativeLevel();
+            if (administrative !== 'detail') {
+                this.layers.changeLayerAdministrative(administrative);
+            }
+        },
+        loadMap: function () {
+            var self = this;
+            const mousePositionControl = new ol.control.MousePosition({
+                projection: 'EPSG:4326',
+                target: document.getElementById('mouse-position-wrapper'),
+                coordinateFormat: function (coordinate) {
+                    return ol.coordinate.format(coordinate, '{y},{x}', 4);
+                }
+            });
+            var basemap = new Basemap();
+
+            let center = this.initCenter;
+            // Add scaleline control
+            let scalelineControl = new ol.control.ScaleLine({
+                units: 'metric',
+                bar: true,
+                steps: 4,
+                text: true,
+                minWidth: 140
+            })
+
+
+            const newExtent = [5.207535937500003,-37.72038269917067,47.3950359375,-18.54426493227018];
+            extent = ol.proj.transformExtent(newExtent, 'EPSG:4326', 'EPSG:3857');
+
+            this.map = new ol.Map({
+                target: 'map',
+                layers: basemap.getBaseMaps(),
+                view: new ol.View({
+                    center: ol.proj.fromLonLat(center),
+                    zoom: this.initZoom,
+                    minZoom: 2,
+                    maxZoom: 19, // prevent zooming past 50m
+                }),
+                controls: ol.control.defaults({
+                    zoom: false
+                }).extend(
+                    [
+                        mousePositionControl,
+                        scalelineControl
+                    ])
+            });
+
+            this.map.getView().fit(extent);
+
+            // Create a popup overlay which will be used to dispgitlay feature info
+            this.popup = new ol.Overlay({
+                element: document.getElementById('popup'),
+                positioning: 'bottom-center',
+                offset: [0, -10]
+            });
+            this.map.addOverlay(this.popup);
+            this.layers.addLayersToMap(this.map);
+            this.initExtent = this.getCurrentBbox();
+        },
+        removeLayer: function (layer) {
+            this.map.removeLayer(layer);
+        },
+        addLayer: function (layer) {
+            this.map.addLayer(layer);
+        },
+
+        switchHighlight: function (features, ignoreZoom) {
+            var self = this;
+            this.closeHighlight();
+            $.each(features, function (index, feature) {
+                self.addHighlightFeature(feature);
+            });
+            if (!ignoreZoom) {
+                var extent = this.layers.highlightVectorSource.getExtent();
+                this.map.getView().fit(extent, {
+                    size: this.map.getSize(), padding: [
+                        0, $('.right-panel').width(), 0, 250
+                    ]
+                });
+                if (this.getCurrentZoom() > 8) {
+                    this.map.getView().setZoom(8);
+                }
+            }
+        },
+        addHighlightFeature: function (feature) {
+            this.layers.highlightVectorSource.addFeature(feature);
+        },
+        closeHighlight: function () {
+            this.hidePopup();
+            if (this.layers.highlightVectorSource) {
+                this.layers.highlightVectorSource.clear();
+            }
+        },
+        switchHighlightPinned: function (features, ignoreZoom) {
+            var self = this;
+            this.closeHighlightPinned();
+            $.each(features, function (index, feature) {
+                self.addHighlightPinnedFeature(feature);
+            });
+        },
+        zoomToHighlightPinnedFeatures: function () {
+            this.map.getView().fit(
+                this.layers.highlightPinnedVectorSource.getExtent(),
+                {
+                    size: this.map.getSize(),
+                    padding: [
+                        0, $('.right-panel').width(), 0, 250
+                    ]
+                });
+        },
+        addHighlightPinnedFeature: function (feature) {
+            this.layers.highlightPinnedVectorSource.addFeature(feature);
+        },
+        removeHighlightPinnedFeature: function (id) {
+            var self = this;
+            self.layers.highlightPinnedVectorSource.getFeatures().forEach(function (feature) {
+                var feature_id = feature.getProperties()['id'];
+                if (feature_id === id) {
+                    self.layers.highlightPinnedVectorSource.removeFeature(feature);
+                }
+            });
+        },
+        closeHighlightPinned: function () {
+            this.hidePopup();
+            if (this.layers.highlightPinnedVectorSource) {
+                this.layers.highlightPinnedVectorSource.clear();
+            }
+        },
+        showInfoPopup: function () {
+            if (!hideBimsInfo && bimsInfoContent) {
+                $('#general-info-modal').fadeIn()
+            }
+        },
+        zoomToDefault: function () {
+            var center = this.initCenter;
+            if (centerPointMap) {
+                var centerArray = centerPointMap.split(',');
+                for (var i in centerArray) {
+                    centerArray[i] = parseFloat(centerArray[i]);
+                }
+                center = centerArray;
+            }
+            this.zoomToCoordinates(ol.proj.fromLonLat(center), this.initZoom);
+        },
+
+        toggleMapInteraction: function (enabled) {
+            this.mapInteractionEnabled = enabled;
+        },
+
+        whenMapIsReady: function (callback) {
+            var self = this;
+            if (this.mapIsReady)
+                callback();
+            else {
+                setTimeout(function () {
+                    self.map.once('change:ready', self.whenMapIsReady.bind(null, callback));
+                    self.whenMapIsReady(callback);
+                }, 100)
+            }
+        },
+        downloadMap: function () {
+            var that = this;
+            var downloadMap = true;
+
+            that.map.once('postcompose', function (event) {
+                var canvas = event.context.canvas;
+                try {
+                    canvas.toBlob(function (blob) {
+                    })
+                }
+                catch (error) {
+                    $('#error-modal').modal('show');
+                    downloadMap = false
+                }
+            });
+            that.map.renderSync();
+
+            if (downloadMap) {
+                $('#ripple-loading').show();
+                $('.map-control-panel').hide();
+                $('.zoom-control').hide();
+                $('.print-map-control').addClass('control-panel-selected');
+                that.whenMapIsReady(function () {
+                    var canvas = document.getElementsByClassName('map-wrapper');
+                    var $mapWrapper = $('.map-wrapper');
+                    var divHeight = $mapWrapper.height();
+                    var divWidth = $mapWrapper.width();
+                    var ratio = divHeight / divWidth;
+                    html2canvas(canvas, {
+                        useCORS: true,
+                        background: '#FFFFFF',
+                        allowTaint: false,
+                        onrendered: function (canvas) {
+                            var link = document.createElement('a');
+                            link.setAttribute("type", "hidden");
+                            link.href = canvas.toDataURL("image/png");
+                            link.download = 'map.png';
+                            document.body.appendChild(link);
+                            link.click();
+                            link.remove();
+                            $('.zoom-control').show();
+                            $('.map-control-panel').show();
+                            $('#ripple-loading').hide();
+                            $('.bug-report-wrapper').show();
+                            $('.print-map-control').removeClass('control-panel-selected');
+                        }
+                    })
+                });
+            }
+        },
+
+    })
+});

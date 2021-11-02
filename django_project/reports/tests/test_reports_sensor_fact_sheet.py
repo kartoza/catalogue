@@ -20,11 +20,11 @@ __date__ = '19/06/2014'
 __copyright__ = 'South African National Space Agency'
 
 
-from django.core.urlresolvers import reverse, NoReverseMatch
+from django.urls import reverse, NoReverseMatch
 from django.test import TestCase, Client
 
 
-class ReportsViewsSensorFactSheetTests(TestCase):
+class TestReportsViewsSensorFactSheet(TestCase):
     """
     Tests reports.py sensor_fact_sheet method/view
     """

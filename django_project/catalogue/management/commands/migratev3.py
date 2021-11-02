@@ -29,8 +29,8 @@ from django.conf import settings
 class Command(BaseCommand):
     help = 'Migrate catalogue db from v2.x to v3.0, uses default database'
 
-    option_list = BaseCommand.option_list + (
-        make_option(
+    def add_arguments(self, parser):
+        parser.add_argument(
             '--migrations', metavar="MIGRATION_TYPE", default='all',
             help=(
                 'Selectively migrate parts of the database, comma "," '
@@ -39,8 +39,7 @@ class Command(BaseCommand):
                 'unique_product_id, product_schema_changes, pycsw, orders, '
                 'exchange, cleanup defaults to "all"'
             )
-        ),
-    )
+        )
 
     def handle(self, *args, **options):
         self.db = settings.DATABASES['default']['NAME']

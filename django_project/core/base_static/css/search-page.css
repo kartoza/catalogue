@@ -49,9 +49,9 @@
   /*height: 100%;*/
   left: 0;
   right: 0;
-  top: 37px;
+  top: 7px;
   bottom:34px;
-  position: fixed;
+  /*position: fixed;*/
 }
 
 #map-controls2 {

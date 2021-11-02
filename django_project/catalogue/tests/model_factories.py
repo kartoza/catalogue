@@ -20,9 +20,12 @@ __copyright__ = 'South African National Space Agency'
 import factory
 from datetime import datetime
 
-from ..models import (
-    GenericProduct, GenericImageryProduct, GenericSensorProduct,
-    OpticalProduct, RadarProduct, GeospatialProduct, OrdinalProduct,
+from catalogue.models import (
+    GenericProduct,
+    GenericImageryProduct,
+    GenericSensorProduct,
+    OpticalProduct, RadarProduct,
+    GeospatialProduct, OrdinalProduct,
     ContinuousProduct, Visit, WorldBorders
 )
 
@@ -31,6 +34,7 @@ class GenericProductF(factory.django.DjangoModelFactory):
     """
     GenericProduct model factory
     """
+
     class Meta:
         model = GenericProduct
 
@@ -55,6 +59,7 @@ class GenericImageryProductF(GenericProductF):
     """
     GenericImageryProduct model factory
     """
+
     class Meta:
         model = GenericImageryProduct
 
@@ -69,6 +74,7 @@ class GenericSensorProductF(GenericImageryProductF):
     """
     GenericSensorProduct model factory
     """
+
     class Meta:
         model = GenericSensorProduct
 
@@ -93,6 +99,7 @@ class OpticalProductF(GenericSensorProductF):
     """
     OpticalProduct model factory
     """
+
     class Meta:
         model = OpticalProduct
 
@@ -114,6 +121,7 @@ class RadarProductF(GenericSensorProductF):
     """
     RadarProduct model factory
     """
+
     class Meta:
         model = RadarProduct
 
@@ -140,6 +148,7 @@ class GeospatialProductF(GenericProductF):
     """
     GeospatialProduct model factory
     """
+
     class Meta:
         model = GeospatialProduct
 
@@ -163,6 +172,7 @@ class OrdinalProductF(GenericProductF):
     """
     OrdinalProduct model factory
     """
+
     class Meta:
         model = OrdinalProduct
 
@@ -175,6 +185,7 @@ class ContinuousProductF(GenericProductF):
     """
     ContinuousProduct model factory
     """
+
     class Meta:
         model = ContinuousProduct
 
@@ -187,6 +198,7 @@ class VisitF(factory.django.DjangoModelFactory):
     """
     Visit model factory
     """
+
     class Meta:
         model = Visit
 
@@ -201,6 +213,7 @@ class WorldBordersF(factory.django.DjangoModelFactory):
     """
     OrderNotificationRecipients model factory
     """
+
     class Meta:
         model = WorldBorders
 

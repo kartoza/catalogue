@@ -48,7 +48,6 @@ class ResamplingMethodCRUD_Test(TestCase):
         myModel = ResamplingMethodF.create()
 
         myModel.delete()
-
         #check if deleted
         self.assertTrue(myModel.pk is None)
 

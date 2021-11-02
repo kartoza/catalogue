@@ -1,0 +1,94 @@
+{% load static from staticfiles %}
+<!-- IntroJs -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/intro.js/2.9.3/introjs.min.css" rel="stylesheet">
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/intro.js/2.9.3/intro.min.js"></script>
+
+<script type='text/html' id='map-template'>
+
+    <div id="map" class="map"></div>
+    <div class="ol-control mouse-position">
+        <button type="button"><i class="fa fa-globe"></i></button>
+        <div id="mouse-position-wrapper" style="display: none"></div>
+    </div>
+    <div id="map-control-panel-element" class="map-control-panel">
+        <div id="zoom-control" class="zoom-control">
+            <div class="sub-control-panel sub-zoom-control zoom-out"><i class="fa fa-plus" aria-hidden="false"></i>
+            </div>
+            <div class="sub-control-panel sub-zoom-control zoom-in"><i class="fa fa-minus" aria-hidden="false"></i>
+            </div>
+        </div>
+        <div id="search-control" class="search-control sub-control-panel"
+        data-toggle="popover"
+             data-placement="right" data-trigger="hover" data-content="Search">
+            <i class="fa fa-search" aria-hidden="true"></i>
+        </div>
+        <div id="lasso-control" class="lasso-control sub-control-panel"
+        data-toggle="popover"
+             data-placement="right" data-trigger="hover" data-content="Draw Polygon">
+            <i class="fa fa-object-group" aria-hidden="true"></i>
+        </div>
+
+        <div id="print-control" class="print-map-control sub-control-panel"
+             data-toggle="popover"
+             data-placement="right" data-trigger="hover"
+             data-content="Print Map">
+            <i class="fa fa-print" aria-hidden="true"></i>
+        </div>
+        <div id="permalink-control" class="permalink-control sub-control-panel sub-control-panel-disabled"
+        data-toggle="popover"
+             data-placement="right" data-trigger="hover"
+             data-content="No filters applied">
+            <i class="fa fa-link" aria-hidden="true"></i>
+        </div>
+
+    </div>
+
+
+    {# layers selector container #}
+    <div class="layers-selector-container
+         map-control-panel-box">
+        <div class="row">
+            <div class="col-lg-12" style="padding-right: 0">
+                    <span class="title">
+                        LAYER SELECTOR
+                    </span>
+                <div class="layers-selector-container-close close-button pull-right">
+                    <img class="close-icon" src="/static/img/close_icon.svg">
+                </div>
+            </div>
+        </div>
+        <div class="row content">
+            <div class="input-group layer-selector-search-input">
+                <input type="text" class="form-control" placeholder="Search"
+                       id="layer-selector-search">
+            </div>
+            <ul id="layers-selector" style="width:100%">
+            </ul>
+        </div>
+    </div>
+    {# locate option container #}
+    <div id="locate-control" class="locate-options-container
+         map-control-panel-box">
+        <div class="row">
+            <div class="col-lg-12" style="padding-right: 0">
+                    <span class="title">
+                        LOCATE OPTIONS
+                    </span>
+                <div class="locate-options-container-close close-button pull-right">
+                    <img class="close-icon" src="/static/img/close_icon.svg">
+                </div>
+            </div>
+        </div>
+        <div class="row content">
+            <ul id="locate-options" style="width:100%">
+                <li class="locate-coordinates">
+                    Locate by Coordinate
+                </li>
+                <li class="locate-farm">
+                    Locate by Farm Portion Code
+                </li>
+            </ul>
+        </div>
+    </div>
+
+</script>

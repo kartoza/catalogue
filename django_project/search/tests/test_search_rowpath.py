@@ -19,14 +19,12 @@ __date__ = '01/09/2013'
 __copyright__ = 'South African National Space Agency'
 
 from django.test import TestCase
-
 from search.searcher import Searcher
-
 from catalogue.tests.model_factories import OpticalProductF
-from .model_factories import SearchF
+from model_factories import SearchF
 
 
-class SearchRowPath_Test(TestCase):
+class TestSearchRowPath(TestCase):
     """
     Tests Search Row/Path
     """
@@ -50,7 +48,7 @@ class SearchRowPath_Test(TestCase):
             'j_frame_row': '40'
         })
 
-        #create Searcher object
+        # create Searcher object
         mySearcher = Searcher(mySearch)
         self.assertEqual(mySearcher.mQuerySet.count(), 1)
 
@@ -73,7 +71,7 @@ class SearchRowPath_Test(TestCase):
             'k_orbit_path': '144'
         })
 
-        #create Searcher object
+        # create Searcher object
         mySearcher = Searcher(mySearch)
         self.assertEqual(mySearcher.mQuerySet.count(), 1)
 
@@ -99,7 +97,7 @@ class SearchRowPath_Test(TestCase):
             'k_orbit_path': '144'
         })
 
-        #create Searcher object
+        # create Searcher object
         mySearcher = Searcher(mySearch)
         self.assertEqual(mySearcher.mQuerySet.count(), 1)
 
@@ -137,6 +135,6 @@ class SearchRowPath_Test(TestCase):
             'k_orbit_path': '144, 100-120'
         })
 
-        #create Searcher object
+        # create Searcher object
         mySearcher = Searcher(mySearch)
         self.assertEqual(mySearcher.mQuerySet.count(), 4)

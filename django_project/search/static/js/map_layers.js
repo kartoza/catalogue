@@ -1,4 +1,4 @@
-var WMS_SERVER = 'maps.sansa.org.za';
+const WMS_SERVER = 'maps.sansa.org.za';
 
 WEB_LAYERS = {}
 WEB_LAYERS_IMAGE = {}
@@ -11,7 +11,7 @@ WEB_LAYERS_DESC = {}
 //
 // and under that blue marble. Its rendered as a single
 // layer for best quality.
-WEB_LAYERS.zaSpot2mMosaic2010TC = new OpenLayers.Layer.WMS(
+WEB_LAYERS.zaSpot2mMosaic2010TC = new ol.source.TileWMS(
   '2m Mosaic 2010 TC', 'http://'+ WMS_SERVER + '/cgi-bin/tilecache.cgi?',
 {
  VERSION: '1.1.1',
@@ -34,7 +34,7 @@ WEB_LAYERS.zaSpot2mMosaic2010TC = new OpenLayers.Layer.WMS(
 //
 // and under that blue marble. Its rendered as a single layer
 // for best quality.
-WEB_LAYERS.zaSpot2mMosaic2009TC = new OpenLayers.Layer.WMS(
+WEB_LAYERS.zaSpot2mMosaic2009TC = new ol.source.TileWMS(
     '2m Mosaic 2009 TC', 'http://' + WMS_SERVER + '/cgi-bin/tilecache.cgi?',
 {
    VERSION: '1.1.1',
@@ -56,7 +56,7 @@ WEB_LAYERS.zaSpot2mMosaic2009TC = new OpenLayers.Layer.WMS(
 // of spot 2008 mosaic. Uses the degraded 2m product in a tile cache
 // and under that blue marble. Its rendered as a single layer for
 // best quality.
-WEB_LAYERS.zaSpot2mMosaic2008TC = new OpenLayers.Layer.WMS(
+WEB_LAYERS.zaSpot2mMosaic2008TC = new ol.source.TileWMS(
     '2m Mosaic 2008 TC', 'http://' + WMS_SERVER + '/cgi-bin/tilecache.cgi?',
 {
    VERSION: '1.1.1',
@@ -76,7 +76,7 @@ WEB_LAYERS.zaSpot2mMosaic2008TC = new OpenLayers.Layer.WMS(
 // 2007 mosaic. Uses the degraded 2m product in a tile cache
 // and under that blue marble. Its rendered as a single layer
 // for best quality.
-WEB_LAYERS.zaSpot2mMosaic2007TC = new OpenLayers.Layer.WMS(
+WEB_LAYERS.zaSpot2mMosaic2007TC = new ol.source.TileWMS(
   '2m Mosaic 2007 TC', 'http://' + WMS_SERVER + '/cgi-bin/tilecache.cgi?',
 {
    VERSION: '1.1.1',
@@ -95,7 +95,7 @@ WEB_LAYERS.zaSpot2mMosaic2007TC = new OpenLayers.Layer.WMS(
 // Streets and boundaries for SA base map with an underlay of spot
 // 2010 mosaic and under that blue marble. Its rendered as a single
 // layer for best quality.
-WEB_LAYERS.zaSpot2mMosaic2010 = new OpenLayers.Layer.WMS(
+WEB_LAYERS.zaSpot2mMosaic2010 = new ol.source.TileWMS(
     '2m Mosaic 2010', 'http://' + WMS_SERVER + '/cgi-bin/mapserv?map=ZA_SPOT2010',
 {
    VERSION: '1.1.1',
@@ -114,7 +114,7 @@ WEB_LAYERS.zaSpot2mMosaic2010 = new OpenLayers.Layer.WMS(
  // Streets and boundaries for SA base map with an underlay of
  // spot 2009 mosaic and under that blue marble. Its rendered as a
  // single layer for best quality.
- WEB_LAYERS.zaSpot2mMosaic2009 = new OpenLayers.Layer.WMS(
+ WEB_LAYERS.zaSpot2mMosaic2009 = new ol.source.TileWMS(
      '2m Mosaic 2009', 'http://' + WMS_SERVER + '/cgi-bin/mapserv?map=ZA_SPOT2009',
           {
   VERSION: '1.1.1',
@@ -133,7 +133,7 @@ WEB_LAYERS.zaSpot2mMosaic2010 = new OpenLayers.Layer.WMS(
 // Streets and boundaries for SA base map with an underlay of spot
 // 2008 mosaic and under that blue marble. Its rendered as a single
 // layer for best quality.
-WEB_LAYERS.zaSpot2mMosaic2008 = new OpenLayers.Layer.WMS(
+WEB_LAYERS.zaSpot2mMosaic2008 = new ol.source.TileWMS(
     '2m Mosaic 2008', 'http://' + WMS_SERVER + '/cgi-bin/mapserv?map=ZA_SPOT2008',
 {
    width: '800',
@@ -152,7 +152,7 @@ WEB_LAYERS.zaSpot2mMosaic2008 = new OpenLayers.Layer.WMS(
 // Streets and boundaries for SA base map with an underlay of spot
 // 2007 mosaic and under that blue marble. Its rendered as a single
 // layer for best quality.
-WEB_LAYERS.zaSpot2mMosaic2007 = new OpenLayers.Layer.WMS(
+WEB_LAYERS.zaSpot2mMosaic2007 = new ol.source.TileWMS(
    '2m Mosaic 2007', 'http://' + WMS_SERVER + '/cgi-bin/mapserv?map=ZA_SPOT2007',
           {
   VERSION: '1.1.1',
@@ -172,7 +172,7 @@ WEB_LAYERS.zaSpot2mMosaic2007 = new OpenLayers.Layer.WMS(
  // spot 2010 mosaic. Uses the degraded 10m product in a tile cache
  // and under that blue marble. Its rendered as a single layer for
  // best quality.
-WEB_LAYERS.zaSpot10mMosaic2010 = new OpenLayers.Layer.WMS(
+WEB_LAYERS.zaSpot10mMosaic2010 = new ol.source.TileWMS(
    '10m Mosaic 2010 TC', 'http://' + WMS_SERVER + '/cgi-bin/tilecache.cgi?',
           {
   VERSION: '1.1.1',
@@ -193,7 +193,7 @@ WEB_LAYERS.zaSpot10mMosaic2010 = new OpenLayers.Layer.WMS(
  //
  // and under that blue marble. Its rendered as a single layer for
  // best quality.
-WEB_LAYERS.zaSpot10mMosaic2009 = new OpenLayers.Layer.WMS(
+WEB_LAYERS.zaSpot10mMosaic2009 = new ol.source.TileWMS(
    '10m Mosaic 2009 TC', 'http://' + WMS_SERVER + '/cgi-bin/tilecache.cgi?',
           {
   VERSION: '1.1.1',
@@ -216,7 +216,7 @@ WEB_LAYERS.zaSpot10mMosaic2009 = new OpenLayers.Layer.WMS(
  //
  // and under that blue marble. Its rendered as a single layer for
  // best quality.
-WEB_LAYERS.zaSpot10mMosaic2008 = new OpenLayers.Layer.WMS(
+WEB_LAYERS.zaSpot10mMosaic2008 = new ol.source.TileWMS(
    '10m Mosaic 2008 TC', 'http://' + WMS_SERVER + '/cgi-bin/tilecache.cgi?',
           {
   VERSION: '1.1.1',
@@ -239,7 +239,7 @@ WEB_LAYERS.zaSpot10mMosaic2008 = new OpenLayers.Layer.WMS(
  //
  // and under that blue marble. Its rendered as a single layer for
  // best quality.
-WEB_LAYERS.zaSpot10mMosaic2007 = new OpenLayers.Layer.WMS(
+WEB_LAYERS.zaSpot10mMosaic2007 = new ol.source.TileWMS(
    '10m Mosaic 2007 TC', 'http://' + WMS_SERVER + '/cgi-bin/tilecache.cgi?',
           {
   VERSION: '1.1.1',
@@ -256,7 +256,7 @@ WEB_LAYERS.zaSpot10mMosaic2007 = new OpenLayers.Layer.WMS(
 {isBaseLayer: true});
 
 // Spot5 ZA 2008 10m Mosaic directly from mapserver
-WEB_LAYERS.zaSpot5Mosaic2008 = new OpenLayers.Layer.WMS(
+WEB_LAYERS.zaSpot5Mosaic2008 = new ol.source.TileWMS(
      'SPOT5 10m Mosaic 2008, ZA',
      'http://' + WMS_SERVER + '/cgi-bin/mapserv?map=ZA_SPOT',
  {
@@ -265,10 +265,10 @@ WEB_LAYERS.zaSpot5Mosaic2008 = new OpenLayers.Layer.WMS(
    layers: 'Spot5_RSA_2008_10m',
    maxResolution: '156543.0339',
  });
- WEB_LAYERS.zaSpot5Mosaic2008.setVisibility(false);
+ // WEB_LAYERS.zaSpot5Mosaic2008.setVisibility(false);
 
 //a Vector only version of the above
-WEB_LAYERS.zaRoadsBoundaries = new OpenLayers.Layer.WMS(
+WEB_LAYERS.zaRoadsBoundaries = new ol.source.TileWMS(
     'SA Vector', 'http://' + WMS_SERVER + '/cgi-bin/tilecache.cgi?',
           {
   VERSION: '1.1.1',
@@ -286,7 +286,7 @@ WEB_LAYERS.zaRoadsBoundaries = new OpenLayers.Layer.WMS(
 
  // Map of all search footprints that have been made.
  // Transparent: true will make a wms layer into an overlay
- WEB_LAYERS.searches = new OpenLayers.Layer.WMS(
+ WEB_LAYERS.searches = new ol.source.TileWMS(
      'Searches', 'http://' + WMS_SERVER + '/cgi-bin/mapserv?map=SEARCHES',
           {
   VERSION: '1.1.1',
@@ -303,7 +303,7 @@ WEB_LAYERS.zaRoadsBoundaries = new OpenLayers.Layer.WMS(
 
 // Map of site visitors
 // Transparent: true will make a wms layer into an overlay
-WEB_LAYERS.visitors = new OpenLayers.Layer.WMS(
+WEB_LAYERS.visitors = new ol.source.TileWMS(
   'Visitors', 'http://' + WMS_SERVER + '/cgi-bin/mapserv?map=VISITORS',
 {
   VERSION: '1.1.1',
@@ -321,7 +321,7 @@ WEB_LAYERS.visitors = new OpenLayers.Layer.WMS(
        );
 
         // Nasa Blue marble directly from mapserver
-WEB_LAYERS.BlueMarble = new OpenLayers.Layer.WMS('BlueMarble',
+WEB_LAYERS.BlueMarble = new ol.source.TileWMS('BlueMarble',
      'http://' + WMS_SERVER + '/cgi-bin/mapserv?map=WORLD',
  {
   VERSION: '1.1.1',
@@ -329,7 +329,7 @@ WEB_LAYERS.BlueMarble = new OpenLayers.Layer.WMS('BlueMarble',
   layers: 'BlueMarble',
   maxResolution: '156543.0339'
  });
- WEB_LAYERS.BlueMarble.setVisibility(false);
+ // WEB_LAYERS.BlueMarble.setVisibility(false);
 
 // //
 // // Google
@@ -365,65 +365,73 @@ WEB_LAYERS.BlueMarble = new OpenLayers.Layer.WMS('BlueMarble',
 //
 // Heatmap - all
 //
-WEB_LAYERS.Heatmap_total = new OpenLayers.Layer.Image(
-     'Heatmap total',
-     '/media/heatmaps/heatmap-total.png',
-     new OpenLayers.Bounds(-20037508.343,
-     -16222639.241,
-     20019734.329,
-     16213801.068),
-     new OpenLayers.Size(1252,1013),
-     {isBaseLayer: true,
-     maxResolution: 156543.0339
-     }
+WEB_LAYERS.Heatmap_total = new ol.layer.Image({
+    className: 'Heatmap total',
+    source: '/media/heatmaps/heatmap-total.png',
+    extent: ol.extent.boundingExtent([[-20037508.343, -16222639.241],
+        [20019734.329, 16213801.068]]),
+//     new OpenLayers.Size(1252, 1013),
+// {
+//     isBaseLayer: true,
+//         maxResolution
+// :
+//     156543.0339
+// }
+}
 );
 
 //
 // Heatmap - last3month
 //
-WEB_LAYERS.Heatmap_last3month = new OpenLayers.Layer.Image(
-     'Heatmap last 3 months',
-     '/media/heatmaps/heatmap-last3month.png',
-     new OpenLayers.Bounds(-20037508.343,
-     -16222639.241,
-     20019734.329,
-     16213801.068),
-     new OpenLayers.Size(1252,1013),
-     {isBaseLayer: true,
-     maxResolution: 156543.0339
-     }
+WEB_LAYERS.Heatmap_last3month = new ol.layer.Image({
+    className: 'Heatmap last 3 months',
+    source: '/media/heatmaps/heatmap-last3month.png',
+    extent: ol.extent.boundingExtent([[-20037508.343, -16222639.241],
+        [20019734.329, 16213801.068]]),
+    // zIndex: new OpenLayers.Size(1252, 1013),
+// {
+//     isBaseLayer: true,
+//         maxResolution
+// :
+//     156543.0339
+// }
+}
 );
 
 //
 // Heatmap - last month
 //
- WEB_LAYERS.Heatmap_lastmonth = new OpenLayers.Layer.Image(
-     'Heatmap last month',
-     '/media/heatmaps/heatmap-lastmonth.png',
-     new OpenLayers.Bounds(-20037508.343,
-     -16222639.241,
-     20019734.329,
-     16213801.068),
-     new OpenLayers.Size(1252,1013),
-     {isBaseLayer: true,
-     maxResolution: 156543.0339
-     }
+ WEB_LAYERS.Heatmap_lastmonth = new ol.layer.Image({
+     className: 'Heatmap last month',
+     source: '/media/heatmaps/heatmap-lastmonth.png',
+     extent: ol.extent.boundingExtent([[-20037508.343, -16222639.241],
+         [20019734.329, 16213801.068]]),
+     zIndex: new OpenLayers.Size(1252, 1013),
+// {
+//     isBaseLayer: true,
+//         maxResolution
+// :
+//     156543.0339
+// }
+}
 );
 
 //
 // Heatmap - last week
 //
-WEB_LAYERS.Heatmap_lastweek = new OpenLayers.Layer.Image(
-     'Heatmap last week',
-     '/media/heatmaps/heatmap-lastweek.png',
-     new OpenLayers.Bounds(-20037508.343,
-     -16222639.241,
-     20019734.329,
-     16213801.068),
-     new OpenLayers.Size(1252,1013),
-     {isBaseLayer: true,
-     maxResolution: 156543.0339
-     }
+WEB_LAYERS.Heatmap_lastweek = new ol.layer.Image({
+    className: 'Heatmap last week',
+    source: '/media/heatmaps/heatmap-lastweek.png',
+    extent: ol.extent.boundingExtent([[-20037508.343, -16222639.241],
+        [20019734.329, 16213801.068]]),
+    zIndex: new OpenLayers.Size(1252, 1013),
+// {
+//     isBaseLayer: true,
+//         maxResolution
+// :
+//     156543.0339
+// }
+}
 );
 
 

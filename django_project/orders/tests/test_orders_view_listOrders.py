@@ -21,15 +21,15 @@ __copyright__ = 'South African National Space Agency'
 import unittest
 from datetime import date
 
-from django.core.urlresolvers import reverse, NoReverseMatch
+from django.urls import reverse, NoReverseMatch
 from django.test import TestCase
 from django.test.client import Client
 
 from core.model_factories import UserF
-from .model_factories import OrderF
+from model_factories import OrderF
 
 
-class OrdersViews_listOrders_Tests(TestCase):
+class TestOrdersViewsListOrders(TestCase):
     """
     Tests orders.py listOrders method/view
     """

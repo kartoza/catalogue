@@ -756,6 +756,7 @@ def writeSearchRecordThumbToZip(theSearchRecord, theZip):
 
 # render_to_kml helpers
 def render_to_kml(template, context, filename):
+
     response = HttpResponse(render_to_string(template, context))
     response['Content-Type'] = 'application/vnd.google-earth.kml+xml'
     response['Content-Disposition'] = 'attachment; filename=%s.kml' % filename
@@ -767,6 +768,7 @@ def render_to_kmz(template, context, filename):
     thumbnails will be bundled into the kmz archive."""
     # try to get MAX_METADATA_RECORDS from settings, default to 500
     myMaxMetadataRecords = getattr(settings, 'MAX_METADATA_RECORDS', 500)
+    logging.error('testtt', context)
     myKml = render_to_string(template, context)
     myZipData = BytesIO()
     myZip = zipfile.ZipFile(myZipData, 'w', zipfile.ZIP_DEFLATED)

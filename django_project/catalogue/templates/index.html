@@ -1,127 +1,149 @@
 {% extends "base.html" %}
 {% load staticfiles %}
-{% block content %}
-    <div id="content" class="center">
-        <img src="{% static 'sansa-logos/SANSA-logo.png' %}" class="gap-bottom"/>
-        <div id="home-slider" class="carousel slide">
-            <ol class="carousel-indicators">
-                <li data-target="#home-slider" data-slide-to="0" class="active"></li>
-                <li data-target="#home-slider" data-slide-to="1"></li>
-                <li data-target="#home-slider" data-slide-to="2"></li>
-                <li data-target="#home-slider" data-slide-to="3"></li>
-                <li data-target="#home-slider" data-slide-to="4"></li>
-            </ol>
-            <!-- Carousel items -->
-            <div class="carousel-inner">
-                {% if slider %}
-                    {% for item in slider %}
-                        <div class="item">
-                            <img src="static/{{item.slide}}" style="height:300px;width:1210px"/>
-                        </div>
-                    {% endfor %}
-                {% endif %}
+{% block extracss %}
+    <style>
+    .main-content {
+        margin-top: 0;
+    }
+    </style>
+{% endblock %}
 
-            </div>
-            <!-- Carousel nav -->
-            <a class="carousel-control left" href="#home-slider" data-slide="prev">&lsaquo;</a>
-            <a class="carousel-control right" href="#home-slider" data-slide="next">&rsaquo;</a>
-        </div>
-        <h2 class="blue center">SANSA Earth Observation Online Catalogue</h2>
-        <p class="lead center">
-            The South African National Space Agency Earth Observation imagery archive for
-            South Africa and SADC
-        </p>
-        {% if user.is_authenticated %}
-            <p class="lead"><strong>Welcome back {{ user.get_profile.first_name }}!</strong></p>
-        {% endif %}
-        <div class="row-fluid">
-            <div class="span4 center">
-                {% if user.is_authenticated %}
-                    <a href="{% url 'myOrders' %}" class="btn btn-large btn-primary">
-                        <i class="icon-user"></i>
-                        My Orders
-                    </a>
-                {% else %}
-                    <a href="/accounts/signin/" class="btn btn-large btn-primary">
-                        <i class="icon-user"></i>
-                        Login
-                    </a>
-                {% endif %}
-            </div>
-            <div class="span4 center">
-                <a href="/search/" class="btn btn-large btn-primary">
-                    <i class="icon-search"></i>
-                    Search
-                </a>
-            </div>
-            <div class="span4 center">
-                {% if user.is_authenticated %}
-                    <a href="{% url "userena_profile_edit" user %}" class="btn btn-large btn-primary">
-                        <i class="icon-group"></i>
-                        Edit My Profile
-                    </a>
-                {% else %}
-                    <a href="/accounts/signup/" class="btn btn-large btn-primary">
-                        <i class="icon-group"></i>
-                        Register
-                    </a>
-                {% endif %}
-            </div>
-        </div>
-        <hr class="gap-top">
-        <div class="row-fluid">
-            <div class="span4">
-                <h3 class="black">QGIS</h3>
-                <p>
-                    Download a special SANSA-branded version of the free, open-source Quantum GIS<br/><a
-                        href="http://maps.sansa.org.za/QGIS-1-7-0-Sansa-Edition-Setup.exe" target="_blank"><img
-                        src="{% static 'images/qgis-icon.png' %}" style="height:50px"/></a>
-                </p>
-            </div>
-            <div class="span4">
-                <h3 class="black">Fundisa Student Portal</h3>
-                <p>
-                    Be inspired by Earth Observation - Resources and a Student Forum for all your remote sensing
-                    questions
-                    <br/>
-                    <a href="http://fundisa.sansa.org.za" target="_blank">
-                        <div id="fundisa">Fundisa Student Portal</div>
-                    </a>
-                </p>
-            </div>
-            <div class="span4">
-                <h3 class="black">DST</h3>
-                <p>
-                    This catalogue was funded by the Department of Science and Technology
-                    <br/><a href="http://www.dst.gov.za/" target="_blank"><img
-                        src="{% static 'images/dst_logo_small.png' %}" style="height:50px"/></a>
-                </p>
-            </div>
-        </div>
-    </div>
 
-    <!-- Begin Cookie Consent script https://cookiescript.info/ -->
-    <script type="text/javascript">
-        window.cookieconsent_options = {
-            "message": "This website uses cookies to ensure you get the best experience on our website",
-            "dismiss": "Got it!",
-            "learnMore": "More info",
-            "link": "https://en.wikipedia.org/wiki/HTTP_cookie",
-            "theme": "dark-bottom"
-        };
-        var cookieconsent_ts = 1486015696;
-        var cookieconsent_id = '1edd4f95-64f5-46e6-a895-51ff79630ad8';</script>
+{% block header %}
+{#    <div id="content" class="center">#}
+{#        <div id="home-slider" class="carousel slide">#}
+{#            <ol class="carousel-indicators">#}
+{#                <li data-target="#home-slider" data-slide-to="0" class="active"></li>#}
+{#                <li data-target="#home-slider" data-slide-to="1"></li>#}
+{#                <li data-target="#home-slider" data-slide-to="2"></li>#}
+{#                <li data-target="#home-slider" data-slide-to="3"></li>#}
+{#                <li data-target="#home-slider" data-slide-to="4"></li>#}
+{#            </ol>#}
+{#            <!-- Carousel items -->#}
+{#            <div class="carousel-inner">#}
+{#                {% if slider %}#}
+{#                    {% for item in slider %}#}
+{#                        <div class="item">#}
+{#                            <img src="static/{{item.slide}}" style="height:300px;width:1210px"/>#}
+{#                        </div>#}
+{#                    {% endfor %}#}
+{#                {% endif %}#}
+{##}
+{#            </div>#}
+{#            <!-- Carousel nav -->#}
+{#            <a class="carousel-control left" href="#home-slider" data-slide="prev">&lsaquo;</a>#}
+{#            <a class="carousel-control right" href="#home-slider" data-slide="next">&rsaquo;</a>#}
+{#        </div>#}
+{#        <h2 class="blue center">SANSA Earth Observation Online Catalogue</h2>#}
+{#        <p class="lead center">#}
+{#            The South African National Space Agency Earth Observation imagery archive for#}
+{#            South Africa and SADC#}
+{#        </p>#}
+{#        {% if user.is_authenticated %}#}
+{#            <p class="lead"><strong>Welcome back {{ user.get_profile.first_name }}!</strong></p>#}
+{#        {% endif %}#}
+{#        <div class="row-fluid">#}
+{#            <div class="span4 center">#}
+{#                {% if user.is_authenticated %}#}
+{#                    <a href="{% url 'myOrders' %}" class="btn btn-large btn-primary">#}
+{#                        <i class="icon-user"></i>#}
+{#                        My Orders#}
+{#                    </a>#}
+{#                {% else %}#}
+{#                    <a href="/accounts/signin/" class="btn btn-large btn-primary">#}
+{#                        <i class="icon-user"></i>#}
+{#                        Login#}
+{#                    </a>#}
+{#                {% endif %}#}
+{#            </div>#}
+{#            <div class="span4 center">#}
+{#                <a href="/search/" class="btn btn-large btn-primary">#}
+{#                    <i class="icon-search"></i>#}
+{#                    Search#}
+{#                </a>#}
+{#            </div>#}
+{#            <div class="span4 center">#}
+{#                {% if user.is_authenticated %}#}
+{#                    <a href="{% url "userena_profile_edit" user %}" class="btn btn-large btn-primary">#}
+{#                        <i class="icon-group"></i>#}
+{#                        Edit My Profile#}
+{#                    </a>#}
+{#                {% else %}#}
+{#                    <a href="/accounts/signup/" class="btn btn-large btn-primary">#}
+{#                        <i class="icon-group"></i>#}
+{#                        Register#}
+{#                    </a>#}
+{#                {% endif %}#}
+{#            </div>#}
+{#        </div>#}
+{#        <hr class="gap-top">#}
+{#        <div class="row-fluid">#}
+{#            <div class="span4">#}
+{#                <h3 class="black">QGIS</h3>#}
+{#                <p>#}
+{#                    Download a special SANSA-branded version of the free, open-source Quantum GIS<br/><a#}
+{#                        href="http://maps.sansa.org.za/QGIS-1-7-0-Sansa-Edition-Setup.exe" target="_blank"><img#}
+{#                        src="{% static 'images/qgis-icon.png' %}" style="height:50px"/></a>#}
+{#                </p>#}
+{#            </div>#}
+{#            <div class="span4">#}
+{#                <h3 class="black">Fundisa Student Portal</h3>#}
+{#                <p>#}
+{#                    Be inspired by Earth Observation - Resources and a Student Forum for all your remote sensing#}
+{#                    questions#}
+{#                    <br/>#}
+{#                    <a href="http://fundisa.sansa.org.za" target="_blank">#}
+{#                        <div id="fundisa">Fundisa Student Portal</div>#}
+{#                    </a>#}
+{#                </p>#}
+{#            </div>#}
+{#            <div class="span4">#}
+{#                <h3 class="black">DST</h3>#}
+{#                <p>#}
+{#                    This catalogue was funded by the Department of Science and Technology#}
+{#                    <br/><a href="http://www.dst.gov.za/" target="_blank"><img#}
+{#                        src="{% static 'images/dst_logo_small.png' %}" style="height:50px"/></a>#}
+{#                </p>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
+{##}
+{#    <!-- Begin Cookie Consent script https://cookiescript.info/ -->#}
+{#    <script type="text/javascript">#}
+{#        window.cookieconsent_options = {#}
+{#            "message": "This website uses cookies to ensure you get the best experience on our website",#}
+{#            "dismiss": "Got it!",#}
+{#            "learnMore": "More info",#}
+{#            "link": "https://en.wikipedia.org/wiki/HTTP_cookie",#}
+{#            "theme": "dark-bottom"#}
+{#        };#}
+{#        var cookieconsent_ts = 1486015696;#}
+{#        var cookieconsent_id = '1edd4f95-64f5-46e6-a895-51ff79630ad8';</script>#}
+{##}
+{#    <script type="text/javascript" src="//cdn.cookiescript.info/libs/cookiescript.min.js"></script>#}
+{#    <script type="text/javascript">document.write("<div style='display: none'>");</script>#}
+{#    <script type="text/javascript">document.write("</div>");</script>#}
+{##}
+{#    <!-- End Cookie Consent script -->#}
+{##}
+{#    <script type="text/javascript">#}
+{#        $('.carousel').carousel({#}
+{#            interval: 5000#}
+{#        });#}
+{#    </script>#}
+<div id="section-wrapper">
+        <header class="masthead text-white d-flex" id="header">
+            <div id="title-header">
+                <div class="title-header-buttons">
+                    <div class="title-header-text">
+                        SANSA Earth Observation Online Catalogue
+                    </div>
+                    <a class="btn-account btn-l js-scroll-trigger search" href="/search">SEARCH</a>
 
-    <script type="text/javascript" src="//cdn.cookiescript.info/libs/cookiescript.min.js"></script>
-    <script type="text/javascript">document.write("<div style='display: none'>");</script>
-    <script type="text/javascript">document.write("</div>");</script>
+                </div>
+            </div>
+        </header>
 
-    <!-- End Cookie Consent script -->
-
-    <script type="text/javascript">
-        $('.carousel').carousel({
-            interval: 5000
-        });
-    </script>
+</div>
 {% endblock %}
 

@@ -45,10 +45,10 @@ from dictionaries.tests.model_factories import (
     InstrumentTypeProcessingLevelF
 )
 
-from .model_factories import SearchRecordF
+from model_factories import SearchRecordF
 
 
-class SearchRecordCRUD_Test(TestCase):
+class TestSearchRecordCRUD(TestCase):
     """
     Tests models.
     """
@@ -67,7 +67,7 @@ class SearchRecordCRUD_Test(TestCase):
             currency=CurrencyF.create(code='ZAR'),
         )
 
-        #check if PK exists
+        # check if PK exists
         self.assertTrue(myModel.pk is not None)
 
     def test_SearchRecord_read(self):
@@ -159,7 +159,6 @@ class SearchRecordCRUD_Test(TestCase):
 
         myNewOrder = OrderF()
 
-
         myNewModelData = {
             'order': myNewOrder,
             'download_path': 'Some path',
@@ -171,7 +170,7 @@ class SearchRecordCRUD_Test(TestCase):
         myModel.__dict__.update(myNewModelData)
         myModel.save()
 
-        #check if updated
+        # check if updated
         for key, val in list(myNewModelData.items()):
             self.assertEqual(myModel.__dict__.get(key), val)
 
@@ -185,7 +184,7 @@ class SearchRecordCRUD_Test(TestCase):
 
         myModel.delete()
 
-        #check if deleted
+        # check if deleted
         self.assertTrue(myModel.pk is None)
 
     def test_SearchRecord_kmlExtents(self):

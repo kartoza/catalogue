@@ -23,10 +23,10 @@ from django.test import TestCase
 from search.searcher import Searcher
 
 from catalogue.tests.model_factories import OpticalProductF
-from .model_factories import SearchF
+from model_factories import SearchF
 
 
-class SearchIncliantionAngle_Test(TestCase):
+class TestSearchIncliantionAngle(TestCase):
     """
     Tests Search Inclination Angle
     """
@@ -55,7 +55,7 @@ class SearchIncliantionAngle_Test(TestCase):
             'sensor_inclination_angle_end': 50
         })
 
-        #create Searcher object
+        # create Searcher object
         mySearcher = Searcher(mySearch)
         self.assertEqual(mySearcher.mQuerySet.count(), 2)
 
@@ -83,7 +83,7 @@ class SearchIncliantionAngle_Test(TestCase):
             'sensor_inclination_angle_end': -30
         })
 
-        #create Searcher object
+        # create Searcher object
         mySearcher = Searcher(mySearch)
         self.assertEqual(mySearcher.mQuerySet.count(), 2)
 
@@ -109,6 +109,6 @@ class SearchIncliantionAngle_Test(TestCase):
             'sensor_inclination_angle_end': 30
         })
 
-        #create Searcher object
+        # create Searcher object
         mySearcher = Searcher(mySearch)
         self.assertEqual(mySearcher.mQuerySet.count(), 0)

@@ -52,24 +52,13 @@ __copyright__ = 'South African National Space Agency'
 
 import os
 import sys
-from datetime import datetime
 import traceback
-import urllib.request, urllib.error, urllib.parse
-from mercurial import lock, error
-from django.core.management.base import CommandError
-from django.conf import settings
-from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
-from django.db import transaction
-from django.contrib.gis.gdal import OGRGeometry
-from django.contrib.gis.gdal import DataSource
-from django.contrib.gis.gdal.feature import Feature
+import urllib.error
+import urllib.parse
+import urllib.request
+from datetime import datetime
 
-# from django.db import transaction
-# from django.contrib.gis.geos import WKTReader
-# from django.core.management.base import CommandError
-# from django.core.exceptions import ObjectDoesNotExist
-# from django.conf import settings
-
+from catalogue.models import OpticalProduct
 from dictionaries.models import (
     SpectralMode,
     SatelliteInstrument,
@@ -79,8 +68,21 @@ from dictionaries.models import (
     SatelliteInstrumentGroup,
     Projection,
     Quality)
+from django.conf import settings
+from django.contrib.gis.gdal import DataSource
+from django.contrib.gis.gdal import OGRGeometry
+from django.contrib.gis.gdal.feature import Feature
+from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
+from django.core.management.base import CommandError
+from django.db import transaction
+from mercurial import lock, error, vfs
 
-from ..models import OpticalProduct
+
+# from django.db import transaction
+# from django.contrib.gis.geos import WKTReader
+# from django.core.management.base import CommandError
+# from django.core.exceptions import ObjectDoesNotExist
+# from django.conf import settings
 
 
 def get_dates(log_message, feature):
@@ -423,7 +425,7 @@ def ingest(
             print(message)
 
     try:
-        lock_file = lock.lock('/tmp/spot_harvest.lock', timeout=60)
+        lock_file = lock.lock(vfs.vfs("/tmp/"), str.encode("/tmp/spot_harvest.lock"), timeout=60)
     except error.LockHeld:
         # couldn't take the lock
         raise CommandError('Could not acquire lock.')

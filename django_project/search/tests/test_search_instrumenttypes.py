@@ -19,21 +19,20 @@ __date__ = '22/01/2014'
 __copyright__ = 'South African National Space Agency'
 
 from django.test import TestCase
-
 from search.searcher import Searcher
-
 from catalogue.tests.model_factories import OpticalProductF
 from dictionaries.tests.model_factories import (
     SatelliteInstrumentGroupF, SatelliteInstrumentF,
     OpticalProductProfileF, InstrumentTypeF
 )
-from .model_factories import SearchF
+from model_factories import SearchF
 
 
-class SearchInstrumentTypes_Test(TestCase):
+class TestSearchInstrumentTypes(TestCase):
     """
     Tests Search Instrument Types
     """
+
     def setUp(self):
         """
         Set up before each test
@@ -72,6 +71,6 @@ class SearchInstrumentTypes_Test(TestCase):
             'instrument_types': [myInsType]
         })
 
-        #create Searcher object
+        # create Searcher object
         mySearcher = Searcher(mySearch)
         self.assertEqual(mySearcher.mQuerySet.count(), 1)

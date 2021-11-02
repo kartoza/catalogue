@@ -31,12 +31,12 @@ from dictionaries.tests.model_factories import (
 
 from catalogue.tests.model_factories import OpticalProductF
 
-from .model_factories import OrderNotificationRecipientsF
+from model_factories import OrderNotificationRecipientsF
 
-from ..models import OrderNotificationRecipients
+from orders.models import OrderNotificationRecipients
 
 
-class OrderNotificationRecipientsCRUD_Test(TestCase):
+class TestOrderNotificationRecipientsCRUD(TestCase):
     """
     Tests models.
     """
@@ -47,121 +47,118 @@ class OrderNotificationRecipientsCRUD_Test(TestCase):
         """
         pass
 
-    def test_OrderNotificationRecipients_create(self):
+    def test_order_notification_recipients_create(self):
         """
         Tests OrderNotificationRecipients model creation
         """
-        myModel = OrderNotificationRecipientsF.create()
+        model = OrderNotificationRecipientsF.create()
 
-        #check if PK exists
-        self.assertTrue(myModel.pk is not None)
+        # check if PK exists
+        self.assertTrue(model.pk is not None)
 
-    def test_OrderNotificationRecipients_delete(self):
+    def test_order_notification_recipients_delete(self):
         """
         Tests OrderNotificationRecipients model delete
         """
-        myModel = OrderNotificationRecipientsF.create()
+        model = OrderNotificationRecipientsF.create()
 
-        myModel.delete()
+        model.delete()
 
-        #check if deleted
-        self.assertTrue(myModel.pk is None)
+        # check if deleted
+        self.assertTrue(model.pk is None)
 
-    def test_OrderNotificationRecipients_read(self):
+    def test_order_notification_recipients_read(self):
         """
         Tests OrderNotificationRecipients model read
         """
-        myUser = UserF.create(**{
+        user = UserF.create(**{
             'username': 'Samsung'
         })
-        myModel = OrderNotificationRecipientsF.create(**{
-            'user': myUser
+        model = OrderNotificationRecipientsF.create(**{
+            'user': user
         })
 
-        self.assertEqual(myModel.user.username, 'Samsung')
+        self.assertEqual(model.user.username, 'Samsung')
 
-    def test_OrderNotificationRecipients_update(self):
+    def test_order_notification_recipients_update(self):
         """
         Tests OrderNotificationRecipients model update
         """
 
-        myUser = UserF.create(**{
+        user = UserF.create(**{
             'username': 'Samsung'
         })
-        myModel = OrderNotificationRecipientsF.create()
+        model = OrderNotificationRecipientsF.create()
+        model.user = user
+        model.save()
+        self.assertEqual(model.user.username, 'Samsung')
 
-        myModel.user = myUser
-
-        myModel.save()
-
-        self.assertEqual(myModel.user.username, 'Samsung')
-
-    def test_OrderNotificationRecipients_repr(self):
+    def test_order_notification_recipients_repr(self):
         """
         Tests OrderNotificationRecipients model repr
         """
-        myUser = UserF.create(**{
+        user = UserF.create(**{
             'username': 'Samsung'
         })
-        myModel = OrderNotificationRecipientsF.create(**{
-            'user': myUser
+        model = OrderNotificationRecipientsF.create(**{
+            'user': user
         })
 
-        self.assertEqual(str(myModel), 'Samsung')
+        self.assertEqual(str(model), 'Samsung')
 
-    def test_OrderNotificationRecipients_getUsersForProduct(self):
+    def test_order_notification_recipients_get_users_for_product(self):
         """
         Tests OrderNotificationRecipients model getUsersForProduct method
         """
-        myUser = UserF.create(**{
+        user = UserF.create(**{
             'username': 'Samsung'
         })
 
-        myOtherUser = UserF.create(**{
+        other_user = UserF.create(**{
             'username': 'Sony'
         })
 
-        myInstType = InstrumentTypeF.create(**{
+        inst_type = InstrumentTypeF.create(**{
             'operator_abbreviation': 'ITOP 1'
         })
-        mySatellite = SatelliteF.create(**{
+        satellite = SatelliteF.create(**{
             'operator_abbreviation': 'ST 1'
         })
 
-        mySatInstGroup = SatelliteInstrumentGroupF.create(**{
-            'instrument_type': myInstType,
-            'satellite': mySatellite
+        sat_inst_group = SatelliteInstrumentGroupF.create(**{
+            'instrument_type': inst_type,
+            'satellite': satellite
         })
 
-        mySatInst = SatelliteInstrumentF.create(**{
+        sat_inst = SatelliteInstrumentF.create(**{
             'operator_abbreviation': 'SATIN 1',
-            'satellite_instrument_group': mySatInstGroup
+            'satellite_instrument_group': sat_inst_group
         })
 
-        myOPP = OpticalProductProfileF.create(**{
-            'satellite_instrument': mySatInst
+        opp = OpticalProductProfileF.create(**{
+            'satellite_instrument': sat_inst
         })
 
         # first user is registered to a product
-        myProduct = OpticalProductF.create(**{
-            'product_profile': myOPP
+        product = OpticalProductF.create(**{
+            'product_profile': opp
         })
 
-        myContentType = ContentType.objects.get_for_model(myProduct.__class__)
+        content_type = ContentType.objects.get_for_model(product.__class__)
 
         OrderNotificationRecipientsF.create(**{
-            'user': myUser,
-            'add_classes': [myContentType]
+            'user': user,
+            'add_classes': [content_type]
         })
 
         # second user is registered to a sat_inst_group
 
         OrderNotificationRecipientsF.create(**{
-            'user': myOtherUser,
-            'add_satellite_instrument_groups': [mySatInstGroup]
+            'user': other_user,
+            'add_satellite_instrument_groups': [sat_inst_group]
         })
 
         self.assertEqual(
-            len(OrderNotificationRecipients.getUsersForProduct(myProduct)),
+            len(OrderNotificationRecipients.getUsersForProduct(product)),
             2
         )

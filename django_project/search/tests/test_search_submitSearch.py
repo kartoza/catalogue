@@ -17,14 +17,13 @@ __version__ = '0.1'
 __date__ = '28/01/2014'
 __copyright__ = 'South African National Space Agency'
 
-from django.core.urlresolvers import reverse, NoReverseMatch
+from django.urls import reverse, NoReverseMatch
 from django.test import TestCase
 from django.test.client import Client
-
 from core.model_factories import UserF
 
 
-class SearchViews_submitSearch_Tests(TestCase):
+class TestSearchViewsSubmitSearch(TestCase):
     """
     Tests search views.py submitSearch method/view
     """

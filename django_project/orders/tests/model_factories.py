@@ -18,8 +18,9 @@ __date__ = '01/02/2014'
 __copyright__ = 'South African National Space Agency'
 
 import factory
+from exchange.models import Currency, ExchangeRate
 
-from ..models import (
+from orders.models import (
     Order,
     OrderStatus,
     DeliveryMethod,
@@ -31,6 +32,29 @@ from ..models import (
     OrderNotificationRecipients,
     NonSearchRecord
 )
+
+
+class CurrencyF(factory.django.DjangoModelFactory):
+    """
+    Factory for exchange.Currency
+    """
+    class Meta:
+        model = Currency
+
+    code = factory.Sequence(lambda n: "%s" % n)
+    name = factory.Sequence(lambda n: "Currency %s" % n)
+
+
+class ExchangeRateF(factory.django.DjangoModelFactory):
+    """
+    Factory for exchange.ExchangeRate
+    """
+    class Meta:
+        model = ExchangeRate
+
+    source = factory.SubFactory(CurrencyF)
+    target = factory.SubFactory(CurrencyF)
+    rate = 0.0
 
 
 class OrderStatusF(factory.django.DjangoModelFactory):
@@ -100,7 +124,7 @@ class OrderF(factory.django.DjangoModelFactory):
     class Meta:
         model = Order
 
-    user = factory.SubFactory('core.model_factories.UserF')
+    user = factory.SubFactory(UserF)
     notes = ''
     order_status = factory.SubFactory(OrderStatusF)
     delivery_method = factory.SubFactory(DeliveryMethodF)
@@ -175,6 +199,6 @@ class NonSearchRecordF(factory.django.DjangoModelFactory):
     download_path = factory.Sequence(lambda n: 'Download path // {}'.format(n))
     cost_per_scene = 0.0
     currency = factory.SubFactory(
-        'core.model_factories.CurrencyF'
+        CurrencyF
     )
     rand_cost_per_scene = 0.0

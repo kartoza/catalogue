@@ -1,7 +1,6 @@
 from datetime import date
 import factory
-
-from ..models import Search, SearchDateRange, Clip, SearchRecord
+from search.models import Search, SearchDateRange, Clip, SearchRecord
 
 
 class SearchF(factory.django.DjangoModelFactory):
@@ -11,7 +10,7 @@ class SearchF(factory.django.DjangoModelFactory):
     class Meta:
         model = Search
 
-    user = factory.SubFactory('core.model_factories.UserF')
+    user = factory.SubFactory('useraccounts.model_factories.UserF')
     geometry = (
         'POLYGON ((17.54 -32.05, 20.83 -32.41, 20.30 -35.17, 17.84 '
         '-34.65, 17.54 -32.05))')
@@ -117,7 +116,7 @@ class ClipF(factory.django.DjangoModelFactory):
         model = Clip
 
     guid = None
-    owner = factory.SubFactory('core.model_factories.UserF')
+    owner = factory.SubFactory('useraccounts.model_factories_UserF')
     image = 'zaSpot2mMosaic2009'
     geometry = (
         'POLYGON ((17.5400390625000000 -32.0595703125000000, '
@@ -146,7 +145,7 @@ class SearchRecordF(factory.django.DjangoModelFactory):
     cost_per_scene = 0.0
     rand_cost_per_scene = 0.0
     currency = factory.SubFactory(
-        'core.model_factories.CurrencyF')
+        'orders.model_factories.CurrencyF')
     processing_level = factory.SubFactory(
         'dictionaries.tests.model_factories.ProcessingLevelF')
     projection = factory.SubFactory(

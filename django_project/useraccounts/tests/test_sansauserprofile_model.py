@@ -18,12 +18,11 @@ __date__ = '09/08/2013'
 __copyright__ = 'South African National Space Agency'
 
 from django.test import TestCase
-
 from core.model_factories import UserF
-from .model_factories import SansaUserProfileF
+from model_factories import SansaUserProfileF
 
 
-class SansaUserProfileCRUD_Test(TestCase):
+class TestSansaUserProfileCRUD(TestCase):
     """
     Tests models.
     """
@@ -50,7 +49,7 @@ class SansaUserProfileCRUD_Test(TestCase):
 
         myModel.delete()
 
-        #check if deleted
+        # check if deleted
         self.assertTrue(myModel.pk is None)
 
     def test_SansaUserProfile_read(self):

@@ -19,7 +19,7 @@ __date__ = '20/08/2013'
 __copyright__ = 'South African National Space Agency'
 
 
-from django.core.urlresolvers import reverse, NoReverseMatch
+from django.urls import reverse, NoReverseMatch
 from django.test import TestCase
 from django.test.client import Client
 
@@ -27,7 +27,7 @@ from core.model_factories import UserF
 from search.tests.model_factories import SearchF
 
 
-class ReportsViews_searchHistory_Tests(TestCase):
+class TestReportsViewsSearchHistory(TestCase):
     """
     Tests reports.py searchHistory method/view
     """
