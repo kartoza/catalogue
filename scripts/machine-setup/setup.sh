@@ -21,14 +21,14 @@ sudo apt-get install docker-ce docker-ce-cli containerd.io
 
 sudo apt-get instal git make
 
-git clone https://github.com/kartoza/catalogue.git
+#git clone https://github.com/kartoza/catalogue.git
 
-cd catalogue
+#cd catalogue
 
 # modify database passwords
 
-make pull
-make build
-make production_up
-make db_restore
-make migrate
+#make pull
+#make build
+#make production_up
+#make db_restore
+#make migrate
