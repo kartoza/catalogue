@@ -13,7 +13,7 @@ services:
   nginx:
     # Note you cannot scale if you use conteiner_name
     container_name: catalogue-nginx
-    image: nginx
+    image: nginx:1.21.3
     hostname: nginx
     volumes:
       - ./nginx-conf:/etc/nginx/conf.d
@@ -35,7 +35,7 @@ services:
   db:
     # Note you cannot scale if you use conteiner_name
     container_name: catalogue-db
-    image: kartoza/postgis:13
+    image: kartoza/postgis:13-3.1--v2021.09.08
     volumes:
       - ./pg/postgres_data:/var/lib/postgresql
       - ./backups:/backups
@@ -46,7 +46,7 @@ services:
     restart: on-failure:5
 
   rabbitmq:
-    image: library/rabbitmq
+    image: library/rabbitmq:3.9.5
     hostname: rabbitmq
     environment:
        - RABBIT_PASSWORD=rabbit_test_password
@@ -140,7 +140,7 @@ services:
   web:
     # Note you cannot scale if you use conteiner_name
     container_name: catalogue-web
-    image: nginx
+    image: nginx:1.21.3
     hostname: nginx
     volumes:
       - ./sites-enabled:/etc/nginx/conf.d:ro
