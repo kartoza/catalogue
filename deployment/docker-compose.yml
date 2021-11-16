@@ -8,7 +8,7 @@
 
 # Our main nginx service - this is for testing only - normally
 # You would use a standalone nginx instance running on the host!
-version: "3.8"
+version: "3.4"
 services:
   nginx:
     # Note you cannot scale if you use conteiner_name
