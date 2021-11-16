@@ -1,37 +1,24 @@
-define(['shared', 'backbone', 'underscore', 'jquery', 'jqueryUi', 'jqueryTouch', 'ol', 'views/layer_style'], function (Shared, Backbone, _, $, jqueryUI, jqueryTouch, ol, LayerStyle) {
+define([
+    'shared',
+    'backbone',
+    'underscore',
+    'jquery',
+    'jqueryTouch',
+    'ol',
+    'views/layer_style',
+    'collections/paginated'
+], function (Shared, Backbone, _, $, jqueryTouch, ol, LayerStyle, ResultItemCollection) {
     return Backbone.View.extend({
         // source of layers
-        locationSiteCluster: null,
-        locationSiteClusterLayer: null,
-        locationSiteClusterSource: null,
-        highlightVectorSource: null,
-        highlightVector: null,
-        highlightPinnedVectorSource: null,
-        highlightPinnedVector: null,
-        administrativeLayerGroup: null,
         layers: {},
-        initialLoadBiodiversityLayersToMap: false,
         orders: {},
         layerSelector: null,
+        layerSearchSource: null,
         initialize: function () {
             this.layerStyle = new LayerStyle();
-            Shared.Dispatcher.on('layers:showFeatureInfo', this.showFeatureInfo, this);
-            Shared.Dispatcher.on('layers:renderLegend', this.renderLegend, this);
-            var administrativeVisibility = Shared.StorageUtil.getItemDict('Administrative', 'transparency');
-            if (administrativeVisibility !== null) {
-                this.administrativeTransparency = administrativeVisibility;
-            }
+            this.layerSearchSource = new ol.source.Vector({})
         },
-        isBiodiversityLayerLoaded: function () {
-            return true;
-        },
-        isAdministrativeLayerSelected: function () {
-            var $checkbox = $('.layer-selector-input[value="Administrative"]');
-            if ($checkbox.length === 0) {
-                return true
-            }
-            return $checkbox.is(':checked');
-        },
+
         initLayer: function (layer, layerName, visibleInDefault, category, source) {
             layer.set('added', false);
             var layerType = layerName;
@@ -46,10 +33,7 @@ define(['shared', 'backbone', 'underscore', 'jquery', 'jqueryUi', 'jqueryTouch',
                 if (e instanceof TypeError) {
                 }
             }
-            if (layerName.indexOf(this.administrativeKeyword) >= 0) {
-                layerType = layerName;
-            }
-            if (layerName === 'Sites') {
+            if (layerName === 'Search results') {
                 layerType = layerName;
             }
 
@@ -77,64 +61,33 @@ define(['shared', 'backbone', 'underscore', 'jquery', 'jqueryUi', 'jqueryTouch',
                 layer.setVisible(false);
             }
         },
-        // addBiodiveristyLayersToMap: function (map) {
-        //     var self = this;
-        //     // ---------------------------------
-        //     // HIGHLIGHT PINNED LAYER
-        //     // ---------------------------------
-        //     self.highlightPinnedVectorSource = new ol.source.Vector({});
-        //     self.highlightPinnedVector = new ol.layer.Vector({
-        //         source: self.highlightPinnedVectorSource,
-        //         style: function (feature) {
-        //             var geom = feature.getGeometry();
-        //             return self.layerStyle.getPinnedHighlightStyle(geom.getType());
-        //         }
-        //     });
-        //     map.addLayer(self.highlightPinnedVector);
-        //
-        //     // ---------------------------------
-        //     // HIGHLIGHT LAYER -- MARKER
-        //     // ---------------------------------
-        //     self.highlightVectorSource = new ol.source.Vector();
-        //     self.highlightVector = new ol.layer.Vector({
-        //         source: self.highlightVectorSource,
-        //         style: function (feature) {
-        //             var geom = feature.getGeometry();
-        //             return self.layerStyle.getHighlightStyle(geom.getType());
-        //         }
-        //     });
-        //     map.addLayer(self.highlightVector);
-        //
-        //     // ---------------------------------
-        //     // BIODIVERSITY LAYERS
-        //     // ---------------------------------
-        //
-        //     // self.biodiversitySource = new ol.source.ImageWMS(biodiversityLayersOptions);
-        //     // self.biodiversityTileLayer = new ol.layer.Image({
-        //     //     source: self.biodiversitySource
-        //     // });
-        //     self.initLayer(
-        //         self.biodiversityTileLayer,
-        //         'Sites',
-        //         true,
-        //     );
-        //
-        //     if (!self.initialLoadBiodiversityLayersToMap) {
-        //         self.initialLoadBiodiversityLayersToMap = true;
-        //     }
-        // },
+        addSearchResultLayersToMap: function (map) {
+            const self = this;
+            self.layerSearchSource = new ol.source.Vector({});
+            self.layerSearchVector = new ol.layer.Vector({
+                source: self.layerSearchSource,
+                style: function (feature) {
+                    var geom = feature.getGeometry();
+                    return self.layerStyle.getPinnedHighlightStyle(geom.getType());
+                }
+            });
+            map.addLayer(self.layerSearchVector);
+
+            self.initLayer(
+                self.layerSearchVector,
+                'Search results',
+                true,
+            );
+        },
 
         addLayersToMap: function (map) {
             var self = this;
             this.map = map;
-
-            var biodiversityOrder = Shared.StorageUtil.getItemDict('Sites', 'order');
-            if (biodiversityOrder === null) {
-                biodiversityOrder = 0;
-            }
-            self.orders[0] = 'Sites';
-            // self.addBiodiveristyLayersToMap(map);
-            self.renderLayers(false);
+            self.orders[0] = 'Search results';
+            self.addSearchResultLayersToMap(
+                map
+            )
+            self.renderLayers(true);
         },
         
         changeLayerVisibility: function (layerName, visible) {
@@ -143,104 +96,12 @@ define(['shared', 'backbone', 'underscore', 'jquery', 'jqueryUi', 'jqueryTouch',
             }
             this.layers[layerName]['layer'].setVisible(visible);
         },
-        changeLayerTransparency: function (layername, opacity) {
-            if (Object.keys(this.layers).length === 0) {
-                return false;
-            }
-            this.layers[layername]['layer'].setOpacity(opacity);
-        },
-        selectorChanged: function (layerName, selected) {
-            Shared.StorageUtil.setItemDict(layerName, 'selected', selected);
-            this.changeLayerVisibility(layerName, selected);
-            var needToReloadXHR = true;
-            this.toggleLegend(layerName, selected, needToReloadXHR);
-        },
-        toggleLegend: function (layerName, selected, reloadXHR) {
-            // show/hide legend
-            var $legendElement = this.getLegendElement(layerName);
-            if (layerName === 'Sites' && this.isBiodiversityLayerLoaded()) {
-                if (reloadXHR) {
-                    Shared.Dispatcher.trigger('map:reloadXHR');
-                }
-                if (selected) {
-                    Shared.Dispatcher.trigger('biodiversityLegend:show');
-                } else {
-                    Shared.Dispatcher.trigger('biodiversityLegend:hide');
-                }
-            }
 
-            if (selected) {
-                if ($legendElement.length > 0) {
-                    $legendElement.show();
-                    let legendDisplayed = Shared.StorageUtil.getItem('legendsDisplayed');
-                    if (legendDisplayed !== false || typeof legendDisplayed === 'undefined') {
-                        Shared.Dispatcher.trigger('map:showMapLegends');
-                    }
-                }
-            } else {
-                $legendElement.hide();
-            }
-        },
-        ol3_checkLayer: function (layer) {
-            var res = false;
-            for (var i = 0; i < this.map.getLayers().getLength(); i++) {
-                //check if layer exists
-                if (this.map.getLayers().getArray()[i] === layer) {
-                    //if exists, return true
-                    res = true;
-                }
-            }
-            return res;
-        },
-        moveLayerToTop: function (layer) {
-            if (layer) {
-                if (this.ol3_checkLayer(layer)) {
-                    this.map.removeLayer(layer);
-                    this.map.getLayers().insertAt(this.map.getLayers().getLength(), layer);
-                } else {
-                    console.log('not found')
-                }
-            }
-        },
-        moveLegendToTop: function (layerName) {
-            this.getLegendElement(layerName).detach().prependTo('#map-legend');
-        },
         getLegendElement: function (layerName) {
             return $(".control-drop-shadow").find(
                 "[data-name='" + layerName + "']");
         },
 
-        renderTransparencySlider: function () {
-            var self = this;
-            var layerDivs = $('#layers-selector').find('.layer-transparency');
-            $.each(layerDivs, function (key, layerDiv) {
-                $(layerDiv).slider({
-                    range: 'max',
-                    min: 1,
-                    max: 100,
-                    value: $(layerDiv).data('value'),
-                    slide: function (event, ui) {
-                        var $label = $(event.target).closest('li').find('.layer-selector-input');
-                        var layername = 'Sites';
-                        if ($label.length > 0) {
-                            layername = $label.val();
-                        }
-                        self.changeLayerTransparency(layername, ui.value / 100);
-                    },
-                    stop: function (event, ui) {
-                        var $label = $(event.target).closest('li').find('.layer-selector-input');
-                        var layername = 'Sites';
-                        if ($label.length > 0) {
-                            layername = $label.val();
-                        }
-                        Shared.StorageUtil.setItemDict(layername, 'transparency', ui.value / 100);
-                        if (layername.indexOf(self.administrativeKeyword) >= 0) {
-                            self.administrativeTransparency = ui.value / 100;
-                        }
-                    }
-                });
-            });
-        },
         renderLayers: function (isFirstTime) {
             let self = this;
             let savedOrders = $.extend({}, self.orders);
@@ -289,21 +150,6 @@ define(['shared', 'backbone', 'underscore', 'jquery', 'jqueryUi', 'jqueryTouch',
                 } else {
                     currentLayerTransparency = 100;
                 }
-
-                if (layerName.indexOf(self.administrativeKeyword) >= 0) {
-                    var administrativeVisibility = Shared.StorageUtil.getItem('Administrative');
-                    if (administrativeVisibility === null) {
-                        administrativeVisibility = true;
-                    } else {
-                        if (administrativeVisibility.hasOwnProperty('selected')) {
-                            administrativeVisibility = administrativeVisibility['selected'];
-                        }
-                    }
-                    defaultVisibility = administrativeVisibility;
-                    source = 'Base';
-                }
-
-                self.renderLayersSelector(key, layerName, defaultVisibility, currentLayerTransparency, category, source, isFirstTime);
             });
 
             // RENDER LAYERS
@@ -311,18 +157,11 @@ define(['shared', 'backbone', 'underscore', 'jquery', 'jqueryUi', 'jqueryTouch',
                 let _layer = value['layer'];
                 if (!_layer.get('added')) {
                     _layer.set('added', true);
-                    self.map.addLayer(_layer);
+                    // self.map.addLayer(_layer);
                 }
             });
-            self.renderTransparencySlider();
-
-            $('.layer-selector-input').change(function (e) {
-                self.selectorChanged($(e.target).val(), $(e.target).is(':checked'))
-            });
-            if (isFirstTime) {
-                self.initializeLayerSelector();
-            }
         },
+
         showFeatureInfo: function (lon, lat, siteExist = false) {
             // Show feature info from lon and lat
             // Lon and lat coordinates are in EPSG:3857 format
@@ -425,16 +264,13 @@ define(['shared', 'backbone', 'underscore', 'jquery', 'jqueryUi', 'jqueryTouch',
                 }
             });
         },
+
         renderFeaturesInfo: function (featuresInfo, coordinate) {
             var that = this;
             let tabs = '<ul class="nav nav-tabs">';
             let content = '';
             $.each(featuresInfo, function (key_feature, feature) {
                 var layerName = feature['layerName'];
-                if (layerName.indexOf(that.administrativeKeyword) >= 0) {
-                    layerName = that.administrativeKeyword;
-                    key_feature = 'administrative';
-                }
                 tabs += '<li ' +
                     'role="presentation" class="info-wrapper-tab"  ' +
                     'title="' + layerName + '" ' +
@@ -469,13 +305,7 @@ define(['shared', 'backbone', 'underscore', 'jquery', 'jqueryUi', 'jqueryTouch',
             }
             infoWrapperTab[0].click();
         },
-        showLayerSource: function (layerKey) {
-            if (Object.keys(this.layers).length === 0) {
-                return false;
-            } else if (layerKey !== this.administrativeKeyword) {
-                this.getLayerAbstract(layerKey);
-            }
-        },
+
         getLayerAbstract: function (layerKey) {
             let layerProvider = '';
             let layerName = '';
@@ -505,50 +335,6 @@ define(['shared', 'backbone', 'underscore', 'jquery', 'jqueryUi', 'jqueryTouch',
             let source = this.layers[layerKey].source
             var abstract_result = "";
         },
-        initializeLayerSelector: function () {
-            let self = this;
-            this.layerSelector = $('#layers-selector');
-            this.layerSelector.sortable({cancel: '.layer-abstract'});
-            this.layerSelector.on('sortupdate', function () {
-                let $layerSelectorInput = $('.layer-selector-input');
-                $($layerSelectorInput.get().reverse()).each(function (index, value) {
-                    let layerName = $(value).val();
-                    self.moveLayerToTop(self.layers[layerName]['layer']);
-                    self.moveLegendToTop(layerName);
-                });
-                self.moveLayerToTop(self.highlightPinnedVector);
-                self.moveLayerToTop(self.highlightVector);
 
-                // Update saved order
-                $($layerSelectorInput.get()).each(function (index, value) {
-                    let layerName = $(value).val();
-                    Shared.StorageUtil.setItemDict(layerName, 'order', parseInt(index));
-                });
-            });
-        },
-        changeLayerOder: function (layerName, order) {
-            let $layerElm = $('.layer-selector-input[value="' + layerName + '"]').parent().parent();
-            let $layerSelectorList = $('#layers-selector li');
-            if (order > $layerSelectorList.length - 1) {
-                order = $layerSelectorList.length - 1;
-            }
-            if (order <= 0) {
-                $layerElm.insertBefore($layerSelectorList.get(0));
-            } else {
-                $layerElm.insertAfter($layerSelectorList.get(order - 1));
-            }
-        },
-        refreshLayerOrders: function () {
-            let self = this;
-            let $layerSelectorInput = $('.layer-selector-input');
-            $($layerSelectorInput.get()).each(function (index, value) {
-                let layerName = $(value).val();
-                let order = Shared.StorageUtil.getItemDict(layerName, 'order');
-                if (order != null) {
-                    self.changeLayerOder(layerName, order);
-                }
-            });
-            self.layerSelector.trigger('sortupdate');
-        }
     })
 });

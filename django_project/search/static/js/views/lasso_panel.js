@@ -1,7 +1,6 @@
 define(['shared', 'backbone', 'underscore', 'jqueryUi',
     'jquery', 'ol'], function (Shared, Backbone, _, jqueryUi, $, ol) {
     return Backbone.View.extend({
-        template: _.template($('#lasso-control-panel-template').html()),
         isEmpty: true,
         layer: null,
         source: null,
@@ -56,11 +55,7 @@ define(['shared', 'backbone', 'underscore', 'jqueryUi',
             });
         },
         render: function () {
-            this.$el.html(this.template());
             this.$el.hide();
-            if (isSuperUser) {
-                this.$el.find('.merge-sites').show();
-            }
             return this;
         },
         getPolygonCoordinates: function () {

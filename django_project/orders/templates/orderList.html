@@ -1,7 +1,7 @@
 {% load render_table from django_tables2 %}
 <script type="text/javascript">
 function showOrder(theId) {
-  var theUrl = '/listorders/?order_id=' + theId + ' #list-order-table';
+  var theUrl = '/list-orders/?order_id=' + theId + ' #list-order-table';
   $('#list-order-table').load(theUrl);
 }
 </script>
@@ -29,14 +29,14 @@ function showOrder(theId) {
             onclick='location="{{ myUrl }}?page={{ myRecords.number}}&pdf"'>
       <i class="icon-download"></i> Download as PDF
     </button>
-    {% if myUrl == '/listorders/' %} {# can't use url template tag for if evaluation #}
+    {% if myUrl == '/list-orders/' %} {# can't use url template tag for if evaluation #}
     <button class="btn monthly-btn"
             onclick='location="{% url 'orderMonthlyReport' myCurrentMonth|date:'Y'  myCurrentMonth|date:'m' %}"'>
       <i class="icon-calendar"></i> View Monthly Reports
     </button>
     <button class="btn summary-btn"
-            onclick='location="{% url 'ordersSummary' %}"'>
-      <i class="icon-tasks"></i> View Orders Summary
+            onclick='location="{% url 'orders-summary' %}"'>
+      <i class="icon-tasks"></i> View Orderssss Summary
     </button>
     {% endif %}
   </div>

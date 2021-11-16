@@ -23,10 +23,10 @@ define([
         return Backbone.Collection.prototype.fetch.call(this, options);
     },
     parse: function(resp) {
-        this.offset = resp.meta.offset;
-        this.limit = resp.meta.limit;
-        this.total = resp.meta.total_count;
-        return resp.objects;
+        this.offset = 500;
+        this.limit = 50;
+        this.total = resp.count;
+        return resp.results;
     },
     url: function() {
         urlparams = {
@@ -109,7 +109,7 @@ define([
    return PaginatedCollection.extend({
 
        urlRoot: function() {
-           return '/api/v1/searchresults/'+ guid +'/';
+           return '/api/search-results/'+ guid +'/';
        },
        model: ResultItem,
        limit: searchresults

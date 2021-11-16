@@ -390,7 +390,7 @@ def show_product(request, theProductId):
         original_product_id=theProductId)
     if len(myProducts) > 0:
         myProduct = myProducts[0]
-        myObject, myType = myProduct.getConcreteProduct()
+        myObject, myType = myProduct.get_concrete_product()
         myMessages.append('Product found')
     else:
         myMessages.append('No matching product found')
@@ -421,7 +421,7 @@ def show_thumb_page(request, theId):
     logger.info('showThumbPage : id ' + theId)
     myDetails = []
     myProduct = get_object_or_404(GenericProduct, id=theId)
-    myProduct = myProduct.getConcreteProduct()[0]
+    myProduct = myProduct.get_concrete_product()[0]
     # ABP: ugly hack
     try:
         myDetails.append(
@@ -458,11 +458,11 @@ def show_thumb(request, theId, theSize):
 
 
 # @login_required
-def metadata(request, theId):
+def metadata(request, pk):
     """Get the metadata for a product."""
-    myGenericProduct = get_object_or_404(GenericProduct, id=theId)
-    myObject, myType = myGenericProduct.getConcreteProduct()
-    return HttpResponse(myObject.toHtml())
+    generic_product = get_object_or_404(GenericProduct, id=pk)
+    product, product_type = generic_product.get_concrete_product()
+    return HttpResponse(product.toHtml())
 
 
 @staff_member_required

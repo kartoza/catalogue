@@ -8,14 +8,14 @@ var listTreeFactory = (function($, _) {
         '<ul>',
         '<% _.each(context, function(parent1, index) { %>',
         // first level
-        '<li>',
+        '<li style="height: auto">',
         '<span><i class="icon-angle-down icon-black"></i><input type="checkbox" ',
         '<% var ps; %>',
         '<% if ( !_.isUndefined(ps = _.find(options.selected, function(elem) { return elem.key === this.key; }, parent1)) ) { %>',
         'checked="checked"',
         '<% } %> value="<%= parent1.val %>" /> <%= parent1.key %></span>',
         '<% if (options.startCollapsed) { %>',
-        '<ul style="display: none;">',
+        '<ul class="tree-children" style="display: none;">',
         '<% } else { %>',
         '<ul>',
         '<% } %>',
@@ -198,7 +198,9 @@ var listTreeFactory = (function($, _) {
                             _toggleIcon(node);
 
                             // Toggle the child list.
-                            node.children('ul').slideToggle('fast');
+                            // node.children('ul').slideToggle('fast');
+                            node.children('ul').toggle()
+
 
                             e.stopImmediatePropagation();
                         })
@@ -209,7 +211,8 @@ var listTreeFactory = (function($, _) {
                             _toggleIcon(node);
 
                             // Toggle the child list.
-                            node.children('ul').slideToggle('fast');
+                            // node.children('ul').slideToggle('fast');
+                            node.children('ul').toggle()
 
                             e.stopImmediatePropagation();
                         })
@@ -220,7 +223,8 @@ var listTreeFactory = (function($, _) {
                             _toggleIcon(node);
 
                             // Toggle the child list.
-                            node.children('ul').slideToggle('fast');
+                            // node.children('ul').slideToggle('fast');
+                            node.children('ul').toggle()
 
                             e.stopImmediatePropagation();
                         })
@@ -231,7 +235,8 @@ var listTreeFactory = (function($, _) {
                             _toggleIcon(node);
 
                             // Toggle the child list.
-                            node.children('ul').slideToggle('fast');
+                            // node.children('ul').slideToggle('fast');
+                            node.children('ul').toggle()
 
                             e.stopImmediatePropagation();
                         });

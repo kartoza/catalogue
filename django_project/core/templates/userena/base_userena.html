@@ -1,1 +1,17 @@
 {% extends "base.html" %}
+{% load staticfiles %}
+{% block extracss %}
+    <!-- Chosen library -->
+    <link rel="stylesheet" href="{% static 'css/form.css' %}">
+    <link rel="stylesheet" href="{% static 'css/account.css' %}">
+    <style>
+    #account-btn{
+        width: 50%;
+        color: #1371a5;
+        border-color: #1371a5
+    }
+    </style>
+
+{% endblock %}
+{% block footer %}
+{% endblock %}

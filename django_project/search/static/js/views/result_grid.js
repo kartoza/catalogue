@@ -8,12 +8,13 @@ define([
     'blockUI',
     'perfectScrollbar'
     ],
-    function ($, _, Backbone, Shared, ResultGridViewItem, Cart) {
+    function ($, _, Backbone, Shared, CartItemCollection, ResultGridViewItem) {
     return Backbone.View.extend({
-        template: _.template($("#result-panel").html()),
+        template: _.template($("#side-result-panel").html()),
+        cont: '',
         events: {
-            'click div.searchPrev': 'previous',
-            'click div.searchNext': 'next',
+            'click #searchPrev': 'previous',
+            'click #searchNext': 'next',
             'click button.resetZoom': 'resetZoom'
         },
 
@@ -68,7 +69,7 @@ define([
             _.bindAll(this, 'render');
             this.collection.bind('reset', this.render, this);
             //this.collection.fetch({reset: true});
-            this.cont = $("#results-container");
+            this.cont = $('#results-container');
             Shared.Dispatcher.on('collectionSearch', $.proxy(this.collectionSearch, this));
         },
 
@@ -91,41 +92,24 @@ define([
                 error: this.unblockResultPanel()
             });
         },
-        render: function() {
-            $('#result-panel-toggle').removeClass('hide');
-            if (_.size(this.collection.models) != 0) {
-                Shared.Dispatcher.trigger('layers:addSearch', {
-                    'data': this.collection.models
-                });
-                this.cont.empty();
-                $('#results-container').perfectScrollbar('destroy');
-                this.cont.append('<div class="result-items-header"><div class="result-item-info">Product</div><div class="result-item-info-date">Date</div><div class="cloud-cover">Cloud cover</div></div>');
-                const self = this;
-                _(this.collection.models).each(function(item){
-                    self.renderItem(item);
-                },this);
-                this._update_pagination_info();
-            }
-            $('#results-container').perfectScrollbar( { wheelSpeed: 20, wheelPropogation: true } );
-            this.unblockResultPanel();
-            return this;
-        },
+
         renderItem: function(item) {
-            const myItem = new ResultGridViewItem({
+            const view_item = new ResultGridViewItem({
                 model: item,
                 collection: this.collection
             });
-            this.cont.append(myItem.render().$el);
+            $('#results-container').append(view_item.render().$el);
             // check if result item if is in cart
-            const id = myItem.model.get('id');
-            const exist = Cart.filter(function(item) {
+            const id = view_item.model.get('id');
+            const cart = new CartItemCollection()
+            const exist = cart.filter(function(item) {
                 return item.get("product").id == id;
             });
             // if it is, color it differently
             if (exist.length > 0) {
-                $("#result_item_"+ myItem.model.get('original_product_id')).addClass('cartResultRow');
-                $("#result_item_"+ myItem.model.get('original_product_id')).children('.cart-remove-button').removeClass('hide');
-                $("#result_item_"+ myItem.model.get('original_product_id')).children('.cart-button').addClass('hide');
+                $("#result_item_"+ view_item.model.get('original_product_id')).addClass('cartResultRow');
+                $("#result_item_"+ view_item.model.get('original_product_id')).children('.cart-remove-button').show();
+                $("#result_item_"+ view_item.model.get('original_product_id')).children('.cart-button').hide();
             }
         },
 
@@ -137,7 +121,7 @@ define([
                 self.jumpToPage(event.target.value);
             };
             let option;
-            for (var i = 1; i < end+1; i++) {
+            for (let i = 1; i < end+1; i++) {
                 option = document.createElement("option");
                 option.setAttribute("value", i);
                 option.innerHTML = i;
@@ -173,6 +157,30 @@ define([
                     $(".alert").alert('close');
                 }, 6000);
             }
+        },
+
+        render: function() {
+            $('#result-panel-toggle').removeClass('hide');
+            if (_.size(this.collection.models) != 0) {
+                Shared.Dispatcher.trigger('sidePanel:openSidePanel', this.collection.models);
+                Shared.Dispatcher.trigger('layers:addSearch', this.collection.models);
+                this.cont.empty();
+                // $('#results-container').perfectScrollbar('destroy');
+                const record_html = '<div class="result-items-header">' +
+                    '<div class="result-item-info" style="float: left">' +
+                    'Product</div><div class="result-item-info-date" style="float: left">Date' +
+                    '</div><div class="cloud-cover">Cloud cover</div>' +
+                    '</div>'
+                // $('#results-container').append(record_html);
+                const self = this;
+                _(this.collection.models).each(function(item){
+                    self.renderItem(item);
+                },this);
+                this._update_pagination_info();
+            }
+            // $('#results-container').perfectScrollbar( { wheelSpeed: 20, wheelPropogation: true } );
+            // this.unblockResultPanel();
+            return this;
         },
 });
 })

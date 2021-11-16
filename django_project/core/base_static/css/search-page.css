@@ -1,35 +1,35 @@
-.accordion-inner {
-    font-size: 12px !important;
-}
+/*.accordion-inner {*/
+/*    font-size: 12px !important;*/
+/*}*/
 
-.accordion-inner .control-label {
-    width: 90px!important;
-}
+/*.accordion-inner .control-label {*/
+/*    width: 90px!important;*/
+/*}*/
 
-.accordion-inner .controls {
-    margin-left: 100px!important;
-}
+/*.accordion-inner .controls {*/
+/*    margin-left: 100px!important;*/
+/*}*/
 
-.accordion-inner .controls input {
-    width: 150px;
-}
+/*.accordion-inner .controls input {*/
+/*    width: 150px;*/
+/*}*/
 
-.cloud-cover-search input {
-    width: 50px !important;
-}
+/*.cloud-cover-search input {*/
+/*    width: 50px !important;*/
+/*}*/
 
-.accordion-inner .controls select {
-    width: 160px;
-}
+/*.accordion-inner .controls select {*/
+/*    width: 160px;*/
+/*}*/
 
-.accordion-toggle {
-    background-color: white;
-    border-radius: 4px;
-}
+/*.accordion-toggle {*/
+/*    background-color: white;*/
+/*    border-radius: 4px;*/
+/*}*/
 
-.help-popover {
-    cursor: pointer;
-}
+/*.help-popover {*/
+/*    cursor: pointer;*/
+/*}*/
 
 #panel-toggles {
     position: absolute;
@@ -44,77 +44,77 @@
 /*
  * Map size
  */
-.search-map {
-  /* width defined by blueprint.css */
-  /*height: 100%;*/
-  left: 0;
-  right: 0;
-  top: 7px;
-  bottom:34px;
-  /*position: fixed;*/
-}
+/*.search-map {*/
+/*  !* width defined by blueprint.css *!*/
+/*  !*height: 100%;*!*/
+/*  left: 0;*/
+/*  right: 0;*/
+/*  top: 7px;*/
+/*  bottom:34px;*/
+/*  !*position: fixed;*!*/
+/*}*/
 
-#map-controls2 {
-    width: 200px;
-    height: 53px;
-    z-index: 100;
-    position: fixed;
-    bottom: 50px;
-    right: 10px;
-    color: #ffffff;
-    font-size: 10px;
-}
+/*#map-controls2 {*/
+/*    width: 200px;*/
+/*    height: 53px;*/
+/*    z-index: 100;*/
+/*    position: fixed;*/
+/*    bottom: 50px;*/
+/*    right: 10px;*/
+/*    color: #ffffff;*/
+/*    font-size: 10px;*/
+/*}*/
 
-#map-controls3 {
-    width: auto;
-    height: auto;
-    z-index: 100;
-    position: fixed;
-    bottom: 50px;
-    left: 10px;
-    color: #ffffff;
-    font-size: 10px;
-    padding: 5px;
-}
+/*#map-controls3 {*/
+/*    width: auto;*/
+/*    height: auto;*/
+/*    z-index: 100;*/
+/*    position: fixed;*/
+/*    bottom: 50px;*/
+/*    left: 10px;*/
+/*    color: #ffffff;*/
+/*    font-size: 10px;*/
+/*    padding: 5px;*/
+/*}*/
 
-#map-control-position {
-    position: relative;
-    float:left;
-    clear:left;
-    margin-left: 50px;
-    margin-bottom: 3px;
-}
+/*#map-control-position {*/
+/*    position: relative;*/
+/*    float:left;*/
+/*    clear:left;*/
+/*    margin-left: 50px;*/
+/*    margin-bottom: 3px;*/
+/*}*/
 
-#map-control-scalebar {
-    position: relative;
-    margin-left: 15px;
-    float:left;
-    clear:left;
-}
+/*#map-control-scalebar {*/
+/*    position: relative;*/
+/*    margin-left: 15px;*/
+/*    float:left;*/
+/*    clear:left;*/
+/*}*/
 
-#map-controls {
-    width: 450px;
-    height: 40px;
-    z-index: 100;
-    position: fixed;
-    bottom: 50px;
-    left: 50%;
-    margin-left: -225px;
-    color: #ffffff;
-    padding-top: 12px;
-    padding-left: 3px;
-}
+/*#map-controls {*/
+/*    width: 450px;*/
+/*    height: 40px;*/
+/*    z-index: 100;*/
+/*    position: fixed;*/
+/*    bottom: 50px;*/
+/*    left: 50%;*/
+/*    margin-left: -225px;*/
+/*    color: #ffffff;*/
+/*    padding-top: 12px;*/
+/*    padding-left: 3px;*/
+/*}*/
 
-.blackalpha60 {
-    /* Fallback for web browsers that doesn't support RGBa */
-    background: rgb(0, 0, 0);
-    /* RGBa with 0.6 opacity */
-    background: rgba(0, 0, 0, 0.6);
-    /* For IE 5.5 - 7*/
-    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000);
-    /* For IE 8*/
-    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000)";
-}
+/*.blackalpha60 {*/
+/*    !* Fallback for web browsers that doesn't support RGBa *!*/
+/*    background: rgb(0, 0, 0);*/
+/*    !* RGBa with 0.6 opacity *!*/
+/*    background: rgba(0, 0, 0, 0.6);*/
+/*    !* For IE 5.5 - 7*!*/
+/*    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000);*/
+/*    !* For IE 8*!*/
+/*    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000)";*/
+/*}*/
 
 #map-navigation {
     position: absolute;

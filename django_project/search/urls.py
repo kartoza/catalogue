@@ -1,6 +1,7 @@
 from django.conf.urls import url
+from django.views.decorators.csrf import csrf_exempt
 
-from .api import SearchRecordView, AddSearchRecordView
+from .api import SearchRecordView, AddSearchRecordView, SearchResultsResourceView
 from .views import (
     downloadSearchResult,
     downloadSearchResultMetadata,
@@ -23,6 +24,8 @@ urlpatterns = [
         name='submitSearch'),
     url(r'^upload_geo/$', upload_geo,
         name='upload_geo'),
-    url('api/searchrecords', AddSearchRecordView.as_view()),
-    url('api/searchrecords/<int:pk>', SearchRecordView.as_view()),
+    url(r'api/searchrecords', csrf_exempt(AddSearchRecordView.as_view())),
+    url(r'api/searchrecords/<int:pk>', SearchRecordView.as_view()),
+    url(r'api/search-results/(?P<guid>[a-h0-9\-]{36})/$', SearchResultsResourceView.as_view()),
+
 ]

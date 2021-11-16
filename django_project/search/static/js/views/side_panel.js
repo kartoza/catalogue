@@ -1,12 +1,11 @@
 define(['shared', 'backbone', 'underscore', 'jqueryUi', 'jquery'], function (Shared, Backbone, _, JqueryUI, $) {
     return Backbone.View.extend({
-        template: _.template($('#side-panel-template').html()),
+        template: _.template($('#side-result-panel').html()),
         className: 'panel-wrapper',
         rightPanel: null,
         returnButton: null,
         validationMode: false,
         siteDetailData: null,
-        apiParameters: _.template(Shared.SearchURLParametersTemplate),
         events: {
             'click .close-panel': 'closeSidePanel',
             'click .open-detailed-site-button' : 'openDetailedSiteButton',
@@ -40,7 +39,7 @@ define(['shared', 'backbone', 'underscore', 'jqueryUi', 'jquery'], function (Sha
             // $('#map-container').append(this.$el);
 
             // Hide the side panel
-            this.rightPanel = this.$el.find('.right-panel');
+            this.rightPanel = this.$el.find('.result-panel');
             this.returnButton = this.rightPanel.find('.return-panel');
 
             this.hideReturnButton();
@@ -53,27 +52,27 @@ define(['shared', 'backbone', 'underscore', 'jqueryUi', 'jquery'], function (Sha
             this.clearSidePanel();
             this.openSidePanel();
             this.switchToSearchResultPanel();
+            this.validateDataListView.delegateEvents();
+            this.$el.find('#content-panel').append(this.validateDataListView.render().$el);
+            this.validateDataListView.show();
+            this.validationMode = true;
         },
         closeValidateDataList: function () {
             this.closeSidePanel();
+            this.validateDataListView.close();
+            this.validationMode = false;
         },
         isSidePanelOpen: function () {
             return this.rightPanel.is(":visible");
         },
         openSidePanel: function (properties) {
-            if (this.validationMode) {
-                Shared.Dispatcher.trigger('mapControlPanel:validationClosed');
-                this.validationMode = false;
-            }
+
             Shared.SidePanelOpen = true;
-            Shared.Dispatcher.trigger('biodiversityLegend:moveLeft');
-            Shared.Dispatcher.trigger('bugReport:moveLeft');
             this.hideReturnButton();
-            $('#geocontext-information-container').hide();
             this.rightPanel.show('slide', {direction: 'right'}, 200);
             if (typeof properties !== 'undefined') {
                 this.clearSidePanel();
-                this.$el.find('.panel-loading').show();
+                // this.$el.find('.panel-loading').show();
                 this.updateSidePanelTitle('<i class="fa fa-map-marker"></i>Overview</span>');
                 if (properties.hasOwnProperty('location_type')) {
                     this.fillSidePanel(properties['location_type']);
@@ -164,6 +163,28 @@ define(['shared', 'backbone', 'underscore', 'jqueryUi', 'jquery'], function (Sha
             this.clearReturnButtonFunction();
             this.returnButton.hide();
         },
-
+        updateSiteDetailData: function (siteDetailData) {
+            this.siteDetailData = siteDetailData;
+        },
+        openDetailedSiteButton: function () {
+            if (this.siteDetailData) {
+                Shared.Dispatcher.trigger('map:showSiteDetailedDashboard', this.siteDetailData);
+            }
+        },
+        openFishDetailedSiteButton: function () {
+            filterParameters['modules'] = Shared.FishModuleID;
+            if (this.siteDetailData) {
+                Shared.Dispatcher.trigger('map:showSiteDetailedDashboard', this.siteDetailData);
+            }
+        },
+        openFishPanel: function () {
+            window.location.href = "/fish-form/?siteId=" + filterParameters['siteId'];
+        },
+        addSassPanel: function () {
+            window.location.href = "/sass/" + filterParameters['siteId'];
+        },
+        viewSassPanel: function () {
+            window.location.href = "/sass/dashboard/" + filterParameters['siteId'] + '/' + this.apiParameters(filterParameters);
+        }
     })
 });

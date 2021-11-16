@@ -70,11 +70,11 @@
     <div class="row">
     <div class="span12">
       <div class="centered">
-          <button onclick='location="{% url 'downloadClipGeometry' myOrder.id %}?shp";return false;'>SHP</button>
-          <button onclick='location="{% url 'downloadClipGeometry' myOrder.id %}?kml";return false;'>KML</button>
-          <button onclick='location="{% url 'downloadClipGeometry' myOrder.id %}?kmz";return false;'>KMZ</button>
-          <button onclick='location="{% url 'downloadOrderMetadata' myOrder.id %}";return false;'>XML metadata</button>
-          <button onclick='location="{% url 'downloadOrderMetadata' myOrder.id %}?html";return false;'>HTML metadata</button>
+          <button onclick='location="{% url 'download-clip-geometry' myOrder.id %}?shp";return false;'>SHP</button>
+          <button onclick='location="{% url 'download-clip-geometry' myOrder.id %}?kml";return false;'>KML</button>
+          <button onclick='location="{% url 'download-clip-geometry' myOrder.id %}?kmz";return false;'>KMZ</button>
+          <button onclick='location="{% url 'download-clip-geometry' myOrder.id %}";return false;'>XML metadata</button>
+          <button onclick='location="{% url 'download-clip-geometry' myOrder.id %}?html";return false;'>HTML metadata</button>
       </div>
     </div>
   </div>

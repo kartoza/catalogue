@@ -22,6 +22,10 @@ import logging
 from django.conf.urls import url
 from django.shortcuts import get_object_or_404
 from django.conf import settings
+from django.http import HttpResponse
+from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_exempt
+from rest_framework.generics import ListAPIView
 
 from tastypie import fields
 from tastypie.resources import ModelResource
@@ -34,12 +38,14 @@ from rest_framework.views import APIView
 from rest_framework import status
 from core.api_fields import ProductRelField
 
-from .models import Search, SearchRecord
-from .searcher import Searcher
-from .serializers import SearchRecordSerializer
+from search.models import Search, SearchRecord
+from search.searcher import Searcher
+from search.serializers import SearchRecordSerializer
 
 from catalogue.models import OpticalProduct
+from catalogue.serializers.product_serializer import OpticalProductSerializer
 
+from catalogue.limitoffset_pagination import LimitOffsetPagination
 
 logger = logging.getLogger(__name__)
 
@@ -156,6 +162,7 @@ class SearchRecordView(APIView):
 
 class AddSearchRecordView(APIView):
 
+    @method_decorator(csrf_exempt)
     def post(self, request, format=None):
         context = {
             "request": self.request,
@@ -165,3 +172,28 @@ class AddSearchRecordView(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class SearchResultsResourceView(ListAPIView):
+    serializer_class = OpticalProductSerializer
+    pagination_class = LimitOffsetPagination
+
+    def get_queryset(self):
+
+        search = get_object_or_404(Search, guid=self.kwargs.get('guid'))
+        result = Searcher(search)
+
+        try:
+            query_list = result.mQuerySet
+            return query_list
+
+            # serializer = OpticalProductSerializer(
+            #     queryset,
+            #     many=True)
+            # return Response(serializer.data)
+
+        except OpticalProduct.DoesNotExist:
+            return HttpResponse(
+                'Object Does Not Exist',
+                status=status.HTTP_400_BAD_REQUEST
+            )

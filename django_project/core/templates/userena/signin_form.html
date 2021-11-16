@@ -1,11 +1,24 @@
 {% extends 'userena/base_userena.html' %}
+{% load staticfiles %}
 {% load i18n %}
 
-{% block title %}{% trans "Sign In" %}{% endblock %}
+{% block title %}{% trans "Login" %}{% endblock %}
 
 {% block extrajs %}
+
+    <script src="{% static "js/libs/jquery/jquery-3.6.0.min.js" %}"></script>
+    <script src="{% static "js/libs/bootstrap-5.0.2/js/bootstrap.bundle.min.js" %}"></script>
+    <script src="{% static "js/libs/jquery-ui-1.12.1/jquery-ui.min.js" %}"></script>
+
+    <script src="{% static 'js/form.js' %}"></script>
+
 {{ block.super }}
 <script type="text/javascript">
+    $(document).ready(function () {
+            $('input[id=id_password]').parent().append('' +
+                '<div class="pull-right forgot-password" style="font-size: 12px;color: #3a3a3a">' +
+                '<a href="{% url 'userena_password_reset' %}">{% trans "Forgot Password" %}</a></div>')
+        })
 $(function() {
   $("input[type='text'], input[type='password']").addClass("text");
   $("#id_identification").focus();
@@ -21,12 +34,14 @@ $(function() {
 </script>
 {% endblock %}
 
-{% block content %}
-<div id="content" class="row-fluid center">
-  <form id="login-form" class="span6 form-horizontal" method="post" accept-charset="utf-8">
-  {% csrf_token %}
-  <fieldset>
-    <legend>{% trans "User Sign In" %}</legend>
+<div class="content" style="height: 100%;">
+    {% block content %}
+    <div class="container" style="height: 100%;">
+    <div class="custom-form-container" style="margin-top: 40px;">
+        <h1>{% trans "LOG IN" %}</h1>
+        <form class="form-horizontal span6" action="" method="post" accept-charset="utf-8">
+      {% csrf_token %}
+      <fieldset>
       <div class="control-group">
         <label class="control-label" for="id_identification">{% trans "Username" %}</label>
         <div class="controls">
@@ -52,23 +67,18 @@ $(function() {
       {% endif %}
     </fieldset>
     <div class="control-group">
-      <div class="controls">
-        <input class="btn btn-success" type="submit" value="{% trans 'Login' %}" />
+      <div class="controls" style="text-align: center; margin-top: 15px">
+        <input class="btn" id="account-btn" type="submit" value="{% trans 'Login' %}" />
       </div>
     </div>
     {% if next %}<input type="hidden" name="next" value="{{ next }}" />{% endif %}
 </form>
-<div id="login-extras" class="span6 gap-top">
-  <p class="lead">
-    If you do not already have a user account, you'll need to register before you can access the catalogue.
-  </p>
-  {# http://code.djangoproject.com/ticket/7239 #}
-  <a class="btn btn-success" href="{% url 'userena_signup' %}">
-    {% trans "Sign up!" %}
-  </a>
-  <a class="btn btn-info" href="{% url 'userena_password_reset' %}">
-    {% trans "Lost Your Password?" %}
-  </a>
-</div>
+<div class="login-help" style="padding-top: 30px">
+                            <p>If you have not created an account yet, then please
+                                <a href="{% url 'userena_signup' %}">sign up</a> first.</p>
+                        </div>
 </div>
 {% endblock %}
+
+
+

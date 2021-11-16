@@ -3,17 +3,16 @@ define([
     'underscore',
     'shared',
     'jquery',
-    'views/cart_item_collection',
-], function (Backbone,_, Shared, $, Cart){
+    'collections/cart_item',
+], function (Backbone,_, Shared, $, CartItemCollection){
     return Backbone.View.extend({
-    tagName: 'div',
     selectedFeatureID: '',
-    modal: $('#ajax-modal'),
+    // modal: $('#ajax-modal'),
     // snap: Snap('#svg'),
     events: {
-        'click span.metadata-button': 'showMetadata',
-        'click span.cart-button': 'addToCart',
-        'click span.cart-remove-button': 'removeFromCart',
+        'click .metadata-button': 'showMetadata',
+        'click .cart-button': 'addToCart',
+        'click .cart-remove-button': 'removeFromCart',
         'click': 'highlightResultItem',
         'click img': 'imagePopover',
         'mouseenter': 'focusItem',
@@ -52,14 +51,14 @@ define([
     focusItem: function() {
         const selectedID = this.model.get('original_product_id');
         const pos2 = $("#result_item_" + selectedID).offset();
-        const targetFeature = searchLayer.getFeatureElementRecordId(selectedID);
-        if (targetFeature.onScreen()) {
-            const point = targetFeature.geometry.getCentroid();
-            const pos = myMap.map.getPixelFromLonLat(new OpenLayers.LonLat(point.x, point.y));
-            // this.line = this.snap.line(pos.x, pos.y + 35, pos2.left+2, pos2.top+9);
-            this.line.animate({stroke: "#2f96b4", strokeWidth: "4"}, 500);
-        }
-        Shared.Dispatcher.trigger('focusFeature', {'original_product_id': selectedID});
+        // const targetFeature = searchLayer.getFeatureElementRecordId(selectedID);
+        // if (targetFeature.onScreen()) {
+        //     const point = targetFeature.geometry.getCentroid();
+        //     const pos = myMap.map.getPixelFromLonLat(new OpenLayers.LonLat(point.x, point.y));
+        //     // this.line = this.snap.line(pos.x, pos.y + 35, pos2.left+2, pos2.top+9);
+        //     this.line.animate({stroke: "#2f96b4", strokeWidth: "4"}, 500);
+        // }
+        Shared.Dispatcher.trigger('layer:focusFeature', selectedID);
     },
 
     blurItem: function() {
@@ -68,7 +67,7 @@ define([
         if (this.selectedFeatureID == selectedID) {
             Shared.Dispatcher.trigger('highlightSearchRecord', {'original_product_id': selectedID, 'zoom': false});
         } else {
-            Shared.Dispatcher.trigger('removeFocusFeature', {'original_product_id': selectedID});
+            Shared.Dispatcher.trigger('layer:removeFocusFeature', selectedID);
         }
     },
 
@@ -101,26 +100,39 @@ define([
     },
 
     showMetadata: function(event) {
-        var id = this.model.get('id');
-        this.modal.load('/metadata/'+id, '', function(){
-            this.modal.modal();
+        const id = this.model.get('id');
+        // $('#ajax-modal').load('/metadata/'+id, '', function(){
+        //     $('#ajax-modal').modal();
+        // });
+        const url = '/metadata/' + id;
+        $.ajax({
+            type: 'GET',
+            url: url,
+            success: function (output) {
+                console.log(output);
+                $("#product-metadata").html(output).show();//now its working
+            },
+            error: function(output){
+            alert("fail");
+            }
         });
         event.stopPropagation();
     },
     addToCart: function(event) {
         if (UserLoged) {
             const id = this.model.get('id');
-            var exist = Cart.filter(function(item) {
+            const cart = new CartItemCollection()
+            const exist = cart.filter(function(item) {
                 return item.get("product").id == id;
             });
             if (exist.length > 0) {
                 alert('Product already in cart!');
             } else {
-                Cart.create({'product':id},{wait: true});
+                cart.create({'product':id},{wait: true});
                 Shared.Dispatcher.trigger('colorCartFeature', {'original_product_id': this.model.get('original_product_id')});
                 $("#result_item_"+ this.model.get('original_product_id')).addClass('cartResultRow');
-                $("#result_item_"+ this.model.get('original_product_id')).children('.cart-remove-button').removeClass('hide');
-                $("#result_item_"+ this.model.get('original_product_id')).children('.cart-button').addClass('hide');
+                $("#result_item_"+ this.model.get('original_product_id')).children('.cart-remove-button').show();
+                $("#result_item_"+ this.model.get('original_product_id')).children('.cart-button').hide();
             }
             showButtonSubPanel();
         } else {
@@ -143,7 +155,32 @@ define([
     },
 
     render: function() {
-       $(this.el).html(_.template(template, {model:this.model}));
+        const template = _.template([
+            '<div class="result-item" id="result_item_<%= model.get("original_product_id") %>">',
+            '<div class="result-image-thumb">',
+            '<img class="result-img" style="float: left" src="/thumbnail/<%= model.get("id") %>/mini/" />',
+            '</div>',
+            '<div class="result-item-info">',
+            '<div class="result-item-info-name">',
+            '<p><%= model.get("product_name") %></p>',
+            '</div>',
+            '<div class="result-item-info-date">',
+            '<p><%= model.get("product_date") %></p>',
+            '</div>',
+            '<div class="cloud-cover"><p>',
+            '<% if(model.get("cloud_cover") != -1) { %><%= model.get("cloud_cover") %>%',
+            '<% } else { %>UNK',
+            '<% } %>',
+            '</p></div>',
+            '</div>',
+            '<div class="button-action">',
+            '<span class="button metadata-button btn btn-default" data-title="View Metadata"><i class="icon-list-alt"></i></span>',
+            '<span class="button cart-button btn btn-default" data-title="Add to Cart"><i class="icon-shopping-cart"></i></span>',
+            '<span class="button cart-remove-button btn btn-danger" style="display: none" data-title="Remove From Cart"><i class="fa fa-trash"></i></span>',
+            '</div>',
+            '</div>'
+        ].join(''))
+       $(this.el).html(template({"model":this.model}));
         return this;
     },
 });

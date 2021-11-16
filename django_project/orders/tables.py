@@ -35,6 +35,6 @@ class OrderListTable(tables.Table):
         :param record: The Order object rendered in this row
         """
         return mark_safe(
-            '<a href="/vieworder/%s/"><i class="icon-search"></i></a>'
+            '<a href="/order/%s/"><i class="icon-search"></i></a>'
             % record.id
         )

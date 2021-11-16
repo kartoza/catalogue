@@ -50,7 +50,7 @@
 <body>
     <!-- Content for Static Frame 'header_frame' -->
     <header>
-        <img src="{{ 'sansa-logos/SANSA-logo.png' | local_static_filepath }}" />
+        <img src="{% static "/sansa-logos/SANSA-logo.png"%}" />
         <table >
             <tr><td class="bold">SANSA Earth Observation Online Catalogue</td></tr>
             <tr><td><a href="http://catalogue.sansa.org.za">http://catalogue.sansa.org.za</a></td></tr>
@@ -61,7 +61,7 @@
     <section>
         <div class="date"><span>{% now "F j, Y" %}</span></div>
     </section>
-    <section id="container">
+    <section id="container">p
         <div id="title" class="bold">{% block title %} Page title {% endblock %}</div>
         <div id="content">
         {% block content %}

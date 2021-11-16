@@ -1,472 +1,101 @@
 <script type="text/html" id="map-search-container">
-    <div class="map-search-box map-control-panel-box">
+    <div class="map-search-box map-control-panel-box" style="height:100%">
         <div class="row search-header-row">
             <div class="col-lg-12" style="padding-right: 0">
-                <div class="close-button search-reset pull-left"
-                     data-toggle="tooltip" data-placement="top"
-                     data-original-title="Reset">
-                    <img class="close-icon" src="/static/img/reset.svg">
-                </div>
-                <span class="title">
-                        SEARCH
-                    </span>
+                <span class="title">Parameters</span>
                 <div class="close-button map-search-close pull-right">
-                    <img class="close-icon" src="/static/img/close_icon.svg">
                 </div>
             </div>
         </div>
-        <div class="row search-box-row">
-            <div class="search-box">
-                <div class="container-1">
-                    <input type="search" id="search"
-                           placeholder="Search..."><span class="search-arrow"><i
-                        class="fa fa-angle-right"></i></span>
+        <div id="search-panel">
+        <div id="search-panel-content" class="well well-small" style="margin-bottom: 10px; margin-top: 70px">
+          <form id="catalogueSearch" action="{% url 'submitSearch' %}" class="accordion">
+            {% csrf_token %}
+            {{ searchform.geometry }}
+            {{ searchform.selected_sensors }}
+              <div class="parameter-item">
+                  <h2 class="parameter-item-header">Satellites</h2>
+                  <div class="listTree" id="listTree"></div>
+              </div>
+              <div class="parameter-item">
+                    <h2 class="parameter-item-header" >Date Ranges</h2>
+                    {% include 'search_form/date-range-content.html' %}
+              </div>
+              <div class="accordion">
+                  <div class="accordion-item">
+                      <h2 class="accordion-header" id="panelsStayOpen-headingThree">
+                          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                  data-bs-target="#panelsStayOpen-collapseThree"
+                                  aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">Define Search Area
+                          </button>
+                      </h2>
+                      {% include 'search_form/area-content.html' %}
+                  </div>
+                  <div class="accordion-item">
+                      <h2 class="accordion-header" id="panelsStayOpen-headingFour">
+                          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                  data-bs-target="#panelsStayOpen-collapseFour"
+                                  aria-expanded="false" aria-controls="panelsStayOpen-collapseFour">Set Cloud Cover Range
+                          </button>
+                      </h2>
+                      {% include 'search_form/cloud-cover-content.html' %}
+                </div>
+                  <div class="accordion-item">
+                      <h2 class="accordion-header" id="panelsStayOpen-headingFive">
+                          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                  data-bs-target="#panelsStayOpen-collapseFive"
+                                  aria-expanded="false" aria-controls="panelsStayOpen-collapseFive"> Other Options
+                          </button>
+                      </h2>
+                      {% include 'search_form/other-option-content.html' %}
                 </div>
             </div>
-            <div id="search-error-text">Minimal 3 characters or empty.</div>
+          </form>
         </div>
-        <div class="row filter-header-row">
-            <div class="col-lg-12 search-info">
-                Refine your search by using the filters below.
-            </div>
-        </div>
+        <div id="search-summary-container" class="well well-small" style="margin-bottom: 10px; width: 100%">
+          <div id="search-buttons" class="text-center">
 
-        <div class="row">
-            <div class="col-lg-12 map-filter-title">
-                FILTERS
-            </div>
-        </div>
-
-        {% if bims_preferences.enable_module_filter %}
-            <div class="row sub-filter">
-                <div class="col-lg-12 subtitle">
-                    MODULE <i
-                        class="fa fa-angle-up pull-right filter-icon-arrow"></i><i
-                        class="fa fa-angle-down pull-right filter-icon-arrow"></i>
-                </div>
-            </div>
-            <div style="display: none;"
-                 data-toggle="tooltip" data-placement="top" class="module-filters-wrapper">
-                <div class="module-filters row"></div>
-                <hr class="module-hr"/>
-                <div class="form-check module-checkbox-wrapper">
-                    <input type="checkbox" class="form-check-input" id="abiotic-data-filter">
-                    <label class="form-check-label" for="abiotic-data-filter">Abiotic Data</label>
-                </div>
-                <div class="button-filter-wrapper button-filter-module">
-                    <button class="apply-filter"><i class="fa fa-check"
-                                                    aria-hidden="true"></i> Apply
-                    </button>
-                    <button class="clear-filter clear-filter-module"><i class="fa fa-times"
-                                                    aria-hidden="true"></i> Clear
-                    </button>
-                </div>
-            </div>
-        {% endif %}
-
-        <div class="source-collection-wrapper">
-        </div>
-
-        <div class="row sub-filter">
-            <div class="col-lg-12 subtitle">
-                VALIDATION STATUS <i
-                    class="fa fa-angle-up pull-right filter-icon-arrow"></i><i
-                    class="fa fa-angle-down pull-right filter-icon-arrow"></i>
-            </div>
-        </div>
-        <div class="row validation-filter-row" style="display: none">
-            <div class="col-lg-12 filter-content">
-                <div><input id="filter-validation-validated"
-                            name="filter-validation" type="checkbox"
-                            value="validated"> <label class="checkbox-label" for="filter-validation-validated">Validated</label>
-                </div>
-                <div><input id="filter-validation-non-validated" name="filter-validation" type="checkbox"
-                            value="non validated"> <label class="checkbox-label" for="filter-validation-non-validated">Non validated</label>
-                </div>
-                {% if preferences.SiteSetting.enable_sass %}
-                    <div>
-                        <input id="filter-validation-sass-acredited" name="filter-validation" type="checkbox"
-                            value="sass accredited">
-                        <label class="checkbox-label" for="filter-validation-sass-acredited">SASS Accredited</label>
-                    </div>
-                    <div>
-                        <input id="filter-validation-non-sass-acredited" name="filter-validation" type="checkbox"
-                            value="non sass accredited">
-                        <label class="checkbox-label" for="filter-validation-non-sass-acredited">Non SASS Accredited</label>
-                    </div>
-                {% endif %}
-            </div>
-
-            <div class="button-filter-wrapper">
-                <button class="apply-filter"><i class="fa fa-check"
-                                                aria-hidden="true"></i> Apply
-                </button>
-                <button class="clear-filter"><i class="fa fa-times"
-                                                aria-hidden="true"></i> Clear
-                </button>
-            </div>
-        </div>
-
-        <div class="row sub-filter">
-            <div class="col-lg-12 subtitle" id="date-filter-subtitle">
-                {{ date_title }} <i
-                    class="fa fa-angle-up pull-right filter-icon-arrow"></i><i
-                    class="fa fa-angle-down pull-right filter-icon-arrow"></i>
-            </div>
-        </div>
-        <div class="row temporal-scale-row" style="display: none">
-            <div class="slide-container" style="padding-bottom: 10px">
-                <div>YEAR</div>
-                <div class="year-indicator">
-                    <div id="year-from">1600</div>
-                    <div id="year-to">1800</div>
-                </div>
-                <div id="year-slider" class="noUiSlider"></div>
-                <div>MONTH</div>
-                <table id="month-selector" style="width:100%">
-                </table>
-                <button class="apply-filter"><i class="fa fa-check" aria-hidden="true"></i> Apply</button>
-                <button class="clear-filter"><i class="fa fa-times" aria-hidden="true"></i> Clear</button>
-            </div>
-        </div>
-
-        <div class="spatial-filter-wrapper"></div>
-
-        {% if use_ecological_condition and preferences.SiteSetting.enable_sass %}
-            <div class="row sub-filter">
-                <div class="col-lg-12 subtitle">
-                    ECOLOGICAL CATEGORY (SASS) <i
-                        class="fa fa-angle-up pull-right filter-icon-arrow"></i><i
-                        class="fa fa-angle-down pull-right filter-icon-arrow"></i>
-                </div>
-            </div>
-            <div class="row ecological-condition" style="display: none;"
-                 data-toggle="tooltip" data-placement="top">
-                <div class="row col-lg-12">
-                    <div class="col-lg-4 neutral ecological-condition-item" data-category="A" data-toggle="popover" data-placement="top" data-trigger="hover" data-content="Unmodified natural">
-                        Natural (N)
-                    </div>
-                    <div class="col-lg-4 good ecological-condition-item" data-category="B"  data-toggle="popover" data-placement="top" data-trigger="hover" data-content="Largely natural with few modifications">
-                        Good (G)
-                    </div>
-                    <div class="col-lg-4 fair ecological-condition-item" data-category="C" data-toggle="popover" data-placement="top" data-trigger="hover" data-content="Moderately modified">
-                        Fair (F)
-                    </div>
-                </div>
-                <div class="row col-lg-12">
-                    <div class="col-lg-6 poor ecological-condition-item" data-category="D" style="font-size: 9pt" data-toggle="popover" data-placement="top" data-trigger="hover" data-content="Largely modified">
-                        Poor (P)
-                    </div>
-                    <div class="col-lg-6 seriously-modified ecological-condition-item" data-category="E" style="font-size: 9pt" data-toggle="popover" data-placement="top" data-trigger="hover" data-content="Seriously modified (S)/Critically or extremely modified (CM)">
-                        Seriously/Critically Modified (S/CM)
-                    </div>
-                </div>
-                <div class="button-filter-wrapper">
-                <button class="apply-filter"><i class="fa fa-check"
-                                                aria-hidden="true"></i> Apply
-                </button>
-                <button class="clear-filter"><i class="fa fa-times"
-                                                aria-hidden="true"></i> Clear
-                </button>
-            </div>
-            </div>
-        {% endif %}
-
-          <div class="row sub-filter">
-            <div class="col-lg-12 subtitle">
-                ORIGIN AND ENDEMISM<i
-                    class="fa fa-angle-up pull-right filter-icon-arrow"></i><i
-                    class="fa fa-angle-down pull-right filter-icon-arrow"></i>
-            </div>
-        </div>
-        <div class="row" style="display: none" id="origin-filter-wrapper">
-                <div class="btn-group-wrapper text-center">
-                <input class="origin-checkbox" type="checkbox" value="alien" name="category-value" style="display: none" id="alien"/>
-                <input class="origin-checkbox" type="checkbox" value="indigenous" name="category-value" style="display: none" id="indigenous"/>
-                <input class="origin-checkbox" type="checkbox" value="translocated" name="category-value" style="display: none" id="translocated"/>
-                <div class="smaller-font btn-group btn-group-sm">
-                    <button id="non-native-origin-btn" type="button" class="btn origin-btn btn-secondary">Non-Native</button>
-                </div>
-                <div class="smaller-font btn-group btn-group-sm" role="group" aria-label="First group">
-                    <button id="native-origin-btn" type="button" class="btn origin-btn btn-secondary dropdown-toggle" data-origin="indigenous" data-toggle="dropdown">Native</button>
-                    <div class="native-origin-dropdown dropdown-menu origin-menu" aria-labelledby="native-origin-btn">
-                        <div class="dropdown-item endemic-dropdown-item" data-endemic-value="all-endemic"><input id="all-endemic-checkbox" class="endemic-checkbox" type="checkbox"> All native </div>
-                    </div>
-                </div>
-                </div>
-            <div class="col-lg-12 filter-content" id="filter-category">
-            </div>
-            <div class="button-filter-wrapper">
-                <button class="apply-filter"><i class="fa fa-check" aria-hidden="true"></i> Apply</button>
-                <button class="clear-filter clear-origin-filter"><i class="fa fa-times" aria-hidden="true"></i> Clear</button>
-            </div>
-        </div>
-
-        {% if use_conservation_status %}
-            <div class="row sub-filter">
-                <div class="col-lg-12 subtitle">
-                    CONSERVATION STATUS <i
-                        class="fa fa-angle-up pull-right filter-icon-arrow"></i><i
-                        class="fa fa-angle-down pull-right filter-icon-arrow"></i>
-                </div>
-            </div>
-            <div class="row conservation-status-row" style="display: none">
-                <div class="col-lg-12 filter-content conservation-status-wrapper form-group">
-                    {% for status_data in conservation_status_data %}
-                        <div>
-                            <input type="checkbox" id="conservation-status-{{ status_data.status }}" value="{{ status_data.status }}">
-                            <label for="conservation-status-{{ status_data.status }}" data-toggle="popover"
-                                data-placement="top" data-container="#map-container" data-trigger="hover" data-content="{{ status_data.desc }}">{{ status_data.name }}</label>
-                        </div>
-                    {% endfor %}
-                </div>
-                <div class="button-filter-wrapper">
-                    <button class="apply-filter"><i class="fa fa-check" aria-hidden="true"></i> Apply</button>
-                    <button class="clear-filter clear-conservation-filter"><i class="fa fa-times" aria-hidden="true"></i> Clear
-                    </button>
-                </div>
-                <div class="small-space"></div>
-            </div>
-        {% endif %}
-
-        <div class="reference-category-wrapper"></div>
-
-        <div class="study-reference-wrapper">
-            <div class="row sub-filter">
-                <div class="col-lg-12 subtitle">
-                    STUDY REFERENCE <i
-                        class="fa fa-angle-up pull-right filter-icon-arrow"></i><i
-                        class="fa fa-angle-down pull-right filter-icon-arrow"></i>
-                </div>
-            </div>
-            <div class="row filter-study-reference-row" style="display: none">
-                <div class="chosen-wrapper">
-                    <select data-placeholder="Choose a reference..."
-                        id="filter-study-reference"
-                        multiple>
-                    </select>
-                </div>
-                <div class="button-filter-wrapper">
-                    <button class="apply-filter"><i class="fa fa-check" aria-hidden="true"></i> Apply</button>
-                    <button class="clear-filter"><i class="fa fa-times" aria-hidden="true"></i> Clear</button>
-                </div>
-            </div>
-        </div>
-
-         {% if COLLECTOR_FILTER %}
-            <div class="row sub-filter">
-                <div class="col-lg-12 subtitle">
-                    OWNER <i
-                        class="fa fa-angle-up pull-right filter-icon-arrow"></i><i
-                        class="fa fa-angle-down pull-right filter-icon-arrow"></i>
-                </div>
-            </div>
-            <div class="row filter-collectors-row" style="display: none">
-                <div class="chosen-wrapper">
-                    <select data-placeholder="Choose a collector/assessor..."
-                        id="filter-collectors"
-                        multiple>
-                    </select>
-                </div>
-                <div class="button-filter-wrapper">
-                    <button class="apply-filter"><i class="fa fa-check" aria-hidden="true"></i> Apply</button>
-                    <button class="clear-filter"><i class="fa fa-times" aria-hidden="true"></i> Clear</button>
-                </div>
-            </div>
-        {% endif %}
-</script>
-
-
-<script type="text/html" id="source-collection-template">
-        <div class="source-collection-wrapper">
-            <div class="row sub-filter">
-                <div class="col-lg-12 subtitle">
-                     DATA SOURCES <i
-                        class="fa fa-angle-up pull-right filter-icon-arrow"></i><i
-                        class="fa fa-angle-down pull-right filter-icon-arrow"></i>
-                </div>
-            </div>
-            <div class="row" style="display: none">
-                <div class="col-lg-12 filter-content data-source-list">
-                </div>
-                <div class="button-filter-wrapper">
-                    <button class="apply-filter"><i class="fa fa-check" aria-hidden="true"></i> Apply</button>
-                    <button class="clear-filter"><i class="fa fa-times" aria-hidden="true"></i> Clear</button>
-                </div>
-            </div>
-        </div>
-</script>
-
-<script type="text/html" id="reference-category-template">
-    <div class="row sub-filter">
-        <div class="col-lg-12 subtitle">
-            REFERENCE CATEGORY <i
-                class="fa fa-angle-up pull-right filter-icon-arrow"></i><i
-                class="fa fa-angle-down pull-right filter-icon-arrow"></i>
+            <button id="reset-search-form" class="btn"
+                    data-toggle="tooltip" title="Reset Search Parameters"
+{#                    onclick="resetSearchForm()"#}
+                    data-placement="top" style="width: 45%; color: #1371a5; border-color: #1371a5">
+              <i class="icon-refresh"></i> RESET
+            </button>
+              <button id="search_button" class="btn"
+                    data-toggle="tooltip" title="Run Search"
+                    data-placement="top" style="width: 45%; background-color: #1371a5; color: #FFFFFF">
+              <i class="icon-play"></i> APPLY
+            </button>
+{#            <button id="search-panel-help-button"#}
+{#                    class="btn btn-info"#}
+{#                    data-toggle="tooltip" title="Search Help"#}
+{#                    data-placement="top">#}
+{#              <i class="icon-question-sign"></i>#}
+{#            </button>#}
+{#            <button id="SearchShare"#}
+{#                 data-toggle="tooltip" title="Search Permalink"#}
+{#                 data-placement="top"#}
+{#                 class="btn btn-info">#}
+{#              <i class="icon-link"></i>#}
+{#            </button>#}
+          </div>
         </div>
     </div>
-    <div class="row" style="display: none">
-        <div class="col-lg-12 filter-content reference-category">
-        </div>
-        <div class="button-filter-wrapper">
-            <button class="apply-filter"><i class="fa fa-check" aria-hidden="true"></i> Apply</button>
-            <button class="clear-filter"><i class="fa fa-times" aria-hidden="true"></i> Clear</button>
-        </div>
     </div>
 </script>
-
-<script type="text/html" id="map-search-result-template">
-    <div class="map-search-box map-control-panel-box map-search-result">
-        <div class="row">
-            <div class="col-lg-12" style="padding-right: 0">
-                    <span class="title">
-                        SEARCH RESULT
-                    </span>
-                <div class="close-button map-result-close pull-right">
-                    <img class="close-icon" src="/static/img/close_icon.svg">
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="search-box">
-            </div>
-        </div>
-        <div class="row sortby-wrapper form-group">
-            <select class="form-control" id="sortby-select">
-                <option value="name">Name : Ascending</option>
-                <option value="-name">Name : Descending</option>
-                <option value="-total">Occurrences : High to low</option>
-                <option value="total">Occurrences : Low to high</option>
-                <option value="-total_survey">Site Visits : High to low</option>
-                <option value="total_survey">Site Visits : Low to high</option>
-            </select>
-        </div>
-        <div class="row" style="margin-top: 10px; margin-bottom: 12px">
-            <div class="col-lg-12 search-info">
-                Select an item to find more detailed information.
-            </div>
-        </div>
-        <div id="search-result-content" class="noselect">
-        </div>
-    </div>
-</script>
-
-<script type="text/html" id="lasso-control-panel-template">
-    {# lasso control container #}
-    <div id="merge-sites-modal" class="modal" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Merge Sites</h5>
-                    <button type="button"
-                            class="close close-upload-boundary-modal"
-                            data-dismiss="modal"
-                            aria-label="Close">
-                        <img class="close-icon"
-                             src="/static/img/close_icon.svg">
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Primary Site</label>
-                        <select class="form-control" id="sites-selection">
-                        </select>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <div class="btn btn-primary" style="width: 100%" id="merge-site-btn">Merge</div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="lasso-control-container map-control-panel-box">
-        <div class="row">
-            <div class="col-md-12" style="padding-right: 0">
-                <span class="title">
-                    LASSO CONTROL
-                </span>
-                <div class="close-button lasso-control-close pull-right">
-                    <img class="close-icon" src="/static/img/close_icon.svg">
-                </div>
-            </div>
-        </div>
-        <div class="row content" style="border-top: 1px solid darkgray; margin-top: 3px">
-            <ul id="lasso-options" style="width:100%">
-                <li class="polygonal-lasso-tool">
-                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Draw a Polygon
-                </li>
-                <li class="update-search disabled">
-                    <i class="fa fa-search-plus" aria-hidden="true"></i> Update Search
-                </li>
-                <li class="clear-lasso disabled">
-                    <i class="fa fa-eraser" aria-hidden="true"></i> Clear Polygon
-                </li>
-                <li class="merge-sites disabled" style="height: 55px; display: none">
-                    <i class="fa fa-compress" aria-hidden="true"></i> Merge Sites <br/><span class="text-muted" style="font-size: 0.8em; padding-left: 1.4em;">Min Sites = 2, Max Sites = 10</span>
-                </li>
-            </ul>
-        </div>
-    </div>
-</script>
-
 
 <script type="text/html" id="map-control-panel">
     <div id="map-control-panel-element" class="map-control-panel">
-        <div id="search-control" class="search-control sub-control-panel"
-        data-toggle="popover"
-             data-placement="right" data-trigger="hover" data-content="Search">
-            <i class="fa fa-search" aria-hidden="true"></i>
+        <div id="zoom-control" class="zoom-control">
+            <div class="sub-control-panel sub-zoom-control zoom-out"><i class="fa fa-plus" aria-hidden="false"></i>
+            </div>
+            <div class="sub-control-panel sub-zoom-control zoom-in"><i class="fa fa-minus" aria-hidden="false"></i>
+            </div>
         </div>
-        <div id="lasso-control" class="lasso-control sub-control-panel"
-        data-toggle="popover"
+        <div id="lasso-control" class="lasso-control sub-control-panel polygonal-lasso-tool"
              data-placement="right" data-trigger="hover" data-content="Draw Polygon">
-            <i class="fa fa-object-group" aria-hidden="true"></i>
+            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
         </div>
-        <div id="filter-control" class="filter-control sub-control-panel"
-        data-toggle="popover"
-             data-placement="right" data-trigger="hover"
-             data-content="Layer Selector">
-            <i class="fa fa-map" aria-hidden="true"></i>
-        </div>
-        {% if preferences.SiteSetting.show_third_party_layer %}
-        <div id="third-party-layer-control" class="third-party-layer-control sub-control-panel"
-        data-toggle="popover"
-             data-placement="right" data-trigger="hover"
-             data-content="Third-party Layer Selector">
-            <i class="fa fa-map-o" aria-hidden="true"></i>
-        </div>
-        {% endif %}
-        <div id="locate-control" class="locate-control sub-control-panel"
-        data-toggle="popover"
-             data-placement="right" data-trigger="hover"
-             data-content="Locate Options">
-            <i class="fa fa-location-arrow" aria-hidden="true"></i>
-        </div>
-{# COMMENTED FOR NOW #}
-{#        {% if user.is_authenticated %}#}
-{#            {% if perms.bims.can_upload_csv or perms.bims.can_add_single_occurrence %}#}
-{#                <div class="upload-data sub-control-panel" data-toggle="popover"#}
-{#                     data-placement="right" data-trigger="hover"#}
-{#                     data-content="Capture Single Occurrence">#}
-{#                    <i class="fa fa-crosshairs" aria-hidden="true"></i>#}
-{#                </div>#}
-{#            {% endif %}#}
-{#        {% endif %}#}
-{#        {% if can_validate %}#}
-{#            <div class="validate-data sub-control-panel" data-toggle="popover"#}
-{#                 data-placement="right" data-trigger="hover"#}
-{#                 data-content="Validate Data">#}
-{#                <i class="fa fa-check" aria-hidden="true"></i>#}
-{#            </div>#}
-{#        {% endif %}#}
-        {% if bims_preferences.enable_download_data_from_map %}
-        <div id="download-control" class="download-control sub-control-panel"
-        data-toggle="popover"
-             data-placement="right" data-trigger="hover"
-             data-content="Download Data">
-            <i class="fa fa-download" aria-hidden="true"></i>
-        </div>
-        {% endif %}
         <div id="print-control" class="print-map-control sub-control-panel"
              data-toggle="popover"
              data-placement="right" data-trigger="hover"
@@ -479,178 +108,5 @@
              data-content="No filters applied">
             <i class="fa fa-link" aria-hidden="true"></i>
         </div>
-    </div>
-    <div id="zoom-control" class="zoom-control row">
-        <div class="col-lg-6 sub-zoom-control zoom-out"><i class="fa fa-plus"
-                                                           aria-hidden="true"></i>
-        </div>
-        <div class="col-lg-6 sub-zoom-control zoom-in"><i class="fa fa-minus"
-                                                          aria-hidden="true"></i>
-        </div>
-    </div>
-
-    {# layers selector container #}
-    <div class="layers-selector-container
-         map-control-panel-box">
-        <div class="row">
-            <div class="col-lg-12" style="padding-right: 0">
-                    <span class="title">
-                        LAYER SELECTOR
-                    </span>
-                <div class="layers-selector-container-close close-button pull-right">
-                    <img class="close-icon" src="/static/img/close_icon.svg">
-                </div>
-            </div>
-        </div>
-        <div class="row content">
-            <div class="input-group layer-selector-search-input">
-                <input type="text" class="form-control" placeholder="Search"
-                       id="layer-selector-search">
-            </div>
-            <ul id="layers-selector" style="width:100%">
-            </ul>
-        </div>
-    </div>
-    {# locate option container #}
-    <div id="locate-control" class="locate-options-container
-         map-control-panel-box">
-        <div class="row">
-            <div class="col-lg-12" style="padding-right: 0">
-                    <span class="title">
-                        LOCATE OPTIONS
-                    </span>
-                <div class="locate-options-container-close close-button pull-right">
-                    <img class="close-icon" src="/static/img/close_icon.svg">
-                </div>
-            </div>
-        </div>
-        <div class="row content">
-            <ul id="locate-options" style="width:100%">
-                <li class="locate-coordinates">
-                    Locate by Coordinate
-                </li>
-                <li class="locate-farm">
-                    Locate by Farm Portion Code
-                </li>
-            </ul>
-        </div>
-    </div>
-
-
-</script>
-
-<script type="text/html" id="download-control-panel">
-
-</script>
-
-
-
-
-<script type="text/template" id="search-result-sub-title">
-    <div class="search-result-sub-title search-results-total"
-         data-search-result-id="">
-        <%= name %>
-        <i class="pull-right"><span class="total-occurences"><%= count %></span>
-            occurrences</i>
-    </div>
-</script>
-
-<script type="text/template" id="search-catchment-area-template">
-    <div class="result-search" data-id="<%= id %>">
-        <p class="group-title"><%= name %></p>
-    </div>
-</script>
-
-<script type="text/template" id="search-result-dashboard-detail-template">
-    <div class="result-search" data-search-result-id="">
-        <p class="group-title"><%= name %></p>
-        <a class="group-description"><%= description %></a>
-    </div>
-</script>
-
-<script type="text/template" id="search-result-dashboard-origin-template">
-    <div class="result-search" data-search-result-id="">
-        <p class="group-title" style="margin-bottom: 10px"><%= name %></p>
-        <a class="group-description">
-            <div class="progress">
-                <div class="progress-text">Native</div>
-                <div class="progress-bar progress-native" role="progressbar"
-                     style="width: <%= nativeValue %>%"
-                     aria-valuenow="<%= nativeValue %>"
-                     aria-valuemin="0"
-                     aria-valuemax="100">
-                </div>
-            </div>
-            <div class="progress">
-                <div class="progress-text">Non-Native</div>
-                <div class="progress-bar progress-non-native" role="progressbar"
-                     style="width: <%= nonNativeValue %>%"
-                     aria-valuenow="<%= nonNativeValue %>"
-                     aria-valuemin="0"
-                     aria-valuemax="100">
-                </div>
-            </div>
-            <div class="progress">
-                <div class="progress-text">Translocated</div>
-                <div class="progress-bar progress-translocated"
-                     role="progressbar"
-                     style="width: <%= translocatedValue %>%"
-                     aria-valuenow="<%= translocatedValue %>"
-                     aria-valuemin="0"
-                     aria-valuemax="100">
-                </div>
-            </div>
-        </a>
-    </div>
-</script>
-
-<script type="text/template"
-        id="search-result-dashboard-richness-index-template">
-    <div class="result-search" data-search-result-id="">
-        <p class="group-title" style="margin-bottom: 10px"><%= name %></p>
-        <a class="group-description">
-            <div class="species-richness-text row">
-                <div class="col-lg-6">Species Richness</div>
-                <div class="col-lg-5">: <%= speciesRichness %></div>
-            </div>
-            <div class="species-richness-text row">
-                <div class="col-lg-6">Shanon Diversity</div>
-                <div class="col-lg-5">: <%= shanonDiversity %></div>
-            </div>
-            <div class="species-richness-text row">
-                <div class="col-lg-6">Simpson Diversity</div>
-                <div class="col-lg-5">: <%= simpsonDiversity %></div>
-            </div>
-        </a>
-    </div>
-</script>
-
-<script type="text/template" id="search-result-record-template">
-    <div class="result-search" data-search-result-id="">
-        <a href="#" id="<%= taxon_gbif_id %>">
-            <p class="group-title"><%= common_name %></p>
-        </a>
-        <a class="group-description"><%= count %> occurrences</a>
-    </div>
-</script>
-
-<script type="text/template" id="search-result-taxa-template">
-    <div class="result-search" data-search-result-id=""
-         data-taxon-id="<%= id %>">
-        <p class="group-title"><%= highlight %></p>
-        <a class="group-description"><%= count %> <% if (count.length > 1) { %> occurrences <% } else { %> occurrence <% } %> &bull; <%= survey %><% if (survey.length > 1) { %> visits <% } else { %> visit <% } %> </a>
-    </div>
-</script>
-
-<script type="text/template" id="search-result-site-template">
-    <div class="result-search" data-search-result-id="<%= id %>">
-        <p class="group-title"><%= name %></p>
-        <a class="group-description"><%= count %> <% if (count.length > 1) { %> occurrences <% } else { %> occurrence <% } %> &bull; <%= survey %><% if (survey.length > 1) { %> visits <% } else { %> visit <% } %> </a>
-    </div>
-</script>
-
-<script type="text/template" id="show-more-result-site-template">
-    <div class="show-more-button" data-search-result-id="">
-        <p class="group-title">Show More</p>
     </div>
 </script>

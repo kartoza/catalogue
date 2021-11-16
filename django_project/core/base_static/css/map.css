@@ -203,7 +203,7 @@
 /*}*/
 
 body {
-    font-family: "Roboto Condensed";
+    font-family: "Roboto Condensed", sans-serif;
 }
 
 #mainNav {
@@ -267,13 +267,6 @@ body {
     margin-right: 0 !important;
 }
 
-html, body, .map, .map-wrapper, #map-container {
-    margin: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-}
-
 #map-container {
     padding-top: 56px;
 }
@@ -288,22 +281,6 @@ html, body, .map, .map-wrapper, #map-container {
     min-width: 422px;
     pointer-events: none;
     padding-top: 56px;
-}
-
-.right-panel {
-    top: 0;
-    right: 0;
-    position: relative;
-    height: 100%;
-    min-width: 422px;
-    background: rgb(255, 255, 255);
-    color: #4e4e4e;
-    z-index: 2000;
-    -webkit-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.2); /* Safari 3-4, iOS 4.0.2 - 4.2, Android 2.3+ */
-    -moz-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.2); /* Firefox 3.5 - 3.6 */
-    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.2); /* Opera 10.5, IE 9, Firefox 4+, Chrome 6+, iOS 5 */
-    border-radius: 0;
-    pointer-events: auto;
 }
 
 .title-side-panel {
@@ -362,14 +339,14 @@ html, body, .map, .map-wrapper, #map-container {
     position: absolute;
     left: 0;
     top: 0;
-    margin-top: 90px;
+    margin-top: 70px;
     padding-left: 6px;
     padding-right: 6px;
     font-size: 18pt;
     text-align: center;
     color: #4e4e4e;
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.2);
-    margin-left: 31px;
+    margin-left: 350px;
     padding-top: 0;
     border-top: none;
     width: 54px;
@@ -488,19 +465,18 @@ html, body, .map, .map-wrapper, #map-container {
 }
 
 .map-control-panel-box {
-    width: 280px;
+    width: 350px;
     background-color: white;
     position: absolute;
     top: 0;
     color: black;
-    padding: 5px 15px 0;
+    padding: 15px 15px 0;
     border: none;
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.2);
     text-align: center;
     font-weight: normal;
     border-radius: 0;
-    margin-left: 85px;
-    margin-top: 60px;
+    margin-top: 30px;
     z-index: 100;
     overflow-y: auto;
     overflow-x: hidden;
@@ -542,7 +518,7 @@ html, body, .map, .map-wrapper, #map-container {
     padding-bottom: 5px;
     font-weight: bold;
     font-size: 15px;
-    font-family: "Roboto Condensed";
+    font-family: "Roboto Condensed", sans-serif;
 }
 
 #search-result-content .result-search {
@@ -565,7 +541,7 @@ html, body, .map, .map-wrapper, #map-container {
 }
 
 #search-result-content .search-results-section {
-    max-height: 275px;
+    max-height: 350px;
     overflow-y: visible;
 }
 
@@ -666,7 +642,7 @@ html, body, .map, .map-wrapper, #map-container {
 
 .map-control-panel-box ul {
     list-style-type: none;
-    padding: 5px;
+    padding: 5px 0px;
     margin-bottom: 0;
     display: block;
 }
@@ -757,8 +733,11 @@ html, body, .map, .map-wrapper, #map-container {
 }
 
 .map-control-panel-box .title {
-    font-size: 16pt;
-    line-height: 20px;
+    font-size: .875rem;
+    font-weight: 600;
+    line-height: 1.25rem;
+    text-transform: uppercase;
+    color: #525351;
 }
 
 .map-filter-title {
@@ -1089,7 +1068,7 @@ div:hover::-webkit-scrollbar {
     background-color: #f9f9f9;
     font-weight: 400;
     font-size: 16px;
-    font-family: "Roboto Condensed";
+    font-family: "Roboto Condensed", sans-serif;
 
 }
 
@@ -2708,43 +2687,6 @@ div:hover::-webkit-scrollbar {
     background-color: #3d647d;
 }
 
-.fbis-rpanel-block-text {
-    text-align: center;
-    width: 100%;
-    color: white;
-    font-family: "Roboto Condensed";
-    font-weight: 400;
-    margin-top: auto;
-    margin-bottom: auto;
-}
-
-.fbis-rpanel-block-dd .fbis-rpanel-block-text {
-    padding: 0.25rem;
-    padding-bottom: 0.25rem;
-    font-size: 0.75rem;
-    line-height: 1.5rem;
-}
-
-.flex-base-auto {
-    flex-basis: auto !important;
-}
-
-.iucn-species-page-link {
-    font-family: "Roboto Condensed";
-    font-size: 16px;
-    font-weight: 400;
-    text-decoration: underline;
-    color: var(--main-accent-color);
-    padding: 0.3rem;
-    padding-left: 10px;
-}
-
-#gbif-images-row {
-    padding: 0;
-    margin: 0;
-    z-index: -1;
-}
-
 #gbif-images-row .col-6 {
     padding: 0;
     margin: 0;
@@ -2885,14 +2827,6 @@ div:hover::-webkit-scrollbar {
     align-self: center;
 }
 
-#climate-data-wrapper .row {
-    border: 1px solid #d3d4d1;
-    background-color: #ebebeb;
-    font-family: "Roboto Condensed";
-    color: #4a4a4a;
-    font-size: 0.75rem;
-    line-height: 2rem;
-}
 
 #site-details-wrapper .row {
     font-size: 0.75rem;
@@ -3025,13 +2959,14 @@ div:hover::-webkit-scrollbar {
 }
 
 .search-header-row {
-    width: 280px;
+    width: 340px;
     z-index: 9999;
     position: fixed;
     background: white;
-    margin-top: -5px;
-    padding-top: 5px;
+    padding-top: 30px;
+    padding-bottom: 40px;
     height: 30px;
+    text-align: left;
 }
 
 .search-box-row {
@@ -3079,3 +3014,25 @@ div:hover::-webkit-scrollbar {
         max-width: 1140px !important;
     }
 }
+
+.parameter-item {
+    margin: 0;
+}
+.parameter-item-header {
+    font-size: .875rem;
+    line-height: 1.25rem;
+    text-align: left;
+    color: #525351;
+    text-transform: uppercase;
+    font-weight: 600;
+
+}
+
+.result-img {
+    width: 16px;
+    height: 16px;
+    position: absolute;
+    top: 6px;
+    right: 428px;
+}
+

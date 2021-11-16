@@ -1,6 +1,6 @@
-<script type='text/html' id='result-panel'>
-<div id="result-panel">
-        <div class="well well-small" style="height: 100%;">
+<script type='text/html' id='side-result-panel'>
+<div class="result-panel" style="display:table; height: 100%; width: 100%">
+        <div class="well well-small" style="display: table-row">
           <div class="navigation">
             <div id="searchPrev" class="btn searchPrev"
                  style="float:left; display: none;"
@@ -27,49 +27,63 @@
               <i class="icon-chevron-right"></i>
             </div>
           </div>
-          <div id="results-container"></div>
+          <div id="results-container" style="position: absolute; inset: 0px; overflow: scroll; margin-right: -12px; margin-bottom: -12px; height: 80%"></div>
         </div>
-        <div id="result-sub-panel" class="well well-small text-center">
-          <button id="result-panel-download-button"
-                  class="btn btn-info">
-            <i class="icon-download-alt"></i> Download Results Data
-          </button>
-          <a class="btn btn-info" onclick="addOrderClicked(); return false;" href="/addorder/">
+        <div id="result-sub-panel" class="well well-small text-center" style="height: 20%; display: table-row">
+          <div class="btn-group">
+              <button id="result-panel-download-button" type="button"
+                  class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <i class="icon-download-alt"></i> Download Results Data
+              </button>
+              <div class="dropdown-menu">
+                  <a class="dropdown-item" href="#" id="result-panel-download-button-shp">SHP</a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="#" id="result-panel-download-button-kml">KML</a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="#" id="result-panel-download-button-kmz">KMZ</a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="#" id="result-panel-download-button-xml">XML</a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="#" id="result-panel-download-button-htm">HTML</a>
+              </div>
+          </div>
+          <a class="btn btn-info" onclick="addOrderClicked(); return false;" href="/add-order/">
             <i class="icon-plane" href=""></i> Order Now!
           </a>
-          <div id="result-panel-btns">
-            <hr/>
-            <p>Please choose your download format</p>
-            <div class="btn-group">
-              <button id="result-panel-download-button-shp"
-                      class="btn btn-info" data-toggle="tooltip"
-                      data-title="Download as SHP"
-                      data-placement="top">SHP
-              </button>
-              <button id="result-panel-download-button-kml"
-                      class="btn btn-info" data-toggle="tooltip"
-                      data-title="Download as KML"
-                      data-placement="top">KML
-              </button>
-              <button id="result-panel-download-button-kmz"
-                      class="btn btn-info" data-toggle="tooltip"
-                      data-title="Download as KMZ"
-                      data-placement="top">KMZ
-              </button>
-              <button id="result-panel-download-button-xml"
-                      class="btn btn-info" data-toggle="tooltip"
-                      data-title="Download as XML"
-                      data-placement="top">XML
-              </button>
-              <button id="result-panel-download-button-htm"
-                      class="btn btn-info" data-toggle="tooltip"
-                      data-title="Download as HTM"
-                      data-placement="top">HTM
-              </button>
-            </div>
-          </div>
+{#          <div id="result-panel-btns" style="font-size: 10pt">#}
+{##}
+{#            <div class="btn-group">#}
+{#              <button id="result-panel-download-button-shp"#}
+{#                      class="btn btn-info" data-toggle="tooltip"#}
+{#                      data-title="Download as SHP"#}
+{#                      data-placement="top">SHP#}
+{#              </button>#}
+{#              <button id="result-panel-download-button-kml"#}
+{#                      class="btn btn-info" data-toggle="tooltip"#}
+{#                      data-title="Download as KML"#}
+{#                      data-placement="top">KML#}
+{#              </button>#}
+{#              <button id="result-panel-download-button-kmz"#}
+{#                      class="btn btn-info" data-toggle="tooltip"#}
+{#                      data-title="Download as KMZ"#}
+{#                      data-placement="top">KMZ#}
+{#              </button>#}
+{#              <button id="result-panel-download-button-xml"#}
+{#                      class="btn btn-info" data-toggle="tooltip"#}
+{#                      data-title="Download as XML"#}
+{#                      data-placement="top">XML#}
+{#              </button>#}
+{#              <button id="result-panel-download-button-htm"#}
+{#                      class="btn btn-info" data-toggle="tooltip"#}
+{#                      data-title="Download as HTM"#}
+{#                      data-placement="top">HTM#}
+{#              </button>#}
+{#            </div>#}
+{#          </div>#}
         </div>
       </div>
+<div id="product-metadata" class="modal hide"  role="dialog"></div>
+
 </script>
 
 <script type='text/html' id='panel-toggles'>

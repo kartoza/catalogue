@@ -14,7 +14,7 @@
               </li>
               {% if user.is_authenticated %}
               <li class="nav-item active">
-                <a href="{% url 'addOrder' %}">Order Now</a>
+                <a href="{% url 'add-order' %}">Order Now</a>
               </li>
               {% endif %}
               {% if not user.is_authenticated %}
@@ -72,8 +72,8 @@
         <a class="dropdown-toggle" href="#"  id="dropdownMenuLink"
            data-bs-toggle="dropdown" aria-expanded="false">Staff</a>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-          <a class="dropdown-item" href="{% url 'listOrders' %}">Orders List</a>
-          <a class="dropdown-item"  href="{% url 'addAdhocOrder' %}">Ad-hoc order</a>
+          <a class="dropdown-item" href="{% url 'list-orders' %}">Orders List</a>
+          <a class="dropdown-item"  href="{% url 'add-ad-hoc-order' %}">Ad-hoc order</a>
           <a class="dropdown-item" href="{% url 'recentSearches' %}">Searches Table</a>
           <a class="dropdown-item" href="{% url 'searchesMap' %}">Searches Map</a>
           <a class="dropdown-item" href="{% url 'visitorMap' %}">Vistor Map</a>
@@ -92,7 +92,7 @@
             {% include "useraccounts/menu_content.html" %}
           {% else %}
           <li class="nav-item active" >
-            <a id="login_link" href="{% url 'userena_signin' %}">Login</a>
+            <a id="login_link" href="{% url 'userena_signin' %}">Log in</a>
           </li>
           <li class="nav-item active">
             <a id="login_register" href="{% url 'userena_signup' %}">Sign Up</a>
