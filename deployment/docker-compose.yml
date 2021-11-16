@@ -198,7 +198,7 @@ services:
     image: geopython/pycsw
     environment:
       PYCSW_SERVER_URL: http://localhost:8000
-    volumes:x
+    volumes:
       - ./docker/pycsw.cfg:/etc/pycsw/pycsw.cfg
     ports:
       - "8000:8000"
