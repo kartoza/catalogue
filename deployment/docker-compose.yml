@@ -8,7 +8,7 @@
 
 # Our main nginx service - this is for testing only - normally
 # You would use a standalone nginx instance running on the host!
-version: "3.4"
+version: "3.8"
 services:
   nginx:
     # Note you cannot scale if you use conteiner_name
@@ -35,7 +35,7 @@ services:
   db:
     # Note you cannot scale if you use conteiner_name
     container_name: catalogue-db
-    image: kartoza/postgis:latest
+    image: kartoza/postgis:13
     volumes:
       - ./pg/postgres_data:/var/lib/postgresql
       - ./backups:/backups
@@ -193,3 +193,16 @@ services:
     environment:
       - CHECK_HOST=db
       - CHECK_PORT=5432
+  pycsw:
+    container_name: catalogue-pycsw
+    image: geopython/pycsw
+    environment:
+      PYCSW_SERVER_URL: http://localhost:8000
+    volumes:x
+      - ./docker/pycsw.cfg:/etc/pycsw/pycsw.cfg
+    ports:
+      - "8000:8000"
+
+
+
+
