@@ -43,6 +43,8 @@ services:
       - POSTGRES_USER=docker
       - POSTGRES_PASS=docker
       - ALLOW_IP_RANGE=0.0.0.0/0
+    links:
+      - pycsw:pycsw
     restart: on-failure:5
 
   rabbitmq:
