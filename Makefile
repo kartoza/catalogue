@@ -26,6 +26,9 @@ db_up:
 up: db_up  ## Bring the containers up
 	docker-compose up -d devweb
 
+prod_certs:
+	bash init-letsencrypt.sh
+
 production_up: db_up
 	docker-compose up -d web
 

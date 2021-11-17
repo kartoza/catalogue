@@ -142,17 +142,28 @@ services:
     container_name: catalogue-web
     image: nginx:1.21.3
     hostname: nginx
+    command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
     volumes:
       - ./sites-enabled:/etc/nginx/conf.d:ro
       # I dont use volumes_from as I want to use the ro modifier
       - ./static:/home/web/static:ro
       - ./media:/home/web/media:ro
       - ./logs:/var/log/nginx
+      - ./certbot/conf:/etc/letsencrypt
+      - ./certbot/www:/var/www/certbot
     links:
       - uwsgi:uwsgi
     ports:
-      - "80:8080"
+      - "80:80"
+      - "443:443"
     restart: on-failure:5
+
+  certbot:
+    image: certbot/certbot
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
+    volumes:
+      - ./data/certbot/conf:/etc/letsencrypt
+      - ./data/certbot/www:/var/www/certbot
 
   # This is the entry point for a development server.
   # Run with --no-deps to run attached to the services
