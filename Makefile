@@ -30,6 +30,7 @@ prod_certs:
 	bash init-letsencrypt.sh
 
 production_up: db_up
+	docker-compose up -d dbbackups
 	docker-compose up -d web
 
 down:  ## Bring down the containers
