@@ -2,14 +2,7 @@
 {% load staticfiles %}
 {% load i18n %}
 
-{% block extrajs %}
 
-    <script src="{% static "js/libs/jquery/jquery-3.6.0.min.js" %}"></script>
-    <script src="{% static "js/libs/bootstrap-5.0.2/js/bootstrap.bundle.min.js" %}"></script>
-    <script src="{% static "js/libs/jquery-ui-1.12.1/jquery-ui.min.js" %}"></script>
-    <script src="{% static 'js/form.js' %}"></script>
-
-{% endblock %}
 {% block title %}{% trans "Sign Up" %}{% endblock %}
 
 <div class="content" style="height: 100%;">
@@ -37,7 +30,7 @@
         {% endfor %}
       </fieldset>
       <div class="controls" style="text-align: center">
-      <input class="btn custom-form-submit"  id="account-btn" type="submit" value="{% trans "SIGN UP"%}" />
+      <input class="btn custom-form-submit sansa-blue-btn" style="width: 50%" type="submit" value="{% trans "SIGN UP"%}" />
       </div>
     </form>
     <div class="login-help">
