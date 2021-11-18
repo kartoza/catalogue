@@ -1,13 +1,11 @@
 {% extends "base-fluid.html" %}
 {% load staticfiles %}
 {% block extracss %}
-    <link href="{% static "js/libs/openlayers-6.5.0/ol.css" %}" rel="stylesheet">
     <link href="{% static "js/libs/ol-layerswitcher/ol3-layerswitcher.css" %}" rel="stylesheet">
     <link href="{% static "js/libs/jquery-ui-1.12.1/jquery-ui.min.css" %}" rel="stylesheet">
     <link href="{% static "js/libs/noUiSlider.15.2.0/nouislider.css" %}" rel="stylesheet">
     <link href="{% static "css/bootstrap-listTree.css" %}" rel="stylesheet">
     <link href="{% static "js/libs/jquery-datetimepicker/jquery.datetimepicker.css" %}" rel="stylesheet" type="text/css">
-    <link href="{% static "css/map.css" %}" rel="stylesheet">
 
     <style>
     html, body, .map, .map-wrapper, #map-container {
@@ -16,45 +14,6 @@
         height: 100%;
         overflow: hidden;
     }
-    .result-item {
-        width: 99%;
-        border: 1px solid rgb(210, 208, 206);
-        margin-bottom: 6px;
-        display: flex;
-    }
-
-    .result-image-thumb {
-        min-width: 100px;
-        min-height: 100px;
-        border-right: 1px solid rgb(243, 242, 241);
-        border-radius: 5px 0px 0px 3px;
-    }
-
-    .result-item-info {
-        width: 50%;
-        height: 100px;
-        flex-flow: column nowrap;
-        justify-content: space-evenly;
-        margin-left: 10px;
-    }
-    .result-item-info-name {
-        color: #1371a5;
-    }
-
-    .result-item-info-date {
-        margin-right: 50px;
-        float: left;
-    }
-
-    .button-action {
-        height: 50px;
-        margin-left: 50px;
-    }
-
-    .result-panel {
-        display: table;
-    }
-
     </style>
 {% endblock %}
 {% block content%}
@@ -113,6 +72,12 @@
             const UserLoged = false;
         {% endif %}
       const defaultBasemap = 'OpenStreetMap';
+      let history = false;
+      {% if mysearch %}
+      // set guid of loaded search
+      guid = '{{ mysearch.guid }}';
+      history = true
+    {% endif %}
 
     </script>
 {#  <script type="text/javascript" src="{% static 'js/backbone-pagination.js' %}"></script>#}
@@ -138,16 +103,7 @@
     // initialize layer that holds cart geometry
     {#searchCartLayer = new APP.SearchCartLayer(myMap);#}
     // check if we are opening existing search from history
-    {% if mysearch %}
-      // set guid of loaded search
-      guid = '{{ mysearch.guid }}';
-      // trigger load of search results
-      $APP.trigger('collectionSearch', {
-          offset: 0
-      });
-      // open panel with results (panel is hidden by default)
-      openResultPanel();
-    {% endif %}
+
     // activate tooltip for map control buttons
     $(".olButton").tooltip({"placement": "top"});
     // hide search share button and widget

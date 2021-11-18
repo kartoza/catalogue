@@ -1,6 +1,6 @@
 <script type='text/html' id='side-result-panel'>
-<div class="result-panel" style="display:table; height: 100%; width: 100%">
-        <div class="well well-small" style="display: table-row">
+<div class="result-panel row" style="--bs-gutter-x:0;--bs-gutter-y: 0;">
+        <div class="well well-small" style="height: 90%">
           <div class="navigation">
             <div id="searchPrev" class="btn searchPrev"
                  style="float:left; display: none;"
@@ -27,13 +27,14 @@
               <i class="icon-chevron-right"></i>
             </div>
           </div>
-          <div id="results-container" style="position: absolute; inset: 0px; overflow: scroll; margin-right: -12px; margin-bottom: -12px; height: 80%"></div>
+          <div id="results-container" style="position: absolute; inset: 0px; overflow-y: scroll; margin-right: -12px; margin-bottom: -12px; height: 90%"></div>
         </div>
-        <div id="result-sub-panel" class="well well-small text-center" style="height: 20%; display: table-row">
+        <hr>
+        <div id="result-sub-panel" class="well well-small text-center" style="height: 20%; margin-top: 15px; margin-right: -12px">
           <div class="btn-group">
               <button id="result-panel-download-button" type="button"
-                  class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  <i class="icon-download-alt"></i> Download Results Data
+                  class="btn dropdown-toggle sansa-white-btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                   Download Results Data
               </button>
               <div class="dropdown-menu">
                   <a class="dropdown-item" href="#" id="result-panel-download-button-shp">SHP</a>
@@ -47,8 +48,8 @@
                   <a class="dropdown-item" href="#" id="result-panel-download-button-htm">HTML</a>
               </div>
           </div>
-          <a class="btn btn-info" onclick="addOrderClicked(); return false;" href="/add-order/">
-            <i class="icon-plane" href=""></i> Order Now!
+          <a class="btn sansa-blue-btn" onclick="addOrderClicked(); return false;" href="/add-order/">
+             Order Now
           </a>
 {#          <div id="result-panel-btns" style="font-size: 10pt">#}
 {##}
@@ -82,7 +83,7 @@
 {#          </div>#}
         </div>
       </div>
-<div id="product-metadata" class="modal hide"  role="dialog"></div>
+<div id="product-metadata" class="modal hide product-metadata"  role="dialog" style="width: 500px; right: 0; z-index: 10000"></div>
 
 </script>
 

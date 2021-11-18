@@ -8,7 +8,7 @@
             </div>
         </div>
         <div id="search-panel">
-        <div id="search-panel-content" class="well well-small" style="margin-bottom: 10px; margin-top: 70px">
+        <div id="search-panel-content" class="well well-small" style="margin-bottom: 10px; margin-top: 40px">
           <form id="catalogueSearch" action="{% url 'submitSearch' %}" class="accordion">
             {% csrf_token %}
             {{ searchform.geometry }}
@@ -55,15 +55,15 @@
         <div id="search-summary-container" class="well well-small" style="margin-bottom: 10px; width: 100%">
           <div id="search-buttons" class="text-center">
 
-            <button id="reset-search-form" class="btn"
+            <button id="reset-search-form" class="btn sansa-white-btn"
                     data-toggle="tooltip" title="Reset Search Parameters"
 {#                    onclick="resetSearchForm()"#}
-                    data-placement="top" style="width: 45%; color: #1371a5; border-color: #1371a5">
+                    data-placement="top" style="width: 45%">
               <i class="icon-refresh"></i> RESET
             </button>
-              <button id="search_button" class="btn"
+              <button id="search_button" class="btn sansa-blue-btn"
                     data-toggle="tooltip" title="Run Search"
-                    data-placement="top" style="width: 45%; background-color: #1371a5; color: #FFFFFF">
+                    data-placement="top" style="width: 45%">
               <i class="icon-play"></i> APPLY
             </button>
 {#            <button id="search-panel-help-button"#}
