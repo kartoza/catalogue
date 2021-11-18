@@ -508,7 +508,7 @@ def delete_search(request, pk):
             content_type='text/plain')
 
     # return a simple json object
-    return HttpResponse("{'success' : True}", content_type="text/plain")
+    return HttpResponseRedirect("/mysearches")
 
 
 @login_required
