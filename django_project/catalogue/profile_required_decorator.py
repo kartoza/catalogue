@@ -79,7 +79,7 @@ def require_profile(view):
                         )
                     else:
                         return HttpResponseRedirect(
-                            "/accounts/{0}/edit/?next=/{1}/".format(profile.user, view))
+                            "/accounts/{0}/edit/?next=/{1}/".format(request.user, view))
 
         return wraps(function)(inner_decorator)
     return decorator
