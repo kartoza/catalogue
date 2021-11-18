@@ -12,8 +12,9 @@
   <meta name="robots" content="NONE,NOARCHIVE" />
   {# for Bootstrap responsive layout #}
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <script src="{% static "js/libs/bootstrap-5.0.2/js/bootstrap.js" %}"></script>
-
+    <script src="{% static "js/libs/jquery/jquery-3.6.0.min.js" %}"></script>
+    <script src="{% static "js/libs/bootstrap-5.0.2/js/bootstrap.bundle.min.js" %}"></script>
+    <script src="{% static "js/libs/jquery-ui-1.12.1/jquery-ui.min.js" %}"></script>
   {% block extracss %}{% endblock %}
     {# Be very careful about changing the order of these css includes as it can have unintended side effects #}
     <link href="{% url 'logVisit' %}" rel="stylesheet" type="text/css" />
