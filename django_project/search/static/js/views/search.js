@@ -35,6 +35,11 @@ define([
             this.parent = options.parent;
             this.sidePanel = options.sidePanel;
             Shared.Dispatcher.on('search:clearSearch', this.clearSearch, this);
+            if(history){
+                Shared.Dispatcher.trigger('collectionSearch', {
+                        offset: 0
+                    });
+            }
         },
         render: function () {
             var self = this;
@@ -170,12 +175,12 @@ define([
                     Shared.Dispatcher.trigger('collectionSearch', {
                         offset: 0
                     });
-                    //set redirect link if user it not loged in
+                    //set redirect link if user is not loged in
                     // if he logs in, he will be redirected  back to last performed search
                     if (!UserLoged) {
                         var link = $('#login_link').attr("href") + '?next=/search/' + guid + '/';
                         $('#login_link').attr("href", link);
-                        link = $('#login_register').attr("href") + '?next=/search/' + this.guid + '/';
+                        link = $('#login_register').attr("href") + '?next=/search/' + guid + '/';
                         $('#login_register').attr("href", link);
                     }
                     // self.openResultPanel();

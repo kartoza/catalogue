@@ -35,8 +35,8 @@ define(['jquery'],function ($) {
     };
 
     DateRange.DEFAULTS = {
-    dateFormat: 'yy-mm-dd'
-  };
+        dateFormat: 'yy-mm-dd'
+    };
 
   DateRange.prototype._resliver_dateranges = function() {
     // resilver all of the date ranges

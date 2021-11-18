@@ -39,6 +39,7 @@ define([
             'click .lasso-control-close': 'closeLassoPanel',
             'click .print-map-control': 'downloadMap',
             'click .polygonal-lasso-tool': 'drawPolygon',
+            'click .close-matadata': 'hideMetadata',
         },
 
         initialize: function () {
@@ -659,6 +660,10 @@ define([
             this.$el.find('.polygonal-lasso-tool').removeClass('selected');
             this.parent.map.removeInteraction(this.polygonDraw);
             Shared.Dispatcher.trigger('map:toggleMapInteraction', false);
+        },
+        hideMetadata: function (event){
+            $("#product-metadata").hide()
+
         },
     })
 });

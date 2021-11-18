@@ -7,8 +7,6 @@ define([
 ], function (Backbone,_, Shared, $, CartItemCollection){
     return Backbone.View.extend({
     selectedFeatureID: '',
-    // modal: $('#ajax-modal'),
-    // snap: Snap('#svg'),
     events: {
         'click .metadata-button': 'showMetadata',
         'click .cart-button': 'addToCart',
@@ -101,16 +99,13 @@ define([
 
     showMetadata: function(event) {
         const id = this.model.get('id');
-        // $('#ajax-modal').load('/metadata/'+id, '', function(){
-        //     $('#ajax-modal').modal();
-        // });
         const url = '/metadata/' + id;
         $.ajax({
             type: 'GET',
             url: url,
             success: function (output) {
                 console.log(output);
-                $("#product-metadata").html(output).show();//now its working
+                $("#product-metadata").html(output).show();
             },
             error: function(output){
             alert("fail");
@@ -118,6 +113,7 @@ define([
         });
         event.stopPropagation();
     },
+
     addToCart: function(event) {
         if (UserLoged) {
             const id = this.model.get('id');
@@ -131,8 +127,8 @@ define([
                 cart.create({'product':id},{wait: true});
                 Shared.Dispatcher.trigger('colorCartFeature', {'original_product_id': this.model.get('original_product_id')});
                 $("#result_item_"+ this.model.get('original_product_id')).addClass('cartResultRow');
-                $("#result_item_"+ this.model.get('original_product_id')).children('.cart-remove-button').show();
-                $("#result_item_"+ this.model.get('original_product_id')).children('.cart-button').hide();
+                $("#result_item_"+ this.model.get('original_product_id')).children('.button-action').children('.cart-remove-button').show();
+                $("#result_item_"+ this.model.get('original_product_id')).children('.button-action').children('.cart-button').hide();
             }
             showButtonSubPanel();
         } else {
@@ -150,8 +146,8 @@ define([
 
     _removeFromCart: function(id) {
         $("#result_item_"+ id).removeClass('cartResultRow');
-        $("#result_item_"+ id).children('.cart-remove-button').addClass('hide');
-        $("#result_item_"+ id).children('.cart-button').removeClass('hide');
+        $("#result_item_"+ id).children('.button-action').children('.cart-remove-button').hide();
+        $("#result_item_"+ id).children('.button-action').children('.cart-button').show();
     },
 
     render: function() {
@@ -176,7 +172,7 @@ define([
             '<div class="button-action">',
             '<span class="button metadata-button btn btn-default" data-title="View Metadata"><i class="icon-list-alt"></i></span>',
             '<span class="button cart-button btn btn-default" data-title="Add to Cart"><i class="icon-shopping-cart"></i></span>',
-            '<span class="button cart-remove-button btn btn-danger" style="display: none" data-title="Remove From Cart"><i class="fa fa-trash"></i></span>',
+            '<span class="button cart-remove-button btn" style="display: none; color: #b02a37" data-title="Remove From Cart"><i class="fa fa-trash"></i></span>',
             '</div>',
             '</div>'
         ].join(''))
