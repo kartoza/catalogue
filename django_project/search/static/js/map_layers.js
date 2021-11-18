@@ -366,7 +366,7 @@ WEB_LAYERS.BlueMarble = new ol.source.TileWMS('BlueMarble',
 // Heatmap - all
 //
 WEB_LAYERS.Heatmap_total = new ol.layer.Image({
-    className: 'Heatmap total',
+    // className: 'Heatmap total',
     source: '/media/heatmaps/heatmap-total.png',
     extent: ol.extent.boundingExtent([[-20037508.343, -16222639.241],
         [20019734.329, 16213801.068]]),

@@ -1,14 +1,17 @@
 {% extends "base.html" %}
+{% load staticfiles %}
 {% load render_table from django_tables2 %}
 {% block extrajs %}
     {{ block.super }}
-    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
+
+
+        // Load the Visualization API and the piechart package.
+        google.load('visualization', '1', {'packages': ['corechart']});
 
         // Set a callback to run when the Google Visualization API is loaded.
         google.setOnLoadCallback(drawChart);
-        // Load the Visualization API and the piechart package.
-        google.load('visualization', '1', {'packages': ['corechart']});
 
         // Callback that creates and populates a data table,
         // instantiates the pie chart, passes in the data and
@@ -42,9 +45,10 @@
     </script>
 {% endblock %}
 {% block content %}
-    <h2 class="centered">
+    <h2 style="text-align: left">
         Summary of All Sensor-Based Catalogue Holdings
     </h2>
+    <hr>
     <!--Div that will hold the pie chart-->
     <div class="row">
         <div id="chart_div" style="width: 860px; margin: auto;"></div>
@@ -73,4 +77,6 @@
             </button>
         </div>
     </div>
+{% endblock %}
+{% block footer %}
 {% endblock %}

@@ -102,7 +102,7 @@ urlpatterns = [
     # returns html mime type
     url(r'^showpreview/(?P<theId>[0-9]+)/(?P<theSize>[a-z]+)/$', show_preview, name='showPreview'),
     # show info for a scene or segment by #
-    url(r'^metadata/(?P<theId>[0-9]+)/$', metadata, name="metadata"),
+    url(r'^metadata/(?P<pk>[0-9]+)/$', metadata, name="metadata"),
     url(r'^addtocart/(?P<pk>[0-9]+)/$', addToCart, name='addToCart'),
     url(r'^removefromcart/(?P<theId>[0-9]+)/$', removeFromCart, name='removeFromCart'),
     # cart contents for embedding into other pages

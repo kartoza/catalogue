@@ -19,7 +19,7 @@ __copyright__ = 'South African National Space Agency'
 
 from tastypie.api import Api
 
-from search.api import SearchResultsResource, SearchRecordResource
+from search.api import SearchResultsResource
 
 from useraccounts.api import UserResource
 from catalogue.api import OpticalProductResource

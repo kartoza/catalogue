@@ -71,11 +71,11 @@
 	<div class="row">
 		<div class="span12">
 			<div class="centered">
-			    <button onclick='location="{% url 'downloadClipGeometry' myOrder.id %}?shp";return false;'>SHP</button>
-			    <button onclick='location="{% url 'downloadClipGeometry' myOrder.id %}?kml";return false;'>KML</button>
-			    <button onclick='location="{% url 'downloadClipGeometry' myOrder.id %}?kmz";return false;'>KMZ</button>
-			    <button onclick='location="{% url 'downloadOrderMetadata' myOrder.id %}";return false;'>XML metadata</button>
-			    <button onclick='location="{% url 'downloadOrderMetadata' myOrder.id %}?html";return false;'>HTML metadata</button>
+			    <button onclick='location="{% url 'download-clip-geometry' myOrder.id %}?shp";return false;'>SHP</button>
+			    <button onclick='location="{% url 'download-clip-geometry' myOrder.id %}?kml";return false;'>KML</button>
+			    <button onclick='location="{% url 'download-clip-geometry' myOrder.id %}?kmz";return false;'>KMZ</button>
+			    <button onclick='location="{% url 'download-clip-geometry' myOrder.id %}";return false;'>XML metadata</button>
+			    <button onclick='location="{% url 'download-clip-geometry' myOrder.id %}?html";return false;'>HTML metadata</button>
 			</div>
 		</div>
 	</div>
@@ -138,8 +138,10 @@
 {% endblock %}
 
 {% block extrajs %}
-  {{ block.super }}
-  {% javascript 'orderpage' %}
+    <script src="{% static "js/libs/jquery/jquery-3.6.0.min.js" %}"></script>
+    <script src="{% static "js/libs/bootstrap-5.0.2/js/bootstrap.bundle.min.js" %}"></script>
+    <script src="{% static "js/libs/openlayers-6.5.0/ol.js" %}"></script>
+    {% javascript 'orderpage' %}
   <script>
 	function triggerProjectionChange(option) {
 		/*

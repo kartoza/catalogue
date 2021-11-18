@@ -90,6 +90,9 @@ class Projection(models.Model):
     def __unicode__(self):
         return 'EPSG: %s %s' % (str(self.epsg_code), self.name)
 
+    def __str__(self):
+        return 'EPSG: %s %s' % (str(self.epsg_code), self.name)
+
     class Meta:
         verbose_name = 'Projection'
         verbose_name_plural = 'Projections'
@@ -106,6 +109,9 @@ class Institution(models.Model):
     address2 = models.CharField(max_length=255)
     address3 = models.CharField(max_length=255)
     post_code = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.name
 
     def __unicode__(self):
         return self.name
@@ -145,6 +151,9 @@ class Quality(models.Model):
     def __unicode__(self):
         return self.name
 
+    def __str__(self):
+        return self.name
+
     class Meta:
         verbose_name = 'Quality'
         verbose_name_plural = 'Qualities'
@@ -161,6 +170,9 @@ class Topic(models.Model):
     def __unicode__(self):
         return self.name
 
+    def __str__(self):
+        return self.name
+
 
 class PlaceType(models.Model):
     """
@@ -171,6 +183,9 @@ class PlaceType(models.Model):
     name = models.CharField(max_length=255, unique=True, null=False)
 
     def __unicode__(self):
+        return self.name
+
+    def __str__(self):
         return self.name
 
 
@@ -194,6 +209,9 @@ class Place(models.Model):
     def __unicode__(self):
         return self.name
 
+    def __str__(self):
+        return self.name
+
 
 class Unit(models.Model):
     """
@@ -206,6 +224,9 @@ class Unit(models.Model):
     def __unicode__(self):
         return self.name
 
+    def __str__(self):
+        return self.name
+
 
 class SalesRegion(models.Model):
     """
@@ -216,6 +237,9 @@ class SalesRegion(models.Model):
     abbreviation = models.CharField(max_length=4)
 
     def __unicode__(self):
+        return self.abbreviation
+
+    def __str__(self):
         return self.abbreviation
 
 
@@ -455,6 +479,9 @@ class InstrumentType(models.Model):
     def __unicode__(self):
         return self.operator_abbreviation
 
+    def __str__(self):
+        return self.operator_abbreviation
+
     class Meta:
         """Meta class implementation."""
         ordering = ['name']
@@ -484,6 +511,9 @@ class RadarBeam(models.Model):
     )
 
     def __unicode__(self):
+        return '{0} ({1})'.format(self.band_name, self.wavelength_cm)
+
+    def __str__(self):
         return '{0} ({1})'.format(self.band_name, self.wavelength_cm)
 
     class Meta:
@@ -530,6 +560,9 @@ class ImagingMode(models.Model):
     )
 
     def __unicode__(self):
+        return '{0} ({1})'.format(self.name, self.polarization)
+
+    def __str__(self):
         return '{0} ({1})'.format(self.name, self.polarization)
 
     class Meta:
@@ -609,6 +642,12 @@ class SatelliteInstrumentGroup(models.Model):
             self.instrument_type.operator_abbreviation
         )
 
+    def __str__(self):
+        return '{0} - {1}'.format(
+            self.satellite.operator_abbreviation,
+            self.instrument_type.operator_abbreviation
+        )
+
     def min_year(self):
         return self.products_per_year()[0]['year']
 
@@ -654,6 +693,10 @@ class SatelliteInstrument(models.Model):
     )
 
     def __unicode__(self):
+        """Return 'operator_abbreviation' as model representation."""
+        return '{0}'.format(self.operator_abbreviation)
+
+    def __str__(self):
         """Return 'operator_abbreviation' as model representation."""
         return '{0}'.format(self.operator_abbreviation)
 
@@ -782,6 +825,10 @@ class BandSpectralMode(models.Model):
         return '{0} ({1})'.format(
             self.band.band_name, self.spectral_mode.name)
 
+    def __str__(self):
+        return '{0} ({1})'.format(
+            self.band.band_name, self.spectral_mode.name)
+
 
 class InstrumentTypeProcessingLevel(models.Model):
     """
@@ -805,6 +852,10 @@ class InstrumentTypeProcessingLevel(models.Model):
     )
 
     def __unicode__(self):
+        return '{0} - {1}'.format(
+            self.instrument_type.name, self.processing_level.abbreviation)
+
+    def __str__(self):
         return '{0} - {1}'.format(
             self.instrument_type.name, self.processing_level.abbreviation)
 
@@ -857,6 +908,13 @@ class SpectralModeProcessingCosts(models.Model):
             self.get_currency().code,
             self.spectral_mode.name, self.instrument_type_processing_level)
 
+    def __str__(self):
+        return '{0} {1} ({2} - {3})'.format(
+            self.cost_per_scene,
+            self.get_currency().code,
+            self.spectral_mode.name, self.instrument_type_processing_level)
+
+
     def get_currency(self):
         """Handle the case where no currency is specified"""
         if self.currency:
@@ -878,6 +936,9 @@ class ProductProcessState(models.Model):
         max_length=30, help_text='Full name of a product process state')
 
     def __unicode__(self):
+        return self.name
+
+    def __str__(self):
         return self.name
 
 
@@ -904,6 +965,12 @@ class OpticalProductProfile(models.Model):
     objects = OpticalProductProfileQuerySet.as_manager()
 
     def __unicode__(self):
+        return '{0} -- {1}'.format(
+            self.satellite_instrument,
+            self.spectral_mode
+        )
+
+    def __str__(self):
         return '{0} -- {1}'.format(
             self.satellite_instrument,
             self.spectral_mode
@@ -980,6 +1047,12 @@ class RadarProductProfile(models.Model):
     )
 
     def __unicode__(self):
+        return '{0} -- {1}'.format(
+            self.satellite_instrument,
+            self.imaging_mode
+        )
+
+    def __str__(self):
         return '{0} -- {1}'.format(
             self.satellite_instrument,
             self.imaging_mode

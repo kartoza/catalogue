@@ -20,10 +20,11 @@ __copyright__ = 'South African National Space Agency'
 
 import logging
 
+from django.conf import settings
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.template.loader import render_to_string
-from weasyprint import HTML
+from weasyprint import HTML, CSS
 
 
 class RenderWithContext(object):
@@ -72,9 +73,11 @@ class RenderWithContext(object):
                     pdf_response['Content-Disposition'] = 'filename= %s.pdf' % template_name
                     html_object = HTML(
                         string=html_string,
-                        base_url='file://',
+                        base_url=request.build_absolute_uri(),
                     )
-                    html_object.write_pdf(pdf_response)
+                    html_object.write_pdf(pdf_response, stylesheets=[CSS(settings.STATIC_ROOT + '/js/libs/bootstrap-5'
+                                                                                                '.0.2/css/bootstrap.css'
+                                                                         )])
                     return pdf_response
 
                 return render(

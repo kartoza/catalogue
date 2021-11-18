@@ -12,10 +12,11 @@ from django.core.management.base import BaseCommand, CommandError
 from django.db.models import Q
 from django.db import transaction
 
-from catalogue.models import *
 from catalogue.os4eo_client import OS4EOClient
 from elementsoap.ElementSOAP import SoapFault
 from search.models import SearchRecord
+
+from django_project.orders.models import OrderStatus
 
 
 class Command(BaseCommand):

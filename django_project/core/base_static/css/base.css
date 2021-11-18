@@ -18,8 +18,9 @@ hr {display: block;position: relative;padding: 0;margin: 8px auto;height: 0;widt
     top: 37px;
     margin: 0;
 }
-h2 {color:#228441;font-family: arial; text-align:center;}
-h3 {color:#228441;font-family: arial;}
+h2 {color:#525351; text-align:left;}
+a {text-decoration: none}
+h3 {color:#525351;}
 .footer-text{font-size: 12px;line-height: 14px;text-align:center;padding-top:3px;}
 .brand{padding:4px 20px 2px!important;}
 .gap-bottom{padding-bottom:20px;}
@@ -271,8 +272,8 @@ line {
 }
 
 .cartResultRow {
-    background-color: #5bb75b;
-    border-left: 2px solid #5bb75b;
+    background-color: rgb(13 110 253 / 11%);
+    border-left: 2px solid rgb(13 110 253 / 11%);
 }
 
 #svg_layer {
@@ -287,4 +288,14 @@ line {
 
 .red {
   color: red;
+}
+
+.sansa-white-btn{
+        color: #1371a5;
+        border-color: #1371a5
+    }
+
+.sansa-blue-btn{
+    background-color: #1371a5;
+    color: #FFFFFF
 }

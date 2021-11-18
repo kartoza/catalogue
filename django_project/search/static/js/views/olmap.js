@@ -3,25 +3,28 @@ define([
     'underscore',
     'shared',
     'views/map_control_panel',
-    // 'views/side_panel',
-    'views/lasso_panel',
+    'views/side_panel',
     'ol',
     'jquery',
     'layerSwitcher',
     'views/olmap_basemap',
+    'collections/paginated',
     'views/olmap_layers',
-], function (Backbone, _, Shared, MapControlPanelView, LassoPanelView, ol, $, LayerSwitcher, Basemap, Layers) {
+    'views/result_grid',
+    'models/result_item',
+    'htmlToCanvas'
+], function (Backbone, _, Shared, MapControlPanelView, SidePanelView,
+             ol, $, LayerSwitcher, Basemap, ResultItemCollection, Layers, ResultGridView, ResultItem, HtmlToCanvas) {
     return Backbone.View.extend({
         template: _.template($('#map-template').html()),
         className: 'map-wrapper',
         map: null,
-        uploadDataState: false,
-        isBoundaryEnabled: false,
+        polygonDraw: null,
+        layerSearchSource: null,
+        sidePanelView: null,
         // attributes
         mapInteractionEnabled: false,
         previousZoom: 0,
-        sidePanelView: null,
-        lassoPanelView: null,
         initZoom: 8,
         numInFlightTiles: 0,
         scaleLineControl: null,
@@ -31,23 +34,23 @@ define([
         events: {
             'click .zoom-in': 'zoomInMap',
             'click .zoom-out': 'zoomOutMap',
-            'click .print-map-control': 'downloadMap',
-            'click .search-control': 'searchClicked',
+            'click .layer-control': 'layerControlClicked',
             'click .lasso-control': 'lassoClicked',
+            'click .lasso-control-close': 'closeLassoPanel',
+            'click .print-map-control': 'downloadMap',
+            'click .polygonal-lasso-tool': 'drawPolygon',
+            'click .close-matadata': 'hideMetadata',
         },
-        clusterLevel: {
-            5: 'country',
-            7: 'province',
-            8: 'district',
-            9: 'municipal'
-        }, // note that this is the max level for cluster level
-        initialize: function () {
 
+        initialize: function () {
             // Ensure methods keep the `this` references to the view itself
             _.bindAll(this, 'render');
             this.layers = new Layers({parent: this});
-
+            this.createPolygonInteraction();
             Shared.CurrentState.FETCH_CLUSTERS = true;
+            Shared.Dispatcher.on('layers:addSearch', this.addFeatures, this);
+            Shared.Dispatcher.on('layer:focusFeature', this.focusFeature, this);
+            Shared.Dispatcher.on('layer:removeFocusFeature', this.removeFocusFeature, this);
             Shared.Dispatcher.on('map:zoomToCoordinates', this.zoomToCoordinates, this);
             Shared.Dispatcher.on('map:drawPoint', this.drawPoint, this);
             Shared.Dispatcher.on('map:clearPoint', this.clearPoint, this);
@@ -65,19 +68,19 @@ define([
             Shared.Dispatcher.on('map:zoomToHighlightPinnedFeatures', this.zoomToHighlightPinnedFeatures, this);
             Shared.Dispatcher.on('map:boundaryEnabled', this.boundaryEnabled, this);
             Shared.Dispatcher.on('map:zoomToDefault', this.zoomToDefault, this);
-            Shared.Dispatcher.on('map:clearAllLayers', this.clearAllLayers, this);
             Shared.Dispatcher.on('map:addLayer', this.addLayer, this);
             Shared.Dispatcher.on('map:removeLayer', this.removeLayer, this);
             Shared.Dispatcher.on('map:downloadMap', this.downloadMap, this);
-            Shared.Dispatcher.on('map:resetSitesLayer', this.resetSitesLayer, this);
             Shared.Dispatcher.on('map:toggleMapInteraction', this.toggleMapInteraction, this);
             Shared.Dispatcher.on('map:setPolygonDrawn', this.setPolygonDrawn, this);
-            Shared.Dispatcher.on('mapControlPanel:lassoClicked', this.lassoClicked, this);
+            Shared.Dispatcher.on('map:lassoClicked', this.lassoClicked, this);
+
+            new ResultGridView({
+                'collection': new ResultItemCollection()
+            });
 
             this.render();
-            this.mapControlPanel.searchView.initDateFilter();
-            this.showInfoPopup();
-
+            this.mapControlPanel.searchView.initCloudCover();
             this.pointVectorSource = new ol.source.Vector({});
             this.pointLayer = new ol.layer.Vector({
                 source: this.pointVectorSource,
@@ -92,19 +95,10 @@ define([
                         })
                     })]
             });
+            this.layerSearchSource = new ol.source.Vector({})
             this.pointLayer.setZIndex(1000);
             this.map.addLayer(this.pointLayer);
-        },
-        hidePopOver: function (e) {
-                if (!e.hasClass('sub-control-panel')) {
-                    e = e.parent();
-                }
-                for (var i = 0; i < this.closedPopover.length; i++) {
-                    this.closedPopover[i].popover('enable');
-                    this.closedPopover[i].splice(i, 1);
-                }
-                e.popover('hide');
-                this.closedPopover.push(e);
+
         },
         zoomInMap: function (e) {
             var view = this.map.getView();
@@ -113,36 +107,6 @@ define([
                 zoom: zoom - 1,
                 duration: 250
             })
-        },
-        searchClicked: function (e) {
-            if (!this.searchView.isOpen()) {
-                this.hidePopOver($(e.target));
-                this.resetAllControlState();
-                this.openSearchPanel();
-                this.closeFilterPanel();
-                this.closeLassoPanel();
-                this.closeLocatePanel();
-                this.closeSpatialFilterPanel();
-                this.closeValidateData();
-                this.closeThirdPartyPanel();
-            } else {
-                this.closeSearchPanel();
-                }
-        },
-        lassoClicked: function (e) {
-            if(!this.lassoPanelView.isDisplayed()) {
-                this.hidePopOver($(e.target));
-                this.resetAllControlState();
-                this.openLassoPanel();
-                this.closeSearchPanel();
-                this.closeFilterPanel();
-                this.closeLocatePanel();
-                this.closeSpatialFilterPanel();
-                this.closeValidateData();
-                this.closeThirdPartyPanel();
-            } else {
-                this.closeLassoPanel();
-            }
         },
         boundaryEnabled: function (value) {
             this.isBoundaryEnabled = value;
@@ -161,15 +125,6 @@ define([
             if (typeof zoomLevel !== 'undefined') {
                 this.map.getView().setZoom(zoomLevel);
             }
-        },
-        drawPoint: function (coordinates, zoomLevel) {
-            this.zoomToCoordinates(coordinates, zoomLevel);
-            var circle = new ol.geom.Circle(coordinates, 1000);
-            var circleFeature = new ol.Feature(circle);
-            this.pointVectorSource.addFeature(circleFeature);
-        },
-        clearPoint: function () {
-            this.pointVectorSource.clear();
         },
 
         zoomToExtent: function (coordinates, shouldTransform=true, updateZoom=true) {
@@ -198,102 +153,6 @@ define([
         },
         setPolygonDrawn: function (polygon) {
            this.polygonDrawn = polygon
-        },
-        mapClicked: function (e) {
-            // Event handler when the map is clicked
-            const self = this;
-            if (this.mapInteractionEnabled) {
-                return;
-            }
-            this.layers.highlightVectorSource.clear();
-            this.hidePopup();
-
-            // Get lat and long map
-            let lonlat = ol.proj.transform(e.coordinate, 'EPSG:3857', 'EPSG:4326');
-            let lon = lonlat[0];
-            let lat = lonlat[1];
-
-            let layer = this.layers.layers['Sites'];
-            let siteVisible = layer['layer'].getVisible();
-
-            // If default bims site layer is visible then check whether user click on the
-            // site point or not
-            if (siteVisible) {
-                let view = this.map.getView();
-                let queryLayer = layer['layer'].getSource().getParams()['LAYERS'];
-                let layerSource = layer['layer'].getSource().getGetFeatureInfoUrl(
-                    e.coordinate,
-                    view.getResolution(),
-                    view.getProjection(),
-                    {'INFO_FORMAT': 'application/json'}
-                );
-                layerSource += '&QUERY_LAYERS=' + queryLayer;
-                $.ajax({
-                    type: 'POST',
-                    url: '/get_feature/',
-                    data: {
-                        'layerSource': layerSource
-                    },
-                    success: function (data) {
-                        let objectData = {};
-                        if (data.constructor === Object) {
-                            objectData = data;
-                        } else {
-                            try {
-                                objectData = JSON.parse(data);
-                            } catch (e) {
-                                console.log(e)
-                                return
-                            }
-                        }
-                        let features = objectData['features'];
-                        if (features.length === 0) {
-                            self.showFeature(self.map.getFeaturesAtPixel(e.pixel), lon, lat);
-                            return;
-                        }
-                        let count = features[0]['properties']['count'];
-                        if (count > 1) {
-                            self.zoomToCoordinates(
-                                e.coordinate,
-                                self.getCurrentZoom() + 2
-                            );
-                        } else if (count === 1) {
-                            // Check if the feature is a single location site point
-                            if (features[0]['id'].includes('location_site_view')) {
-                                // Get location site id
-                                let siteId = '';
-                                if (features[0]['id'].indexOf('fid') > -1) {
-                                    siteId = features[0]['properties']['site_id'];
-                                } else {
-                                    siteId = features[0]['id'].split('.')[1];
-                                }
-                                Shared.Dispatcher.trigger('siteDetail:show', siteId, '');
-                            }
-                            let initialRadius = 5;
-                            self.getSiteByCoordinate(lat, lon, initialRadius, function () {
-                                self.showFeature(self.map.getFeaturesAtPixel(e.pixel), lon, lat, true);
-                            });
-                        } else {
-                            // Check if the feature is single location site marker
-                            if (features[0]['id'].includes('location_site_view')) {
-                                // Get location site id
-                                 // Get location site id
-                                let siteId = '';
-                                if (features[0]['id'].indexOf('fid') > -1) {
-                                    siteId = features[0]['properties']['site_id'];
-                                } else {
-                                    siteId = features[0]['id'].split('.')[1];
-                                }
-                                Shared.Dispatcher.trigger('siteDetail:show', siteId, '');
-                            } else {
-                                self.showFeature(self.map.getFeaturesAtPixel(e.pixel), lon, lat);
-                            }
-                        }
-                    }
-                });
-            } else {
-                self.showFeature(self.map.getFeaturesAtPixel(e.pixel), lon, lat);
-            }
         },
 
         showFeature: function (features, lon, lat, siteExist = false) {
@@ -326,6 +185,14 @@ define([
                         }
                     }
                 });
+            }
+            if (self.uploadDataState && !poiFound) {
+                // Show modal upload if in upload mode
+                self.mapControlPanel.showUploadDataModal(lon, lat, featuresData);
+            } else if (!self.uploadDataState && !poiFound) {
+                // Show feature info
+                Shared.Dispatcher.trigger('third_party_layers:showFeatureInfo', lon, lat, siteExist, featuresData);
+                Shared.Dispatcher.trigger('layers:showFeatureInfo', lon, lat, siteExist);
             }
         },
         featureClicked: function (feature, uploadDataState) {
@@ -366,6 +233,46 @@ define([
             }
             return [true, properties];
         },
+        focusFeature: function( theRecordId ) {
+            const self = this
+            const highlightStyle = new ol.style.Style({
+                fill: new ol.style.Fill({
+                    color: 'rgba(255,255,255,0.7)',
+                }),
+                stroke: new ol.style.Stroke({
+                    color: '#3399CC',
+                    width: 3,
+              }),
+            });
+            const featureId = this.getFeatureIndexByRecordId( theRecordId );
+            const feature = self.layerSearchSource.getFeatureById(featureId);
+            feature.setStyle(highlightStyle);
+            console.log(feature)
+            // this.layerSearchSource.highlightFeatureControl.highlight(feature);
+
+        },
+
+        getFeatureIndexByRecordId: function( theRecordId ) {
+            const self = this
+            const features = self.layerSearchSource.getFeatures();
+            for(let i=0; i < features.length; ++i)
+            {
+              if(features[i].getProperties()['original_product_id'] == theRecordId)
+              {
+                return features[i].getId();
+              }
+            }
+        },
+
+        removeFocusFeature: function (theRecordId){
+            const featureId = this.getFeatureIndexByRecordId( theRecordId );
+            const feature = self.layerSearchSource.getFeatureById(featureId);
+            feature.setStyle(new ol.style.Style({
+                        stroke: new ol.style.Stroke({ color: '#FFA500' }),
+                        fillOpacity: '0'
+                    }));
+        },
+
         hidePopup: function () {
             this.popup.setPosition(undefined);
         },
@@ -383,6 +290,34 @@ define([
             var ext = this.map.getView().calculateExtent(this.map.getSize());
             return ol.proj.transformExtent(ext, ol.proj.get('EPSG:3857'), ol.proj.get('EPSG:4326'));
         },
+        createPolygonInteraction: function () {
+            let self = this;
+            this.source = new ol.source.Vector({wrapX: false});
+            this.layer = new ol.layer.Vector({
+                source: self.source
+            });
+            this.polygonDraw = new ol.interaction.Draw({
+                source: self.source,
+                type: 'Polygon'
+            });
+            this.polygonDraw.on('drawend', function (evt) {
+                // Zoom to extent
+                let polygonExtent = evt.feature.getGeometry().getExtent();
+                let transformedCoordinates = [];
+                let coordinates = evt.feature.getGeometry().getCoordinates()[0];
+                for (let i=0; i<coordinates.length; i++) {
+                    let newCoord = ol.proj.transform(coordinates[i], ol.proj.get('EPSG:3857'), ol.proj.get('EPSG:4326'));
+                    transformedCoordinates.push(newCoord);
+                }
+                self.polygonCoordinates = transformedCoordinates;
+                self.polygonExist = true;
+                // Shared.Dispatcher.trigger('map:zoomToExtent', polygonExtent, false, false);
+                Shared.Dispatcher.trigger('map:setPolygonDrawn', polygonExtent);
+            });
+            this.polygonDraw.on('drawstart', function () {
+                self.source.clear();
+            });
+        },
         render: function () {
             var self = this;
             this.$el.html(this.template());
@@ -390,19 +325,14 @@ define([
             this.loadMap();
 
             this.map.on('click', function (e) {
-                self.mapClicked(e);
+                // self.mapClicked(e);
             });
-
-            // this.sidePanelView = new SidePanelView();
+            this.sidePanelView = new SidePanelView();
             this.mapControlPanel = new MapControlPanelView({
                 parent: this
             });
-            this.lassoPanelView = new LassoPanelView({
-                    parent: this
-            });
-
             this.$el.append(this.mapControlPanel.render().$el);
-            this.$el.append(this.lassoPanelView.render().$el);
+            this.$el.append(this.sidePanelView.render().$el);
 
             // add layer switcher
             var layerSwitcher = new LayerSwitcher();
@@ -422,10 +352,6 @@ define([
                 $('.layer-switcher-custom').popover('enable');
             });
             this.mapControlPanel.addPanel($(layerSwitcher.element));
-
-            this.map.on('moveend', function (evt) {
-                self.mapMoved();
-            });
 
             this.map.getLayers().forEach(function (layer) {
                 try {
@@ -459,16 +385,10 @@ define([
 
             return this;
         },
-        mapMoved: function () {
-            let self = this;
-            let administrative = self.checkAdministrativeLevel();
-            if (administrative !== 'detail') {
-                this.layers.changeLayerAdministrative(administrative);
-            }
-        },
+
         loadMap: function () {
             var self = this;
-            const mousePositionControl = new ol.control.MousePosition({
+            var mousePositionControl = new ol.control.MousePosition({
                 projection: 'EPSG:4326',
                 target: document.getElementById('mouse-position-wrapper'),
                 coordinateFormat: function (coordinate) {
@@ -477,7 +397,7 @@ define([
             });
             var basemap = new Basemap();
 
-            let center = this.initCenter;
+            var center = this.initCenter;
             // Add scaleline control
             let scalelineControl = new ol.control.ScaleLine({
                 units: 'metric',
@@ -487,8 +407,11 @@ define([
                 minWidth: 140
             })
 
-
-            const newExtent = [5.207535937500003,-37.72038269917067,47.3950359375,-18.54426493227018];
+            let extent = ['5.207535937500003','-37.72038269917067','47.3950359375','-18.54426493227018'];
+            let newExtent = [];
+            for (let e=0; e < extent.length; e++) {
+                newExtent.push(parseFloat(extent[e]));
+            }
             extent = ol.proj.transformExtent(newExtent, 'EPSG:4326', 'EPSG:3857');
 
             this.map = new ol.Map({
@@ -497,7 +420,7 @@ define([
                 view: new ol.View({
                     center: ol.proj.fromLonLat(center),
                     zoom: this.initZoom,
-                    minZoom: 2,
+                    minZoom: 1,
                     maxZoom: 19, // prevent zooming past 50m
                 }),
                 controls: ol.control.defaults({
@@ -518,7 +441,7 @@ define([
                 offset: [0, -10]
             });
             this.map.addOverlay(this.popup);
-            this.layers.addLayersToMap(this.map);
+            // this.layers.addLayersToMap(this.map);
             this.initExtent = this.getCurrentBbox();
         },
         removeLayer: function (layer) {
@@ -526,6 +449,12 @@ define([
         },
         addLayer: function (layer) {
             this.map.addLayer(layer);
+        },
+        reloadXHR: function () {
+            this.previousZoom = -1;
+            this.clusterCollection.administrative = null;
+            this.fetchingRecords();
+            $('#fetching-error .call-administrator').show();
         },
 
         switchHighlight: function (features, ignoreZoom) {
@@ -590,11 +519,7 @@ define([
                 this.layers.highlightPinnedVectorSource.clear();
             }
         },
-        showInfoPopup: function () {
-            if (!hideBimsInfo && bimsInfoContent) {
-                $('#general-info-modal').fadeIn()
-            }
-        },
+
         zoomToDefault: function () {
             var center = this.initCenter;
             if (centerPointMap) {
@@ -607,10 +532,18 @@ define([
             this.zoomToCoordinates(ol.proj.fromLonLat(center), this.initZoom);
         },
 
+        clearAllLayers: function () {
+            let newParams = {
+                layers: locationSiteGeoserverLayer,
+                format: 'image/png',
+                viewparams: 'where:' + emptyWMSSiteParameter
+            };
+            this.layers.biodiversitySource.updateParams(newParams);
+        },
+
         toggleMapInteraction: function (enabled) {
             this.mapInteractionEnabled = enabled;
         },
-
         whenMapIsReady: function (callback) {
             var self = this;
             if (this.mapIsReady)
@@ -622,10 +555,53 @@ define([
                 }, 100)
             }
         },
+
+        addFeatures: function(features){
+            const self = this
+            self.layerSearchSource.clear();
+            _.each(features, function (feature) {
+                const format = new ol.format.WKT();
+                const feat = format.readFeature(feature.attributes['spatial_coverage'], {
+                    dataProjection: 'EPSG:4326',
+                    featureProjection: 'EPSG:3857',
+                });
+                feat.setProperties(feature.attributes)
+                feat.setId(feature.attributes['id'])
+                const exist = new ResultItemCollection().filter(function (item) {
+                    return item.get("product").id == feature.attributes.id;
+                });
+
+                //if item is in cart, color green else orange
+                if (exist.length > 0) {
+                  feat.setStyle(new ol.style.Style({
+                        stroke: new ol.style.Stroke({ color: '#5bb75b' }),
+                        fillOpacity: '0.5'
+                    })
+                  );
+                } else {
+                    feat.setStyle(new ol.style.Style({
+                        stroke: new ol.style.Stroke({ color: '#FFA500' }),
+                        fillOpacity: '0'
+                    }));
+                }
+
+                self.layerSearchSource.addFeatures([feat]);
+
+              });
+            const layerSearchVector = new ol.layer.Vector({
+                className: 'Search result',
+                source: self.layerSearchSource,
+                style: function (feature) {
+                    const geom = feature.getGeometry();
+                    return self.layerStyle.getPinnedHighlightStyle(geom.getType());
+                    }
+            });
+            this.map.addLayer(layerSearchVector)
+        },
+
         downloadMap: function () {
             var that = this;
             var downloadMap = true;
-
             that.map.once('postcompose', function (event) {
                 var canvas = event.context.canvas;
                 try {
@@ -643,6 +619,7 @@ define([
                 $('#ripple-loading').show();
                 $('.map-control-panel').hide();
                 $('.zoom-control').hide();
+                $('.bug-report-wrapper').hide();
                 $('.print-map-control').addClass('control-panel-selected');
                 that.whenMapIsReady(function () {
                     var canvas = document.getElementsByClassName('map-wrapper');
@@ -672,6 +649,21 @@ define([
                 });
             }
         },
+        drawPolygon: function () {
+            this.$el.find('.polygonal-lasso-tool').addClass('selected');
+            this.map.removeLayer(this.layer);
+            this.map.addLayer(this.layer);
+            this.map.addInteraction(this.polygonDraw);
+            Shared.Dispatcher.trigger('map:toggleMapInteraction', true);
+        },
+        stopDrawing: function () {
+            this.$el.find('.polygonal-lasso-tool').removeClass('selected');
+            this.parent.map.removeInteraction(this.polygonDraw);
+            Shared.Dispatcher.trigger('map:toggleMapInteraction', false);
+        },
+        hideMetadata: function (event){
+            $("#product-metadata").hide()
 
+        },
     })
 });

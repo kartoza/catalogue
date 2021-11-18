@@ -1,14 +1,18 @@
 {% extends 'userena/base_userena.html' %}
+{% load staticfiles %}
 {% load i18n %}
 
-{% block title %}{% trans "User registration" %}{% endblock %}
 
-{% block content %}
-<div id="content" class="row-fluid">
-    <form class="form-horizontal span6" action="" method="post" accept-charset="utf-8">
+{% block title %}{% trans "Sign Up" %}{% endblock %}
+
+<div class="content" style="height: 100%;">
+    {% block content %}
+    <div class="container" style="height: 100%;">
+    <div class="custom-form-container" style="margin-top: 40px;">
+        <h1>{% trans "SIGN UP" %}</h1>
+        <form class="form-horizontal span6" action="" method="post" accept-charset="utf-8">
       {% csrf_token %}
       <fieldset>
-        <legend>{% trans "User registration" %}</legend>
         {{ form.non_field_errors }}
         {% for field in form %}
         {{ field.errors }}
@@ -25,7 +29,15 @@
         {% endif %}
         {% endfor %}
       </fieldset>
-      <input class="btn" type="submit" value="{% trans "Signup"%}" />
+      <div class="controls" style="text-align: center">
+      <input class="btn custom-form-submit sansa-blue-btn" style="width: 50%" type="submit" value="{% trans "SIGN UP"%}" />
+      </div>
     </form>
-</div>
-{% endblock %}
+    <div class="login-help">
+        <a href="{% url 'userena_signin' %}">{% trans "Log In" %}</a> -
+        <a href="{% url "userena_password_reset" %}">{% trans "Forgot Password" %}</a>
+    </div>
+    </div>
+    </div>
+
+    {% endblock %}

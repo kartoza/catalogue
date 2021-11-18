@@ -204,7 +204,7 @@ def searchguid(request, guid_id):
 
     return {
         'mysearch': search,
-        'searchform': form,
+        'search_form': form,
         'dateformset': form_set,
         'listreeoptions': list_tree_options,
         'selected_options': list_tree_selected,
@@ -239,7 +239,7 @@ def searchView(request):
     form = AdvancedSearchForm()
     form_set = DateRangeInlineFormSet()
     return {
-        'searchform': form,
+        'search_form': form,
         'dateformset': form_set,
         'listreeoptions': list_tree_options,
         'selected_options': [],

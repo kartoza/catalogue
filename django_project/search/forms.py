@@ -18,6 +18,7 @@ __date__ = '01/01/2011'
 __copyright__ = 'South African National Space Agency'
 
 import logging
+
 # Get an instance of a logger
 logger = logging.getLogger(__name__)
 
@@ -26,22 +27,19 @@ import datetime
 from django import forms
 from django.forms.models import BaseInlineFormSet
 
-
 from django.forms import HiddenInput
 
 from catalogue.fields import IntegersCSVIntervalsField
 from catalogue.datetimewidget import DateTimeWidget
 from catalogue.aoigeometry import AOIGeometryField
 
-
 from .models import Search
-
 
 # Support dmy formats (see
 #    http://dantallis.blogspot.com/2008/11/date-validation-in-django.html )
 DATE_FORMATS = (
-    '%d-%m-%Y',               # '25-10-2005'
-    '%d/%m/%Y', '%d/%m/%y',   # '25/10/2006', '25/12/06'
+    '%d-%m-%Y',  # '25-10-2005'
+    '%d/%m/%Y', '%d/%m/%y',  # '25/10/2006', '25/12/06'
     '%d %b %Y', '%d %b, %Y',  # '25 Oct 2006', '25 Oct, 2006'
     '%d %B %Y', '%d %B, %Y',  # '25 October 2006', '25 October, 2006'
 )
@@ -63,6 +61,7 @@ class DateRangeFormSet(BaseInlineFormSet):
     missing (deleted) forms.
 
     """
+
     def clean(self):
         """
         Delete incomplete forms
@@ -78,7 +77,7 @@ class DateRangeFormSet(BaseInlineFormSet):
             start_date = form.cleaned_data.get('start_date')
             end_date = form.cleaned_data.get('end_date')
             # Checks for empty forms
-            if not(start_date and end_date) or self._should_delete_form(form):
+            if not (start_date and end_date) or self._should_delete_form(form):
                 empty_forms.append(i)
             elif start_date > end_date:
                 raise forms.ValidationError((
@@ -86,7 +85,7 @@ class DateRangeFormSet(BaseInlineFormSet):
         # Delete empty/deleted forms
         empty_forms.reverse()
         for i in empty_forms:
-            del(self.forms[i])
+            del (self.forms[i])
         self.management_form.cleaned_data['TOTAL_FORMS'] = len(self.forms)
         if not len(self.forms):
             raise forms.ValidationError('At least one date range is required.')
@@ -110,7 +109,9 @@ class AdvancedSearchForm(forms.ModelForm):
         widget=DateTimeWidget(
             attrs={
                 'title': 'Choose the start date for this date range.',
-                'data-date_focus': 'start'}),
+                'data-date_focus': 'start',
+                'class': 'form-control'
+            }),
         required=False, label='Start date', input_formats=DATE_FORMATS,
         error_messages={
             'required': 'Entering a start date for your search is required.'},
@@ -120,7 +121,9 @@ class AdvancedSearchForm(forms.ModelForm):
         widget=DateTimeWidget(
             attrs={
                 'title': 'Choose the end date for this date range.',
-                'data-date_focus': 'end'}),
+                'data-date_focus': 'end',
+                'class': 'form-control'
+            }),
         required=False, label='End date', input_formats=DATE_FORMATS,
         error_messages={
             'required': 'Entering an end date for your search is required.'},
@@ -135,7 +138,9 @@ class AdvancedSearchForm(forms.ModelForm):
             'refine the set of search results to a specific area.'))
 
     geometry_file = forms.FileField(
-        widget=forms.FileInput(attrs={'class': 'file'}),
+        widget=forms.FileInput(attrs={'class': 'file form-control',
+                                      'type': 'file',
+                                      }),
         required=False,
         help_text=(
             'KML/KMZ file less than 1MB.'))
@@ -144,7 +149,8 @@ class AdvancedSearchForm(forms.ModelForm):
         label='Bounding Box/Circle',
         widget=forms.TextInput(attrs={'title': (
             'Upper left and lower right coordinates e.g. (20,-32,22,-34). Or '
-            'circle center and radius e.g. (20,-32,100000).')
+            'circle center and radius e.g. (20,-32,100000).'),
+            'class': 'form-control'
         }),
         required=False)
 
@@ -152,18 +158,23 @@ class AdvancedSearchForm(forms.ModelForm):
         label='Path (K/orbit)',
         required=False,
         help_text=(
-            'e.g."10,20,30" or  "20-40"'))
+            'e.g."10,20,30" or  "20-40"'),
+        widget=forms.TextInput(attrs={'class': 'form-control'})
+    )
     j_frame_row = IntegersCSVIntervalsField(
         label='Row (J/frame)',
         required=False,
         help_text=(
-            'e.g. "10,20,30" or "20-40"'))
+            'e.g. "10,20,30" or "20-40"'),
+        widget=forms.TextInput(attrs={'class': 'form-control'})
+    )
 
     cloud_max = forms.IntegerField(
         label='Cloud Max Percentage',
         min_value=0, max_value=100, initial=100,
         help_text=(
-            'Range 0 - 100')
+            'Range 0 - 100'),
+        widget=forms.TextInput(attrs={'class': 'form-control'})
     )
 
     cloud_min = forms.IntegerField(
@@ -171,7 +182,9 @@ class AdvancedSearchForm(forms.ModelForm):
         min_value=0, max_value=100, initial=0,
         help_text=(
             'Range 0 - 100'
-        )
+        ),
+        widget=forms.TextInput(attrs={'class': 'form-control'})
+
     )
 
     selected_sensors = forms.CharField(
@@ -179,9 +192,15 @@ class AdvancedSearchForm(forms.ModelForm):
     )
 
     free_imagery = forms.BooleanField(
-        required=False, label="Free images only")
+        required=False,
+        label="Free images only",
+        label_suffix=''
+    )
     panchromatic_imagery = forms.BooleanField(
-        required=False, label="Panchromatic images only")
+        required=False,
+        label="Panchromatic images only",
+        label_suffix=''
+    )
 
     class Meta:
         model = Search
@@ -198,8 +217,22 @@ class AdvancedSearchForm(forms.ModelForm):
         # calculate initial search_date (today - 1 month)
         # we use a constant -> 1 month = 31 days
         myPreviousMonthDate = (
-            datetime.date.today() - datetime.timedelta(days=31))
+                datetime.date.today() - datetime.timedelta(days=31))
         self.fields['start_datepicker'].initial = myPreviousMonthDate
+        self.fields['band_count'].widget.attrs.update({'class': 'form-select'})
+        self.fields['spatial_resolution'].widget.attrs.update({'class': 'form-select'})
+        self.fields['sensor_inclination_angle_start'].widget.attrs.update({'class': 'form-control'})
+        self.fields['sensor_inclination_angle_end'].widget.attrs.update({'class': 'form-control'})
+        self.fields['panchromatic_imagery'].widget.attrs.update(
+            {'class': 'form-check-input',
+             'type': 'checkbox',
+             'id': 'panchromaticImagery'
+             })
+        self.fields['free_imagery'].widget.attrs.update(
+            {'class': 'form-check-input',
+             'type': 'checkbox',
+             'id': 'freeImagery'
+             })
 
     def clean_guid(self):
         """Custom validator for guid"""

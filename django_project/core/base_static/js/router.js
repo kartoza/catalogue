@@ -11,8 +11,6 @@ define(['backbone', 'views/olmap', 'shared'], function (Backbone, olmap, Shared)
             this.defaultFiltersExist = false;
             this.defaultFiltersParam = '';
             this.map = new olmap();
-            this.eventsConnector = new EventsConnector();
-
         },
     })
 

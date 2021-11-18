@@ -24,6 +24,7 @@ INSTALLED_APPS += (
     'celery',
     # django rest
     'rest_framework',
+
 )
 
 # Added by George for webodt
@@ -146,3 +147,8 @@ STATICFILES_DIRS = [
     absolute_path('core', 'base_static'),
     absolute_path('search', 'static'),
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 50
+}

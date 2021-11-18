@@ -1,7 +1,6 @@
 body {
     padding-top: 70px;
     padding-bottom : 140px;
-    background-image: url('../img/Login_Background.jpg');
     background-size:     cover;
     background-position: center top;
 }
@@ -222,21 +221,10 @@ a.anchor-entry {
     visibility: hidden;
 }
 
-.btn-login {
-    background-color: white;
-    border-radius: 0;
-    margin: 10px;
-    font-weight: normal;
-    color: #436461;
-    padding: 0 30px;
-    border: 2px solid #436461;
-    font-size: 16pt;
-}
-
-.btn-login:hover {
-    background-color: #436461;
-    color: white;
-    border: 2px solid #436461;
+.userena-btn{
+        width: 50%;
+        color: #1371a5;
+        border-color: #1371a5
 }
 
 .socialaccount_ballot li {
@@ -245,30 +233,5 @@ a.anchor-entry {
     text-align: center !important;
 }
 
-@media only screen and (max-width: 600px) {
-    /* For mobile phones: */
-    .socialaccount_ballot li {
-        float: none;
-        margin: 0 auto !important;
-    }
-    .btn-social-login {
-        margin: 20px 0 0 0 !important;
-    }
-}
 
-.btn-social-login {
-    background-color: white !important;
-    border-radius: 0;
-    font-weight: normal;
-    color: #436461 !important;
-    border: 2px solid #e0d441;
-    font-size: 9pt;
-    margin: 0 25px;
-    margin-top: 20px;
-}
 
-.btn-social-login:hover {
-    background-color: #e0d441 !important;
-    color: white !important;
-    border: 2px solid #e0d441;
-}

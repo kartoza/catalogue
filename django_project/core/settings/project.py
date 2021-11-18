@@ -112,7 +112,7 @@ PIPELINE = {
                 'bootstrap/css/bootstrap/responsive.css',
                 'css/font-awesome/font-awesome.css',
                 'datepicker/css/datepicker.css',
-                'css/new-custom.css',
+                'css/base.css',
                 'js/libs/openlayers-6.5.0/ol.css',
             ),
             'output_filename': 'css/contrib.css',
@@ -122,14 +122,14 @@ PIPELINE = {
         },
         'fluid': {
             'source_filenames': (
-                'css/search-page.css',
-                'css/tabs.css',
-                'css/flat-buttons.css',
-                'css/bootstrap-listTree.css',
-                'css/perfect-scrollbar.css',
-                'css/bootstrap-modal.css',
-                'css/lightbox.css',
-                'css/bootstrap-switch.min.css'
+                # 'css/search-page.css',
+                # 'css/tabs.css',
+                # 'css/flat-buttons.css',
+                # 'css/bootstrap-listTree.css',
+                # 'css/perfect-scrollbar.css',
+                # 'css/bootstrap-modal.css',
+                # 'css/lightbox.css',
+                # 'css/bootstrap-switch.min.css'
             ),
             'output_filename': 'css/fluid.css',
             'extra_context': {
@@ -149,43 +149,43 @@ PIPELINE = {
     'JAVASCRIPT': {
         'contrib': {
             'source_filenames': (
-                'js/libs/jquery/jquery-3.6.0.min.js',
-                'js/jquery/jquery-ui-1.10.2.custom.min.js',
-                'js/jquery.imgareaselect-0.4.2.min.js',
-                'js/csrf-ajax.js',
-                'js/catalogue.js',
-                'js/widget.mapResizer.js',
-                'js/widget.deliveryform.js',
-                'js/libs/bootstrap-5.0.2/js/bootstrap.min.js',
-                'datepicker/js/bootstrap-datepicker.js',
-                'js/sansa-ui.js'
+                # 'js/libs/jquery/jquery-3.6.0.min.js',
+                # 'js/jquery/jquery-ui-1.10.2.custom.min.js',
+                # 'js/jquery.imgareaselect-0.4.2.min.js',
+                # 'js/csrf-ajax.js',
+                # 'js/catalogue.js',
+                # 'js/widget.mapResizer.js',
+                # 'js/widget.deliveryform.js',
+                # 'js/libs/bootstrap-5.0.2/js/bootstrap.min.js',
+                # 'datepicker/js/bootstrap-datepicker.js',
+                # 'js/sansa-ui.js'
             ),
             'output_filename': 'js/contrib.js',
         },
         'fluid': {
             'source_filenames': (
-                'js/libs/jquery/jquery-3.6.0.min.js',
-                'js/init_project.js',
-                'js/jquery/jquery-ui-1.10.2.custom.min.js',
-                'js/jquery.form.min.js',
-                'js/csrf-ajax.js',
-                'js/underscore-min.js',
-                'js/libs/backbone-1.4.0/backbone-min.js',
-                'js/libs/backbone-tastypie.js',
-                'js/libs/bootstrap-5.0.2/js/bootstrap.min.js',
-                'datepicker/js/bootstrap-datepicker.js',
-                'js/bootstrap-modal.js',
-                'js/bootstrap-modalmanager.js',
-                'js/bootstrap-listTree.js',
-                'js/snap.svg.js',
-                'js/perfect-scrollbar-0.4.3.with-mousewheel.min.js',
-                'js/jquery.blockUI.js',
+                # 'js/libs/jquery/jquery-3.6.0.min.js',
+                # 'js/init_project.js',
+                # 'js/jquery/jquery-ui-1.10.2.custom.min.js',
+                # 'js/jquery.form.min.js',
+                # 'js/csrf-ajax.js',
+                # 'js/underscore-min.js',
+                # 'js/libs/backbone-1.4.0/backbone-min.js',
+                # 'js/libs/backbone-tastypie.js',
+                # 'js/libs/bootstrap-5.0.2/js/bootstrap.min.js',
+                # 'datepicker/js/bootstrap-datepicker.js',
+                # 'js/bootstrap-modal.js',
+                # 'js/bootstrap-modalmanager.js',
+                # 'js/bootstrap-listTree.js',
+                # 'js/snap.svg.js',
+                # 'js/perfect-scrollbar-0.4.3.with-mousewheel.min.js',
+                # 'js/jquery.blockUI.js',
                 # 'js/openlayers-plugins/ScaleBar.js',
-                'js/date_utils.js',
-                'js/lightbox-2.6.min.js',
-                'js/bootstrap-switch.min.js',
+                # 'js/date_utils.js',
+                # 'js/lightbox-2.6.min.js',
+                # 'js/bootstrap-switch.min.js',
                 # 'js/map_layers.js',
-                # 'js/widget.daterange.js',
+                # 'js/date_range.js',
                 # 'js/widget.sansaMap.js',
                 # 'js/widget.sansaMapSearchLayer.js',
                 # 'js/widget.sansaGeoSearchLayer.js',
@@ -197,16 +197,16 @@ PIPELINE = {
         },
         'base': {
             'source_filenames': (
-                'js/libs/jquery/jquery-3.6.0.min.js',
-                'js/jquery.blockUI.js',
-                'js/init_project.js',
-                'js/jquery/jquery-ui-1.10.2.custom.min.js',
-                'js/jquery.form.min.js',
-                'js/csrf-ajax.js',
-                'js/underscore-min.js',
-                'js/libs/bootstrap-5.0.2/js/bootstrap.min.js',
-                'datepicker/js/bootstrap-datepicker.js',
-                'js/sansa-ui.js'
+                # 'js/libs/jquery/jquery-3.6.0.min.js',
+                # 'js/jquery.blockUI.js',
+                # 'js/init_project.js',
+                # 'js/jquery/jquery-ui-1.10.2.custom.min.js',
+                # 'js/jquery.form.min.js',
+                # 'js/csrf-ajax.js',
+                # 'js/underscore-min.js',
+                # 'js/libs/bootstrap-5.0.2/js/bootstrap.min.js',
+                # 'datepicker/js/bootstrap-datepicker.js',
+                # 'js/sansa-ui.js'
             ),
             'output_filename': 'js/base.js',
         },
@@ -225,5 +225,9 @@ PIPELINE = {
         }
     }
 }
+
+# userena settings
+USERENA_SIGNIN_REDIRECT_URL = '/search/'
+
 
 from .celery_setting import *  # noqa

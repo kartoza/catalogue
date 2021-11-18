@@ -12,6 +12,9 @@
   <meta name="robots" content="NONE,NOARCHIVE" />
   {# for Bootstrap responsive layout #}
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="{% static "js/libs/jquery/jquery-3.6.0.min.js" %}"></script>
+    <script src="{% static "js/libs/bootstrap-5.0.2/js/bootstrap.bundle.min.js" %}"></script>
+    <script src="{% static "js/libs/jquery-ui-1.12.1/jquery-ui.min.js" %}"></script>
   {% block extracss %}{% endblock %}
     {# Be very careful about changing the order of these css includes as it can have unintended side effects #}
     <link href="{% url 'logVisit' %}" rel="stylesheet" type="text/css" />
@@ -34,21 +37,13 @@
     {% block header %}
     {% endblock %}
 
-      <div id="main-content" class="container main-content well">
-        {% if messages %}
-        <div id="system-messages">
-          <ul>
-            {% for message in messages %}
-            <li>Message: {{ message }}</li>
-            {% endfor %}
-          </ul>
-        </div>
-        {% endif %}
-
+      <div id="main-content" class="container" style="margin-top: 5%">
+       <div class="main-content">
           {% block content %}
           {% endblock %}
+        </div>
       </div>
-
+{% block footer %}
     <div class="footer-wrapper footer">
         <div id="inner-footer" class="wrap cf" style="width: 1040px; margin: 0 auto;">
             <div class="-ft-content">
@@ -70,5 +65,7 @@
             <a class="footer-item" href="https://kartoza.com/" target="_blank"><img src="/static/images/kartoza-icon.png" alt="kartoza_logo" height="23"></a>
         </center>
     </div>
+{% endblock %}
+
     </body>
   </html>

@@ -650,7 +650,7 @@ class GenericProduct(models.Model):
         else:
             return None
 
-    def getConcreteProduct(self):
+    def get_concrete_product(self):
         """
         Downcast a product to its subtype using technique described here:
         http://docs.djangoproject.com/en/dev/topics/db/models/#id7
@@ -697,7 +697,7 @@ class GenericProduct(models.Model):
         """
         Returns the concrete product instance
         """
-        return self.getConcreteProduct()[0]
+        return self.get_concrete_product()[0]
 
     @runconcrete
     def setSacProductId(self):

@@ -184,7 +184,7 @@ def list_orders(request):
             'per_page': settings.PAGE_SIZE
         }).configure(table)
     return ({
-        'myUrl': reverse('listOrders'),
+        'myUrl': reverse('list-orders'),
         'myCurrentMonth': datetime.date.today(),
         'table': table,
         'myRecords': records
@@ -299,14 +299,14 @@ def download_clip_geometry(request, pk):
         return responder.write_delivery_details(my_order)
     elif 'kml' in request.GET:
         return render_to_kml(
-            'kml/clipGeometry.kml', {
+            'kml/clip_geometry.kml', {
                 'order': my_order,
                 'external_site_url': settings.DOMAIN,
                 'transparentStyle': True
             }, 'clip_geometry_order_%s' % my_order.id)
     elif 'kmz' in request.GET:
         return render_to_kmz(
-            'kml/clipGeometry.kml', {
+            'kml/clip_geometry.kml', {
                 'order': my_order,
                 'external_site_url': settings.DOMAIN,
                 'transparentStyle': True,
@@ -359,7 +359,7 @@ def view_order(request, pk):
                     record.save()
 
                 return HttpResponseRedirect(
-                    reverse('viewOrder', kwargs={'theId': order.id}))
+                    reverse('order', kwargs={'theId': order.id}))
             else:
                 return render(
                     request,
@@ -424,7 +424,7 @@ def view_order(request, pk):
                     non_search_record.currency = Currency.objects.get(code=prod_currency)
                     non_search_record.save()
                 return HttpResponseRedirect(
-                    reverse('viewOrder', kwargs={'pk': order.id}))
+                    reverse('order', kwargs={'pk': order.id}))
             else:
                 return render(
                     request,
@@ -595,7 +595,7 @@ def add_order(request):
 
             notifySalesStaff(request.user, order.id)
             return HttpResponseRedirect(
-                reverse('viewOrder', kwargs={'theId': order.id}))
+                reverse('order', kwargs={'theId': order.id}))
         else:
             logger.info('Add Order: form is NOT valid')
             return render(
@@ -684,7 +684,7 @@ def add_adhoc_order(request):
                 non_search_record.save()
             notifySalesStaff(request.user, order.id)
             return HttpResponseRedirect(
-                reverse('viewOrder', kwargs={'theId': order.id}))
+                reverse('order', kwargs={'theId': order.id}))
         else:
             return render(
                 request,
