@@ -107,7 +107,7 @@ services:
       - ./reports:/home/web/reports
       - ./logs:/var/log/
       - ./data:/home/web/django_project/data
-      - /lustre/lfs01/EOSHARE/CATALOGUE/thumbnails_cat3:/home/web/django_project/thumbs_out
+      - /dmz/CATALOGUE/thumbnails_cat3:/home/web/django_project/thumbs_out
     links:
       - smtp:smtp
       - db:db
