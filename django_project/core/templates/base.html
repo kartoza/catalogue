@@ -18,12 +18,10 @@
   {% block extracss %}{% endblock %}
     {# Be very careful about changing the order of these css includes as it can have unintended side effects #}
     <link href="{% url 'logVisit' %}" rel="stylesheet" type="text/css" />
-          <link href="{% static "css/navbar.css" %}" rel="stylesheet">
-          <link href="{% static "css/landing_page.css" %}" rel="stylesheet">
-    {% stylesheet 'contrib' %}
-    {% stylesheet 'base' %}
+    <link href="{% static "css/navbar.css" %}" rel="stylesheet">
+    <link href="{% static "css/landing_page.css" %}" rel="stylesheet">
+    {% stylesheet 'catalogue' %}
   {% block extrajs %}{% endblock %}
-    {% javascript 'base' %}
       <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}"/>
       <link rel="icon" href="{% static 'images/animated_favicon.gif' %}" type="image/gif" />
       {% block extraHeaders %}{% endblock %}

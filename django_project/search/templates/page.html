@@ -17,35 +17,7 @@
     </style>
 {% endblock %}
 {% block content%}
-
-
-
-{#      <div id="map" class="search-map"></div>#}
-{#      <div id="svg_layer">#}
-{#        <svg id="svg" style="width:100%; height: 100%;"></svg>#}
-{#      </div>#}
-{#      <input type="hidden" id="id_geometry" />#}
-{#      <div id="map-controls">#}
-{#        <div id="map-layerswitcher-control">#}
-{#          <button class="btn btn-info btn-large right icon-globe" data-toggle="tooltip"#}
-{#                      data-title="Select layers"#}
-{#                      data-placement="top"></button>#}
-{#        </div>#}
-{#        <div id="map-navigation"></div>#}
-{#      </div>#}
-{#      <div id="map-controls3" class="blackalpha60">#}
-{#      </div>#}
-{#      <div id="map-controls2" class="blackalpha60">#}
-{#        <div id="map-control-position"></div>#}
-{#        <div id="map-control-scalebar"></div>#}
-{#      </div>#}
-{#      <div id="map-layerswitcher"></div>#}
-{#  <div id="ajax-modal" class="modal hide fade" tabindex="-1"></div>#}
-{#  <div id="imageBox" class="modal container hide fade text-center"  tabindex="-2">#}
-{#    <img id="imageBoximage" src="" />#}
-{#  </div>#}
     <div id="map-container"></div>
-
 {% endblock%}
 {% block footer %}
     {% include 'map_templates.html' %}
@@ -54,9 +26,6 @@
 
     <script data-main="/static/js/app" src="/static/js/libs/requirejs-2.3.6/require.js"></script>
     <script src="{% static "js/date_utils.js" %}"></script>
-{#    <script src="{% static "js/widget.sansaMapSearchLayer.js" %}"></script>#}
-{#    <script src="{% static "js/widget.sansaGeoSearchLayer.js" %}"></script>#}
-{#    <script src="{% static "js/widget.sansaSearchCartLayer.js" %}"></script>#}
 
 {% endblock %}
 {% block extrajs %}
@@ -80,7 +49,6 @@
     {% endif %}
 
     </script>
-{#  <script type="text/javascript" src="{% static 'js/backbone-pagination.js' %}"></script>#}
   <script>
   // set control variable for share link window
   // default false
