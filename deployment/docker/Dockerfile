@@ -17,11 +17,13 @@ RUN apt-get update -y && \
         python3-pyproj \
         python3-lxml \
         gdal-bin gdal-data libgdal-dev \
-        python3-gdal --fix-missing
+        python3-gdal \
+        nodejs npm --fix-missing
 
 ADD libs /libs
 ADD deployment/docker/REQUIREMENTS.txt /REQUIREMENTS.txt
 RUN pip install pyproj && pip install -r /REQUIREMENTS.txt && pip install uwsgi
+RUN npm -g install yuglify
 
 RUN sed -i "/        new_class = super_new(cls, name, bases, {'__module__': module})/a\        new_attrs = {'__module__': module}\n        classcell = attrs.pop('__classcell__', None)\n        if classcell is not None:\n            new_attrs['__classcell__'] = classcell\n        new_class = super_new(cls, name, bases, new_attrs)" /usr/local/lib/python3.8/site-packages/django/db/models/base.py
 
