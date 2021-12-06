@@ -236,9 +236,6 @@ define([
         focusFeature: function( theRecordId ) {
             const self = this
             const highlightStyle = new ol.style.Style({
-                fill: new ol.style.Fill({
-                    color: 'rgba(255,255,255,0.7)',
-                }),
                 stroke: new ol.style.Stroke({
                     color: '#3399CC',
                     width: 3,
@@ -247,8 +244,6 @@ define([
             const featureId = this.getFeatureIndexByRecordId( theRecordId );
             const feature = self.layerSearchSource.getFeatureById(featureId);
             feature.setStyle(highlightStyle);
-            console.log(feature)
-            // this.layerSearchSource.highlightFeatureControl.highlight(feature);
 
         },
 
@@ -265,6 +260,7 @@ define([
         },
 
         removeFocusFeature: function (theRecordId){
+            const self = this
             const featureId = this.getFeatureIndexByRecordId( theRecordId );
             const feature = self.layerSearchSource.getFeatureById(featureId);
             feature.setStyle(new ol.style.Style({

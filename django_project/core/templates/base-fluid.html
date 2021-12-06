@@ -19,8 +19,7 @@
     {# Be very careful about changing the order of these css includes as it can have unintended side effects #}
     <link href="{% url 'logVisit' %}" rel="stylesheet" type="text/css" />
 
-    {% stylesheet 'contrib' %}
-{#    {% stylesheet 'fluid' %}#}
+    {% stylesheet 'catalogue' %}
 
     {% block extraHeaders %}
     {% endblock %}
@@ -33,8 +32,9 @@
    {% include "navigation_bar.html" %}
    {% block content %}
    {% endblock %}
-    {% block extrajs %}
-    {% javascript 'fluid' %}
-    {% endblock %}
+   {% block extrajs %}
+   {% endblock %}
+   {% block footer %}
+   {% endblock %}
   </body>
 </html>
