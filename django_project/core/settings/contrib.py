@@ -76,8 +76,7 @@ STATICFILES_FINDERS += (
 )
 
 # enable cached storage - requires uglify.js (node.js)
-# STATICFILES_STORAGE = 'pipeline.storage.PipelineCachedStorage'
-STATICFILES_STORAGE = 'pipeline.storage.NonPackagingPipelineStorage'
+STATICFILES_STORAGE = 'pipeline.storage.PipelineCachedStorage'
 
 # we use some of the libraries which use global namespace (OL, Proj4JS, ...)
 DISABLE_WRAPPER = True
