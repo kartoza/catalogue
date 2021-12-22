@@ -67,25 +67,6 @@
               <li class="nav-item active">
                 <a href="{% url 'contact' %}">Contact</a>
               </li>
-        {% if user.is_staff %}
-      <li class="nav-item active  dropdown">
-        <a class="dropdown-toggle" href="#"  id="dropdownMenuLink"
-           data-bs-toggle="dropdown" aria-expanded="false">Staff</a>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-          <a class="dropdown-item" href="{% url 'list-orders' %}">Orders List</a>
-          <a class="dropdown-item"  href="{% url 'add-ad-hoc-order' %}">Ad-hoc order</a>
-          <a class="dropdown-item" href="{% url 'recentSearches' %}">Searches Table</a>
-          <a class="dropdown-item" href="{% url 'searchesMap' %}">Searches Map</a>
-          <a class="dropdown-item" href="{% url 'visitorMap' %}">Vistor Map</a>
-          <a class="dropdown-item" href="{% url 'visitorsKml' %}">Visitor KML</a>
-          <a class="dropdown-item" href="{% url 'visitorList' %}">Visitor List</a>
-          <a class="dropdown-item" href="{% url 'visitorReport' %}">Visitor Stats</a>
-          {% if user.is_superuser %}
-          <a class="dropdown-item" href="{% url 'admin:index' %}">Page Admin</a>
-          {% endif %}
-        </div>
-      </li>
-        {% endif %}
       </ul>
         <ul class="navbar-nav mr-auto">
         {% if user.is_authenticated %}
