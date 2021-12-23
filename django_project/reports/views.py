@@ -18,7 +18,6 @@ __version__ = '0.1'
 __date__ = '17/08/2012'
 __copyright__ = 'South African National Space Agency'
 
-import os
 import json
 # for error logging
 import traceback
@@ -356,7 +355,7 @@ def search_monthly_report_aoi(request, year, month):
 
 
 # RenderWithContext is explained in renderWith.py
-@RenderWithContext('dataSummaryTable.html')
+@RenderWithContext('data-summary-table.html')
 def data_summary_table(request):
     """
     Summary of available records
@@ -379,7 +378,6 @@ def data_summary_table(request):
         # Django's pagination is only required for the PDF view as
         # django-tables2 handles pagination for the table
         table = None
-        template_name = 'pdf/data_summary.html'
         page_size = len(json_data)
         try:
             page = int(request.GET.get('page', '1'))
@@ -396,7 +394,7 @@ def data_summary_table(request):
             'per_page': settings.PAGE_SIZE
         }).configure(table)
     return ({
-        'myUrl': reverse('dataSummaryTable'),
+        'myUrl': reverse('data-summary-table'),
         'table': table,
         'total': total,
         'myResultSet': json_data
@@ -518,6 +516,6 @@ def sensor_fact_sheet(request, sat_abbr, instrument_type):
     return ({
         'bands': bands,
         'processing_levels': processing_levels,
-        'dataSummaryTable': reverse('dataSummaryTable'),
+        'dataSummaryTable': reverse('data-summary-table'),
         'sat_group': sat_group
     })

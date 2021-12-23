@@ -1,5 +1,6 @@
 from django.conf.urls import url
 
+from .api import DataSummaryApiView
 from .views import (
     search_history,
     recent_searches,
@@ -13,7 +14,6 @@ from .views import (
     sensor_summary_table,
     sensor_fact_sheet
 )
-
 
 urlpatterns = [
     url(r'^mysearches/$', search_history, name='searchHistory'),
@@ -29,8 +29,10 @@ urlpatterns = [
     url(r'^visitormonthlyreport/(?P<year>\d{4})/(?P<month>\d{1,2})/$',
         visitor_monthly_report, name='visitorMonthlyReport'
         ),
-    url(r'^dataSummaryTable/$', data_summary_table, name='dataSummaryTable'),
+    url(r'^data-summary-table/$', data_summary_table, name='data-summary-table'),
     url(r'^dictionaryReport/$', dictionary_report, name='dictionaryReport'),
     url(r'^sensor-fact-sheet/(?P<sat_abbr>[\w-]+)/(?P<instrument_type>[\w-]+)/$',
-        sensor_fact_sheet, name='fact-sheet')
+        sensor_fact_sheet, name='fact-sheet'),
+    url(r'^data-summary/$',
+        DataSummaryApiView.as_view(), name='data-summary')
 ]
