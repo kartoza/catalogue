@@ -1,85 +1,94 @@
 {% load staticfiles %}
-<div class="hr-navbar d-flex flex-column flex-md-row align-items-center p-3 px-md-4 border-bottom fixed-top">
-    <div class="my-0 font-weight-normal me-5" >
-        <a class="navbar-brand bims-title-big" href="/"><img src="{% static 'sansa-logos/SANSA-logo.png' %}" height="50px"/></a>
-    </div>
-<div class="navbar navbar-expand-md ms-5">
-    <div class="collapse navbar-collapse my-2 my-md-0 ms-5 topNav" id="navbarCollapse">
-            <ul class="navbar-nav ms-5">
-              <li class="nav-item active">
-                <a href="{% url 'data-summary-table' %}">Data Summary</a>
-              </li>
-              <li class="nav-item active">
-                <a href="{% url 'search' %}">Search</a>
-              </li>
-              {% if user.is_authenticated %}
-              <li class="nav-item active">
-                <a href="{% url 'add-order' %}">Order Now</a>
-              </li>
-              {% endif %}
-              {% if not user.is_authenticated %}
-              <li class="nav-item active">
-                <a href="{% url 'about' %}">About</a>
-              </li>
-              {% endif %}
-              {% if user.is_authenticated %}
-              {# my history #}
-              <li class="nav-item active dropdown">
-                <a class="dropdown-toggle" href="#"  id="dropdownMenuLink"
-                     data-bs-toggle="dropdown" aria-expanded="false"href="#" >
-                   My History</a>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                    <a class="dropdown-item" href="{% url 'searchHistory' %}">My Search History</a>
-                    <a class="dropdown-item" href="{% url 'showCartContents' %}">My Cart</a>
-                    <a class="dropdown-item" href="{% url 'myOrders' %}">My Orders</a>
-                  {#<li><a href="{% url 'whereAmI' %}">Where am I?</a></li>#}
-                </div>
-              </li>
-              <li class="nav-item active dropdown">
-                  <a class="dropdown-toggle" href="#"  id="dropdownMenuLink"
-                     data-bs-toggle="dropdown" aria-expanded="false">
-                    Downloads
-                </a>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                    <a class="dropdown-item" href="ftp://eoftp.sansa.org.za/images/fundisa" target="_blank">
-                        Fundisa</a>
-                </div>
-              </li>
+ <!-- Responsive navbar-->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light" style="padding-top: 0; padding-bottom: 0;">
+            <div class="container">
+                <a class="navbar-brand" href="/"><img src="{% static 'sansa-logos/SANSA-logo.png' %}" height="50px"/></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="{% url 'search' %}">Search</a></li>
+                        <li class="nav-item"><a class="nav-link" aria-current="page" href="{% url 'data-summary-table' %}">Data Summary</a></li>
+                        {% if not user.is_authenticated %}
+                        <li class="nav-item"><a class="nav-link" href="#!">About</a></li>
+                        {% endif %}
+                        <li class="nav-item"><a class="nav-link" href="{% url 'contact' %}">Contact</a></li>
+                         {% if user.is_authenticated %}
+                          <li class="nav-item active">
+                            <a class="nav-link" href="{% url 'add-order' %}">Order Now</a>
+                          </li>
+                          {% endif %}
 
-              {% endif %}
-              <li class="nav-item active dropdown">
-                <a class="dropdown-toggle" href="#"  id="dropdownMenuLink"
-                     data-bs-toggle="dropdown" aria-expanded="false">
-                    Links</a>
+                          {% if user.is_authenticated %}
+                          <li class="nav-item dropdown">
+                            <a class="dropdown-toggle nav-link" href="#"  id="dropdownMenuLink"
+                                 data-bs-toggle="dropdown" aria-expanded="false"href="#" >
+                               My History</a>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                <a class="dropdown-item" href="{% url 'searchHistory' %}">My Search History</a>
+                                <a class="dropdown-item" href="{% url 'showCartContents' %}">My Cart</a>
+                                <a class="dropdown-item" href="{% url 'myOrders' %}">My Orders</a>
+{#                              <li><a href="{% url 'whereAmI' %}">Where am I?</a></li>#}
+                            </div>
+                          </li>
+                          <li class="nav-item active dropdown">
+                              <a class="dropdown-toggle nav-link" href="#"  id="dropdownMenuLink"
+                                 data-bs-toggle="dropdown" aria-expanded="false">
+                                Downloads
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                <a class="dropdown-item" href="ftp://eoftp.sansa.org.za/images/fundisa" target="_blank">
+                                    Fundisa</a>
+                            </div>
+                          </li>
+
+                          {% endif %}
+                          <li class="nav-item active dropdown">
+                            <a class="dropdown-toggle nav-link" href="#"  id="dropdownMenuLink"
+                                 data-bs-toggle="dropdown" aria-expanded="false">
+                                Links</a>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                <a class="dropdown-item" href="http://www.sansa.org.za" target="_blank">SANSA</a>
+                                <a class="dropdown-item" href="http://www.earthobservations.org/index.shtml" target="_blank">GEO</a>
+                                <a class="dropdown-item" href="http://saeos.dirisa.org" target="_blank">SAEOS</a>
+                                <a class="dropdown-item" href="http://afis.co.za" target="_blank">AFIS</a>
+                                <a class="dropdown-item" href="http://wamis.meraka.org.za/" target="_blank">WAMIS</a>
+                                <a class="dropdown-item" href="http://glovis.usgs.gov" target="_blank">USGS</a>
+                                <a class="dropdown-item" href="https://geostore.astrium-geo.com/en-EMEA/2-home" target="_blank">Astrium</a>
+                                <a class="dropdown-item" href="https://www.digitalglobe.com/" target="_blank">Digital Globe</a>
+                                <a class="dropdown-item" href="http://www.satimagingcorp.com/" target="_blank">Satellite Imaging Corporation</a>
+                                <a class="dropdown-item" href="http://eyefind.rapideye.com" target="_blank">RapidEye</a>
+                            </div>
+                          </li>
+                {% if user.is_staff %}
+              <li class="nav-item  dropdown">
+                <a class="dropdown-toggle nav-link" href="#"  id="dropdownMenuLink"
+                   data-bs-toggle="dropdown" aria-expanded="false">Staff</a>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                    <a class="dropdown-item" href="http://www.sansa.org.za" target="_blank">SANSA</a>
-                    <a class="dropdown-item" href="http://www.earthobservations.org/index.shtml" target="_blank">GEO</a>
-                    <a class="dropdown-item" href="http://saeos.dirisa.org" target="_blank">SAEOS</a>
-                    <a class="dropdown-item" href="http://afis.co.za" target="_blank">AFIS</a>
-                    <a class="dropdown-item" href="http://wamis.meraka.org.za/" target="_blank">WAMIS</a>
-                    <a class="dropdown-item" href="http://glovis.usgs.gov" target="_blank">USGS</a>
-                    <a class="dropdown-item" href="https://geostore.astrium-geo.com/en-EMEA/2-home" target="_blank">Astrium</a>
-                    <a class="dropdown-item" href="https://www.digitalglobe.com/" target="_blank">Digital Globe</a>
-                    <a class="dropdown-item" href="http://www.satimagingcorp.com/" target="_blank">Satellite Imaging Corporation</a>
-                    <a class="dropdown-item" href="http://eyefind.rapideye.com" target="_blank">RapidEye</a>
+                  <a class="dropdown-item" href="{% url 'list-orders' %}">Orders List</a>
+                  <a class="dropdown-item"  href="{% url 'add-ad-hoc-order' %}">Ad-hoc order</a>
+                  <a class="dropdown-item" href="{% url 'recentSearches' %}">Searches Table</a>
+                  <a class="dropdown-item" href="{% url 'searchesMap' %}">Searches Map</a>
+                  <a class="dropdown-item" href="{% url 'visitorMap' %}">Vistor Map</a>
+                  <a class="dropdown-item" href="{% url 'visitorsKml' %}">Visitor KML</a>
+                  <a class="dropdown-item" href="{% url 'visitorList' %}">Visitor List</a>
+                  <a class="dropdown-item" href="{% url 'visitorReport' %}">Visitor Stats</a>
+                  {% if user.is_superuser %}
+                  <a class="dropdown-item" href="{% url 'admin:index' %}">Page Admin</a>
+                  {% endif %}
                 </div>
               </li>
-              <li class="nav-item active">
-                <a href="{% url 'contact' %}">Contact</a>
+                {% endif %}
+                {% if user.is_authenticated %}
+                {% include "useraccounts/menu_content.html" %}
+              {% else %}
+              <li class="nav-item active" >
+                <a id=login_link" class="nav-link" href="{% url 'userena_signin' %}">Log in</a>
               </li>
-      </ul>
-        <ul class="navbar-nav mr-auto">
-        {% if user.is_authenticated %}
-            {% include "useraccounts/menu_content.html" %}
-          {% else %}
-          <li class="nav-item active" >
-            <a id="login_link" href="{% url 'userena_signin' %}">Log in</a>
-          </li>
-          <li class="nav-item active">
-            <a id="login_register" href="{% url 'userena_signup' %}">Sign Up</a>
-          </li>
-        {% endif %}
-        </ul>
-  </div>
-</div>
-</div>
+              <li class="nav-item">
+                <a id="login_register" class="nav-link" href="{% url 'userena_signup' %}">Sign Up</a>
+              </li>
+            {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </nav>

@@ -1,5 +1,4 @@
 body {
-    padding-top: 70px;
     padding-bottom : 140px;
     background-size:     cover;
     background-position: center top;
@@ -177,9 +176,7 @@ html,
 body {
   overflow-x: hidden; /* Prevent scroll on narrow devices */
 }
-body {
-  padding-top: 70px;
-}
+
 footer {
   padding: 30px 0;
 }
