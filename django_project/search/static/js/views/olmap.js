@@ -18,6 +18,7 @@ define([
     return Backbone.View.extend({
         template: _.template($('#map-template').html()),
         className: 'map-wrapper',
+        id: 'wrapper',
         map: null,
         polygonDraw: null,
         layerSearchSource: null,

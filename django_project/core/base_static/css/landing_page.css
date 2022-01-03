@@ -57,16 +57,9 @@ img::-moz-selection {
 }
 
 header.masthead {
-    padding-top: 20px;
-    padding-bottom: 0px;
     background-position: center center;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
     background-size: cover;
-    background-color: black;
-    max-height: 700px !important;
-    min-height: auto !important;
+    max-height: 500px !important;
 }
 
 header.masthead hr {
@@ -97,7 +90,7 @@ header.masthead p {
 
 @media (min-width: 992px) {
     header.masthead {
-        min-height: 670px !important;
+        min-height: 470px !important;
         padding-top: 0;
         padding-bottom: 0;
     }

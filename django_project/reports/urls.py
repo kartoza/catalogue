@@ -16,7 +16,7 @@ from .views import (
 )
 
 urlpatterns = [
-    url(r'^mysearches/$', search_history, name='searchHistory'),
+    url(r'^search-history/$', search_history, name='search-history'),
     url(r'^recentsearches/$', recent_searches, name='recentSearches'),
     url(r'^searchmonthlyreport/(?P<year>\d{4})/(?P<month>\d{1,2})/$',
         search_monthly_report, name='searchMonthlyReport'

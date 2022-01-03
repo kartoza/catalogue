@@ -6,18 +6,37 @@
         margin-top: 0;
     }
     </style>
-{% endblock %}
-{% block header %}
-<div id="section-wrapper">
+{% endblock %}cd
+{% block content %}
 <!-- Header - set the background image for the header in the line below-->
-        <header class="py-5 bg-image-full" style="background-image: url('/static/images/sansa.jpg')">
-            <div class="text-center my-5">
-                <h1 class="text-white fs-3 fw-bolder" >SANSA Earth Observation Online Catalogue</h1>
-                <p class="text-white mb-5">The South African National Space Agency Earth Observation imagery archive for South Africa and SADC </p>
-                <a class="btn-account btn-l  search" href="/search">SEARCH</a>
-            </div>
-        </header>
+    <header class="py-5 bg-image-full masthead" style="background-image: url('/static/images/sansa.jpg')">
+        <div class="text-center my-5">
+            <h1 class="text-white fs-3 fw-bolder" >SANSA Earth Observation Online Catalogue</h1>
+            <p class="text-white mb-5">The South African National Space Agency Earth Observation imagery archive for South Africa and SADC </p>
+            <a class="btn-account btn-l  search" href="/search">SEARCH</a>
+        </div>
+    </header>
+   <!-- Features section-->
+        <section class="py-5" id="features">
+            <div class="container px-5 my-5">
+                <div class="row gx-5">
+                    <div class="col-lg-4 mb-5 mb-lg-0">
+                        <div class="feature bg-gradient text-white rounded-3 mb-3"><br><img class="img-fluid rounded" src={% static 'images/qgis-icon64.png' %} alt="..." /><br></div>
+                        <p>Download a special SANSA-branded version of the free, open-source Quantum GIS</p>
+                    </div>
+                    <div class="col-lg-4 mb-5 mb-lg-0">
+                        <div class="feature bg-gradient text-white rounded-3 mb-3"><br><h2 class="h4 fw-bolder">Fundisa Student Portal</h2><br></div>
+                        <p>Be inspired by Earth Observation - Resources and a Student Forum for all your remote sensing questions.</p>
 
-</div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="feature bg-gradient text-white rounded-3 mb-3"><img class="img-fluid rounded" src={% static 'images/dst_logo_small.png' %} alt="..." /></div>
+                        <p>This catalogue was funded by the Department of Science and Technology</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
 {% endblock %}
 
