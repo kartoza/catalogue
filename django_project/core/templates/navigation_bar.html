@@ -19,17 +19,16 @@
                           {% endif %}
 
                           {% if user.is_authenticated %}
-                          <li class="nav-item dropdown">
-                            <a class="dropdown-toggle nav-link" href="#"  id="dropdownMenuLink"
-                                 data-bs-toggle="dropdown" aria-expanded="false"href="#" >
-                               My History</a>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                <a class="dropdown-item" href="{% url 'searchHistory' %}">My Search History</a>
-                                <a class="dropdown-item" href="{% url 'showCartContents' %}">My Cart</a>
-                                <a class="dropdown-item" href="{% url 'myOrders' %}">My Orders</a>
-{#                              <li><a href="{% url 'whereAmI' %}">Where am I?</a></li>#}
-                            </div>
-                          </li>
+{#                          <li class="nav-item dropdown">#}
+{#                            <a class="dropdown-toggle nav-link" href="#"  id="dropdownMenuLink"#}
+{#                                 data-bs-toggle="dropdown" aria-expanded="false"href="#" >#}
+{#                               My History</a>#}
+{#                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">#}
+{#                                <a class="dropdown-item" href="{% url 'search-history' %}">My Search History</a>#}
+{#                                <a class="dropdown-item" href="{% url 'showCartContents' %}">My Cart</a>#}
+{#                                <a class="dropdown-item" href="{% url 'myOrders' %}">My Orders</a>#}
+{#                            </div>#}
+{#                          </li>#}
                           <li class="nav-item active dropdown">
                               <a class="dropdown-toggle nav-link" href="#"  id="dropdownMenuLink"
                                  data-bs-toggle="dropdown" aria-expanded="false">
@@ -66,12 +65,15 @@
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                   <a class="dropdown-item" href="{% url 'list-orders' %}">Orders List</a>
                   <a class="dropdown-item"  href="{% url 'add-ad-hoc-order' %}">Ad-hoc order</a>
+                  <hr>
                   <a class="dropdown-item" href="{% url 'recentSearches' %}">Searches Table</a>
                   <a class="dropdown-item" href="{% url 'searchesMap' %}">Searches Map</a>
+                  <hr>
                   <a class="dropdown-item" href="{% url 'visitorMap' %}">Vistor Map</a>
                   <a class="dropdown-item" href="{% url 'visitorsKml' %}">Visitor KML</a>
                   <a class="dropdown-item" href="{% url 'visitorList' %}">Visitor List</a>
                   <a class="dropdown-item" href="{% url 'visitorReport' %}">Visitor Stats</a>
+                  <hr>
                   {% if user.is_superuser %}
                   <a class="dropdown-item" href="{% url 'admin:index' %}">Page Admin</a>
                   {% endif %}

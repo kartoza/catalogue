@@ -4,35 +4,21 @@
            data-bs-toggle="dropdown" aria-expanded="false">{{ user.username }}</a>
       <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
       {% if user.is_authenticated %}
-          <a class="dropdown-item" href="{% url "userena_profile_detail" user %}">{% trans "Personal information" %}</a>
-          <a class="dropdown-item" href="{% url "userena_profile_edit" user %}">{% trans "Edit profile" %}</a>
-        {% comment %}
-        <li>
-          <a href="{% url profile_detail %}">{% trans "Avatar" %}</a>
-        </li>
-        {% endcomment %}
-          <a class="dropdown-item" href="{% url "userena_password_change" user %}">{% trans "Change password" %}</a>
-          <a class="dropdown-item" href="{% url "userena_email_change" user %}">
-          {% if email %}{% trans "Change your e-mail address" %}{% else %}{% trans "Change your e-mail address" %}{% endif %}</a>
+          <a class="dropdown-item" href="{% url 'search-history' %}">Search History</a>
+          <a class="dropdown-item" href="{% url 'showCartContents' %}">My Cart</a>
+          <a class="dropdown-item" href="{% url 'myOrders' %}">My Orders</a>
+          <hr>
+          <a class="dropdown-item" href="{% url "userena_profile_detail" user %}">{% trans "Profile" %}</a>
+{#          <a class="dropdown-item" href="{% url "userena_profile_detail" user %}">{% trans "Personal information" %}</a>#}
+{#          <a class="dropdown-item" href="{% url "userena_profile_edit" user %}">{% trans "Edit profile" %}</a>#}
+{#          <a class="dropdown-item" href="{% url "userena_password_change" user %}">{% trans "Change password" %}</a>#}
+{#          <a class="dropdown-item" href="{% url "userena_email_change" user %}">#}
+{#          {% if email %}{% trans "Change your e-mail address" %}{% else %}{% trans "Change your e-mail address" %}{% endif %}</a>#}
         {% if not validated and email %}
           <a class="dropdown-item" href="{% url "userena_email_confirm" %}">{% trans "Resend validation e-mail" %}</a>
         {% endif %}
-          <hr>
-          {% if user.is_staff %}
-          <a class="dropdown-item" href="{% url 'list-orders' %}">Orders List</a>
-          <a class="dropdown-item"  href="{% url 'add-ad-hoc-order' %}">Ad-hoc order</a>
-          <a class="dropdown-item" href="{% url 'recentSearches' %}">Searches Table</a>
-          <a class="dropdown-item" href="{% url 'searchesMap' %}">Searches Map</a>
-          <a class="dropdown-item" href="{% url 'visitorMap' %}">Vistor Map</a>
-          <a class="dropdown-item" href="{% url 'visitorsKml' %}">Visitor KML</a>
-          <a class="dropdown-item" href="{% url 'visitorList' %}">Visitor List</a>
-          <a class="dropdown-item" href="{% url 'visitorReport' %}">Visitor Stats</a>
-          {% if user.is_superuser %}
-          <a class="dropdown-item" href="{% url 'admin:index' %}">Page Admin</a>
-          {% endif %}
-          <hr>
+        <hr>
            <a class="dropdown-item" href="{% url "userena_signout" %}">Logout</a>
-        {% endif %}
       {% else %}
           <a class="dropdown-item" href="{% url 'userena_signin' %}">Login</a>
       {% endif %}
