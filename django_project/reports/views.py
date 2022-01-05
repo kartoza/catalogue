@@ -96,7 +96,7 @@ def slice_for_display(the_list, page_size=10):
 
 @staff_member_required
 # RenderWithContext is explained in renderWith.py
-@RenderWithContext('visitorReport.html')
+@RenderWithContext('visitor-report.html')
 def visitor_report(request):
     """
     The view to render a visitor report
@@ -127,7 +127,7 @@ def visitor_report(request):
 
 @staff_member_required
 # RenderWithContext is explained in renderWith.py
-@RenderWithContext('visitorMonthlyReport.html')
+@RenderWithContext('visitor-monthly-report.html')
 def visitor_monthly_report(request, year, month):
     """
     The view to return a monthly report on visitor activity
@@ -247,7 +247,7 @@ def search_history(request):
 
 @staff_member_required
 # RenderWithContext is explained in renderWith.py
-@RenderWithContext('recentSearches.html')
+@RenderWithContext('recent-searches.html')
 def recent_searches(request):
     """
     View to return a list of recent searches. Limited to 50.

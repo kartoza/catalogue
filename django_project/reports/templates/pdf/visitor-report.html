@@ -1,23 +1,21 @@
 {% extends "pdf_base.html" %}
+
 {% load graphtag %}
 
 {% block title %}
-    Visits by country for {{ myCurrentDate|date:'F Y' }}
+    Visits by country excluding SA
 {% endblock %}
 
 {% block content %}
 
 {% if myScores %}
 
-
 <center>
-<img src="{% gPieChart myScores myGraphLabel 0 %}" />
+<img src="{% gPieChart myScores myGraphLabel 1 %}" />
 </center>
 
-<pdf:spacer height='1cm'/>
-
-<div class="h2">Visits by country for {{ myCurrentDate|date:'F Y' }}</div>
-<table>
+<div class="h2">All Countries</div>
+<table  width="100%" class="table table-striped">
   <thead>
     <th width="150px">Country</th>
     <th width="100px">Visitors</th>
