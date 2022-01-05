@@ -1,4 +1,8 @@
+{% load staticfiles %}
 {% load render_table from django_tables2 %}
+{% block extracss %}
+    <link href="{% static "css/table.css" %}" rel="stylesheet">
+{% endblock %}
 <script type="text/javascript">
 function showOrder(theId) {
   var theUrl = '/list-orders/?order_id=' + theId + ' #list-order-table';
@@ -6,8 +10,49 @@ function showOrder(theId) {
 }
 </script>
 {% block content %}
-<div class="row-fluid">
-  <h2>Orders List</h2>
+<div class="main-content">
+<div id="layoutSidenav_content">
+                <main>
+                    <div class="container-fluid px-4">
+                        <h1 class="mt-4">Orders</h1>
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <i class="fas fa-table me-1"></i>
+                                Orders Table
+                                <div id="order-list-buttonset" class="btn-group pull-right">
+                                    <button id="download-btn" class="btn"
+                                            onclick='location="{{ myUrl }}?page={{ myRecords.number}}&pdf"'>
+                                      <i class="icon-download"></i> Download as PDF
+                                    </button>
+                                    {% if myUrl == '/list-orders/' %} {# can't use url template tag for if evaluation #}
+                                    <button class="btn monthly-btn"
+                                            onclick='location="{% url 'orderMonthlyReport' myCurrentMonth|date:'Y'  myCurrentMonth|date:'m' %}"'>
+                                      <i class="icon-calendar"></i> View Monthly Reports
+                                    </button>
+                                    <button class="btn summary-btn"
+                                            onclick='location="{% url 'orders-summary' %}"'>
+                                      <i class="icon-tasks"></i> View Orders Summary
+                                    </button>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                {% if myRecords %}
+                                  <div class=id="list-order-table">
+                                    {% render_table table 'django_tables2/custom-table.html' %}
+                                  </div>
+                                {% else %}
+                                  <div class="text-center" id="list-order-table">
+                                    <p class="lead">
+                                      No Order Founds.
+                                    </p>
+                                  </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </main>
+            </div>
 </div>
 <div class="row-fluid center">
   <form name="frmShowOrder" method="get" action="" class="form-horizontal">
@@ -25,33 +70,9 @@ function showOrder(theId) {
 </div>
 <div class="row-fluid center gap-bottom">
   <div id="order-list-buttonset" class="btn-group">
-    <button id="download-btn" class="btn"
-            onclick='location="{{ myUrl }}?page={{ myRecords.number}}&pdf"'>
-      <i class="icon-download"></i> Download as PDF
-    </button>
-    {% if myUrl == '/list-orders/' %} {# can't use url template tag for if evaluation #}
-    <button class="btn monthly-btn"
-            onclick='location="{% url 'orderMonthlyReport' myCurrentMonth|date:'Y'  myCurrentMonth|date:'m' %}"'>
-      <i class="icon-calendar"></i> View Monthly Reports
-    </button>
-    <button class="btn summary-btn"
-            onclick='location="{% url 'orders-summary' %}"'>
-      <i class="icon-tasks"></i> View Orderssss Summary
-    </button>
-    {% endif %}
+
   </div>
 </div>
-{% if myRecords %}
-  <div class="row-fluid" id="list-order-table">
-    {% render_table table 'django_tables2/custom-table.html' %}
-  </div>
-{% else %}
-  <div class="row-fluid text-center" id="list-order-table">
-    <p class="lead">
-      No Order Founds.
-    </p>
-  </div>
-{% endif %}
 <script>
 $('.monthly-btn').tooltip({
   placement:'top',

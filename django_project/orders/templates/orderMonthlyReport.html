@@ -1,6 +1,9 @@
 {% extends "base.html" %}
 {% load render_table from django_tables2 %}
 {% load staticfiles %}
+{% block extracss %}
+    <link href="{% static "css/table.css" %}" rel="stylesheet">
+{% endblock %}
 {% block content %}
   <script type="text/javascript">
       function showOrder(theId) {
@@ -8,30 +11,47 @@
         $('#content').load(theUrl,'', zebraTables );
       };
   </script>
+  <div class="main-content">
+<div id="layoutSidenav_content">
+                <main>
+                    <div class="container-fluid px-4">
+                        <h1 class="mt-4">Order List for {{ myCurrentDate|date:'M, Y' }}</h1>
 
-  <div class="row-fluid center">
-    <span class="step-links btn-group">
-      <button class="btn"
-         onclick='location="{% url 'orderMonthlyReport' myPrevDate|date:'Y' myPrevDate|date:'m' %}"'>
-        <i class="icon-chevron-left"></i> Previous Month
-      </button>
-      <button onclick='location="?pdf"' class="btn btn-success">
-        <i class="icon-download"></i> PDF
-      </button>
-      <button class="btn"
-              onclick='location="{% url 'orderMonthlyReport' myNextDate|date:'Y' myNextDate|date:'m' %}"'>
-        Next Month <i class="icon-chevron-right"></i>
-      </button>
-    </span>
-  </div>
-  {% if not myRecords %}
-     <div class="row">
-       <h2>No Report to Generate</h2>
-     </div>
-  {% else %}
-    <h2 class="chartTitle text-center">Order List for {{ myCurrentDate|date:'M, Y' }}</h2>
-    <div class="row-fluid">
-      {% render_table table 'django_tables2/custom-table.html' %}
-    </div>
-  {% endif %}
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <i class="fas fa-table me-1"></i>
+                                Orders Table
+                                <div id="order-list-buttonset" class="btn-group pull-right">
+                                    <button class="btn"
+                                         onclick='location="{% url 'orderMonthlyReport' myPrevDate|date:'Y' myPrevDate|date:'m' %}"'>
+                                        <i class="icon-chevron-left"></i> Previous Month
+                                    </button>
+                                    <button onclick='location="?pdf"' class="btn btn-success">
+                                        <i class="icon-download"></i> PDF
+                                    </button>
+                                    <button class="btn" onclick='location="{% url 'orderMonthlyReport' myNextDate|date:'Y' myNextDate|date:'m' %}"'>
+                                        Next Month <i class="icon-chevron-right"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                {% if myRecords %}
+                                  <div class=id="list-order-table">
+                                    {% render_table table 'django_tables2/custom-table.html' %}
+                                  </div>
+                                {% else %}
+                                  <div class="text-center" id="list-order-table">
+                                    <p class="lead">
+                                      No Report to Generate
+                                    </p>
+                                  </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </main>
+            </div>
+</div>
+{% endblock %}
+{% block footer %}
 {% endblock %}
