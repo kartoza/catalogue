@@ -93,7 +93,7 @@ logger = logging.getLogger(__name__)
 
 
 @login_required
-@RenderWithContext('orderListPage.html', 'orderList.html')
+@RenderWithContext('order-list-page.html', 'order-list.html')
 def my_orders(request):
     """
     The view to return a requesting user's orders
@@ -116,7 +116,6 @@ def my_orders(request):
         except ValueError:
             page = 1
         paginator = Paginator(records, 1)
-        logger.error('testtttttststs', page_size)
         try:
             records = paginator.page(page)
         except (EmptyPage, InvalidPage):
@@ -135,14 +134,14 @@ def my_orders(request):
 
 
 @login_required
-@RenderWithContext('orderListPage.html', 'orderList.html')
+@RenderWithContext('order-list-page.html', 'order-list.html')
 def list_orders(request):
     """
     The view to return a list of Orders. Records returned depends on whether
     the requesting User is_staff.
 
     :param request: HttpRequest dict
-    :return: orderListPage and orderList :rtype: HttpResponse
+    :return: order-list-page and order-list :rtype: HttpResponse
     """
     order_id = request.GET.get('order_id')
     if not request.user.is_staff:
@@ -363,7 +362,7 @@ def view_order(request, pk):
             else:
                 return render(
                     request,
-                    'orderPage.html',
+                    'order-page.html',
                     context
                 )
         else:
@@ -378,7 +377,7 @@ def view_order(request, pk):
                 }
                 return render(
                     request,
-                    'orderPage.html',
+                    'order-page.html',
                     context
                 )
             else:
