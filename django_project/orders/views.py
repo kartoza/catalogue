@@ -191,7 +191,7 @@ def list_orders(request):
 
 
 @login_required
-@RenderWithContext('orderMonthlyReport.html')
+@RenderWithContext('order-monthly-report.html')
 def order_monthly_report(request, year, month):
     """
     The view to render a monthly Order report. reports depends on whether the
@@ -388,7 +388,7 @@ def view_order(request, pk):
                 }
                 return render(
                     request,
-                    'orderPageUser.html',
+                    'order-page-user.html',
                     context,
                 )
     else:
@@ -427,7 +427,7 @@ def view_order(request, pk):
             else:
                 return render(
                     request,
-                    'orderAdHocForm.html',
+                    'order-adhoc-form.html',
                     context
                 )
         else:
@@ -687,7 +687,7 @@ def add_adhoc_order(request):
         else:
             return render(
                 request,
-                'orderAdHocForm.html',
+                'order-adhoc-form.html',
                 context
             )
     else:
@@ -702,7 +702,7 @@ def add_adhoc_order(request):
         logger.info('Add Order: new object requested')
         return render(
             request,
-            'orderAdHocForm.html',
+            'order-adhoc-form.html',
             context
         )
 

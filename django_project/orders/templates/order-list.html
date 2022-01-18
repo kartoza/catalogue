@@ -26,7 +26,7 @@ function showOrder(theId) {
                                     </button>
                                     {% if myUrl == '/list-orders/' %} {# can't use url template tag for if evaluation #}
                                     <button class="btn monthly-btn"
-                                            onclick='location="{% url 'orderMonthlyReport' myCurrentMonth|date:'Y'  myCurrentMonth|date:'m' %}"'>
+                                            onclick='location="{% url 'order-monthly-report' myCurrentMonth|date:'Y'  myCurrentMonth|date:'m' %}"'>
                                       <i class="icon-calendar"></i> View Monthly Reports
                                     </button>
                                     <button class="btn summary-btn"
