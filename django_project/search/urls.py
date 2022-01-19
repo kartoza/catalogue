@@ -24,8 +24,8 @@ urlpatterns = [
         name='submitSearch'),
     url(r'^upload_geo/$', upload_geo,
         name='upload_geo'),
-    url(r'api/searchrecords', csrf_exempt(AddSearchRecordView.as_view())),
-    url(r'api/searchrecords/<int:pk>', SearchRecordView.as_view()),
+    url(r'api/search-records', csrf_exempt(AddSearchRecordView.as_view())),
+    url(r'api/search-records/<int:pk>', SearchRecordView.as_view()),
     url(r'api/search-results/(?P<guid>[a-h0-9\-]{36})/$', SearchResultsResourceView.as_view()),
 
 ]
