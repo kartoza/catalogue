@@ -187,11 +187,6 @@ class SearchResultsResourceView(ListAPIView):
             query_list = result.mQuerySet
             return query_list
 
-            # serializer = OpticalProductSerializer(
-            #     queryset,
-            #     many=True)
-            # return Response(serializer.data)
-
         except OpticalProduct.DoesNotExist:
             return HttpResponse(
                 'Object Does Not Exist',
