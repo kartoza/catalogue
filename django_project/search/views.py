@@ -213,20 +213,35 @@ def searchView(theRequest):
     """
     Perform an attribute and spatial search for imagery
     """
-    collections = Collection.objects.all().prefetch_related('satellite_set')
+    col_names = ['ZA South Africa', 'SAC','ERS']
+    sat_names = [
+        'CBERS-2B',
+        'CBERS-04-P10',
+        'Landsat 1',
+        'Landsat 2',
+        'Landsat 3',
+        'Landsat 4']
+    modified_sat_names = [
+        'CBERS-04-MUX',
+        'CBERS-04-P5M',
+        'CBERS-04-WFI']
+    collections = Collection.objects.all().prefetch_related('satellite_set')\
+        .exclude(name__in=col_names)
     data = [{
         'key': col.name,
         'val': 'cc{}'.format(col.pk),
         # we need to unnest the lists, and for that purpose we reuse chain
         # from iterable module
         'values': list(chain.from_iterable((({
-            'key': '{} {}'.format(sat.name, sig.instrument_type.name),
+            'key': '{} {}'.format((
+                'CBERS-04' if sat.name in modified_sat_names else sat.name),
+                                  sig.instrument_type.name),
             'val': '{}|{}'.format(sat.pk, sig.instrument_type.pk)
             } for sig in sat.satelliteinstrumentgroup_set.all()
             # only select instrument_types which are searchable
             if sig.instrument_type.is_searchable)
-            for sat in col.satellite_set.all())))
-    } for col in collections
+            for sat in col.satellite_set.all().exclude(name__in=sat_names))))
+            } for col in collections
     ]
 
     myListTreeOptions = simplejson.dumps(data)
