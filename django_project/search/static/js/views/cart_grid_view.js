@@ -1,10 +1,10 @@
 define([
     'backbone',
     'jquery',
-    'views/cart_item_collection',
-    'views/cart_grid_view_item'
+    'shared',
+    'views/cart_grid_view_item',
     ],
-    function (Backbone, $, Cart, CartGridViewItem) {
+    function (Backbone, $, Shared, Cart, CartGridViewItem) {
     return  Backbone.View.extend({
         el: $("#cart-container"),
         initialize: function() {
@@ -14,7 +14,7 @@ define([
             if (UserLoged) {
                 this.collection.fetch({reset: true});
             }
-            $APP.on('deleteCartItem', $.proxy(this.deleteItem, this));
+            Shared.Dispatcher.on('deleteCartItem', $.proxy(this.deleteItem, this));
         },
 
         deleteItem: function(event, data) {

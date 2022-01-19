@@ -1,7 +1,7 @@
 define(['backbone', 'underscore'], function (Backbone, _) {
 
    return Backbone.Model.extend({
-       urlRoot: '/api/searchrecords/',
+       urlRoot: '/api/search-records/',
        idAttribute: 'id',
        url: function () {
            let urlRoot;
@@ -18,18 +18,6 @@ define(['backbone', 'underscore'], function (Backbone, _) {
            }
            return urlRoot+id;
        },
-       sync: function(method, model, options) {
-              if (!options.noCSRF) {
-                  const beforeSend = options.beforeSend;
-
-                  // Set X-CSRF-Token HTTP header
-                  console.log(options.beforeSend)
-                options.beforeSend = function(xhr) {
-                    if (csrfToken) { xhr.setRequestHeader('X-CSRF-Token', csrfToken); }
-                  if (beforeSend) { return beforeSend.apply(this, arguments); }
-                };
-              }
-            }
 
    })
 });
