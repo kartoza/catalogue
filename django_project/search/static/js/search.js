@@ -199,6 +199,15 @@ function submitSearchForm() {
         type: 'POST',
         dataType: 'json',
         beforeSubmit: function(formData, jqForm, options) {
+            // check if bounding box exists when KML/KMZ file presents
+            if ($('#id_geometry_file').val() != "") {
+                if ($('#id_aoi_geometry').val() == "")
+                {
+                    alert("Please specify Bounding Box");
+                    $('#id_aoi_geometry').focus();
+                    return false;
+                }
+            }
           if (validate_form()) {
             // process data if needed... before submit
             var selected_sensors = [];
