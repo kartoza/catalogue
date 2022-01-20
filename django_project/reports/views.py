@@ -226,7 +226,7 @@ def visitor_list(request):
 
 @login_required
 # RenderWithContext is explained in renderWith.py
-@RenderWithContext('mySearches.html')
+@RenderWithContext('searches.html')
 def search_history(request):
     """
     The view to return the requesting User's search history

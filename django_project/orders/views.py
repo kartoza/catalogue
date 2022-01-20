@@ -126,7 +126,8 @@ def my_orders(request):
             'per_page': settings.PAGE_SIZE
         }).configure(table)
     return ({
-        'myUrl': reverse('myOrders'),
+        'header': True,
+        'myUrl': reverse('orders'),
         'myCurrentMonth': datetime.date.today(),
         'table': table,
         'myRecords': records
