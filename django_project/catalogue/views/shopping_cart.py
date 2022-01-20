@@ -161,8 +161,8 @@ def removeFromCart(request, theId):
 
 @login_required
 # RenderWithContext is explained in renderWith.py
-@RenderWithContext('cartContentsPage.html', 'cartContents.html')
-def showCartContents(request):
+@RenderWithContext('cart-contents-page.html', 'cart-contents.html')
+def show_cart_contents(request):
     """
     Returns a nice table showing cart contents. Second template in method sig.
     is used in ajax requests.

@@ -247,7 +247,8 @@ class Order(models.Model):
         return str(self.id)
 
     def __str__(self):
-        return '{}'.format(self.name)
+        date = self.order_date.strftime("%y%m%d")
+        return "EO" + date + str(self.id)
 
     def get_recent_history_date(self):
         current_status = OrderStatus.objects.get(name=self.order_status)

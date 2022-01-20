@@ -24,7 +24,7 @@ urlpatterns = [
         download_order_metadata, name='downloadOrderMetadata'),
     url(r'^download-order/(?P<pk>\d*)/$',
         download_order, name='downloadOrder'),
-    url(r'^myorders/$', my_orders, name='myOrders'),
+    url(r'^orders/$', my_orders, name='orders'),
     url(r'^list-orders/$', list_orders, name='list-orders'),
     url(r'^order-monthly-report/(?P<year>\d{4})/(?P<month>\d{1,2})/$',
         order_monthly_report, name='order-monthly-report'),

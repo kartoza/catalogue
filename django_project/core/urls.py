@@ -33,7 +33,7 @@ from catalogue.views.shopping_cart import (
     removeFromCart,
     download_cart,
     downloadCartMetadata,
-    showCartContents,
+    show_cart_contents,
     showMiniCartContents,
 )
 from catalogue.views.messaging import (
@@ -108,7 +108,7 @@ urlpatterns = [
     # cart contents for embedding into other pages
     url(r'^downloadcart/$', download_cart, name='downloadCart'),
     url(r'^downloadcartmetadata/$', downloadCartMetadata, name='downloadCartMetadata'),
-    url(r'^showcartcontents/$', showCartContents, name='showCartContents'),  # used by xhr requests
+    url(r'^show-cart-contents/$', show_cart_contents, name='show-cart-contents'),  # used by xhr requests
     url(r'^showminicartcontents/$', showMiniCartContents, name='showMiniCartContents'),
 
     # upload polygon from zipped shapefile for search/clip

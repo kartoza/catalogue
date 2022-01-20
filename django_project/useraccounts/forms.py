@@ -11,6 +11,11 @@ class EditProfileFormExtra(EditProfileForm):
         label='Last name (required)',
         max_length=30, required=True)
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields.values():
+            field.widget.attrs.update({'class': 'form-control'})
+
     class Meta:
         model = get_profile_model()
         exclude = ('user', 'mugshot', 'strategic_partner', 'privacy')

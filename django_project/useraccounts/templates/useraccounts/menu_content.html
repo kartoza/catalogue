@@ -4,16 +4,8 @@
            data-bs-toggle="dropdown" aria-expanded="false">{{ user.username }}</a>
       <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
       {% if user.is_authenticated %}
-          <a class="dropdown-item" href="{% url 'search-history' %}">Search History</a>
-          <a class="dropdown-item" href="{% url 'showCartContents' %}">My Cart</a>
-          <a class="dropdown-item" href="{% url 'myOrders' %}">My Orders</a>
-          <hr>
+
           <a class="dropdown-item" href="{% url "userena_profile_detail" user %}">{% trans "Profile" %}</a>
-{#          <a class="dropdown-item" href="{% url "userena_profile_detail" user %}">{% trans "Personal information" %}</a>#}
-{#          <a class="dropdown-item" href="{% url "userena_profile_edit" user %}">{% trans "Edit profile" %}</a>#}
-{#          <a class="dropdown-item" href="{% url "userena_password_change" user %}">{% trans "Change password" %}</a>#}
-{#          <a class="dropdown-item" href="{% url "userena_email_change" user %}">#}
-{#          {% if email %}{% trans "Change your e-mail address" %}{% else %}{% trans "Change your e-mail address" %}{% endif %}</a>#}
         {% if not validated and email %}
           <a class="dropdown-item" href="{% url "userena_email_confirm" %}">{% trans "Resend validation e-mail" %}</a>
         {% endif %}

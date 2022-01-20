@@ -20,6 +20,7 @@ __copyright__ = 'South African National Space Agency'
 import logging
 
 from django.conf.urls import url
+from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404
 from django.conf import settings
 from django.http import HttpResponse
@@ -134,33 +135,42 @@ class SearchRecordView(APIView):
     Retrieve, update or delete a search record.
     """
 
-    def get_object(self, pk):
+    serializer_class = SearchRecordSerializer
+
+    def get_queryset(self, request):
+
+        record = get_object_or_404(SearchRecord, user=User.objects.get(username=request.user))
+        result = SearchRecord(record)
+
         try:
-            return SearchRecord.objects.get(pk=pk)
+            query_list = result.mQuerySet
+            return query_list
+
         except SearchRecord.DoesNotExist:
-            from django.http import Http404
-            raise Http404
-
-    def get(self, request, pk, format=None):
-        record = self.get_object(pk)
-        serializer = SearchRecordSerializer(record)
-        return Response(serializer.data)
-
-    def put(self, request, pk, format=None):
-        record = self.get_object(pk)
-        serializer = SearchRecordSerializer(record, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    def delete(self, request, pk, format=None):
-        record = self.get_object(pk)
-        record.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+            return HttpResponse(
+                'Object Does Not Exist',
+                status=status.HTTP_400_BAD_REQUEST
+            )
 
 
-class AddSearchRecordView(APIView):
+    # def get(self, request, *args):
+    #     record = SearchRecord.objects.filter(user=User.objects.get(username=request.user))
+    #     logger.error('testtts', record)
+    #     serializer = SearchRecordSerializer(data=record)
+    #     return Response(serializer.data)
+
+    # def put(self, request, pk, format=None):
+    #     record = self.get_object(pk)
+    #     serializer = SearchRecordSerializer(record, data=request.data)
+    #     if serializer.is_valid():
+    #         serializer.save()
+    #         return Response(serializer.data)
+    #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    #
+    # def delete(self, request, pk, format=None):
+    #     record = self.get_object(pk)
+    #     record.delete()
+    #     return Response(status=status.HTTP_204_NO_CONTENT)
 
     @method_decorator(csrf_exempt)
     def post(self, request, format=None):

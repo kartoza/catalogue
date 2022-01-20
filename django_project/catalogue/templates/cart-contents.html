@@ -1,8 +1,5 @@
 {% load staticfiles %}
 <div id="content" class="row-fluid">
-  {% if myCartTitle %}
-  <h2>{{ myCartTitle }}</h2>
-  {% endif %}
   {% if myRecords %}
   <table id="cart-contents-table" class="table table-bordered">
     {% include "recordHeader.html" %}
@@ -40,7 +37,7 @@
       <button onclick='location="{% url 'downloadCartMetadata' %}?html";return false;' class="btn">HTML</button>
     </div>
     <div style="margin-top: 20px;">
-      <a class="btn btn-success" onclick="addOrderClicked(); return false;" href="/addorder/">
+      <a class="btn btn-success" onclick="addOrderClicked(); return false;" href="/add-order/">
           <i class="icon-shopping-cart"></i> Order Now!
       </a>
     </div>
@@ -73,4 +70,5 @@ $(document).ready(function(){
   $('#cart_title').html('Cart (' + {{ myRecords.count }} + ')');
 });
 </script>
+
 
