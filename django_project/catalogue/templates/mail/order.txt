@@ -13,7 +13,7 @@ you made on {{ myOrder.order_date }} on SANSA ONLINE Catalogue
 Your order status: {{ myOrder.order_status }}
 
 You can review your order at any time by visiting the Order Page
-(http://{{ domain }}{% url 'viewOrder' myOrder.id %}) If you have any
+(http://{{ domain }}{% url 'order' myOrder.id %}) If you have any
 problems or special requests relating to this order, please contact
 our sales staff at sales@sac.co.za. They will be more than happy to
 assist you. Below you will find a summary of the order options and

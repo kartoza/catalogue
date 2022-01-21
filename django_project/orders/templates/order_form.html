@@ -3,41 +3,37 @@
 {% load pipeline %}
 
 {% block extracss %}
-	{{ block.super }}
-	{% stylesheet 'orderpage' %}
+	<link href="{% static "css/table.css" %}" rel="stylesheet">
 {% endblock %}
 
 {% block content%}
 <div class="main-content">
-  <div class="row">
-  	<div class="span12">
-  		<div id="map" class="order-map">
-	  		<div id="map-controls">
-			    <div id="map-layerswitcher-control">
-			      <button class="btn btn-info btn-large right icon-globe"></button>
-			    </div>
-				<div id="map-navigation"></div>
-			</div>
-			<div id="map-controls2" class="blackalpha60">
-			    <div id="map-control-position"></div>
-				<div id="map-control-scalebar"></div>
-			</div>
-			<div id="map-controls3" class="blackalpha60">
-      		</div>
-			<div id="map-layerswitcher" class="drop-shadow"></div>
-		</div>
-  	</div>
-  </div>
-  <div class="row">
-  	<div class="span12">
-  		<h2>Order options</h2>
-  	</div>
-  </div>
-  {% include "orderFormSearch.html" %}
+
+    <div id="map" class="order-map map" style="width: 100%; height: 500px">
+{#	  		<div id="map-controls">#}
+{#			    <div id="map-layerswitcher-control">#}
+{#			      <button class="btn btn-info btn-large right icon-globe"></button>#}
+{#			    </div>#}
+{#				<div id="map-navigation"></div>#}
+{#			</div>#}
+{#			<div id="map-controls2" class="blackalpha60">#}
+{#			    <div id="map-control-position"></div>#}
+{#				<div id="map-control-scalebar"></div>#}
+{#			</div>#}
+{#			<div id="map-controls3" class="blackalpha60">#}
+{#      		</div>#}
+{#			<div id="map-layerswitcher" class="drop-shadow"></div>#}
+    </div>
+
+  {% include "order_form_search.html" %}
 {% endblock %}
 
 {% block extrajs %}
-  {{ block.super }}
+    <script src="{% static "js/libs/underscore-1.13.1/underscore-min.js" %}"></script>
+    <script src="{% static "js/libs/jquery-ui-1.12.1/jquery-ui.min.js" %}"></script>
+    <script src="{% static "js/libs/openlayers-6.5.0/ol.js" %}"></script>
+    <script src="{% static "js/init_project.js" %}"></script>
+    <script src="{% static "js/widget.deliveryOptions.js" %}"></script>
   {% javascript 'orderpage' %}
   <script>
   	var LayerSwitcherState = false;
@@ -71,7 +67,7 @@
 			var selector = 'option:first';
 		}
 		$("select[name*='_"+option+"']").find(selector).attr("selected","selected");
-		/* 
+		/*
 		we need to manually trigger change event for costs to get updated
 		*/
 		$("select[name*='_"+option+"']").trigger('change');
@@ -92,17 +88,50 @@
 	}
 
   	$( document ).ready(function() {
-  		var myMap = new APP.SansaMap('map');
-  		APP.$modal = $('#ajax-modal');
-  		APP.CartRecords = {};
 
-  		{% for record in myRecords %}
-        APP.CartRecords['{{ record.id }}'] = {
-          'wkt': '{{ record.product.spatial_coverage.wkt }}',
-          'id': '{{ record.product.unique_product_id }}',
-    	};
+  		{#var myMap = new SansaMap('map');#}
+        var cartRecords  = new ol.source.Vector({})
+        {% for record in myRecords %}
+            var format = new ol.format.WKT();
+            var feat = format.readFeature("{{ record.product.spatial_coverage.wkt}}", {
+                dataProjection: 'EPSG:4326',
+                featureProjection: 'EPSG:3857',
+            });
+            feat.setProperties({'id': '{{ record.product.unique_product_id }}'})
+            cartRecords.addFeature(feat)
       	{% endfor %}
-      	var cartLayer = new APP.CartLayer(myMap, {'wkt': APP.CartRecords});
+        const center = ol.extent.getCenter(cartRecords.getExtent())
+  		let map = new ol.Map({
+            target: 'map',
+            layers: [
+                new ol.layer.Tile({
+                    source: new ol.source.OSM()
+                }),
+                new ol.layer.Vector({
+                    className: 'Cart Records',
+                    source: cartRecords,
+                    style: [
+                        new ol.style.Style({
+                        stroke: new ol.style.Stroke({
+                            color: 'blue',
+                            width: 3
+                        }),
+                        fill: new ol.style.Fill({
+                            color: 'rgba(0, 0, 255, 0.1)'
+                        })
+                    })]
+                })
+            ],
+            view: new ol.View({
+                zoom: 5,
+                center: center
+            })
+
+        });
+  		$modal = $('#ajax-modal');
+
+
+      	{#var cartLayer = new CartLayer(myMap, {'wkt': CartRecords});#}
 
 		$('#map-layerswitcher-control').click(function() {
 			toggleLayerSwitcher();
@@ -110,8 +139,8 @@
 
 		$('.metadata').click(function() {
 			var id = $(this).data('id');
-	        APP.$modal.load('/metadata/'+id, '', function(){
-	            APP.$modal.modal();
+	        $modal.load('/metadata/'+id, '', function(){
+	            $modal.modal();
 	        });
 		})
 
@@ -134,12 +163,8 @@
 		});
 		// initial setup of total cost across all products
 		setTotalCost();
-    });
+    })
   </script>
 {% endblock %}
 {% block footer %}
-    <script src="{% static "js/libs/jquery/jquery-3.6.0.min.js" %}"></script>
-    <script src="{% static "js/libs/openlayers-6.5.0/ol.js" %}"></script>
-    <script src="{% static "js/libs/bootstrap-5.0.2/js/bootstrap.min.js" %}"></script>
-    <script src="{% static 'js/order/add_order.js' %}"></script>
 {% endblock %}

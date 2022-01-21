@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load staticfiles %}
 {% load pipeline %}
 
 {% block extracss %}
@@ -7,8 +8,8 @@
 {% endblock %}
 
 {% block content %}
+ <div class="main-content">
   <div class="row">
-  	<div class="span12">
   		<h2>Order details</h2>
   	</div>
   </div>
@@ -126,4 +127,6 @@
 
     });
   </script>
+{% endblock %}
+{% block footer %}
 {% endblock %}

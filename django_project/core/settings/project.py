@@ -122,12 +122,27 @@ PIPELINE = {
         },
     },
     'JAVASCRIPT': {
+        # 'orderpage': {
+        #     'source_filenames': (
+        #         'js/libs/jquery/jquery-3.6.0.min.js',
+        #         'js/libs/openlayers-6.5.0/ol.js',
+        #         'js/libs/bootstrap-5.0.2/js/bootstrap.min.js',
+        #         'js/bootstrap-modal.js',
+        #         'js/bootstrap-modalmanager.js',
+        #         'js/map_layers.js',
+        #         # 'js/openlayers-plugins/ScaleBar.js',
+        #         # 'js/widget.sansaMap.js',
+        #         # 'js/widget.sansaCartLayer.js',
+        #         'js/widget.deliveryOptions.js',
+        #         'js/widget.nonSearchRecordsTable.js'
+        #     ),
+        #     'output_filename': 'js/orderpage.js',
+        # }
 
-        }
+    }
 }
 
 # userena settings
 USERENA_SIGNIN_REDIRECT_URL = '/search/'
-
 
 from .celery_setting import *  # noqa
