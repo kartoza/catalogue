@@ -299,3 +299,12 @@ line {
     background-color: #1371a5;
     color: #FFFFFF
 }
+
+
+.text-light {
+    color: #a6b0cf !important;
+}
+
+.text-dark {
+    color: #262b3c !important;
+}
