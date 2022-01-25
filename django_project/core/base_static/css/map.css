@@ -1,206 +1,3 @@
-/*!**/
-/* * Css required for map controls that are not rendered in the map widget*/
-/* *!*/
-
-/*.destroyFeatureItemInactive {*/
-/*  cursor:pointer;*/
-/*  margin-right: 2px;*/
-/*  !*height: 24px;*/
-/*  width: 24px;*/
-/*  background:url(/static/images/delete_16.png) no-repeat;*!*/
-/*}    */
-
-/*.olControlDrawFeaturePolygonItemActive*/
-/*{*/
-/*  color:#228441;*/
-/*  margin-right: 2px;*/
-/*  cursor:pointer;*/
-/*  !*background:url(/static/images/draw_polygon_on.png) no-repeat;*/
-/*  height:24px;*/
-/*  width:24px;*!*/
-/*}*/
-/*.olControlDrawFeaturePolygonItemInactive*/
-/*{*/
-/*  margin-right: 2px;*/
-/*  cursor:pointer;*/
-/*  !*background:url(/static/images/draw_polygon_off.png) no-repeat;*/
-/*  height:24px;*/
-/*  width:24px;*!*/
-/*}*/
-/*.olControlModifyFeatureItemActive*/
-/*{*/
-/*  color:#228441;*/
-/*  margin-right: 2px;*/
-/*  cursor:pointer;*/
-/*  !*background:url(/static/images/draw_line_on.png) no-repeat;*/
-/*  height:24px;*/
-/*  width:24px;*!*/
-/*}*/
-/*.olControlModifyFeatureItemInactive*/
-/*{*/
-/*  margin-right: 2px;*/
-/*  cursor:pointer;*/
-/*  !*background:url(/static/images/draw_line_off.png) no-repeat;*/
-/*  height:24px;*/
-/*  width:24px;*!*/
-/*}*/
-/*.olControlNavigationItemActive*/
-/*{*/
-/*  color:#228441;*/
-/*  margin-right: 2px;*/
-/*  cursor:pointer;*/
-/*}*/
-/*.olControlNavigationItemInactive*/
-/*{*/
-/*  margin-right: 2px;*/
-/*  cursor:pointer;*/
-/*  !*background:url(/static/images/pan_off.png) no-repeat;*/
-/*  height:24px;*/
-/*  width:24px;*!*/
-/*}*/
-/*.olControlZoomBoxInItemActive */
-/*{*/
-/*  color:#228441;*/
-/*  margin-right: 2px;*/
-/*  cursor:pointer;*/
-/*  !*background:url(/static/images/zoom_in_24.png) no-repeat;*/
-/*  height:24px;*/
-/*  width:24px;*!*/
-/*}*/
-/*.olControlZoomBoxOutItemActive */
-/*{*/
-/*  color:#228441;*/
-/*  margin-right: 2px;*/
-/*  cursor:pointer;*/
-/*  !*background:url(/static/images/zoom_out_24.png) no-repeat;*/
-/*  height:24px;*/
-/*  width:24px;*!*/
-/*}*/
-/*.olControlZoomBoxInItemInactive */
-/*{*/
-/*  margin-right: 2px;*/
-/*  cursor:pointer;*/
-/*  !*background:url(/static/images/zoom_in_off_24.png) no-repeat;*/
-/*  height:24px;*/
-/*  width:24px;*!*/
-/*}*/
-/*.olControlZoomBoxOutItemInactive */
-/*{*/
-/*  margin-right: 2px;*/
-/*  cursor:pointer;*/
-/*  !*background:url(/static/images/zoom_out_off_24.png) no-repeat;*/
-/*  height:24px;*/
-/*  width:24px;*!*/
-/*}*/
-/*.olControlMapHelpItemInactive*/
-/*{*/
-/*  margin-right: 2px;*/
-/*  cursor:pointer;*/
-/*  !* OL button control uses ItemInactive CSS class*/
-/*  http://dev.openlayers.org/docs/files/OpenLayers/Control/Button-js.html*/
-/*  *!*/
-/*  background:url(/static/images/maphelp-active.png) no-repeat;*/
-/*  height:24px;*/
-/*  width:24px;*/
-/*}*/
-
-/*.olControlNavigationHistory {*/
-/*  margin-right: 2px;*/
-/*  cursor:pointer;*/
-/*}*/
-/*.olControlNavigationHistoryPreviousItemActive {*/
-/*  color:black;*/
-/*  margin-right: 2px;*/
-/*  cursor:pointer;*/
-/* !* background-position: 0px 0px;*!*/
-/*}*/
-/*.olControlNavigationHistoryPreviousItemInactive {*/
-/*  margin-right: 2px;*/
-/*  color:grey;*/
-/*  cursor:pointer;*/
-/*   !*background-position: 0px -24px;*!*/
-/*}*/
-/*.olControlNavigationHistoryNextItemActive {*/
-/*  margin-right: 2px;*/
-/*  color:black;*/
-/*  cursor:pointer;*/
-/*   !*background-position: -24px 0px;*!*/
-/*}*/
-/*.olControlNavigationHistoryNextItemInactive {*/
-/*  margin-right: 2px;*/
-/*  color:grey;*/
-/*  cursor:pointer;*/
-/*   !*background-position: -24px -24px;*!*/
-/*}*/
-
-/*!**/
-/* * Scalebar*/
-/* *!*/
-
-/*.olImageLoadError { background-color: transparent !important; }*/
-
-/*.olControlScaleBar {*/
-/*    bottom: 10px;*/
-/*    left: 15px;*/
-/*    font-family: sans-serif;*/
-/*}*/
-
-/*.olControlScaleBarBar {*/
-/*    height: 5px!important;*/
-/*    top: 12px;*/
-/*    background-color: #FFFFFF;*/
-/*    background-position: 0 0;*/
-/*    background-repeat: repeat-x;*/
-/*}*/
-/*.olControlScaleBarBarAlt {*/
-/*    height: 5px!important;*/
-/*    top: 12px;*/
-/*    background-color: #000000;*/
-/*    background-position: 0 0;*/
-/*    background-repeat: repeat-x;*/
-/*}*/
-
-/*.olControlScaleBarMarkerMajor {*/
-/*    height: 12px!important;*/
-/*    width: 13px;*/
-/*    top: 12px;*/
-/*    color: #000000;*/
-/*    background-position: 0 0;*/
-/*    background-repeat: no-repeat;*/
-/*    z-index: 5000;*/
-/*}*/
-
-/*.olControlScaleBarMarkerMinor {*/
-/*    height: 12px!important;*/
-/*    width: 13px;*/
-/*    top: 12px;*/
-/*    background-position: 0 0;*/
-/*    background-repeat: no-repeat;*/
-/*    z-index: 5000;*/
-/*}*/
-
-/*.olControlScaleBarNumbersBox {*/
-/*    height: 17px!important;*/
-/*    width: 40px;*/
-/*    top: 18px;*/
-/*    font-size: 9px;*/
-/*}*/
-
-/*.olControlScaleBarLabelBox {*/
-/*    height: 17px!important;*/
-/*    top: -6px;*/
-/*    font-size: 11px;*/
-/*    font-weight: bold;*/
-/*    letter-spacing: 0.1em;*/
-/*}*/
-
-/*.olControlScaleBarLabelBoxSingleLine {*/
-/*    height: 13px!important;*/
-/*    width: 35px;*/
-/*    top: 0px;*/
-/*    left: 10px;*/
-/*    font-size: 13px;*/
-/*}*/
 
 body {
     font-family: "Roboto Condensed", sans-serif;
@@ -308,22 +105,17 @@ body {
 }
 
 .map-control-panel, .download-control-panel {
-    background-color: white;
     position: absolute;
     left: 0;
     top: 0;
-    margin-top: 80px;
-    padding-left: 6px;
-    padding-right: 6px;
-    font-size: 18pt;
+    font-size: 15pt;
     text-align: center;
     color: #4e4e4e;
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.2);
-    margin-left: 350px;
     padding-top: 0;
     border-top: none;
-    width: 54px;
     z-index: 100;
+    width: 50px;
 }
 
 .download-control-panel .download-format-selector-container {
@@ -334,12 +126,7 @@ body {
 }
 
 .map-control-panel-box {
-    width: 350px;
-    background-color: white;
-    position: absolute;
     top: 0;
-    color: black;
-    padding: 15px 15px 0;
     border: none;
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.2);
     text-align: center;
@@ -1083,4 +870,3 @@ body {
     margin-top: 56px;
 
 }
-

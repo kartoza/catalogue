@@ -2,7 +2,10 @@ body {
     padding-bottom : 140px;
     background-size:     cover;
     background-position: center top;
+    background-color: #262b3c;
+
 }
+
 
 .align-bottom {
    display: inline-block;

@@ -22,10 +22,7 @@
 }
 
 .listTree > ul > li {
-    background-color: #eee;
-    border-width: 1px 1px 0 1px;
-    border-style: solid;
-    border-color: #ddd;
+    background-color: #272f3b;
 }
 
 .listTree > ul > li:first-child {
@@ -57,29 +54,6 @@
     font-weight: normal;
 }
 
-.listTree > ul > li > ul > li {
-    background-color: #fff;
-    border-width: 1px 0 0 0;
-    border-style: solid;
-    border-color: #ddd;
-    padding-left: 10px;
-}
-
-.listTree > ul > li > ul > li > ul > li{
-    background-color: #fff;
-    border-width: 1px 0 0 0;
-    border-style: solid;
-    border-color: #ddd;
-    padding-left: 20px;
-}
-
-.listTree > ul > li > ul > li > ul > li > ul > li{
-    background-color: #fff;
-    border-width: 1px 0 0 0;
-    border-style: solid;
-    border-color: #ddd;
-    padding-left: 30px;
-}
 
 .listTree > ul > li > ul > li:first-child {
     border-width: 1px 0 0 0;

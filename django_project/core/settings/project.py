@@ -123,11 +123,10 @@ PIPELINE = {
     },
     'JAVASCRIPT': {
 
-        }
+    }
 }
 
 # userena settings
 USERENA_SIGNIN_REDIRECT_URL = '/search/'
-
 
 from .celery_setting import *  # noqa

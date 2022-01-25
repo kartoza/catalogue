@@ -1,64 +1,70 @@
 <script type="text/html" id="map-search-container">
-    <div class="map-search-box map-control-panel-box" style="height:100%">
-        <div id="search-panel">
+    <nav class="sidenav shadow-right sidenav-dark" id="search-panel">
+        <div class="sidenav-menu" style=" overflow-y: auto;">
+        <div class="nav accordion" id="accordionSidenav">
         <div id="search-panel-content" class="well well-small" style="margin-bottom: 10px">
           <form id="catalogueSearch" action="{% url 'submitSearch' %}" class="accordion">
             {% csrf_token %}
             {{ searchform.geometry }}
             {{ searchform.selected_sensors }}
-              <div class="parameter-item">
-                  <h2 class="parameter-item-header">Satellites</h2>
-                  <div class="listTree" id="listTree"></div>
-              </div>
-              <div class="parameter-item">
-                    <h2 class="parameter-item-header" >Date Ranges</h2>
-                    {% include 'search_form/date-range-content.html' %}
-              </div>
-              <div class="accordion">
-                  <div class="accordion-item">
-                      <h2 class="accordion-header" id="panelsStayOpen-headingThree">
-                          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                  data-bs-target="#panelsStayOpen-collapseThree"
-                                  aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">Define Search Area
-                          </button>
-                      </h2>
+              <div class="sidenav-menu-heading">Satellites</div>
+              <div class="listTree" id="listTree"></div>
+
+              <div class="sidenav-menu-heading">Date Ranges</div>
+              <!-- Sidenav Accordion (Pages)-->
+              {% include 'search_form/date-range-content.html' %}
+              <div class="sidenav-menu-heading">Other</div>
+              <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseArea" aria-expanded="false" aria-controls="collapseArea">
+                  <div class="nav-link-icon"><i data-feather="repeat"></i></div>
+                  Define Search Area
+                  <div class="sidenav-collapse-arrow"><i class="fa fa-angle-down"></i></div>
+              </a>
+              <div class="collapse" id="collapseArea" data-bs-parent="#accordionSidenav">
+                  <nav class="sidenav-menu-nested nav">
                       {% include 'search_form/area-content.html' %}
-                  </div>
-                  <div class="accordion-item">
-                      <h2 class="accordion-header" id="panelsStayOpen-headingFour">
-                          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                  data-bs-target="#panelsStayOpen-collapseFour"
-                                  aria-expanded="false" aria-controls="panelsStayOpen-collapseFour">Set Cloud Cover Range
-                          </button>
-                      </h2>
+                  </nav>
+              </div>
+              <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseCloudCover" aria-expanded="false" aria-controls="collapseCloudCover">
+                  <div class="nav-link-icon"><i data-feather="activity"></i></div>
+                  Set Cloud Cover Range
+                  <div class="sidenav-collapse-arrow"><i class="fa fa-angle-down"></i></div>
+              </a>
+              <div class="collapse" id="collapseCloudCover" data-bs-parent="#accordionSidenav">
+                  <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
                       {% include 'search_form/cloud-cover-content.html' %}
-                </div>
-                  <div class="accordion-item">
-                      <h2 class="accordion-header" id="panelsStayOpen-headingFive">
-                          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                  data-bs-target="#panelsStayOpen-collapseFive"
-                                  aria-expanded="false" aria-controls="panelsStayOpen-collapseFive"> Other Options
-                          </button>
-                      </h2>
+                  </nav>
+              </div>
+
+              <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseOtherOption" aria-expanded="false" aria-controls="collapseOtherOption">
+                  <div class="nav-link-icon"><i data-feather="activity"></i></div>
+                    Other Options
+                  <div class="sidenav-collapse-arrow"><i class="fa fa-angle-down"></i></div>
+              </a>
+              <div class="collapse" id="collapseOtherOption" data-bs-parent="#accordionSidenav">
+                  <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
                       {% include 'search_form/other-option-content.html' %}
-                </div>
-            </div>
+
+                  </nav>
+              </div>
           </form>
         </div>
-        <div id="search-summary-container" class="well well-small" style="margin-bottom: 10px; width: 100%">
-          <div id="search-buttons" class="text-center">
-
-            <button id="reset-search-form" class="btn sansa-white-btn"
-                    data-toggle="tooltip" title="Reset Search Parameters"
-{#                    onclick="resetSearchForm()"#}
-                    data-placement="top" style="width: 45%">
-              <i class="icon-refresh"></i> RESET
-            </button>
-              <button id="search_button" class="btn sansa-blue-btn"
-                    data-toggle="tooltip" title="Run Search"
-                    data-placement="top" style="width: 45%">
-              <i class="icon-play"></i> APPLY
-            </button>
+        </div>
+        </div>
+        <!-- Sidenav Footer-->
+        <div class="sidenav-footer">
+            <div class="sidenav-footer-content" style="width: 100%">
+                <div id="search-summary-container" class="well well-small" style="margin-bottom: 10px; width: 100%">
+                    <div id="search-buttons" class="align-content-center">
+                        <button id="reset-search-form" class="btn btn-search"
+                                data-toggle="tooltip" title="Reset Search Parameters"
+                                onclick="resetSearchForm()" data-placement="top" style="width: 45%; color: rgba(255, 255, 255, 0.5);  border: 1px solid rgba(255, 255, 255, 0.25);">
+                            <i class="icon-refresh"></i> RESET
+                        </button>
+                        <button id="search_button" class="btn btn-search"
+                                data-toggle="tooltip" title="Run Search"
+                                data-placement="top" style="width: 45%; color: rgba(255, 255, 255, 0.5);  border: 1px solid rgba(255, 255, 255, 0.25);">
+                            <i class="icon-play"></i> APPLY
+                        </button>
 {#            <button id="search-panel-help-button"#}
 {#                    class="btn btn-info"#}
 {#                    data-toggle="tooltip" title="Search Help"#}
@@ -73,12 +79,16 @@
 {#            </button>#}
           </div>
         </div>
-    </div>
-    </div>
+            </div>
+        </div>
+
+    </nav>
 </script>
 
 <script type="text/html" id="map-control-panel">
     <div id="map-control-panel-element" class="map-control-panel">
+        <button class="btn btn-icon btn-transparent-dark
+        order-1 order-lg-0 me-2 ms-lg-2 me-lg-0" id="sidebarToggle"><i data-feather="menu" class="fa fa-cog"></i></button>
         <div id="zoom-control" class="zoom-control">
             <div class="sub-control-panel sub-zoom-control zoom-out"><i class="fa fa-plus" aria-hidden="false"></i>
             </div>
@@ -103,3 +113,4 @@
         </div>
     </div>
 </script>
+

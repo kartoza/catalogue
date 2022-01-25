@@ -600,7 +600,7 @@ def add_order(request):
             logger.info('Add Order: form is NOT valid')
             return render(
                 request,
-                'orderForm.html',
+                'order_form.html',
                 context
             )
     else:  # new order
@@ -620,7 +620,7 @@ def add_order(request):
         logger.info('Add Order: new object requested')
         return render(
             request,
-            'orderForm.html',
+            'order_form.html',
             context
         )
 
