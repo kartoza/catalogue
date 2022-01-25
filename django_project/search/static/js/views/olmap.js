@@ -10,11 +10,12 @@ define([
     'views/olmap_basemap',
     'collections/paginated',
     'views/olmap_layers',
+    'views/search',
     'views/result_grid',
     'models/result_item',
     'htmlToCanvas'
 ], function (Backbone, _, Shared, MapControlPanelView, SidePanelView,
-             ol, $, LayerSwitcher, Basemap, ResultItemCollection, Layers, ResultGridView, ResultItem, HtmlToCanvas) {
+             ol, $, LayerSwitcher, Basemap, ResultItemCollection, Layers, SearchView, ResultGridView, ResultItem, HtmlToCanvas) {
     return Backbone.View.extend({
         template: _.template($('#map-template').html()),
         className: 'map-wrapper',
@@ -23,6 +24,7 @@ define([
         polygonDraw: null,
         layerSearchSource: null,
         sidePanelView: null,
+        searchView: null,
         // attributes
         mapInteractionEnabled: false,
         previousZoom: 0,
@@ -57,18 +59,6 @@ define([
             Shared.Dispatcher.on('map:clearPoint', this.clearPoint, this);
             Shared.Dispatcher.on('map:zoomToExtent', this.zoomToExtent, this);
             Shared.Dispatcher.on('map:reloadXHR', this.reloadXHR, this);
-            Shared.Dispatcher.on('map:showPopup', this.showPopup, this);
-            Shared.Dispatcher.on('map:closePopup', this.hidePopup, this);
-            Shared.Dispatcher.on('map:closeHighlight', this.closeHighlight, this);
-            Shared.Dispatcher.on('map:addHighlightFeature', this.addHighlightFeature, this);
-            Shared.Dispatcher.on('map:switchHighlight', this.switchHighlight, this);
-            Shared.Dispatcher.on('map:addHighlightPinnedFeature', this.addHighlightPinnedFeature, this);
-            Shared.Dispatcher.on('map:removeHighlightPinnedFeature', this.removeHighlightPinnedFeature, this);
-            Shared.Dispatcher.on('map:switchHighlightPinned', this.switchHighlightPinned, this);
-            Shared.Dispatcher.on('map:closeHighlightPinned', this.closeHighlightPinned, this);
-            Shared.Dispatcher.on('map:zoomToHighlightPinnedFeatures', this.zoomToHighlightPinnedFeatures, this);
-            Shared.Dispatcher.on('map:boundaryEnabled', this.boundaryEnabled, this);
-            Shared.Dispatcher.on('map:zoomToDefault', this.zoomToDefault, this);
             Shared.Dispatcher.on('map:addLayer', this.addLayer, this);
             Shared.Dispatcher.on('map:removeLayer', this.removeLayer, this);
             Shared.Dispatcher.on('map:downloadMap', this.downloadMap, this);
@@ -81,7 +71,6 @@ define([
             });
 
             this.render();
-            this.mapControlPanel.searchView.initCloudCover();
             this.pointVectorSource = new ol.source.Vector({});
             this.pointLayer = new ol.layer.Vector({
                 source: this.pointVectorSource,
@@ -319,17 +308,23 @@ define([
             var self = this;
             this.$el.html(this.template());
             $('#map-container').append(this.$el);
+
             this.loadMap();
 
             this.map.on('click', function (e) {
                 // self.mapClicked(e);
             });
+            this.searchView = new SearchView({
+                    parent: this,
+            });
             this.sidePanelView = new SidePanelView();
             this.mapControlPanel = new MapControlPanelView({
                 parent: this
             });
+            $('#layoutSidenav_nav').append(this.searchView.render().$el);
             this.$el.append(this.mapControlPanel.render().$el);
             this.$el.append(this.sidePanelView.render().$el);
+
 
             // add layer switcher
             var layerSwitcher = new LayerSwitcher();
@@ -470,86 +465,6 @@ define([
                 if (this.getCurrentZoom() > 8) {
                     this.map.getView().setZoom(8);
                 }
-            }
-        },
-        addHighlightFeature: function (feature) {
-            this.layers.highlightVectorSource.addFeature(feature);
-        },
-        closeHighlight: function () {
-            this.hidePopup();
-            if (this.layers.highlightVectorSource) {
-                this.layers.highlightVectorSource.clear();
-            }
-        },
-        switchHighlightPinned: function (features, ignoreZoom) {
-            var self = this;
-            this.closeHighlightPinned();
-            $.each(features, function (index, feature) {
-                self.addHighlightPinnedFeature(feature);
-            });
-        },
-        zoomToHighlightPinnedFeatures: function () {
-            this.map.getView().fit(
-                this.layers.highlightPinnedVectorSource.getExtent(),
-                {
-                    size: this.map.getSize(),
-                    padding: [
-                        0, $('.right-panel').width(), 0, 250
-                    ]
-                });
-        },
-        addHighlightPinnedFeature: function (feature) {
-            this.layers.highlightPinnedVectorSource.addFeature(feature);
-        },
-        removeHighlightPinnedFeature: function (id) {
-            var self = this;
-            self.layers.highlightPinnedVectorSource.getFeatures().forEach(function (feature) {
-                var feature_id = feature.getProperties()['id'];
-                if (feature_id === id) {
-                    self.layers.highlightPinnedVectorSource.removeFeature(feature);
-                }
-            });
-        },
-        closeHighlightPinned: function () {
-            this.hidePopup();
-            if (this.layers.highlightPinnedVectorSource) {
-                this.layers.highlightPinnedVectorSource.clear();
-            }
-        },
-
-        zoomToDefault: function () {
-            var center = this.initCenter;
-            if (centerPointMap) {
-                var centerArray = centerPointMap.split(',');
-                for (var i in centerArray) {
-                    centerArray[i] = parseFloat(centerArray[i]);
-                }
-                center = centerArray;
-            }
-            this.zoomToCoordinates(ol.proj.fromLonLat(center), this.initZoom);
-        },
-
-        clearAllLayers: function () {
-            let newParams = {
-                layers: locationSiteGeoserverLayer,
-                format: 'image/png',
-                viewparams: 'where:' + emptyWMSSiteParameter
-            };
-            this.layers.biodiversitySource.updateParams(newParams);
-        },
-
-        toggleMapInteraction: function (enabled) {
-            this.mapInteractionEnabled = enabled;
-        },
-        whenMapIsReady: function (callback) {
-            var self = this;
-            if (this.mapIsReady)
-                callback();
-            else {
-                setTimeout(function () {
-                    self.map.once('change:ready', self.whenMapIsReady.bind(null, callback));
-                    self.whenMapIsReady(callback);
-                }, 100)
             }
         },
 

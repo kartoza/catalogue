@@ -6,15 +6,13 @@ define(
         'jquery',
         'jqueryUi',
         'ol',
-        'views/search',
     ],
-    function (Backbone, _, Shared, $, jqueryUi, ol, SearchView) {
+    function (Backbone, _, Shared, $, jqueryUi, ol) {
         return Backbone.View.extend({
             template: _.template($('#map-control-panel').html()),
             locationControlActive: false,
             uploadDataActive: false,
             catchmentAreaActive: false,
-            searchView: null,
             locateView: null,
             closedPopover: [],
             validateDataListOpen: false,
@@ -24,6 +22,7 @@ define(
                 'click .map-search-close': 'closeSearchPanel',
                 'input #layer-selector-search': 'handleSearchInLayerSelector',
                 'click #permalink-control': 'handlePermalinkClicked',
+                'click #sidebarToggle': 'sidebarToggle'
 
             },
             initialize: function (options) {
@@ -60,17 +59,6 @@ define(
 
             render: function () {
                 this.$el.html(this.template())
-                this.searchView = new SearchView({
-                    parent: this,
-                    sidePanel: this.parent.sidePanelView
-                });
-
-                this.$el.append(this.searchView.render().$el);
-                // this.searchView.show();
-
-
-
-
                 var layerSelectorSearchValue = Shared.StorageUtil.getItem(this.layerSelectorSearchKey);
                 if (layerSelectorSearchValue) {
                     var $layerSelectorSearch = this.$el.find('#layer-selector-search');
@@ -85,6 +73,12 @@ define(
             closeSearchPanel: function () {
                 this.$el.find('.search-control').removeClass('control-panel-selected');
                 this.searchView.hide();
+            },
+
+            sidebarToggle: function (event){
+                event.preventDefault();
+                document.body.classList.toggle('sidenav-toggled');
+                // localStorage.setItem('sb|sidebar-toggle', document.body.classList.contains('sidenav-toggled'));
             },
 
         })

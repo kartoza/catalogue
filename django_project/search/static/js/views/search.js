@@ -33,7 +33,6 @@ define([
         initialize: function (options) {
             _.bindAll(this, 'render');
             this.parent = options.parent;
-            this.sidePanel = options.sidePanel;
             Shared.Dispatcher.on('search:clearSearch', this.clearSearch, this);
             if(history){
                 Shared.Dispatcher.trigger('collectionSearch', {
@@ -183,9 +182,7 @@ define([
                         link = $('#login_register').attr("href") + '?next=/search/' + guid + '/';
                         $('#login_register').attr("href", link);
                     }
-                    // self.openResultPanel();
-                        //toggleSearchPanel();
-                    // Shared.Dispatcher.trigger('sidePanel:openSidePanel');
+
                     },
                     error: function(data) {
                         if (data.status == '404') {
