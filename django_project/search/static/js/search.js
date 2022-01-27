@@ -480,6 +480,26 @@ APP.ResultItemCollection = PaginatedCollection.extend({
 
 APP.Results = new APP.ResultItemCollection();
 
+APP.AllResult = Backbone.Model.extend({
+
+});
+
+APP.AllResultCollection = Backbone.Collection.extend ({
+    urlRoot: '/api/v1/opticalproducts/',
+    model: APP.AllResult,
+    el: $("#total_data"),
+    parse: function (response) {
+        this.el.append(response.meta['total_count']);
+        return this.models;
+    },
+    initialize: function() {
+        // this.collection.bind('reset', this.render, this);
+    }
+});
+
+APP.AllResults = new APP.AllResultCollection();
+APP.AllResults.fetch();
+
 APP.ResultGridView = Backbone.View.extend({
     el: $("#result-panel"),
 
