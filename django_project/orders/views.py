@@ -363,7 +363,7 @@ def view_order(request, pk):
             else:
                 return render(
                     request,
-                    'order-page.html',
+                    'order_page.html',
                     context
                 )
         else:
@@ -378,7 +378,7 @@ def view_order(request, pk):
                 }
                 return render(
                     request,
-                    'order-page.html',
+                    'order_page.html',
                     context
                 )
             else:
@@ -389,7 +389,7 @@ def view_order(request, pk):
                 }
                 return render(
                     request,
-                    'order-page-user.html',
+                    'order_page_user.html',
                     context,
                 )
     else:

@@ -116,8 +116,18 @@ class OrderStatusHistoryForm(forms.ModelForm):
         model = OrderStatusHistory
         exclude = ('order', 'user', 'order_change_date', 'old_order_status')
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields.values():
+            field.widget.attrs.update({'class': 'form-control'})
+
 
 class NonSearchRecordForm(forms.ModelForm):
     class Meta:
         model = NonSearchRecord
         exclude = ('download_path',)
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields.values():
+            field.widget.attrs.update({'class': 'form-control'})

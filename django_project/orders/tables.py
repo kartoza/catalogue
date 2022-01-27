@@ -15,16 +15,20 @@ class OrderListTable(tables.Table):
     """
     id = tables.Column()
     order_date = SANSADateColumn()
-    last_status_changed = tables.Column(accessor='get_recent_history_date')
+    user = tables.Column()
+    last_status_changed = tables.Column(accessor='get_recent_history_date',
+                                        orderable=False,)
+    day_in_process = tables.Column(accessor='day_in_process',
+                                   orderable=False,
+                                   )
     order_status__name = tables.Column(
         verbose_name='Status'
     )
-    day_in_process = tables.Column(accessor='day_in_process')
-    user = tables.Column()
+
     view = tables.URLColumn(
         empty_values=(),
         orderable=False,
-        verbose_name='View Order'
+        verbose_name='View Details'
     )
 
     def render_view(self, record):
@@ -35,6 +39,6 @@ class OrderListTable(tables.Table):
         :param record: The Order object rendered in this row
         """
         return mark_safe(
-            '<a href="/order/%s/"><i class="icon-search"></i></a>'
+            '<a href="/order/%s/"><button class="btn btn-sm btn-primary">View Details</button></i></a>'
             % record.id
         )

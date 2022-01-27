@@ -1,11 +1,7 @@
 {% load staticfiles %}
-<div class="card mb-4" style="margin-top: 10px">
-    <div class="card-header">Order options</div>
-    <div class="card-body">
-        <form enctype="multipart/form-data" action="" method="post" accept-charset="utf-8" class="form-horizontal" id="order-form">
+<form enctype="multipart/form-data" action="" method="post" accept-charset="utf-8" class="form-horizontal" id="order-form">
       	{% csrf_token %}
-        <!-- Form Row-->
-            <div class="row gx-3 mb-3">
+      	<div class="row gx-3 mb-3">
                 <!-- Form Projection-->
                 <div class="col-md-6">
                     <div class="control-group">
@@ -19,7 +15,7 @@
 				    	Geographic
 				  	</label>
                     <div class="span4">
-                        <button type="button" class="btn" onclick="triggerProjectionChange('projection')">Apply</button>
+                        <button type="button" class="btn btn-sm btn-primary" onclick="triggerProjectionChange('projection')">Apply</button>
                     </div>
 				</div>
                 </div>
@@ -35,7 +31,7 @@
                         <label class="form-check-label small mb-1" for="radioPrivacy1">Standard default</label>
 				  	</label>
                     <div class="span4">
-                        <button type="button" class="btn" onclick="triggerProjectionChange('processing')">Apply</button>
+                        <button type="button" class="btn btn-sm btn-primary" onclick="triggerProjectionChange('processing')">Apply</button>
                     </div>
 				</div>
 			</div>
@@ -198,15 +194,7 @@
 					<td colspan="2"><span id="product_total_cost">R 0</span></td>
 				</tr>
 				</table>
-		</div>
-		<div class="row">
-			<div class="span2 offset10" style="padding-top: 20px;">
-				<button type="submit" class="btn btn-sm btn-primary">
-                    Order now
-                </button>
 			</div>
 		</div>
   </form>
-    </div>
-</div>
   <div id="ajax-modal" class="modal hide fade" tabindex="-1"></div>
