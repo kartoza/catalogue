@@ -1,0 +1,240 @@
+{% extends "base.html" %}
+{% load pipeline %}
+{% load staticfiles %}
+
+
+{% block content %}
+  <div class="main-content">
+  <div id="layoutSidenav_content">
+    <main>
+    <div class="container-xl px-4 mt-4">
+  <div class="row">
+    <div class="col-xl-4">
+        <div class="card mb-4 mb-xl-0">
+            <div class="card-header">Order details</div>
+            <div class="card-body">
+                <table>
+                    <tbody>
+                    <tr>
+                        <td><label class="span4 small mb-1"> Order no.</label></td>
+                        <td><span class="small mb-1">{{ myOrder.order_number }}</span></td>
+                    </tr>
+                    <tr>
+                        <td><label class="span4 small mb-1">Status:</label></td>
+                        <td><span class="small mb-1">{{ myOrder.order_status.name }}</span></td>
+                    </tr>
+                    <tr>
+                        <td><label class="span4 small mb-1">Full name:</label></td>
+                        <td><span class="small mb-1">{{ myOrder.user.first_name}} {{ myOrder.user.last_name}}</span></td>
+                    </tr>
+                    <tr>
+                        <td><label class="span4 small mb-1">Email:</label></td>
+                        <td><span class="small mb-1">{{ myOrder.user.email }}</span></td>
+                    </tr>
+                    <tr>
+                        <td><label class="span4 small mb-1">Organisation:</label></td>
+                        <td><span class="small mb-1">{{myOrder.user.sansauserprofile.organisation}}</span></td>
+                    </tr>
+                    <tr>
+                        <td><label class="span4 small mb-1">Contact No:</label></td>
+                        <td><span class="small mb-1">{{ myOrder.user.sansauserprofile.contact_no }}</span></td>
+                    </tr>
+                    <tr>
+                        <td><label class="span4 small mb-1">Address:</label></td>
+                        <td> <span class="span4 small mb-1"><addresse>
+                          {{ myOrder.user.sansauserprofile.address1 }}
+                          {{ myOrder.user.sansauserprofile.address2 }}
+                          {{ myOrder.user.sansauserprofile.address3 }}
+                          {{ myOrder.user.sansauserprofile.address4 }}
+                          {{ myOrder.user.sansauserprofile.post_code }}
+                        </addresse></span></td>
+                    </tr>
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+         <div class="col-xl-8">
+            <div class="card mb-4">
+                <div class="card-header">Order options</div>
+                <div class="card-body">
+                    {% include "order_form_search_no_button.html" %}
+                    <div class="row">
+                        <div class="span12">
+                        <div class="centered">
+                            <button class="btn btn-sm btn-primary" onclick='location="{% url 'download-clip-geometry' myOrder.id %}?shp";return false;'>SHP</button>
+                            <button class="btn btn-sm btn-primary" onclick='location="{% url 'download-clip-geometry' myOrder.id %}?kml";return false;'>KML</button>
+                            <button class="btn btn-sm btn-primary" onclick='location="{% url 'download-clip-geometry' myOrder.id %}?kmz";return false;'>KMZ</button>
+                            <button class="btn btn-sm btn-primary" onclick='location="{% url 'download-clip-geometry' myOrder.id %}";return false;'>XML metadata</button>
+                            <button class="btn btn-sm btn-primary" onclick='location="{% url 'download-clip-geometry' myOrder.id %}?html";return false;'>HTML metadata</button>
+                        </div>
+		                </div>
+	                </div>
+          <div class="card-header" style="margin-top: 10px">Order history</div>
+          <div class="card-body">
+              <div class="mb-3">
+                  <button type="button" id="statusFormBtn" class="btn btn-sm btn-primary">Update status</button>
+              </div>
+              <div class="span8">
+                  {% for myRecord in myHistory %}
+                      <div class="mb-3">
+                          <label class="span4 small mb-1">Old status:</label>
+                          <span class="small mb-1">{{ myRecord.old_order_status.name }}</span>
+                      </div>
+                      <div class="mb-3">
+                      <label class="span4 small mb-1"> New status:</label>
+                              <span class="small mb-1">{{ myRecord.new_order_status.name }}</span>
+                      </div>
+                      <div class="mb-3">
+                          <label class="span4 small mb-1">{{ myRecord.user }} notes:</label>
+                          <div class="span6">
+                              <span class="small mb-1">{{ myRecord.notes }}</span>
+                          </div>
+                      </div>
+                  {% endfor %}
+              </div>
+          <div class="span4">
+              <div class="row hide" id="statusForm">
+                  <form id="updateStatusForm" method="POST">
+                      {% csrf_token %}
+                      <div class="mb-3">
+                      <label class="span4 small mb-1"> New status: </label>
+                          <span class="small mb-1">{{ myStatusForm.new_order_status.name }}</span>
+                      </div>
+                      <div class="mb-3">
+                      <label class="span1 span4 small mb-1">Notes</label>
+                      <div class="span3">
+                          {{ myStatusForm.notes }}
+                      </div>
+                      </div>
+                       <div class="mb-3">
+                      <div class="span4">
+                          <button type="submit" id="statusUpdate" class="btn btn-sm btn-primary">Set
+                          </button>
+                      </div>
+                       </div>
+                  </form>
+              </div>
+          </div>
+          </div>
+            </div>
+        </div>
+  </div>
+  </div>
+    </main>
+  </div>
+  </div>
+
+{% endblock %}
+
+{% block extrajs %}
+    <script src="{% static "js/libs/jquery/jquery-3.6.0.min.js" %}"></script>
+    <script src="{% static "js/libs/bootstrap-5.0.2/js/bootstrap.bundle.min.js" %}"></script>
+    <script src="{% static "js/libs/openlayers-6.5.0/ol.js" %}"></script>
+    {% javascript 'orderpage' %}
+  <script>
+	function triggerProjectionChange(option) {
+		/*
+		function is triggered by applying one of helper filters for either projection or
+		processing level
+		expected input is either "projection" or "processing"
+		filter value (option element) can be:
+		0 - default option
+		1 - secondary selection
+		logic is based on presumtion that default selection is first option in select
+		and secondary option (GEO for projection and RAW for processing) is last option in select
+		*/
+		var type = $('input[name='+ option +'Radio]:radio:checked').val()
+		if (type == 1) {
+			var selector = 'option:last';
+		} else {
+			var selector = 'option:first';
+		}
+		$("select[name*='_"+option+"']").find(selector).attr("selected","selected");
+		/* 
+		we need to manually trigger change event for costs to get updated
+		*/
+		$("select[name*='_"+option+"']").trigger('change');
+	}
+
+	function setTotalCost() {
+		/*
+		function expects for DOM elements that hold costs have name attribute with _cost suffix
+		and data-id attribute that holds product ID
+		using product ID we lookup corresponding widget which has method that returns cost
+		for curently selected process level
+		*/
+		var cost = 0;
+		$('td[name*="_cost"]').each(function() {
+			cost += APP['widget_' + $(this).data('id') + '_processing'].getCost();
+		})
+		$('#product_total_cost').html(cost);
+	}
+
+  	$( document ).ready(function() {
+
+        $('form#updateStatusForm').submit(function(){
+            $('.download-spinner').show();
+            $(this).find('button[type=submit]').prop('disabled', true);
+        });
+
+        $('form#order-form').submit(function(){
+            $('.download-spinner').show();
+            $(this).find('button[type=submit]').prop('disabled', true);
+        });
+
+  		APP.$modal = $('#ajax-modal');
+  		$('.metadata').click(function() {
+			var id = $(this).data('id');
+	        APP.$modal.load('/metadata/'+id, '', function(){
+	            APP.$modal.modal();
+	        });
+		});
+
+		$('#statusFormBtn').click(function() {
+			var btn = $(this);
+			var div = $('#statusForm')
+			if (div.hasClass('hide')) {
+				div.removeClass('hide');
+				btn.html('Hide');
+			} else {
+				div.addClass('hide');
+				btn.html('Update status')
+			}
+		});
+
+		$('#updateStatusForm').ajaxForm({
+			url: '/updateorderhistory/',
+			data: { order: '{{ myOrder.id }}' },
+			success: function() { 
+		        location.reload(); 
+		    },
+		    error: function() {
+		    	alert('There has been an error!')
+		    } 
+		});
+
+		$('.remove').click(function() {
+			if (confirm('You are about to remove product from cart, are you sure?')) {
+			    uiBlock();
+			    var elem = $(this);
+			    var id = elem.data('id');
+			    $.get("/removefromcart/" + id + "/?xhr")
+			    .done(function () {
+			    	elem.parent().parent().remove();
+			        cartLayer.removeFeature(id);
+			    })
+			    .fail(function () {
+			      alert('There has been a problem!');
+			    });
+				uiUnblock();
+			}
+		});
+		// initial setup of total cost across all products
+		setTotalCost();
+    });
+  </script>
+{% endblock %}
+{% block footer %}
+{% endblock %}
