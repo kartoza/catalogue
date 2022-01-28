@@ -7,30 +7,22 @@
     <link href="{% static "js/libs/noUiSlider.15.2.0/nouislider.css" %}" rel="stylesheet">
     <link href="{% static "css/bootstrap-listTree.css" %}" rel="stylesheet">
     <link href="{% static "js/libs/jquery-datetimepicker/jquery.datetimepicker.css" %}" rel="stylesheet" type="text/css">
-
-    <style>
-        body, .map, #map-container {
-            margin: 0;
-            height: 100vh;
-            overflow: hidden;
-        }
-        .btn-search{
-            color: rgba(255, 255, 255, 0.25);
-            border: 1px solid rgba(255, 255, 255, 0.25);
-        }
-
-    </style>
+    <link href="{% static "css/search-page-custom.css" %}" rel="stylesheet" type="text/css">
 {% endblock %}
 {% block content%}
     <div id="layoutSidenav">
-    <div id="layoutSidenav_nav">
+        <div id="layoutSidenav_content">
+            <main>
+                <div id="map-container"></div>
+            </main>
+        </div>
+        <div id="layoutSidenav_nav" class="sidenav-dark">
+        </div>
 
-    </div>
-    <div id="layoutSidenav_content">
-    <main>
-        <div id="map-container"></div>
-    </main>
-    </div>
+        {#  Right Side Panel #}
+        <div id="layoutRightSide">
+
+        </div>
     </div>
 {% endblock%}
 {% block footer %}
