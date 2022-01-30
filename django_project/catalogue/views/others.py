@@ -494,17 +494,16 @@ def delete_search(request, pk):
     site statistics. Rather we mark them as deleted so the user only sees his
     valid ones
     """
-    mySearch = None
     try:
-        mySearch = Search.objects.get(pk=pk)
-        if mySearch.user == request.user:
-            mySearch.deleted = True
-            mySearch.save()
+        search = Search.objects.get(pk=pk)
+        if search.user == request.user or request.user.is_staff:
+            search.deleted = True
+            search.save()
         else:
-            raise ('Search not owned by you!')
-    except Exception as myError:
+            raise Exception('Search not owned by you!')
+    except TypeError:
         return HttpResponse(
-            '{"success" : False,"reason" : "' + myError + '"}',
+            '{"success" : False,"reason" : "'+pk+ '"}',
             content_type='text/plain')
 
     # return a simple json object
