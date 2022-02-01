@@ -15,6 +15,7 @@ class SearchRecordSerializer(serializers.ModelSerializer):
     class Meta:
         model = SearchRecord
         fields = [
+            'pk',
             'user',
             'order',
             'product',

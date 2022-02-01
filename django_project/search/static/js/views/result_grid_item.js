@@ -3,19 +3,21 @@ define([
     'underscore',
     'shared',
     'jquery',
+    'models/cart_item',
     'collections/cart_item',
-], function (Backbone,_, Shared, $, CartItemCollection){
+], function (Backbone,_, Shared, $, CartItem, CartItemCollection){
     return Backbone.View.extend({
-    selectedFeatureID: '',
-    events: {
-        'click .metadata-button': 'showMetadata',
-        'click .cart-button': 'addToCart',
-        'click .cart-remove-button': 'removeFromCart',
-        'click': 'highlightResultItem',
-        'click img': 'imagePopover',
-        'mouseenter': 'focusItem',
-        'mouseleave': 'blurItem',
-    },
+        selectedFeatureID: '',
+        collectionUrl: '/api/search-records/',
+        events: {
+            'click .metadata-button': 'showMetadata',
+            'click .cart-button': 'addToCart',
+            'click .cart-remove-button': 'removeFromCart',
+            'click': 'highlightResultItem',
+            'click img': 'imagePopover',
+            'mouseenter': 'focusItem',
+            'mouseleave': 'blurItem',
+        },
     initialize: function() {
         _.bindAll(this, 'render');
         Shared.Dispatcher.on('highlightResultItem', $.proxy(this.highlightResultItem, this));
@@ -120,33 +122,39 @@ define([
             const self = this;
             const id = this.model.get('id');
             const cart = new CartItemCollection()
-            const exist = cart.filter(function(item) {
-                return item.get("product").id == id;
-            });
-            if (exist.length > 0) {
-                alert('Product already in cart!');
-            } else {
-                // cart.create({'product':id},{wait: true});
-                $.ajax({
-                    type: 'POST',
-                    url: '/api/search-records/',
-                    headers: {"X-CSRFToken": csrfToken},
-                    data: {'product':id},
-                    success: function (response) {
-                        Shared.Dispatcher.trigger('colorCartFeature', {'original_product_id': self.model.get('original_product_id')});
-                        $("#result_item_"+ self.model.get('original_product_id')).addClass('cartResultRow');
-                        $("#result_item_"+ self.model.get('original_product_id')).children('.button-action').children('.cart-remove-button').show();
-                        $("#result_item_"+ self.model.get('original_product_id')).children('.button-action').children('.cart-button').hide();
+            let exist = [];
+            fetch(self.collectionUrl).then(
+              response => response.json()
+            ).then((data => {
+                for (let i in data) {
+                    exist.push(data[i].product);
+                }
+                if (exist.includes(id)) {
+                    Shared.Dispatcher.trigger('colorCartFeature', {'original_product_id': self.model.get('original_product_id')});
+                    $("#result_item_" + self.model.get('original_product_id')).addClass('cartResultRow');
+                    $("#result_item_" + self.model.get('original_product_id')).children('.button-action').children('.cart-remove-button').show();
+                    $("#result_item_" + self.model.get('original_product_id')).children('.button-action').children('.cart-button').hide();
+                } else {
+                    $.ajax({
+                        type: 'POST',
+                        url: self.collectionUrl,
+                        headers: {"X-CSRFToken": csrfToken},
+                        data: {'product': id},
+                        success: function (response) {
+                            Shared.Dispatcher.trigger('colorCartFeature', {'original_product_id': self.model.get('original_product_id')});
+                            $("#result_item_" + self.model.get('original_product_id')).addClass('cartResultRow');
+                            $("#result_item_" + self.model.get('original_product_id')).children('.button-action').children('.cart-remove-button').show();
+                            $("#result_item_" + self.model.get('original_product_id')).children('.button-action').children('.cart-button').hide();
 
-                    },
-                    error: function (error) {
-                        console.log('error');
-                    }
-                });
-
-
-            }
-        } else {
+                        },
+                        error: function (error) {
+                            console.log('error');
+                        }
+                    });
+                }
+            }));
+        }
+         else {
             alert('You need to log in first!');
         }
         event.stopPropagation();
@@ -168,14 +176,24 @@ define([
 
     deleteItem: function(event) {
         const id = this.model.get('id');
-        const cart = new CartItemCollection()
-        const exist = cart.filter(function (item) {
-            return item.get('product').id == id;
+        const self = this;
+        const collection = new CartItemCollection()
+        const cart = new CartItem()
+        const url = '/api/search-record/';
+        $.ajax({
+            type: 'DELETE',
+            url: url + id,
+            headers: {"X-CSRFToken": csrfToken},
+            success: function (response) {
+                        },
+            error: function (error) {
+                console.log('error');
+            }
         });
-        console.log(exist)
-        if (exist) {
-            exist.destroy({wait: true});
-        }
+        // console.log(exist)
+        // if (exist) {
+        //     exist.destroy({wait: true});
+        // }
         if (cart.length-1==0) {
             // If cart is empty after item has been removed then hide bottom panel button
             hideButtonSubPanel();

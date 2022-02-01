@@ -132,19 +132,17 @@ class SearchRecordResource(ModelResource):
 
 class SearchRecordView(APIView):
     """
-    Retrieve, update or delete a search record.
+    Retrieve, search record.
     """
 
     serializer_class = SearchRecordSerializer
 
-    def get_queryset(self, request):
-
-        record = get_object_or_404(SearchRecord, user=User.objects.get(username=request.user))
-        result = SearchRecord(record)
-
+    def get(self, request, *args):
         try:
-            query_list = result.mQuerySet
-            return query_list
+            result = SearchRecord.objects.filter(user=User.objects.get(username=request.user))
+            serializer = SearchRecordSerializer(result, many=True)
+                # query_list = result.mQuerySet
+            return Response(serializer.data)
 
         except SearchRecord.DoesNotExist:
             return HttpResponse(
@@ -152,25 +150,6 @@ class SearchRecordView(APIView):
                 status=status.HTTP_400_BAD_REQUEST
             )
 
-
-    # def get(self, request, *args):
-    #     record = SearchRecord.objects.filter(user=User.objects.get(username=request.user))
-    #     logger.error('testtts', record)
-    #     serializer = SearchRecordSerializer(data=record)
-    #     return Response(serializer.data)
-
-    # def put(self, request, pk, format=None):
-    #     record = self.get_object(pk)
-    #     serializer = SearchRecordSerializer(record, data=request.data)
-    #     if serializer.is_valid():
-    #         serializer.save()
-    #         return Response(serializer.data)
-    #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    #
-    # def delete(self, request, pk, format=None):
-    #     record = self.get_object(pk)
-    #     record.delete()
-    #     return Response(status=status.HTTP_204_NO_CONTENT)
 
     @method_decorator(csrf_exempt)
     def post(self, request, format=None):
@@ -182,6 +161,27 @@ class SearchRecordView(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class SearchRecordDetailsView(APIView):
+    """
+    Delete, update, search record.
+    """
+
+    serializer_class = SearchRecordSerializer
+
+    def put(self, request, *args, **kwargs):
+        record = SearchRecord.objects.filter(pk=self.kwargs.get('pk'))
+        serializer = SearchRecordSerializer(record, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, *args, **kwargs):
+        record = SearchRecord.objects.filter(product=self.kwargs.get('pk'), user=User.objects.get(username=request.user))
+        record.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 class SearchResultsResourceView(ListAPIView):
