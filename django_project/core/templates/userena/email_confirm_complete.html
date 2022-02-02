@@ -6,8 +6,9 @@
 
 {% block content_title %}<h2>{% trans 'New email' %}</h2>{% endblock %}
 {% block content %}
-<div id="content" class="row-fluid center">
-  <img src="{% static 'sansa-logos/SANSA-logo.png' %}" class="gap-bottom"/>
+<div class="container" style="height: 100%;">
+    <div class="custom-form-container" style="margin-top: 40px;">
   <p class="lead">{% blocktrans with site.name as site %}Your new email address is saved. You can continue using {{ site }} with this email.{% endblocktrans %}</p>
+</div>
 </div>
 {% endblock %}

@@ -37,6 +37,7 @@
 		var suffix = this.default[options.type].suffix;
 		elem.attr('id', options.id + suffix);
 		elem.attr('name', options.id + suffix);
+		elem.attr('class', 'form-select');
 		_.each(options.data, function(opt) {
 			var option = new Option(opt[1], opt[0]);
 			elem.append(option);
