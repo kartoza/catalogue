@@ -131,12 +131,13 @@ class EmailMultiRelated(EmailMultiAlternatives):
                     msg.attach(self._create_related_attachment(*related))
         return msg
 
-    def _create_related_attachment(self, filename, content, content_type=None):
+    def _create_related_attachment(self, filename, content, content_type):
         """
         Convert the filename, content, content_type triple into a MIME attachment
         object. Adjust headers to use Content-ID where applicable.
         Taken from http://code.djangoproject.com/ticket/4771
         """
+        content_type = "multipart/related"
         attachment = super(EmailMultiRelated, self)._create_attachment(
             filename, content, content_type)
         if filename:
@@ -245,7 +246,7 @@ def duplicate(obj, value=None, field=None, duplicate_order=None):
 ###########################################################
 
 
-def notifySalesStaff(theUser, theOrderId, theContext=None):
+def notify_sales_staff(theUser, theOrderId, theContext=None):
     """
     A helper method to notify sales staff who are subscribed to a sensor
     Example usage from the console / doctest:

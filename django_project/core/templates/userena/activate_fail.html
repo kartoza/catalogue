@@ -6,10 +6,11 @@
 {% block content_title %}<h2>{% trans "Your account could not be activated..." %}</h2>{% endblock %}
 
 {% block content %}
-<div class="row-fluid center">
-  <img src="{% static 'sansa-logos/SANSA-logo.png' %}" class="gap-bottom"/>
+<div class="container" style="height: 100%;">
+    <div class="custom-form-container" style="margin-top: 40px;">
   <p class="lead">{% trans "Your account could not be activated. This could be because your activation link has expired." %}</p>
   <p class="lead">{% trans "Please try signing up again or contact us if you think something went wrong." %}</p>
   <a href="/contact/" class="btn btn-success">Contact Us</a>
+</div>
 </div>
 {% endblock %}

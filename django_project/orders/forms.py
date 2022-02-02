@@ -22,6 +22,7 @@ import logging
 from dictionaries.models import SubsidyType
 from django.contrib.auth.models import User
 from django import forms
+from django.forms import ModelChoiceField
 
 from orders.models import (
     Order,
@@ -79,7 +80,10 @@ class OrderForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         for field in self.fields.values():
-            field.widget.attrs.update({'class': 'form-control'})
+            if isinstance(field, ModelChoiceField):
+                field.widget.attrs.update({'class': 'form-select'})
+            else:
+                field.widget.attrs.update({'class': 'form-control'})
 
     class Meta:
         model = Order
@@ -107,6 +111,12 @@ class OrderFormNonSearchRecords(forms.ModelForm):
         self.fields['subsidy_type_requested'].empty_label = "--- Please select ---"
         users = User.objects.all()
         User._meta.ordering = ['first_name', 'last_name', 'username']
+        for field in self.fields.values():
+            if isinstance(field, ModelChoiceField):
+                field.widget.attrs.update({'class': 'form-select'})
+            else:
+                field.widget.attrs.update({'class': 'form-control'})
+
         self.fields['user'].choices = [
             (user.pk, (user.username if user.get_full_name() == "" else user.get_full_name())) for user in users]
 
@@ -119,7 +129,10 @@ class OrderStatusHistoryForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         for field in self.fields.values():
-            field.widget.attrs.update({'class': 'form-control'})
+            if isinstance(field, ModelChoiceField):
+                field.widget.attrs.update({'class': 'form-select'})
+            else:
+                field.widget.attrs.update({'class': 'form-control'})
 
 
 class NonSearchRecordForm(forms.ModelForm):
@@ -130,4 +143,7 @@ class NonSearchRecordForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         for field in self.fields.values():
-            field.widget.attrs.update({'class': 'form-control'})
+            if isinstance(field, ModelChoiceField):
+                field.widget.attrs.update({'class': 'form-select'})
+            else:
+                field.widget.attrs.update({'class': 'form-control'})

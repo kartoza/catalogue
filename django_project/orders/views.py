@@ -65,7 +65,7 @@ from orders.forms import (
 )
 # Helper classes
 from catalogue.views.helpers import (
-    notifySalesStaff,
+    notify_sales_staff,
     render_to_kml,
     render_to_kmz,
     downloadISOMetadata,
@@ -359,7 +359,7 @@ def view_order(request, pk):
                     record.save()
 
                 return HttpResponseRedirect(
-                    reverse('order', kwargs={'theId': order.id}))
+                    reverse('order', kwargs={'pk': order.id}))
             else:
                 return render(
                     request,
@@ -428,7 +428,7 @@ def view_order(request, pk):
             else:
                 return render(
                     request,
-                    'order-adhoc-form.html',
+                    'order_adhoc_form.html',
                     context
                 )
         else:
@@ -535,7 +535,7 @@ def update_order_history(request):
         return HttpResponse(resp, content_type="application/json")
     my_order.order_status = my_new_status
     my_order.save()
-    notifySalesStaff(my_order.user, my_order_id)
+    notify_sales_staff(my_order.user, my_order_id)
     resp = simplejson.dumps({"saved": 'ok'})
     return HttpResponse(resp, content_type="application/json")
 
@@ -593,9 +593,9 @@ def add_order(request):
                 myRecord.processing_level = proc
                 myRecord.save()
 
-            notifySalesStaff(request.user, order.id)
+            notify_sales_staff(request.user, order.id)
             return HttpResponseRedirect(
-                reverse('order', kwargs={'theId': order.id}))
+                reverse('order', kwargs={'pk': order.id}))
         else:
             logger.info('Add Order: form is NOT valid')
             return render(
@@ -627,7 +627,7 @@ def add_order(request):
 
 @login_required
 # RenderWithContext is explained in renderWith.py
-@RenderWithContext('ordersSummary.html')
+@RenderWithContext('orders_summary.html')
 def orders_summary(request):
     del request
     # count orders by status
@@ -644,7 +644,7 @@ def orders_summary(request):
 
 @login_required
 # RenderWithContext is explained in renderWith.py
-@RenderWithContext('order-summary.html')
+@RenderWithContext('order_summary.html')
 def order_summary_mail(request):
     my_order = get_object_or_404(Order, id=643)
     my_records = SearchRecord.objects.filter(order=my_order).select_related()
@@ -682,13 +682,13 @@ def add_adhoc_order(request):
                 non_search_record.rand_cost_per_scene = convert_value(prod_cost, prod_currency, 'ZAR')
                 non_search_record.currency = Currency.objects.get(code=prod_currency)
                 non_search_record.save()
-            notifySalesStaff(request.user, order.id)
+            notify_sales_staff(request.user, order.id)
             return HttpResponseRedirect(
-                reverse('order', kwargs={'theId': order.id}))
+                reverse('order', kwargs={'pk': order.id}))
         else:
             return render(
                 request,
-                'order-adhoc-form.html',
+                'order_adhoc_form.html',
                 context
             )
     else:
@@ -703,7 +703,7 @@ def add_adhoc_order(request):
         logger.info('Add Order: new object requested')
         return render(
             request,
-            'order-adhoc-form.html',
+            'order_adhoc_form.html',
             context
         )
 

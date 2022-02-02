@@ -1,7 +1,13 @@
 {% extends "base.html" %}
 {% load pipeline %}
 {% load staticfiles %}
-
+{% block extraHeaders %}
+    <script src="{% static "js/libs/jquery/jquery-3.6.0.min.js" %}"></script>
+    <script src="{% static "js/libs/jquery-ui-1.12.1/jquery-ui.min.js" %}"></script>
+    <script src="{% static "js/libs/underscore-1.13.1/underscore-min.js" %}"></script>
+    <script src="{% static "js/widget.deliveryOptions.js" %}"></script>
+    <script src="{% static "js/init_project.js" %}"></script>
+{% endblock %}
 
 {% block content %}
   <div class="main-content">
