@@ -41,6 +41,12 @@ if 'raven.contrib.django.raven_compat' in INSTALLED_APPS:
                 'class': (
                     'raven.contrib.django.raven_compat.'
                     'handlers.SentryHandler'),
+            },
+            # output file
+            'file': {
+                'level': 'DEBUG',
+                'class': 'logging.FileHandler',
+                'filename': '/home/web/log/django.log',
             }
         },
         'loggers': {
@@ -59,8 +65,8 @@ if 'raven.contrib.django.raven_compat' in INSTALLED_APPS:
                 'handlers': ['mail_admins'],
                 'propagate': False
             },
-            'django.request': {
-                'handlers': ['mail_admins'],
+            'django': {
+                'handlers': ['mail_admins', 'file'],
                 'level': 'ERROR',
                 'propagate': True
             }
