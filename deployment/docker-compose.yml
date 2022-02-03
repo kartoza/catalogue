@@ -108,6 +108,7 @@ services:
       - ./logs:/var/log/
       - ./data:/home/web/django_project/data
       - /dmz/CATALOGUE/thumbnails_cat3:/home/web/django_project/thumbs_out
+      - ../logs:/home/web/logs/
     links:
       - smtp:smtp
       - db:db
