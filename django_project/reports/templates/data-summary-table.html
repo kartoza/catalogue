@@ -4,81 +4,20 @@
 {% block extracss %}
     <link href="{% static "css/table.css" %}" rel="stylesheet">
 {% endblock %}
-{% block extrajs %}
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script type="text/javascript">
 
-
-        // Load the Visualization API and the piechart package.
-        google.load('visualization', '1', {'packages': ['corechart']});
-
-        // Set a callback to run when the Google Visualization API is loaded.
-        google.setOnLoadCallback(drawChart);
-
-        // Callback that creates and populates a data table,
-        // instantiates the pie chart, passes in the data and
-        // draws it.
-        function drawChart() {
-
-            // Create our data table.
-            var data = new google.visualization.DataTable();
-            console.log(data);
-            data.addColumn('string', 'Sensor');
-            data.addColumn('number', 'Records');
-            data.addRows([
-                {% for myRecord in myResultSet %}
-                    {% if myRecord.id__count > 0 %}
-                        ['{{myRecord.satellite_operator_abbr }} - {{ myRecord.instrument_operator_abbr }}',
-                            {{ myRecord.id__count }}],
-                    {% endif %}
-                {% endfor %}
-                [null, null]]);
-
-            // Instantiate and draw our chart, passing in some options.
-            var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
-            chart.draw(data, {
-                width: 860,
-                height: 400,
-                is3D: true,
-                title: 'Records by Sensor',
-                backgroundColor: '#f5f5f5'
-            });
-        }
-
-    </script>
-{% endblock %}
 {% block content %}
-{#    <div class="row">#}
-{#        <div class="span8 offset2 text-right">#}
-{#            <p><strong>Total Scenes: {{ total }}</strong></p>#}
-{#        </div>#}
-{#    </div>#}
-{##}
 
 <div class="main-content">
 <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
                         <h1 class="mt-4">Summary of All Sensor-Based Catalogue Holdings</h1>
-                        <div class="row">
-                            <div class="col-xl-6">
-                                <div class="card mb-4">
+                        <div class="card mb-4">
                                     <div class="card-header">
                                         <i class="fas fa-chart-area me-1"></i>
-                                        Area Chart
+                                        Records by Sensor Chart
                                     </div>
-                                    <div class="card-body"><canvas id="myAreaChart" width="100%" height="40"></canvas></div>
-                                </div>
-                            </div>
-                            <div class="col-xl-6">
-                                <div class="card mb-4">
-                                    <div class="card-header">
-                                        <i class="fas fa-chart-bar me-1"></i>
-                                        Bar Chart
-                                    </div>
-                                    <div class="card-body"><canvas id="myBarChart" width="100%" height="40"></canvas></div>
-                                </div>
-                            </div>
+                                    <div class="card-body" id="chart_summary_sensor"></div>
                         </div>
                         <div class="card mb-4">
                             <div class="card-header">
@@ -101,5 +40,61 @@
             </div>
 </div>
 {% endblock %}
+
 {% block footer %}
+    <script src="{% static "js/libs/jquery/jquery-3.6.0.min.js" %}"></script>
+    <script src="{% static "js/libs/highcharts/highcharts.js" %}"></script>
+    <script src="{% static "js/libs/highcharts/modules/data.js" %}"></script>
+    <script src="{% static "js/libs/highcharts/modules/exporting.js" %}"></script>
+    <script src="{% static "js/libs/highcharts/modules/export-data.js" %}"></script>
+    <script src="{% static "js/libs/highcharts/modules/accessibility.js" %}"></script>    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        var data = [];
+        {% for myRecord in myResultSet %}
+            {% if myRecord.id__count > 0 %}
+                data.push({
+                    'name': '{{myRecord.satellite_operator_abbr }} - {{ myRecord.instrument_operator_abbr }}',
+                    'y': {{ myRecord.id__count }}
+                        });
+                    {% endif %}
+                {% endfor %}
+
+        Highcharts.chart('chart_summary_sensor', {
+            chart: {
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: false,
+                type: 'pie'
+            },
+            title: {
+                text: 'Records by Sensor'
+            },
+            tooltip: {
+                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+            },
+            accessibility: {
+                point: {
+                    valueSuffix: '%'
+                }
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: false
+                    },
+                    showInLegend: true
+                }
+            },
+            series: [{
+                name: 'Records by Sensor',
+                colorByPoint: true,
+                data: data
+            }]
+        });
+
+
+
+    </script>
 {% endblock %}

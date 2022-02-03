@@ -96,7 +96,7 @@ def slice_for_display(the_list, page_size=10):
 
 @staff_member_required
 # RenderWithContext is explained in renderWith.py
-@RenderWithContext('visitor-report.html')
+@RenderWithContext('visitor_report.html')
 def visitor_report(request):
     """
     The view to render a visitor report
@@ -127,7 +127,7 @@ def visitor_report(request):
 
 @staff_member_required
 # RenderWithContext is explained in renderWith.py
-@RenderWithContext('visitor-monthly-report.html')
+@RenderWithContext('visitor_monthly_report.html')
 def visitor_monthly_report(request, year, month):
     """
     The view to return a monthly report on visitor activity
@@ -272,7 +272,7 @@ def recent_searches(request):
 
 # monthly search report by user ip_position
 @staff_member_required
-@RenderWithContext('searchMonthlyReport.html')
+@RenderWithContext('search_monthly_report.html')
 def search_monthly_report(request, year, month):
     """
     The view to return a monthly search report
@@ -313,7 +313,7 @@ def search_monthly_report(request, year, month):
 
 # monthly search report by user ip_position
 @staff_member_required
-@RenderWithContext('searchMonthlyReportAOI.html')
+@RenderWithContext('search_monthly_report_aoi.html')
 def search_monthly_report_aoi(request, year, month):
     """
     The view to return a table of countries searched for by month
@@ -321,7 +321,7 @@ def search_monthly_report_aoi(request, year, month):
     :param request: HttpRequest dict
     :param year: The year requested (int)
     :param month: The month requested (int)
-    :return: searchMonthlyReportAOI.html :rtype: HttpResponse
+    :return: search_monthly_report_aoi.html :rtype: HttpResponse
     """
     sort_col, sort_order, sort_link = table_sort_settings(request)
     if not (year and month):
