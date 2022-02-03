@@ -46,7 +46,7 @@ if 'raven.contrib.django.raven_compat' in INSTALLED_APPS:
             'file': {
                 'level': 'DEBUG',
                 'class': 'logging.FileHandler',
-                'filename': '/home/web/log/django.log',
+                'filename': '/home/web/logs/django.log',
             }
         },
         'loggers': {
