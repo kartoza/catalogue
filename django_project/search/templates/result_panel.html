@@ -1,37 +1,37 @@
 <script type='text/html' id='side-result-panel'>
 <div class="result-panel row" style="--bs-gutter-x:0;--bs-gutter-y: 0;">
         <div class="well well-small">
-          <div class="navigation">
-            <div id="searchPrev" class="btn searchPrev"
-                 style="float:left; display: none;"
-                 data-toggle="tooltip"
-                 data-title="Previous Page"
-                 data-placement="top">
-              <i class="icon-chevron-left"></i>
-            </div>
-            <div style="float:left;" data-toggle="tooltip"
-                 data-title="Toggle Polygons">
-              <input type="checkbox" checked data-on="success" data-off="info" class="switch-small" id="switchSearchLayer">
-            </div>
-            <button id="resetZoom" style="float:left; display: none;"
-                 class="btn btn-info resetZoom"
-                 data-toggle="tooltip" data-title="Reset Zoom"
-                 data-placement="top">
-              <i class="icon-zoom-out"></i>
-            </button>
-            <div class="position" id="resultsPosition"></div>
-            <div id="searchNext" class="btn searchNext"
-                 style="float:right; display: none;"
-                 data-toggle="tooltip" data-title="Next Page"
-                 data-placement="top">
-              <i class="icon-chevron-right"></i>
-            </div>
-          </div>
+{#          <div class="navigation">#}
+{#            <div id="searchPrev" class="btn searchPrev"#}
+{#                 style="float:left; display: none;"#}
+{#                 data-toggle="tooltip"#}
+{#                 data-title="Previous Page"#}
+{#                 data-placement="top">#}
+{#              <i class="icon-chevron-left"></i>#}
+{#            </div>#}
+{#            <div style="float:left;" data-toggle="tooltip"#}
+{#                 data-title="Toggle Polygons">#}
+{#              <input type="checkbox" checked data-on="success" data-off="info" class="switch-small" id="switchSearchLayer">#}
+{#            </div>#}
+{#            <button id="resetZoom" style="float:left; display: none;"#}
+{#                 class="btn btn-info resetZoom"#}
+{#                 data-toggle="tooltip" data-title="Reset Zoom"#}
+{#                 data-placement="top">#}
+{#              <i class="icon-zoom-out"></i>#}
+{#            </button>#}
+{#            <div class="position" id="resultsPosition"></div>#}
+{#            <div id="searchNext" class="btn searchNext"#}
+{#                 style="float:right; display: none;"#}
+{#                 data-toggle="tooltip" data-title="Next Page"#}
+{#                 data-placement="top">#}
+{#              <i class="icon-chevron-right"></i>#}
+{#            </div>#}
+{#          </div>#}
           <div id="results-container"></div>
         </div>
-        <div id="result-sub-panel" class="well text-center">
+        <div id="result-sub-panel" class="well text-center" style="background-color: #272f3b">
           <div class="btn-group">
-              <button id="result-panel-download-button" type="button"
+              <button id="result-panel-download-button" type="button" style="width: 45%; color: rgba(255, 255, 255, 0.5);  border: 1px solid rgba(255, 255, 255, 0.25);"
                   class="btn dropdown-toggle sansa-white-btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                    Download Results Data
               </button>
@@ -47,7 +47,7 @@
                   <a class="dropdown-item" href="#" id="result-panel-download-button-htm">HTML</a>
               </div>
           </div>
-          <a class="btn sansa-blue-btn" onclick="addOrderClicked(); return false;" href="/add-order/">
+          <a class="btn sansa-blue-btn" style="width: 45%; color: rgba(255, 255, 255, 0.5);  border: 1px solid rgba(255, 255, 255, 0.25);" onclick="addOrderClicked(); return false;" href="/add-order/">
              Order Now
           </a>
 {#          <div id="result-panel-btns" style="font-size: 10pt">#}
