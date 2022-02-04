@@ -84,9 +84,9 @@ EMAIL_NOTIFICATIONS_ENABLED = True
 #    '.StripWhitespaceMiddleware',
 # )
 
-CATALOGUE_ISO_METADATA_XML_TEMPLATE = ABS_PATH('..', (
+CATALOGUE_ISO_METADATA_XML_TEMPLATE = abspath(join('..', (
     'resources/PackageTemplate/Metadata/'
-    'ISOMetadata/ISOMetadata_template.xml'))
+    'ISOMetadata/ISOMetadata_template.xml')))
 
 # limit the number of returned metadata records
 MAX_METADATA_RECORDS = 500

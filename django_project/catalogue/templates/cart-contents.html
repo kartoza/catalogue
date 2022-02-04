@@ -22,22 +22,22 @@
     {% if myDownloadOrderFlag %}
     <div id="cart-download-div">
       <p>Download order as:</p>
-      <button onclick='location="{% url 'downloadOrder' myOrder.id %}?shp";return false;' class="btn">SHP</button>
-      <button onclick='location="{% url 'downloadOrder' myOrder.id %}?kml";return false;' class="btn">KML</button>
-      <button onclick='location="{% url 'downloadOrder' myOrder.id %}?kmz";return false;' class="btn">KMZ</button>
+      <button onclick='location="{% url 'downloadOrder' myOrder.id %}?shp";return false;' class="btn btn-primary">SHP</button>
+      <button onclick='location="{% url 'downloadOrder' myOrder.id %}?kml";return false;' class="btn btn-primary">KML</button>
+      <button onclick='location="{% url 'downloadOrder' myOrder.id %}?kmz";return false;' class="btn btn-primary">KMZ</button>
     </div>
     {% else %}
     {% if myRecords %}
     <div id="cart-download-div">
       <p>Download cart as:</p>
-      <button onclick='location="{% url 'downloadCart' %}?shp";return false;' class="btn">SHP</button>
-      <button onclick='location="{% url 'downloadCart' %}?kml";return false;' class="btn">KML</button>
-      <button onclick='location="{% url 'downloadCart' %}?kmz";return false;' class="btn">KMZ</button>
-      <button onclick='location="{% url 'downloadCartMetadata' %}";return false;' class="btn">XML</button>
-      <button onclick='location="{% url 'downloadCartMetadata' %}?html";return false;' class="btn">HTML</button>
+      <button onclick='location="{% url 'downloadCart' %}?shp";return false;' class="btn btn-primary">SHP</button>
+      <button onclick='location="{% url 'downloadCart' %}?kml";return false;' class="btn btn-primary">KML</button>
+      <button onclick='location="{% url 'downloadCart' %}?kmz";return false;' class="btn btn-primary">KMZ</button>
+      <button onclick='location="{% url 'downloadCartMetadata' %}";return false;' class="btn btn-primary">XML</button>
+      <button onclick='location="{% url 'downloadCartMetadata' %}?html";return false;' class="btn btn-primary">HTML</button>
     </div>
     <div style="margin-top: 20px;">
-      <a class="btn btn-success" onclick="addOrderClicked(); return false;" href="/add-order/">
+      <a class="btn btn-primary" onclick="addOrderClicked(); return false;" href="/add-order/">
           <i class="icon-shopping-cart"></i> Order Now!
       </a>
     </div>
