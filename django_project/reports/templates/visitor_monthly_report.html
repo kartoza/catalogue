@@ -28,8 +28,8 @@
                                 <div id="order-list-buttonset" class="btn-group pull-right">
                                     <button onclick='location="{% url 'visitorMonthlyReport' myPrevDate|date:'Y' myPrevDate|date:'m' %}"'
             class="btn" id="download-btn"><i class="icon-chevron-left"></i> Previous Month</button>
-        <button onclick='location="?pdf"'
-            class="btn btn-primary" id="download-btn"><i class="icon-download"></i> PDF</button>
+            {% if table %}<a href="?pdf" download="proposed_file_name"><button
+                class="btn btn-primary" id="download-btn"><i class="icon-download"></i> PDF</button></a>{% endif %}
         <button onclick='location="{% url 'visitorMonthlyReport' myNextDate|date:'Y' myNextDate|date:'m' %}"'
             class="btn" id="download-btn">Next Month <i class="icon-chevron-right"></i> </button>
                                 </div>
@@ -91,6 +91,21 @@
                         enabled: false
                     },
                     showInLegend: true
+                }
+            },
+            exporting: {
+                buttons: {
+                    contextButton: {
+                        menuItems: ["printChart",
+                            "separator",
+                            "downloadPNG",
+                            "downloadJPEG",
+                            "downloadPDF",
+                            "downloadSVG",
+                            "separator",
+                            "downloadCSV",
+                            "downloadXLS"]
+                    }
                 }
             },
             series: [{

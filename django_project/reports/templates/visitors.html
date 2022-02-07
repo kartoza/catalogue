@@ -4,6 +4,11 @@
 {% block extracss %}
     <link href="{% static "css/table.css" %}" rel="stylesheet">
 {% endblock %}
+{% block extraHeaders %}
+    <script src="{% static "js/libs/jquery/jquery-3.6.0.min.js" %}"></script>
+    <script src="{% static "js/libs/jquery-ui-1.12.1/jquery-ui.min.js" %}"></script>
+
+{% endblock%}
 {# Original code from Tim's SABIO project and copyright is retained by the original author #}
 {% block content %}
 <div class="main-content">
@@ -16,7 +21,7 @@
                                 <i class="fas fa-table me-1"></i>
                                 Visitor Table
                             <div id="order-list-buttonset" class="btn-group pull-right">
-                                <button  class="btn" id="download-btn-1"><i class="icon-download"></i> Download this page as PDF</button>
+                                <a href="?pdf&page={{request.GET.page}}" download="proposed_file_name"><button  class="btn" id="download-btn-1"><i class="icon-download"></i> Download as PDF</button></a>
                                  <button onclick="location='http://catalogue.sansa.org.za/static/visitor/visitors.csv'" class="btn" id="download-btn-2"><i class="icon-download"></i> Download all pages as CSV</button>
                                 </div>
                             </div>
@@ -42,8 +47,8 @@ $('#download-btn').popover({
   content:'Click to download the entire list of visitors in PDF format',
   title:'Download as PDF'
 });
+
 $('#download-btn-1').click(function () {
-    alert('hhehhehe')
     var page = $.urlParam('page');
     var sort_method = $.urlParam('sort');
     var sort_string = '';

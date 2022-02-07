@@ -24,10 +24,11 @@
                                 <i class="fas fa-table me-1"></i>
                                 Data Summary Table
                                 <div id="order-list-buttonset" class="btn-group pull-right">
-                                    <button id="download-btn" class="btn"
-                                            onclick='location="?pdf"'>
+                                    <a href="?pdf" download="proposed_file_name">
+                                    <button id="download-btn" class="btn">
                                         <i class="icon-download"></i> Download as PDF
                                     </button>
+                                    </a>
                                 </div>
                             </div>
                             <div class="card-body">
@@ -85,6 +86,21 @@
                         enabled: false
                     },
                     showInLegend: true
+                }
+            },
+            exporting: {
+                buttons: {
+                    contextButton: {
+                        menuItems: ["printChart",
+                            "separator",
+                            "downloadPNG",
+                            "downloadJPEG",
+                            "downloadPDF",
+                            "downloadSVG",
+                            "separator",
+                            "downloadCSV",
+                            "downloadXLS"]
+                    }
                 }
             },
             series: [{

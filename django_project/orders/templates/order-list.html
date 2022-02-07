@@ -24,10 +24,11 @@ function showOrder(theId) {
                 <i class="fas fa-table me-1"></i>
                                 Orders Table
                 <div id="order-list-buttonset" class="btn-group pull-right">
-                    <button id="download-btn" class="btn"
-                            onclick='location="{{ myUrl }}?page={{ myRecords.number}}&pdf"'>
+                <a href="{{ myUrl }}?page={{ myRecords.number}}&pdf" download="proposed_file_name">
+                    <button id="download-btn" class="btn">
                         <i class="icon-download"></i> Download as PDF
                     </button>
+                </a>
                     {% if myUrl == '/list-orders/' %} {# can't use url template tag for if evaluation #}
                         <button class="btn monthly-btn"
                                 onclick='location="{% url 'order-monthly-report' myCurrentMonth|date:'Y'  myCurrentMonth|date:'m' %}"'>

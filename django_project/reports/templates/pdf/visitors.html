@@ -20,7 +20,7 @@
 <tbody>
           {% for record in records.object_list %}
           <tr>
-            <td>{{ record.user.first_name}} {{record.user.last_name}}</td>
+            <td>{% if record.user.get_full_name %} {{ record.user.get_full_name}} {% else %}  {{record.user.username}}{% endif %}</td>
             <td>{{ record.ip_address }}</td>
             <td>{{ record.country}}</td>
             <td>{{ record.city }}</td>
