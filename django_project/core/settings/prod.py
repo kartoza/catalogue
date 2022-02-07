@@ -27,7 +27,7 @@ if 'raven.contrib.django.raven_compat' in INSTALLED_APPS:
         # default root logger - handle with sentry
         'root': {
             'level': 'ERROR',
-            'handlers': ['sentry'],
+            'handlers': ['sentry', 'file'],
         },
         'handlers': {
             # send email to mail_admins, if DEBUG=False

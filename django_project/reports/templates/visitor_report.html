@@ -4,6 +4,9 @@
 {% block extracss %}
     <link href="{% static "css/table.css" %}" rel="stylesheet">
 {% endblock %}
+{% block extraHeaders %}
+    <script src="{% static "js/libs/jquery/jquery-3.6.0.min.js" %}"></script>
+{% endblock %}
 {% block content %}
 <div class="main-content">
 <div id="layoutSidenav_content">
@@ -23,7 +26,7 @@
         <i class="fas fa-table me-1"></i>
                                 Visits by Country Excluding SA
                                 <div id="order-list-buttonset" class="btn-group pull-right">
-                                    <button onclick='location="?pdf"' class="btn btn-primary" id="download-btn"> <i class="icon-download"></i> Download as PDF</button>
+                                    <a href="?pdf" download="proposed_file_name"><button class="btn btn-primary" id="download-btn"> <i class="icon-download"></i> Download as PDF</button></a>
                                     <button onclick='location="{% url 'visitorMonthlyReport' myCurrentMonth|date:'Y' myCurrentMonth|date:'m' %}"' class="btn" id="monthly-reports-btn"><i class="icon-calendar"></i> View Monthly Reports</button>                                </div>
                             </div>
     <div class="card-body">
@@ -85,8 +88,23 @@
                     showInLegend: true
                 }
             },
+            exporting: {
+                buttons: {
+                    contextButton: {
+                        menuItems: ["printChart",
+                            "separator",
+                            "downloadPNG",
+                            "downloadJPEG",
+                            "downloadPDF",
+                            "downloadSVG",
+                            "separator",
+                            "downloadCSV",
+                            "downloadXLS"]
+                    }
+                }
+            },
             series: [{
-                name: 'Brands',
+                name: 'Visits by Country',
                 colorByPoint: true,
                 data: data
             }]

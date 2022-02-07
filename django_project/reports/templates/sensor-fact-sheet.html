@@ -10,152 +10,149 @@
             <h1 class="mt-4">Sensor Summary Fact Sheet for {{ sat_group.satellite.name }} {{ sat_group.instrument_type.name }}</h1>
             <div class="card mb-4">
                 <div class="card-header">Collection: {{ sat_group.satellite.collection.name }}</div>
-    <div class="card-body">
-        <table>
-            <tbody>
-            <tr>
-                <td><label class="span4 small mb-1">Description</label></td>
-                <td><span class="small mb-1">{{ sat_group.satellite.collection.description }}</span></td>
-            </tr>
-            <tr>
-                <td><label class="span4 small mb-1">Owner</label></td>
-                <td><span class="small mb-1">{{ sat_group.satellite.collection.institution.name }}</span></td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-    <div class="card-header">Satellite: {{ sat_group.satellite.name }}</div>
-    <div class="card-body">
-        <table>
-            <tbody>
-        <tr>
-            <td><label class="span4 small mb-1">Description</label></td>
-            <td><span class="small mb-1">{{ sat_group.satellite.description }}</span></td>
-        </tr>
-        <tr>
-            <td><label class="span4 small mb-1">Reference</label></td>
-            <td><span class="small mb-1">
-                <a href="{{ sat_group.satellite.reference_url }}" target="_blank">
-                    {{ sat_group.satellite.reference_url }}
-                </a>
-            </span></td>
-        </tr>
-        <tr>
-            <td><label class="span4 small mb-1">Launch Date</label></td>
-            <td><span class="small mb-1">{{ sat_group.satellite.launch_date }}</span></td>
-        </tr>
-        <tr>
-            <td><label class="span4 small mb-1">Status</label></td>
-            <td><span class="small mb-1">{{ sat_group.satellite.status }}</span></td>
-        </tr>
-        <tr>
-            <td><label class="span4 small mb-1">Altitude</label></td>
-            <td><span class="small mb-1">{{ sat_group.satellite.altitude_km }} km</span></td>
-        </tr>
-        <tr>
-            <td><label class="span4 small mb-1">Orbit</label></td>
-            <td><span class="small mb-1">{{ sat_group.satellite.orbit_km }} km</span></td>
-        </tr>
-        <tr>
-            <td><label class="span4 small mb-1">Revisit Time</label></td>
-            <td><span class="small mb-1">{{ sat_group.satellite.revisit_time_days }} days</span></td>
-        </tr>
-            </tbody>
-        </table>
-    </div>
-    <div class="card-header">Sensor: {{ sat_group.instrument_type.name }}</div>
-    <div class="card-body">
-        <table>
-            <tbody>
-            <tr>
-            <td><label class="span4 small mb-1">Description</label></td>
-            <td><span class="small mb-1">{{ sat_group.instrument_type.description }}</span></td>
-            </tr>
-            <tr>
-            <td><label class="span4 small mb-1">Sensor Type</label></td>
-            <td><span class="small mb-1">{% if sat_group.instrument_type.is_radar %}Radar{% else %}Optical{% endif %}</span></td>
-            </tr>
-            <tr>
-            <td><label class="span4 small mb-1">Reference System</label></td>
-            <td><span class="small mb-1">{{ sat_group.instrument_type.reference_system.description }}</span></td>
-            </tr>
-            <tr>
-            <td><label class="span4 small mb-1">Scanner Type</label></td>
-            <td><span class="small mb-1">{{ sat_group.instrument_type.scanner_type.description }}</span></td>
-            </tr>
-            <tr>
-            <td><label class="span4 small mb-1">Swath</label></td>
-            <td><span class="small mb-1">{{ sat_group.instrument_type.swath_optical_km }} km</span></td>
-            </tr>
-            <tr>
-            <td><label class="span4 small mb-1">Bands</label></td>
-            <td><span class="small mb-1">{{ sat_group.instrument_type.band_count }}</span></td>
-            </tr>
-            <tr>
-            <td><label class="span4 small mb-1">Band Type</label></td>
-            <td><span class="small mb-1">{{ sat_group.instrument_type.band_type }}</span></td>
-            </tr>
-            <tr>
-            <td><label class="span4 small mb-1">Spectral Range</label></td>
-            <td><span class="small mb-1">{{ sat_group.instrument_type.spectral_range_list_nm }}</span></td>
-            </tr>
-            <tr>
-            <td><label class="span4 small mb-1">Spatial Resolution</label></td>
-            <td><span class="small mb-1">{{ sat_group.instrument_type.spatial_resolution_range }}</span></td>
-            </tr>
-        <tr>
-            <td><label class="span4 small mb-1">Quantization</label></td>
-            <td><span class="small mb-1">{{ sat_group.instrument_type.quantization_bits }}</span></td>
-        </tr>
-        <tr>
-            <td><label class="span4 small mb-1">Image Size</label></td>
-            <td><span class="small mb-1">{{ sat_group.instrument_type.image_size_km }} km</span></td>
-        </tr>
-        <tr>
-            <td><label class="span4 small mb-1">Keywords</label></td>
-            <td><span class="small mb-1">{{ sat_group.instrument_type.keywords }}</span></td>
-        </tr>
-        </tbody>
-        </table>
-    </div>
-    <div class="card-header">Yearly catalogue product overview for {{ sat_group.satellite.name }}</div>
-    <div class="card-body">
-    <div class="row">
-        <div class="span8">
-            <table class="dataTable-table">
-                <tbody>
-                <tr>
-                    {% for items in sat_group.products_per_year %}
-                        <th>{{ items.year }}</th>
-                    {% endfor %}
-                </tr>
-                <tr>
-                    {% for items in sat_group.products_per_year %}
+                <div class="card-body">
+                    <table>
+                        <tbody>
+                        <tr>
+                            <td><label class="span4 small mb-1">Description</label></td>
+                            <td><span class="small mb-1">{{ sat_group.satellite.collection.description }}</span></td>
+                        </tr>
+                        <tr>
+                            <td><label class="span4 small mb-1">Owner</label></td>
+                            <td><span class="small mb-1">{{ sat_group.satellite.collection.institution.name }}</span></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="card-header">Satellite: {{ sat_group.satellite.name }}</div>
+                <div class="card-body">
+                    <table>
+                        <tbody>
+                    <tr>
+                        <td><label class="span4 small mb-1">Description</label></td>
+                        <td><span class="small mb-1">{{ sat_group.satellite.description }}</span></td>
+                    </tr>
+                    <tr>
+                        <td><label class="span4 small mb-1">Reference</label></td>
+                        <td><span class="small mb-1">
+                            <a href="{{ sat_group.satellite.reference_url }}" target="_blank">
+                                {{ sat_group.satellite.reference_url }}
+                            </a>
+                        </span></td>
+                    </tr>
+                    <tr>
+                        <td><label class="span4 small mb-1">Launch Date</label></td>
+                        <td><span class="small mb-1">{{ sat_group.satellite.launch_date }}</span></td>
+                    </tr>
+                    <tr>
+                        <td><label class="span4 small mb-1">Status</label></td>
+                        <td><span class="small mb-1">{{ sat_group.satellite.status }}</span></td>
+                    </tr>
+                    <tr>
+                        <td><label class="span4 small mb-1">Altitude</label></td>
+                        <td><span class="small mb-1">{{ sat_group.satellite.altitude_km }} km</span></td>
+                    </tr>
+                    <tr>
+                        <td><label class="span4 small mb-1">Orbit</label></td>
+                        <td><span class="small mb-1">{{ sat_group.satellite.orbit_km }} km</span></td>
+                    </tr>
+                    <tr>
+                        <td><label class="span4 small mb-1">Revisit Time</label></td>
+                        <td><span class="small mb-1">{{ sat_group.satellite.revisit_time_days }} days</span></td>
+                    </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="card-header">Sensor: {{ sat_group.instrument_type.name }}</div>
+                <div class="card-body">
+                    <table>
+                        <tbody>
+                        <tr>
+                        <td><label class="span4 small mb-1">Description</label></td>
+                        <td><span class="small mb-1">{{ sat_group.instrument_type.description }}</span></td>
+                        </tr>
+                        <tr>
+                        <td><label class="span4 small mb-1">Sensor Type</label></td>
+                        <td><span class="small mb-1">{% if sat_group.instrument_type.is_radar %}Radar{% else %}Optical{% endif %}</span></td>
+                        </tr>
+                        <tr>
+                        <td><label class="span4 small mb-1">Reference System</label></td>
+                        <td><span class="small mb-1">{{ sat_group.instrument_type.reference_system.description }}</span></td>
+                        </tr>
+                        <tr>
+                        <td><label class="span4 small mb-1">Scanner Type</label></td>
+                        <td><span class="small mb-1">{{ sat_group.instrument_type.scanner_type.description }}</span></td>
+                        </tr>
+                        <tr>
+                        <td><label class="span4 small mb-1">Swath</label></td>
+                        <td><span class="small mb-1">{{ sat_group.instrument_type.swath_optical_km }} km</span></td>
+                        </tr>
+                        <tr>
+                        <td><label class="span4 small mb-1">Bands</label></td>
+                        <td><span class="small mb-1">{{ sat_group.instrument_type.band_count }}</span></td>
+                        </tr>
+                        <tr>
+                        <td><label class="span4 small mb-1">Band Type</label></td>
+                        <td><span class="small mb-1">{{ sat_group.instrument_type.band_type }}</span></td>
+                        </tr>
+                        <tr>
+                        <td><label class="span4 small mb-1">Spectral Range</label></td>
+                        <td><span class="small mb-1">{{ sat_group.instrument_type.spectral_range_list_nm }}</span></td>
+                        </tr>
+                        <tr>
+                        <td><label class="span4 small mb-1">Spatial Resolution</label></td>
+                        <td><span class="small mb-1">{{ sat_group.instrument_type.spatial_resolution_range }}</span></td>
+                        </tr>
+                    <tr>
+                        <td><label class="span4 small mb-1">Quantization</label></td>
+                        <td><span class="small mb-1">{{ sat_group.instrument_type.quantization_bits }}</span></td>
+                    </tr>
+                    <tr>
+                        <td><label class="span4 small mb-1">Image Size</label></td>
+                        <td><span class="small mb-1">{{ sat_group.instrument_type.image_size_km }} km</span></td>
+                    </tr>
+                    <tr>
+                        <td><label class="span4 small mb-1">Keywords</label></td>
+                        <td><span class="small mb-1">{{ sat_group.instrument_type.keywords }}</span></td>
+                    </tr>
+                    </tbody>
+                    </table>
+                </div>
+                <div class="card-header">Yearly catalogue product overview for {{ sat_group.satellite.name }}</div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="span8">
+                            <table class="dataTable-table">
+                                <tbody>
+                                <tr>
+                                    {% for items in sat_group.products_per_year %}
+                                        <th>{{ items.year }}</th>
+                                    {% endfor %}
+                                </tr>
+                                <tr>
+                                    {% for items in sat_group.products_per_year %}
 
-                        <td>{{ items.count }}</td>
-                    {% endfor %}
-                </tr>
-                </tbody>
-            </table>
+                                        <td>{{ items.count }}</td>
+                                    {% endfor %}
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="row-fluid center gap-right" style="margin-bottom: 15px">
+                     <button class="btn btn-primary" onclick='location="{{ dataSummaryTable }}"'>Back</button>
+                    <div id="order-list-buttonset" class="btn-group">
+                        <a href="{{ myUrl }}?page=&pdf" download="proposed_file_name">
+                        <button id="download-btn" class="btn">
+                            <i class="icon-download"></i> Download as PDF
+                        </button>
+                        </a>
+                    </div>
+                </div>
         </div>
-    </div>
-    </div>
-
-    <div class="row-fluid center gap-right" style="margin-bottom: 15px">
-        <button class="btn btn-primary"
-                onclick='location="{{ dataSummaryTable }}"'>
-            Back
-        </button>
-        <div id="order-list-buttonset" class="btn-group">
-            <button id="download-btn" class="btn"
-                    onclick='location="{{ myUrl }}?page=&pdf"'>
-                <i class="icon-download"></i> Download as PDF
-            </button>
         </div>
-    </div>
-    </div>
     </main>
-    </div>
     </div>
     </div>
 {% endblock %}

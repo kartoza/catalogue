@@ -19,7 +19,6 @@
          </div>
          <div class="card-body" id="chart_div"></div>
      </div>
-            {% else %}
       {% endif %}
 
     <div class="card mb-4">
@@ -27,7 +26,7 @@
         <i class="fas fa-table me-1"></i>
         This report lists the countries of origin of users making searches for {{ myCurrentDate|date:'M, Y' }}
         <div id="order-list-buttonset" class="btn-group pull-right">
-            <button onclick='location="?pdf"' class="btn" id="download-btn"><i class="icon-download"></i> Download as PDF</button>
+            {% if table %}<a href="?pdf" download="proposed_file_name"><button class="btn" id="download-btn"><i class="icon-download"></i> Download as PDF</button></a>{% endif %}
             <div class="btn-group">
                 <button onclick='location="{% url 'searchMonthlyReportAOI' myPrevDate|date:'Y' myPrevDate|date:'m' %}"' class="btn"><i class="icon-backward"></i></button>
                 <button class="btn disabled btn-primary">{{ myCurrentDate|date:'M, Y' }}</button>
@@ -94,8 +93,23 @@
                     showInLegend: true
                 }
             },
+            exporting: {
+                buttons: {
+                    contextButton: {
+                        menuItems: ["printChart",
+                            "separator",
+                            "downloadPNG",
+                            "downloadJPEG",
+                            "downloadPDF",
+                            "downloadSVG",
+                            "separator",
+                            "downloadCSV",
+                            "downloadXLS"]
+                    }
+                }
+            },
             series: [{
-                name: 'Brands',
+                name: 'Searched by User Origin',
                 colorByPoint: true,
                 data: data
             }]
