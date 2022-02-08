@@ -3054,8 +3054,8 @@ textarea.form-control-lg {
 }
 .btn-primary:disabled, .btn-primary.disabled {
   color: #fff;
-  background-color: #0d6efd;
-  border-color: #0d6efd;
+  background-color:  rgba(22, 106, 154, 0.7);
+  border-color:  rgba(22, 106, 154, 0.7);
 }
 
 .btn-secondary {
