@@ -45,14 +45,14 @@
 
 {% block footer %}
      <!-- Footer-->
-        <footer class="bg-dark py-4 mt-auto">
+        <footer class="bg-dark py-4 mt-auto" style="position: fixed; bottom: 0;margin-bottom: 0px; left: 0;right: 0">
             <div class="container px-5">
                 <div class="row align-items-center justify-content-between flex-column flex-sm-row">
                     <div class="col-auto"><div class="small m-0 text-light">Copyright &copy; SANSA, Earth Observation. 2022 | This catalogue was developed by Kartoza (Pty) Ltd</div></div>
                     <div class="col-auto">
-                        <a class="link-light small" href="#!">About</a>
+                        <a class="link-light small" href="{% url 'about' %}">About</a>
                         <span class="text-light mx-1">&middot;</span>
-                        <a class="link-light small" href="#!">Contact</a>
+                        <a class="link-light small" href="{% url 'contact' %}">Contact</a>
                     </div>
                 </div>
             </div>
