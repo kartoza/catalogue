@@ -56,13 +56,13 @@
                   <a class="dropdown-item" href="{% url 'list-orders' %}">Orders List</a>
                   <a class="dropdown-item"  href="{% url 'add-ad-hoc-order' %}">Ad-hoc order</a>
                   <hr>
-                  <a class="dropdown-item" href="{% url 'recentSearches' %}">Searches Table</a>
-                  <a class="dropdown-item" href="{% url 'searchesMap' %}">Searches Map</a>
+                  <a class="dropdown-item" href="{% url 'recent-searches' %}">Searches Table</a>
+                  <a class="dropdown-item" href="{% url 'searches-map' %}">Searches Map</a>
                   <hr>
-                  <a class="dropdown-item" href="{% url 'visitorMap' %}">Vistor Map</a>
+                  <a class="dropdown-item" href="{% url 'visitor-map' %}">Vistor Map</a>
                   <a class="dropdown-item" href="{% url 'visitorsKml' %}">Visitor KML</a>
-                  <a class="dropdown-item" href="{% url 'visitorList' %}">Visitor List</a>
-                  <a class="dropdown-item" href="{% url 'visitorReport' %}">Visitor Stats</a>
+                  <a class="dropdown-item" href="{% url 'visitor-list' %}">Visitor List</a>
+                  <a class="dropdown-item" href="{% url 'visitor-report' %}">Visitor Stats</a>
                   <hr>
                   {% if user.is_superuser %}
                   <a class="dropdown-item" href="{% url 'admin:index' %}">Page Admin</a>

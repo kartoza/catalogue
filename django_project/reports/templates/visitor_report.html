@@ -27,7 +27,7 @@
                                 Visits by Country Excluding SA
                                 <div id="order-list-buttonset" class="btn-group pull-right">
                                     <a href="?pdf" download="proposed_file_name"><button class="btn btn-primary" id="download-btn"> <i class="icon-download"></i> Download as PDF</button></a>
-                                    <button onclick='location="{% url 'visitorMonthlyReport' myCurrentMonth|date:'Y' myCurrentMonth|date:'m' %}"' class="btn" id="monthly-reports-btn"><i class="icon-calendar"></i> View Monthly Reports</button>                                </div>
+                                    <button onclick='location="{% url 'visitor-monthly-report' myCurrentMonth|date:'Y' myCurrentMonth|date:'m' %}"' class="btn" id="monthly-reports-btn"><i class="icon-calendar"></i> View Monthly Reports</button>                                </div>
                             </div>
     <div class="card-body">
         {% if table %}
