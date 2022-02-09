@@ -42,7 +42,6 @@ from catalogue.views.messaging import (
     sendMessageToAllUsers
 )
 
-
 # These are used for our generic views
 # see http://docs.djangoproject.com/en/dev/intro/tutorial04/
 # myOrdersDict = { 'queryset': Order.objects.all(),
@@ -50,10 +49,9 @@ from catalogue.views.messaging import (
 #    }
 
 from .api import v1_API
-
+from catalogue.api import VisitorGeojson
 
 admin.autodiscover()
-
 
 # Here are our patterns
 urlpatterns = [
@@ -87,11 +85,11 @@ urlpatterns = [
     # is this used?
     url(r'^myclips/$', clip_history),
     url(r'^visit/$', log_visit, name='logVisit'),
-    url(r'^visitormap/$', visitor_map, name='visitorMap'),
+    url(r'^visitor-map/$', visitor_map, name='visitor-map'),
     url(r'^whereami/$', whereAmI, name='whereAmI'),
 
     # show all searches that were made
-    url(r'^searchesmap/$', searches_map, name='searchesMap'),
+    url(r'^searches-map/$', searches_map, name='searches-map'),
 
     # show segment thumb for a segment by #
     # thumbnailpage is called only by itself?
@@ -135,6 +133,8 @@ urlpatterns = [
     url(r'', include('reports.urls')),
     # new orders app
     url(r'', include('orders.urls')),
+    url(r'^visitors/geojson$',
+        VisitorGeojson.as_view(), name='visitor-geojson'),
 
     # api urls
     url(r'^api/', include(v1_API.urls)),

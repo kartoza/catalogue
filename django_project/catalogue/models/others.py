@@ -20,7 +20,7 @@ __date__ = '09/08/2012'
 __copyright__ = 'South African National Space Agency'
 
 from django.contrib.gis.db import models
-#for user id foreign keys
+# for user id foreign keys
 from django.contrib.auth.models import User
 
 from offline_messages.models import OfflineMessage
@@ -141,9 +141,10 @@ class VisitorReport(models.Model):
     class Meta:
         app_label = 'catalogue'
         db_table = 'vw_visitor_report'
-        #requires django 1.1
+        # requires django 1.1
         managed = False
         ordering = ['visit_count']
+
 
 ##############################################################################
 
