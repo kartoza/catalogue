@@ -17,13 +17,15 @@ __version__ = '0.1'
 __date__ = '09/09/2013'
 __copyright__ = 'South African National Space Agency'
 
+from rest_framework.views import APIView
+from rest_framework.response import Response
 from tastypie import fields
 from tastypie.resources import ModelResource
 from tastypie.authorization import Authorization
 # from tastypie.authentication import SessionAuthentication
 
-
-from .models import OpticalProduct
+from catalogue.models import OpticalProduct, VisitorReport
+from catalogue.serializer import VisitSerializer
 
 
 class OpticalProductResource(ModelResource):
@@ -44,3 +46,11 @@ class OpticalProductResource(ModelResource):
 
     def dehydrate_product_date(self, bundle):
         return bundle.data['product_date'].strftime('%d/%m/%Y %M:%H')
+
+
+class VisitorGeojson(APIView):
+
+    def get(self, request, *args):
+        visitors = VisitorReport.objects.all()
+
+        return Response(VisitSerializer(visitors, many=True).data)
