@@ -17,9 +17,9 @@
                                 <i class="fas fa-table me-1"></i>
                                 Recent Search History Table
                                 <div id="order-list-buttonset" class="btn-group pull-right">
-                                    <button id="user-origin-btn" onclick='location="{% url 'searchMonthlyReport' myCurrentMonth|date:'Y' myCurrentMonth|date:'m' %}"' class="btn"><i class="icon-calendar"></i> User Country of Origin</button>
+                                    <button id="user-origin-btn" onclick='location="{% url 'search-monthly-report' myCurrentMonth|date:'Y' myCurrentMonth|date:'m' %}"' class="btn"><i class="icon-calendar"></i> User Country of Origin</button>
                                     <a href="?pdf" download="proposed_file_name"><button class="btn btn-primary" id="download-btn"><i class="icon-download"></i> PDF</button></a>
-                                    <button id="aoi-report-btn" onclick='location="{% url 'searchMonthlyReportAOI' myCurrentMonth|date:'Y' myCurrentMonth|date:'m' %}"' class="btn"><i class="icon-calendar"></i> Countries Searched</button>
+                                    <button id="aoi-report-btn" onclick='location="{% url 'search-monthly-report' myCurrentMonth|date:'Y' myCurrentMonth|date:'m' %}"' class="btn"><i class="icon-calendar"></i> Countries Searched</button>
                                 </div>
                             </div>
                             <div class="card-body">

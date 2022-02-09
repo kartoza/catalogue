@@ -5,7 +5,7 @@ require.config({
         ol: 'libs/openlayers-6.5.0/ol',
         underscore: 'libs/underscore-1.13.1/underscore-min',
         backbone: 'libs/backbone-1.4.0/backbone-min',
-        bootstrap: 'libs/bootstrap-5.0.2/js/bootstrap.bundle.min',
+        bootstrap: 'libs/bootstrap-5.0.2/js/bootstrap.bundle',
         jqueryUi: 'libs/jquery-ui-1.12.1/jquery-ui.min',
         layerSwitcher: 'libs/ol-layerswitcher/ol-layerswitcher',
         htmlToCanvas: 'libs/htmlToCanvas/html2canvas.min',

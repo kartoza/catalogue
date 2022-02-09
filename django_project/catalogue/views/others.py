@@ -331,7 +331,7 @@ def clip(request):
 
 @staff_member_required
 # RenderWithContext is explained in renderWith.py
-@RenderWithContext('simpleMap.html')
+@RenderWithContext('simple_map.html')
 def visitor_map(request):
     """Show a map of all visitors"""
     myGeoIpUtils = GeoIpUtils()

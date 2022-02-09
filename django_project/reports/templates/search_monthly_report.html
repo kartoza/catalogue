@@ -28,9 +28,9 @@
         <div id="order-list-buttonset" class="btn-group pull-right">
             {% if table %}<a href="?pdf" download="proposed_file_name"><button class="btn" id="download-btn"><i class="icon-download"></i> Download as PDF</button></a>{% endif %}
             <div class="btn-group">
-                <button onclick='location="{% url 'searchMonthlyReportAOI' myPrevDate|date:'Y' myPrevDate|date:'m' %}"' class="btn"><i class="icon-backward"></i></button>
+                <button onclick='location="{% url 'search-monthly-report-aoi' myPrevDate|date:'Y' myPrevDate|date:'m' %}"' class="btn"><i class="icon-backward"></i></button>
                 <button class="btn disabled btn-primary">{{ myCurrentDate|date:'M, Y' }}</button>
-                <button onclick='location="{% url 'searchMonthlyReportAOI' myNextDate|date:'Y' myNextDate|date:'m' %}"' class="btn"><i class="icon-forward"></i></button>
+                <button onclick='location="{% url 'search-monthly-report-aoi' myNextDate|date:'Y' myNextDate|date:'m' %}"' class="btn"><i class="icon-forward"></i></button>
             </div>
         </div>
     </div>

@@ -26,11 +26,11 @@
         <i class="fas fa-table me-1"></i>
                                 Visits by Country For {{ myCurrentDate|date:'F Y' }}
                                 <div id="order-list-buttonset" class="btn-group pull-right">
-                                    <button onclick='location="{% url 'visitorMonthlyReport' myPrevDate|date:'Y' myPrevDate|date:'m' %}"'
+                                    <button onclick='location="{% url 'visitor-monthly-report' myPrevDate|date:'Y' myPrevDate|date:'m' %}"'
             class="btn" id="download-btn"><i class="icon-chevron-left"></i> Previous Month</button>
             {% if table %}<a href="?pdf" download="proposed_file_name"><button
                 class="btn btn-primary" id="download-btn"><i class="icon-download"></i> PDF</button></a>{% endif %}
-        <button onclick='location="{% url 'visitorMonthlyReport' myNextDate|date:'Y' myNextDate|date:'m' %}"'
+        <button onclick='location="{% url 'visitor-monthly-report' myNextDate|date:'Y' myNextDate|date:'m' %}"'
             class="btn" id="download-btn">Next Month <i class="icon-chevron-right"></i> </button>
                                 </div>
                                 </div>
