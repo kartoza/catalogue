@@ -46,21 +46,7 @@ define([
             this.searchBox = this.$el.find('.map-search-box');
             this.$el.find('.listTree').listTree( listTreeOptions , { "startCollapsed": true, "selected": selectedOptions });
 
-            $.datetimepicker.setLocale('en');
-            this.$el.find('#end-datepicker').datetimepicker({
-                value:'2015/04/15',
-                format:'d/m/Y',
-                formatDate:'Y/m/d',
-                step:1,
-                timepicker:false
-            });
-
-            this.$el.find('#start-datepicker').datetimepicker({
-                format:'d/m/Y',
-                formatDate:'Y/m/d',
-                step:1,
-                timepicker:false
-            });
+            this.$el.find('#datepicker').datepicker({});
 
              // setup daterange widget
             this.$el.find('#date_range').daterange();
