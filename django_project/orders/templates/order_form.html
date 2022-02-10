@@ -29,6 +29,29 @@
     </div>
 
   {% include "order_form_search.html" %}
+    <div class="modal fade" tabindex="-1" role="dialog"
+             id="confirmRemoveModal" data-id="">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Remove Product</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>You are about to remove product from cart, are you sure?'</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary"
+                                id="removeBtn">
+                            Remove
+                        </button>
+                        <button type="button" class="btn btn-secondary"
+                                data-bs-dismiss="modal">Close
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 {% endblock %}
 {% block footer %}
@@ -87,7 +110,6 @@
 
   	$( document ).ready(function() {
 
-  		{#var myMap = new SansaMap('map');#}
         var cartRecords  = new ol.source.Vector({})
         {% for record in myRecords %}
             var format = new ol.format.WKT();
@@ -95,7 +117,8 @@
                 dataProjection: 'EPSG:4326',
                 featureProjection: 'EPSG:3857',
             });
-            feat.setProperties({'id': '{{ record.product.unique_product_id }}'})
+            feat.setProperties({'production': '{{ record.product.unique_product_id }}','id': '{{ record.id }}'})
+            feat.setId({{ record.id }})
             cartRecords.addFeature(feat)
       	{% endfor %}
         const center = ol.extent.getCenter(cartRecords.getExtent())
@@ -126,8 +149,6 @@
             })
 
         });
-  		$modal = $('#ajax-modal');
-
 
       	{#var cartLayer = new CartLayer(myMap, {'wkt': CartRecords});#}
 
@@ -137,30 +158,49 @@
 
 		$('.metadata').click(function() {
 			var id = $(this).data('id');
-	        $modal.load('/metadata/'+id, '', function(){
-	            $modal.modal();
-	        });
+	        $.ajax({
+                type: 'GET',
+                url: '/metadata/' + id,
+            success: function (output) {
+                const modal = $("#ajax-modal");
+                const metadata = $("#metadataContent")
+                metadata.append(output);
+                modal.modal('show');
+            },
+            error: function(output){
+                    alert("fail");
+            }
+        });
 		})
 
 		$('.remove').click(function() {
-			if (confirm('You are about to remove product from cart, are you sure?')) {
-			    {#uiBlock();#}
-			    var elem = $(this);
-			    var id = elem.data('id');
-			    $.get("/removefromcart/" + id + "/?xhr")
+		    const modal = $('#confirmRemoveModal');
+            const elem = $(this);
+            const id = elem.data('id');
+            modal.data('id', id);
+            modal.data('elem', elem)
+
+            modal.modal('show');
+			{#	uiUnblock();#}
+		});
+
+		$('#removeBtn').click(function (){
+            const modal = $('#confirmRemoveModal');
+            let id = modal.data('id');
+            let elem = modal.data('elem')
+            $.get("/removefromcart/" + id + "/?xhr")
 			    .done(function () {
 			    	elem.parent().parent().remove();
-			        cartLayer.removeFeature(id);
+			        cartRecords.removeFeature(cartRecords.getFeatureById(id));
 			        setTotalCost();
 			    })
 			    .fail(function () {
-			      alert('There has been a problem!');
+			      console.log('There has been a problem!');
 			    });
-				uiUnblock();
-			}
-		});
+            }
+        )
 		// initial setup of total cost across all products
-		setTotalCost();
+		{#setTotalCost();#}
     })
   </script>
 {% endblock %}

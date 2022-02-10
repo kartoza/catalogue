@@ -21,7 +21,29 @@
 
         {#  Right Side Panel #}
         <div id="layoutRightSide">
-
+        </div>
+        <div class="modal fade" tabindex="-1" role="dialog"
+             id="alertNotLoggedIn" data-id="">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Log In</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>You need to log in first</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary"
+                                id="logIn" onclick="location='{% url 'userena_signin' %}'">
+                            Log In
+                        </button>
+                        <button type="button" class="btn btn-secondary"
+                                data-bs-dismiss="modal">Close
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 {% endblock%}
@@ -45,7 +67,6 @@
         {% else %}
             const UserLoged = false;
         {% endif %}
-      const defaultBasemap = 'OpenStreetMap';
       let history = false;
       {% if mysearch %}
       // set guid of loaded search

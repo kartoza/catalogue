@@ -107,7 +107,6 @@ define([
             type: 'GET',
             url: url,
             success: function (output) {
-                console.log(output);
                 $("#product-metadata").html(output).show();
             },
             error: function(output){
@@ -155,7 +154,8 @@ define([
             }));
         }
          else {
-            alert('You need to log in first!');
+            const modal = $('#alertNotLoggedIn');
+            modal.modal('show');
         }
         event.stopPropagation();
     },

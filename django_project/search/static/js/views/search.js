@@ -28,7 +28,7 @@ define([
             'click .ecological-condition': 'handleEcologicalConditionClicked',
             'click #search_button': 'submitSearchForm',
             'click #reset-search-form': 'resetSearchForm',
-            'click #start-date': 'helpStartDate',
+            'click #logIn': 'login'
         },
         initialize: function (options) {
             _.bindAll(this, 'render');
@@ -46,7 +46,8 @@ define([
             this.searchBox = this.$el.find('.map-search-box');
             this.$el.find('.listTree').listTree( listTreeOptions , { "startCollapsed": true, "selected": selectedOptions });
 
-            this.$el.find('#datepicker').datepicker({});
+            this.$el.find('#start-datepicker').datepicker({});
+            this.$el.find('#end-datepicker').datepicker({});
 
              // setup daterange widget
             this.$el.find('#date_range').daterange();
@@ -221,10 +222,7 @@ define([
             // searchSummary.reset();
             self.resetSearchFromErrors();
         },
-        helpStartDate: function (){
-            new Bootstrap.Popover(this.$el.find('#start-date'), options)
 
-        },
 
     })
 
