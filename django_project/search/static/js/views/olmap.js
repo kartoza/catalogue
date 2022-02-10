@@ -15,7 +15,7 @@ define([
     'models/result_item',
     'htmlToCanvas'
 ], function (Backbone, _, Shared, MapControlPanelView, SidePanelView,
-             ol, $, LayerSwitcher, Basemap, ResultItemCollection, Layers, SearchView, ResultGridView, ResultItem, HtmlToCanvas) {
+             ol, $, LayerSwitcher, Basemap, ResultItemCollection, Layers, SearchView, ResultGridView, HtmlToCanvas) {
     return Backbone.View.extend({
         template: _.template($('#map-template').html()),
         className: 'map-wrapper',
