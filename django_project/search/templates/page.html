@@ -74,6 +74,11 @@
       history = true
     {% endif %}
 
+    {#$('#search-panel-help-button').click(function() {#}
+    {#  APP.$modal.load('/searchformhelp/', '', function(){#}
+    {#    APP.$modal.modal();#}
+    {#  });#}
+
     </script>
   <script>
   // set control variable for share link window
@@ -159,72 +164,7 @@
     $('#map-layerswitcher-control').click(function() {
       toggleLayerSwitcher();
     });
-    $('#result-panel-download-button-shp').click(function() {
-      window.open(
-        '/downloadsearchresults/' + guid + '/?shp',
-        '_blank'
-      );
-    });
-    $('#result-panel-download-button-htm').click(function() {
-      window.open(
-        '/downloadsearchmetadata/' + guid + '/?html',
-        '_blank'
-      );
-    });
-    $('#result-panel-download-button-kml').click(function() {
-      window.open(
-        '/downloadsearchresults/' + guid + '/?kml',
-        '_blank'
-      );
-    });
-    $('#result-panel-download-button-kmz').click(function() {
-      window.open(
-        '/downloadsearchresults/' + guid + '/?kmz',
-        '_blank'
-      );
-    });
-    $('#result-panel-download-button-xml').click(function() {
-      window.open(
-        '/downloadsearchmetadata/' + guid + '/',
-        '_blank'
-      );
-    });
 
-    $('#cart-panel-download-button-shp').click(function() {
-      window.open(
-        '/downloadcart/?shp',
-        '_blank'
-      );
-    });
-    $('#cart-panel-download-button-htm').click(function() {
-      window.open(
-        '/downloadcartmetadata/?html',
-        '_blank'
-      );
-    });
-    $('#cart-panel-download-button-kml').click(function() {
-      window.open(
-        '/downloadcart/?kml',
-        '_blank'
-      );
-    });
-    $('#cart-panel-download-button-kmz').click(function() {
-      window.open(
-        '/downloadcart/?kmz',
-        '_blank'
-      );
-    });
-    $('#cart-panel-download-button-xml').click(function() {
-      window.open(
-        '/downloadcartmetadata/',
-        '_blank'
-      );
-    });
-    $('#search-panel-help-button').click(function() {
-      APP.$modal.load('/searchformhelp/', '', function(){
-        APP.$modal.modal();
-      });
-    });
     $('#map-help-button').click(function() {
       APP.$modal.load('/mapHelp/', '', function(){
         APP.$modal.modal();
