@@ -4,31 +4,28 @@
     <div id="date_from_cg" class="control-group">
       <label for="id_start_datepicker" class="control-label">From: </label>
       <div class="controls">
-        <input class="form-control" type="text" id="start-datepicker" placeholder="dd/mm/yyyy" >
-          <span class="help-popover pull-right"
-              data-title="Start Date"
-              data-content="See start date on Data Summary menu for each Satellite to make sure that you not input wrong date"
-              data-trigger="hover"
-              data-container="body">
-{#          <button id="start-date-help" type="button" data-bs-toggle="popover" title="Start Date" data-bs-content="And here's some amazing content. It's very engaging. Right?">#}
-{#              <i class="icon-question-sign" ></i>#}
-{#          </button>#}
-        </span>
+          <div class="input-group date">
+              <input class="form-control" type="text" id="datepicker" placeholder="dd/mm/yyyy" >
+              <span class="input-group-append">
+                <span class="input-group-text bg-light d-block">
+                    <i class="fa fa-calendar"></i>
+                </span>
+            </span>
+          </div>
+
       </div>
     </div>
     <div id="date_to_cg" class="control-group">
       <label for="id_end_datepicker" class="control-label">To: </label>
       <div class="controls">
-        <input class="form-control" type="text" id="end-datepicker" placeholder="dd/mm/yyyy">
-          <span class="help-popover pull-right"
-              data-title="End Date"
-              data-content="See end date on Data Summary menu for each Satellite to make sure that you not input wrong date"
-              data-trigger="hover"
-              data-container="body">
-{#          <button type="button" data-bs-toggle="popover" title="End Date" data-bs-content="And here's some amazing content. It's very engaging. Right?">#}
-{#              <i class="icon-question-sign"></i>#}
-{#          </button>#}
-        </span>
+        <div class="input-group date">
+            <input class="form-control" type="text" id="datepicker"  placeholder="dd/mm/yyyy">
+            <span class="input-group-append">
+                <span class="input-group-text bg-light d-block">
+                    <i class="fa fa-calendar"></i>
+                </span>
+            </span>
+        </div>
       </div>
     </div>
     <div id="date_range">
