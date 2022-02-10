@@ -10,7 +10,6 @@ require.config({
         layerSwitcher: 'libs/ol-layerswitcher/ol-layerswitcher',
         htmlToCanvas: 'libs/htmlToCanvas/html2canvas.min',
         jqueryTouch: 'libs/jqueryui-touch-punch/jquery.ui.touch-punch.min',
-        olMapboxStyle: 'libs/ol-mapbox-style/olms',
         noUiSlider: 'libs/noUiSlider.15.2.0/nouislider',
         jqueryForm: 'libs/jquery.form.min',
         // mousewheel: 'libs/jquery-datetimepicker/jquery.mousewheel',
@@ -28,6 +27,9 @@ require.config({
         underscore: {
             exports: '_'
         },
+        bootstrap: {
+            deps: ['jquery']
+        },
         backbone: {
             deps: [
                 'underscore',
@@ -43,11 +45,7 @@ require.config({
         layerSwitcher: {
             deps: ['ol'],
             exports: 'LayerSwitcher'
-        },
-        olMapboxStyle: {
-            deps: ['ol'],
-            exports: 'OlMapboxStyle'
-        },
+        }
     }
 });
 
