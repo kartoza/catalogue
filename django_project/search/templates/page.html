@@ -9,6 +9,11 @@
     <link href="{% static "js/libs/jquery-datetimepicker/jquery.datetimepicker.css" %}" rel="stylesheet" type="text/css">
     <link href="{% static "css/search-page-custom.css" %}" rel="stylesheet" type="text/css">
 {% endblock %}
+
+{% block extraHeaders %}
+    <script data-main="/static/js/app" src="/static/js/libs/requirejs-2.3.6/require.js"></script>
+    <script src="{% static "js/date_utils.js" %}"></script>
+{% endblock %}
 {% block content%}
     <div id="layoutSidenav">
         <div id="layoutSidenav_content">
@@ -34,10 +39,9 @@
                         <p>You need to log in first</p>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-primary"
-                                id="logIn" onclick="location='{% url 'userena_signin' %}'">
+                        <a href="{% url 'userena_signin' %}" id="logIn" ><button type="button" class="btn btn-primary">
                             Log In
-                        </button>
+                        </button></a>
                         <button type="button" class="btn btn-secondary"
                                 data-bs-dismiss="modal">Close
                         </button>
@@ -51,8 +55,6 @@
     {% include 'map_templates.html' %}
     {% include 'map_control_panel.html' %}
     {% include 'result_panel.html' %}
-    <script data-main="/static/js/app" src="/static/js/libs/requirejs-2.3.6/require.js"></script>
-    <script src="{% static "js/date_utils.js" %}"></script>
 
 {% endblock %}
 {% block extrajs %}
