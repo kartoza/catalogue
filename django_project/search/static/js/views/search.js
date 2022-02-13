@@ -161,13 +161,15 @@ define([
                     Shared.Dispatcher.trigger('collectionSearch', {
                         offset: 0
                     });
-                    //set redirect link if user is not loged in
+                    // set redirect link if user is not loged in
                     // if he logs in, he will be redirected  back to last performed search
                     if (!UserLoged) {
-                        var link = $('#login_link').attr("href") + '?next=/search/' + guid + '/';
-                        $('#login_link').attr("href", link);
-                        link = $('#login_register').attr("href") + '?next=/search/' + guid + '/';
-                        $('#login_register').attr("href", link);
+                        var link = $('#loginLink').attr("href") + '?next=/search/' + guid + '/';
+                        var popLink = $('#logIn').attr("href") + '?next=/search/' + guid + '/';
+                        $('#loginLink').attr("href", link);
+                        $('#logIn').attr("href", popLink);
+                        link = $('#loginRegister').attr("href") + '?next=/search/' + guid + '/';
+                        $('#loginRegister').attr("href", link);
                     }
 
                     },
