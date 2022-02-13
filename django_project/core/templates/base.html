@@ -53,6 +53,13 @@
                         <a class="link-light small" href="{% url 'about' %}">About</a>
                         <span class="text-light mx-1">&middot;</span>
                         <a class="link-light small" href="{% url 'contact' %}">Contact</a>
+                         {% if user.is_authenticated %}
+                            <span class="text-light mx-1">&middot;</span>
+                            <a class="link-light small" href="{% url "userena_profile_detail" user%}">Logged in as {{ user.username }}</a>
+                             {% else %}
+                             <span class="text-light mx-1">&middot;</span>
+                            <a class="link-light small" href="{% url 'userena_signin' %}">Login</a>
+                        {% endif %}
                     </div>
                 </div>
             </div>
