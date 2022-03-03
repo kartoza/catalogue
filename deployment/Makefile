@@ -22,6 +22,7 @@ build:
 	@echo "------------------------------------------------------------------"
 	@docker-compose -p $(PROJECT_ID) build uwsgi
 
+
 web:
 	@echo
 	@echo "------------------------------------------------------------------"
@@ -32,6 +33,37 @@ web:
 	@# This one runs the postgis-backup cron container
 	@# We add --no-recreate so that it does not destroy & recreate the db container
 	@docker-compose -p $(PROJECT_ID) up --no-recreate --no-deps -d dbbackups
+
+setup-pycsw: web build-pycsw run-pycsw update-migrations
+	@echo
+	@echo "------------------------------------------------------------------"
+	@echo "Setting up pycsw in production mode"
+	@echo "------------------------------------------------------------------"
+	@echo "If create_trigger.sql and setup_db.sql can't be found"
+	@echo "Build using: build-pycsw, then run with: run-pycsw"
+	@echo "------------------------------------------------------------------"
+	@docker-compose -p $(PROJECT_ID) run uwsgi python manage.py migrate catalogue
+	@echo "Create a new table and add a trigger function related to catalogue_pycswextrafield table into the database"
+	@docker cp ./docker-pycsw/setup_db.sql catalogue-db:/tmp/setup_db.sql
+	@docker cp ./docker-pycsw/create_trigger.sql catalogue-db:/tmp/create_trigger.sql
+	@echo "Execute the scripts"
+	@docker exec -it $(PROJECT_ID)-db su - postgres -c "psql gis -f /tmp/setup_db.sql"
+	@docker exec -it $(PROJECT_ID)-db su - postgres -c "psql gis -f /tmp/create_trigger.sql"
+
+
+build-pycsw:
+	@echo
+	@echo "------------------------------------------------------------------"
+	@echo "Building in production mode"
+	@echo "------------------------------------------------------------------"
+	@docker-compose -p $(PROJECT_ID) build pycsw
+
+run-pycsw:
+	@echo
+	@echo "------------------------------------------------------------------"
+	@echo "Running pycsw"
+	@echo "------------------------------------------------------------------"
+	@docker-compose -p $(PROJECT_ID) up -d pycsw
 
 permissions:
 	# Probably we want something more granular here....
