@@ -20050,28 +20050,28 @@ body {
 
 .sidenav-dark {
   background-color: #272f3b;
-  color: rgba(255, 255, 255, 0.5);
+  color: #f6f6f6;
 }
 .sidenav-dark .sidenav-menu .sidenav-menu-heading {
-  color: rgba(255, 255, 255, 0.25);
+  color: #f6f6f6;
 }
 .sidenav-dark .sidenav-menu .nav-link {
-  color: rgba(255, 255, 255, 0.5);
+  color: #f6f6f6;;
 }
 .sidenav-dark .sidenav-menu .nav-link .nav-link-icon {
-  color: rgba(255, 255, 255, 0.25);
+  color: #f6f6f6;
 }
 .sidenav-dark .sidenav-menu .nav-link .sidenav-collapse-arrow {
-  color: rgba(255, 255, 255, 0.25);
+  color: #f6f6f6;;
 }
 .sidenav-dark .sidenav-menu .nav-link:hover {
-  color: #fff;
+  color: #f6f6f6;
 }
 .sidenav-dark .sidenav-menu .nav-link.active {
-  color: #fff;
+  color: #f6f6f6;
 }
 .sidenav-dark .sidenav-menu .nav-link.active .nav-link-icon {
-  color: #fff;
+  color: #f6f6f6;
 }
 .sidenav-dark .sidenav-menu-nested {
   border-left-color: rgba(255, 255, 255, 0.15);
