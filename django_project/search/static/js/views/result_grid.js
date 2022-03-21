@@ -83,7 +83,6 @@ define([
         },
 
         collectionSearch: function (evt, options) {
-            Shared.Dispatcher.trigger('ResultGridView_fetchresults');
             this.blockResultPanel();
             this.clearHTML();
             _.extend(this.collection, options);
@@ -160,8 +159,9 @@ define([
         },
 
         render: function() {
-            $('#result-panel-toggle').removeClass('hide');
+
             if (_.size(this.collection.models) != 0) {
+                $('#result-panel-toggle').removeClass('hide');
                 Shared.Dispatcher.trigger('sidePanel:openSidePanel', this.collection.models);
                 Shared.Dispatcher.trigger('layers:addSearch', this.collection.models);
                 this.cont.empty();
@@ -177,6 +177,11 @@ define([
                     self.renderItem(item);
                 },this);
                 this._update_pagination_info();
+            }
+
+            else {
+                const modal = $('#alertNoResult');
+                modal.modal('show');
             }
             // $('#results-container').perfectScrollbar( { wheelSpeed: 20, wheelPropogation: true } );
             // this.unblockResultPanel();
