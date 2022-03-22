@@ -46,8 +46,12 @@ define([
             this.searchBox = this.$el.find('.map-search-box');
             this.$el.find('.listTree').listTree( listTreeOptions , { "startCollapsed": true, "selected": selectedOptions });
 
-            this.$el.find('#start-datepicker').datepicker({});
-            this.$el.find('#end-datepicker').datepicker({});
+            this.$el.find('#start-datepicker').datepicker({
+                format: 'dd/mm/yyyy'
+            });
+            this.$el.find('#end-datepicker').datepicker({
+                format: 'dd/mm/yyyy'
+            });
 
              // setup daterange widget
             this.$el.find('#date_range').daterange();

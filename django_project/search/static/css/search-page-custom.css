@@ -142,6 +142,11 @@ html, body {
     width: 100%;
 }
 
+.date_range_row{
+    color: var(--bs-table-striped-color);
+    background-color: #EDF1FC !important
+}
+
 /*
  * Off Canvas
  * --------------------------------------------------

@@ -109,24 +109,27 @@ define(['jquery'],function ($) {
               });
               // TODO: find overlapping ranges
               if(in_list){
-                  alert('The date range is already in the list.');
+                  const modal = $('#alertDateRangeExist');
+                  modal.modal('show');
               } else {
                   $('#date-range-table').append(self._cloneMore(myStartDate, myEndDate));
                   self.datecount++;
               }
           } else {
-              alert('Please check the date range.');
+              const modal = $('#alertCheckDateRange');
+              modal.modal('show');
           }
       } else {
-          alert('Please select both start and end dates.');
+          const modal = $('#alertAddDateRange');
+          modal.modal('show');
       }
       self._notify();
       return false;
     });
 
     //handle remove events...
-    this.$element.find('.del_daterange').on('click', 'icon-remove', function () {
-        alert('herrerrre');
+    $('.delete-date-range').on('click', function () {
+        console.log('testtts')
       //remove the date range
       $(this).closest('.date_range_row').remove();
       self._resliver_dateranges();
@@ -157,7 +160,7 @@ define(['jquery'],function ($) {
           '<input type="hidden" id="id_searchdaterange_set-'+total+'-end_date" name="searchdaterange_set-'+total+'-end_date" value="'+this._format_date(theEndDate)+'">',
           '<td class="date_from">', this._format_date(theStartDate, 'dd/mm/yy'), '</td>',
           '<td class="date_to">', this._format_date(theEndDate, 'dd/mm/yy'), '</td>',
-          '<td><a href="#"><i class="del_daterange icon-remove"></i></a></td>'
+          '<td><a type="button" class="delete-date-range"><i class="icon-remove"></i></a></td>'
       ].join('');
       return tpl;
     };
