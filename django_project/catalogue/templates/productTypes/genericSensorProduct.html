@@ -1,8 +1,8 @@
 {% extends 'productTypes/genericImageryProduct.html' %}
 {% block header %}
-<h3 class="centered prepend-1 append-1 ">Generic Sensor based Product details for</h3>
-<p class="centered"><b>{{myObject.product_id}}</b></p>
-<p class="centered">Base details common for satellite imagery</p>
+<h5 class="modal-title" id="staticBackdropLabel">Generic Sensor based Product details for
+    <br/><span class="centered">{{myObject.product_id}}</span>
+    <br/><span class="centered">Base details common for satellite imagery</span></h5>
 {% endblock %}
 
 {% block tableBody %}

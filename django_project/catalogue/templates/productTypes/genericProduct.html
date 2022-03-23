@@ -1,7 +1,13 @@
-{% block header %}
-<h3 class="centered prepend-1 append-1 ">Generic Product details for</h3>
-<h2 class="centered">{{myObject.product_id}}</h2>
-{% endblock %}
+<div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        {% block header %}
+            <h5 class="modal-title" id="staticBackdropLabel">Generic Product details for
+            <span class="centered">{{myObject.product_id}}</span></h5>
+        {% endblock %}
+      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+    <div class="modal-body">
 
 <p>
  <center>
@@ -39,6 +45,7 @@
 <tr><td class="loud">Product Revision</td><td class="quiet">{{ myObject.product_revision }}</td></tr>
 {% endblock %}
 </table>
-
+    </div>
+    </div>
 {% block footer %}
 {% endblock %}
