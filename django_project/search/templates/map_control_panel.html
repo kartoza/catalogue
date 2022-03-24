@@ -10,7 +10,7 @@
               <div class="sidenav-menu-heading">Satellites</div>
               <div class="listTree" id="listTree"></div>
 
-              <div class="sidenav-menu-heading">Date Ranges</div>
+              <div class="sidenav-menu-heading" id="date-range-content">Date Ranges</div>
               <!-- Sidenav Accordion (Pages)-->
               {% include 'search_form/date-range-content.html' %}
               <div class="sidenav-menu-heading">Other</div>
@@ -57,12 +57,12 @@
                     <div id="search-buttons" class="align-content-center">
                         <button id="reset-search-form" class="btn btn-search"
                                 data-toggle="tooltip" title="Reset Search Parameters"
-                                onclick="resetSearchForm()" data-placement="top" style="width: 45%; color: rgba(255, 255, 255, 0.5);  border: 1px solid rgba(255, 255, 255, 0.25);">
+                                onclick="resetSearchForm()" data-placement="top" style="width: 45%; color: #EDF1FC;  border: 1px solid #EDF1FC;">
                             <i class="icon-refresh"></i> RESET
                         </button>
                         <button id="search_button" class="btn btn-search"
                                 data-toggle="tooltip" title="Run Search"
-                                data-placement="top" style="width: 45%; color: rgba(255, 255, 255, 0.5);  border: 1px solid rgba(255, 255, 255, 0.25);">
+                                data-placement="top" style="width: 45%; color: #EDF1FC;  border: 1px solid #EDF1FC;">
                             <i class="icon-play"></i> APPLY
                         </button>
 {#            <button id="search-panel-help-button"#}
