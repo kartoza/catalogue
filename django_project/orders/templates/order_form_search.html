@@ -1,4 +1,11 @@
 {% load staticfiles %}
+{% block extracss %}
+<style>
+    .modal-title > span {
+        padding-left: 0;
+    }
+</style>
+{% endblock %}
 <div class="card mb-4" style="margin-top: 10px">
     <div class="card-header">Order options</div>
     <div class="card-body">
@@ -210,17 +217,6 @@
     </div>
 </div>
 
-<div class="modal modal-dialog modal-dialog-scrollable" tabindex="-1" role="dialog"
+<div class="modal fade" tabindex="-1" role="dialog"
              id="ajax-modal" data-id="">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body" id="metadataContent">
-
-                    </div>
-
-                </div>
-            </div>
-        </div>
+</div>

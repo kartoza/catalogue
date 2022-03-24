@@ -107,7 +107,10 @@ define([
             type: 'GET',
             url: url,
             success: function (output) {
-                $("#product-metadata").html(output).show();
+                $("#productMetadata").html(output);
+                const modal = $('#productMetadata');
+                modal.modal('show');
+
             },
             error: function(output){
             alert("fail");

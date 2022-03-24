@@ -38,18 +38,18 @@
       <hr/>
       <table class="table table-striped" style="margin-top: 10px; border: none">
         <thead>
-          <th class="text-center" style="color:rgba(255, 255, 255, 0.25)">From </th>
-          <th class="text-center" style="color:rgba(255, 255, 255, 0.25)">To</th>
-          <th class="text-center" style="color:rgba(255, 255, 255, 0.25)"></th>
+          <th class="text-center " style="color:#f6f6f6">From </th>
+          <th class="text-center" style="color:#f6f6f6">To</th>
+          <th class="text-center" style="color:#f6f6f6"></th>
         </thead>
         <tbody id="date-range-table">
           {% for form in dateformset.forms %}
             <tr class="date_range_row text-center">
               {{ form.start_date }}
               {{ form.end_date }}
-              <td class="date_from" style="color:rgba(255, 255, 255, 0.25); background-color: #272f3b !important">{{ form.start_date.value|date:"d/m/Y" }}</td>
-              <td class="date_to" style="color:rgba(255, 255, 255, 0.25); background-color: #272f3b !important">{{ form.end_date.value|date:"d/m/Y" }}</td>
-              <td><a href="#" class="del_daterange" style="color:rgba(255, 255, 255, 0.25); background-color: #272f3b !important"><i class="icon-remove"></i></a></td>
+              <td class="date_from">{{ form.start_date.value|date:"d/m/Y" }}</td>
+              <td class="date_to">{{ form.end_date.value|date:"d/m/Y" }}</td>
+              <td><a type="button" class="delete-date-range"><i class="icon-remove"></i></a></td>
             </tr>
           {% endfor %}
         </tbody>

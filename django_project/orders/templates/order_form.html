@@ -162,9 +162,9 @@
                 type: 'GET',
                 url: '/metadata/' + id,
             success: function (output) {
-                const modal = $("#ajax-modal");
-                const metadata = $("#metadataContent")
-                metadata.append(output);
+                const modal = $("#ajax-modal").html(output);
+                {#const metadata = $("#metadataContent")#}
+                {#metadata.append(output);#}
                 modal.modal('show');
             },
             error: function(output){
