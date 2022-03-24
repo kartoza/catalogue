@@ -105,8 +105,11 @@ define([
             let form_ok = false;
             const myDateRange = $('#date_range .date_range_row');
             if (myDateRange.length === 0) {
-                const helpElem = '<span class="error-block">You have to select at least 1 date range!</span>';
-                $('#date_range').parent().prepend(helpElem);
+                const helpElem = '<div id="error-date-range" class="alert alert-danger" role="alert">You have to select at least 1 date range!</div>';
+                $('#search-panel').animate({ scrollTop: $('#date-range-content').position().top}, 400);
+                if(this.$el.find('#error-date-range').length==0){
+                     $('#date_range').parent().prepend(helpElem);
+                }
               } else {
                 form_ok = true;
             }
@@ -128,7 +131,7 @@ define([
             for (const field in errors) {
                 const inputDOM = $('#id_' + field);
                 inputDOM.parent().parent().addClass('error');
-                const helpElem = '<span class="error-block">' + errors[field] + '</span>';
+                const helpElem = '<div class="alert alert-danger" role="alert">' + errors[field] + '</div>';
                 inputDOM.parent().append(helpElem);
             }
             $('.error-block').first().closest('.accordion-body').collapse('show');
