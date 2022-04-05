@@ -13,6 +13,7 @@
 {% block extraHeaders %}
     <script data-main="/static/js/app" src="/static/js/libs/requirejs-2.3.6/require.js"></script>
     <script src="{% static "js/date_utils.js" %}"></script>
+
 {% endblock %}
 {% block content%}
     <div id="layoutSidenav">
@@ -23,6 +24,7 @@
         </div>
         <div id="layoutSidenav_nav" class="sidenav-dark">
         </div>
+        <a id="image-download" download="map.png"></a>
 
         {#  Right Side Panel #}
         <div id="layoutRightSide">

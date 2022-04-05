@@ -15,7 +15,7 @@ define([
     'models/result_item',
     'htmlToCanvas'
 ], function (Backbone, _, Shared, MapControlPanelView, SidePanelView,
-             ol, $, LayerSwitcher, Basemap, ResultItemCollection, Layers, SearchView, ResultGridView, HtmlToCanvas) {
+             ol, $, LayerSwitcher, Basemap, ResultItemCollection, Layers, SearchView, ResultGridView) {
     return Backbone.View.extend({
         template: _.template($('#map-template').html()),
         className: 'map-wrapper',
@@ -502,7 +502,7 @@ define([
 
               });
             const layerSearchVector = new ol.layer.Vector({
-                className: 'Search result',
+                className: 'search-result',
                 source: self.layerSearchSource,
                 style: function (feature) {
                     const geom = feature.getGeometry();
@@ -515,52 +515,58 @@ define([
         downloadMap: function () {
             var that = this;
             var downloadMap = true;
-            that.map.once('postcompose', function (event) {
-                var canvas = event.context.canvas;
-                try {
-                    canvas.toBlob(function (blob) {
-                    })
-                }
-                catch (error) {
-                    $('#error-modal').modal('show');
-                    downloadMap = false
-                }
-            });
-            that.map.renderSync();
-
-            if (downloadMap) {
-                $('#ripple-loading').show();
-                $('.map-control-panel').hide();
-                $('.zoom-control').hide();
-                $('.bug-report-wrapper').hide();
-                $('.print-map-control').addClass('control-panel-selected');
-                that.whenMapIsReady(function () {
-                    var canvas = document.getElementsByClassName('map-wrapper');
-                    var $mapWrapper = $('.map-wrapper');
-                    var divHeight = $mapWrapper.height();
-                    var divWidth = $mapWrapper.width();
-                    var ratio = divHeight / divWidth;
-                    html2canvas(canvas, {
-                        useCORS: true,
-                        background: '#FFFFFF',
-                        allowTaint: false,
-                        onrendered: function (canvas) {
-                            var link = document.createElement('a');
-                            link.setAttribute("type", "hidden");
-                            link.href = canvas.toDataURL("image/png");
-                            link.download = 'map.png';
-                            document.body.appendChild(link);
-                            link.click();
-                            link.remove();
-                            $('.zoom-control').show();
-                            $('.map-control-panel').show();
-                            $('#ripple-loading').hide();
-                            $('.bug-report-wrapper').show();
-                            $('.print-map-control').removeClass('control-panel-selected');
+            that.map.once('rendercomplete', function () {
+                const mapCanvas = document.createElement('canvas');
+                const size = that.map.getSize();
+                mapCanvas.width = size[0];
+                mapCanvas.height = size[1];
+                const mapContext = mapCanvas.getContext('2d');
+                Array.prototype.forEach.call(
+                    that.map.getViewport().querySelectorAll('.ol-layer canvas, .search-result canvas'),
+                    function (canvas) {
+                        if (canvas.width > 0) {
+                            const opacity = canvas.parentNode.style.opacity || canvas.style.opacity;
+                            mapContext.globalAlpha = opacity === '' ? 1 : Number(opacity);
+                            const backgroundColor = canvas.parentNode.style.backgroundColor;
+                            if (backgroundColor) {
+                                mapContext.fillStyle = backgroundColor;
+                                mapContext.fillRect(0, 0, canvas.width, canvas.height);
+                            }
+                            let matrix;
+                            const transform = canvas.style.transform;
+                            if (transform) {
+                                // Get the transform parameters from the style's transform matrix
+                                matrix = transform.match(/^matrix\(([^\(]*)\)$/)[1].split(',').map(Number);
+                            } else {
+                                matrix = [
+                                    parseFloat(canvas.style.width) / canvas.width, 0, 0,
+                                    parseFloat(canvas.style.height) / canvas.height,
+                                    0,
+                                    0,
+                                ];
+                            }
+                            // Apply the transform to the export map context
+                            CanvasRenderingContext2D.prototype.setTransform.apply(
+                                mapContext,
+                                matrix
+                            );
+                            mapContext.drawImage(canvas, 0, 0);
                         }
-                    })
-                });
-            }
+                    }
+                    );
+                mapContext.globalAlpha = 1;
+                if (navigator.msSaveBlob) {
+                  // link download attribute does not work on MS browsers
+                  navigator.msSaveBlob(mapCanvas.msToBlob(), 'map.png');
+                } else {
+                  const link = document.getElementById('image-download');
+                  link.href = mapCanvas.toDataURL();
+                  link.click();
+                                        
+                }
+              });
+                that.map.renderSync();
+
         },
         drawPolygon: function () {
             this.$el.find('.polygonal-lasso-tool').addClass('selected');
