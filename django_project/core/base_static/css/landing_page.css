@@ -59,7 +59,7 @@ img::-moz-selection {
 header.masthead {
     background-position: center center;
     background-size: cover;
-    max-height: 500px !important;
+    max-height: 600px !important;
 }
 
 header.masthead hr {
@@ -68,16 +68,43 @@ header.masthead hr {
 }
 
 header.masthead h1 {
-    font-size: 2rem;
+    font-size: 3.2rem;
 }
 
 header.masthead p {
     font-weight: 300;
 }
 
+header.masthead a {
+    text-decoration: none;
+}
+
+.header-video-content {
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9, for an aspect ratio of 1:1 change to this value to 100% */
+    overflow:hidden
+}
+
+.header-video-content iframe {
+    position: absolute;
+    margin-top: -140px;
+    width: 100% !important;
+    height: 100% !important;
+    pointer-events: none;
+}
+
+.header-text-content{
+    position:absolute;
+    width: 100%;
+    top:0;
+    margin-top: 15%;
+    margin-left:auto;
+    margin-right:auto;
+}
+
 @media (min-width: 768px) {
     header.masthead p {
-        font-size: 1.15rem;
+        font-size: 1.5rem;
     }
 }
 
@@ -90,7 +117,7 @@ header.masthead p {
 
 @media (min-width: 992px) {
     header.masthead {
-        min-height: 470px !important;
+        min-height: 600px !important;
         padding-top: 0;
         padding-bottom: 0;
     }
