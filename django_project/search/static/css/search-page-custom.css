@@ -27,10 +27,9 @@ html, body {
 }
 
 #layoutSidenav_nav {
-    height: 100%;
+    height: 70%;
     left: 0;
     overflow-y: auto;
-    padding-bottom: 60px; /* this is navbar height */
     position: absolute;
     top: 0;
     width: var(--nav-width);
@@ -145,6 +144,16 @@ html, body {
 .date_range_row{
     color: var(--bs-table-striped-color);
     background-color: #EDF1FC !important
+}
+
+.btn-search {
+    width: 45%;
+    color: #EDF1FC;
+    border: 1px solid #EDF1FC
+}
+
+.table-header {
+    color:#f6f6f6
 }
 
 /*
