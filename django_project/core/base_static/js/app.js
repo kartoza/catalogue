@@ -60,4 +60,13 @@ require([
     // Display the map
     Shared.Router = new Router();
 
+    Backbone.history.start({hashChange: true, root: "/search/"});
+
+    $(document).ready(function () {
+
+        $('[data-bs-toggle="tooltip"]').tooltip();
+        $('[data-bs-toggle="popover"]').popover();
+
+    })
+
 });
