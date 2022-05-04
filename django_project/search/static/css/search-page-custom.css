@@ -156,6 +156,10 @@ html, body {
     color:#f6f6f6
 }
 
+.permalink-disabled {
+    color: #d6d6d6;
+}
+
 /*
  * Off Canvas
  * --------------------------------------------------

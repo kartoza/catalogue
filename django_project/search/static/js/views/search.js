@@ -28,7 +28,7 @@ define([
             'click .ecological-condition': 'handleEcologicalConditionClicked',
             'click #search_button': 'submitSearchForm',
             'click #reset-search-form': 'resetSearchForm',
-            'click #logIn': 'login'
+            'click #logIn': 'login',
         },
         initialize: function (options) {
             _.bindAll(this, 'render');
@@ -168,8 +168,10 @@ define([
                     Shared.Dispatcher.trigger('collectionSearch', {
                         offset: 0
                     });
+
                     // set redirect link if user is not loged in
                     // if he logs in, he will be redirected  back to last performed search
+
                     if (!UserLoged) {
                         var link = $('#loginLink').attr("href") + '?next=/search/' + guid + '/';
                         var popLink = $('#logIn').attr("href") + '?next=/search/' + guid + '/';

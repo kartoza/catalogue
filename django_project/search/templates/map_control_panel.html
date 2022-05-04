@@ -95,22 +95,22 @@
             <div class="sub-control-panel sub-zoom-control zoom-in" title="Zoom Out"><i class="fa fa-minus" aria-hidden="false"></i>
             </div>
         </div>
-        <div id="lasso-control" class="lasso-control sub-control-panel polygonal-lasso-tool"
-             data-placement="right" data-trigger="hover" data-content="Draw Polygon" title="Draw Polygon">
+        <div id="lasso-control" class="lasso-control sub-control-panel polygonal-lasso-tool" data-bs-toggle="popover"
+             data-placement="right" data-bs-trigger="hover focus" data-content="Draw Polygon" title="Draw Polygon">
             <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
         </div>
         <div id="print-control" class="print-map-control sub-control-panel"
-             data-toggle="popover"
-             data-placement="right" data-trigger="hover"
-             data-content="Print Map" title="Print Map">
+             data-bs-toggle="popover"
+             data-bs-placement="right"  data-bs-trigger="hover focus"
+             data-bs-content="Print Map">
             <i class="fa fa-print" aria-hidden="true"></i>
         </div>
-        <div id="permalink-control" class="permalink-control sub-control-panel sub-control-panel-disabled"
-        data-toggle="popover"
-             data-placement="right" data-trigger="hover"
-             data-content="No filters applied" title="Search Permalink">
+        <div id="permalink-control" class="permalink-control permalink-disabled" tabindex="0"
+             data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="right"
+             data-bs-content="No link to copy" style="cursor: default;">
             <i class="fa fa-link" aria-hidden="true"></i>
         </div>
+
     </div>
 </script>
 

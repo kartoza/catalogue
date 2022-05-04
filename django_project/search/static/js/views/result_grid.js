@@ -97,6 +97,13 @@ define([
                 model: item,
                 collection: this.collection
             });
+
+            // Enable permalink
+            let permalink =  $('#permalink-control')
+            permalink.css('cursor', 'pointer');
+            permalink.removeClass('permalink-disabled');
+            permalink.attr('data-bs-content', 'Copy the link for this map');
+
             $('#results-container').append(view_item.render().$el);
             // check if result item if is in cart
             const id = view_item.model.get('id');

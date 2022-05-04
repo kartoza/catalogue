@@ -43,6 +43,8 @@ define([
             'click .print-map-control': 'downloadMap',
             'click .polygonal-lasso-tool': 'drawPolygon',
             'click .close-matadata': 'hideMetadata',
+            'click .permalink-control': 'toggleSearchShare'
+
         },
 
         initialize: function () {
@@ -582,6 +584,29 @@ define([
         },
         hideMetadata: function (event){
             $("#product-metadata").hide()
+
+        },
+
+        toggleSearchShare: function() {
+
+            const permalink =  $('#permalink-control');
+            if (permalink.hasClass('permalink-disabled')) {
+                return;
+            }
+            const textArea = document.createElement("textarea");
+            textArea.value = window.location.href + guid + '/';
+            document.body.insertBefore(textArea, document.body.firstChild);
+            textArea.focus();
+            textArea.select();
+
+            try {
+                const successful = document.execCommand('copy');
+                permalink.attr('data-bs-content', 'Permalink copied to your clipboard');
+            } catch (err) {
+                permalink.attr('data-bs-content', 'Unable to copy');
+            }
+            permalink.popover('show');
+            document.body.removeChild(textArea);
 
         },
     })
