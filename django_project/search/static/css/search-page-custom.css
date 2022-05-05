@@ -160,6 +160,40 @@ html, body {
     color: #d6d6d6;
 }
 
+.hide-delete-polygon {
+    display: none;
+}
+
+.result-panel-header {
+  font-size: 21px;
+  padding-bottom: 10px;
+  padding-left: 15px;
+  padding-right: 10px;
+  min-height: 3rem;
+  background: transparent;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+.sidebar-result{
+    background-color: #272f3b;
+    height: 3rem;
+    width: 2rem;
+    position: fixed;
+    cursor: pointer;
+    color: #f6f6f6;
+    margin-left: -2rem;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    border-top-left-radius: .35rem;
+    border-bottom-left-radius: .35rem;
+    box-shadow: 0 .15rem 1.75rem 0 rgba(34,39,46,.15);
+}
+
 /*
  * Off Canvas
  * --------------------------------------------------
