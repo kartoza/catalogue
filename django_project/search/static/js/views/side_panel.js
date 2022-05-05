@@ -22,7 +22,7 @@ define(['shared', 'backbone', 'underscore', 'jqueryUi', 'jquery'], function (Sha
             // Hide the side panel
             this.rightPanel = this.$el.find('.result-panel');
             this.sideBar = this.$el.find('.sidebar-result');
-            this.sideBar.css('transform', 'translate(500px)');
+            this.sideBar.css('display', 'none');
             this.rightPanel.css('display', 'none');
 
             return this;
