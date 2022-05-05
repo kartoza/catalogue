@@ -49,7 +49,6 @@ body {
     max-width: 600px;
     width: 500px;
     min-width: 422px;
-    pointer-events: none;
     padding-top: 60px;
 }
 

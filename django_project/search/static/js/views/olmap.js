@@ -38,12 +38,11 @@ define([
             'click .zoom-in': 'zoomInMap',
             'click .zoom-out': 'zoomOutMap',
             'click .layer-control': 'layerControlClicked',
-            'click .lasso-control': 'lassoClicked',
-            'click .lasso-control-close': 'closeLassoPanel',
             'click .print-map-control': 'downloadMap',
             'click .polygonal-lasso-tool': 'drawPolygon',
             'click .close-matadata': 'hideMetadata',
-            'click .permalink-control': 'toggleSearchShare'
+            'click .permalink-control': 'toggleSearchShare',
+            'click .delete-polygon': 'deletePolygon'
 
         },
 
@@ -66,7 +65,6 @@ define([
             Shared.Dispatcher.on('map:downloadMap', this.downloadMap, this);
             Shared.Dispatcher.on('map:toggleMapInteraction', this.toggleMapInteraction, this);
             Shared.Dispatcher.on('map:setPolygonDrawn', this.setPolygonDrawn, this);
-            Shared.Dispatcher.on('map:lassoClicked', this.lassoClicked, this);
 
             new ResultGridView({
                 'collection': new ResultItemCollection()
@@ -120,15 +118,15 @@ define([
         },
 
         zoomToExtent: function (coordinates, shouldTransform=true, updateZoom=true) {
-            if (this.isBoundaryEnabled) {
-                this.fetchingRecords();
-                return false;
-            }
+
             this.previousZoom = this.getCurrentZoom();
+
             let ext = coordinates;
+
             if (shouldTransform) {
                 ext = ol.proj.transformExtent(coordinates, ol.proj.get('EPSG:4326'), ol.proj.get('EPSG:3857'));
             }
+
             if (this.polygonDrawn) {
                 ext = this.polygonDrawn;
             }
@@ -289,6 +287,7 @@ define([
                 type: 'Polygon'
             });
             this.polygonDraw.on('drawend', function (evt) {
+
                 // Zoom to extent
                 let polygonExtent = evt.feature.getGeometry().getExtent();
                 let transformedCoordinates = [];
@@ -301,6 +300,10 @@ define([
                 self.polygonExist = true;
                 // Shared.Dispatcher.trigger('map:zoomToExtent', polygonExtent, false, false);
                 Shared.Dispatcher.trigger('map:setPolygonDrawn', polygonExtent);
+
+                // show delete polygon
+                $('.polygonal-lasso-tool').hide();
+                $('.delete-polygon').removeClass('hide-delete-polygon');
             });
             this.polygonDraw.on('drawstart', function () {
                 self.source.clear();
@@ -571,15 +574,15 @@ define([
 
         },
         drawPolygon: function () {
-            this.$el.find('.polygonal-lasso-tool').addClass('selected');
+
             this.map.removeLayer(this.layer);
             this.map.addLayer(this.layer);
             this.map.addInteraction(this.polygonDraw);
             Shared.Dispatcher.trigger('map:toggleMapInteraction', true);
         },
         stopDrawing: function () {
-            this.$el.find('.polygonal-lasso-tool').removeClass('selected');
-            this.parent.map.removeInteraction(this.polygonDraw);
+
+            this.map.removeInteraction(this.polygonDraw);
             Shared.Dispatcher.trigger('map:toggleMapInteraction', false);
         },
         hideMetadata: function (event){
@@ -594,7 +597,7 @@ define([
                 return;
             }
             const textArea = document.createElement("textarea");
-            textArea.value = window.location.href + guid + '/';
+            textArea.value = window.location.origin +'/search/'+ guid + '/';
             document.body.insertBefore(textArea, document.body.firstChild);
             textArea.focus();
             textArea.select();
@@ -609,5 +612,15 @@ define([
             document.body.removeChild(textArea);
 
         },
+
+        deletePolygon: function (){
+            this.map.removeLayer(this.layer);
+            this.source.clear();
+            $('.polygonal-lasso-tool').show();
+                $('.delete-polygon').addClass('hide-delete-polygon');
+            this.stopDrawing();
+            Shared.Dispatcher.trigger('map:setPolygonDrawn', null);
+        }
+
     })
 });

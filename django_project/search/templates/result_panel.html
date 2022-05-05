@@ -1,5 +1,9 @@
 <script type='text/html' id='side-result-panel'>
-<div class="result-panel row" style="--bs-gutter-x:0;--bs-gutter-y: 0;">
+    <div class="sidebar-result" style="top:150px; transform: translate(0px)">
+        <i class="fa fa-bars" aria-hidden="true"></i>
+    </div>
+    <div class="result-panel row" style="--bs-gutter-x:0;--bs-gutter-y: 0;">
+
         <div class="well well-small">
 {#          <div class="navigation">#}
 {#            <div id="searchPrev" class="btn searchPrev"#}
@@ -27,7 +31,8 @@
 {#              <i class="icon-chevron-right"></i>#}
 {#            </div>#}
 {#          </div>#}
-          <div id="results-container"></div>
+
+          <div id="results-container" style="margin-top: 25px"></div>
         </div>
         <div id="result-sub-panel" class="well text-center" style="background-color: #272f3b">
           <div class="btn-group">
