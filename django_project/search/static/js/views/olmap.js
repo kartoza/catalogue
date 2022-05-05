@@ -621,5 +621,6 @@ define([
             this.stopDrawing();
             Shared.Dispatcher.trigger('map:setPolygonDrawn', null);
         }
+
     })
 });
