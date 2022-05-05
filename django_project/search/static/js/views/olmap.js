@@ -328,7 +328,6 @@ define([
             });
             $('#layoutSidenav_nav').append(this.searchView.render().$el);
             this.$el.append(this.mapControlPanel.render().$el);
-            // this.$el.append(this.sidePanelView.render().$el);
             $('#layoutRightSide').append(this.sidePanelView.render().$el);
 
 
@@ -621,6 +620,5 @@ define([
             this.stopDrawing();
             Shared.Dispatcher.trigger('map:setPolygonDrawn', null);
         }
-
     })
 });

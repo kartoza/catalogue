@@ -168,7 +168,7 @@ define([
         render: function() {
 
             if (_.size(this.collection.models) != 0) {
-                $('#result-panel-toggle').removeClass('hide');
+                $('.sidebar-result').show();
                 Shared.Dispatcher.trigger('sidePanel:openSidePanel', this.collection.models);
                 Shared.Dispatcher.trigger('layers:addSearch', this.collection.models);
                 this.cont.empty();
