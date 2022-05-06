@@ -96,7 +96,8 @@ class OrderForm(forms.ModelForm):
             'user',
             'file_format',
             'delivery_method',
-            'notes'
+            'notes',
+            'uses'
         )
 
 

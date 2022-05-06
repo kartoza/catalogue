@@ -29,6 +29,7 @@ from catalogue.nosubclassmanager import NoSubclassManager
 
 from catalogue.models.products import GenericSensorProduct
 
+
 ###############################################################################
 #
 # Next bunch of models all relate to order management
@@ -89,6 +90,7 @@ class FileFormat(models.Model):
 
     def __str__(self):
         return self.name
+
 
 class OrderStatus(models.Model):
     """
@@ -228,8 +230,17 @@ class Order(models.Model):
         related_name='subsidy_type+',
         on_delete=models.CASCADE
     )
+
+    uses = models.CharField(
+        max_length=500,
+        null=True, blank=True,
+        help_text=(
+            'Please tell us the uses of the data'
+        ))
+
     # default manager
     objects = OrderQuerySet.as_manager()
+
     # A model can have more than one manager. Above will be used as default
     # see: http://docs.djangoproject.com/en/dev/topics/db/managers/
     # Also use a custom manager so that we can get
@@ -254,8 +265,8 @@ class Order(models.Model):
         current_status = OrderStatus.objects.get(name=self.order_status)
         recent_history = (
             OrderStatusHistory.objects.filter(order=self)
-            .filter(new_order_status=current_status)
-            .latest('order_change_date')
+                .filter(new_order_status=current_status)
+                .latest('order_change_date')
         )
         return recent_history.order_change_date
 
@@ -391,18 +402,18 @@ class OrderNotificationRecipients(models.Model):
         # Get class listeners
         listeners = set([o.user for o in (
             OrderNotificationRecipients.objects
-            .filter(
+                .filter(
                 classes=ContentType.objects.get_for_model(instance.__class__))
-            .select_related()
+                .select_related()
         )])
         # Determines if is a sensor-based product and add sensor listeners
         if isinstance(instance, GenericSensorProduct):
             listeners.update([o.user for o in (
                 OrderNotificationRecipients.objects
-                .filter(
+                    .filter(
                     satellite_instrument_group=instance.product_profile
-                    .satellite_instrument.satellite_instrument_group)
-                .select_related()
+                        .satellite_instrument.satellite_instrument_group)
+                    .select_related()
             )])
         return listeners
 
