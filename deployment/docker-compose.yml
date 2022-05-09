@@ -46,6 +46,7 @@ services:
     links:
       - pycsw:pycsw
     restart: on-failure:5
+    shm_size: 1g
 
   rabbitmq:
     image: library/rabbitmq:3.9.5

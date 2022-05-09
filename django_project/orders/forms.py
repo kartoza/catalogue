@@ -97,7 +97,7 @@ class OrderForm(forms.ModelForm):
             'file_format',
             'delivery_method',
             'notes',
-            'uses'
+            'uses_of_the_data'
         )
 
 
