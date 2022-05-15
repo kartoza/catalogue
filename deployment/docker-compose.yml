@@ -212,11 +212,12 @@ services:
       - CHECK_PORT=5432
   pycsw:
     container_name: catalogue-pycsw
-    image: geopython/pycsw
+    image: geopython/pycsw:latest
     environment:
       PYCSW_SERVER_URL: http://localhost:8000
     volumes:
       - ./docker/pycsw.cfg:/etc/pycsw/pycsw.cfg
+      - ../django_project/pycsw_integration/mappings.py:/etc/pycsw/mappings.py
     ports:
       - "8000:8000"
 
