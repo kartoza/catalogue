@@ -45,6 +45,18 @@ class OrderStatusForm(forms.ModelForm):
 
 
 class OrderForm(forms.ModelForm):
+    uses_option = (
+        ('Agriculture, Forestry and Crop Detection', 'Agriculture, Forestry and Crop Detection'),
+        ('Defence, Military and Intelligence', 'Defence, Military and Intelligence'),
+        ('Environment and Environmental Monitoring', 'Environment and Environmental Monitoring'),
+        ('Location Based services and Map making', 'Location Based services and Map making'),
+        ('Marine and Oceanography', 'Marine and Oceanography'),
+        ('Hydrology', 'Hydrology'),
+        ('Mining and Natural resources', 'Mining and Natural resources'),
+        ('National disaster and Recovery operations', 'National disaster and Recovery operations'),
+        ('Educational research', 'Educational research'),
+        ('Rural Planning and Infrastructure', 'Rural Planning and Infrastructure')
+    )
     market_sector = forms.ModelChoiceField(
         queryset=MarketSector.objects.order_by('name'),
         label='Market sector'
@@ -76,9 +88,11 @@ class OrderForm(forms.ModelForm):
         # label='User'
         empty_label='Select user'
     )
+    uses_of_the_data = forms.CharField(widget=forms.Select(choices=uses_option))
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.fields['uses_of_the_data'].widget.attrs.update({'class': 'form-select'})
         for field in self.fields.values():
             if isinstance(field, ModelChoiceField):
                 field.widget.attrs.update({'class': 'form-select'})
