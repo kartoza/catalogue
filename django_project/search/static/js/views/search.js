@@ -47,12 +47,19 @@ define([
             this.$el.find('.listTree').listTree( listTreeOptions , { "startCollapsed": true, "selected": selectedOptions });
 
             this.$el.find('#start-datepicker').datepicker({
-                format: 'dd/mm/yyyy'
+                autoclose: true,
+                startView: 2,
+                format: 'dd/mm/yyyy',
+                endDate: new Date()
             });
             this.$el.find('#end-datepicker').datepicker({
-                format: 'dd/mm/yyyy'
+                autoclose: true,
+                startView: 2,
+                format: 'dd/mm/yyyy',
+                endDate: new Date(),
             });
 
+           this.$el.find('#end_datepicker').datepicker('setDate', new Date())
              // setup daterange widget
             this.$el.find('#date_range').daterange();
             this.$el.find('#date_range').daterange('notify');

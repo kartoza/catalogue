@@ -41,6 +41,7 @@ html, body {
 }
 
 #layoutSidenav #layoutSidenav_nav {
+     margin: 0.5rem;
     transform: unset;
 }
 
@@ -74,7 +75,7 @@ html, body {
 #map-control-panel-element {
     background: white;
     margin-top: 10px;
-    margin-left: -0.5rem;
+    margin-left: 0.5rem;
 }
 
 #map-control-panel-element > div {
