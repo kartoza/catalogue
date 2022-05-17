@@ -50,7 +50,7 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS catalogue_pycsw_view AS
 	c.title as title,
 	c.date_creation as date_creation,
 	c.abstract as abstract,
-	c.links as links,
+	NULL as links,
 	'http://purl.org/dc/dcmitype/Dataset' as type,
 	c.license as license,
 	concat_ws(' ', 'EPSG:', c.projection) AS crs,
