@@ -53,7 +53,7 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS catalogue_pycsw_view AS
 	NULL as links,
 	'http://purl.org/dc/dcmitype/Dataset' as type,
 	c.license as license,
-	concat_ws(' ', 'EPSG:', c.projection) AS crs,
+	concat_ws('', 'EPSG:', c.projection) AS crs,
 	c.instrument as instrument,
 	c.time_begin as time_begin,
 	c.time_end as time_end,
