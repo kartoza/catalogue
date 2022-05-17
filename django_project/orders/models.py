@@ -231,7 +231,7 @@ class Order(models.Model):
         on_delete=models.CASCADE
     )
 
-    uses = models.CharField(
+    uses_of_the_data = models.CharField(
         max_length=500,
         null=True, blank=True,
         help_text=(
