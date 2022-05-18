@@ -75,8 +75,10 @@
 
 <script type="text/html" id="map-control-panel">
     <div id="map-control-panel-element" class="map-control-panel">
-        <button class="btn btn-icon btn-transparent-dark
-        order-1 order-lg-0 me-2 ms-lg-2 me-lg-0" data-bs-toggle="tooltip" data-bs-placement="right" title="Parameter" id="sidebarToggle"><i data-feather="menu" class="fa fa-cog"></i></button>
+        <div class="sidebar-toggle">
+        <div class="sub-control-panel sidebarToggle" data-bs-content="Hide parameters" data-bs-trigger="hover focus"
+             data-bs-toggle="popover" data-bs-placement="right" id="sidebarToggle"><i data-feather="menu" class="fa fa-compress"></i></div>
+            </div>
         <div id="zoom-control" class="zoom-control">
             <div class="sub-control-panel sub-zoom-control zoom-out" title="Zoom In"><i class="fa fa-plus" aria-hidden="false"></i>
             </div>

@@ -238,16 +238,7 @@
         APP.$modal.modal();
       });
     });
-    $("#SearchShare").click(function(){
-      toggleSearchShare();
-    });
-    // setup daterange widget
-    $('#date_range').daterange();
-    // setup search summary widget
-    //searchSummary = new APP.SearchSummary('#search-summary');
-    //searchSummary.force();
-    // ask daterange widget to notify us about dates, it will trigger state of search button
-    $('#date_range').daterange('notify');
+
 
     // Hide popovers on click
     $('body').on('click', function (e) {

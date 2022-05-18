@@ -24,8 +24,6 @@ define([
             'keypress #search': 'searchEnter',
             'click .search-arrow': 'searchClick',
             'click .search-reset': 'clearSearch',
-            'click .endemic-dropdown-item': 'handleEndemicDropdown',
-            'click .ecological-condition': 'handleEcologicalConditionClicked',
             'click #search_button': 'submitSearchForm',
             'click #reset-search-form': 'resetSearchForm',
             'click #logIn': 'login',
