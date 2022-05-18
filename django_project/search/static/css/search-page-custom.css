@@ -49,10 +49,6 @@ html, body {
     margin-left: 0;
 }
 
-#sidebarToggle {
-    margin-left: 0.5rem !important;
-    margin-right: 0 !important;
-}
 
 .sidenav-toggled #layoutSidenav #layoutSidenav_content {
     margin-left: 0;
@@ -79,7 +75,6 @@ html, body {
 }
 
 #map-control-panel-element > div {
-    margin-left: 0.5rem;
     cursor: pointer;
 }
 
@@ -92,7 +87,7 @@ html, body {
 }
 
 #map-control-panel-element .layer-switcher button {
-    width: 107% !important;
+    width: 100% !important;
 }
 
 #map-control-panel-element .layer-switcher button:hover {

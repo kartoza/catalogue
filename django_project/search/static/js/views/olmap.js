@@ -42,7 +42,8 @@ define([
             'click .polygonal-lasso-tool': 'drawPolygon',
             'click .close-matadata': 'hideMetadata',
             'click .permalink-control': 'toggleSearchShare',
-            'click .delete-polygon': 'deletePolygon'
+            'click .delete-polygon': 'deletePolygon',
+            'click .sidebarToggle' : 'toggleChange'
 
         },
 
@@ -619,6 +620,23 @@ define([
                 $('.delete-polygon').addClass('hide-delete-polygon');
             this.stopDrawing();
             Shared.Dispatcher.trigger('map:setPolygonDrawn', null);
+        },
+
+        toggleChange: function (){
+           const sidebar = $('#sidebarToggle');
+           const sidenav = $('#layoutSidenav_nav');
+           if (sidebar.attr('data-bs-content')=="Hide parameters"){
+               sidebar.attr('data-bs-content', 'Show parameters');
+               sidenav.css('margin','0');
+               sidebar.children('i').removeClass('fa-compress');
+               sidebar.children('i').addClass('fa-expand');
+           }
+           else{
+               sidebar.attr('data-bs-content', 'Hide parameters');
+               sidenav.css('margin','0.5rem');
+               sidebar.children('i').removeClass('fa-expand');
+               sidebar.children('i').addClass('fa-compress');
+           }
         }
     })
 });
