@@ -4,15 +4,47 @@
 {% block content_title %}<h2>{% blocktrans with user.username as username %}Account &raquo; {{ username }}{% endblocktrans %}</h2>{% endblock %}
 
 {% block content %}
-<div id="content" class="row-fluid">
-  <form id="email-change-form" class="form-horizontal span6" action="" method="post" accept-charset="utf-8">
+<div class="main-content">
+<div id="layoutSidenav_content">
+    <main>
+    <!-- Main page content-->
+    <div class="container-xl px-4 mt-4">
+    <!-- Account page navigation-->
+    {% include  'account_header.html' %}
+    <div class="row">
+    <div class="col-xl-4">
+        <!-- Profile picture card-->
+        <div class="card mb-4 mb-xl-0">
+            <div class="card-header">Profile</div>
+            <div class="card-body">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url "userena_profile_edit" user %}">{% trans "Edit profile" %}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url "userena_email_change" user %}">
+                            {% if email %}{% trans "Change your e-mail address" %}{% else %}{% trans "Change e-mail address" %}{% endif %}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url "userena_password_change" user %}">{% trans "Change password" %}</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-8">
+    <!-- Edit Your Profile-->
+    <div class="card mb-4">
+    <div class="card-header">{% trans "Change Email Address" %}</div>
+    <div class="card-body">
+  <form id="email-change-form" action="" method="post" accept-charset="utf-8">
     {% csrf_token %}
     <fieldset>
-      <legend>{% trans "Change Your Email Address" %}</legend>
       <div class="control-group">
-        <label class="control-label" for="id_email">
-          {% trans 'Your new e-mail address:' %}
+        <label class="control-label small mb-1" for="id_email">
+          {% trans 'New e-mail address' %}
         </label>
+      <div class="mb-3">
         <div class="controls">
           {{ form.email }}
           {% if form.email.errors %}
@@ -21,6 +53,7 @@
           </span>
           {% endif %}
         </div>
+      </div>
         {% if form.non_field_errors %}
         <p class="small text-error">
           {{ form.non_field_errors.as_ul }}
@@ -28,7 +61,7 @@
         {% endif %}
       </div>
     </fieldset>
-    <input id="form-submit-btn" class="btn btn-success" type="submit" value="{% trans 'Send confirmation' %}" />
+    <input id="form-submit-btn" class="btn sansa-blue-btn" type="submit" value="{% trans 'Send confirmation' %}" />
   </form>
 </div>
 {% endblock %}

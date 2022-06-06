@@ -1,12 +1,13 @@
-{% extends "pdfpage.html" %}
+{% extends "pdf_base.html" %}
+
+{% block title %}
+    Visitor list
+{% endblock %}
+
 
 {% block content %}
 
-<div class="h2">
-Visitor list
-</div>
-
-<table>
+<table  width="100%" class="table table-striped">
 <thead>
           <tr>
             <th>User</th>
@@ -17,13 +18,13 @@ Visitor list
           </tr>
 </thead>
 <tbody>
-          {% for myRecord in myRecords.object_list %}
+          {% for record in records.object_list %}
           <tr>
-            <td>{{ myRecord.user.get_profile.firstname}} {{myRecord.user.get_profile.surname}}</td>
-            <td>{{ myRecord.ip_address }}</td>
-            <td>{{ myRecord.country}}</td>
-            <td>{{ myRecord.city }}</td>
-            <td>{{ myRecord.visit_date }}</td>
+            <td>{% if record.user.get_full_name %} {{ record.user.get_full_name}} {% else %}  {{record.user.username}}{% endif %}</td>
+            <td>{{ record.ip_address }}</td>
+            <td>{{ record.country}}</td>
+            <td>{{ record.city }}</td>
+            <td>{{ record.visit_date }}</td>
           </tr>
 	  {% endfor %}
 </tbody>

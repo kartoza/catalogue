@@ -22,41 +22,37 @@ import os
 
 # python logging support to django logging middleware
 import logging
-logger = logging.getLogger(__name__)
 
 # for get feature info
-import urllib2
+import urllib.request, urllib.error, urllib.parse
 
 # for error logging
 import traceback
 
 # Django helpers for forming html pages
-from django.core.urlresolvers import reverse
-from django.shortcuts import render_to_response, get_object_or_404
+from django.contrib.gis.db.models.functions import AsKML
+from django.contrib.gis.gdal import OGRGeometry
+from django.db.models import Q
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect, HttpResponse
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
-from django.template import RequestContext
 from django.forms.utils import ErrorList
 from django.contrib.gis.geos import Point
 
-
 # Models and forms for our app
-from catalogue.models import (
-    GenericProduct,
-    Visit,
-    VisitorReport,
-    Contact,
-    Slider
-)
+from catalogue.models.others import Visit, VisitorReport
+from catalogue.models.products import GenericProduct
+from catalogue.models.website import Contact, Slider
+
 from catalogue.forms import (
     ClipForm)
-from catalogue.renderDecorator import renderWithContext
+from catalogue.render_decorator import RenderWithContext
 
 # SHP and KML readers
 from catalogue.featureReaders import (
-    getGeometryFromUploadedFile,)
+    getGeometryFromUploadedFile, )
 
 # View Helper classes
 from catalogue.views.geoiputils import GeoIpUtils
@@ -72,11 +68,13 @@ from search.models import (
     Clip,
 )
 
+logger = logging.getLogger(__name__)
+
 
 #### VIEW FUNCTIONS ####
 
 
-def logVisit(theRequest):
+def log_visit(request):
     """
     Silently log a visit and return an empty string. The best way to use this
     method is by adding it as a fake css reference at the top of your template
@@ -84,9 +82,9 @@ def logVisit(theRequest):
     """
     if settings.USE_GEOIP:
         myGeoIpUtils = GeoIpUtils()
-        myIp = myGeoIpUtils.getMyIp(theRequest)
+        myIp = myGeoIpUtils.getMyIp(request)
         if myIp:
-            myLatLong = myGeoIpUtils.getMyLatLong(theRequest)
+            myLatLong = myGeoIpUtils.getMyLatLong(request)
             myVisit = Visit()
             try:
                 if myLatLong['city']:
@@ -102,21 +100,21 @@ def logVisit(theRequest):
                 myVisit.ip_address = myIp
                 # User is optional - we can see anonymous visits as they will
                 # have a null user
-                if theRequest.user:
-                    myVisit.user = theRequest.user
+                if request.user:
+                    myVisit.user = request.user
             except:
                 return HttpResponse(
                     '/** Error in geoip */', content_type='text/css')
             myVisit.save()
             # If user is logged in, store their IP lat lon to their profile
             try:
-                if theRequest.user:
-                    myProfile = theRequest.user.get_profile()
+                if request.user:
+                    myProfile = request.user.get_profile()
                     myProfile.latitude = str(myLatLong['latitude'])
                     myProfile.longitude = str(myLatLong['longitude'])
                     myProfile.save()
             except:
-                    #user has no profile ...
+                # user has no profile ...
                 return HttpResponse('/** No Profile */', content_type='text/css')
         else:
             logger.info(
@@ -131,14 +129,14 @@ def logVisit(theRequest):
 
 
 @login_required
-#renderWithContext is explained in renderWith.py
-@renderWithContext('map.html')
-def whereAmI(theRequest):
+# RenderWithContext is explained in renderWith.py
+@RenderWithContext('map.html')
+def whereAmI(request):
     logger.info('whereAmI called...')
     myExtent = '(16,-34, 33, -22)'
     myMessages = []
     myGeoIpUtils = GeoIpUtils()
-    myLatLong = myGeoIpUtils.getMyLatLong(theRequest)
+    myLatLong = myGeoIpUtils.getMyLatLong(request)
     if myLatLong:
         # Above returns something like:
         # {'city': 'Johannesburg', 'region': '06', 'area_code': 0, 'longitude':
@@ -153,7 +151,7 @@ def whereAmI(theRequest):
         myMessages.append('Country: ' + str(myLatLong['country_name']))
         myMessages.append('Longitude: ' + str(myLatLong['longitude']))
         myMessages.append('Latitude: ' + str(myLatLong['latitude']))
-        myIp = myGeoIpUtils.getMyIp(theRequest)
+        myIp = myGeoIpUtils.getMyIp(request)
         myMessages.append('IP Address: ' + myIp)
         # Record the visitor details to our db
         myVisit = Visit()
@@ -167,7 +165,7 @@ def whereAmI(theRequest):
         myVisit.ip_address = myIp
         myVisit.save()
         myLayerString = (
-            """
+                """
            /*
            * Layer style
            */
@@ -191,8 +189,8 @@ def whereAmI(theRequest):
                {style: myLayerStyle});
            // create a point feature
            var myPoint = new OpenLayers.Geometry.Point(""" +
-            str(myLatLong['longitude']) + "," +
-            str(myLatLong['latitude']) + """);
+                str(myLatLong['longitude']) + "," +
+                str(myLatLong['latitude']) + """);
            myPoint = transformPoint( myPoint );
            var myPointFeature = new OpenLayers.Feature.Vector(myPoint,null,
                 myBlueStyle);
@@ -230,9 +228,9 @@ def whereAmI(theRequest):
 
 
 @login_required
-#renderWithContext is explained in renderWith.py
-@renderWithContext('addPage.html')
-def clip(theRequest):
+# RenderWithContext is explained in renderWith.py
+@RenderWithContext('addPage.html')
+def clip(request):
     """Show a spot map of South Africa"""
     myTitle = 'Clip Request'
     myExtent = '(15.256693,-35.325000,33.743307,-21.675000)'
@@ -251,20 +249,20 @@ def clip(theRequest):
     myForm = None
 
     try:
-        myProfile = theRequest.user.get_profile()
+        myProfile = request.user.get_profile()
     except:
         logger.debug('Profile does not exist')
     myLayersList, myLayerDefinitions, myActiveBaseMap = standardLayers(
-        theRequest)
-    if theRequest.method == 'POST':
-        myForm = ClipForm(theRequest.POST, theRequest.FILES)
+        request)
+    if request.method == 'POST':
+        myForm = ClipForm(request.POST, request.FILES)
         if myForm.is_valid():
             myObject = myForm.save(commit=False)
-            myObject.owner = theRequest.user
+            myObject.owner = request.user
             myGeometry = None
             try:
                 myGeometry = getGeometryFromUploadedFile(
-                    theRequest, myForm, 'geometry_file')
+                    request, myForm, 'geometry_file')
                 if myGeometry:
                     myObject.geometry = myGeometry
                 else:
@@ -278,24 +276,26 @@ def clip(theRequest):
                 logger.info(traceback.format_exc())
             if not myObject.geometry:
                 myErrors = myForm._errors.setdefault('geometry', ErrorList())
-                myErrors.append(u'No valid geometry provided')
+                myErrors.append('No valid geometry provided')
                 logger.info(
                     'Form is NOT valid - at least a file or digitised geom is '
                     'needed')
-                return render_to_response(
-                    'addPage.html', myOptions,
-                    context_instance=RequestContext(theRequest))
+                return render(
+                    request,
+                    'addPage.html',
+                    myOptions,
+                    )
 
-                #BUG: this code is unreachable, will never execute
+                # BUG: this code is unreachable, will never execute
                 myObject.save()
 
             logger.debug('Clip: ' + str(myClip))
             logger.info('form is VALID after editing')
-            #test of registered user messaging system
+            # test of registered user messaging system
             return HttpResponseRedirect(myRedirectPath + str(myObject.id))
         else:
             logger.info('form is INVALID after editing')
-            #render_to_response is done by the renderWithContext decorator
+            # render_to_response is done by the RenderWithContext decorator
             return ({
                 'myTitle': myTitle,
                 'mySubmitLabel': 'Submit Clip Request',
@@ -312,7 +312,7 @@ def clip(theRequest):
             })
     else:
         myForm = ClipForm()
-        #render_to_response is done by the renderWithContext decorator
+        # render_to_response is done by the RenderWithContext decorator
         return ({
             'myTitle': myTitle,
             'mySubmitLabel': 'Submit Clip Request',
@@ -330,17 +330,17 @@ def clip(theRequest):
 
 
 @staff_member_required
-#renderWithContext is explained in renderWith.py
-@renderWithContext('simpleMap.html')
-def visitorMap(theRequest):
+# RenderWithContext is explained in renderWith.py
+@RenderWithContext('simple_map.html')
+def visitor_map(request):
     """Show a map of all visitors"""
     myGeoIpUtils = GeoIpUtils()
-    myCount = Visit.objects.count()
+    myCount = Visit.objects.all()
     myMessages = []
     myLayerDefinitions = None
     myExtent = None
     myLayersList = None
-    myLatLong = myGeoIpUtils.getMyLatLong(theRequest)
+    myLatLong = myGeoIpUtils.getMyLatLong(request)
     # Above returns something like:
     # {'city': 'Johannesburg', 'region': '06', 'area_code': 0, 'longitude':
     # 28.08329963684082, 'country_code3': 'ZAF',
@@ -357,16 +357,16 @@ def visitorMap(theRequest):
         myMessages.append('Country: ' + myLatLong['country_name'])
         myMessages.append('Longitude: ' + str(myLatLong['longitude']))
         myMessages.append('Latitude: ' + str(myLatLong['latitude']))
-        myIp = myGeoIpUtils.getMyIp(theRequest)
+        myIp = myGeoIpUtils.getMyIp(request)
         myMessages.append('IP Address: ' + myIp)
         myMessages.append('<h3>All visitors</h3>')
         myMessages.append('Total Site Visits: ' + str(myCount))
     myLayersList, myLayerDefinitions, myActiveBaseMap = standardLayers(
-        theRequest)
+        request)
     myLayerDefinitions.append(WEB_LAYERS['Visitors'])
     myLayersList = myLayersList.replace(']', ',visitors]')
 
-    #render_to_response is done by the renderWithContext decorator
+    # render_to_response is done by the RenderWithContext decorator
     return ({
         'myMessages': myMessages,
         'myExtents': '-90, -70, 90, 70',
@@ -376,9 +376,9 @@ def visitorMap(theRequest):
     })
 
 
-#renderWithContext is explained in renderWith.py
-@renderWithContext('productView.html')
-def showProduct(theRequest, theProductId):
+# RenderWithContext is explained in renderWith.py
+@RenderWithContext('productView.html')
+def show_product(request, theProductId):
     """
     Renders a search results page including the map and all attendant html
     content - for a single product only identified by its sac product ID
@@ -390,7 +390,7 @@ def showProduct(theRequest, theProductId):
         original_product_id=theProductId)
     if len(myProducts) > 0:
         myProduct = myProducts[0]
-        myObject, myType = myProduct.getConcreteProduct()
+        myObject, myType = myProduct.get_concrete_product()
         myMessages.append('Product found')
     else:
         myMessages.append('No matching product found')
@@ -400,9 +400,9 @@ def showProduct(theRequest, theProductId):
     })
 
 
-#@login_required
-@renderWithContext('productPreview.html')
-def showPreview(theRequest, theId, theSize):
+# @login_required
+@RenderWithContext('productPreview.html')
+def show_preview(request, theId, theSize):
     """Show a segment or scene thumbnail details,
       returning the result as a scaled down image.
 
@@ -413,16 +413,16 @@ def showPreview(theRequest, theId, theSize):
     return {'theId': theId, 'theSize': theSize}
 
 
-#@login_required
-#renderWithContext is explained in renderWith.py
-@renderWithContext('thumbnail.html')
-def showThumbPage(theRequest, theId):
+# @login_required
+# RenderWithContext is explained in renderWith.py
+@RenderWithContext('thumbnail.html')
+def show_thumb_page(request, theId):
     """Show a segment or scene thumbnail details in a popup dialog"""
     logger.info('showThumbPage : id ' + theId)
     myDetails = []
     myProduct = get_object_or_404(GenericProduct, id=theId)
-    myProduct = myProduct.getConcreteProduct()[0]
-    #ABP: ugly hack
+    myProduct = myProduct.get_concrete_product()[0]
+    # ABP: ugly hack
     try:
         myDetails.append(
             '<tr><th>Sensor:{}</th></tr>'.format(
@@ -433,15 +433,15 @@ def showThumbPage(theRequest, theId):
     myDetails.append(
         '<tr><td><center><img src=\"/thumbnail/'
         + theId + '/large/"></center></td></tr>')
-    #render_to_response is done by the renderWithContext decorator
+    # render_to_response is done by the RenderWithContext decorator
     logger.info('Thumbnail path:   ' + str(settings.THUMBS_ROOT))
     logger.info('Static path    :   ' + str(settings.STATIC_ROOT))
     logger.info('Project root path:' + str(settings.PROJECT_ROOT))
     return ({'myDetails': myDetails})
 
 
-#@login_required
-def showThumb(theRequest, theId, theSize):
+# @login_required
+def show_thumb(request, theId, theSize):
     """
     Show a scene thumbnail details,
     returning the result as a scaled down image.
@@ -449,26 +449,26 @@ def showThumb(theRequest, theId, theSize):
     logger.info('showThumb : id ' + theId)
     myProduct = get_object_or_404(GenericProduct, id=theId)
     myImage = myProduct.thumbnail(theSize)
-    if (isinstance(myImage, str)):
+    if isinstance(myImage, str):
         return HttpResponse('Thumbnail for %s could not be found' % theId)
     else:
         myResponse = HttpResponse(content_type='image/png')
         myImage.save(myResponse, 'PNG')
-        return (myResponse)
+        return myResponse
 
 
-#@login_required
-def metadata(theRequest, theId):
+# @login_required
+def metadata(request, pk):
     """Get the metadata for a product."""
-    myGenericProduct = get_object_or_404(GenericProduct, id=theId)
-    myObject, myType = myGenericProduct.getConcreteProduct()
-    return (HttpResponse(myObject.toHtml()))
+    generic_product = get_object_or_404(GenericProduct, id=pk)
+    product, product_type = generic_product.get_concrete_product()
+    return HttpResponse(product.toHtml())
 
 
 @staff_member_required
-#renderWithContext is explained in renderWith.py
-@renderWithContext('searchesmap.html')
-def searchesMap(theRequest):
+# RenderWithContext is explained in renderWith.py
+@RenderWithContext('searchesmap.html')
+def searches_map(request):
     """Show a map of all searches"""
 
 
@@ -476,44 +476,48 @@ def searchesMap(theRequest):
 # Visitor related views. Visits are recordings of site hits by
 # IP and LatLong
 #
-@login_required
-def visitorsKml(theRequest):
-    myVisits = VisitorReport.objects.kml()
-    return render_to_kml("kml/visitorreport.kml", {
-        'Visits': myVisits}, 'visitors')
+@login_required()
+def visitors_kml(request):
+    my_visits = VisitorReport.objects.kml
+    return render_to_kml(
+        "kml/visitorreport.kml",
+        {
+            'Visits': my_visits
+        },
+        'visitors')
 
 
 @login_required
-def deleteSearch(theRequest, theId):
+def delete_search(request, pk):
     """
     We don't ever actually delete a search since we need to see them all for
     site statistics. Rather we mark them as deleted so the user only sees his
     valid ones
     """
-    mySearch = None
     try:
-        mySearch = Search.objects.get(id=theId)
-        if mySearch.user == theRequest.user:
-            mySearch.deleted = True
-            mySearch.save()
+        search = Search.objects.get(pk=pk)
+        if search.user == request.user or request.user.is_staff:
+            search.deleted = True
+            search.save()
         else:
-            raise('Search not owned by you!')
-    except Exception, myError:
+            raise Exception('Search not owned by you!')
+    except TypeError:
         return HttpResponse(
-            '{"success" : False,"reason" : "' + myError + '"}',
+            '{"success" : False,"reason" : "'+pk+ '"}',
             content_type='text/plain')
 
-    #return a simple json object
-    return HttpResponse("{'success' : True}", content_type="text/plain")
+    # return a simple json object
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
 @login_required
-#renderWithContext is explained in renderWith.py
-@renderWithContext('myClips.html')
-def clipHistory(theRequest):
+# RenderWithContext is explained in renderWith.py
+@RenderWithContext('myClips.html')
+def clip_history(request):
     myClipHistory = Clip.objects.filter(
-        owner=theRequest.user).order_by('-date')
-    return ({'myClips': myClipHistory})
+        owner=request.user).order_by('-date')
+    return {'myClips': myClipHistory}
+
 
 ###########################################################
 #
@@ -523,7 +527,7 @@ def clipHistory(theRequest):
 
 
 @login_required
-def getFeatureInfo(theRequest,
+def get_feature_info(request,
                    theLon,
                    theLat,
                    theBoundingBox,
@@ -552,14 +556,13 @@ def getFeatureInfo(theRequest,
             theMapWidth,
             theMapHeight))
 
-    myGeometryQuery = Q(frame_geometry__intersects=(self.mSearch.geometry))
     myUrl = "http://" + settings.WMS_SERVER
 
     myHeaders = {'Content-Type': 'text/plain'}
     myBody = 'foo body'
     try:
-        myRequest = urllib2.Request(myUrl, myBody, myHeaders)
-        myResponse = urllib2.urlopen(myRequest)
+        myRequest = urllib.request.Request(myUrl, myBody, myHeaders)
+        myResponse = urllib.request.urlopen(myRequest)
 
         # logger.debug(content type header)
         myInfo = myResponse.info()
@@ -572,13 +575,14 @@ def getFeatureInfo(theRequest,
 
         myResponse.close()
 
-    except Exception, e:
+    except Exception as e:
         logger.debug('Status: 500 Unexpected Error')
         logger.debug('Content-Type: text/plain')
         logger.debug()
         logger.debug('Some unexpected error occurred. Error text was:', e)
 
     return HttpResponse('Hello world')
+
 
 ###########################################################
 #
@@ -587,34 +591,34 @@ def getFeatureInfo(theRequest,
 ###########################################################
 
 
-#renderWithContext is explained in renderWith.py
-@renderWithContext('index.html')
-def index(theRequest):
-    #render_to_response is done by the renderWithContext decorator
+# RenderWithContext is explained in renderWith.py
+@RenderWithContext('index.html')
+def index(request):
+    # render_to_response is done by the RenderWithContext decorator
     return ({
-        'myPartnerFlag': isStrategicPartner(theRequest),
-        'slider' : Slider.objects.all()
+        'myPartnerFlag': isStrategicPartner(request),
+        'slider': Slider.objects.all()
     })
 
 
-#renderWithContext is explained in renderWith.py
-@renderWithContext('video.html')
-def video(theRequest):
-    #render_to_response is done by the renderWithContext decorator
+# RenderWithContext is explained in renderWith.py
+@RenderWithContext('video.html')
+def video(request):
+    # render_to_response is done by the RenderWithContext decorator
     return ()
 
 
-#renderWithContext is explained in renderWith.py
-@renderWithContext('about.html')
-def about(theRequest):
-    #render_to_response is done by the renderWithContext decorator
+# RenderWithContext is explained in renderWith.py
+@RenderWithContext('about.html')
+def about(request):
+    # render_to_response is done by the RenderWithContext decorator
     return ()
 
 
-#renderWithContext is explained in renderWith.py
-@renderWithContext('contact.html')
-def contact(theRequest):
-    #render_to_response is done by the renderWithContext decorator
+# RenderWithContext is explained in renderWith.py
+@RenderWithContext('contact.html')
+def contact(request):
+    # render_to_response is done by the RenderWithContext decorator
     return (
         {
             'data': Contact.objects.all()
@@ -622,34 +626,34 @@ def contact(theRequest):
     )
 
 
-#renderWithContext is explained in renderWith.py
-@renderWithContext('mapHelp.html')
-def mapHelp(theRequest):
-    #render_to_response is done by the renderWithContext decorator
-    if theRequest.is_ajax():
+# RenderWithContext is explained in renderWith.py
+@RenderWithContext('mapHelp.html')
+def map_help(request):
+    # render_to_response is done by the RenderWithContext decorator
+    if request.is_ajax():
         return ({'myTemplate': 'emptytemplate.html'})
     else:
         return ({'myTemplate': 'base.html'})
 
 
-#renderWithContext is explained in renderWith.py
-@renderWithContext('emptyCartHelp.html')
-def emptyCartHelp(theRequest):
-    #render_to_response is done by the renderWithContext decorator
+# RenderWithContext is explained in renderWith.py
+@RenderWithContext('emptyCartHelp.html')
+def empty_cart_help(request):
+    # render_to_response is done by the RenderWithContext decorator
     return ()
 
 
-#Note: Dont use the login required decorator here -
+# Note: Dont use the login required decorator here -
 # it causes the page to continually try to reload and cpu
 # for firefix goes ballistic
-#renderWithContext is explained in renderWith.py
-@renderWithContext('sceneIdHelp.html')
-def sceneIdHelp(theRequest):
+# RenderWithContext is explained in renderWith.py
+@RenderWithContext('sceneIdHelp.html')
+def scene_id_help(request):
     return
 
 
-#renderWithContext is explained in renderWith.py
-@renderWithContext('searchFormHelp.html')
-def searchFormHelp(theRequest):
-    #render_to_response is done by the renderWithContext decorator
+# RenderWithContext is explained in renderWith.py
+@RenderWithContext('searchFormHelp.html')
+def search_form_help(request):
+    # render_to_response is done by the RenderWithContext decorator
     return ()

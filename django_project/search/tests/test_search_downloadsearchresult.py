@@ -18,16 +18,15 @@ __version__ = '0.1'
 __date__ = '19/08/2013'
 __copyright__ = 'South African National Space Agency'
 
-from django.core.urlresolvers import reverse, NoReverseMatch
+from django.urls import reverse, NoReverseMatch
 from django.test import TestCase
 from django.test.client import Client
-
 from core.model_factories import UserF
 from dictionaries.tests.model_factories import CollectionF
-from .model_factories import SearchF
+from model_factories import SearchF
 
 
-class SearchViews_downloadSearchResult_Tests(TestCase):
+class TestSearchViewsDownloadSearchResult(TestCase):
     """
     Tests search views.py downloadSearchResult method/view
     """

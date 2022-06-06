@@ -9,8 +9,9 @@ from shutil import move
 from os import remove, close
 from django.core.management.base import BaseCommand
 
-
 halt_on_error = True
+
+
 # source_path=('/home/web/django_project/data/CBERS/')
 
 class Command(BaseCommand):
@@ -36,7 +37,7 @@ class Command(BaseCommand):
 
         record_count = 0
         failed_record_count = 0
-        print 'Starting directory scan...'
+        print('Starting directory scan...')
 
         for myFolder in glob.glob(os.path.join(path, '*.XML')):
             record_count += 1
@@ -46,34 +47,34 @@ class Command(BaseCommand):
                 # print product_folder
 
                 # Find the first and only xml file in the folder
-                #search_path = os.path.join(str(myFolder), '*.XML')
+                # search_path = os.path.join(str(myFolder), '*.XML')
                 # print search_path
                 xml_file = glob.glob(myFolder)[0]
                 filename = os.path.basename(xml_file)
-                print "Converting {} ....".format(filename)
+                print("Converting {} ....".format(filename))
                 pattern = 'GB2312'
                 subst = 'UTF-8'
 
                 fh, abs_path = mkstemp()
-                with open(abs_path,'w') as new_file:
+                with open(abs_path, 'w') as new_file:
                     with open(xml_file) as old_file:
                         for line in old_file:
                             new_file.write(line.replace(pattern, subst))
                 close(fh)
-                #Remove original file
+                # Remove original file
                 remove(xml_file)
-                #Move new file
+                # Move new file
                 move(abs_path, xml_file)
 
-            except Exception, e:
-                print 'Error when want to convert! : %s' % product_folder
+            except Exception as e:
+                print('Error when want to convert! : %s' % product_folder)
                 failed_record_count += 1
                 if halt_on_error:
-                    print e.message
+                    print(e.message)
                     break
                 else:
                     continue
 
-        print '==============================='
-        print 'Products converted : %s ' % record_count
-        print 'Products failed to convert : %s ' % failed_record_count
+        print('===============================')
+        print('Products converted : %s ' % record_count)
+        print('Products failed to convert : %s ' % failed_record_count)

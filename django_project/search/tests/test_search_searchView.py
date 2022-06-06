@@ -18,18 +18,18 @@ __date__ = '27/01/2014'
 __copyright__ = 'South African National Space Agency'
 
 from django.conf import settings
-from django.core.urlresolvers import reverse, NoReverseMatch
+from django.urls import reverse, NoReverseMatch
 from django.test import TestCase
 from django.test.client import Client
 
 from core.model_factories import UserF
 from dictionaries.tests.model_factories import CollectionF
 
-from ..forms import AdvancedSearchForm
-from ..views import DateRangeInlineFormSet
+from search.forms import AdvancedSearchForm
+from search.views import DateRangeInlineFormSet
 
 
-class SearchViews_searchView_Tests(TestCase):
+class TestSearchViewsSearchView(TestCase):
     """
     Tests search views.py searchView method/view
     """

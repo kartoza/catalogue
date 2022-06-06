@@ -85,4 +85,4 @@ class PlaceTypeCRUD_Test(TestCase):
             'name': 'Super place type'
         })
 
-        self.assertEqual(unicode(myModel), 'Super place type')
+        self.assertEqual(str(myModel), 'Super place type')

@@ -45,10 +45,10 @@ from dictionaries.tests.model_factories import (
     InstrumentTypeProcessingLevelF
 )
 
-from .model_factories import SearchRecordF
+from model_factories import SearchRecordF
 
 
-class SearchRecordCRUD_Test(TestCase):
+class TestSearchRecordCRUD(TestCase):
     """
     Tests models.
     """
@@ -67,7 +67,7 @@ class SearchRecordCRUD_Test(TestCase):
             currency=CurrencyF.create(code='ZAR'),
         )
 
-        #check if PK exists
+        # check if PK exists
         self.assertTrue(myModel.pk is not None)
 
     def test_SearchRecord_read(self):
@@ -159,7 +159,6 @@ class SearchRecordCRUD_Test(TestCase):
 
         myNewOrder = OrderF()
 
-
         myNewModelData = {
             'order': myNewOrder,
             'download_path': 'Some path',
@@ -171,8 +170,8 @@ class SearchRecordCRUD_Test(TestCase):
         myModel.__dict__.update(myNewModelData)
         myModel.save()
 
-        #check if updated
-        for key, val in myNewModelData.items():
+        # check if updated
+        for key, val in list(myNewModelData.items()):
             self.assertEqual(myModel.__dict__.get(key), val)
 
     def test_SearchRecord_delete(self):
@@ -185,7 +184,7 @@ class SearchRecordCRUD_Test(TestCase):
 
         myModel.delete()
 
-        #check if deleted
+        # check if deleted
         self.assertTrue(myModel.pk is None)
 
     def test_SearchRecord_kmlExtents(self):
@@ -215,7 +214,7 @@ class SearchRecordCRUD_Test(TestCase):
         )
 
         myExpResult = '123qwe'
-        self.assertEqual(unicode(myModel), myExpResult)
+        self.assertEqual(str(myModel), myExpResult)
 
     def test_SearchRecord_create_method(self):
         """
@@ -229,7 +228,7 @@ class SearchRecordCRUD_Test(TestCase):
 
         myNewModel = myModel.create(myUser, myProduct)
 
-        self.assertEqual(unicode(myNewModel), '123qwe')
+        self.assertEqual(str(myNewModel), '123qwe')
         self.assertEqual(myNewModel.user.username, 'testuser')
 
     def test_SearchRecord_snapshot_price_and_currency_method(self):

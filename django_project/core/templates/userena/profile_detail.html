@@ -1,58 +1,112 @@
 {% extends 'userena/base_userena.html' %}
 {% load i18n %}
-
+{% block extracss %}
+    <style>
+      .card-body input:disabled {
+          background: #ffff;
+      }
+    </style>
+{% endblock %}
 {% block title %}{% blocktrans with profile.user.username as username %}{{ username }}'s profile.{% endblocktrans %}{% endblock %}
 {% block content_title %}<h2>{{ profile.user.username }} {% if profile.user.get_full_name %}({{ profile.user.get_full_name }}){% endif %}</h2>{% endblock %}
 
 {% block content %}
-<div id="content" class="row-fluid">
-  <div class="span4 center">
-    <h3>{% trans "Your Profile" %}</h3>
-    <p class="lead">These are the personal details which we currently have on our system.</p>
-    <a href="{% url "userena_profile_edit" user %}" class="btn btn-success">Edit Profile</a>
-  </div>
-    <div id="details" class="span6 offset1">
-      {% block profile_details %}
-        <div class="span6">
-        {% block profile_definition_list %}
-          {% if profile.user.get_full_name %}
-            <strong>{% trans "Name: " %}</strong>
-            {{ profile.user.get_full_name }}
-          {% endif %}
-          {% if profile.user.email and not hide_email %}
-            <br /><strong>{% trans "Email: " %}</strong>
-            {{ profile.user.email }}
-          {% endif %}
-          {% if profile.url %}
-            <br /><strong>{% trans "Website: " %}</strong>
-            {{ profile.url|urlize }}
-          {% endif %}
-          {% if profile.address1 %}
-            <br /><strong>{% trans "Primary Address: " %}</strong>
-            {{ profile.address1 }}
-          {% endif %}
-          {% if profile.address2 %}
-            <br /><strong>{% trans "Secondary Address: " %}</strong>
-            {{ profile.address2 }}
-          {% endif %}
-          {% if profile.organisation %}
-            <br /><strong>{% trans "Organisation: " %}</strong>
-            {{ profile.organisation }}
-          {% endif %}
-          {% if profile.contact_no %}
-            <br /><strong>{% trans "Contact Telephone: " %}</strong>
-            {{ profile.contact_no }}
-          {% endif %}
-        </div>
-        <div class="span6">
-            {% if profile.about %}
-              <strong>{% trans "About Me:" %}</strong>
-              <br />{{ profile.about }}
-            {% endif %}
-          {% endblock %}
-        </div>
-      {% endblock %}
-    </div>
-  </div>
+<div class="main-content">
+<div id="layoutSidenav_content">
+                <main>
+                    <!-- Main page content-->
+                    <div class="container-xl px-4 mt-4">
+                        <!-- Account page navigation-->
+                        {% include  'account_header.html' %}
+                        <div class="row">
+                            <div class="col-xl-4">
+                                <div class="card mb-4 mb-xl-0">
+                                    <div class="card-header">Profile</div>
+                                    <div class="card-body">
+                                        <ul class="nav flex-column">
+                                                <li class="nav-item">
+                                                    <a class="nav-link" href="{% url "userena_profile_edit" user %}">{% trans "Edit profile" %}</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" href="{% url "userena_email_change" user %}">
+                                                    {% if email %}{% trans "Change your e-mail address" %}{% else %}{% trans "Change e-mail address" %}{% endif %}</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" href="{% url "userena_password_change" user %}">{% trans "Change password" %}</a>
+                                                </li>
+                                            </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-8">
+                                <!-- Account details card-->
+                                <div class="card mb-4">
+                                    <div class="card-header">Account Details</div>
+                                    <div class="card-body">
+                                        {% block profile_details %}
+                                        {% block profile_definition_list %}
+                                        <form>
+                                            <!-- Form Group (username)-->
+                                            <div class="mb-3">
+                                                <label class="small mb-1" for="inputUsername">Username</label>
+                                                <input class="form-control" disabled="disabled" id="inputUsername" type="text" placeholder="Enter your username" value="{{ profile.user.username }}" />
+                                            </div>
+                                            <!-- Form Row-->
+                                            <div class="row gx-3 mb-3">
+                                                <!-- Form Group (first name)-->
+                                                <div class="col-md-6">
+                                                    <label class="small mb-1" for="inputFirstName">First name</label>
+                                                    <input class="form-control" disabled="disabled" id="inputFirstName" type="text" placeholder="Enter your first name" value="{{ profile.user.first_name }}" />
+                                                </div>
+                                                <!-- Form Group (last name)-->
+                                                <div class="col-md-6">
+                                                    <label class="small mb-1" for="inputLastName">Last name</label>
+                                                    <input class="form-control" disabled="disabled" id="inputLastName" type="text" placeholder="Enter your last name" value="{{ profile.user.last_name }}" />
+                                                </div>
+                                            </div>
+                                            <!-- Form Row        -->
+                                            <div class="row gx-3 mb-3">
+                                                <!-- Form Group (organization name)-->
+                                                <div class="col-md-6">
+                                                    <label class="small mb-1" for="inputOrgName">Organization name</label>
+                                                    <input class="form-control" disabled="disabled" id="inputOrgName" type="text" placeholder="Enter your organization name" value="{{ profile.organisation }}" />
+                                                </div>
+                                                <!-- Form Group (phone number)-->
+                                                <div class="col-md-6">
+                                                    <label class="small mb-1" for="inputPhone">Phone number</label>
+                                                    <input class="form-control" disabled="disabled" id="inputPhone" type="tel" placeholder="Enter your phone number" value="{{ profile.contact_no }}" />
+                                                </div>
+
+                                            </div>
+                                            <!-- Form Group (email address)-->
+                                            <div class="mb-3">
+                                                <label class="small mb-1" for="inputEmailAddress">Email address</label>
+                                                <input class="form-control" disabled="disabled" id="inputEmailAddress" type="email" placeholder="Enter your email address" value=" {% if profile.user.email and not hide_email %}{{ profile.user.email }}{% endif %}" />
+                                            </div>
+                                            <!-- Form Row-->
+                                            <div class="row gx-3 mb-3">
+
+                                                <!-- Form Group (location)-->
+                                                <div class="col-md-6">
+                                                    <label class="small mb-1" for="inputLocation">Primary Address</label>
+                                                    <input class="form-control" disabled="disabled" id="inputLocation" type="text" placeholder="Enter your location" value="{{ profile.address1 }}" />
+                                                </div>
+                                                <!-- Form Group (birthday)-->
+                                                <div class="col-md-6">
+                                                    <label class="small mb-1" for="inputBirthday">Secondary Address</label>
+                                                    <input class="form-control" disabled="disabled" id="inputLocation" type="text" placeholder="Enter your location" value="{{ profile.address2 }}" />
+                                                </div>
+                                            </div>
+                                        </form>
+                                            {% endblock %}
+                                       {% endblock %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+
+            </div>
 </div>
 {% endblock %}

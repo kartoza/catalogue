@@ -18,12 +18,12 @@ __version__ = '0.1'
 __date__ = '27/01/2014'
 __copyright__ = 'South African National Space Agency'
 
-from django.core.urlresolvers import reverse, NoReverseMatch
+from django.urls import reverse, NoReverseMatch
 from django.test import TestCase
 from django.test.client import Client
 
 
-class SearchViews_upload_geo_Tests(TestCase):
+class TestSearchViewsUploadGeo(TestCase):
     """
     Tests search views.py upload_geo method/view
     """
@@ -44,7 +44,7 @@ class SearchViews_upload_geo_Tests(TestCase):
                 NoReverseMatch, reverse, 'upload_geo',
                 kwargs=myKwargTest)
 
-    def test_searchView_user_not_logged_in_get(self):
+    def test_search_view_user_not_logged_in_get(self):
         """
         Test view if user is not logged in
         """
@@ -62,7 +62,7 @@ class SearchViews_upload_geo_Tests(TestCase):
         myClient = Client()
 
         myPostData = {
-            u'file_upload': ''
+            'file_upload': ''
         }
 
         self.assertRaises(
@@ -80,7 +80,7 @@ class SearchViews_upload_geo_Tests(TestCase):
         myClient = Client()
 
         myPostData = {
-            u'file_upload': myUploadFile
+            'file_upload': myUploadFile
         }
 
         myResp = myClient.post(reverse('upload_geo', kwargs={}), myPostData)
@@ -107,7 +107,7 @@ class SearchViews_upload_geo_Tests(TestCase):
         myClient = Client()
 
         myPostData = {
-            u'file_upload': myUploadFile
+            'file_upload': myUploadFile
         }
 
         myResp = myClient.post(reverse('upload_geo', kwargs={}), myPostData)
@@ -133,7 +133,7 @@ class SearchViews_upload_geo_Tests(TestCase):
         myClient = Client()
 
         myPostData = {
-            u'file_upload': myUploadFile
+            'file_upload': myUploadFile
         }
 
         myResp = myClient.post(reverse('upload_geo', kwargs={}), myPostData)
@@ -154,7 +154,7 @@ class SearchViews_upload_geo_Tests(TestCase):
         myClient = Client()
 
         myPostData = {
-            u'file_upload': myUploadFile
+            'file_upload': myUploadFile
         }
 
         self.assertRaises(

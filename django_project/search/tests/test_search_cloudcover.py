@@ -19,14 +19,12 @@ __date__ = '01/09/2013'
 __copyright__ = 'South African National Space Agency'
 
 from django.test import TestCase
-
 from search.searcher import Searcher
-
 from catalogue.tests.model_factories import OpticalProductF
-from .model_factories import SearchF
+from model_factories import SearchF
 
 
-class SearchCloudCover_Test(TestCase):
+class TestSearchCloudCover(TestCase):
     """
     Tests Search Cloud Cover
     """
@@ -53,7 +51,7 @@ class SearchCloudCover_Test(TestCase):
             'cloud_mean': 50
         })
 
-        #create Searcher object
+        # create Searcher object
         mySearcher = Searcher(mySearch)
         self.assertEqual(mySearcher.mQuerySet.count(), 2)
 
@@ -79,6 +77,6 @@ class SearchCloudCover_Test(TestCase):
             'cloud_mean': 50
         })
 
-        #create Searcher object
+        # create Searcher object
         mySearcher = Searcher(mySearch)
         self.assertEqual(mySearcher.mQuerySet.count(), 2)

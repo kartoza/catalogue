@@ -131,7 +131,7 @@ class TestOpticalProductProfileCRUD(TestCase):
         })
 
         self.assertEqual(
-            unicode(myModel), u'SATIN 1 -- Temp Spectral mode - INSTYPE1')
+            str(myModel), 'SATIN 1 -- Temp Spectral mode - INSTYPE1')
 
     def test_OpticalProductProfile_baseProcessingLevel(self):
         """
@@ -206,19 +206,19 @@ class TestOpticalProductProfileCRUD(TestCase):
         Tests OpticalProductProfile model QuerySet for_license_type
         """
         license_1 = LicenseF(**{
-            'id': 1, u'type': 3, u'name': u'SANSA Commercial License',
-            u'details': u'SANSA Commercial License'
+            'id': 1, 'type': 3, 'name': 'SANSA Commercial License',
+            'details': 'SANSA Commercial License'
         })
-        satellite_1 = SatelliteF(**{'id': 1, u'license_type': license_1})
+        satellite_1 = SatelliteF(**{'id': 1, 'license_type': license_1})
         satelliteinstrumentgroup_1 = SatelliteInstrumentGroupF(**{
-            'id': 1, u'satellite': satellite_1
+            'id': 1, 'satellite': satellite_1
         })
         satelliteinstrument_1 = SatelliteInstrumentF(**{
-            'id': 1, u'satellite_instrument_group': satelliteinstrumentgroup_1
+            'id': 1, 'satellite_instrument_group': satelliteinstrumentgroup_1
         })
 
         OpticalProductProfileF(**{
-            'id': 1, u'satellite_instrument': satelliteinstrument_1
+            'id': 1, 'satellite_instrument': satelliteinstrument_1
         })
 
         myLicense = License.objects.filter(pk=1)
@@ -232,16 +232,16 @@ class TestOpticalProductProfileCRUD(TestCase):
         Tests OpticalProductProfile model QuerySet for_collection
         """
         collection_1 = CollectionF(**{'id': 1})
-        satellite_1 = SatelliteF(**{'id': 1, u'collection': collection_1})
+        satellite_1 = SatelliteF(**{'id': 1, 'collection': collection_1})
         satelliteinstrumentgroup_1 = SatelliteInstrumentGroupF(**{
-            'id': 1, u'satellite': satellite_1
+            'id': 1, 'satellite': satellite_1
         })
         satelliteinstrument_1 = SatelliteInstrumentF(**{
-            'id': 1, u'satellite_instrument_group': satelliteinstrumentgroup_1
+            'id': 1, 'satellite_instrument_group': satelliteinstrumentgroup_1
         })
 
         OpticalProductProfileF(**{
-            'id': 1, u'satellite_instrument': satelliteinstrument_1
+            'id': 1, 'satellite_instrument': satelliteinstrument_1
         })
 
         myCollection = Collection.objects.filter(pk=1)
@@ -256,14 +256,14 @@ class TestOpticalProductProfileCRUD(TestCase):
         """
         instrumenttype_1 = InstrumentTypeF(**{'id': 1})
         satelliteinstrumentgroup_1 = SatelliteInstrumentGroupF(**{
-            'id': 1, u'instrument_type': instrumenttype_1
+            'id': 1, 'instrument_type': instrumenttype_1
         })
         satelliteinstrument_1 = SatelliteInstrumentF(**{
-            'id': 1, u'satellite_instrument_group': satelliteinstrumentgroup_1
+            'id': 1, 'satellite_instrument_group': satelliteinstrumentgroup_1
         })
 
         OpticalProductProfileF(**{
-            'id': 1, u'satellite_instrument': satelliteinstrument_1
+            'id': 1, 'satellite_instrument': satelliteinstrument_1
         })
 
         myInsType = InstrumentType.objects.filter(pk=1)
@@ -278,14 +278,14 @@ class TestOpticalProductProfileCRUD(TestCase):
         """
         satellite_1 = SatelliteF(**{'id': 1})
         satelliteinstrumentgroup_1 = SatelliteInstrumentGroupF(**{
-            'id': 1, u'satellite': satellite_1
+            'id': 1, 'satellite': satellite_1
         })
         satelliteinstrument_1 = SatelliteInstrumentF(**{
-            'id': 1, u'satellite_instrument_group': satelliteinstrumentgroup_1
+            'id': 1, 'satellite_instrument_group': satelliteinstrumentgroup_1
         })
 
         OpticalProductProfileF(**{
-            'id': 1, u'satellite_instrument': satelliteinstrument_1
+            'id': 1, 'satellite_instrument': satelliteinstrument_1
         })
 
         mySatellite = Satellite.objects.filter(pk=1)
@@ -300,11 +300,11 @@ class TestOpticalProductProfileCRUD(TestCase):
         """
         spectralgroup_1 = SpectralGroupF(**{'id': 1})
         spectralmode_1 = SpectralModeF(**{
-            'id': 1, u'spectralgroup': spectralgroup_1
+            'id': 1, 'spectralgroup': spectralgroup_1
         })
 
         OpticalProductProfileF(**{
-            'id': 1, u'spectral_mode': spectralmode_1
+            'id': 1, 'spectral_mode': spectralmode_1
         })
 
         mySpecGroup = SpectralGroup.objects.filter(pk=1)
@@ -328,14 +328,14 @@ class TestOpticalProductProfileCRUD(TestCase):
         })
 
         satelliteinstrumentgroup_1 = SatelliteInstrumentGroupF(**{
-            'id': 1, u'instrument_type': instrumenttype_1
+            'id': 1, 'instrument_type': instrumenttype_1
         })
         satelliteinstrument_1 = SatelliteInstrumentF(**{
-            'id': 1, u'satellite_instrument_group': satelliteinstrumentgroup_1
+            'id': 1, 'satellite_instrument_group': satelliteinstrumentgroup_1
         })
 
         OpticalProductProfileF(**{
-            'id': 2, u'satellite_instrument': satelliteinstrument_1
+            'id': 2, 'satellite_instrument': satelliteinstrument_1
         })
 
         myResult = OpticalProductProfile.objects.only_searchable()

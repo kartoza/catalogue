@@ -1,5 +1,5 @@
 import os.path
-from ConfigParser import SafeConfigParser
+from configparser import SafeConfigParser
 
 # from django.conf import settings
 from django.http import HttpResponse
@@ -71,9 +71,9 @@ def csw(request):
 
     # TODO: pass just dict when pycsw supports it
     config = SafeConfigParser()
-    for section, options in mdict.iteritems():
+    for section, options in mdict.items():
         config.add_section(section)
-        for k, v in options.iteritems():
+        for k, v in options.items():
             config.set(section, k, v)
 
     # update server.url

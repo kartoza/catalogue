@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load render_table from django_tables2 %}
+{% block extracss %}
+    <link href="{% static "css/table.css" %}" rel="stylesheet">
+{% endblock %}
+{# Original code from Tim's SABIO project and copyright is retained by the original author #}
+
+{% block content %}
+<div class="main-content">
+    <div id="layoutSidenav_content">
+                <main>
+                    <div class="container-fluid px-4">
+                        <h1 class="mt-4">Recent Search History</h1>
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <i class="fas fa-table me-1"></i>
+                                Recent Search History Table
+                                <div id="order-list-buttonset" class="btn-group pull-right">
+                                    <button id="user-origin-btn" onclick='location="{% url 'search-monthly-report' myCurrentMonth|date:'Y' myCurrentMonth|date:'m' %}"' class="btn"><i class="icon-calendar"></i> User Country of Origin</button>
+                                    <a href="?pdf" download="proposed_file_name"><button class="btn btn-primary" id="download-btn"><i class="icon-download"></i> PDF</button></a>
+                                    <button id="aoi-report-btn" onclick='location="{% url 'search-monthly-report' myCurrentMonth|date:'Y' myCurrentMonth|date:'m' %}"' class="btn"><i class="icon-calendar"></i> Countries Searched</button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                 {% if mySearches %}
+                                    {% render_table table 'django_tables2/custom-table.html' %}
+                                {% else %}
+                                  <div class="row-fluid center">
+                                    <h2>No Recent Searches</h2>
+                                  </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </main>
+            </div>
+</div>
+
+
+<script>
+$('#download-btn').popover({
+  placement:'bottom',
+  trigger:'hover',
+  content:'Click to download the entire search history list in PDF format',
+  title:'Download as PDF'
+});
+$('#user-origin-btn').popover({
+  placement:'bottom',
+  trigger:'hover',
+  content:'Click to view the monthly user origin reports',
+  title:'User Country of Origin Reports'
+});
+$('#aoi-report-btn').popover({
+  placement:'bottom',
+  trigger:'hover',
+  content:'Click to view the monthly AOI reports',
+  title:'AOI Reports'
+});
+$('.remove-btn').tooltip({
+  placement:'right',
+  title:'Delete'
+});
+$('.view-btn').tooltip({
+  placement:'top',
+  title:'View'
+});
+</script>
+{% endblock %}
+{% block footer %}
+{% endblock %}

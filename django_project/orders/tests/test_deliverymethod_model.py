@@ -18,11 +18,10 @@ __date__ = '07/08/2013'
 __copyright__ = 'South African National Space Agency'
 
 from django.test import TestCase
+from model_factories import DeliveryMethodF
 
-from .model_factories import DeliveryMethodF
 
-
-class DeliveryMethodCRUD_Test(TestCase):
+class TestDeliveryMethodCRUD(TestCase):
     """
     Tests models.
     """
@@ -38,46 +37,45 @@ class DeliveryMethodCRUD_Test(TestCase):
         Tests DeliveryMethod model creation
         """
 
-        myModel = DeliveryMethodF.create()
+        model = DeliveryMethodF.create()
 
-        self.assertTrue(myModel.pk is not None)
+        self.assertTrue(model.pk is not None)
 
-    def test_DeliveryMethod_delete(self):
+    def test_delivery_method_delete(self):
         """
         Tests DeliveryMethod model delete
         """
-        myModel = DeliveryMethodF.create()
+        model = DeliveryMethodF.create()
+        model.delete()
 
-        myModel.delete()
+        # check if deleted
+        self.assertTrue(model.pk is None)
 
-        #check if deleted
-        self.assertTrue(myModel.pk is None)
-
-    def test_DeliveryMethod_read(self):
+    def test_delivery_method_read(self):
         """
         Tests DeliveryMethod model read
         """
 
-        myModel = DeliveryMethodF.create(**{
+        model = DeliveryMethodF.create(**{
             'name': 'Courier + External Hard Disk'
         })
 
-        self.assertEqual(myModel.name, 'Courier + External Hard Disk')
+        self.assertEqual(model.name, 'Courier + External Hard Disk')
 
-    def test_DeliveryMethod_update(self):
+    def test_delivery_method_update(self):
         """
         Tests DeliveryMethod model update
         """
-        myModel = DeliveryMethodF.create()
+        model = DeliveryMethodF.create()
 
-        myModel.__dict__.update({
+        model.__dict__.update({
             'name': 'Courier + External Hard Disk'
         })
-        myModel.save()
+        model.save()
 
-        self.assertEqual(myModel.name, 'Courier + External Hard Disk')
+        self.assertEqual(model.name, 'Courier + External Hard Disk')
 
-    def test_DeliveryMethod_repr(self):
+    def test_delivery_method_repr(self):
         """
         Tests DeliveryMethod model representation
         """
@@ -85,4 +83,4 @@ class DeliveryMethodCRUD_Test(TestCase):
             'name': 'Courier + External Hard Disk'
         })
 
-        self.assertEqual(unicode(myModel.name), 'Courier + External Hard Disk')
+        self.assertEqual(str(myModel.name), 'Courier + External Hard Disk')

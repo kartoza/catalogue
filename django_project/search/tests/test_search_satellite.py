@@ -24,16 +24,18 @@ from search.searcher import Searcher
 
 from catalogue.tests.model_factories import OpticalProductF
 from dictionaries.tests.model_factories import (
-    SatelliteF, SatelliteInstrumentGroupF, SatelliteInstrumentF,
+    SatelliteF, SatelliteInstrumentGroupF,
+    SatelliteInstrumentF,
     OpticalProductProfileF
 )
-from .model_factories import SearchF
+from model_factories import SearchF
 
 
-class SearchSatellite_Test(TestCase):
+class TestSearchSatellite(TestCase):
     """
     Tests Search Satellites
     """
+
     def setUp(self):
         """
         Set up before each test
@@ -58,7 +60,7 @@ class SearchSatellite_Test(TestCase):
         })
 
         myOPP = OpticalProductProfileF.create(**{
-            u'satellite_instrument': mySatInst
+            'satellite_instrument': mySatInst
         })
 
         OpticalProductF.create(**{
@@ -72,6 +74,6 @@ class SearchSatellite_Test(TestCase):
             'satellites': [mySat]
         })
 
-        #create Searcher object
+        # create Searcher object
         mySearcher = Searcher(mySearch)
         self.assertEqual(mySearcher.mQuerySet.count(), 1)

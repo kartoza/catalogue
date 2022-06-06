@@ -19,7 +19,7 @@ __date__ = '19/08/2013'
 __copyright__ = 'South African National Space Agency'
 
 import unittest
-from django.core.urlresolvers import reverse, NoReverseMatch
+from django.urls import reverse, NoReverseMatch
 from django.test import TestCase
 from django.test.client import Client
 
@@ -84,10 +84,10 @@ class OrdersViews_myOrders_Tests(TestCase):
 
         # check used templates
         myExpTemplates = [
-            'orderListPage.html', u'base.html',
-            u'pipeline/css.html', u'pipeline/js.html', u'menu.html',
-            u'useraccounts/menu_content.html', u'orderList.html',
-            u'django_tables2/custom-table.html'
+            'orderListPage.html', 'base.html',
+            'pipeline/css.html', 'pipeline/js.html', 'menu.html',
+            'useraccounts/menu_content.html', 'orderList.html',
+            'django_tables2/custom-table.html'
         ]
 
         myUsedTemplates = [tmpl.name for tmpl in myResp.templates]
@@ -122,10 +122,10 @@ class OrdersViews_myOrders_Tests(TestCase):
 
         # check used templates
         myExpTemplates = [
-            'orderListPage.html', u'base.html',
-            u'pipeline/css.html', u'pipeline/js.html', u'menu.html',
-            u'useraccounts/menu_content.html', u'orderList.html',
-            u'django_tables2/custom-table.html'
+            'orderListPage.html', 'base.html',
+            'pipeline/css.html', 'pipeline/js.html', 'menu.html',
+            'useraccounts/menu_content.html', 'orderList.html',
+            'django_tables2/custom-table.html'
         ]
 
         myUsedTemplates = [tmpl.name for tmpl in myResp.templates]
@@ -161,10 +161,10 @@ class OrdersViews_myOrders_Tests(TestCase):
 
         # check used templates
         myExpTemplates = [
-            'orderListPage.html', u'base.html',
-            u'pipeline/css.html', u'pipeline/js.html', u'menu.html',
-            u'useraccounts/menu_content.html', u'orderList.html',
-            u'django_tables2/custom-table.html'
+            'orderListPage.html', 'base.html',
+            'pipeline/css.html', 'pipeline/js.html', 'menu.html',
+            'useraccounts/menu_content.html', 'orderList.html',
+            'django_tables2/custom-table.html'
         ]
 
         myUsedTemplates = [tmpl.name for tmpl in myResp.templates]
@@ -199,10 +199,10 @@ class OrdersViews_myOrders_Tests(TestCase):
 
         # check used templates
         myExpTemplates = [
-            'orderListPage.html', u'base.html',
-            u'pipeline/css.html', u'pipeline/js.html', u'menu.html',
-            u'useraccounts/menu_content.html', u'orderList.html',
-            u'django_tables2/custom-table.html'
+            'orderListPage.html', 'base.html',
+            'pipeline/css.html', 'pipeline/js.html', 'menu.html',
+            'useraccounts/menu_content.html', 'orderList.html',
+            'django_tables2/custom-table.html'
         ]
 
         myUsedTemplates = [tmpl.name for tmpl in myResp.templates]

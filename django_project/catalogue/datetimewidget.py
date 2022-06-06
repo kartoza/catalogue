@@ -75,7 +75,7 @@ class DateTimeWidget(forms.DateInput):
             # set current date to YESTERDAY
             myCurrentDate = datetime.date.today() + relativedelta(days=-1)
 
-        myA = u'''
+        myA = '''
     <input type="text" name="%(name)s" value="%(currentDate)s" id="%(id)s" data-date-format="dd-mm-yyyy">
 ''' % {'id': myId, 'name': theName, 'attrs': flatatt(myFinal_attrs),
        'currentDate': myCurrentDate.strftime(self.dformat)}

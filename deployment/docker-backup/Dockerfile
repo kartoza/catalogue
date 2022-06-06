@@ -1,4 +1,4 @@
-FROM kartoza/pg-backup:9.4
+FROM kartoza/pg-backup:v13---v20210523
 MAINTAINER Rischan Mafrur <rischann@kartoza.com>
 
 ADD backups.sh /backups.sh

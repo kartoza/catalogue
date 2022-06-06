@@ -9,14 +9,14 @@ if 'raven.contrib.django.raven_compat' in INSTALLED_APPS:
     'dsn': 'http://840958b39a464c88aa9b3751891a6b4b:d8abb7bca77d49c0a24a08ea4fba4988@sentry.kartoza.com/9',
     }
 
-    MIDDLEWARE_CLASSES = (
+    MIDDLEWARE = (
         # We recommend putting this as high in the chain as possible
         # see http://raven.readthedocs.org/en/latest/integrations/  ...
         # ... django.html#message-references
         # This will add a client unique id in messages
         'raven.contrib.django.raven_compat.middleware.'
         'SentryResponseErrorIdMiddleware',
-    ) + MIDDLEWARE_CLASSES
+    ) + MIDDLEWARE
 
     #
     # Sentry settings - logs exceptions to a database
@@ -27,7 +27,7 @@ if 'raven.contrib.django.raven_compat' in INSTALLED_APPS:
         # default root logger - handle with sentry
         'root': {
             'level': 'ERROR',
-            'handlers': ['sentry'],
+            'handlers': ['sentry', 'file'],
         },
         'handlers': {
             # send email to mail_admins, if DEBUG=False
@@ -41,6 +41,12 @@ if 'raven.contrib.django.raven_compat' in INSTALLED_APPS:
                 'class': (
                     'raven.contrib.django.raven_compat.'
                     'handlers.SentryHandler'),
+            },
+            # output file
+            'file': {
+                'level': 'DEBUG',
+                'class': 'logging.FileHandler',
+                'filename': '/home/web/logs/django.log',
             }
         },
         'loggers': {
@@ -59,8 +65,8 @@ if 'raven.contrib.django.raven_compat' in INSTALLED_APPS:
                 'handlers': ['mail_admins'],
                 'propagate': False
             },
-            'django.request': {
-                'handlers': ['mail_admins'],
+            'django': {
+                'handlers': ['mail_admins', 'file'],
                 'level': 'ERROR',
                 'propagate': True
             }

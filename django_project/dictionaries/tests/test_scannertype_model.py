@@ -94,4 +94,4 @@ class TestScannerTypeCRUD(TestCase):
             'abbreviation': 'NST1'
         })
 
-        self.assertEqual(unicode(myModel), u'NST1')
+        self.assertEqual(str(myModel), 'NST1')

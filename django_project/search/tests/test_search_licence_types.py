@@ -24,16 +24,18 @@ from search.searcher import Searcher
 
 from catalogue.tests.model_factories import OpticalProductF
 from dictionaries.tests.model_factories import (
-    SatelliteF, SatelliteInstrumentGroupF, SatelliteInstrumentF,
+    SatelliteF, SatelliteInstrumentGroupF,
+    SatelliteInstrumentF,
     OpticalProductProfileF, LicenseF
 )
-from .model_factories import SearchF
+from model_factories import SearchF
 
 
-class SearchLicenseType_Test(TestCase):
+class TestSearchLicenseType(TestCase):
     """
     Tests Search License types
     """
+
     def setUp(self):
         """
         Set up before each test
@@ -44,38 +46,38 @@ class SearchLicenseType_Test(TestCase):
         Test satellite license types
         """
 
-        myLicense = LicenseF.create(**{
+        licence = LicenseF.create(**{
             'name': 'My License'
         })
-        mySat = SatelliteF.create(**{
+        sat = SatelliteF.create(**{
             'name': 'My Satellite',
-            'license_type': myLicense
+            'license_type': licence
         })
 
-        mySatInstGroup = SatelliteInstrumentGroupF.create(**{
-            'satellite': mySat
+        sat_inst_group = SatelliteInstrumentGroupF.create(**{
+            'satellite': sat
         })
 
-        mySatInst = SatelliteInstrumentF.create(**{
+        sat_inst = SatelliteInstrumentF.create(**{
             'operator_abbreviation': 'SATIN 1',
-            'satellite_instrument_group': mySatInstGroup
+            'satellite_instrument_group': sat_inst_group
         })
 
-        myOPP = OpticalProductProfileF.create(**{
-            u'satellite_instrument': mySatInst
+        opp = OpticalProductProfileF.create(**{
+            'satellite_instrument': sat_inst
         })
 
         OpticalProductF.create(**{
-            'product_profile': myOPP
+            'product_profile': opp
         })
 
         # create an optical product that should not appear in the results
         OpticalProductF.create()
 
-        mySearch = SearchF.create(**{
-            'license_types': [myLicense]
+        search = SearchF.create(**{
+            'license_types': [licence]
         })
 
-        #create Searcher object
-        mySearcher = Searcher(mySearch)
-        self.assertEqual(mySearcher.mQuerySet.count(), 1)
+        # create Searcher object
+        searcher = Searcher(search)
+        self.assertEqual(searcher.mQuerySet.count(), 1)

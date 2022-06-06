@@ -1,5 +1,6 @@
-from django.conf.urls import patterns, url
+from django.conf.urls import url
 
+from .api import DataSummaryApiView
 from .views import (
     search_history,
     recent_searches,
@@ -14,24 +15,24 @@ from .views import (
     sensor_fact_sheet
 )
 
-
-urlpatterns = patterns(
-    '',
-    url(r'^mysearches/$', search_history, name='searchHistory'),
-    url(r'^recentsearches/$', recent_searches, name='recentSearches'),
-    url(r'^searchmonthlyreport/(?P<year>\d{4})/(?P<month>\d{1,2})/$',
-        search_monthly_report, name='searchMonthlyReport'
+urlpatterns = [
+    url(r'^search-history/$', search_history, name='search-history'),
+    url(r'^recent-searches/$', recent_searches, name='recent-searches'),
+    url(r'^search-monthly-report/(?P<year>\d{4})/(?P<month>\d{1,2})/$',
+        search_monthly_report, name='search-monthly-report'
         ),
-    url(r'^searchmonthlyreportaoi/(?P<year>\d{4})/(?P<month>\d{1,2})/$',
-        search_monthly_report_aoi, name='searchMonthlyReportAOI'
+    url(r'^search-monthly-report-aoi/(?P<year>\d{4})/(?P<month>\d{1,2})/$',
+        search_monthly_report_aoi, name='search-monthly-report-aoi'
         ),
-    url(r'^visitorlist/$', visitor_list, name='visitorList'),
-    url(r'^visitorreport/$', visitor_report, name='visitorReport'),
-    url(r'^visitormonthlyreport/(?P<year>\d{4})/(?P<month>\d{1,2})/$',
-        visitor_monthly_report, name='visitorMonthlyReport'
+    url(r'^visitor-list/$', visitor_list, name='visitor-list'),
+    url(r'^visitor-report/$', visitor_report, name='visitor-report'),
+    url(r'^visitor-monthly-report/(?P<year>\d{4})/(?P<month>\d{1,2})/$',
+        visitor_monthly_report, name='visitor-monthly-report'
         ),
-    url(r'^dataSummaryTable/$', data_summary_table, name='dataSummaryTable'),
-    url(r'^dictionaryReport/$', dictionary_report, name='dictionaryReport'),
+    url(r'^data-summary-table/$', data_summary_table, name='data-summary-table'),
+    url(r'^dictionary-report/$', dictionary_report, name='dictionary-report'),
     url(r'^sensor-fact-sheet/(?P<sat_abbr>[\w-]+)/(?P<instrument_type>[\w-]+)/$',
-        sensor_fact_sheet, name='fact-sheet')
-)
+        sensor_fact_sheet, name='fact-sheet'),
+    url(r'^data-summary/$',
+        DataSummaryApiView.as_view(), name='data-summary')
+]

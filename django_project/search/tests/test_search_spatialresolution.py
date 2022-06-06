@@ -23,10 +23,10 @@ from django.test import TestCase
 from search.searcher import Searcher
 
 from catalogue.tests.model_factories import OpticalProductF
-from .model_factories import SearchF
+from model_factories import SearchF
 
 
-class SearchSpatialResolution_Test(TestCase):
+class TestSearchSpatialResolution(TestCase):
     """
     Tests Search spatial resolution
     """
@@ -53,7 +53,7 @@ class SearchSpatialResolution_Test(TestCase):
             'spatial_resolution': 0
         })
 
-        #create Searcher object
+        # create Searcher object
         mySearcher = Searcher(mySearch)
         self.assertEqual(mySearcher.mQuerySet.count(), 2)
 
@@ -79,7 +79,7 @@ class SearchSpatialResolution_Test(TestCase):
             'spatial_resolution': 1
         })
 
-        #create Searcher object
+        # create Searcher object
         mySearcher = Searcher(mySearch)
         self.assertEqual(mySearcher.mQuerySet.count(), 2)
 
@@ -105,7 +105,7 @@ class SearchSpatialResolution_Test(TestCase):
             'spatial_resolution': 2
         })
 
-        #create Searcher object
+        # create Searcher object
         mySearcher = Searcher(mySearch)
         self.assertEqual(mySearcher.mQuerySet.count(), 2)
 
@@ -131,7 +131,7 @@ class SearchSpatialResolution_Test(TestCase):
             'spatial_resolution': 3
         })
 
-        #create Searcher object
+        # create Searcher object
         mySearcher = Searcher(mySearch)
         self.assertEqual(mySearcher.mQuerySet.count(), 2)
 
@@ -157,7 +157,7 @@ class SearchSpatialResolution_Test(TestCase):
             'spatial_resolution': 4
         })
 
-        #create Searcher object
+        # create Searcher object
         mySearcher = Searcher(mySearch)
         self.assertEqual(mySearcher.mQuerySet.count(), 2)
 
@@ -183,6 +183,6 @@ class SearchSpatialResolution_Test(TestCase):
             'spatial_resolution': 5
         })
 
-        #create Searcher object
+        # create Searcher object
         mySearcher = Searcher(mySearch)
         self.assertEqual(mySearcher.mQuerySet.count(), 2)

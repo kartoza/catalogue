@@ -19,7 +19,7 @@ __date__ = '20/08/2013'
 __copyright__ = 'South African National Space Agency'
 
 
-from django.core.urlresolvers import reverse, NoReverseMatch
+from django.urls import reverse, NoReverseMatch
 from django.test import TestCase
 from django.test.client import Client
 
@@ -27,7 +27,7 @@ from core.model_factories import UserF
 from search.tests.model_factories import SearchF
 
 
-class ReportsViews_searchHistory_Tests(TestCase):
+class TestReportsViewsSearchHistory(TestCase):
     """
     Tests reports.py searchHistory method/view
     """
@@ -81,10 +81,10 @@ class ReportsViews_searchHistory_Tests(TestCase):
 
         # check used templates
         myExpTemplates = [
-            'mySearches.html', u'base.html',
-            u'pipeline/css.html', u'pipeline/js.html', u'menu.html',
-            u'useraccounts/menu_content.html',
-            u'django_tables2/custom-table.html'
+            'mySearches.html', 'base.html',
+            'pipeline/css.html', 'pipeline/js.html', 'menu.html',
+            'useraccounts/menu_content.html',
+            'django_tables2/custom-table.html'
         ]
 
         myUsedTemplates = [tmpl.name for tmpl in myResp.templates]
@@ -113,10 +113,10 @@ class ReportsViews_searchHistory_Tests(TestCase):
 
         # check used templates
         myExpTemplates = [
-            'mySearches.html', u'base.html',
-            u'pipeline/css.html', u'pipeline/js.html', u'menu.html',
-            u'useraccounts/menu_content.html',
-            u'django_tables2/custom-table.html'
+            'mySearches.html', 'base.html',
+            'pipeline/css.html', 'pipeline/js.html', 'menu.html',
+            'useraccounts/menu_content.html',
+            'django_tables2/custom-table.html'
         ]
 
         myUsedTemplates = [tmpl.name for tmpl in myResp.templates]

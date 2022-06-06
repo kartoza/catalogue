@@ -18,8 +18,7 @@ __date__ = '17/07/2013'
 __copyright__ = 'South African National Space Agency'
 
 from django.test import TestCase
-
-from .model_factories import ClipF
+from model_factories import ClipF
 
 
 class TestClipCRUD(TestCase):
@@ -52,7 +51,7 @@ class TestClipCRUD(TestCase):
         }
         myModel = ClipF.create()
         #check if data is correct
-        for key, val in myExpectedModelData.items():
+        for key, val in list(myExpectedModelData.items()):
             self.assertEqual(myModel.__dict__.get(key), val)
 
         self.assertEqual(
@@ -84,7 +83,7 @@ class TestClipCRUD(TestCase):
         myModel.save()
 
         #check if updated
-        for key, val in myNewModelData.items():
+        for key, val in list(myNewModelData.items()):
             if key != 'geometry':
                 self.assertEqual(myModel.__dict__.get(key), val)
 

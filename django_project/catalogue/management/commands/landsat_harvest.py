@@ -13,15 +13,16 @@ class Command(BaseCommand):
 
     # noinspection PyShadowingBuiltins
     help = 'Imports Landsat 7/8 records into the SANSA catalogue'
-    option_list = BaseCommand.option_list + (
-        make_option(
+
+    def add_arguments(self, parser):
+        parser.add_argument(
             '--test_only',
             '-t',
             dest='test_only_flag',
             action='store_true',
             help='Just test, nothing will be written into the DB.',
-            default=False),
-        make_option(
+            default=False)
+        parser.add_argument(
             '--source_dir',
             '-d',
             dest='source_dir',
@@ -31,15 +32,15 @@ class Command(BaseCommand):
                 'thumbnail to import.'),
             default=(
                 '/home/web/django_project'
-                '/data/landsat/')),
-        make_option(
+                '/data/landsat/'))
+        parser.add_argument(
             '--halt_on_error', '-e', dest='halt_on_error_flag',
             action='store',
             help=(
                 'Halt on first error that occurs and print a '
                 'stacktrace'),
-            default=False),
-        make_option(
+            default=False)
+        parser.add_argument(
             '--ignore-missing-thumbs',
             '-i',
             dest='ignore_missing_thumbs_flag',
@@ -48,7 +49,6 @@ class Command(BaseCommand):
                 'Continue with importing records even if they miss their'
                 'thumbnails.'),
             default=False)
-    )
 
     # noinspection PyDeprecation
     @staticmethod

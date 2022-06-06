@@ -57,7 +57,7 @@ class OthersViews_searchesMap(TestCase):
                 kwargs={}))
         self.assertEqual(myResp.status_code, 302)
         self.assertEqual(
-            myResp.wsgi_request.path, u'/searchesmap/')
+            myResp.wsgi_request.path, '/searchesmap/')
 
     def test_searchesMap_userlogin(self):
         """
@@ -77,7 +77,7 @@ class OthersViews_searchesMap(TestCase):
                 kwargs={}))
         self.assertEqual(myResp.status_code, 302)
         self.assertEqual(
-                myResp.wsgi_request.path, u'/searchesmap/')
+                myResp.wsgi_request.path, '/searchesmap/')
 
     def test_searchesMap_stafflogin(self):
         """
@@ -98,9 +98,9 @@ class OthersViews_searchesMap(TestCase):
         self.assertEqual(myResp.status_code, 200)
         # check used templates
         myExpTemplates = [
-            u'searchesmap.html', u'base-fluid.html', u'pipeline/css.html',
-            u'pipeline/css.html', u'menu.html',
-            u'useraccounts/menu_content.html', u'pipeline/js.html'
+            'searchesmap.html', 'base-fluid.html', 'pipeline/css.html',
+            'pipeline/css.html', 'menu.html',
+            'useraccounts/menu_content.html', 'pipeline/js.html'
         ]
 
         myUsedTemplates = [tmpl.name for tmpl in myResp.templates]

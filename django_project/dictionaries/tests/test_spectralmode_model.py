@@ -128,4 +128,4 @@ class TestSpectralModeCRUD(TestCase):
         })
 
         self.assertEqual(
-            unicode(myModel), u'New Spectral mode - NIT 1')
+            str(myModel), 'New Spectral mode - NIT 1')

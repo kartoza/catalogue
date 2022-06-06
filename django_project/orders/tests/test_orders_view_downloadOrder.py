@@ -18,14 +18,15 @@ __version__ = '0.1'
 __date__ = '19/08/2013'
 __copyright__ = 'South African National Space Agency'
 
-from django.core.urlresolvers import reverse, NoReverseMatch
+from django.urls import reverse, NoReverseMatch
 from django.test import TestCase
 from django.test.client import Client
 
 from core.model_factories import UserF
-from .model_factories import OrderF
+from model_factories import OrderF
 
-class OrdersViews_downloadOrder_Tests(TestCase):
+
+class TestOrdersViewsDownloadOrder(TestCase):
     """
     Tests orders.py downloadOrder method/view
     """

@@ -48,7 +48,6 @@ class ResamplingMethodCRUD_Test(TestCase):
         myModel = ResamplingMethodF.create()
 
         myModel.delete()
-
         #check if deleted
         self.assertTrue(myModel.pk is None)
 
@@ -85,4 +84,4 @@ class ResamplingMethodCRUD_Test(TestCase):
             'name': 'Nearest Neighbour'
         })
 
-        self.assertEqual(unicode(myModel), 'Nearest Neighbour')
+        self.assertEqual(str(myModel), 'Nearest Neighbour')

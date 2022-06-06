@@ -132,4 +132,4 @@ class TestBandCRUD(TestCase):
         })
 
         self.assertEqual(
-            unicode(myModel), u'Cool band (200 400) 30')
+            str(myModel), 'Cool band (200 400) 30')

@@ -19,20 +19,20 @@ __date__ = '22/01/2014'
 __copyright__ = 'South African National Space Agency'
 
 from django.test import TestCase
-
 from search.searcher import Searcher
-
 from catalogue.tests.model_factories import OpticalProductF
 from dictionaries.tests.model_factories import (
-    SpectralGroupF, OpticalProductProfileF, SpectralModeF
+    SpectralGroupF, OpticalProductProfileF,
+    SpectralModeF
 )
-from .model_factories import SearchF
+from model_factories import SearchF
 
 
-class SearchSpectralGroup_Test(TestCase):
+class TestSearchSpectralGroup(TestCase):
     """
     Tests Search Spectral Group
     """
+
     def setUp(self):
         """
         Set up before each test
@@ -53,7 +53,7 @@ class SearchSpectralGroup_Test(TestCase):
         })
 
         myOPP = OpticalProductProfileF.create(**{
-            u'spectral_mode': mySpecMode
+            'spectral_mode': mySpecMode
         })
 
         OpticalProductF.create(**{
@@ -67,6 +67,6 @@ class SearchSpectralGroup_Test(TestCase):
             'spectral_groups': [mySpecGroup]
         })
 
-        #create Searcher object
+        # create Searcher object
         mySearcher = Searcher(mySearch)
         self.assertEqual(mySearcher.mQuerySet.count(), 1)

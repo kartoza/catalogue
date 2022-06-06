@@ -79,7 +79,7 @@ class OthersViews_metadata(TestCase):
         """
 
         myProjection = ProjectionF.create(**{
-            u'name': u'UTM37S', u'epsg_code': 32737
+            'name': 'UTM37S', 'epsg_code': 32737
         })
 
         myLicense = LicenseF.create(**{
@@ -113,7 +113,7 @@ class OthersViews_metadata(TestCase):
         })
 
         myOPP = OpticalProductProfileF.create(**{
-            u'spectral_mode': mySpecMode, u'satellite_instrument': mySatInst
+            'spectral_mode': mySpecMode, 'satellite_instrument': mySatInst
         })
 
         myQuality = QualityF.create(**{'name': 'SuperQuality'})
@@ -153,9 +153,9 @@ class OthersViews_metadata(TestCase):
         # check used templates
         myExpTemplates = [
             'productTypes/opticalProduct.html',
-            u'productTypes/genericSensorProduct.html',
-            u'productTypes/genericImageryProduct.html',
-            u'productTypes/genericProduct.html'
+            'productTypes/genericSensorProduct.html',
+            'productTypes/genericImageryProduct.html',
+            'productTypes/genericProduct.html'
         ]
 
         myUsedTemplates = [tmpl.name for tmpl in myResp.templates]
@@ -168,7 +168,7 @@ class OthersViews_metadata(TestCase):
         """
 
         myProjection = ProjectionF.create(**{
-            u'name': u'UTM37S', u'epsg_code': 32737
+            'name': 'UTM37S', 'epsg_code': 32737
         })
 
         myLicense = LicenseF.create(**{
@@ -202,7 +202,7 @@ class OthersViews_metadata(TestCase):
         })
 
         myOPP = OpticalProductProfileF.create(**{
-            u'spectral_mode': mySpecMode, u'satellite_instrument': mySatInst
+            'spectral_mode': mySpecMode, 'satellite_instrument': mySatInst
         })
 
         myQuality = QualityF.create(**{'name': 'SuperQuality'})
@@ -246,9 +246,9 @@ class OthersViews_metadata(TestCase):
         # check used templates
         myExpTemplates = [
             'productTypes/opticalProduct.html',
-            u'productTypes/genericSensorProduct.html',
-            u'productTypes/genericImageryProduct.html',
-            u'productTypes/genericProduct.html'
+            'productTypes/genericSensorProduct.html',
+            'productTypes/genericImageryProduct.html',
+            'productTypes/genericProduct.html'
         ]
 
         myUsedTemplates = [tmpl.name for tmpl in myResp.templates]

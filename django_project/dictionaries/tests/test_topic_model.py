@@ -19,7 +19,7 @@ __copyright__ = 'South African National Space Agency'
 
 from django.test import TestCase
 
-from model_factories import TopicF
+from .model_factories import TopicF
 
 
 class TopicCRUD_Test(TestCase):
@@ -88,4 +88,4 @@ class TopicCRUD_Test(TestCase):
             'name': 'Sample Topic'
         })
 
-        self.assertEqual(unicode(myModel), 'Sample Topic')
+        self.assertEqual(str(myModel), 'Sample Topic')

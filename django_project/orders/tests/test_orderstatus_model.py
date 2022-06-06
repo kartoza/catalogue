@@ -18,11 +18,10 @@ __date__ = '01/08/2013'
 __copyright__ = 'South African National Space Agency'
 
 from django.test import TestCase
+from model_factories import OrderStatusF
 
-from .model_factories import OrderStatusF
 
-
-class OrderStatusCRUD_Test(TestCase):
+class TestOrderStatusCRUD(TestCase):
     """
     Tests models.
     """
@@ -38,7 +37,7 @@ class OrderStatusCRUD_Test(TestCase):
         Tests OrderStatus model creation
         """
         myModel = OrderStatusF.create()
-        #check if PK exists
+        # check if PK exists
         self.assertTrue(myModel.pk is not None)
 
     def test_OrderStatus_delete(self):
@@ -49,7 +48,7 @@ class OrderStatusCRUD_Test(TestCase):
 
         myModel.delete()
 
-        #check if deleted
+        # check if deleted
         self.assertTrue(myModel.pk is None)
 
     def test_OrderStatus_read(self):
@@ -83,4 +82,4 @@ class OrderStatusCRUD_Test(TestCase):
             'name': 'Placed'
         })
 
-        self.assertEqual(unicode(myModel), 'Placed')
+        self.assertEqual(str(myModel), 'Placed')

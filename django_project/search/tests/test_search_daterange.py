@@ -19,20 +19,17 @@ __date__ = '23/01/2014'
 __copyright__ = 'South African National Space Agency'
 
 from datetime import datetime, date
-
 from django.test import TestCase
-
 from search.searcher import Searcher
-
 from catalogue.tests.model_factories import OpticalProductF
+from model_factories import SearchF, SearchDateRangeF
 
-from .model_factories import SearchF, SearchDateRangeF
 
-
-class SearchDateRange_Test(TestCase):
+class TestSearchDateRange(TestCase):
     """
     Tests Search Date ranges
     """
+
     def setUp(self):
         """
         Set up before each test
@@ -44,17 +41,17 @@ class SearchDateRange_Test(TestCase):
         """
 
         OpticalProductF.create(**{
-            'product_acquisition_start': datetime(2010, 07, 15, 0, 0),
+            'product_acquisition_start': datetime(2010, 0o7, 15, 0, 0),
             'product_acquisition_end': None
         })
         OpticalProductF.create(**{
-            'product_acquisition_start': datetime(2011, 07, 20, 0, 0),
+            'product_acquisition_start': datetime(2011, 0o7, 20, 0, 0),
             'product_acquisition_end': None
         })
 
         # create an optical product that should not appear in the results
         OpticalProductF.create(**{
-            'product_acquisition_start': datetime(2010, 07, 14, 0, 0),
+            'product_acquisition_start': datetime(2010, 0o7, 14, 0, 0),
             'product_acquisition_end': None
         })
 
@@ -62,11 +59,11 @@ class SearchDateRange_Test(TestCase):
 
         SearchDateRangeF.create(**{
             'search': mySearch,
-            'start_date': date(2010, 07, 15),
-            'end_date': date(2012, 07, 15)
+            'start_date': date(2010, 0o7, 15),
+            'end_date': date(2012, 0o7, 15)
         })
 
-        #create Searcher object
+        # create Searcher object
         mySearcher = Searcher(mySearch)
         self.assertEqual(mySearcher.mQuerySet.count(), 2)
 
@@ -76,18 +73,18 @@ class SearchDateRange_Test(TestCase):
         """
 
         OpticalProductF.create(**{
-            'product_acquisition_start': datetime(2010, 07, 15, 0, 0),
+            'product_acquisition_start': datetime(2010, 0o7, 15, 0, 0),
             'product_acquisition_end': None
         })
 
         OpticalProductF.create(**{
-            'product_acquisition_start': datetime(2010, 07, 16, 0, 0),
+            'product_acquisition_start': datetime(2010, 0o7, 16, 0, 0),
             'product_acquisition_end': None
         })
 
         # create an optical product that should not appear in the results
         OpticalProductF.create(**{
-            'product_acquisition_start': datetime(2010, 07, 14, 0, 0),
+            'product_acquisition_start': datetime(2010, 0o7, 14, 0, 0),
             'product_acquisition_end': None
         })
 
@@ -95,10 +92,10 @@ class SearchDateRange_Test(TestCase):
 
         SearchDateRangeF.create(**{
             'search': mySearch,
-            'start_date': date(2010, 07, 15),
-            'end_date': date(2010, 07, 15)
+            'start_date': date(2010, 0o7, 15),
+            'end_date': date(2010, 0o7, 15)
         })
 
-        #create Searcher object
+        # create Searcher object
         mySearcher = Searcher(mySearch)
         self.assertEqual(mySearcher.mQuerySet.count(), 2)

@@ -17,7 +17,7 @@ for {{ myOrder.user.first_name }} {{ myOrder.user.last_name }} made on <b>
 Your order status: {{ myOrder.order_status }}
 </p>
 
-You can review this order at any time by visiting the http://{{ domain }}{% url 'viewOrder' myOrder.id %}
+You can review this order at any time by visiting the http://{{ domain }}{% url 'order' myOrder.id %}
 
     If you have any problems or special requests relating to this
 order, please contact our sales staff

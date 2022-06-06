@@ -40,7 +40,7 @@ def parse_date_time(date_stamp):
     :returns: A python datetime object.
     :rtype: datetime
     """
-    #print 'Parsing Date: %s\n' % date_stamp
+    # print 'Parsing Date: %s\n' % date_stamp
     start_year = date_stamp[0:4]
     start_month = date_stamp[5:7]
     start_day = date_stamp[8:10]
@@ -49,7 +49,7 @@ def parse_date_time(date_stamp):
     start_hour = tokens[0]
     start_minute = tokens[1]
     start_seconds = tokens[2]
-    #print "%s-%s-%sT%s:%s:%s" % (
+    # print "%s-%s-%sT%s:%s:%s" % (
     #    start_year, start_month, start_day,
     #    start_hour, start_minute, start_seconds)
     parsed_date_time = datetime(
@@ -60,6 +60,7 @@ def parse_date_time(date_stamp):
         int(start_minute),
         int(start_seconds))
     return parsed_date_time
+
 
 def get_geometry(log_message, dom):
     """Extract the bounding box as a geometry from the xml file.
@@ -98,11 +99,11 @@ def get_geometry(log_message, dom):
 
     polygon = 'POLYGON((' '%s %s, ' \
               '%s %s, %s %s, %s %s, %s %s' '))' % (
-        up_left_long, up_left_lat,
-        up_right_long, up_right_lat,
-        low_right_long, low_right_lat,
-        low_left_long, low_left_lat,
-        up_left_long, up_left_lat )
+                  up_left_long, up_left_lat,
+                  up_right_long, up_right_lat,
+                  low_right_long, low_right_lat,
+                  low_left_long, low_left_lat,
+                  up_left_long, up_left_lat)
 
     myReader = WKTReader()
     myGeometry = myReader.read(polygon)
@@ -135,6 +136,7 @@ def get_dates(log_message, dom):
 
     return start_date, center_date
 
+
 def get_original_product_id(filename):
     # Get part of product name from filename
     # file name = CB04-WFI-81-135-20160118-L20000024812
@@ -142,43 +144,51 @@ def get_original_product_id(filename):
     product_name = ''.join(tokens)
     return product_name
 
+
 def get_band_count(dom):
     band_count_data = dom.getElementsByTagName('bands')[0]
     band_count = band_count_data.firstChild.nodeValue
-    if len(band_count)==1:
+    if len(band_count) == 1:
         return 1
     else:
         return len(eval(band_count))
+
 
 def get_solar_azimuth_angle(dom):
     sun_azimuth = dom.getElementsByTagName('sunAzimuthElevation')[0]
     solar_azimuth = sun_azimuth.firstChild.nodeValue
     return solar_azimuth
 
+
 def get_scene_row(dom):
     scene_row = dom.getElementsByTagName('sceneRow')[0]
     row = scene_row.firstChild.nodeValue
     return row
+
 
 def get_scene_path(dom):
     scene_path = dom.getElementsByTagName('scenePath')[0]
     path = scene_path.firstChild.nodeValue
     return path
 
+
 def get_sensor_inclination():
     # The static value of sensor inclination angle
     # source http://www.cbers.inpe.br/ingles/satellites/orbit_cbers3_4.php
     return 98.5
+
 
 def get_spatial_resolution_x(dom):
     spatial_resolution_data = dom.getElementsByTagName('pixelSpacing')[0]
     spatial_resolution = spatial_resolution_data.firstChild.nodeValue
     return spatial_resolution
 
+
 def get_spatial_resolution_y(dom):
     spatial_resolution_data = dom.getElementsByTagName('pixelSpacing')[0]
     spatial_resolution = spatial_resolution_data.firstChild.nodeValue
     return spatial_resolution
+
 
 def get_product_profile(log_message, product_id):
     """Find the product_profile for this record.
@@ -200,8 +210,8 @@ def get_product_profile(log_message, product_id):
     try:
         instrument_type = InstrumentType.objects.get(
             operator_abbreviation=sensor_value)  # e.g. MUX, P10
-    except Exception, e:
-        #print e.message
+    except Exception as e:
+        # print e.message
         raise e
     log_message('Instrument Type %s' % instrument_type, 2)
 
@@ -216,24 +226,24 @@ def get_product_profile(log_message, product_id):
     try:
         satellite_instrument_group = SatelliteInstrumentGroup.objects.get(
             satellite=satellite, instrument_type=instrument_type)
-    except Exception, e:
-        print e.message
+    except Exception as e:
+        print(e.message)
         raise e
     log_message('Satellite Instrument Group %s' %
                 satellite_instrument_group, 2)
     try:
         satellite_instrument = SatelliteInstrument.objects.get(
             satellite_instrument_group=satellite_instrument_group)
-    except Exception, e:
-        print e.message
+    except Exception as e:
+        print(e.message)
         raise e
     log_message('Satellite Instrument %s' % satellite_instrument, 2)
 
     try:
         spectral_modes = SpectralMode.objects.filter(
             instrument_type=instrument_type)
-    except Exception, e:
-        print e.message
+    except Exception as e:
+        print(e.message)
         raise
     log_message('Spectral Modes %s' % spectral_modes, 2)
 
@@ -241,11 +251,11 @@ def get_product_profile(log_message, product_id):
         product_profile = OpticalProductProfile.objects.get(
             satellite_instrument=satellite_instrument,
             spectral_mode__in=spectral_modes)
-    except Exception, e:
-        print e.message
-        print 'Searched for satellite instrument: %s and spectral modes %s' % (
+    except Exception as e:
+        print(e.message)
+        print('Searched for satellite instrument: %s and spectral modes %s' % (
             satellite_instrument, spectral_modes
-        )
+        ))
         raise e
     log_message('Product Profile %s' % product_profile, 2)
 
@@ -274,12 +284,13 @@ def get_radiometric_resolution(dom):
         return 8
     elif sensor_id == 'P10':
         return 8
-    elif sensor_id =='P5M':
+    elif sensor_id == 'P5M':
         return 8
     elif sensor_id == 'WFI':
         return 10
     else:
         return 0
+
 
 def get_projection(dom):
     """Get the projection for this product record.
@@ -319,8 +330,8 @@ def get_quality(dom):
 def ingest(
         test_only_flag=True,
         source_path=(
-            '/home/web/catalogue/django_project/catalogue/tests/sample_files/'
-            'CBERS/'),
+                '/home/web/catalogue/django_project/catalogue/tests/sample_files/'
+                'CBERS/'),
         verbosity_level=2,
         halt_on_error_flag=True,
         ignore_missing_thumbs=False):
@@ -346,6 +357,7 @@ def ingest(
         if we find we are missing a thumbnails. Default is False.
     :type ignore_missing_thumbs: bool
     """
+
     def log_message(message, level=1):
         """Log a message for a given leven.
 
@@ -353,17 +365,17 @@ def ingest(
         :param level: A log level.
         """
         if verbosity_level >= level:
-            print message
+            print(message)
 
     log_message((
-        'Running CBERS 04 Importer with these options:\n'
-        'Test Only Flag: %s\n'
-        'Source Dir: %s\n'
-        'Verbosity Level: %s\n'
-        'Halt on error: %s\n'
-        '------------------')
-        % (test_only_flag, source_path, verbosity_level,
-           halt_on_error_flag), 2)
+                    'Running CBERS 04 Importer with these options:\n'
+                    'Test Only Flag: %s\n'
+                    'Source Dir: %s\n'
+                    'Verbosity Level: %s\n'
+                    'Halt on error: %s\n'
+                    '------------------')
+                % (test_only_flag, source_path, verbosity_level,
+                   halt_on_error_flag), 2)
 
     # Scan the source folder and look for any sub-folders
     # The sub-folder names should be e.g.
@@ -388,7 +400,7 @@ def ingest(
             log_message(product_folder, 2)
 
             # Find the first and only xml file in the folder
-            #search_path = os.path.join(str(myFolder), '*.XML')
+            # search_path = os.path.join(str(myFolder), '*.XML')
             log_message(myFolder, 2)
             xml_file = glob.glob(myFolder)[0]
             file = os.path.basename(xml_file)
@@ -453,19 +465,19 @@ def ingest(
                 today = datetime.today()
                 time_stamp = today.strftime("%Y-%m-%d")
                 log_message('Time Stamp: %s' % time_stamp, 2)
-            except Exception, e:
-                print e.message
+            except Exception as e:
+                print(e.message)
 
             update_mode = True
             try:
                 log_message('Trying to update')
-                #original_product_id is not necessarily unique
-                #so we use product_id
+                # original_product_id is not necessarily unique
+                # so we use product_id
                 product = OpticalProduct.objects.get(
                     original_product_id=original_product_id
                 ).getConcreteInstance()
                 log_message(('Already in catalogue: updating %s.'
-                            % original_product_id), 2)
+                             % original_product_id), 2)
                 new_record_flag = False
                 message = product.ingestion_log
                 message += '\n'
@@ -483,12 +495,12 @@ def ingest(
                     product = OpticalProduct(**data)
                     log_message('Product: %s' % product)
 
-                except Exception, e:
+                except Exception as e:
                     log_message(e.message, 2)
 
                 new_record_flag = True
-            except Exception, e:
-                print e.message
+            except Exception as e:
+                print(e.message)
 
             log_message('Saving product and setting thumb', 2)
             try:
@@ -513,16 +525,16 @@ def ingest(
                         pass
 
                     jpeg_path = os.path.join(str(myFolder))
-                    #log_message(jpeg_path, 2)
-                    jpeg_path = jpeg_path.replace(".XML","-THUMB.JPG")
+                    # log_message(jpeg_path, 2)
+                    jpeg_path = jpeg_path.replace(".XML", "-THUMB.JPG")
 
                     if jpeg_path:
-                        print jpeg_path
+                        print(jpeg_path)
                         new_name = '%s.JPG' % product.original_product_id
                         shutil.copyfile(
                             jpeg_path,
                             os.path.join(thumbs_folder, new_name))
-                        print new_name
+                        print(new_name)
                         # Transform and store .wld file
                     #     log_message('Referencing thumb', 2)
                     #     try:
@@ -533,14 +545,14 @@ def ingest(
                     # elif ignore_missing_thumbs:
                     #         log_message('IGNORING missing thumb:')
                     else:
-                        raise Exception('Missing thumbnail in %s' %jpeg_path)
+                        raise Exception('Missing thumbnail in %s' % jpeg_path)
                 if new_record_flag:
                     log_message('Product %s imported.' % record_count, 2)
                     pass
                 else:
                     log_message('Product %s updated.' % updated_record_count, 2)
                     pass
-            except Exception, e:
+            except Exception as e:
                 traceback.print_exc(file=sys.stdout)
                 raise CommandError('Cannot import: %s' % e)
 
@@ -551,21 +563,21 @@ def ingest(
             else:
                 transaction.commit()
                 log_message('Imported scene : %s' % product_folder, 1)
-        except Exception, e:
+        except Exception as e:
             log_message('Record import failed. AAAAAAARGH! : %s' %
                         product_folder, 1)
             failed_record_count += 1
             if halt_on_error_flag:
-                print e.message
+                print(e.message)
                 break
             else:
                 continue
 
     # To decide: should we remove ingested product folders?
 
-    print '==============================='
-    print 'Products processed : %s ' % record_count
-    print 'Products updated : %s ' % updated_record_count
-    print 'Products imported : %s ' % created_record_count
-    print 'Products failed to import : %s ' % failed_record_count
-    print '==============================='
+    print('===============================')
+    print('Products processed : %s ' % record_count)
+    print('Products updated : %s ' % updated_record_count)
+    print('Products imported : %s ' % created_record_count)
+    print('Products failed to import : %s ' % failed_record_count)
+    print('===============================')

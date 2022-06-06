@@ -20,6 +20,7 @@
 		var elem = this.element;
 		this.currencyElem = document.createElement("select");
         this.currencyElem.setAttribute("id", "currency");
+        this.currencyElem.classList.add('form-select')
 		_.each(options.currency, function(element) {
 			var option = new Option(element[1], element[0]);
 			$(self.currencyElem).append(option);
@@ -147,8 +148,8 @@
 
 	_writeBody: function() {
 		var body = '<tbody id="products"><tr class="hide nonsearchForm">';
-		body = body + '<td><input type="text" class="product_desc" style="width: 300px;"></td>';
-		body = body + '<td><input type="text" class="product_price" style="width: 100px;"></td>';
+		body = body + '<td><input type="text" class="product_desc form-control" style="width: 300px;"></td>';
+		body = body + '<td><input type="text" class="product_price form-control" style="width: 100px;"></td>';
 		body = body + '<td>' + this.currencyElem.outerHTML + '</td>';
 		body = body + '<td></td>';
 		body = body + '<td></td>';

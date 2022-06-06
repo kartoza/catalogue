@@ -12,7 +12,8 @@ class SansaUserProfile(UserenaBaseProfile):
         'auth.User',
         unique=True,
         verbose_name='user',
-        related_name='sansauserprofile'
+        related_name='sansauserprofile',
+        on_delete=models.CASCADE
     )
     strategic_partner = models.BooleanField(
         'Strategic Partner?', help_text=('Mark this as true if the person '
@@ -52,5 +53,5 @@ class SansaUserProfile(UserenaBaseProfile):
         return self.user.last_name
 
     def __unicode__(self):
-        return u'{0}, ({1})'.format(
+        return '{0}, ({1})'.format(
             self.user.username, self.user.get_full_name())

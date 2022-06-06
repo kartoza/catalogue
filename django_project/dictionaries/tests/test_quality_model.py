@@ -19,7 +19,7 @@ __copyright__ = 'South African National Space Agency'
 
 from django.test import TestCase
 
-from model_factories import QualityF
+from .model_factories import QualityF
 
 
 class QualityCRUD_Test(TestCase):
@@ -85,4 +85,4 @@ class QualityCRUD_Test(TestCase):
             'name': 'Super quality'
         })
 
-        self.assertEqual(unicode(myModel), 'Super quality')
+        self.assertEqual(str(myModel), 'Super quality')

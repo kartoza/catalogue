@@ -17,13 +17,11 @@ __date__ = '01/01/2011'
 __copyright__ = 'South African National Space Agency'
 
 import logging
-logger = logging.getLogger(__name__)
-
 import datetime
 import traceback
 import json
 from decimal import Decimal
-#other modules
+# other modules
 from shapes.views import ShpResponder
 
 from django.http import (
@@ -33,11 +31,11 @@ from django.http import (
 from django.core.paginator import (
     Paginator,
     EmptyPage,
-    InvalidPage)
-from django.core.urlresolvers import reverse
+    InvalidPage
+)
+from django.urls import reverse
 from django.contrib.auth.decorators import login_required
-from django.template import RequestContext
-from django.shortcuts import get_object_or_404, render_to_response
+from django.shortcuts import get_object_or_404, render
 from django.contrib.admin.views.decorators import staff_member_required
 
 from django.conf import settings
@@ -46,7 +44,8 @@ from django.db.models import Count
 
 from django.contrib.gis.gdal import (
     SpatialReference,
-    CoordTransform)
+    CoordTransform
+)
 
 import json as simplejson
 from exchange.models import Currency
@@ -59,29 +58,30 @@ from .models import (
     NonSearchRecord
 )
 
-from .forms import (
+from orders.forms import (
     OrderStatusHistoryForm,
     OrderForm,
-    NonSearchRecordForm,
     OrderFormNonSearchRecords
 )
 # Helper classes
 from catalogue.views.helpers import (
-    notifySalesStaff,
+    notify_sales_staff,
     render_to_kml,
     render_to_kmz,
     downloadISOMetadata,
-    downloadHtmlMetadata,)
+    downloadHtmlMetadata
+)
 
 # SHP and KML readers
 from catalogue.utmzonecalc import utmZoneFromLatLon
-from catalogue.profileRequiredDecorator import requireProfile
-from catalogue.renderDecorator import renderWithContext
+from catalogue.profile_required_decorator import require_profile
+from catalogue.render_decorator import RenderWithContext
 
 from search.models import SearchRecord
 from dictionaries.models import Projection, ProcessingLevel
 from django_tables2 import RequestConfig
 from orders.tables import OrderListTable
+
 # from dictionaries.models import InstrumentType, Satellite
 ###########################################################
 #
@@ -89,9 +89,11 @@ from orders.tables import OrderListTable
 #
 ###########################################################
 
+logger = logging.getLogger(__name__)
+
 
 @login_required
-@renderWithContext('orderListPage.html', 'orderList.html')
+@RenderWithContext('order-list-page.html', 'order-list.html')
 def my_orders(request):
     """
     The view to return a requesting user's orders
@@ -102,7 +104,7 @@ def my_orders(request):
 
     :param request: HttpRequest obj
     """
-    records = Order.base_objects.filter(
+    records = Order.objects.filter(
         user=request.user).order_by('-order_date')
     if 'pdf' in request.GET:
         # Django's pagination is only required for the PDF view as
@@ -113,7 +115,7 @@ def my_orders(request):
             page = int(request.GET.get('page', '1'))
         except ValueError:
             page = 1
-        paginator = Paginator(records, page_size)
+        paginator = Paginator(records, 1)
         try:
             records = paginator.page(page)
         except (EmptyPage, InvalidPage):
@@ -124,7 +126,8 @@ def my_orders(request):
             'per_page': settings.PAGE_SIZE
         }).configure(table)
     return ({
-        'myUrl': reverse('myOrders'),
+        'header': True,
+        'myUrl': reverse('orders'),
         'myCurrentMonth': datetime.date.today(),
         'table': table,
         'myRecords': records
@@ -132,14 +135,14 @@ def my_orders(request):
 
 
 @login_required
-@renderWithContext('orderListPage.html', 'orderList.html')
+@RenderWithContext('order-list-page.html', 'order-list.html')
 def list_orders(request):
     """
     The view to return a list of Orders. Records returned depends on whether
     the requesting User is_staff.
 
     :param request: HttpRequest dict
-    :return: orderListPage and orderList :rtype: HttpResponse
+    :return: order-list-page and order-list :rtype: HttpResponse
     """
     order_id = request.GET.get('order_id')
     if not request.user.is_staff:
@@ -181,7 +184,7 @@ def list_orders(request):
             'per_page': settings.PAGE_SIZE
         }).configure(table)
     return ({
-        'myUrl': reverse('listOrders'),
+        'myUrl': reverse('list-orders'),
         'myCurrentMonth': datetime.date.today(),
         'table': table,
         'myRecords': records
@@ -189,7 +192,7 @@ def list_orders(request):
 
 
 @login_required
-@renderWithContext('orderMonthlyReport.html')
+@RenderWithContext('order-monthly-report.html')
 def order_monthly_report(request, year, month):
     """
     The view to render a monthly Order report. reports depends on whether the
@@ -200,7 +203,7 @@ def order_monthly_report(request, year, month):
     :param month: Optional month int
     :return: orderMonthlyReport.html :rtype: HttpResponse
     """
-    if not(year and month):
+    if not (year and month):
         date = datetime.date.today()
     else:
         try:
@@ -213,19 +216,19 @@ def order_monthly_report(request, year, month):
         '''Non staff users can only see their own orders listed'''
         records = (Order.base_objects.filter(
             user=request.user)
-            .filter(
-                order_date__month=date.month)
-            .filter(
-                order_date__year=date.year)
-            .order_by('order_date'))
+                   .filter(
+            order_date__month=date.month)
+                   .filter(
+            order_date__year=date.year)
+                   .order_by('order_date'))
     else:
         '''This view is strictly for staff only'''
         records = (
             Order.base_objects.filter(
                 order_date__month=date.month)
-            .filter(
+                .filter(
                 order_date__year=date.year)
-            .order_by('order_date'))
+                .order_by('order_date'))
     if 'pdf' in request.GET:
         # Django's pagination is only required for the PDF view as
         # django-tables2 handles pagination for the table
@@ -255,29 +258,29 @@ def order_monthly_report(request, year, month):
 
 
 @login_required
-def downloadOrder(theRequest, theId):
+def download_order(request, pk):
     """Dispaches request and returns geometry of ordered products in
        desired file format"""
-    myOrder = get_object_or_404(Order, id=theId)
+    my_order = get_object_or_404(Order, id=pk)
 
-    if 'shp' in theRequest.GET:
-        myResponder = ShpResponder(myOrder)
-        myResponder.file_name = u'products_for_order_%s' % myOrder.id
-        return myResponder.write_order_products(
-            myOrder.searchrecord_set.all())
-    elif 'kml' in theRequest.GET:
+    if 'shp' in request.GET:
+        responder = ShpResponder(my_order)
+        responder.file_name = 'products_for_order_%s' % my_order.id
+        return responder.write_order_products(
+            my_order.searchrecord_set.all())
+    elif 'kml' in request.GET:
         return render_to_kml('kml/searchRecords.kml', {
-            'mySearchRecords': myOrder.searchrecord_set.all(),
+            'mySearchRecords': my_order.searchrecord_set.all(),
             'external_site_url': settings.DOMAIN,
             'transparentStyle': True
-        }, u'products_for_order_%s' % myOrder.id)
-    elif 'kmz' in theRequest.GET:
+        }, 'products_for_order_%s' % my_order.id)
+    elif 'kmz' in request.GET:
         return render_to_kmz('kml/searchRecords.kml', {
-            'mySearchRecords': myOrder.searchrecord_set.all(),
+            'mySearchRecords': my_order.searchrecord_set.all(),
             'external_site_url': settings.DOMAIN,
             'transparentStyle': True,
             'myThumbsFlag': True
-        }, u'products_for_order_%s' % myOrder.id)
+        }, 'products_for_order_%s' % my_order.id)
     else:
         logger.info(
             'Request cannot be proccesed, unsupported download file type')
@@ -285,30 +288,30 @@ def downloadOrder(theRequest, theId):
 
 
 @staff_member_required
-def downloadClipGeometry(theRequest, theId):
+def download_clip_geometry(request, pk):
     """Dispaches request and returns clip geometry
        for order in desired file format"""
-    myOrder = get_object_or_404(Order, id=theId)
+    my_order = get_object_or_404(Order, id=pk)
 
-    if 'shp' in theRequest.GET:
-        myResponder = ShpResponder(myOrder)
-        myResponder.file_name = u'clip_geometry_order_%s' % myOrder.id
-        return myResponder.write_delivery_details(myOrder)
-    elif 'kml' in theRequest.GET:
+    if 'shp' in request.GET:
+        responder = ShpResponder(my_order)
+        responder.file_name = 'clip_geometry_order_%s' % my_order.id
+        return responder.write_delivery_details(my_order)
+    elif 'kml' in request.GET:
         return render_to_kml(
-            'kml/clipGeometry.kml', {
-                'order': myOrder,
+            'kml/clip_geometry.kml', {
+                'order': my_order,
                 'external_site_url': settings.DOMAIN,
                 'transparentStyle': True
-            }, u'clip_geometry_order_%s' % myOrder.id)
-    elif 'kmz' in theRequest.GET:
+            }, 'clip_geometry_order_%s' % my_order.id)
+    elif 'kmz' in request.GET:
         return render_to_kmz(
-            'kml/clipGeometry.kml', {
-                'order': myOrder,
+            'kml/clip_geometry.kml', {
+                'order': my_order,
                 'external_site_url': settings.DOMAIN,
                 'transparentStyle': True,
                 'myThumbsFlag': True
-            }, u'clip_geometry_order_%s' % myOrder.id)
+            }, 'clip_geometry_order_%s' % my_order.id)
     else:
         logger.info(
             'Request cannot be processed, unsupported download file type')
@@ -316,142 +319,152 @@ def downloadClipGeometry(theRequest, theId):
 
 
 @login_required
-def downloadOrderMetadata(theRequest, theId):
+def download_order_metadata(request, pk):
     """Returns ISO 19115 metadata for ordered products
       unless the request is suffixed by ?html"""
-    myOrder = get_object_or_404(Order, id=theId)
-    if 'html' in theRequest.GET:
+    my_order = get_object_or_404(Order, id=pk)
+    if 'html' in request.GET:
         return downloadHtmlMetadata(
-            myOrder.searchrecord_set.all(), 'Order-%s' % myOrder.id)
+            my_order.searchrecord_set.all(), 'Order-%s' % my_order.id)
     else:
         return downloadISOMetadata(
-            myOrder.searchrecord_set.all(), 'Order-%s' % myOrder.id)
+            my_order.searchrecord_set.all(), 'Order-%s' % my_order.id)
 
 
 @login_required
-def viewOrder(theRequest, theId):
-
-    myOrder = get_object_or_404(Order, id=theId)
-    if not ((myOrder.user == theRequest.user) or (theRequest.user.is_staff)):
+def view_order(request, pk):
+    my_order = get_object_or_404(Order, id=pk)
+    if not ((my_order.user == request.user) or request.user.is_staff):
         raise Http404
-    myRecords = SearchRecord.objects.all().filter(order=myOrder)
-    if (myRecords.count() > 0):
-        myHistory = OrderStatusHistory.objects.all().filter(order=myOrder)
-        myStatusForm = OrderStatusHistoryForm()
-        if (theRequest.method == 'POST'):
-            myOrderForm = OrderForm(theRequest.POST, theRequest.FILES, instance=myOrder)
-            myOptions = {
-                    'myOrder': myOrder,
-                    'myOrderForm': myOrderForm,
-                    'myRecords': myRecords,
-                    'myHistory': myHistory,
-                    'myStatusForm': myStatusForm
-                }
-            if myOrderForm.is_valid():
-                myObject = myOrderForm.save()
-                for myRecord in myRecords:
-                    proj = Projection.objects.get(epsg_code=theRequest.POST.get(str(myRecord.product.id) + '_projection'))
-                    myRecord.projection = proj
-                    proc = ProcessingLevel.objects.get(pk=theRequest.POST.get(str(myRecord.product.id) + '_processing'))
-                    myRecord.processing_level = proc
-                    myRecord.save()
+    my_records = SearchRecord.objects.all().filter(order=my_order)
+    if my_records.count() > 0:
+        my_history = OrderStatusHistory.objects.all().filter(order=my_order)
+        my_status_form = OrderStatusHistoryForm()
+        if request.method == 'POST':
+            my_order_form = OrderForm(request.POST, request.FILES, instance=my_order)
+            context = {
+                'myOrder': my_order,
+                'myOrderForm': my_order_form,
+                'myRecords': my_records,
+                'myHistory': my_history,
+                'myStatusForm': my_status_form
+            }
+            if my_order_form.is_valid():
+                order = my_order_form.save()
+                for record in my_records:
+                    proj = Projection.objects.get(epsg_code=request.POST.get(str(record.product.id) + '_projection'))
+                    record.projection = proj
+                    proc = ProcessingLevel.objects.get(pk=request.POST.get(str(record.product.id) + '_processing'))
+                    record.processing_level = proc
+                    record.save()
 
                 return HttpResponseRedirect(
-                    reverse('viewOrder', kwargs={'theId': myObject.id}))
+                    reverse('order', kwargs={'pk': order.id}))
             else:
-                return render_to_response(
-                    'orderPage.html', myOptions,
-                    context_instance=RequestContext(theRequest))
+                return render(
+                    request,
+                    'order_page.html',
+                    context
+                )
         else:
-            if (theRequest.user.is_staff):
-                myOrderForm = OrderForm(instance=myOrder)
-                myOptions = {
-                    'myOrder': myOrder,
-                    'myOrderForm': myOrderForm,
-                    'myRecords': myRecords,
-                    'myHistory': myHistory,
-                    'myStatusForm': myStatusForm
+            if request.user.is_staff:
+                my_order_form = OrderForm(instance=my_order)
+                context = {
+                    'myOrder': my_order,
+                    'myOrderForm': my_order_form,
+                    'myRecords': my_records,
+                    'myHistory': my_history,
+                    'myStatusForm': my_status_form
                 }
-                return render_to_response(
-                    'orderPage.html', myOptions,
-                    context_instance=RequestContext(theRequest))
+                return render(
+                    request,
+                    'order_page.html',
+                    context
+                )
             else:
-                myOptions = {
-                    'myOrder': myOrder,
-                    'myRecords': myRecords,
-                    'myHistory': myHistory
+                context = {
+                    'myOrder': my_order,
+                    'myRecords': my_records,
+                    'myHistory': my_history
                 }
-                return render_to_response(
-                    'orderPageUser.html', myOptions,
-                    context_instance=RequestContext(theRequest))
+                return render(
+                    request,
+                    'order_page_user.html',
+                    context,
+                )
     else:
-        myRecords = NonSearchRecord.objects.all().filter(order=myOrder)
-        myStatusForm = OrderStatusHistoryForm()
-        myHistory = OrderStatusHistory.objects.all().filter(order=myOrder)
-        myStatusForm = OrderStatusHistoryForm()
-        listCurrency = Currency.objects.all().values_list('code', 'name')
-        myCurrency = json.dumps([list(currency) for currency in listCurrency])
-        if (theRequest.method == 'POST'):
-            myOrderForm = OrderFormNonSearchRecords(theRequest.POST, theRequest.FILES, instance=myOrder)
-            myOptions = {
-                    'myOrder': myOrder,
-                    'myOrderForm': myOrderForm,
-                    'myRecords': myRecords,
-                    'myHistory': myHistory,
-                    'myStatusForm': myStatusForm,
-                    'myCurrency': myCurrency
-                }
-            if myOrderForm.is_valid():
-                myObject = myOrderForm.save()
-                NonSearchRecord.objects.all().filter(order=myOrder).delete()
-                products = theRequest.POST.getlist('productlist')
+        my_records = NonSearchRecord.objects.all().filter(order=my_order)
+        my_history = OrderStatusHistory.objects.all().filter(order=my_order)
+        my_status_form = OrderStatusHistoryForm()
+        list_currency = Currency.objects.all().values_list('code', 'name')
+        my_currency = json.dumps([list(currency) for currency in list_currency])
+        if request.method == 'POST':
+            my_order_form = OrderFormNonSearchRecords(request.POST, request.FILES, instance=my_order)
+            context = {
+                'myOrder': my_order,
+                'myOrderForm': my_order_form,
+                'myRecords': my_records,
+                'myHistory': my_history,
+                'myStatusForm': my_status_form,
+                'myCurrency': my_currency
+            }
+            if my_order_form.is_valid():
+                order = my_order_form.save()
+                NonSearchRecord.objects.all().filter(order=my_order).delete()
+                products = request.POST.getlist('productlist')
 
                 for product in products:
-                    nonSearchRecord = NonSearchRecord();
-                    nonSearchRecord.user = theRequest.user
-                    nonSearchRecord.order = myObject
-                    nonSearchRecord.product_description = theRequest.POST.get(str(product) + '_product')
-                    nonSearchRecord.cost_per_scene = Decimal(theRequest.POST.get(str(product) + '_price'))
-                    nonSearchRecord.rand_cost_per_scene = Decimal(theRequest.POST.get(str(product) + '_rand_price'))
-                    prod_currency = theRequest.POST.get(str(product) + '_currency')
-                    nonSearchRecord.currency = Currency.objects.get(code=prod_currency)
-                    nonSearchRecord.save()
+                    non_search_record = NonSearchRecord()
+                    non_search_record.user = request.user
+                    non_search_record.order = order
+                    non_search_record.product_description = request.POST.get(str(product) + '_product')
+                    non_search_record.cost_per_scene = Decimal(request.POST.get(str(product) + '_price'))
+                    non_search_record.rand_cost_per_scene = Decimal(request.POST.get(str(product) + '_rand_price'))
+                    prod_currency = request.POST.get(str(product) + '_currency')
+                    non_search_record.currency = Currency.objects.get(code=prod_currency)
+                    non_search_record.save()
                 return HttpResponseRedirect(
-                    reverse('viewOrder', kwargs={'theId': myObject.id}))
+                    reverse('order', kwargs={'pk': order.id}))
             else:
-                return render_to_response(
-                    'orderAdHocForm.html', myOptions,
-                    context_instance=RequestContext(theRequest))
+                return render(
+                    request,
+                    'order_adhoc_form.html',
+                    context
+                )
         else:
-            if (theRequest.user.is_staff):
-                myOrderForm = OrderFormNonSearchRecords(instance=myOrder)
-                myOptions = {
-                    'myOrder': myOrder,
-                    'myOrderForm': myOrderForm,
-                    'myRecords': myRecords,
-                    'myHistory': myHistory,
-                    'myStatusForm': myStatusForm,
-                    'myCurrency': myCurrency
+            if request.user.is_staff:
+                my_order_form = OrderFormNonSearchRecords(instance=my_order)
+                context = {
+                    'myOrder': my_order,
+                    'myOrderForm': my_order_form,
+                    'myRecords': my_records,
+                    'myHistory': my_history,
+                    'myStatusForm': my_status_form,
+                    'myCurrency': my_currency
                 }
-                return render_to_response(
-                    'orderAdHocPage.html', myOptions,
-                    context_instance=RequestContext(theRequest))
+                return render(
+                    request,
+                    'orderAdHocPage.html',
+                    context
+                )
             else:
-                mySum = 0
-                for record in myRecords:
-                    mySum = mySum + record.rand_cost_per_scene
-                myOptions = {
-                    'myOrder': myOrder,
-                    'myRecords': myRecords,
-                    'myHistory': myHistory,
-                    'mySum': mySum
+                my_sum = 0
+                for record in my_records:
+                    my_sum = my_sum + record.rand_cost_per_scene
+                context = {
+                    'myOrder': my_order,
+                    'myRecords': my_records,
+                    'myHistory': my_history,
+                    'mySum': my_sum
                 }
-                return render_to_response(
-                    'orderAdHocPageUser.html', myOptions,
-                    context_instance=RequestContext(theRequest))
+                return render(
+                    request,
+                    'orderAdHocPageUser.html',
+                    context
+                )
 
 
-def coverageForOrder(theOrder, theSearchRecords):
+def coverage_for_order(order, search_records):
     """A small helper function to compute the coverage area. Logic is:
        - if AOI specified, the union of the products is clipped by the AOI
        - if no AOI is specified the area of the union of the products is
@@ -461,253 +474,260 @@ def coverageForOrder(theOrder, theSearchRecords):
         CentroidZone - UTM zone at cenroid of union of all ordered products
         IntersectedArea - area of union of all products intersected with AOI
        """
-    myCoverage = {}
-    myUnion = None
-    myCentroid = None
-    myZones = []
+    coverage = {}
+    union = None
+    centroid = None
+    zones = []
     try:
-        for myRecord in theSearchRecords:
-            myGeometry = myRecord.product.spatial_coverage
-            if not myUnion:
-                myUnion = myGeometry
+        for record in search_records:
+            geometry = record.product.spatial_coverage
+            if not union:
+                union = geometry
             else:
                 # This can be done faster using cascaded union
                 # but needs geos 3.1
-                myUnion = myUnion.union(myGeometry)
-        if myUnion:
-            myCentroid = myUnion.centroid
-            myZones = utmZoneFromLatLon(myCentroid.x, myCentroid.y)
-        if len(myZones) > 0:
+                union = union.union(geometry)
+        if union:
+            centroid = union.centroid
+            zones = utmZoneFromLatLon(centroid.x, centroid.y)
+        if len(zones) > 0:
             # use the first match
-            myZone = myZones[0]
-            logger.debug('Utm zones: %s' % myZones)
-            logger.debug('Before geom xform to %s: %s' % (myZone[0], myUnion))
-            myTransform = CoordTransform(SpatialReference(4326),
-                                         SpatialReference(myZone[0]))
-            myUnion.transform(myTransform)
-            logger.debug('After geom xform: %s' % myUnion)
-            myCoverage['ProductArea'] = int(myUnion.area)
-            myCoverage['CentroidZone'] = (
-                '%s (EPSG:%s)' % (myZone[1], myZone[0]))
+            zone = zones[0]
+            logger.debug('Utm zones: %s' % zones)
+            logger.debug('Before geom xform to %s: %s' % (zone[0], union))
+            transform = CoordTransform(SpatialReference(4326),
+                                       SpatialReference(zone[0]))
+            union.transform(transform)
+            logger.debug('After geom xform: %s' % union)
+            coverage['ProductArea'] = int(union.area)
+            coverage['CentroidZone'] = (
+                    '%s (EPSG:%s)' % (zone[1], zone[0]))
         else:
-            myCoverage['ProductArea'] = 'Error calculating area of products'
-            myCoverage['CentroidZone'] = (
+            coverage['ProductArea'] = 'Error calculating area of products'
+            coverage['CentroidZone'] = (
                 'Error calculating centroid of products')
-    except Exception, e:
+    except Exception as e:
         logger.info('Error calculating coverage for order %s' % e.message)
         pass
-    return myCoverage
+    return coverage
 
 
 @login_required
-def updateOrderHistory(theRequest):
-    if not theRequest.user.is_staff:
+def update_order_history(request):
+    if not request.user.is_staff:
         return HttpResponse('''Access denied''')
-    myOrderId = theRequest.POST['order']
-    myOrder = get_object_or_404(Order, id=myOrderId)
-    myNewStatusId = theRequest.POST['new_order_status']
-    myNotes = theRequest.POST['notes']
-    myNewStatus = get_object_or_404(OrderStatus, id=myNewStatusId)
+    my_order_id = request.POST['order']
+    my_order = get_object_or_404(Order, id=my_order_id)
+    my_new_status_d = request.POST['new_order_status']
+    my_notes = request.POST['notes']
+    my_new_status = get_object_or_404(OrderStatus, id=my_new_status_d)
 
-    myOrderStatusHistory = OrderStatusHistory()
-    myOrderStatusHistory.order = myOrder
-    myOrderStatusHistory.old_order_status = myOrder.order_status
-    myOrderStatusHistory.new_order_status = myNewStatus
-    myOrderStatusHistory.user = theRequest.user
-    myOrderStatusHistory.notes = myNotes
+    my_order_status_history = OrderStatusHistory()
+    my_order_status_history.order = my_order
+    my_order_status_history.old_order_status = my_order.order_status
+    my_order_status_history.new_order_status = my_new_status
+    my_order_status_history.user = request.user
+    my_order_status_history.notes = my_notes
     try:
-        myOrderStatusHistory.save()
+        my_order_status_history.save()
     except:
         resp = simplejson.dumps({"saved": 'failed'})
         return HttpResponse(resp, content_type="application/json")
-    myOrder.order_status = myNewStatus
-    myOrder.save()
-    notifySalesStaff(myOrder.user, myOrderId)
+    my_order.order_status = my_new_status
+    my_order.save()
+    notify_sales_staff(my_order.user, my_order_id)
     resp = simplejson.dumps({"saved": 'ok'})
     return HttpResponse(resp, content_type="application/json")
 
 
-
 @login_required
-@requireProfile('addorder')
-def addOrder(theRequest):
+@require_profile('add_order')
+def add_order(request):
     logger.debug('Order called')
-    logger.info('Preparing order for user ' + str(theRequest.user))
-    myRecords = None
+    logger.info('Preparing order for user ' + str(request.user))
 
-    if str(theRequest.user) == 'AnonymousUser':
+    if str(request.user) == 'AnonymousUser':
         logger.debug('User is anonymous')
         logger.info('Anonymous users cannot have items in their cart')
-        myMessage = ('If you want to order something, you need to'
-                     ' create an account and log in first.')
-        return HttpResponse(myMessage)
+        message = ('If you want to order something, you need to'
+                   'create an account and log in first.')
+        return HttpResponse(message)
     else:
         logger.debug('User NOT anonymous')
-        myRecords = SearchRecord.objects.all().filter(
-            user=theRequest.user).filter(order__isnull=True)
-        if myRecords.count() < 1:
+        my_records = SearchRecord.objects.all().filter(
+            user=request.user).filter(order__isnull=True)
+        if my_records.count() < 1:
             logger.debug('Cart has no records')
             logger.info('User has no items in their cart')
             return HttpResponseRedirect(reverse('emptyCartHelp'))
         else:
             logger.debug('Cart has records')
-            logger.info('Cart contains : %i items', myRecords.count())
-    myExtraOptions = {
-        'myRecords': myRecords,
+            logger.info('Cart contains : %i items', my_records.count())
+    extra_options = {
+        'myRecords': my_records,
     }
     logger.info('Add Order called')
-    if theRequest.method == 'POST':
+    if request.method == 'POST':
         logger.debug('Order posted')
 
-        myOrderForm = OrderForm(theRequest.POST, theRequest.FILES)
+        my_order_form = OrderForm(request.POST, request.FILES)
 
-        myOptions = {
-            'myOrderForm': myOrderForm,
+        context = {
+            'myOrderForm': my_order_form,
         }
         # shortcut to join two dicts
-        myOptions.update(myExtraOptions)
-        if myOrderForm.is_valid():
+        context.update(extra_options)
+        if my_order_form.is_valid():
             logger.debug('Order valid')
 
-            myObject = myOrderForm.save()
+            order = my_order_form.save()
             logger.debug('Order saved')
 
-            #update serachrecords
+            # update serachrecords
 
-            for myRecord in myRecords:
-                myRecord.order = myObject
-                proj = Projection.objects.get(epsg_code=theRequest.POST.get(str(myRecord.product.id) + '_projection'))
+            for myRecord in my_records:
+                myRecord.order = order
+                proj = Projection.objects.get(epsg_code=request.POST.get(str(myRecord.product.id) + '_projection'))
                 myRecord.projection = proj
-                proc = ProcessingLevel.objects.get(pk=theRequest.POST.get(str(myRecord.product.id) + '_processing'))
+                proc = ProcessingLevel.objects.get(pk=request.POST.get(str(myRecord.product.id) + '_processing'))
                 myRecord.processing_level = proc
                 myRecord.save()
 
-            notifySalesStaff(theRequest.user, myObject.id)
+            notify_sales_staff(request.user, order.id)
             return HttpResponseRedirect(
-                reverse('viewOrder', kwargs={'theId': myObject.id}))
+                reverse('order', kwargs={'pk': order.id}))
         else:
             logger.info('Add Order: form is NOT valid')
-            return render_to_response(
-                'orderForm.html', myOptions,
-                context_instance=RequestContext(theRequest))
+            return render(
+                request,
+                'order_form.html',
+                context
+            )
     else:  # new order
-        myOrderForm = OrderForm(
+        my_order_form = OrderForm(
             initial={
                 'market_sector': None,
-                'user': theRequest.user.id,
+                'user': request.user.id,
                 'file_format': 1,
                 'delivery_method': 2
             }
         )
-        myOptions = {
-            'myOrderForm': myOrderForm,
+        context = {
+            'myOrderForm': my_order_form,
         }
         # shortcut to join two dicts
-        myOptions.update(myExtraOptions),
+        context.update(extra_options),
         logger.info('Add Order: new object requested')
-        return render_to_response(
-            'orderForm.html', myOptions,
-            context_instance=RequestContext(theRequest))
+        return render(
+            request,
+            'order_form.html',
+            context
+        )
 
 
 @login_required
-#renderWithContext is explained in renderWith.py
-@renderWithContext('ordersSummary.html')
-def ordersSummary(theRequest):
-    del theRequest
-    #count orders by status
-    myOrderStatus = OrderStatus.objects.annotate(num_orders=Count('order__id'))
+# RenderWithContext is explained in renderWith.py
+@RenderWithContext('orders_summary.html')
+def orders_summary(request):
+    del request
+    # count orders by status
+    my_order_status = OrderStatus.objects.annotate(num_orders=Count('order__id'))
     # count orders by product type (mission sensor)
     # TODO - refactoring
-    myOrderInstrumentType = None
-    myOrderSatellite = None
+    my_order_instrument_type = None
+    my_order_satellite = None
     return dict(
-        myOrderStatus=myOrderStatus,
-        myOrderInstrumentType=myOrderInstrumentType,
-        myOrderSatellite=myOrderSatellite)
+        my_orderStatus=my_order_status,
+        my_orderInstrumentType=my_order_instrument_type,
+        my_orderSatellite=my_order_satellite)
+
 
 @login_required
-#renderWithContext is explained in renderWith.py
-@renderWithContext('order-summary.html')
-def orderSummaryMail(theRequest):
-    myOrder = get_object_or_404(Order, id=643)
-    myRecords = SearchRecord.objects.filter(order=myOrder).select_related()
-    myHistory = OrderStatusHistory.objects.filter(order=myOrder)
+# RenderWithContext is explained in renderWith.py
+@RenderWithContext('order_summary.html')
+def order_summary_mail(request):
+    my_order = get_object_or_404(Order, id=643)
+    my_records = SearchRecord.objects.filter(order=my_order).select_related()
+    my_history = OrderStatusHistory.objects.filter(order=my_order)
     return ({
-        'myOrder': myOrder,
-        'myRecords': myRecords,
-        'myHistory': myHistory,
+        'myOrder': my_order,
+        'myRecords': my_records,
+        'myHistory': my_history,
         'domain': settings.DOMAIN
     })
 
+
 @staff_member_required
-def addAdhocOrder(theRequest):
+def add_adhoc_order(request):
     logger.debug('Adhoc order called')
-    logger.info('by user ' + str(theRequest.user))
-    if theRequest.method == 'POST':
-        myOrderForm = OrderFormNonSearchRecords(theRequest.POST, theRequest.FILES)
-        myOptions = {
-            'myOrderForm': myOrderForm,
+    logger.info('by user ' + str(request.user))
+    if request.method == 'POST':
+        my_order_form = OrderFormNonSearchRecords(request.POST, request.FILES)
+        context = {
+            'myOrderForm': my_order_form,
         }
 
-        if myOrderForm.is_valid():
-            myObject = myOrderForm.save()
-            products = theRequest.POST.getlist('productlist')
+        if my_order_form.is_valid():
+            order = my_order_form.save()
+            products = request.POST.getlist('productlist')
 
             for product in products:
-                nonSearchRecord = NonSearchRecord();
-                nonSearchRecord.user = theRequest.user
-                nonSearchRecord.order = myObject
-                nonSearchRecord.product_description = theRequest.POST.get(str(product) + '_product')
-                prod_cost = Decimal(theRequest.POST.get(str(product) + '_price'))
-                prod_currency = theRequest.POST.get(str(product) + '_currency')
-                nonSearchRecord.cost_per_scene = prod_cost
-                nonSearchRecord.rand_cost_per_scene = convert_value(prod_cost, prod_currency, 'ZAR')
-                nonSearchRecord.currency = Currency.objects.get(code=prod_currency)
-                nonSearchRecord.save()
-            notifySalesStaff(theRequest.user, myObject.id)
+                non_search_record = NonSearchRecord();
+                non_search_record.user = request.user
+                non_search_record.order = order
+                non_search_record.product_description = request.POST.get(str(product) + '_product')
+                prod_cost = Decimal(request.POST.get(str(product) + '_price'))
+                prod_currency = request.POST.get(str(product) + '_currency')
+                non_search_record.cost_per_scene = prod_cost
+                non_search_record.rand_cost_per_scene = convert_value(prod_cost, prod_currency, 'ZAR')
+                non_search_record.currency = Currency.objects.get(code=prod_currency)
+                non_search_record.save()
+            notify_sales_staff(request.user, order.id)
             return HttpResponseRedirect(
-                reverse('viewOrder', kwargs={'theId': myObject.id}))
+                reverse('order', kwargs={'pk': order.id}))
         else:
-            return render_to_response(
-                'orderAdHocForm.html', myOptions,
-                context_instance=RequestContext(theRequest))
+            return render(
+                request,
+                'order_adhoc_form.html',
+                context
+            )
     else:
-        myOrderForm = OrderFormNonSearchRecords()
-        listCurrency = Currency.objects.all().values_list('code', 'name')
-        myCurrency = json.dumps([list(currency) for currency in listCurrency])
-        myOptions = {
-            'myOrderForm': myOrderForm,
-            'myCurrency': myCurrency
+        my_order_form = OrderFormNonSearchRecords()
+        list_currency = Currency.objects.all().values_list('code', 'name')
+        my_currency = json.dumps([list(currency) for currency in list_currency])
+        context = {
+            'myOrderForm': my_order_form,
+            'myCurrency': my_currency
         }
         # shortcut to join two dicts
         logger.info('Add Order: new object requested')
-        return render_to_response(
-            'orderAdHocForm.html', myOptions,
-            context_instance=RequestContext(theRequest))
+        return render(
+            request,
+            'order_adhoc_form.html',
+            context
+        )
 
 
-def convertPrice(theRequest):
-    currency = theRequest.POST.get('currency')
-    price = Decimal(theRequest.POST.get('price'))
+def convert_price(request):
+    currency = request.POST.get('currency')
+    price = Decimal(request.POST.get('price'))
     rand_price = "%0.2f" % (convert_value(price, currency, 'ZAR'),)
     resp = simplejson.dumps({"rand_price": rand_price})
     return HttpResponse(resp, content_type="application/json")
 
 
 @login_required
-def viewOrderStatusEmail(theRequest, theId):
-
-    myOrder = get_object_or_404(Order, id=theId)
-    if not ((myOrder.user == theRequest.user) or (theRequest.user.is_staff)):
+def view_order_status_email(request, pk):
+    order = get_object_or_404(Order, id=pk)
+    if not ((order.user == request.user) or request.user.is_staff):
         raise Http404
-    myRecords = SearchRecord.objects.all().filter(order=myOrder)
-    if (myRecords.count() == 0):
-        myRecords = NonSearchRecord.objects.all().filter(order=myOrder)
+    my_records = SearchRecord.objects.all().filter(order=order)
+    if my_records.count() == 0:
+        my_records = NonSearchRecord.objects.all().filter(order=order)
 
-    myHistory = OrderStatusHistory.objects.all().filter(order=myOrder)
-    myOptions = {
-        'myOrder': myOrder,
-        'myRecords': myRecords,
-        'myHistory': myHistory
+    my_history = OrderStatusHistory.objects.all().filter(order=order)
+    context = {
+        'myOrder': order,
+        'myRecords': my_records,
+        'myHistory': my_history
     }

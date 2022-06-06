@@ -22,7 +22,7 @@ from django.test import TestCase
 from .model_factories import OrderStatusHistoryF
 
 
-class OrderStatusHistoryCRUD_Test(TestCase):
+class TestOrderStatusHistoryCRUD(TestCase):
     """
     Tests models.
     """
@@ -84,4 +84,4 @@ class OrderStatusHistoryCRUD_Test(TestCase):
             'notes': 'Order Status changed Order Status changed'
         })
 
-        self.assertEqual(unicode(myModel), 'Order Status changed Orde')
+        self.assertEqual(str(myModel), 'Order Status changed Orde')

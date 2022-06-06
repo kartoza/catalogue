@@ -6,7 +6,7 @@ from selenium.webdriver import ActionChains
 from selenium.webdriver.support.ui import Select
 from selenium.common.exceptions import NoSuchElementException
 
-from urlparse import urljoin
+from urllib.parse import urljoin
 
 
 class SansaLiverServerTestCase(LiveServerTestCase):
@@ -36,16 +36,16 @@ class Menu():
     """
 
     ANONYMOUS_MENU = [
-        u' Home', u' Login', u' Register', u' Reset Password', u' About',
-        u' Contact']
+        ' Home', ' Login', ' Register', ' Reset Password', ' About',
+        ' Contact']
 
     STAFF_MENU = [
-        u' Home', u' Search', u' My Cart', u' Order Now!', u' Popular Links',
-        u' Staff', u' Account', u' About', u' Contact']
+        ' Home', ' Search', ' My Cart', ' Order Now!', ' Popular Links',
+        ' Staff', ' Account', ' About', ' Contact']
 
     REGULAR_MENU = [
-        u' Home', u' Search', u' My Cart', u' Order Now!', u' Popular Links',
-        u' Account', u' About', u' Contact']
+        ' Home', ' Search', ' My Cart', ' Order Now!', ' Popular Links',
+        ' Account', ' About', ' Contact']
 
     def __init__(self, theWebDriver):
         self.browser = theWebDriver
@@ -469,7 +469,7 @@ class SeleniumSearch(SansaLiverServerTestCase):
 
         # check number of returned results
         mySearchResults = self.browser.find_element_by_id('search-messages')
-        self.assertEquals(
+        self.assertEqual(
             mySearchResults.find_element_by_tag_name('b').text, '2')
 
     def Xtest_search_polygon(self):
@@ -518,5 +518,5 @@ class SeleniumSearch(SansaLiverServerTestCase):
 
         # check number of returned results
         mySearchResults = self.browser.find_element_by_id('search-messages')
-        self.assertEquals(
+        self.assertEqual(
             mySearchResults.find_element_by_tag_name('b').text, '1')

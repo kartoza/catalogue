@@ -90,4 +90,4 @@ class ProjectionCRUD_Test(TestCase):
         })
 
         self.assertEqual(
-            unicode(myModel), 'EPSG: 13377331 Flatland projection')
+            str(myModel), 'EPSG: 13377331 Flatland projection')

@@ -19,19 +19,17 @@ __date__ = '29/01/2014'
 __copyright__ = 'South African National Space Agency'
 
 from django.test import TestCase
-
 from search.searcher import Searcher
-
 from catalogue.tests.model_factories import OpticalProductF
-
 from dictionaries.tests.model_factories import (
-    SatelliteF, SatelliteInstrumentGroupF, SatelliteInstrumentF,
+    SatelliteF, SatelliteInstrumentGroupF,
+    SatelliteInstrumentF,
     OpticalProductProfileF, InstrumentTypeF
 )
-from .model_factories import SearchF
+from model_factories import SearchF
 
 
-class Search_Only_Searchable_Test(TestCase):
+class TestSearchOnlySearchable(TestCase):
     """
     Test searcher - returns only searchable products
     """
@@ -51,7 +49,7 @@ class Search_Only_Searchable_Test(TestCase):
 
         mySatInstGroup = SatelliteInstrumentGroupF.create(**{
             'satellite': mySat,
-            u'instrument_type': myInstrumentType
+            'instrument_type': myInstrumentType
         })
 
         mySatInst = SatelliteInstrumentF.create(**{
@@ -60,7 +58,7 @@ class Search_Only_Searchable_Test(TestCase):
         })
 
         myOPP = OpticalProductProfileF.create(**{
-            u'satellite_instrument': mySatInst
+            'satellite_instrument': mySatInst
         })
 
         # create a test product which should not be searchable
@@ -74,6 +72,6 @@ class Search_Only_Searchable_Test(TestCase):
 
         mySearch = SearchF.create()
 
-        #create Searcher object
+        # create Searcher object
         mySearcher = Searcher(mySearch)
         self.assertEqual(mySearcher.mQuerySet.count(), 2)

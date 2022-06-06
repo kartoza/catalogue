@@ -18,14 +18,14 @@ __date__ = '31/07/2013'
 __copyright__ = 'South African National Space Agency'
 
 from django.test import TestCase
+from model_factories import FileFormatF
 
-from .model_factories import FileFormatF
 
-
-class FileFormatCRUD_Test(TestCase):
+class TestFileFormatCRUD(TestCase):
     """
     Tests models.
     """
+
     def setUp(self):
         """
         Sets up before each test
@@ -37,51 +37,51 @@ class FileFormatCRUD_Test(TestCase):
         Tests FileFormat model creation
         """
 
-        myModel = FileFormatF.create()
-        #check if PK exists
-        self.assertTrue(myModel.pk is not None)
+        model = FileFormatF.create()
+        # check if PK exists
+        self.assertTrue(model.pk is not None)
 
     def test_FileFormat_delete(self):
         """
         Tests FileFormat model delete
         """
-        myModel = FileFormatF.create()
+        model = FileFormatF.create()
 
-        myModel.delete()
+        model.delete()
 
-        #check if deleted
-        self.assertTrue(myModel.pk is None)
+        # check if deleted
+        self.assertTrue(model.pk is None)
 
     def test_FileFormat_read(self):
         """
         Tests FileFormat model read
         """
-        myModel = FileFormatF.create(**{
+        model = FileFormatF.create(**{
             'name': 'GeoTiff'
         })
-        #check if data is correct
-        self.assertEqual(myModel.name, 'GeoTiff')
+        # check if data is correct
+        self.assertEqual(model.name, 'GeoTiff')
 
     def test_FileFormat_update(self):
         """
         Tests FileFormat model update
         """
-        myModel = FileFormatF.create()
+        model = FileFormatF.create()
 
-        myModel.__dict__.update({
+        model.__dict__.update({
             'name': 'GeoTiff'
         })
 
-        myModel.save()
+        model.save()
 
-        self.assertEqual(myModel.name, 'GeoTiff')
+        self.assertEqual(model.name, 'GeoTiff')
 
     def test_FileFormat_repr(self):
         """
         Tests FileFormat model representation
         """
-        myModel = FileFormatF.create(**{
+        model = FileFormatF.create(**{
             'name': 'GeoTiff'
         })
 
-        self.assertEqual(unicode(myModel), 'GeoTiff')
+        self.assertEqual(str(model), 'GeoTiff')

@@ -96,4 +96,4 @@ class TestCollectionCRUD(TestCase):
             'name': 'Collection 1',
         })
 
-        self.assertEqual(unicode(myModel), u'Collection 1')
+        self.assertEqual(str(myModel), 'Collection 1')

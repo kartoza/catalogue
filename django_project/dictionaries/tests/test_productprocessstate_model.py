@@ -85,4 +85,4 @@ class TestProductProcessStateCRUD(TestCase):
             'name': 'Best state evar!'
         })
 
-        self.assertEqual(unicode(myModel), u'Best state evar!')
+        self.assertEqual(str(myModel), 'Best state evar!')

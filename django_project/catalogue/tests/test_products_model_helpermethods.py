@@ -50,7 +50,7 @@ class Product_HelperMethods_Test(TestCase):
         #check if PK exists
         for idx, myCoord in enumerate(myTestCoords):
             myTestResult = coordIsOnBounds(myCoord, myTestExtents)
-            self.assertEquals(myTestResult, myExpectedResults[idx])
+            self.assertEqual(myTestResult, myExpectedResults[idx])
 
     def test_product_helpermethod_sortCandidates(self):
         """
@@ -70,7 +70,7 @@ class Product_HelperMethods_Test(TestCase):
         for idx, myCoord in enumerate(myTestCandidates):
             myTestResult = sortCandidates(
                 myCoord, myTestExtents, myTestCentorid)
-            self.assertEquals(myTestResult, myExpectedResults[idx])
+            self.assertEqual(myTestResult, myExpectedResults[idx])
 
     def test_product_helpermethod_sortCandidates_exception(self):
         """

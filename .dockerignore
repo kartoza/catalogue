@@ -1,7 +1,6 @@
 .git
 africa-latest.osm.pbf
 build.sh
-django_project
 docs
 fabfile.py
 fabfile.pyc
@@ -26,3 +25,6 @@ swellendam.txt
 tools
 Vagrantfile
 venv
+deployment/backups
+deployment/pg
+deployment/logs

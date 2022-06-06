@@ -169,4 +169,4 @@ class TestInstrumentTypeCRUD(TestCase):
             'operator_abbreviation': 'INSTYPE1'
         })
 
-        self.assertEqual(unicode(myModel), u'INSTYPE1')
+        self.assertEqual(str(myModel), 'INSTYPE1')

@@ -19,14 +19,13 @@ __copyright__ = 'South African National Space Agency'
 
 import unittest
 from django.test import TestCase
-
 from dictionaries.tests.model_factories import SubsidyTypeF
-
 from search.tests.model_factories import SearchRecordF
-from .model_factories import OrderF
+from model_factories import OrderF
 from core.model_factories import CurrencyF
 
-class OrderCRUD_Test(TestCase):
+
+class TestOrderCRUD(TestCase):
     """
     Tests models.
     """
@@ -37,129 +36,128 @@ class OrderCRUD_Test(TestCase):
         """
         pass
 
-    def test_Order_create(self):
+    def test_order_create(self):
         """
         Tests Order model creation
         """
-        myModel = OrderF.create()
-        #check if PK exists
-        self.assertTrue(myModel.pk is not None)
+        model = OrderF.create()
+        # check if PK exists
+        self.assertTrue(model.pk is not None)
 
-    def test_Order_delete(self):
+    def test_order_delete(self):
         """
         Tests Order model delete
         """
-        myModel = OrderF.create()
+        model = OrderF.create()
 
-        myModel.delete()
+        model.delete()
 
-        #check if deleted
-        self.assertTrue(myModel.pk is None)
+        # check if deleted
+        self.assertTrue(model.pk is None)
 
-    def test_Order_read(self):
+    def test_order_read(self):
         """
         Tests Order model read
         """
-        myModel = OrderF.create(**{
+        model = OrderF.create(**{
             'notes': 'Sample Order notes'
         })
 
-        self.assertEqual(myModel.notes, 'Sample Order notes')
+        self.assertEqual(model.notes, 'Sample Order notes')
 
-    def test_Order_update(self):
+    def test_order_update(self):
         """
         Tests Order model update
         """
-        myModel = OrderF.create()
+        model = OrderF.create()
 
-        myModel.__dict__.update({
+        model.__dict__.update({
             'notes': 'Sample Order notes'
         })
-        myModel.save()
+        model.save()
 
-        #check if updated
-        self.assertEqual(myModel.notes, 'Sample Order notes')
+        # check if updated
+        self.assertEqual(model.notes, 'Sample Order notes')
 
-    def test_Order_repr(self):
+    def test_order_repr(self):
         """
         Tests Order model representation
         """
-        myModel = OrderF.create(**{
+        model = OrderF.create(**{
             'id': 1
         })
 
-        self.assertEqual(unicode(myModel), '1')
+        self.assertEqual(str(model), '1')
 
     @unittest.skip("Skiping this test")
-    def test_Order_value(self):
+    def test_order_value(self):
         """
         Tests Order model value attribute
         """
 
-        tstOrder = OrderF.create()
+        tst_order = OrderF.create()
 
         SearchRecordF.create(**{
             'currency': CurrencyF.create(code='ZAR'),
             'rand_cost_per_scene': 120.49,
-            'order': tstOrder
+            'order': tst_order
         })
         SearchRecordF.create(**{
             'currency': CurrencyF.create(code='USD'),
             'rand_cost_per_scene': 101.51,
-            'order': tstOrder
+            'order': tst_order
         })
 
-        self.assertEqual(tstOrder.cost(), 222)
+        self.assertEqual(tst_order.cost(), 222)
 
     @unittest.skip("Skiping this test")
-    def test_Order_cost_no_subsidy(self):
+    def test_order_cost_no_subsidy(self):
         """
         Tests Order model cost attribute without subsidy
         """
 
-        tstSubsidyType = SubsidyTypeF.create(**{
+        subsidy_type = SubsidyTypeF.create(**{
             'name': 'None'
         })
 
-        tstOrder = OrderF.create(**{
-            'subsidy_type_assigned': tstSubsidyType
+        order = OrderF.create(**{
+            'subsidy_type_assigned': subsidy_type
         })
 
         SearchRecordF.create(**{
             'currency': CurrencyF.create(code='ZAR'),
             'rand_cost_per_scene': 120.49,
-            'order': tstOrder
+            'order': order
         })
         SearchRecordF.create(**{
             'currency': CurrencyF.create(code='USD'),
             'rand_cost_per_scene': 101.51,
-            'order': tstOrder
+            'order': order
         })
 
-        self.assertEqual(tstOrder.cost(), 222.0)
+        self.assertEqual(order.cost(), 222.0)
 
-    def test_Order_cost_with_subsidy(self):
+    def test_order_cost_with_subsidy(self):
         """
         Tests Order model cost attribute with subsidy
         """
 
-        tstSubsidyType = SubsidyTypeF.create(**{
+        subsidy_type = SubsidyTypeF.create(**{
             'name': 'PhD Grant'
         })
-
-        tstOrder = OrderF.create(**{
-            'subsidy_type_assigned': tstSubsidyType
+        order = OrderF.create(**{
+            'subsidy_type_assigned': subsidy_type
         })
 
         SearchRecordF.create(**{
             'currency': CurrencyF.create(code='ZAR'),
             'rand_cost_per_scene': 120.49,
-            'order': tstOrder
+            'order': order
         })
         SearchRecordF.create(**{
             'currency': CurrencyF.create(code='USD'),
             'rand_cost_per_scene': 101.51,
-            'order': tstOrder
+            'order': order
         })
 
-        self.assertEqual(tstOrder.cost(), 0)
+        self.assertEqual(order.cost(), 0)

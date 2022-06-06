@@ -19,7 +19,7 @@ __date__ = '20/08/2013'
 __copyright__ = 'South African National Space Agency'
 
 import unittest
-from django.core.urlresolvers import reverse, NoReverseMatch
+from django.urls import reverse, NoReverseMatch
 from django.test import TestCase
 from django.test.client import Client
 
@@ -27,7 +27,7 @@ from core.model_factories import UserF
 from catalogue.tests.model_factories import VisitF
 
 
-class ReportsViews_visitorList_Tests(TestCase):
+class TestReportsViewsVisitorList(TestCase):
     """
     Tests reports.py visitorList method/view
     """
@@ -96,10 +96,10 @@ class ReportsViews_visitorList_Tests(TestCase):
         self.assertEqual(len(myResp.context['records']), 1)
         # check used templates
         myExpTemplates = [
-            'visitors.html', u'base.html',
-            u'pipeline/css.html', u'pipeline/js.html', u'menu.html',
-            u'useraccounts/menu_content.html',
-            u'django_tables2/custom-table.html'
+            'visitors.html', 'base.html',
+            'pipeline/css.html', 'pipeline/js.html', 'menu.html',
+            'useraccounts/menu_content.html',
+            'django_tables2/custom-table.html'
         ]
 
         myUsedTemplates = [tmpl.name for tmpl in myResp.templates]
@@ -126,7 +126,7 @@ class ReportsViews_visitorList_Tests(TestCase):
         self.assertEqual(
             len(myResp.context['records']), 1)
         # check used templates
-        myExpTemplates = [u'<Unknown Template>']
+        myExpTemplates = ['<Unknown Template>']
 
         myUsedTemplates = [tmpl.name for tmpl in myResp.templates]
         self.assertEqual(myUsedTemplates, myExpTemplates)
@@ -161,10 +161,10 @@ class ReportsViews_visitorList_Tests(TestCase):
             len(myResp.context['records']), 1)
         # check used templates
         myExpTemplates = [
-            'visitors.html', u'base.html',
-            u'pipeline/css.html', u'pipeline/js.html', u'menu.html',
-            u'useraccounts/menu_content.html',
-            u'django_tables2/custom-table.html'
+            'visitors.html', 'base.html',
+            'pipeline/css.html', 'pipeline/js.html', 'menu.html',
+            'useraccounts/menu_content.html',
+            'django_tables2/custom-table.html'
         ]
 
         myUsedTemplates = [tmpl.name for tmpl in myResp.templates]
@@ -194,10 +194,10 @@ class ReportsViews_visitorList_Tests(TestCase):
             len(myResp.context['records']), 1)
         # check used templates
         myExpTemplates = [
-            'visitors.html', u'base.html',
-            u'pipeline/css.html', u'pipeline/js.html', u'menu.html',
-            u'useraccounts/menu_content.html',
-            u'django_tables2/custom-table.html'
+            'visitors.html', 'base.html',
+            'pipeline/css.html', 'pipeline/js.html', 'menu.html',
+            'useraccounts/menu_content.html',
+            'django_tables2/custom-table.html'
         ]
 
         myUsedTemplates = [tmpl.name for tmpl in myResp.templates]

@@ -1,0 +1,46 @@
+{% extends "pdf_base.html" %}
+
+{% block title %}
+  Recent Search History
+{% endblock %}
+
+
+{% block content %}
+
+    <table width="100%" class="table table-striped">
+    <tr>
+      <th>
+        <b>Searched by</b>
+      </th>
+      <th>
+        <b>Searched on</b>
+      </th>
+      <th>
+        <b>Sensor</b>
+      </th>
+      <th>
+        <b>Date range</b>
+      </th>
+    </tr>
+    {% for mySearch in mySearches %}
+    <tr>
+      <td>
+        {{ mySearch.user.first_name}} {{mySearch.user.last_name}}
+      </td>
+      <td>
+        {{ mySearch.search_date|date:"D, d M Y, H:m" }} 
+      </td>
+      <td>
+        {{ mySearch.sensorsAsString }} 
+      </td>
+      <td>
+        {{ mySearch.datesAsString }}
+      </td>
+      <td>
+        {{ mySearch.end_date }} 
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+
+{% endblock %}

@@ -118,4 +118,4 @@ class TestSatelliteInstrumentGroupCRUD(TestCase):
         })
 
         self.assertEqual(
-            unicode(myModel), u'ST 1 - ITOP 1')
+            str(myModel), 'ST 1 - ITOP 1')

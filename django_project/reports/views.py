@@ -18,7 +18,6 @@ __version__ = '0.1'
 __date__ = '17/08/2012'
 __copyright__ = 'South African National Space Agency'
 
-import os
 import json
 # for error logging
 import traceback
@@ -26,9 +25,8 @@ import traceback
 import datetime
 # python logging support to django logging middleware
 import logging
-logger = logging.getLogger(__name__)
 
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 # Django helpers for forming html pages
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponseNotFound
@@ -40,7 +38,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
 # from django.template import RequestContext
 # from django.forms.util import ErrorList
-#for sorted, useful when rendering templates
+# for sorted, useful when rendering templates
 from collections import OrderedDict
 # from django.utils.datastructures import SortedDict
 
@@ -53,24 +51,28 @@ from catalogue.models import (
     GenericSensorProduct,
     OpticalProduct
 )
-from catalogue.renderDecorator import renderWithContext
+from catalogue.render_decorator import RenderWithContext
 
 from search.models import (
     Search,
     SearchRecord,
 )
-
-from dictionaries.models import SatelliteInstrumentGroup, Band, SpectralMode, InstrumentTypeProcessingLevel, ProcessingLevel
+from dictionaries.models import (
+    SatelliteInstrumentGroup,
+    Band,
+    ProcessingLevel
+)
 from reports.tables import (
     table_sort_settings,
     CountryTable,
-    SatelliteInstrumentTable,
     SatelliteInstrumentTableJSON,
-    VisitorTable)
+    VisitorTable
+)
 from django.conf import settings
 from django_tables2 import RequestConfig
 from search.tables import SearchesTable
-from core.settings.base import STATIC_ROOT
+
+logger = logging.getLogger(__name__)
 
 
 # in case you need to slice ResultSet (paginate) for display
@@ -86,15 +88,15 @@ def slice_for_display(the_list, page_size=10):
     * list(slice_for_display(myL, 4))
     * [[1, 1, 1, 1], [2, 2, 2, 2]]
     """
-    #calculate number of rows
+    # calculate number of rows
     num_rows = (len(the_list) / page_size) + 1
-    for myX in xrange(num_rows):
+    for myX in range(num_rows):
         yield the_list[myX * page_size:myX * page_size + page_size]
 
 
 @staff_member_required
-#renderWithContext is explained in renderWith.py
-@renderWithContext('visitorReport.html')
+# RenderWithContext is explained in renderWith.py
+@RenderWithContext('visitor_report.html')
 def visitor_report(request):
     """
     The view to render a visitor report
@@ -113,7 +115,7 @@ def visitor_report(request):
         table = CountryTable(country_stats)
     else:
         table = None
-    #render_to_response is done by the renderWithContext decorator
+    # render_to_response is done by the RenderWithContext decorator
     return ({
         'myGraphLabel': ({'Country': 'country'}),
         'myCurrentMonth': datetime.date.today(),
@@ -124,8 +126,8 @@ def visitor_report(request):
 
 
 @staff_member_required
-#renderWithContext is explained in renderWith.py
-@renderWithContext('visitorMonthlyReport.html')
+# RenderWithContext is explained in renderWith.py
+@RenderWithContext('visitor_monthly_report.html')
 def visitor_monthly_report(request, year, month):
     """
     The view to return a monthly report on visitor activity
@@ -136,8 +138,8 @@ def visitor_monthly_report(request, year, month):
     :return: visitorMonthlyReport.html :rtype: HttpResponse
     """
     sort_col, sort_order, sort_link = table_sort_settings(request)
-    #construct date object
-    if not(year and month):
+    # construct date object
+    if not (year and month):
         my_date = datetime.date.today()
     else:
         try:
@@ -169,8 +171,8 @@ def visitor_monthly_report(request, year, month):
 
 
 @staff_member_required
-#renderWithContext is explained in renderWith.py
-@renderWithContext('visitors.html')
+# RenderWithContext is explained in renderWith.py
+@RenderWithContext('visitors.html')
 def visitor_list(request):
     """
     View to render a list of visitors
@@ -215,7 +217,7 @@ def visitor_list(request):
             'per_page': settings.PAGE_SIZE
         }).configure(table)
 
-    #render_to_response is done by the renderWithContext decorator
+    # render_to_response is done by the RenderWithContext decorator
     return ({
         'records': records,
         'table': table
@@ -223,8 +225,8 @@ def visitor_list(request):
 
 
 @login_required
-#renderWithContext is explained in renderWith.py
-@renderWithContext('mySearches.html')
+# RenderWithContext is explained in renderWith.py
+@RenderWithContext('searches.html')
 def search_history(request):
     """
     The view to return the requesting User's search history
@@ -244,8 +246,8 @@ def search_history(request):
 
 
 @staff_member_required
-#renderWithContext is explained in renderWith.py
-@renderWithContext('recentSearches.html')
+# RenderWithContext is explained in renderWith.py
+@RenderWithContext('recent-searches.html')
 def recent_searches(request):
     """
     View to return a list of recent searches. Limited to 50.
@@ -268,9 +270,9 @@ def recent_searches(request):
     })
 
 
-#monthly search report by user ip_position
+# monthly search report by user ip_position
 @staff_member_required
-@renderWithContext('searchMonthlyReport.html')
+@RenderWithContext('search_monthly_report.html')
 def search_monthly_report(request, year, month):
     """
     The view to return a monthly search report
@@ -280,7 +282,7 @@ def search_monthly_report(request, year, month):
     :return: searchMonthlyReport.html :rtype: HttpResponse
     """
     sort_col, sort_order, sort_link = table_sort_settings(request)
-    if not(year and month):
+    if not (year and month):
         date = datetime.date.today()
     else:
         try:
@@ -309,9 +311,9 @@ def search_monthly_report(request, year, month):
     })
 
 
-#monthly search report by user ip_position
+# monthly search report by user ip_position
 @staff_member_required
-@renderWithContext('searchMonthlyReportAOI.html')
+@RenderWithContext('search_monthly_report_aoi.html')
 def search_monthly_report_aoi(request, year, month):
     """
     The view to return a table of countries searched for by month
@@ -319,10 +321,10 @@ def search_monthly_report_aoi(request, year, month):
     :param request: HttpRequest dict
     :param year: The year requested (int)
     :param month: The month requested (int)
-    :return: searchMonthlyReportAOI.html :rtype: HttpResponse
+    :return: search_monthly_report_aoi.html :rtype: HttpResponse
     """
     sort_col, sort_order, sort_link = table_sort_settings(request)
-    if not(year and month):
+    if not (year and month):
         date = datetime.date.today()
     else:
         try:
@@ -352,8 +354,8 @@ def search_monthly_report_aoi(request, year, month):
     })
 
 
-#renderWithContext is explained in renderWith.py
-@renderWithContext('dataSummaryTable.html')
+# RenderWithContext is explained in renderWith.py
+@RenderWithContext('data-summary-table.html')
 def data_summary_table(request):
     """
     Summary of available records
@@ -367,7 +369,7 @@ def data_summary_table(request):
         json_data = json.load(json_file)
         json_file.close()
     except IOError:
-        print 'File not found'
+        print('File not found')
         json_data = []
 
     for result in json_data:
@@ -392,7 +394,7 @@ def data_summary_table(request):
             'per_page': settings.PAGE_SIZE
         }).configure(table)
     return ({
-        'myUrl': reverse('dataSummaryTable'),
+        'myUrl': reverse('data-summary-table'),
         'table': table,
         'total': total,
         'myResultSet': json_data
@@ -400,8 +402,8 @@ def data_summary_table(request):
 
 
 @staff_member_required
-#renderWithContext is explained in renderWith.py
-@renderWithContext('sensorSummaryTable.html')
+# RenderWithContext is explained in renderWith.py
+@RenderWithContext('sensorSummaryTable.html')
 def sensor_summary_table(request, sensor_id):
     """
     Summary of tasking requests,orders etc for a given sensor
@@ -427,10 +429,11 @@ def sensor_summary_table(request, sensor_id):
     product_orders_total_count = records.count()
     product_orders_for_sensor_count = (
         SearchRecord.objects.filter(user__isnull=False)
-        .filter(order__isnull=False)
-        # No idea how we can PEP8 this one!!
-        .filter(product__genericimageryproduct__genericsensorproduct__opticalproduct__product_profile__satellite_instrument__satellite_instrument_group__exact=sensor)
-        .count())
+            .filter(order__isnull=False)
+            # No idea how we can PEP8 this one!!
+            .filter(
+            product__genericimageryproduct__genericsensorproduct__opticalproduct__product_profile__satellite_instrument__satellite_instrument_group__exact=sensor)
+            .count())
 
     results = OrderedDict()
     results['Searches for this sensor'] = search_for_sensor_count
@@ -466,8 +469,8 @@ def sensor_summary_table(request, sensor_id):
 
 
 @staff_member_required
-#renderWithContext is explained in renderWith.py
-@renderWithContext('dictionaryReport.html')
+# RenderWithContext is explained in renderWith.py
+@RenderWithContext('dictionaryReport.html')
 def dictionary_report(request):
     """
     Summary of mission, sensor, type and mode. Later we could add
@@ -477,7 +480,7 @@ def dictionary_report(request):
 
     report = (
         SatelliteInstrumentGroup.objects.all().select_related()
-        .order_by('satellite__name')
+            .order_by('satellite__name')
     )
 
     return ({
@@ -485,19 +488,20 @@ def dictionary_report(request):
     })
 
 
-@renderWithContext('sensor-fact-sheet.html')
+@RenderWithContext('sensor-fact-sheet.html')
 def sensor_fact_sheet(request, sat_abbr, instrument_type):
     """
     The view to render a Sensor's fact sheet
 
     :param sat_abbr: SatelliteInstrumentGroup.satellite.operator_abbreviation
     :param request: HttpRequest
+    :param instrument_type: InstrumentType.operator_abbreviation
     :return: HttpResponse
     """
     try:
         sat_group = SatelliteInstrumentGroup.objects.get(
             satellite__operator_abbreviation=sat_abbr,
-                instrument_type__operator_abbreviation=instrument_type
+            instrument_type__operator_abbreviation=instrument_type
         )
     except SatelliteInstrumentGroup.DoesNotExist:
         return HttpResponseNotFound(
@@ -510,8 +514,8 @@ def sensor_fact_sheet(request, sat_abbr, instrument_type):
     processing_levels = ProcessingLevel.objects.all()
 
     return ({
-        'bands' : bands,
+        'bands': bands,
         'processing_levels': processing_levels,
-        'dataSummaryTable' : reverse('dataSummaryTable'),
+        'dataSummaryTable': reverse('data-summary-table'),
         'sat_group': sat_group
     })

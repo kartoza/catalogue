@@ -6,16 +6,32 @@ OPTS :=
 help: ## Print this help
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort  | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
-setup: build up db-restore migrate ## first setup
+setup: pull build up db-restore migrate ## first setup
+
+deploy:  ## Build and push the to the private repo
+	docker-compose build uwsgi
+	docker tag catalogue_uwsgi:latest cr.kartoza.com/sansa_catalogue
+	docker push cr.kartoza.com/sansa_catalogue
+
+pull:  ## Pull pre-built images
+	docker-compose pull
 
 build:  ## Build base images
-	docker-compose pull
 	docker-compose build
 
-up:  ## Bring the containers up
+db_up:
 	docker-compose up -d db
 	docker-compose run check_db
+
+up: db_up  ## Bring the containers up
 	docker-compose up -d devweb
+
+prod_certs:
+	bash init-letsencrypt.sh
+
+production_up: db_up
+	docker-compose up -d dbbackups
+	docker-compose up -d web
 
 down:  ## Bring down the containers
 	docker-compose down
@@ -52,3 +68,6 @@ db-restore:  ## Restore a database backup
 
 db-shell:
 	docker-compose exec db bash
+
+django-test:
+	@docker-compose exec devweb python manage.py test --noinput --verbosity 3 catalogue

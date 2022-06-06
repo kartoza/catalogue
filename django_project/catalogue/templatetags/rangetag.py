@@ -17,6 +17,7 @@ __version__ = '0.1'
 __date__ = '16/08/2012'
 __copyright__ = 'South African National Space Agency'
 
+from django.contrib.staticfiles import finders
 from django.template import Library
 
 register = Library()
@@ -40,3 +41,15 @@ def get_range(value):
     Instead of 3 one may use the variable set in the views
     """
     return [v + 1 for v in range(value)]
+
+
+@register.filter
+def local_static_filepath(value):
+    """It gives the local filepath of a static file.
+    Inspired by:
+    https://stackoverflow.com/questions/9391167/django-how-to-get-a-static-
+    files-filepath-in-a-development-environment
+    :param value: The name of the static file to look for.
+    :return: The local file path.
+    """
+    return finders.find(value)

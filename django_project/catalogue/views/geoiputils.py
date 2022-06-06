@@ -18,16 +18,16 @@ __date__ = '17/08/2012'
 __copyright__ = 'South African National Space Agency'
 
 
-from django.contrib.gis.geoip import GeoIP
+from django.contrib.gis.geoip2 import GeoIP2
 from django.conf import settings
 import re  # regex support
-import urllib2
+import urllib.request
 
 # python logging support to django logging middleware
 import logging
-logger = logging.getLogger(__name__)
-
 import traceback
+
+logger = logging.getLogger(__name__)
 
 
 class GeoIpUtils:
@@ -46,18 +46,18 @@ class GeoIpUtils:
         """
         remote_ip = request.META['REMOTE_ADDR']
         if remote_ip == '127.0.0.1':
-            checkip = urllib2.urlopen('http://checkip.dyndns.org/').read()
+            checkip = urllib.request.urlopen('http://checkip.dyndns.org/').read()
             matcher = re.compile(r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}')
             try:
                 remote_ip = matcher.search(checkip).group()
             except:
                 remote_ip = ''
-        logger.info('Remote ip is: ' + remote_ip)
+        logger.error('Remote ip is: ' + remote_ip)
         return remote_ip
 
     def getMyLatLong(self, request):
         if settings.USE_GEOIP:
-            g = GeoIP()
+            g = GeoIP2()
             remote_ip = self.getMyIp(request)
             try:
                 remote_location = g.city(remote_ip)

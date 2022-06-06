@@ -19,7 +19,7 @@ __date__ = '20/08/2013'
 __copyright__ = 'South African National Space Agency'
 
 import datetime
-from django.core.urlresolvers import reverse, NoReverseMatch
+from django.urls import reverse, NoReverseMatch
 from django.test import TestCase
 from django.test.client import Client
 
@@ -27,7 +27,7 @@ from core.model_factories import UserF
 from search.tests.model_factories import SearchF
 
 
-class ReportsViews_recentSearches_Tests(TestCase):
+class TestReportsViewsRecentSearches(TestCase):
     """
     Tests reports.py visitor_report method/view
     """
@@ -94,10 +94,10 @@ class ReportsViews_recentSearches_Tests(TestCase):
             myResp.context['myCurrentMonth'], datetime.date.today())
         # check used templates
         myExpTemplates = [
-            'recentSearches.html', u'base.html',
-            u'pipeline/css.html', u'pipeline/js.html', u'menu.html',
-            u'useraccounts/menu_content.html',
-            u'django_tables2/custom-table.html'
+            'recentSearches.html', 'base.html',
+            'pipeline/css.html', 'pipeline/js.html', 'menu.html',
+            'useraccounts/menu_content.html',
+            'django_tables2/custom-table.html'
         ]
 
         myUsedTemplates = [tmpl.name for tmpl in myResp.templates]

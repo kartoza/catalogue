@@ -151,7 +151,7 @@ class SpotIngestorTest(TestCase):
             '17.293880 -6.359587,'
             '17.293880 -5.592359,'
             '16.206099 -5.592359))')
-        print myArea
+        print(myArea)
         myProductCount = GenericProduct.objects.count()
         spot.ingest(theShapeFile=SHAPEFILE_NAME,
                     theVerbosityLevel=1,

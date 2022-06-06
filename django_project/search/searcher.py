@@ -18,6 +18,7 @@ __date__ = '16/02/2013'
 __copyright__ = 'South African National Space Agency'
 
 import logging
+
 # Get an instance of a logger
 logger = logging.getLogger(__name__)
 
@@ -107,8 +108,8 @@ class Searcher:
                 # because range only compares dates
                 myEndDate = date_range.end_date + timedelta(hours=1)
                 myDateQuery = (
-                    myDateQuery | Q(product_date__range=(
-                        date_range.start_date, myEndDate))
+                        myDateQuery | Q(product_date__range=(
+                    date_range.start_date, myEndDate))
                 )
                 logger.debug(
                     'Daterange filter %s - %s',
@@ -119,7 +120,6 @@ class Searcher:
         # filter by sensor_inclination angle
         if (self.mSearch.sensor_inclination_angle_start is not None and
                 self.mSearch.sensor_inclination_angle_end is not None):
-
             mySensorInclinationAngleQuery = Q(
                 sensor_inclination_angle__range=(
                     self.mSearch.sensor_inclination_angle_start,
@@ -146,15 +146,15 @@ class Searcher:
         # filter cloud cover
         if self.mSearch.cloud_min is not None and self.mSearch.cloud_max is not None:
             myCloudQuery = (
-                Q(cloud_cover__gte=self.mSearch.cloud_min) &
-                Q(cloud_cover__lte=self.mSearch.cloud_max) |
-                Q(cloud_cover__isnull=True))
+                    Q(cloud_cover__gte=self.mSearch.cloud_min) &
+                    Q(cloud_cover__lte=self.mSearch.cloud_max) |
+                    Q(cloud_cover__isnull=True))
             self.mQuerySet = self.mQuerySet.filter(myCloudQuery)
             logger.debug('Cloud mean filter: %s - %s', self.mSearch.cloud_min, self.mSearch.cloud_max)
 
         # filter band_count
         if self.mSearch.band_count is not None:
-            #get bandcount range
+            # get bandcount range
             myBandCountRange = (
                 self.mSearch.BAND_COUNT_RANGE[self.mSearch.band_count]
             )
@@ -170,7 +170,7 @@ class Searcher:
             for kpath in myParsedData:
                 if len(kpath) == 2:
                     myKOrbitPathQ = (
-                        myKOrbitPathQ | Q(path__range=(kpath[0], kpath[1])))
+                            myKOrbitPathQ | Q(path__range=(kpath[0], kpath[1])))
                 else:
                     myKOrbitPathQ = myKOrbitPathQ | Q(path=kpath[0])
             self.mQuerySet = self.mQuerySet.filter(myKOrbitPathQ)
@@ -184,7 +184,7 @@ class Searcher:
             for jrow in myParsedData:
                 if len(jrow) == 2:
                     myJFrameRowQ = (
-                        myJFrameRowQ | Q(row__range=(jrow[0], jrow[1])))
+                            myJFrameRowQ | Q(row__range=(jrow[0], jrow[1])))
                 else:
                     myJFrameRowQ = myJFrameRowQ | Q(row=jrow[0])
             self.mQuerySet = self.mQuerySet.filter(myJFrameRowQ)

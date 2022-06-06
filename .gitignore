@@ -54,6 +54,8 @@ build
 .idea/vagrant.xml
 GeoIP.dat
 GeoLiteCity.dat
+GeoLite2-Country.mmdb
+GeoLite2-City.mmdb
 python-dev
 resources/server_config/mapserver/mapfiles/*.map
 resources/server_config/mapserver/apache-include/*.map
@@ -69,5 +71,12 @@ scrap.html
 .sudo_as_admin_successful
 
 deployment/static
+deployment/media
+deployment/backups
+deployment/data
 deployment/pg
+deployment/logs
+deployment/sites-enabled
 latest.sql.gz
+django_project/core/settings/secret.py
+django_project/celerybeat-schedule

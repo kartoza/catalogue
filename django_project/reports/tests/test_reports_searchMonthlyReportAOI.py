@@ -19,7 +19,7 @@ __date__ = '20/08/2013'
 __copyright__ = 'South African National Space Agency'
 
 import datetime
-from django.core.urlresolvers import reverse, NoReverseMatch
+from django.urls import reverse, NoReverseMatch
 from django.test import TestCase
 from django.test.client import Client
 
@@ -28,7 +28,7 @@ from search.tests.model_factories import SearchF
 from catalogue.tests.model_factories import WorldBordersF
 
 
-class ReportsViews_searchMonthlyReportAOI_Tests(TestCase):
+class TestReportsViewSearchMonthlyReportAOI(TestCase):
     """
     Tests reports.py searchMonthlyReportAOI method/view
     """
@@ -115,10 +115,10 @@ class ReportsViews_searchMonthlyReportAOI_Tests(TestCase):
             myDate + datetime.timedelta(days=31))
         # check used templates
         myExpTemplates = [
-            'searchMonthlyReportAOI.html', u'base.html',
-            u'pipeline/css.html', u'pipeline/js.html', u'menu.html',
-            u'useraccounts/menu_content.html',
-            u'django_tables2/custom-table.html'
+            'searchMonthlyReportAOI.html', 'base.html',
+            'pipeline/css.html', 'pipeline/js.html', 'menu.html',
+            'useraccounts/menu_content.html',
+            'django_tables2/custom-table.html'
         ]
 
         myUsedTemplates = [tmpl.name for tmpl in myResp.templates]

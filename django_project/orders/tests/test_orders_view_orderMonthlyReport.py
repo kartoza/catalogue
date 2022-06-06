@@ -21,7 +21,7 @@ __copyright__ = 'South African National Space Agency'
 import unittest
 from datetime import date, timedelta
 
-from django.core.urlresolvers import reverse, NoReverseMatch
+from django.urls import reverse, NoReverseMatch
 from django.test import TestCase
 from django.test.client import Client
 
@@ -29,7 +29,7 @@ from core.model_factories import UserF
 from .model_factories import OrderF
 
 
-class OrdersViews_orderMonthlyReport_Tests(TestCase):
+class TestOrdersViewsOrderMonthlyReport(TestCase):
     """
     Tests orders.py orderMonthlyReport method/view
     """
@@ -112,9 +112,9 @@ class OrdersViews_orderMonthlyReport_Tests(TestCase):
 
         # check used templates
         myExpTemplates = [
-            'orderMonthlyReport.html', u'base.html',
-            u'pipeline/css.html', u'pipeline/js.html', u'menu.html',
-            u'useraccounts/menu_content.html', u'django_tables2/custom-table.html'
+            'orderMonthlyReport.html', 'base.html',
+            'pipeline/css.html', 'pipeline/js.html', 'menu.html',
+            'useraccounts/menu_content.html', 'django_tables2/custom-table.html'
         ]
 
         myUsedTemplates = [tmpl.name for tmpl in myResp.templates]
@@ -164,9 +164,9 @@ class OrdersViews_orderMonthlyReport_Tests(TestCase):
 
         # check used templates
         myExpTemplates = [
-            'orderMonthlyReport.html', u'base.html',
-            u'pipeline/css.html', u'pipeline/js.html', u'menu.html',
-            u'useraccounts/menu_content.html', u'django_tables2/custom-table.html'
+            'orderMonthlyReport.html', 'base.html',
+            'pipeline/css.html', 'pipeline/js.html', 'menu.html',
+            'useraccounts/menu_content.html', 'django_tables2/custom-table.html'
         ]
 
         myUsedTemplates = [tmpl.name for tmpl in myResp.templates]

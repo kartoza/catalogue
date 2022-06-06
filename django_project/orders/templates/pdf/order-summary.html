@@ -1,0 +1,54 @@
+{% extends "pdf_base.html" %}
+{% block title %}
+    ORDER NOTIFICATION
+{% endblock %}
+{% block content %}
+    <p style="text-align:center;font-size:1.1em">
+        Order Number: {{ myOrder.id }}
+        <br/>
+        Order Placed: {{ myOrder.order_date|date:"d F Y" }}
+        <br/>
+
+        Customer: {{ myOrder.user.first_name }} {{ myOrder.user.last_name }}
+        <br/>
+
+        Contact details: {{ myOrder.user.email }}
+        <br/>
+
+        Order Status: {{ myOrder.order_status }}
+        <br/>
+
+    </p>
+    <p>
+        Dear {{ myOrder.user.first_name }},
+    </p>
+    Thank you for your order received on {{ myOrder.order_date|date:"d F Y" }}.
+    The order status above indicates the history and progress of your order.
+    You can review this order at any time by visiting the
+    <a id="link" href="http://{{ domain }}{% url 'order' myOrder.id %}">Order
+        Page</a>. If you have any problems or special requests relating to this
+    order, please contact our sales staff
+    at <a id="link" href="mailto:customers-eo@sansa.org.za">customers-eo@sansa.org.za</a> or 012844 0386/0370.
+    </p>
+    <p>
+        Our very best regards,
+        <br/><br/>
+        The SANSA-Earth Observation team.
+    </p>
+
+    <h2>Product List</h2>
+    {% for myRecord in myRecords %}
+        <p>
+            {{ myRecord.product.getConcreteInstance.product_profile.satellite_instrument }} {{ myRecord.product.getConcreteInstance.product_id }}
+            {% if myRecord.product.getConcreteInstance.productUrl %}
+                Download: {{ myRecord.product.getConcreteInstance.productUrl }}
+            {% endif %}
+            {% if myRecord.product.getConcreteInstance.rawProductUrl %}
+                Download Raw: {{ myRecord.product.getConcreteInstance.rawProductUrl }}
+            {% endif %}
+        </p>
+    {% endfor %}
+
+
+    </div>
+{% endblock %}

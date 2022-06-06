@@ -1,0 +1,40 @@
+{% extends "pdf_base.html" %}
+{% load graphtag %}
+
+{% block title %}
+    Visits by country for {{ myCurrentDate|date:'F Y' }}
+{% endblock %}
+
+{% block content %}
+
+{% if myScores %}
+
+
+<center>
+<img src="{% gPieChart myScores myGraphLabel 0 %}" />
+</center>
+
+<pdf:spacer height='1cm'/>
+
+<div class="h2">Visits by country for {{ myCurrentDate|date:'F Y' }}</div>
+<table width="100%" class="table table-striped">
+  <thead>
+    <th width="150px">Country</th>
+    <th width="100px">Visitors</th>
+  </thead>
+  <tbody>
+    {% for myCountry in myScores %}
+    <tr>
+      <td align="left">{% filter force_escape|capfirst %}{{myCountry.country}}{% endfilter %}</td>
+      <td align="right">{{ myCountry.count }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% else %}
+<p>No reports to generate.</p>
+{% endif %}
+
+{% endblock %}
+

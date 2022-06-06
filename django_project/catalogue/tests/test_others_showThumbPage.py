@@ -84,7 +84,7 @@ class OthersViews_showThumbPage_Tests(TestCase):
         self.assertEqual(myResp.content, myExpResp)
 
         # check used templates
-        myExpTemplates = ['thumbnail.html', u'popupbase.html']
+        myExpTemplates = ['thumbnail.html', 'popupbase.html']
 
         myUsedTemplates = [tmpl.name for tmpl in myResp.templates]
         self.assertEqual(myUsedTemplates, myExpTemplates)
@@ -119,7 +119,7 @@ class OthersViews_showThumbPage_Tests(TestCase):
 
         myOPP = OpticalProductProfileF.create(**{
             'spectral_mode': mySpecMode,
-            u'satellite_instrument': mySatInst
+            'satellite_instrument': mySatInst
         })
 
         OpticalProductF.create(**{
@@ -151,7 +151,7 @@ class OthersViews_showThumbPage_Tests(TestCase):
         self.assertEqual(myResp.content, myExpResp)
 
         # check used templates
-        myExpTemplates = ['thumbnail.html', u'popupbase.html']
+        myExpTemplates = ['thumbnail.html', 'popupbase.html']
 
         myUsedTemplates = [tmpl.name for tmpl in myResp.templates]
         self.assertEqual(myUsedTemplates, myExpTemplates)

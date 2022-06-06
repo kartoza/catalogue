@@ -18,7 +18,7 @@ __version__ = '0.1'
 __date__ = '20/08/2013'
 __copyright__ = 'South African National Space Agency'
 
-from django.core.urlresolvers import reverse, NoReverseMatch
+from django.urls import reverse, NoReverseMatch
 from django.test import TestCase
 from django.test.client import Client
 
@@ -26,7 +26,7 @@ from core.model_factories import UserF
 from dictionaries.tests.model_factories import SatelliteInstrumentGroupF
 
 
-class ReportsViews_dictionaryReport_Tests(TestCase):
+class TestReportsViewsDictionaryReport(TestCase):
     """
     Tests reports.py dictionaryReport method/view
     """

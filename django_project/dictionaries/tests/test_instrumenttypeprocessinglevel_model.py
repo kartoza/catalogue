@@ -128,4 +128,4 @@ class TestInstrumentTypeProcessingLevelCRUD(TestCase):
             'processing_level': myProcLevel
         })
 
-        self.assertEqual(unicode(myModel), u'IT name - PL1')
+        self.assertEqual(str(myModel), 'IT name - PL1')

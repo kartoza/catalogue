@@ -1,0 +1,11 @@
+<div class="accordion-body">
+    <div class="control-group">
+      <label class="control-label" for="id_cloud_min">Cloud Cover %</label>
+      <div class="controls cloud-cover-search row g-2">
+        {{ search_form.cloud_min }}
+          <div id="cloud-cover-slider" class="noUiSlider" style="display: none"></div>
+        {{ search_form.cloud_max }}
+        <span class="help-block">{{ search_form.cloud_min.help_text }}</span>
+      </div>
+    </div>
+</div>

@@ -1,59 +1,58 @@
-#DateUtils==0.6.6
-Django==1.9.13
+dateutils
+Django>=2.0,<3.0
 GDAL==2.4.0
-#PIL==1.1.7
 pillow
-Pygments==1.4
-SQLAlchemy==0.8.0b2
-Sphinx==1.2b1
-coverage==3.6
-virtualenv==14.0.1
-django-crispy-forms==1.6.0
-django-extensions==1.6.1
-django-model-utils==2.5
-django-nose==1.4.3
-# django-offline-messages==0.3.6
-git+https://github.com/dimasciput/django-offline-messages.git
-django-pipeline==1.6.8
-django-guardian==1.4.4
-django-tastypie==0.13.0
-django-userena==2.0.1
-# django-webodt==0.3.1
-# fix for django 1.9
-git+https://github.com/dimasciput/django-webodt.git
-# django-exchange==0.7.1
-# fix for django 1.9
-git+https://github.com/dimasciput/django-exchange.git@support1.9
-docutils==0.12
-#elementsoap==0.6-20071224
-factory-boy==2.6.1
-gdata==2.0.18
+Pygments
+SQLAlchemy
+
+django-allauth==0.41.0
+
+Sphinx
+coverage
+django-crispy-forms==1.7.0
+django-extensions==1.7.9
+django-model-utils
+django-nose
+git+https://github.com/Fanevanjanahary/django-offline-messages.git
+# fix for django 2
+git+https://github.com/Fanevanjanahary/django-exchange.git@django-2
+django-pipeline==2.0.6
+django-guardian==2.3.0
+django-tastypie
+django-userena-ce
+/libs/django-webodt-0.3.1.tar.gz
+docutils
+factory-boy
+gdata
 # Use my forked version because pip 1.4.1 requires non beta deps and pytz
 # (dependency of dateutils) is a beta release.
-git+https://github.com/timlinux/python-dateutils.git@c67ee1932d678b82d65aa69ee35b07791d1c0364
-git+https://github.com/PaulUithol/backbone-tastypie.git
+# git+https://github.com/timlinux/python-dateutils.git@c67ee1932d678b82d65aa69ee35b07791d1c0364
+/libs/Backbone-tastypie-0.2.tar.gz
 git+https://github.com/cmheisel/nose-xcover.git#egg=nosexcover
-git+https://github.com/dodobas/pycsw.git@db_view
+pycsw
 git+https://github.com/gak/pygooglechart.git
-django-jenkins==0.18.1
-html5lib==0.9999999
-jslint==0.6.0
-lxml==3.6.0
-mercurial==2.7
-nose-exclude==0.4.1
-pep8==1.7.0
-# Newer pip needed as it has user agent support needed for pygooglechart install
-pip==8.1.1
-pisa==3.0.33
-psycopg2-binary==2.8.6
-pyflakes==1.1.0
-pylint==1.5.5
-pysqlite==2.8.2
-python-mimeparse==1.5.1
-pytz==2016.3
-raven==5.12.0
-reportlab==3.3.0
-selenium==2.53.0
-django-tables2==1.1.6
+django-jenkins
+html5lib
+jslint
+mercurial
+nose-exclude
+pep8
+pisa
+psycopg2-binary
+pyflakes
+pylint
+python-mimeparse
+pytz
+raven
+reportlab
+selenium
+django-tables2
 jsmin
-celery==3.1.25
+celery==4.4.6
+geoip2==4.1.0
+xhtml2pdf==0.2.5
+djangorestframework==3.12.4
+weasyprint==52.5
+simplekml==1.3.6
+djangorestframework-gis==0.18
+

@@ -1,0 +1,59 @@
+<div>
+    <div class="accordion-body">
+    <span id="daterange_inline" class="help-inline"></span>
+    <div id="date_from_cg" class="control-group">
+      <label for="id_start_datepicker" class="control-label">From: </label>
+      <div class="controls">
+          <div class="input-group date">
+              <input class="form-control" type="text" id="start-datepicker" placeholder="dd/mm/yyyy" >
+              <span class="input-group-append">
+                <span class="input-group-text bg-light d-block">
+                    <i class="fa fa-calendar"></i>
+                </span>
+            </span>
+          </div>
+
+      </div>
+    </div>
+    <div id="date_to_cg" class="control-group">
+      <label for="id_end_datepicker" class="control-label">To: </label>
+      <div class="controls">
+        <div class="input-group date">
+            <input class="form-control" type="text" id="end-datepicker"  placeholder="dd/mm/yyyy">
+            <span class="input-group-append">
+                <span class="input-group-text bg-light d-block">
+                    <i class="fa fa-calendar"></i>
+                </span>
+            </span>
+        </div>
+      </div>
+    </div>
+    <div id="date_range">
+      <div class="date-range">
+        <a type="button" class="btn pull-right" style="width:50%; color: rgba(255, 255, 255, 0.5);  border: 1px solid rgba(255, 255, 255, 0.25); margin-top: 5px" data-toggle="tooltip"
+           data-title="Add date range" data-placement="top">Add
+        </a>
+      </div>
+      {{ dateformset.management_form }}
+      <hr/>
+      <table class="table table-striped" style="margin-top: 10px; border: none">
+        <thead>
+          <th class="text-center table-header">From </th>
+          <th class="text-center table-header">To</th>
+          <th class="text-center table-header"></th>
+        </thead>
+        <tbody id="date-range-table">
+          {% for form in dateformset.forms %}
+            <tr class="date_range_row text-center">
+              {{ form.start_date }}
+              {{ form.end_date }}
+              <td class="date_from">{{ form.start_date.value|date:"d/m/Y" }}</td>
+              <td class="date_to">{{ form.end_date.value|date:"d/m/Y" }}</td>
+              <td><a type="button" class="delete-date-range"><i class="icon-remove"></i></a></td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

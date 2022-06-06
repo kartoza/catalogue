@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+{% load static from staticfiles %}
+{% load pipeline %}
+
+{% block extracss %}
+    <link href="{% static "css/styles.css" %}" rel="stylesheet">
+	<link href="{% static "css/table.css" %}" rel="stylesheet">
+{% endblock %}
+{% block extraHeaders %}
+    <script src="{% static "js/libs/jquery/jquery-3.6.0.min.js" %}"></script>
+    <script src="{% static "js/libs/underscore-1.13.1/underscore-min.js" %}"></script>
+    <script src="{% static "js/libs/jquery-ui-1.12.1/jquery-ui.min.js" %}"></script>
+    <script src="{% static "js/widget.nonSearchRecordsTable.js" %}"></script>
+{% endblock %}
+
+{% block content%}
+<div class="main-content">
+<div id="layoutSidenav_content">
+    <main>
+        <div class="container-xl px-4 mt-4">
+        <h1 class="mt-4">Order</h1>
+        <div class="card mb-4">
+            <div class="card-body">
+            <form enctype="multipart/form-data" action="" method="post" accept-charset="utf-8" class="form-horizontal" id="order-form">{% csrf_token %}
+            <div class="row">
+                <div class="span6">
+                    <div class="control-group mb-3">
+                        <label class="control-label small mb-1" for="{{ myOrderForm.market_sector.auto_id }}">{{ myOrderForm.market_sector.label }}</label>
+                        <div class="controls">
+                            {{ myOrderForm.market_sector }}
+                        </div>
+                    </div>
+                    <div class="row gx-3 mb-3">
+                    <div class="control-group col-md-6">
+                        <label class="control-label small mb-1" for="{{ myOrderForm.subsidy_type_requested.auto_id }}">{{ myOrderForm.subsidy_type_requested.label }}</label>
+                        <div class="controls">
+                            {{ myOrderForm.subsidy_type_requested }}
+                        </div>
+                    </div>
+                    <div class="control-group col-md-6">
+                        <label class="control-label small mb-1" for="{{ myOrderForm.subsidy_type_assigned.auto_id }}">{{ myOrderForm.subsidy_type_assigned.label }}</label>
+                        <div class="controls">
+                            {{ myOrderForm.subsidy_type_assigned }}
+                        </div>
+                    </div>
+                    </div>
+                    {% if user.is_staff %}
+                    <div class="control-group mb-3" id="user_div">
+                        <label class="control-label small mb-1" for="{{ myOrderForm.user.auto_id }}">Choose the user who made this request</label>
+                        <div class="controls">
+                            {{ myOrderForm.user }}
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="span6">
+                    <div class="control-group mb-3">
+                        <label class="control-label small mb-1" for="{{ myOrderForm.notes.auto_id }}">{{ myOrderForm.notes.label }}</label>
+                        <div class="controls">
+                            {{ myOrderForm.notes }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+  <div class="row">
+	<div class="span12">
+		<table class="table" id="nonsearchWidget">
+		</table>
+	</div>
+  </div>
+  <div class="row">
+	<div class="span12">
+		<button class="btn submit btn-primary" type="button" id="submitForm">Submit</button>
+	</div>
+  </div>
+  </form>
+            </div>
+        </div>
+        </div>
+    </main>
+</div>
+</div>
+{% endblock %}
+
+{% block footer %}
+  <script>
+  	{% autoescape  off %}
+  		var currencies = $.parseJSON('{{ myCurrency }}');
+  	{% endautoescape %}
+  	$( document ).ready(function() {
+  		$('#nonsearchWidget').nonSearchRecordsTable({ 'currency': currencies });
+
+  		$('#submitForm').click(function() {
+  			if ($('#id_user').val() == "") {
+  				$('#user_div').addClass('error');
+  				return
+  			}
+  			$('#order-form').submit();
+  		});
+
+  	});
+  </script>
+{% endblock %}

@@ -1,7 +1,6 @@
 __author__ = 'rischan - <--rischan@kartoza.com-->'
 __date__ = '2/26/16'
 
-
 import os
 import sys
 import glob
@@ -41,7 +40,7 @@ def parse_date_time(date_stamp):
     :returns: A python datetime object.
     :rtype: datetime
     """
-    #print 'Parsing Date: %s\n' % date_stamp
+    # print 'Parsing Date: %s\n' % date_stamp
     start_year = date_stamp[0:4]
     start_month = date_stamp[5:7]
     start_day = date_stamp[8:10]
@@ -50,7 +49,7 @@ def parse_date_time(date_stamp):
     start_hour = tokens[0]
     start_minute = tokens[1]
     start_seconds = tokens[2]
-    #print "%s-%s-%sT%s:%s:%s" % (
+    # print "%s-%s-%sT%s:%s:%s" % (
     #    start_year, start_month, start_day,
     #    start_hour, start_minute, start_seconds)
     parsed_date_time = datetime(
@@ -61,6 +60,7 @@ def parse_date_time(date_stamp):
         int(start_minute),
         int(start_seconds))
     return parsed_date_time
+
 
 def get_geometry(log_message, dom):
     """Extract the bounding box as a geometry from the xml file.
@@ -97,7 +97,7 @@ def get_geometry(log_message, dom):
     # Now make a geometry object
     myReader = WKTReader()
     myGeometry = myReader.read(polygon)
-    #log_message('Geometry: %s' % myGeometry, 2)
+    # log_message('Geometry: %s' % myGeometry, 2)
     return myGeometry
 
 
@@ -128,13 +128,16 @@ def get_dates(log_message, dom):
 
     return start_date, center_date
 
+
 def get_band_count():
     return 5  # static value based on client information
+
 
 def get_orbit_number(dom):
     value_orbit_number = dom.getElementsByTagName('ORBIT_NUMBER')[0]
     orbit_number = value_orbit_number.firstChild.nodeValue
     return orbit_number
+
 
 def get_original_product_id(dom):
     constant = 'S7'
@@ -144,11 +147,14 @@ def get_original_product_id(dom):
     product_name = constant + tokens[0] + tokens[2] + tokens[3]
     return product_name
 
+
 def get_spatial_resolution_x():
     return 1.5
 
+
 def get_spatial_resolution_y():
     return 1.5
+
 
 def get_product_profile(log_message, dom):
     """Find the product_profile for this record.
@@ -171,8 +177,8 @@ def get_product_profile(log_message, dom):
     try:
         instrument_type = InstrumentType.objects.get(
             operator_abbreviation=sensor_value)  # e.g. OLI_TIRS
-    except Exception, e:
-        #print e.message
+    except Exception as e:
+        # print e.message
         raise e
     log_message('Instrument Type %s' % instrument_type, 2)
 
@@ -187,24 +193,24 @@ def get_product_profile(log_message, dom):
     try:
         satellite_instrument_group = SatelliteInstrumentGroup.objects.get(
             satellite=satellite, instrument_type=instrument_type)
-    except Exception, e:
-        print e.message
+    except Exception as e:
+        print(e.message)
         raise e
     log_message('Satellite Instrument Group %s' %
                 satellite_instrument_group, 2)
     try:
         satellite_instrument = SatelliteInstrument.objects.get(
             satellite_instrument_group=satellite_instrument_group)
-    except Exception, e:
-        print e.message
+    except Exception as e:
+        print(e.message)
         raise e
     log_message('Satellite Instrument %s' % satellite_instrument, 2)
 
     try:
         spectral_modes = SpectralMode.objects.filter(
             instrument_type=instrument_type)
-    except Exception, e:
-        print e.message
+    except Exception as e:
+        print(e.message)
         raise
     log_message('Spectral Modes %s' % spectral_modes, 2)
 
@@ -212,11 +218,11 @@ def get_product_profile(log_message, dom):
         product_profile = OpticalProductProfile.objects.get(
             satellite_instrument=satellite_instrument,
             spectral_mode__in=spectral_modes)
-    except Exception, e:
-        print e.message
-        print 'Searched for satellite instrument: %s and spectral modes %s' % (
+    except Exception as e:
+        print(e.message)
+        print('Searched for satellite instrument: %s and spectral modes %s' % (
             satellite_instrument, spectral_modes
-        )
+        ))
         raise e
     log_message('Product Profile %s' % product_profile, 2)
 
@@ -226,6 +232,7 @@ def get_product_profile(log_message, dom):
 def get_radiometric_resolution():
     """Get the radiometric resolution for the supplied product record."""
     return 12  # static value based on client information
+
 
 def get_projection():
     # If projection not found default to WGS84
@@ -243,12 +250,12 @@ def get_quality():
     return quality
 
 
-@transaction.commit_manually
+@transaction.atomic
 def ingest(
         test_only_flag=True,
         source_path=(
-            '/home/web/catalogue/django_project/catalogue/tests/sample_files/'
-            'SPOT7/'),
+                '/home/web/catalogue/django_project/catalogue/tests/sample_files/'
+                'SPOT7/'),
         verbosity_level=2,
         halt_on_error_flag=True,
         ignore_missing_thumbs=False):
@@ -274,6 +281,7 @@ def ingest(
         if we find we are missing a thumbnails. Default is False.
     :type ignore_missing_thumbs: bool
     """
+
     def log_message(message, level=1):
         """Log a message for a given leven.
 
@@ -281,17 +289,17 @@ def ingest(
         :param level: A log level.
         """
         if verbosity_level >= level:
-            print message
+            print(message)
 
     log_message((
-        'Running SPOT 7 Importer with these options:\n'
-        'Test Only Flag: %s\n'
-        'Source Dir: %s\n'
-        'Verbosity Level: %s\n'
-        'Halt on error: %s\n'
-        '------------------')
-        % (test_only_flag, source_path, verbosity_level,
-           halt_on_error_flag), 2)
+                    'Running SPOT 7 Importer with these options:\n'
+                    'Test Only Flag: %s\n'
+                    'Source Dir: %s\n'
+                    'Verbosity Level: %s\n'
+                    'Halt on error: %s\n'
+                    '------------------')
+                % (test_only_flag, source_path, verbosity_level,
+                   halt_on_error_flag), 2)
 
     # Scan the source folder and look for any sub-folders
     # The sub-folder names should be e.g.
@@ -383,19 +391,19 @@ def ingest(
                 today = datetime.today()
                 time_stamp = today.strftime("%Y-%m-%d")
                 log_message('Time Stamp: %s' % time_stamp, 2)
-            except Exception, e:
-                print e.message
+            except Exception as e:
+                print(e.message)
 
             update_mode = True
             try:
                 log_message('Trying to update')
-                #original_product_id is not necessarily unique
-                #so we use product_id
+                # original_product_id is not necessarily unique
+                # so we use product_id
                 product = OpticalProduct.objects.get(
                     original_product_id=original_product_id
                 ).getConcreteInstance()
                 log_message(('Already in catalogue: updating %s.'
-                            % original_product_id), 2)
+                             % original_product_id), 2)
                 new_record_flag = False
                 message = product.ingestion_log
                 message += '\n'
@@ -413,12 +421,12 @@ def ingest(
                     product = OpticalProduct(**data)
                     log_message('Product: %s' % product)
 
-                except Exception, e:
+                except Exception as e:
                     log_message(e.message, 2)
 
                 new_record_flag = True
-            except Exception, e:
-                print e.message
+            except Exception as e:
+                print(e.message)
 
             log_message('Saving product and setting thumb', 2)
             try:
@@ -433,7 +441,7 @@ def ingest(
                 else:
                     log_message('Product %s updated.' % updated_record_count, 2)
                     pass
-            except Exception, e:
+            except Exception as e:
                 traceback.print_exc(file=sys.stdout)
                 raise CommandError('Cannot import: %s' % e)
 
@@ -444,21 +452,21 @@ def ingest(
             else:
                 transaction.commit()
                 log_message('Imported scene : %s' % product_folder, 1)
-        except Exception, e:
+        except Exception as e:
             log_message('Record import failed. AAAAAAARGH! : %s' %
                         product_folder, 1)
             failed_record_count += 1
             if halt_on_error_flag:
-                print e.message
+                print(e.message)
                 break
             else:
                 continue
 
     # To decide: should we remove ingested product folders?
 
-    print '==============================='
-    print 'Products processed : %s ' % record_count
-    print 'Products updated : %s ' % updated_record_count
-    print 'Products imported : %s ' % created_record_count
-    print 'Products failed to import : %s ' % failed_record_count
-    print '==============================='
+    print('===============================')
+    print('Products processed : %s ' % record_count)
+    print('Products updated : %s ' % updated_record_count)
+    print('Products imported : %s ' % created_record_count)
+    print('Products failed to import : %s ' % failed_record_count)
+    print('===============================')

@@ -13,7 +13,7 @@ services:
   nginx:
     # Note you cannot scale if you use conteiner_name
     container_name: catalogue-nginx
-    image: nginx
+    image: nginx:1.21.3
     hostname: nginx
     volumes:
       - ./nginx-conf:/etc/nginx/conf.d
@@ -35,18 +35,21 @@ services:
   db:
     # Note you cannot scale if you use conteiner_name
     container_name: catalogue-db
-    image: kartoza/postgis:13-3.1
+    image: kartoza/postgis:13-3.1--v2021.09.08
     volumes:
       - ./pg/postgres_data:/var/lib/postgresql
       - ./backups:/backups
     environment:
-      - USERNAME=docker
-      - PASS=docker
+      - POSTGRES_USER=docker
+      - POSTGRES_PASS=docker
       - ALLOW_IP_RANGE=0.0.0.0/0
+    links:
+      - pycsw:pycsw
     restart: on-failure:5
+    shm_size: 1g
 
   rabbitmq:
-    image: library/rabbitmq
+    image: library/rabbitmq:3.9.5
     hostname: rabbitmq
     environment:
        - RABBIT_PASSWORD=rabbit_test_password
@@ -105,7 +108,10 @@ services:
       - ./reports:/home/web/reports
       - ./logs:/var/log/
       - ./data:/home/web/django_project/data
-      - /EOSHARE/Karabo/CATALOGUE/thumbnails_cat3:/home/web/django_project/thumbs_out
+      - /dmz/CATALOGUE/thumbnails_cat3:/home/web/django_project/thumbs_out
+      - ../logs:/home/web/logs/
+      - ../resources:/home/web/resources
+
     links:
       - smtp:smtp
       - db:db
@@ -140,19 +146,30 @@ services:
   web:
     # Note you cannot scale if you use conteiner_name
     container_name: catalogue-web
-    image: nginx
+    image: nginx:1.21.3
     hostname: nginx
+    command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
     volumes:
       - ./sites-enabled:/etc/nginx/conf.d:ro
       # I dont use volumes_from as I want to use the ro modifier
       - ./static:/home/web/static:ro
       - ./media:/home/web/media:ro
       - ./logs:/var/log/nginx
+      - ./certbot/conf:/etc/letsencrypt
+      - ./certbot/www:/var/www/certbot
     links:
       - uwsgi:uwsgi
     ports:
-      - "62080:8080"
+      - "80:80"
+      - "443:443"
     restart: on-failure:5
+
+  certbot:
+    image: certbot/certbot
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
+    volumes:
+      - ./data/certbot/conf:/etc/letsencrypt
+      - ./data/certbot/www:/var/www/certbot
 
   # This is the entry point for a development server.
   # Run with --no-deps to run attached to the services
@@ -166,10 +183,6 @@ services:
       target: dev_image
     hostname: uwsgi
     environment:
-      - DATABASE_NAME=gis
-      - DATABASE_USERNAME=docker
-      - DATABASE_PASSWORD=docker
-      - DATABASE_HOST=db
       - RABBITMQ_HOST=rabbitmq
       - DJANGO_SETTINGS_MODULE=core.settings.dev_docker
       - PYTHONPATH=/home/web/django_project
@@ -182,6 +195,7 @@ services:
       - ./reports:/home/web/reports
       - ./logs:/var/log/
       - ./data:/home/web/django_project/data
+      - ../resources:/home/web/resources
     links:
       - smtp:smtp
       - db:db
@@ -197,3 +211,17 @@ services:
     environment:
       - CHECK_HOST=db
       - CHECK_PORT=5432
+  pycsw:
+    container_name: catalogue-pycsw
+    image: geopython/pycsw:latest
+    environment:
+      PYCSW_SERVER_URL: http://localhost:8000
+    volumes:
+      - ./docker/pycsw.cfg:/etc/pycsw/pycsw.cfg
+      - ../django_project/pycsw_integration/mappings.py:/etc/pycsw/mappings.py
+    ports:
+      - "8000:8000"
+
+
+
+

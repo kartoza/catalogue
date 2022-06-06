@@ -62,18 +62,18 @@ class TestGenericProductCRUD(TestCase):
         """
 
         myModel = GenericProductF.create(**{
-            u'product_date': datetime.strptime(
+            'product_date': datetime.strptime(
                 '1987-04-28 08:46:32', '%Y-%m-%d %H:%M:%S'),
-            u'spatial_coverage': (
-                u'POLYGON ((21.3566000000000145 -27.2013999999999783, '
+            'spatial_coverage': (
+                'POLYGON ((21.3566000000000145 -27.2013999999999783, '
                 '21.4955000000000496 -26.6752999999999929, 22.0914000000000215'
                 ' -26.7661999999999978, 21.9554000000000542 '
                 '-27.2926999999999964, 21.3566000000000145 '
                 '-27.2013999999999783))'),
-            u'unique_product_id': (
-                u'S1-_HRV_X--_S1C2_0120_00_0404_00_860619_084632_1B--_ORBIT-'),
-            u'remote_thumbnail_url': u'http://sirius.spotimage.fr/',
-            u'original_product_id': u'11204048606190846322X',
+            'unique_product_id': (
+                'S1-_HRV_X--_S1C2_0120_00_0404_00_860619_084632_1B--_ORBIT-'),
+            'remote_thumbnail_url': 'http://sirius.spotimage.fr/',
+            'original_product_id': '11204048606190846322X',
         })
 
         self.assertEqual(str(myModel.product_date), '1987-04-28 08:46:32')
@@ -85,7 +85,7 @@ class TestGenericProductCRUD(TestCase):
         )
 
         self.assertEqual(myModel.unique_product_id, (
-            u'S1-_HRV_X--_S1C2_0120_00_0404_00_860619_084632_1B--_ORBIT-'))
+            'S1-_HRV_X--_S1C2_0120_00_0404_00_860619_084632_1B--_ORBIT-'))
 
     def test_genericproduct_update(self):
         """
@@ -95,23 +95,23 @@ class TestGenericProductCRUD(TestCase):
         myModel = GenericProductF.create()
 
         myNewModelData = {
-            u'product_date': datetime.strptime(
+            'product_date': datetime.strptime(
                 '1987-04-28 08:46:32', '%Y-%m-%d %H:%M:%S'),
-            u'spatial_coverage': (
-                u'POLYGON ((21.3566000000000145 -27.2013999999999783, '
+            'spatial_coverage': (
+                'POLYGON ((21.3566000000000145 -27.2013999999999783, '
                 '21.4955000000000496 -26.6752999999999929, 22.0914000000000215'
                 ' -26.7661999999999978, 21.9554000000000542 '
                 '-27.2926999999999964, 21.3566000000000145 '
                 '-27.2013999999999783))'),
             # u'projection': 89, u'license': 1, u'quality': 1,
             # u'creating_software': 1,
-            u'unique_product_id': (
-                u'S1-_HRV_X--_S1C2_0120_00_0404_00_860619_084632_1B--_ORBIT-'),
-            u'remote_thumbnail_url': u'http://sirius.spotimage.fr/',
-            u'product_revision': None,  # u'owner': 1,
-            u'original_product_id': u'11204048606190846322X',
+            'unique_product_id': (
+                'S1-_HRV_X--_S1C2_0120_00_0404_00_860619_084632_1B--_ORBIT-'),
+            'remote_thumbnail_url': 'http://sirius.spotimage.fr/',
+            'product_revision': None,  # u'owner': 1,
+            'original_product_id': '11204048606190846322X',
             # u'processing_level': 2,
-            u'local_storage_path': None
+            'local_storage_path': None
         }
 
         myModel.__dict__.update(myNewModelData)
@@ -126,7 +126,7 @@ class TestGenericProductCRUD(TestCase):
         )
 
         self.assertEqual(myModel.unique_product_id, (
-            u'S1-_HRV_X--_S1C2_0120_00_0404_00_860619_084632_1B--_ORBIT-'))
+            'S1-_HRV_X--_S1C2_0120_00_0404_00_860619_084632_1B--_ORBIT-'))
 
     def test_genericproduct_repr(self):
         """
@@ -134,45 +134,45 @@ class TestGenericProductCRUD(TestCase):
         """
 
         myModel = GenericProductF.create(**{
-            u'product_date': datetime.strptime(
+            'product_date': datetime.strptime(
                 '1987-04-28 08:46:32', '%Y-%m-%d %H:%M:%S'),
-            u'spatial_coverage': (
-                u'POLYGON ((21.3566000000000145 -27.2013999999999783, '
+            'spatial_coverage': (
+                'POLYGON ((21.3566000000000145 -27.2013999999999783, '
                 '21.4955000000000496 -26.6752999999999929, 22.0914000000000215'
                 ' -26.7661999999999978, 21.9554000000000542 '
                 '-27.2926999999999964, 21.3566000000000145 '
                 '-27.2013999999999783))'),
-            u'unique_product_id': (
-                u'S1-_HRV_X--_S1C2_0120_00_0404_00_860619_084632_1B--_ORBIT-'),
-            u'remote_thumbnail_url': u'http://sirius.spotimage.fr/',
-            u'original_product_id': u'11204048606190846322X',
+            'unique_product_id': (
+                'S1-_HRV_X--_S1C2_0120_00_0404_00_860619_084632_1B--_ORBIT-'),
+            'remote_thumbnail_url': 'http://sirius.spotimage.fr/',
+            'original_product_id': '11204048606190846322X',
         })
 
         myExpResult = (
-            u'S1-_HRV_X--_S1C2_0120_00_0404_00_860619_084632_1B--_ORBIT-')
+            'S1-_HRV_X--_S1C2_0120_00_0404_00_860619_084632_1B--_ORBIT-')
 
-        self.assertEqual(unicode(myModel), myExpResult)
+        self.assertEqual(str(myModel), myExpResult)
 
     def test_genericproduct_tidySacId(self):
         """
         Tests GenericProduct model tidySacId
         """
         myModel = GenericProductF.create(**{
-            u'product_date': datetime.strptime(
+            'product_date': datetime.strptime(
                 '1987-04-28 08:46:32', '%Y-%m-%d %H:%M:%S'),
-            u'spatial_coverage': (
-                u'POLYGON ((21.3566000000000145 -27.2013999999999783, '
+            'spatial_coverage': (
+                'POLYGON ((21.3566000000000145 -27.2013999999999783, '
                 '21.4955000000000496 -26.6752999999999929, 22.0914000000000215'
                 ' -26.7661999999999978, 21.9554000000000542 '
                 '-27.2926999999999964, 21.3566000000000145 '
                 '-27.2013999999999783))'),
-            u'unique_product_id': (
-                u'S1-_HRV_X--_S1C2_0120_00_0404_00_860619_084632_1B--_ORBIT-'),
-            u'remote_thumbnail_url': u'http://sirius.spotimage.fr/',
-            u'original_product_id': u'11204048606190846322X',
+            'unique_product_id': (
+                'S1-_HRV_X--_S1C2_0120_00_0404_00_860619_084632_1B--_ORBIT-'),
+            'remote_thumbnail_url': 'http://sirius.spotimage.fr/',
+            'original_product_id': '11204048606190846322X',
         })
 
-        myExpResult = u'11204048606190846322X'
+        myExpResult = '11204048606190846322X'
 
         self.assertEqual(myModel.tidySacId(), myExpResult),
 
@@ -182,18 +182,18 @@ class TestGenericProductCRUD(TestCase):
         """
 
         myModel = GenericProductF.create(**{
-            u'product_date': datetime.strptime(
+            'product_date': datetime.strptime(
                 '1987-04-28 08:46:32', '%Y-%m-%d %H:%M:%S'),
-            u'spatial_coverage': (
-                u'POLYGON ((21.3566000000000145 -27.2013999999999783, '
+            'spatial_coverage': (
+                'POLYGON ((21.3566000000000145 -27.2013999999999783, '
                 '21.4955000000000496 -26.6752999999999929, 22.0914000000000215'
                 ' -26.7661999999999978, 21.9554000000000542 '
                 '-27.2926999999999964, 21.3566000000000145 '
                 '-27.2013999999999783))'),
-            u'unique_product_id': (
-                u'S1-_HRV_X--_S1C2_0120_00_0404_00_860619_084632_1B--_ORBIT-'),
-            u'remote_thumbnail_url': u'http://sirius.spotimage.fr/',
-            u'original_product_id': u'11204048606190846322X',
+            'unique_product_id': (
+                'S1-_HRV_X--_S1C2_0120_00_0404_00_860619_084632_1B--_ORBIT-'),
+            'remote_thumbnail_url': 'http://sirius.spotimage.fr/',
+            'original_product_id': '11204048606190846322X',
         })
 
         myRes = myModel.getUTMZones()

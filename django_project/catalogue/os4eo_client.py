@@ -1,4 +1,4 @@
-'''
+"""
 SANSA-EO Catalogue - OS4EO Client implementation
 
 Contact : lkleyn@sansa.org.za
@@ -10,7 +10,7 @@ Contact : lkleyn@sansa.org.za
    license to use any code contained herein which is the intellectual property
    of Linfiniti Consulting CC.
 
-'''
+"""
 
 __author__ = 'tim@linfiniti.com'
 __version__ = '0.1'

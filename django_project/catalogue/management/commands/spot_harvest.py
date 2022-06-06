@@ -16,8 +16,6 @@ though it should work on others too.
 Tim Sutton May 2011
 """
 
-from optparse import make_option
-
 from django.core.management.base import BaseCommand
 from django.db import transaction
 from catalogue.ingestors import spot
@@ -27,30 +25,31 @@ class Command(BaseCommand):
     """Management command to import SPOT data from a SPOT catalogue shpfile.
     """
     help = "Imports SPOT packages into the SANSA catalogue"
-    option_list = BaseCommand.option_list + (
-        make_option(
+
+    def add_arguments(self, parser):
+        parser.add_argument(
             '--file',
             '-f',
             dest='shapefile',
             action='store',
             help='Shapefile containing spot coverage data.',
-            default=False),
-        make_option(
+            default=False)
+        parser.add_argument(
             '--download-thumbs',
             '-d',
             dest='download_thumbs_flag',
             action='store',
             help='Whether thumbnails should be fetched to. If not '
                  'fetched now they will be fetched on demand as needed.',
-            default=False),
-        make_option(
+            default=False)
+        parser.add_argument(
             '--test_only',
             '-t',
             dest='test_only_flag',
             action='store_true',
             help='Just test, nothing will be written into the DB.',
-            default=False),
-        make_option(
+            default=False)
+        parser.add_argument(
             '--area',
             '-a',
             dest='area',
@@ -58,21 +57,20 @@ class Command(BaseCommand):
             help=(
                 'Area of interest, images which are external to this'
                 ' area will not be imported (WKT Polygon, SRID=4326)')),
-        make_option(
+        parser.add_argument(
             '--halt_on_error',
             '-e',
             dest='halt_on_error_flag',
             action='store',
             help=(
                 'Halt on first error that occurs and print a stacktrace'),
-            default=False),
-        make_option(
+            default=False)
+        parser.add_argument(
             '--start-from',
             '-s',
             dest='start_from',
             action='store',
             help='Start from a specific original ID')
-    )
 
     # noinspection PyDeprecation
     @staticmethod

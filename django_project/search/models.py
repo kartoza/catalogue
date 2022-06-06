@@ -11,6 +11,7 @@ Contact : lkleyn@sansa.org.za
    of Linfiniti Consulting CC.
 
 """
+from catalogue.models import GenericProduct
 from catalogue.utils import validate_params
 
 __author__ = 'tim@linfiniti.com'
@@ -23,6 +24,7 @@ import uuid
 import json
 from datetime import datetime
 
+from django.contrib.auth.models import User
 from django.contrib.gis.db import models
 from django.core.exceptions import ObjectDoesNotExist
 
@@ -35,8 +37,7 @@ from dictionaries.models import (
     InstrumentTypeProcessingLevel
 )
 from exchange.models import Currency
-
-###############################################################################
+from orders.models import Order
 
 
 class SearchRecord(models.Model):
@@ -54,10 +55,24 @@ class SearchRecord(models.Model):
     When the user creates a new order, all current search records that do not
     havean order id should be added to it.
     """
-    user = models.ForeignKey('auth.User')
-    order = models.ForeignKey('orders.Order', null=True, blank=True)
+    user = models.ForeignKey(
+        User,
+        null=False,
+        blank=False,
+        on_delete=models.CASCADE
+    )
+    order = models.ForeignKey(
+        Order,
+        null=True,
+        blank=True,
+        on_delete=models.CASCADE
+    )
     product = models.ForeignKey(
-        'catalogue.GenericProduct', null=False, blank=False)
+        GenericProduct,
+        null=False,
+        blank=False,
+        on_delete=models.CASCADE
+    )
     # DIMS ordering related fields
     internal_order_id = models.IntegerField(null=True, blank=True)
     download_path = models.CharField(
@@ -75,21 +90,33 @@ class SearchRecord(models.Model):
         max_digits=10, decimal_places=2, null=True, blank=True
     )
     currency = models.ForeignKey(
-        'exchange.Currency', null=True, blank=True
+        Currency,
+        null=True,
+        blank=True,
+        on_delete=models.CASCADE
     )
     processing_level = models.ForeignKey(
-        'dictionaries.ProcessingLevel', verbose_name='Processing Level',
-        null=True, blank=True
+        'dictionaries.ProcessingLevel',
+        verbose_name='Processing Level',
+        null=True,
+        blank=True,
+        on_delete=models.CASCADE
     )
     projection = models.ForeignKey(
-        'dictionaries.Projection', verbose_name='Projection',
-        null=True, blank=True
+        'dictionaries.Projection',
+        verbose_name='Projection',
+        null=True,
+        blank=True,
+        on_delete=models.CASCADE
     )
     product_process_state = models.ForeignKey(
-        'dictionaries.ProductProcessState', null=True, blank=True
+        'dictionaries.ProductProcessState',
+        null=True,
+        blank=True,
+        on_delete=models.CASCADE
     )
     # Required because genericproduct fkey references a table with geometry
-    objects = models.GeoManager()
+    objects = models.Manager()
 
     class Meta:
         verbose_name = 'Record'
@@ -118,18 +145,18 @@ class SearchRecord(models.Model):
         levels = list()
         for lvl in availableLevels:
             insTypeProcLevel = InstrumentTypeProcessingLevel.objects.filter(
-            processing_level=lvl,
-            instrument_type=(
-                self.product.getConcreteInstance().product_profile
-                .satellite_instrument.satellite_instrument_group
-                .instrument_type
-            )
+                processing_level=lvl,
+                instrument_type=(
+                    self.product.getConcreteInstance().product_profile
+                        .satellite_instrument.satellite_instrument_group
+                        .instrument_type
+                )
             ).get()
             try:
                 spectralModeProcCosts = SpectralModeProcessingCosts.objects.filter(
                     spectral_mode=(
                         self.product.getConcreteInstance().product_profile
-                        .spectral_mode
+                            .spectral_mode
                     ),
                     instrument_type_processing_level=insTypeProcLevel
                 ).get()
@@ -149,16 +176,16 @@ class SearchRecord(models.Model):
             basespectralModeProcCosts = SpectralModeProcessingCosts.objects.filter(
                 spectral_mode=(
                     self.product.getConcreteInstance().product_profile
-                    .spectral_mode
+                        .spectral_mode
                 ),
                 instrument_type_processing_level=baseinsTypeProcLevel
-                ).get()
+            ).get()
             rand_cost_per_scene = convert_value(
                 basespectralModeProcCosts.cost_per_scene,
                 basespectralModeProcCosts.get_currency().code, 'ZAR'
-                )
+            )
         except ObjectDoesNotExist:
-                rand_cost_per_scene = 0
+            rand_cost_per_scene = 0
         levels.append([14, 'Level 0 Raw instrument data', rand_cost_per_scene])
 
         def decimal_default(obj):
@@ -169,6 +196,7 @@ class SearchRecord(models.Model):
             if isinstance(obj, decimal.Decimal):
                 return float(obj)
             raise TypeError
+
         return json.dumps([list(level) for level in levels],
                           default=decimal_default)
 
@@ -228,8 +256,8 @@ class SearchRecord(models.Model):
                 processing_level=self.processing_level,
                 instrument_type=(
                     self.product.getConcreteInstance().product_profile
-                    .satellite_instrument.satellite_instrument_group
-                    .instrument_type
+                        .satellite_instrument.satellite_instrument_group
+                        .instrument_type
                 )
             ).get()
             # retrieve the processing mode costs
@@ -237,7 +265,7 @@ class SearchRecord(models.Model):
             spectralModeProcCosts = SpectralModeProcessingCosts.objects.filter(
                 spectral_mode=(
                     self.product.getConcreteInstance().product_profile
-                    .spectral_mode
+                        .spectral_mode
                 ),
                 instrument_type_processing_level=insTypeProcLevel
             ).get()
@@ -269,7 +297,12 @@ class BaseSearch(models.Model):
     """
     ABC Search model, generic search fields
     """
-    user = models.ForeignKey('auth.User', null=True, blank=True)
+    user = models.ForeignKey(
+        'auth.User',
+        null=True,
+        blank=True,
+        on_delete=models.CASCADE
+    )
     geometry = models.PolygonField(
         srid=4326, null=True, blank=True,
         help_text=
@@ -291,16 +324,17 @@ class BaseSearch(models.Model):
         abstract = True
 
     def save(self, *args, **kwargs):
-        #makes a random globally unique id
+        # makes a random globally unique id
         if not self.guid or self.guid == 'null':
             self.guid = str(uuid.uuid4())
         super(BaseSearch, self).save(*args, **kwargs)
 
 
-class SearchHelpersManager(models.GeoManager):
+class SearchHelpersManager(models.Manager):
     """
     Search model helper methods
     """
+
     def monthly_report(self, date, **kwargs):
         """
         Count searches per country for user each month
@@ -411,13 +445,15 @@ class Search(BaseSearch):
     # so we explicitly have to use verbose_name for the user friendly name
     instrument_type = models.ManyToManyField(
         'dictionaries.InstrumentType',
-        verbose_name=u'Sensors', null=True, blank=True,
+        verbose_name='Sensors',
+        blank=True,
         help_text=(
             'Choosing one or more instrument types is required. Use ctrl-click'
             ' to select more than one.')
     )
     satellite = models.ManyToManyField(
-        'dictionaries.Satellite', null=True, blank=True,
+        'dictionaries.Satellite',
+        blank=True,
         help_text='Select satellite mission.'
     )  # e.g. S5
 
@@ -444,15 +480,18 @@ class Search(BaseSearch):
             'cloud cover, enable this.')
     )
     cloud_max = models.IntegerField(
-        null=True, blank=True, max_length=3,
+        null=True,
+        blank=True,
         verbose_name="Max Clouds"
     )
     cloud_min = models.IntegerField(
-        null=True, blank=True, max_length=3,
+        null=True,
+        blank=True,
         verbose_name="Min Clouds"
     )
     license_type = models.ManyToManyField(
-        'dictionaries.License', blank=True, null=True,
+        'dictionaries.License',
+        blank=True,
         help_text='Choose a license type.'
     )
     band_count = models.IntegerField(
@@ -475,19 +514,21 @@ class Search(BaseSearch):
     )
     spectral_group = models.ManyToManyField(
         'dictionaries.SpectralGroup',
-        null=True, blank=True,
+        blank=True,
         help_text='Select one or more spectral groups.'
     )
     processing_level = models.ManyToManyField(
-        'dictionaries.ProcessingLevel', null=True, blank=True,
+        'dictionaries.ProcessingLevel',
+        blank=True,
         help_text='Select one or more processing level.'
     )
     collection = models.ManyToManyField(
-        'dictionaries.Collection', null=True, blank=True,
+        'dictionaries.Collection',
+        blank=True,
         help_text='Select one or more satellite collections.'
     )
     # Use the geo manager to handle geometry
-    objects = models.GeoManager()
+    objects = models.Manager()
     helpers = SearchHelpersManager()
 
     class Meta:
@@ -526,6 +567,7 @@ class Search(BaseSearch):
             sensors.append(sensor.abbreviation)
         return sensors
 
+
 ###############################################################################
 #
 # Search date ranges
@@ -544,7 +586,10 @@ class SearchDateRange(models.Model):
         help_text='Product date is required. DD-MM-YYYY.')
     end_date = models.DateField(
         help_text='Product date is required. DD-MM-YYYY.')
-    search = models.ForeignKey(Search)
+    search = models.ForeignKey(
+        Search,
+        on_delete=models.CASCADE
+    )
 
     def __unicode__(self):
         return "%s Guid: %s" % (self.local_format(), self.search.guid)
@@ -580,7 +625,10 @@ class Clip(models.Model):
     status.
     """
     guid = models.CharField(max_length=40)
-    owner = models.ForeignKey('auth.User')
+    owner = models.ForeignKey(
+        'auth.User',
+        on_delete=models.CASCADE
+    )
     date = models.DateTimeField(
         verbose_name='Date', auto_now_add=True,
         help_text='Not shown to users')
@@ -603,10 +651,10 @@ class Clip(models.Model):
     # to the user
     result_url = models.URLField(max_length=1024)
 
-    objects = models.GeoManager()
+    objects = models.Manager()
 
     def save(self, *args, **kwargs):
-        #makes a random globally unique id
+        # makes a random globally unique id
         if not self.guid or self.guid == 'null':
             self.guid = str(uuid.uuid4())
         super(Clip, self).save(*args, **kwargs)
