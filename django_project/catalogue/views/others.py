@@ -334,51 +334,51 @@ def clip(request):
 @RenderWithContext('simple_map.html')
 def visitor_map(request):
     """Show a map of all visitors"""
-    myGeoIpUtils = GeoIpUtils()
-    myCount = Visit.objects.all()
-    myMessages = []
-    myLayerDefinitions = None
-    myExtent = None
-    myLayersList = None
-    myLatLong = myGeoIpUtils.getMyLatLong(request)
-    # Above returns something like:
-    # {'city': 'Johannesburg', 'region': '06', 'area_code': 0, 'longitude':
-    # 28.08329963684082, 'country_code3': 'ZAF',
-    # 'latitude': -26.200000762939453, 'postal_code': None, 'dma_code': 0,
-    # 'country_code': 'ZA', 'country_name': 'South Africa'}
-    myMessages.append('<h3>Your details</h3>')
-    if not myLatLong:
-        myMessages.append('Could not calculate your location')
-    else:
-        if myLatLong['city']:
-            myMessages.append('Nearest City: ' + myLatLong['city'])
-        else:
-            myMessages.append('Nearest City: Unknown')
-        myMessages.append('Country: ' + myLatLong['country_name'])
-        myMessages.append('Longitude: ' + str(myLatLong['longitude']))
-        myMessages.append('Latitude: ' + str(myLatLong['latitude']))
-        myIp = myGeoIpUtils.getMyIp(request)
-        myMessages.append('IP Address: ' + myIp)
-        myMessages.append('<h3>All visitors</h3>')
-        myMessages.append('Total Site Visits: ' + str(myCount))
-    myLayersList, myLayerDefinitions, myActiveBaseMap = standardLayers(
-        request)
-    myLayerDefinitions.append(WEB_LAYERS['Visitors'])
-    myLayersList = myLayersList.replace(']', ',visitors]')
-
-    # render_to_response is done by the RenderWithContext decorator
-    return ({
-        'myMessages': myMessages,
-        'myExtents': '-90, -70, 90, 70',
-        'myLayerDefinitions': myLayerDefinitions,
-        'myLayersList': myLayersList,
-        'myActiveBaseMap': myActiveBaseMap,
-    })
-
+    # myGeoIpUtils = GeoIpUtils()
+    # myCount = Visit.objects.all()
+    # myMessages = []
+    # myLayerDefinitions = None
+    # myExtent = None
+    # myLayersList = None
+    # myLatLong = myGeoIpUtils.getMyLatLong(request)
+    # # Above returns something like:
+    # # {'city': 'Johannesburg', 'region': '06', 'area_code': 0, 'longitude':
+    # # 28.08329963684082, 'country_code3': 'ZAF',
+    # # 'latitude': -26.200000762939453, 'postal_code': None, 'dma_code': 0,
+    # # 'country_code': 'ZA', 'country_name': 'South Africa'}
+    # myMessages.append('<h3>Your details</h3>')
+    # if not myLatLong:
+    #     myMessages.append('Could not calculate your location')
+    # else:
+    #     if myLatLong['city']:
+    #         myMessages.append('Nearest City: ' + myLatLong['city'])
+    #     else:
+    #         myMessages.append('Nearest City: Unknown')
+    #     myMessages.append('Country: ' + myLatLong['country_name'])
+    #     myMessages.append('Longitude: ' + str(myLatLong['longitude']))
+    #     myMessages.append('Latitude: ' + str(myLatLong['latitude']))
+    #     myIp = myGeoIpUtils.getMyIp(request)
+    #     myMessages.append('IP Address: ' + myIp)
+    #     myMessages.append('<h3>All visitors</h3>')
+    #     myMessages.append('Total Site Visits: ' + str(myCount))
+    # myLayersList, myLayerDefinitions, myActiveBaseMap = standardLayers(
+    #     request)
+    # myLayerDefinitions.append(WEB_LAYERS['Visitors'])
+    # myLayersList = myLayersList.replace(']', ',visitors]')
+    #
+    # # render_to_response is done by the RenderWithContext decorator
+    # return ({
+    #     'myMessages': myMessages,
+    #     'myExtents': '-90, -70, 90, 70',
+    #     'myLayerDefinitions': myLayerDefinitions,
+    #     'myLayersList': myLayersList,
+    #     'myActiveBaseMap': myActiveBaseMap,
+    # })
+    #
 
 # RenderWithContext is explained in renderWith.py
 @RenderWithContext('productView.html')
-def show_product(request, theProductId):
+def show_product(theProductId):
     """
     Renders a search results page including the map and all attendant html
     content - for a single product only identified by its sac product ID
