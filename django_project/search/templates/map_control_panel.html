@@ -80,17 +80,22 @@
              data-bs-toggle="popover" data-bs-placement="right" id="sidebarToggle"><i data-feather="menu" class="fa fa-compress"></i></div>
             </div>
         <div id="zoom-control" class="zoom-control">
-            <div class="sub-control-panel sub-zoom-control zoom-out" title="Zoom In"><i class="fa fa-plus" aria-hidden="false"></i>
+            <div class="sub-control-panel sub-zoom-control zoom-out" data-bs-toggle="popover"
+             data-bs-placement="right"  data-bs-trigger="hover focus"
+             data-bs-content="Zoom In"><i class="fa fa-plus" aria-hidden="false"></i>
             </div>
-            <div class="sub-control-panel sub-zoom-control zoom-in" title="Zoom Out"><i class="fa fa-minus" aria-hidden="false"></i>
+            <div class="sub-control-panel sub-zoom-control zoom-in" data-bs-toggle="popover"
+             data-bs-placement="right"  data-bs-trigger="hover focus"
+             data-bs-content="Zoom Out"><i class="fa fa-minus" aria-hidden="false"></i>
             </div>
         </div>
         <div id="lasso-control" class="lasso-control sub-control-panel polygonal-lasso-tool" data-bs-toggle="popover"
-             data-placement="right" data-bs-trigger="hover focus" data-content="Draw Polygon" title="Draw Polygon">
+             data-bs-placement="right"  data-bs-trigger="hover focus"
+             data-bs-content="Draw Polygon">
             <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
         </div>
          <div id="delete-polygon" class="delete-polygon sub-control-panel hide-delete-polygon" data-bs-toggle="popover"
-             data-placement="right" data-bs-trigger="hover focus" data-content="Delete Polygon" title="Delete Polygon">
+             data-bs-placement="right"  data-bs-trigger="hover focus" data-bs-content="Delete Polygon" >
             <i class="fa fa-minus-square-o" aria-hidden="true"></i>
         </div>
         <div id="print-control" class="print-map-control sub-control-panel"
