@@ -95,7 +95,7 @@ ACCEPTABLE_SORTS = [
     'ASC', 'DESC'
 ]
 
-MESSAGE_STORAGE = 'offline_messages.storage.OfflineStorageEngine'
+# MESSAGE_STORAGE = 'offline_messages.storage.OfflineStorageEngine'
 
 BROKER_URL = 'amqp://guest:guest@%s:5672//' % os.environ['RABBITMQ_HOST']
 
