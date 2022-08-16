@@ -1,0 +1,16 @@
+LAYER
+  NAME "Jpl"
+  TYPE RASTER
+  STATUS OFF
+  CONNECTION "http://wms.jpl.nasa.gov/wms.cgi?"
+  CONNECTIONTYPE WMS
+  METADATA
+    "wms_srs"             "EPSG:4326"
+    "wms_name"            "global_mosaic_base" #comma separated list of layer names
+    "wms_server_version"  "1.1.1"
+    "wms_format"          "image/png"
+    #"wms_auth_username" "username"
+    #"wms_auth_password" "password"
+    "wms_bgcolor" "0xFFFFFF"
+  END
+END

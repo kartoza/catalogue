@@ -1,0 +1,11 @@
+{% extends "kml/base.kml" %}
+{% block records %}
+<Placemark>
+    <name>Geometry for tasking request {{ tasking_request.id }} </name>
+    {% if transparentStyle %}
+    <styleUrl>#transparentPolyStyle</styleUrl>
+    {% endif %}
+    <description>http://{{ external_site_url }}{% url 'viewTaskingRequest' tasking_request.id %}</description>
+    {{ tasking_request.delivery_detail.geometry.kml|safe }}
+    </Placemark>
+{% endblock %}

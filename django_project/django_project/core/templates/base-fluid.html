@@ -1,0 +1,40 @@
+{% load staticfiles %}
+{% load pipeline %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>{% block title %}SANSA-EO Catalogue{% endblock %}</title>
+    <meta name="keywords" content="sansa south african national space agency earth observation south africa" />
+    <meta name="description" content="This web site provides a catalogue of remote sensing data (satellite imagery) available from the SANSA-EO (South African National Space Agency), Hartebeeshoek, South Africa. The catalogue includes data for South Africa and the rest of Africa. This web site was developed by Linfiniti Consulting under contract to SANSA-EO." />
+    <meta name="robots" content="NONE,NOARCHIVE" />
+    {# for Bootstrap responsive layout #}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="{% static "js/libs/font-awesome/css/font-awesome.min.css" %}" rel="stylesheet">
+    {% block extracss %}{% endblock %}
+    {# Be very careful about changing the order of these css includes as it can have unintended side effects #}
+    <link href="{% url 'logVisit' %}" rel="stylesheet" type="text/css" />
+
+    {% stylesheet 'catalogue' %}
+
+    {% block extraHeaders %}
+    {% endblock %}
+    <link href="{% static "css/navbar.css" %}" rel="stylesheet">
+    <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}"/>
+    <link rel="icon" href="{% static 'images/animated_favicon.gif' %}" type="image/gif" />
+
+  </head>
+  <body {% block body_load %}{% endblock %}>
+   {% include "navigation_bar.html" %}
+   {% block content %}
+   {% endblock %}
+   {% block extrajs %}
+   {% endblock %}
+   {% block footer %}
+   {% endblock %}
+  </body>
+</html>

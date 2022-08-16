@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load boxtag %} {# Custom tag defined in templatetags/ #}
+{% block content%}
+  {% box_start box-welcome "span-22 last" %}
+    <h2 class="centered">Learn to use the SANSA Earth Observation Online Catalogue</h2>
+    <embed width=870 height=620 class="centered" src="http://maps.sansa.org.za/SANSA_catalogue_intro.mov" autostart="false" />
+    <p class="centered span-22">The development of this catalogue was funded by the <a href="http://www.dst.gov.za/">South African Department of Science and Technology.</a></p>
+    <br/>
+    <p class="1"><b>About: </b>This short video introduces the catalogue functionality and shows 
+      you how to get up and running as fast as possible. Your computer needs to have video playback 
+      software installed in order to view this video.
+    </p>
+  {% box_end %}
+{% endblock %}
+

@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% load render_table from django_tables2 %}
+{% block extracss %}
+    <link href="{% static "css/table.css" %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+
+<div class="main-content">
+<div id="layoutSidenav_content">
+                <main>
+                    <div class="container-fluid px-4">
+                        <h1 class="mt-4">Summary of All Sensor-Based Catalogue Holdings</h1>
+                        <div class="card mb-4">
+                                    <div class="card-header">
+                                        <i class="fas fa-chart-area me-1"></i>
+                                        Records by Sensor Chart
+                                    </div>
+                                    <div class="card-body" id="chart_summary_sensor"></div>
+                        </div>
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <i class="fas fa-table me-1"></i>
+                                Data Summary Table
+                                <div id="order-list-buttonset" class="btn-group pull-right">
+                                    <a href="?pdf" download="proposed_file_name">
+                                    <button id="download-btn" class="btn">
+                                        <i class="icon-download"></i> Download as PDF
+                                    </button>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                 {% render_table table 'django_tables2/custom-table.html' %}
+
+                            </div>
+                        </div>
+                    </div>
+                </main>
+            </div>
+</div>
+{% endblock %}
+{% block extraHeaders %}
+    <script src="{% static "js/libs/jquery/jquery-3.6.0.min.js" %}"></script>
+    <script src="{% static "js/libs/highcharts/highcharts.js" %}"></script>
+    <script src="{% static "js/libs/highcharts/modules/data.js" %}"></script>
+    <script src="{% static "js/libs/highcharts/modules/exporting.js" %}"></script>
+    <script src="{% static "js/libs/highcharts/modules/export-data.js" %}"></script>
+    <script src="{% static "js/libs/highcharts/modules/accessibility.js" %}"></script>    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        var data = [];
+        {% for myRecord in myResultSet %}
+            {% if myRecord.id__count > 0 %}
+                data.push({
+                    'name': '{{myRecord.satellite_operator_abbr }} - {{ myRecord.instrument_operator_abbr }}',
+                    'y': {{ myRecord.id__count }}
+                        });
+                    {% endif %}
+                {% endfor %}
+
+        Highcharts.chart('chart_summary_sensor', {
+            chart: {
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: false,
+                type: 'pie'
+            },
+            title: {
+                text: 'Records by Sensor'
+            },
+            tooltip: {
+                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+            },
+            accessibility: {
+                point: {
+                    valueSuffix: '%'
+                }
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: false
+                    },
+                    showInLegend: true
+                }
+            },
+            exporting: {
+                buttons: {
+                    contextButton: {
+                        menuItems: ["printChart",
+                            "separator",
+                            "downloadPNG",
+                            "downloadJPEG",
+                            "downloadPDF",
+                            "downloadSVG",
+                            "separator",
+                            "downloadCSV",
+                            "downloadXLS"]
+                    }
+                }
+            },
+            series: [{
+                name: 'Records by Sensor',
+                colorByPoint: true,
+                data: data
+            }]
+        });
+
+
+
+    </script>
+{% endblock %}

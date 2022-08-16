@@ -1,0 +1,149 @@
+
+
+% Leave the blank space above here
+
+== Procedures for importing data from RapidEye packages into the catalogue ==
+
+""Note:"" This document should be considered compulsory reading before you
+attempt to import any data into the catalogue.
+
+""Note2:"" This document //must// be kept up to date when you make changes to
+import scripts etc.
+
+=== Importing the packages from the remote catalogue ===
+
+The import process is done by a Django management command that can be called
+by a cron job.
+
+To see all available options you can call the command with `-h` or `help`
+parameter:
+
+```
+$ python manage.py rapideye_harvest -h
+Usage: manage.py rapideye_harvest [options]
+
+Imports RapidEye packages into the SAC catalogue
+
+Options:
+  -v VERBOSITY, --verbosity=VERBOSITY
+                        Verbosity level; 0=minimal output, 1=normal output,
+                        2=all output
+  --settings=SETTINGS   The Python path to a settings module, e.g.
+                        "myproject.settings.main". If this isn't provided, the
+                        DJANGO_SETTINGS_MODULE environment variable will be
+                        used.
+  --pythonpath=PYTHONPATH
+                        A directory to add to the Python path, e.g.
+                        "/home/djangoprojects/myproject".
+  --traceback           Print traceback on exception
+  -u USERNAME, --username=USERNAME
+                        Username for HTTP Authentication. Defaults is read
+                        from settings.py (CATALOGUE_RAPIDEYE_USERNAME='')
+  -p PASSWORD, --password=PASSWORD
+                        Password for HTTP Authentication. Defaults is read
+                        from settings.py. (CATALOGUE_RAPIDEYE_PASSWORD='')
+  -b BASE_URL, --base_url=BASE_URL
+                        Base catalogue URL. Defaults is read from settings.py.
+                        (CATALOGUE_RAPIDEYE_BASE_URL='https://delivery.rapideye.de/catalogue/')
+  -t, --test_only       Just test, nothing will be written into the DB.
+  -o OWNER, --owner=OWNER
+                        Name of the Institution package owner. Defaults to:
+                        Rapideye AG.
+  -s CREATING_SOFTWARE, --creating_software=CREATING_SOFTWARE
+                        Name of the creating software. Defaults to: Unknown.
+  -y YEAR, --year=YEAR  Year to ingest (4 digits). Defaults to: current year
+  -d DAY, --day=DAY     Day to ingest (2 digits). Defaults to None
+  -m MONTH, --month=MONTH
+                        Month to ingest (2 digits). Defaults to: current month
+  -l LICENSE, --license=LICENSE
+                        Name of the license. Defaults to: SAC Commercial
+                        License
+  -a AREA, --area=AREA  Area of interest, images which are external to this
+                        area will not be imported (WKT Polygon, SRID=4326)
+  -q QUALITY, --quality=QUALITY
+                        Quality code (will be created if does not exists).
+                        Defaults to: Unknown
+  -r PROCESSING_LEVEL, --processing_level=PROCESSING_LEVEL
+                        Processing level code (will be created if does not
+                        exists). Defaults to: 1B
+  --version             show program's version number and exit
+  -h, --help            show this help message and exit
+```
+
+Running the command (e.g. using africa as the extents):
+
+```
+$ python manage.py rapideye_harvest -v 2 -a \
+ 'POLYGON((-22.235294 44.666018,61.630435 44.666018,61.630435 \
+ -41.616591,-22.476982 -41.616591,-22.235294 44.666018))' \
+ -d 12 -y 2011 -m 03
+```
+
+=== Global settings ===
+
+The following parameters in settings.py control the process:
+
+```
+# RapidEye catalogue ingesting settings
+CATALOGUE_RAPIDEYE_BASE_URL = 'https://delivery.rapideye.de/catalogue/'
+CATALOGUE_RAPIDEYE_USERNAME = '*********'
+CATALOGUE_RAPIDEYE_PASSWORD = '*********'
+```
+
+=== Implementation details ===
+
+Details on the implementation, mainly regarding the source of
+the data used to populate the catalogue database.
+
+Pseudocode:
+
++ given the year and month (and optionally the day)
++ download the shapefiles with all imagery metadata for that period of time
++ optionally clip to a bounding polygon to restrict area of interest
++ for each image:
+  + calculate product_id
+  + search in catalogue
+  + if already in catalogue, process the next product
+  + download thumbnail
+  + ingest in catalogue
+
+
+==== Data and metadata extraction ====
+
+
+The following metadata are hardcoded constants and can be changed at the top of the script `catalogue/management/commands/rapideye_harvest.py`:
+
+|| Parameter            | Value                |
+| band_count            | 5 |
+| radiometric_resolution | 16 |
+| geometric_resolution_x | 5 |
+| geometric_resolution_y | 5 |
+| mission_sensor | REI |
+| sensor_type | REI |
+| acquisition_mode | REI |
+| projection | ORBIT |
+| product_acquisition_start_time | 09:00 |
+
+The following metadata are passed to the script as option parameters:
+
+|| Parameter            | Default                |
+| license               | SAC Commercial License |
+| owner                 | Rapideye AG |
+| processing_level      | 1B                     |
+| creating_software     | Unknown                |
+
+
+The following metadata are read from the shapefile:
+
+|| Parameter            | From |
+| original_product_id   | PATH |
+| product_acquisition_start[1] | ACQ_DATE |
+| row/path informations | footprint centroid |
+| mission | CRAFT_ID |
+| cloud_cover | CCP |
+| sensor_viewing_angle | VW_ANGLE |
+| solar_zenith_angle | 90° - SUNELVN |
+| solar_azimuth_angle | SUNAZMT |
+| sensor_inclination_angle | IND_ANGLE |
+
+[1] time taken from constant product_acquisition_start_time

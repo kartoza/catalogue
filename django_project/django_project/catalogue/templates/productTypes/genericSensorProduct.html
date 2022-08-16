@@ -1,0 +1,27 @@
+{% extends 'productTypes/genericImageryProduct.html' %}
+{% block header %}
+<h5 class="modal-title" id="staticBackdropLabel">Generic Sensor based Product details for
+    <br/><span class="centered">{{myObject.product_id}}</span>
+    <br/><span class="centered">Base details common for satellite imagery</span></h5>
+{% endblock %}
+
+{% block tableBody %}
+{{ block.super }}
+<tr><th colspan="2">Generic Sensor Product-Specific Properties</th></tr>
+<tr><td class="loud">Satellite Instrument</td><td class="quiet">{{ myObject.product_profile.satelliteinstrumenttype }}</td></tr>
+<tr><td class="loud">Product Acquisition Start</td><td class="quiet">{{ myObject.product_acquisition_start }}</td></tr>
+<tr><td class="loud">Product Acquisition End</td><td class="quiet">{{ myObject.product_acquisition_end }}</td></tr>
+<tr><td class="loud">Geometric Accuracy Mean</td><td class="quiet">{{ myObject.geometric_accuracy_mean }}</td></tr>
+<tr><td class="loud">Geometric Accuracy 1Sigma</td><td class="quiet">{{ myObject.geometric_accuracy_1sigma }}</td></tr>
+<tr><td class="loud">Geometric Accuracy 2Sigma</td><td class="quiet">{{ myObject.geometric_accuracy_2sigma }}</td></tr>
+<tr><td class="loud">Radiometric Signal To_Noise Ratio</td><td class="quiet">{{ myObject.radiometric_signal_to_noise_ratio }}</td></tr>
+<tr><td class="loud">Radiometric Percentage Error</td><td class="quiet">{{ myObject.radiometric_percentage_error }}</td></tr>
+<tr><td class="loud">Spectral Accuracy</td><td class="quiet">{{ myObject.spectral_accuracy }}</td></tr>
+<tr><td class="loud">Orbit Number</td><td class="quiet">{{ myObject.orbit_number }}</td></tr>
+<tr><td class="loud">Path</td><td class="quiet">{{ myObject.path }}</td></tr>
+<tr><td class="loud">Path Offset</td><td class="quiet">{{ myObject.path_offset }}</td></tr>
+<tr><td class="loud">Row</td><td class="quiet">{{ myObject.row }}</td></tr>
+<tr><td class="loud">Row Offset</td><td class="quiet">{{ myObject.row_offset }}</td></tr>
+<tr><td class="loud">Offline Storage Medium ID</td><td class="quiet">{{ myObject.offline_storage_medium_id }}</td></tr>
+<tr><td class="loud">Online Storage Medium ID</td><td class="quiet">{{ myObject.online_storage_medium_id }}</td></tr>
+{% endblock %}

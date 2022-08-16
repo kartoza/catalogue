@@ -1,0 +1,16 @@
+Gavin's notes 26 May 2016
+
+I restored a dump of sac_live:
+
+no globals available so I added role 'timlinux' since all objects owned by him. 
+createdb sac_live
+psql -c 'CREATE EXTENSION postgis;' -d sac_live
+/usr/share/postgresql/9.5/contrib/postgis-2.2/postgis_restore.pl -v /data/projects/SANSA/sac_live.dmp | psql sac_live
+
+Then ran each bash script in order. 
+
+003 had an error that I fixed in the same commit that added this file. 
+
+008 removes all spot products with the expectation that they will be re-ingested!
+
+

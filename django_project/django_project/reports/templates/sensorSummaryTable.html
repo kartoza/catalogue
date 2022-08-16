@@ -1,0 +1,69 @@
+{% load staticfiles %}
+<div id="content">
+  <h2 class="text-center">
+    Summary of Catalogue Activity For
+  </h2>
+  <h3 class="text-center">{{mySensor}}</h3>
+  <div style="width: 860px; margin: auto;">
+    <table class="table table-striped">
+      <thead>
+      </thead>
+      <tbody>
+        <tr><th>Metric</th><th>Count</th></tr>
+        {% for myRecord,myCount in myResults.items %}
+        <tr>
+          <td>
+              {{myRecord}}
+          </td>
+          <td>{{myCount}}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <div style="width: 860px; margin: auto; padding-top:30px;">
+    <h2 class="text-center">
+      Yearly Catalogue Product Overview For
+    </h2>
+    <h3 class="text-center">
+      {{mySensor}}
+    </h3>
+  <table class="table table-striped">
+    <thead>
+    </thead>
+    <tbody>
+      {% for myDataPage in mySensorYearlyStats %}
+        <tr>
+          {% for myData in myDataPage %}
+            {% if not myData.count == 0 %}
+              <th>
+                  {{ myData.year }}
+              </th>
+            {% endif %}
+          {% endfor %}
+        </tr>
+        <tr>
+          {% for myData in myDataPage %}
+            {% if not myData.count == 0 %}
+              <td>
+                  {{ myData.count }}
+              </td>
+            {% endif %}
+          {% endfor %}
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  </div>
+  <div style="width: 860px; margin: auto;">
+    <p>Please note:</p>
+    <ul>
+      <li>These results are for 'all time'.</li>
+      <li>Test and experimental requests by SAC staff have not been filtered out.</li>
+      <li>The report doesn't distinguish between cancelled requests or requests
+      that were never carried out for whatever reason by SAC staff.</li>
+      <li>Searches can include more than one sensor so the search count for this is
+      not the inverse of all other sensor searches.</li>
+    </ul>
+  </div>
+</div>

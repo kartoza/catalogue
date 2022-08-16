@@ -1,0 +1,20 @@
+{% extends 'productTypes/genericSensorProduct.html' %}
+{% block header %}
+<h5 class="modal-title" id="staticBackdropLabel">Radar Product details for
+    <br/> <span class="centered"><b>{{myObject.product_id}}</b></span></h5>
+{% endblock %}
+
+{% block tableBody %}
+{{ block.super }}
+<tr><th colspan="2">Radar Product-Specific Properties</th></tr>
+<tr><td class="loud">Imaging mode</td><td class="quiet">{{ myObject.imaging_mode }}</td></tr>
+<tr><td class="loud">Look Direction</td><td class="quiet">{{ myObject.look_direction }}</td></tr>
+<tr><td class="loud">Antenna Receive Configuration</td><td class="quiet">{{ myObject.antenna_receive_configuration }}</td></tr>
+<tr><td class="loud">Polarising Mode</td><td class="quiet">{{ myObject.polarising_mode }}</td></tr>
+<tr><td class="loud">Polarising List</td><td class="quiet">{{ myObject.polarising_list }}</td></tr>
+<tr><td class="loud">Slant Range Resolution</td><td class="quiet">{{ myObject.slant_range_resolution }}</td></tr>
+<tr><td class="loud">Azimuth Range Resolution</td><td class="quiet">{{ myObject.azimuth_range_resolution }}</td></tr>
+<tr><td class="loud">Orbit Direction</td><td class="quiet">{{ myObject.orbit_direction }}</td></tr>
+<tr><td class="loud">Calibration</td><td class="quiet">{{ myObject.calibration }}</td></tr>
+<tr><td class="loud">Incidence Angle</td><td class="quiet">{{ myObject.incidence_angle }}</td></tr>
+{% endblock %}

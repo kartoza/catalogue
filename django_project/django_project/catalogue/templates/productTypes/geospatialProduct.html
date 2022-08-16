@@ -1,0 +1,23 @@
+{% extends 'productTypes/genericProduct.html' %}
+{% block header %}
+<h5 class="modal-title" id="staticBackdropLabel">Geospatial Product details for
+<br/><span class="centered"><b>{{myObject.product_id}}</b></span>
+<br/><span class="centered">Geospatial products do not have sensor information. Geospatial products may be rasters
+  (that were derived from one or more satellite or other rasters) or vectors.
+    </span></h5>
+{% endblock %}
+
+{% block tableBody %}
+{{ block.super }}
+<tr><th colspan="2">Geospatial Product-Specific Properties</th></tr>
+<tr><td class="loud">Name</td><td class="quiet">{{ myObject.name }}</td></tr>
+<tr><td class="loud">Description</td><td class="quiet">{{ myObject.description }}</td></tr>
+<tr><td class="loud">Processing Notes</td><td class="quiet">{{ myObject.processing_notes }}</td></tr>
+<tr><td class="loud">Equivalent Scale</td><td class="quiet">{{ myObject.equivalent_scale }}</td></tr>
+<tr><td class="loud">Data Type</td><td class="quiet">{{ myObject.data_type }}</td></tr>
+<tr><td class="loud">Temporal Extent Start</td><td class="quiet">{{ myObject.temporal_extent_start }}</td></tr>
+<tr><td class="loud">Temporal Extent End</td><td class="quiet">{{ myObject.temporal_extent_end }}</td></tr>
+<tr><td class="loud">Place Type</td><td class="quiet">{{ myObject.place_type }}</td></tr>
+<tr><td class="loud">Place</td><td class="quiet">{{ myObject.place }}</td></tr>
+<tr><td class="loud">Primary Topic</td><td class="quiet">{{ myObject.primary_topic }}</td></tr>
+{% endblock %}

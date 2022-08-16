@@ -1,0 +1,5 @@
+{% extends "kml/base.kml" %}
+{% block records %}
+{% include "kml/footprintsInclude.kml" %}
+{% include "kml/overlaysInclude.kml" %}
+{% endblock %}

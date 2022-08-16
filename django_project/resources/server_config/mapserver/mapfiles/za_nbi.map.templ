@@ -1,0 +1,164 @@
+#
+# Notes:
+# 
+# Tim Sutton 2009
+#
+# By using status default for all layers, mapserver will render them 
+# all based on their scale dependent ranges when open layers 
+# makes a request. This is a good thing since It will allow us 
+# to create complex maps without having to add many layer definitions to 
+# OpenLayers.
+#
+
+MAP
+  CONFIG "MS_ENCRYPTION_KEY" "[CODEBASE]/resources/server_config/mapserver/mapfiles/mapserver-key.txt"
+  NAME "South Africa"
+  # Map image size
+  SIZE 400 400
+  UNITS dd
+
+  EXTENT 14.765741 -36.150229 33.660126 -21.010626
+  PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    ''
+  END
+
+  SYMBOLSET "../symbols/symbols.sym"
+  FONTSET "../fonts/fonts.list"
+  # Background color for the map canvas -- change as desired
+  IMAGECOLOR 192 192 192
+  IMAGEQUALITY 95
+  # Background color for the map canvas -- change as desired
+  IMAGECOLOR -1 -1 -1
+  IMAGEQUALITY 95
+
+  #IMAGETYPE png24
+  #OUTPUTFORMAT
+  #  # use the new rendering backend from MapServer 5
+  #  NAME 'AGGA'
+  #  DRIVER AGG/PNG
+  #  IMAGEMODE RGBA
+  #END
+
+  #OUTPUTFORMAT
+  #  NAME png 
+  #  DRIVER 'GD/PNG'
+  #  MIMETYPE 'image/png'
+  #  IMAGEMODE PC256
+  #  EXTENSION 'png'
+  #END
+
+  IMAGETYPE jpeg
+  OUTPUTFORMAT
+    # use the new rendering backend from MapServer 5
+    NAME 'AGG_JPEG'
+    DRIVER AGG/JPEG
+    IMAGEMODE RGB
+  END
+
+  # Legend
+  LEGEND
+      IMAGECOLOR 255 255 255
+    STATUS ON
+    KEYSIZE 18 12
+    LABEL
+      TYPE BITMAP
+      SIZE MEDIUM
+      COLOR 0 0 89
+    END
+  END
+
+  # Web interface definition. Only the template parameter
+  # is required to display a map. See MapServer documentation
+  WEB
+    # Set IMAGEPATH to the path where MapServer should
+    # write its output.
+    IMAGEPATH '/tmp/'
+
+    # Set IMAGEURL to the url that points to IMAGEPATH
+    # as defined in your web server configuration
+    IMAGEURL '/tmp/'
+
+    # WMS server settings
+    METADATA
+      'wms_title'           'South Africa'
+      'wms_onlineresource'  'http://maps.sansa.org.za/cgi-bin/mapserv?map=ZA_NBI&'
+      'wms_srs'             'EPSG:4326 EPSG:900913'
+    END
+
+    #Scale range at which web interface will operate
+    # Template and header/footer settings
+    # Only the template parameter is required to display a map. See MapServer documentation
+  END
+
+  LAYER
+    NAME 'nbi_vegetation_status'
+    TYPE POLYGON
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA '"the_geom" FROM "nbi_vegetation_status" using unique gid using SRID=4326'
+    METADATA
+      'wms_title' 'nbi_vegetation_status'
+    END
+    STATUS DEFAULT
+    TRANSPARENCY 36
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    ''
+    END
+    CLASSITEM 'con_status'
+    CLASS
+      NAME 'Critically Endangered'
+      EXPRESSION 'CE' 
+      STYLE
+        SYMBOL 0
+         OUTLINECOLOR 0 0 0
+         COLOR 249 0 5
+       END
+    END
+    CLASS
+      NAME 'Endangered'
+      EXPRESSION 'E' 
+      STYLE
+        SYMBOL 0
+         OUTLINECOLOR 0 0 0
+         COLOR 255 79 102
+       END
+    END
+    CLASS
+      NAME 'Not Applicable'
+      EXPRESSION 'N/A' 
+      STYLE
+        SYMBOL 0
+         OUTLINECOLOR 0 0 0
+         COLOR 201 204 212
+       END
+    END
+    CLASS
+      NAME 'Near Threatened'
+      EXPRESSION 'NT' 
+      STYLE
+        SYMBOL 0
+         OUTLINECOLOR 0 0 0
+         COLOR 255 170 0
+       END
+    END
+    CLASS
+      NAME 'Vulnerable'
+      EXPRESSION 'V' 
+      STYLE
+        SYMBOL 0
+         OUTLINECOLOR 0 0 0
+         COLOR 255 0 255
+       END
+    END
+  END
+
+  INCLUDE 'vector_layers.map.include'
+END

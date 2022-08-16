@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8"?><IIF>
+
+ <item>
+   <administration>
+     <id xmlns="http://www.caf.dlr.de/dims/pl/iif">(rid://eods_hb_pl_eods_XXXXB00000000342469139923)</id>
+     
+     <type xmlns="http://www.caf.dlr.de/dims/pl/iif">LANDSAT7.ETM.Scene</type>
+     <keys xmlns="http://www.caf.dlr.de/dims/pl/iif">
+<feature key="productID">L7-_ETM_HRF_BUMP_0165_00_0073_00_131204_072545_L0Ra_UTM37S</feature>
+<feature key="eowebProductId">LANDSAT7.ETM.Scene:/eods_hb_pl_eods_XXXXB00000000342469139923/eods_hb_pl_eods_//LANDSAT7.ETM.L0Ra.Scene</feature>
+<feature key="eowebProductType">LANDSAT7.ETM.Scene</feature>
+</keys>
+   <owner>DIMS</owner> <group>DIMS</group> <permission>
+  <ownerRights>VIEW</ownerRights>
+  <ownerRights>READ</ownerRights>
+  <ownerRights>WRITE</ownerRights>
+  <ownerRights>DELETE</ownerRights>
+  <groupRights>VIEW</groupRights>
+  <groupRights>READ</groupRights>
+  <worldRights>VIEW</worldRights>
+  <worldRights>READ</worldRights>
+ </permission> <location>OP</location> <permanency>PERMANENT</permanency>
+</administration>
+   <commandOption xmlns="http://www.caf.dlr.de/dims/pl/iif">
+<action>INSERT</action>
+</commandOption> <fileInformation xmlns="http://www.caf.dlr.de/dims/pl/iif"/> <components>
+  <component>
+   <type>LANDSAT7.ETM.L0Ra.Scene-BROWSE</type>
+   <name>BROWSE</name>
+   <role>BROWSE</role>
+   <ref xmlns="http://www.caf.dlr.de/dims/pl/iif">$((rid://eods_hb_pl_eods_XXXXB00000000342469139924))</ref>
+  </component>
+ </components> <parameters>
+  <availability>EXISTING</availability>
+  <reliability>REAL</reliability>
+  <quality>APPROVED</quality>
+  <revision>1.0</revision>
+  <spatialCoverage>
+   <boundingPolygon xmlns="http://www.caf.dlr.de/dims/pl/iif">
+<point>
+     <latitude>-17.8295502</latitude>
+     <longitude>36.8808048</longitude>
+    </point>
+<point>
+     <latitude>-19.2981266</latitude>
+     <longitude>36.8625852</longitude>
+    </point>
+<point>
+     <latitude>-19.3106287</latitude>
+     <longitude>39.0723444</longitude>
+    </point>
+<point>
+     <latitude>-17.8410361</latitude>
+     <longitude>39.0717271</longitude>
+    </point>
+<point>
+<latitude>-17.8295502</latitude>
+<longitude>36.8808048</longitude>
+</point>
+</boundingPolygon>
+  </spatialCoverage>
+  <temporalCoverage>
+   <startTime>2013-12-04T07:25:32.000</startTime>
+   <centerTime>2013-12-04T07:25:45.000</centerTime>
+   <stopTime>2013-12-04T07:25:52.000</stopTime>
+  </temporalCoverage>
+ </parameters> <specificParameters>
+     <feature key="insertionTime">2013-12-09T08:43:08.889</feature>
+    
+    
+    
+    
+    
+    
+     <feature key="fileFormatVersion">x.x</feature>
+     <feature key="fileFormat">GEOTIFF</feature>
+     <feature key="trackNumber">165</feature>
+     <feature key="orbitNumber">136</feature>
+     <feature key="productName">2272013338165_00073</feature>
+     <feature key="resolution">
+       <feature key="numberOfBands">9</feature>
+       <feature key="groundSamplingDistance">
+         <feature key="x">30.000000</feature>
+         <feature key="y">30.000000</feature>
+      </feature>
+       <feature key="quantitisation">
+         <feature key="min">0</feature>
+         <feature key="max">255</feature>
+      </feature>
+       <feature key="swathWidth">185000</feature>
+    </feature>
+     <feature key="qualityInfo">
+       <feature key="spectralAccuracy">0.05</feature>
+    </feature>
+     <feature key="projectionName">UTM</feature>
+     <feature key="imageCentreCoordinates">-18.5698354,37.971865375</feature>
+     <feature key="license">USGS free distribution license</feature>
+     <feature key="projectName">2272013338165_00073</feature>
+     <feature key="owner">USGS</feature>
+     <feature key="processingLevel">L0Ra</feature>
+     <feature key="mode">BUMPER</feature>
+     <feature key="type">HRF</feature>
+     <feature key="sensor">ETM</feature>
+     <feature key="mission">LANDSAT7</feature>
+     <feature key="row">73</feature>
+     <feature key="path">165</feature>
+     <feature key="earthSunDistance">1.004994493988489</feature>
+     <feature key="solarAzimuthAngle">102.7992169</feature>
+     <feature key="solarZenithAngle">26.601639</feature>
+     <feature key="sensorViewingAngle">90</feature>
+     <feature key="sensorInclinationAngle">98.2</feature>
+     <feature key="cloudCoverPercentage">9</feature>
+     
+     <feature key="dayAcquisition">true</feature>
+     <feature key="partialScenes">1</feature>
+     <feature key="endRow">73</feature>
+     <feature key="startRow">73</feature>
+     
+    
+    
+     
+     <feature key="bandScaling">
+       <feature key="band">1</feature>
+       <feature key="gainSetting">H</feature>
+       <feature key="gainChange">0</feature>
+       <feature key="gainValue">0.77874017</feature>
+       <feature key="biasValue">-6.9787397384643555</feature>
+       <feature key="solarIrradiation">1970.000</feature>
+    </feature>
+     <feature key="bandScaling">
+       <feature key="band">2</feature>
+       <feature key="gainSetting">H</feature>
+       <feature key="gainChange">0</feature>
+       <feature key="gainValue">0.7988189</feature>
+       <feature key="biasValue">-7.198819160461426</feature>
+       <feature key="solarIrradiation">1842.000</feature>
+    </feature>
+     <feature key="bandScaling">
+       <feature key="band">3</feature>
+       <feature key="gainSetting">H</feature>
+       <feature key="gainChange">0</feature>
+       <feature key="gainValue">0.6216535</feature>
+       <feature key="biasValue">-5.6216535568237305</feature>
+       <feature key="solarIrradiation">1547.000</feature>
+    </feature>
+     <feature key="bandScaling">
+       <feature key="band">4</feature>
+       <feature key="gainSetting">L</feature>
+       <feature key="gainChange">0</feature>
+       <feature key="gainValue">0.9692914</feature>
+       <feature key="biasValue">-6.069291114807129</feature>
+       <feature key="solarIrradiation">1044.000</feature>
+    </feature>
+     <feature key="bandScaling">
+       <feature key="band">5</feature>
+       <feature key="gainSetting">H</feature>
+       <feature key="gainChange">0</feature>
+       <feature key="gainValue">0.12622046</feature>
+       <feature key="biasValue">-1.126220464706421</feature>
+       <feature key="solarIrradiation">225.7</feature>
+    </feature>
+     <feature key="bandScaling">
+       <feature key="band">61</feature>
+       <feature key="gainSetting">L</feature>
+       <feature key="gainChange">0</feature>
+       <feature key="gainValue">0.067086615</feature>
+       <feature key="biasValue">-0.0670866146683693</feature>
+       <feature key="solarIrradiation">0</feature>
+    </feature>
+     <feature key="bandScaling">
+       <feature key="band">62</feature>
+       <feature key="gainSetting">H</feature>
+       <feature key="gainChange">0</feature>
+       <feature key="gainValue">0.037204724</feature>
+       <feature key="biasValue">3.162795305252075</feature>
+       <feature key="solarIrradiation">0</feature>
+    </feature>
+     <feature key="bandScaling">
+       <feature key="band">7</feature>
+       <feature key="gainSetting">H</feature>
+       <feature key="gainChange">0</feature>
+       <feature key="gainValue">0.04389764</feature>
+       <feature key="biasValue">-0.3938976228237152</feature>
+       <feature key="solarIrradiation">82.06</feature>
+    </feature>
+     <feature key="bandScaling">
+       <feature key="band">8</feature>
+       <feature key="gainSetting">L</feature>
+       <feature key="gainChange">0</feature>
+       <feature key="gainValue">0.9755906</feature>
+       <feature key="biasValue">-5.675590515136719</feature>
+       <feature key="solarIrradiation">1369.000</feature>
+    </feature>
+  </specificParameters>
+</item>
+
+ <item>
+   <administration>
+     <id xmlns="http://www.caf.dlr.de/dims/pl/iif">(rid://eods_hb_pl_eods_XXXXB00000000342469139924)</id>
+     
+     <type xmlns="http://www.caf.dlr.de/dims/pl/iif">LANDSAT7.ETM.Scene-BROWSE</type>
+     <keys xmlns="http://www.caf.dlr.de/dims/pl/iif">
+<feature key="productID">L7-_ETM_HRF_BUMP_0165_00_0073_00_131204_072545_L0Ra_UTM37S</feature>
+<feature key="mission">LANDSAT7</feature>
+</keys>
+   <owner>DIMS</owner> <group>DIMS</group> <permission>
+  <ownerRights>VIEW</ownerRights>
+  <ownerRights>READ</ownerRights>
+  <ownerRights>WRITE</ownerRights>
+  <ownerRights>DELETE</ownerRights>
+  <groupRights>VIEW</groupRights>
+  <groupRights>READ</groupRights>
+  <worldRights>VIEW</worldRights>
+  <worldRights>READ</worldRights>
+ </permission> <location>OP</location> <permanency>PERMANENT</permanency>
+</administration>
+   <commandOption xmlns="http://www.caf.dlr.de/dims/pl/iif">
+<action>INSERT</action>
+</commandOption> <fileInformation xmlns="http://www.caf.dlr.de/dims/pl/iif">
+<file>
+<location>
+<host>.</host>
+<path>.</path>
+<name>L7_BROWSE_ASLPGS_504020.jpeg</name>
+<account>.</account>
+<password/>
+</location>
+<size>
+<value>27532</value>
+<unit>Byte</unit>
+<bytesPerUnit>1</bytesPerUnit>
+</size>
+</file>
+</fileInformation> <components/> <parameters>
+  <temporalCoverage>
+   <startTime>2013-12-04T07:25:32.000</startTime>
+   <centerTime>2013-12-04T07:25:45.000</centerTime>
+   <stopTime>2013-12-04T07:25:52.000</stopTime>
+  </temporalCoverage>
+ </parameters> <specificParameters>
+     <feature key="insertionTime">2013-12-09T08:43:08.474</feature>
+    
+  </specificParameters>
+</item>
+</IIF>

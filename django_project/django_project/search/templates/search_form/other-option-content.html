@@ -1,0 +1,26 @@
+<div class="accordion-body">
+
+        <div class="control-group">
+            <label class="control-label" for="id_band_count">Band count</label>
+            <div class="controls">
+                {{ search_form.band_count }}
+        <span class="help-popover"
+              data-title="Band count"
+              data-content="{{ search_form.band_count.help_text }}"
+              data-trigger="hover"
+              data-container="body">
+          <i class="icon-question-sign"></i>
+        </span>
+            </div>
+        </div>
+        <div class="search-options">
+            <div class="control-group">
+                <div class="controls form-check">
+                    {{ search_form.free_imagery }}
+                    <label class="form-check-label" for="freeImagery">
+                         {{ search_form.free_imagery.label_tag }}
+                    </label>
+                </div>
+            </div>
+        </div>
+</div>

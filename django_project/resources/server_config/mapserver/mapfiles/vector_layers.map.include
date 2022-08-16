@@ -1,0 +1,433 @@
+  # Include this snippet in your map file e.g. 
+  # include 'vector_layers.map.include'
+  LAYER
+    NAME 'country'
+    TYPE POLYGON
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    # For gcgid connection pooling
+    PROCESSING "CLOSE_CONNECTION=DEFER"
+    DATA 'the_geom FROM country using unique gid using SRID=4326'
+    METADATA
+      'wms_title' 'country'
+      'wms_srs'             'EPSG:4326'
+      'wms_extent' "16 -35 33 -22"
+    END
+    STATUS DEFAULT
+    TRANSPARENCY ALPHA
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    ''
+    END
+    CLASS
+       NAME 'country' 
+       STYLE
+         ANTIALIAS TRUE
+         SYMBOL 0 
+         SIZE 2 
+         OUTLINECOLOR 0 0 0
+         COLOR -1 -1 -1
+       END
+    END
+  END
+
+
+
+  LAYER
+    NAME 'RuralCadastrals'
+    TYPE POLYGON
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    # For gcgid connection pooling
+    PROCESSING "CLOSE_CONNECTION=DEFER"
+    DATA 'the_geom FROM za_cadastral_national using unique gid using SRID=4326'
+    METADATA
+      'wms_title' 'Rural Cadastrals'
+      'wms_srs'             'EPSG:4326'
+      'wms_extent' "16 -35 33 -22"
+    END
+    STATUS DEFAULT
+    TRANSPARENCY ALPHA
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    ''
+    END
+    MINSCALE 1
+    MAXSCALE 10000
+    LABELITEM 'farm_no'
+    CLASS
+       NAME 'Rural Cadastrals' 
+       STYLE
+         ANTIALIAS TRUE
+         SYMBOL 0 
+         SIZE 2 
+         OUTLINECOLOR 167 167 167
+         COLOR -1 -1 -1
+      END
+      LABEL
+        PARTIALS FALSE
+        COLOR 255 255 255
+        OUTLINECOLOR 0 0 0
+        FONT "arial"
+        TYPE truetype
+        POSITION CC
+        ANGLE AUTO
+        OFFSET 0 0
+        SIZE 7
+        MINDISTANCE 400
+        BUFFER 11
+      END
+    END
+  END
+
+  LAYER
+    NAME 'UrbanCadastrals'
+    TYPE POLYGON
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    # For gcgid connection pooling
+    PROCESSING "CLOSE_CONNECTION=DEFER"
+    DATA 'the_geom FROM za_cadastral using unique gid using SRID=4326'
+    METADATA
+      'wms_title' 'Urban Cadastrals'
+      'wms_srs'             'EPSG:4326'
+      'wms_extent' "16 -35 33 -22"
+    END
+    STATUS DEFAULT
+    TRANSPARENCY ALPHA
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    ''
+    END
+    MINSCALE 1
+    MAXSCALE 10000
+    LABELITEM 'erf_no'
+    CLASS
+       NAME 'Urban Cadastrals' 
+       STYLE
+         ANTIALIAS TRUE
+         SYMBOL 0 
+         SIZE 2 
+         OUTLINECOLOR 188 191 149
+         COLOR -1 -1 -1
+      END
+      LABEL
+        PARTIALS FALSE
+        COLOR 255 255 255
+        FONT "arial"
+        TYPE truetype
+        POSITION CC
+        ANGLE AUTO
+        OFFSET 0 0
+        SIZE 8
+        MINDISTANCE 400
+        BUFFER 8
+      END
+    END
+  END
+
+  LAYER
+    NAME 'Highways'
+    TYPE LINE
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    # For gcgid connection pooling
+    PROCESSING "CLOSE_CONNECTION=DEFER"
+    DATA 'the_geom FROM za_highways using unique gid using SRID=4326'
+    METADATA
+      'wms_title' 'Highways'
+      'wms_srs'             'EPSG:4326'
+      'wms_extent' "16 -35 33 -22"
+    END
+    STATUS DEFAULT
+    TRANSPARENCY ALPHA
+    PROJECTION
+      'proj=longlat'
+      'ellps=WGS84'
+      'datum=WGS84'
+      'no_defs'
+      ''
+    END
+    LABELITEM 'str_name' 
+    CLASSITEM 'category'
+    MINSCALE 1000001
+    MAXSCALE 10000000
+    CLASS
+      NAME 'category = HIGHWAY' 
+      EXPRESSION 'HIGHWAY' 
+      STYLE
+        ANTIALIAS TRUE
+        SYMBOL 'circle'
+        SIZE 6
+        COLOR 140 140 140
+      END
+      STYLE
+        ANTIALIAS TRUE
+        SYMBOL 'circle'
+        SIZE 4
+        COLOR 255 250 115
+      END
+    END
+  END
+
+  LAYER
+    NAME 'Highways'
+    TYPE LINE
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    # For gcgid connection pooling
+    PROCESSING "CLOSE_CONNECTION=DEFER"
+    DATA 'the_geom FROM za_highways USING unique gid using SRID=4326'
+    METADATA
+      'wms_title' 'Highways'
+      'wms_srs'             'EPSG:4326'
+      'wms_extent' "16 -35 33 -22"
+    END
+    STATUS DEFAULT
+    TRANSPARENCY ALPHA
+    PROJECTION
+      'proj=longlat'
+      'ellps=WGS84'
+      'datum=WGS84'
+      'no_defs'
+      ''
+    END
+    LABELITEM 'str_name' 
+    CLASSITEM 'category'
+    MINSCALE 60001
+    MAXSCALE 1000000
+    CLASS
+      NAME 'category = SECONDARY' 
+      EXPRESSION 'SECONDARY' 
+      STYLE
+        ANTIALIAS TRUE
+        SYMBOL 'circle'
+        SIZE 5 
+        COLOR 180 180 180
+      END
+      STYLE
+        ANTIALIAS TRUE
+        SYMBOL 'circle'
+        SIZE 3 
+        COLOR 255 255 255
+       END
+    END
+    CLASS
+      NAME 'category = MAIN ROADS' 
+      EXPRESSION 'MAIN ROADS' 
+      STYLE
+        ANTIALIAS TRUE
+        SYMBOL 'circle'
+        SIZE 3 
+        COLOR 140 140 140
+      END
+      STYLE
+        ANTIALIAS TRUE
+        SYMBOL 'circle'
+        SIZE 1 
+        COLOR 255 250 115
+       END
+    END
+    CLASS
+      NAME 'category = HIGHWAY' 
+      EXPRESSION 'HIGHWAY' 
+      STYLE
+        ANTIALIAS TRUE
+        SYMBOL 'circle'
+        SIZE 6
+        COLOR 140 140 140
+      END
+      STYLE
+        ANTIALIAS TRUE
+        SYMBOL 'circle'
+        SIZE 4
+        COLOR 255 250 115
+      END
+    END
+  END
+
+  LAYER
+    NAME 'Highways'
+    TYPE LINE
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    # For gcgid connection pooling
+    PROCESSING "CLOSE_CONNECTION=DEFER"
+    DATA 'the_geom FROM za_highways USING unique gid using SRID=4326'
+    METADATA
+      'wms_title' 'Highways'
+      'wms_srs'             'EPSG:4326'
+      'wms_extent' "16 -35 33 -22"
+    END
+    STATUS DEFAULT
+    TRANSPARENCY ALPHA
+    PROJECTION
+      'proj=longlat'
+      'ellps=WGS84'
+      'datum=WGS84'
+      'no_defs'
+      ''
+    END
+    LABELITEM 'str_name' 
+    CLASSITEM 'category'
+    MINSCALE 1
+    MAXSCALE 60000
+    CLASS
+      NAME 'category = SECONDARY' 
+      EXPRESSION 'SECONDARY' 
+      STYLE
+        ANTIALIAS TRUE
+        SYMBOL 'circle'
+        SIZE 5 
+        COLOR 180 180 180
+      END
+      STYLE
+        ANTIALIAS TRUE
+        SYMBOL 'circle'
+        SIZE 3 
+        COLOR 255 255 255
+       END
+    END
+    CLASS
+      NAME 'category = MAIN ROADS' 
+      EXPRESSION 'MAIN ROADS' 
+      STYLE
+        ANTIALIAS TRUE
+        SYMBOL 'circle'
+        SIZE 3 
+        COLOR 140 140 140
+      END
+      STYLE
+        ANTIALIAS TRUE
+        SYMBOL 'circle'
+        SIZE 1 
+        COLOR 255 250 115
+       END
+      LABEL
+        PARTIALS FALSE
+        COLOR 0 0 20
+        OUTLINECOLOR 255 255 255
+        FONT "arial"
+        TYPE truetype
+        POSITION AUTO
+        ANGLE FOLLOW
+        MINDISTANCE 400
+        BUFFER 8
+        OFFSET 0 -4
+        SIZE 7
+      END
+    END
+    CLASS
+      NAME 'category = HIGHWAY' 
+      EXPRESSION 'HIGHWAY' 
+      STYLE
+        ANTIALIAS TRUE
+        SYMBOL 'circle'
+        SIZE 6
+        COLOR 140 140 140
+      END
+      STYLE
+        ANTIALIAS TRUE
+        SYMBOL 'circle'
+        SIZE 4
+        COLOR 255 250 115
+      END
+
+      LABEL
+        PARTIALS FALSE
+        COLOR 0 0 0
+        OUTLINECOLOR 200 200 200
+        FONT "arial"
+        TYPE truetype
+        POSITION AUTO
+        ANGLE FOLLOW
+        MINDISTANCE 400
+        BUFFER 8
+        OFFSET 0 -4
+        SIZE 7
+      END
+    END
+  END
+
+  LAYER
+    NAME 'Roads'
+    TYPE LINE
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    # For gcgid connection pooling
+    PROCESSING "CLOSE_CONNECTION=DEFER"
+    DATA 'the_geom FROM za_roads USING unique gid using SRID=4326'
+    METADATA
+      'wms_title' 'Roads'
+      'wms_srs'             'EPSG:4326'
+      'wms_extent' "16 -35 33 -22"
+    END
+    STATUS DEFAULT
+    TRANSPARENCY ALPHA
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    ''
+    END
+    MINSCALE 1
+    MAXSCALE 10000
+    CLASSITEM 'category'
+    LABELITEM 'str_name' 
+    CLASS
+      NAME 'category = OTHER' 
+      EXPRESSION 'OTHER' 
+      STYLE
+        ANTIALIAS TRUE
+        SYMBOL 'circle'
+        SIZE 3 
+        COLOR 140 140 140
+       END
+      STYLE
+        ANTIALIAS TRUE
+        SYMBOL 'circle'
+        SIZE 1 
+        COLOR 255 219 50
+       END
+    END
+    CLASS
+      NAME 'category = STREET' 
+      EXPRESSION 'STREET' 
+      STYLE
+        ANTIALIAS TRUE
+        SYMBOL 'circle'
+        SIZE 3
+        COLOR 140 140 140
+      END
+      STYLE
+        ANTIALIAS TRUE
+        SYMBOL 'circle'
+        SIZE 1
+        COLOR 255 219 50
+      END
+      LABEL
+        PARTIALS FALSE
+        COLOR 20 20 20
+        FONT "arial"
+        TYPE truetype
+        POSITION AUTO
+        ANGLE FOLLOW
+        MINDISTANCE 400
+        BUFFER 8
+        OFFSET 0 0
+        ANTIALIAS TRUE
+        SIZE 8
+      END
+    END
+  END
+

@@ -1,0 +1,24 @@
+{% extends 'productTypes/genericSensorProduct.html' %}
+{% block header %}
+<h5 class="modal-title" id="staticBackdropLabel">Optical Product details for
+<br/><span class="centered">{{myObject.product_id}}</span></h5>
+{% endblock %}
+
+{% block tableBody %}
+{{ block.super }}
+<tr><th colspan="2">Optical Product-Specific Properties</th></tr>
+<tr><td class="loud">Product Date</td><td class="quiet">{{ myObject.product_date }}</td></tr>
+<tr><td class="loud">Cloud Cover</td><td class="quiet">{{ myObject.cloud_cover }}</td></tr>
+<tr><td class="loud">Sensor Inclination Angle</td><td class="quiet">{{ myObject.sensor_inclination_angle }}</td></tr>
+<tr><td class="loud">Sensor Viewing Angle</td><td class="quiet">{{ myObject.sensor_viewing_angle }}</td></tr>
+<tr><td class="loud">Gain Name</td><td class="quiet">{{ myObject.gain_name }}</td></tr>
+<tr><td class="loud">Gain Value Per Channel</td><td class="quiet">{{ myObject.gain_value_per_channel }}</td></tr>
+<tr><td class="loud">Gain Change Per Channel</td><td class="quiet">{{ myObject.gain_change_per_channel }}</td></tr>
+<tr><td class="loud">Bias Per Channel</td><td class="quiet">{{ myObject.bias_per_channel }}</td></tr>
+<tr><td class="loud">Solar Zenith Angle</td><td class="quiet">{{ myObject.solar_zenith_angle }}</td></tr>
+<tr><td class="loud">Solar Azimuth Angle</td><td class="quiet">{{ myObject.solar_azimuth_angle }}</td></tr>
+<tr><td class="loud">Earth Sun Distance</td><td class="quiet">{{ myObject.earth_sun_distance }}</td></tr>
+
+{% endblock %}
+
+

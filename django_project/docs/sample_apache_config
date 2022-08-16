@@ -1,0 +1,89 @@
+NameVirtualHost *
+<VirtualHost *>
+  ServerAdmin webmaster@localhost
+  DocumentRoot /var/www/catalogue_redirect/
+  #set to anything to ensure only explicitly named mapfiles are used
+  SetEnv MS_MAP_NO_PATH "foo"
+  #set the ZA_VECTOR e.g. http://localhost/cgi-bin/mapserv?map=ZA_VECTOR&mode=...
+  SetEnv ZA_VECTOR "/opt/webmapping/mapfiles/za_vector.map"
+  SetEnv ZA_SPOT "/opt/webmapping/mapfiles/spot.map"
+  SetEnv ZA_NBI "/opt/webmapping/mapfiles/za_nbi.map"
+  SetEnv WORLD "/opt/webmapping/mapfiles/world.map"
+  SetEnv SEARCHES "/opt/webmapping/mapfiles/searches.map"
+  SetEnv VISITORS "/opt/webmapping/mapfiles/visitors.map"
+  <Directory />
+    Options FollowSymLinks
+    AllowOverride None
+  </Directory>
+  <Directory /var/www/>
+    Options Indexes FollowSymLinks MultiViews
+    AllowOverride None
+    Order allow,deny
+    allow from all
+  </Directory>
+
+
+  ScriptAlias /cgi-bin/ /usr/lib/cgi-bin/
+  <Directory "/usr/lib/cgi-bin">
+    AllowOverride None
+    Options ExecCGI -MultiViews +SymLinksIfOwnerMatch
+    Order allow,deny
+    Allow from all
+  </Directory>
+
+  ErrorLog /var/log/apache2/error.log
+
+  # Possible values include: debug, info, notice, warn, error, crit,
+  # alert, emerg.
+  LogLevel warn
+
+  CustomLog /var/log/apache2/access.log combined
+  ServerSignature On
+
+    Alias /doc/ "/usr/share/doc/"
+    <Directory "/usr/share/doc/">
+        Options Indexes MultiViews FollowSymLinks
+        AllowOverride None
+        Order deny,allow
+        Deny from all
+        Allow from 127.0.0.0/255.0.0.0 ::1/128
+    </Directory>
+
+   # For webmapping
+   Alias /maps/ "/opt/webmapping/web/"
+   Alias /tmp/ "/tmp/ms_tmp/"
+   Alias /kamap/ "/opt/webmapping/kamap/htdocs/"
+
+  # Added by Tim for django
+  
+  # This handler is required because our app is not 
+  # at apache root and so the django registration
+  # generates the wrong URLS. To cover out butts
+  # we use this sac location too...
+  <Location "/sac/">
+    SetHandler python-program
+    PythonHandler django.core.handlers.modpython
+    SetEnv DJANGO_SETTINGS_MODULE sac.settings
+    # see informix notes for why this is needed
+    SetEnv INFORMIXSERVER catalog2
+    PythonPath "['/opt/sac_catalogue/','/opt/sac_catalogue/sac/'] + sys.path"
+    PythonOption django.root /sac
+    PythonDebug On  
+  </Location>
+  # Location used for the main django catalogue app
+  <Location "/catalogue/">
+    SetHandler python-program
+    PythonHandler django.core.handlers.modpython
+    SetEnv DJANGO_SETTINGS_MODULE sac.settings
+    # see informix notes for why this is needed
+    SetEnv INFORMIXSERVER catalog2
+    PythonPath "['/opt/sac_catalogue/','/opt/sac_catalogue/sac/'] + sys.path"
+    PythonOption django.root /sac
+    PythonDebug On  
+  </Location>
+  Alias /admin_media/ "/usr/share/python-support/python-django/django/contrib/admin/media/"
+  <Directory "/usr/share/python-support/python-django/django/contrib/admin/media/">
+      Options Indexes MultiViews FollowSymLinks
+      AllowOverride None
+  </Directory>
+</VirtualHost>

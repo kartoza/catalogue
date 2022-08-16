@@ -1,0 +1,162 @@
+digraph g {
+node [ fontsize = "10", shape = record ];
+edge [];
+
+"public.catalogue_acquisitionmode" [shape = record, label = "{<col0> \N| id:  serial\labbreviation:  character varying(4)\lname:  character varying(255)\lgeometric_resolution:  integer\lband_count:  integer\lsensor_type_id:  integer\lis_grayscale:  boolean\loperator_abbreviation:  character varying(255)\l}" ];
+
+"public.catalogue_clip" [shape = record, label = "{<col0> \N| id:  serial\lguid:  character varying(40)\lowner_id:  integer\ldate:  timestamp with time zone\limage:  character varying(20)\lstatus:  character varying(20)\lresult_url:  character varying(1024)\lpolygon:  geometry\l}" ];
+
+"public.catalogue_continuousproduct" [shape = record, label = "{<col0> \N| genericproduct_ptr_id:  integer\lrange_min:  double precision\lrange_max:  double precision\lunit_id:  integer\l}" ];
+
+"public.catalogue_creatingsoftware" [shape = record, label = "{<col0> \N| id:  serial\lname:  character varying(255)\lversion:  character varying(100)\l}" ];
+
+"public.catalogue_datum" [shape = record, label = "{<col0> \N| id:  serial\lname:  character varying(128)\l}" ];
+
+"public.catalogue_deliverydetail" [shape = record, label = "{<col0> \N| id:  serial\luser_id:  integer\lprocessing_level_id:  integer\lprojection_id:  integer\ldatum_id:  integer\lresampling_method_id:  integer\lfile_format_id:  integer\lgeometry:  geometry\l}" ];
+
+"public.catalogue_deliverymethod" [shape = record, label = "{<col0> \N| id:  serial\lname:  character varying(128)\l}" ];
+
+"public.catalogue_fileformat" [shape = record, label = "{<col0> \N| id:  serial\lname:  character varying(128)\l}" ];
+
+"public.catalogue_genericimageryproduct" [shape = record, label = "{<col0> \N| genericproduct_ptr_id:  integer\lgeometric_resolution:  double precision\lgeometric_resolution_x:  double precision\lgeometric_resolution_y:  double precision\lradiometric_resolution:  integer\lband_count:  integer\l}" ];
+
+"public.catalogue_genericproduct" [shape = record, label = "{<col0> \N| id:  serial\lprocessing_level_id:  integer\lowner_id:  integer\llicense_id:  integer\lproduct_date:  timestamp with time zone\lprojection_id:  integer\lquality_id:  integer\lcreating_software_id:  integer\loriginal_product_id:  character varying(255)\lproduct_id:  character varying(255)\lproduct_revision:  character varying(255)\lmetadata:  text\lspatial_coverage:  geometry\llocal_storage_path:  character varying(255)\lremote_thumbnail_url:  character varying(255)\l}" ];
+
+"public.catalogue_genericsensorproduct" [shape = record, label = "{<col0> \N| genericimageryproduct_ptr_id:  integer\lacquisition_mode_id:  integer\lproduct_acquisition_start:  timestamp with time zone\lproduct_acquisition_end:  timestamp with time zone\lgeometric_accuracy_mean:  double precision\lgeometric_accuracy_1sigma:  double precision\lgeometric_accuracy_2sigma:  double precision\lradiometric_signal_to_noise_ratio:  double precision\lradiometric_percentage_error:  double precision\lspectral_accuracy:  double precision\lorbit_number:  integer\lpath:  integer\lpath_offset:  integer\lrow:  integer\lrow_offset:  integer\loffline_storage_medium_id:  character varying(12)\lonline_storage_medium_id:  character varying(36)\l}" ];
+
+"public.catalogue_geospatialproduct" [shape = record, label = "{<col0> \N| genericproduct_ptr_id:  integer\lname:  character varying(255)\ldescription:  text\lprocessing_notes:  text\lequivalent_scale:  integer\ldata_type:  character varying(1)\ltemporal_extent_start:  timestamp with time zone\ltemporal_extent_end:  timestamp with time zone\lplace_type_id:  integer\lplace_id:  integer\lprimary_topic_id:  integer\l}" ];
+
+"public.catalogue_institution" [shape = record, label = "{<col0> \N| id:  serial\lname:  character varying(255)\laddress1:  character varying(255)\laddress2:  character varying(255)\laddress3:  character varying(255)\lpost_code:  character varying(255)\l}" ];
+
+"public.catalogue_license" [shape = record, label = "{<col0> \N| id:  serial\lname:  character varying(255)\ldetails:  text\ltype:  integer\l}" ];
+
+"public.catalogue_marketsector" [shape = record, label = "{<col0> \N| id:  serial\lname:  character varying(80)\l}" ];
+
+"public.catalogue_mission" [shape = record, label = "{<col0> \N| id:  serial\labbreviation:  character varying(3)\lname:  character varying(255)\lmission_group_id:  integer\lowner:  character varying(255)\loperator_abbreviation:  character varying(255)\l}" ];
+
+"public.catalogue_missiongroup" [shape = record, label = "{<col0> \N| id:  serial\lname:  character varying(255)\l}" ];
+
+"public.catalogue_missionsensor" [shape = record, label = "{<col0> \N| id:  serial\labbreviation:  character varying(3)\lname:  character varying(255)\ldescription:  text\lhas_data:  boolean\lmission_id:  integer\lis_taskable:  boolean\lis_radar:  boolean\loperator_abbreviation:  character varying(255)\l}" ];
+
+"public.catalogue_opticalproduct" [shape = record, label = "{<col0> \N| genericsensorproduct_ptr_id:  integer\lcloud_cover:  integer\lsensor_inclination_angle:  double precision\lsensor_viewing_angle:  double precision\lgain_name:  character varying(200)\lgain_value_per_channel:  character varying(200)\lgain_change_per_channel:  character varying(200)\lbias_per_channel:  character varying(200)\lsolar_zenith_angle:  double precision\lsolar_azimuth_angle:  double precision\learth_sun_distance:  double precision\l}" ];
+
+"public.catalogue_order" [shape = record, label = "{<col0> \N| id:  serial\luser_id:  integer\lnotes:  text\lorder_status_id:  integer\ldelivery_method_id:  integer\lorder_date:  timestamp with time zone\ldelivery_detail_id:  integer\lmarket_sector_id:  integer\l}" ];
+
+"public.catalogue_ordernotificationrecipients" [shape = record, label = "{<col0> \N| id:  serial\luser_id:  integer\l}" ];
+
+"public.catalogue_ordernotificationrecipients_classes" [shape = record, label = "{<col0> \N| id:  serial\lordernotificationrecipients_id:  integer\lcontenttype_id:  integer\l}" ];
+
+"public.catalogue_ordernotificationrecipients_sensors" [shape = record, label = "{<col0> \N| id:  serial\lordernotificationrecipients_id:  integer\lmissionsensor_id:  integer\l}" ];
+
+"public.catalogue_orderstatus" [shape = record, label = "{<col0> \N| id:  serial\lname:  character varying(128)\l}" ];
+
+"public.catalogue_orderstatushistory" [shape = record, label = "{<col0> \N| id:  serial\luser_id:  integer\lorder_id:  integer\lorder_change_date:  timestamp with time zone\lnotes:  text\lold_order_status_id:  integer\lnew_order_status_id:  integer\l}" ];
+
+"public.catalogue_ordinalproduct" [shape = record, label = "{<col0> \N| genericproduct_ptr_id:  integer\lclass_count:  integer\lconfusion_matrix:  character varying(80)\lkappa_score:  double precision\l}" ];
+
+"public.catalogue_place" [shape = record, label = "{<col0> \N| id:  serial\lname:  character varying(255)\lplace_type_id:  integer\l}" ];
+
+"public.catalogue_placetype" [shape = record, label = "{<col0> \N| id:  serial\lname:  character varying(255)\l}" ];
+
+"public.catalogue_processinglevel" [shape = record, label = "{<col0> \N| id:  serial\labbreviation:  character varying(4)\lname:  character varying(255)\l}" ];
+
+"public.catalogue_productlink" [shape = record, label = "{<col0> \N| id:  serial\lparent_id:  integer\lchild_id:  integer\l}" ];
+
+"public.catalogue_projection" [shape = record, label = "{<col0> \N| id:  serial\lepsg_code:  integer\lname:  character varying(128)\l}" ];
+
+"public.catalogue_quality" [shape = record, label = "{<col0> \N| id:  serial\lname:  character varying(255)\l}" ];
+
+"public.catalogue_radarproduct" [shape = record, label = "{<col0> \N| genericsensorproduct_ptr_id:  integer\limaging_mode:  character varying(200)\llook_direction:  character varying(1)\lantenna_receive_configuration:  character varying(1)\lpolarising_mode:  character varying(1)\lpolarising_list:  character varying(200)\lslant_range_resolution:  double precision\lazimuth_range_resolution:  double precision\lorbit_direction:  character varying(1)\lcalibration:  character varying(255)\lincidence_angle:  double precision\l}" ];
+
+"public.catalogue_resamplingmethod" [shape = record, label = "{<col0> \N| id:  serial\lname:  character varying(128)\l}" ];
+
+"public.catalogue_sacuserprofile" [shape = record, label = "{<col0> \N| id:  serial\luser_id:  integer\ldate:  timestamp with time zone\lcountry:  character varying(2)\llatitude:  numeric(10,6)\llongitude:  numeric(10,6)\llocation:  character varying(255)\lstrategic_partner:  boolean\lfirstname:  character varying(255)\lsurname:  character varying(255)\lurl:  character varying(200)\labout:  text\laddress1:  character varying(255)\laddress2:  character varying(255)\laddress3:  character varying(255)\laddress4:  character varying(255)\lpost_code:  character varying(25)\lorganisation:  character varying(255)\lcontact_no:  character varying(16)\l}" ];
+
+"public.catalogue_search" [shape = record, label = "{<col0> \N| id:  serial\luser_id:  integer\lkeywords:  character varying(255)\lsearch_date:  timestamp with time zone\lguid:  character varying(40)\ldeleted:  boolean\luse_cloud_cover:  boolean\lcloud_mean:  integer\lgeometry:  geometry\lip_position:  geometry\lsearch_type:  integer\lacquisition_mode_id:  integer\lmission_id:  integer\lsensor_type_id:  integer\lgeometric_accuracy_mean:  integer\lband_count:  integer\lsensor_inclination_angle_start:  double precision\lsensor_inclination_angle_end:  double precision\lk_orbit_path:  character varying(255)\lj_frame_row:  character varying(255)\llicense_type:  integer\lpolarising_mode:  character varying(1)\lrecord_count:  integer\l}" ];
+
+"public.catalogue_search_processing_level" [shape = record, label = "{<col0> \N| id:  serial\lsearch_id:  integer\lprocessinglevel_id:  integer\l}" ];
+
+"public.catalogue_search_sensors" [shape = record, label = "{<col0> \N| id:  serial\lsearch_id:  integer\lmissionsensor_id:  integer\l}" ];
+
+"public.catalogue_searchdaterange" [shape = record, label = "{<col0> \N| id:  serial\lstart_date:  date\lend_date:  date\lsearch_id:  integer\l}" ];
+
+"public.catalogue_searchrecord" [shape = record, label = "{<col0> \N| id:  serial\luser_id:  integer\lorder_id:  integer\lproduct_id:  integer\lproduct_ready:  boolean\linternal_order_id:  integer\ldownload_path:  character varying(512)\ldelivery_detail_id:  integer\l}" ];
+
+"public.catalogue_sensortype" [shape = record, label = "{<col0> \N| id:  serial\labbreviation:  character varying(4)\lname:  character varying(255)\lmission_sensor_id:  integer\loperator_abbreviation:  character varying(255)\l}" ];
+
+"public.catalogue_taskingrequest" [shape = record, label = "{<col0> \N| order_ptr_id:  integer\ltarget_date:  timestamp with time zone\lmission_sensor_id:  integer\l}" ];
+
+"public.catalogue_topic" [shape = record, label = "{<col0> \N| id:  serial\labbreviation:  character varying(10)\lname:  character varying(255)\l}" ];
+
+"public.catalogue_unit" [shape = record, label = "{<col0> \N| id:  serial\labbreviation:  character varying(10)\lname:  character varying(255)\l}" ];
+
+"public.catalogue_visit" [shape = record, label = "{<col0> \N| id:  serial\lcity:  character varying(255)\lcountry:  character varying(255)\lip_address:  inet\lvisit_date:  timestamp with time zone\luser_id:  integer\lip_position:  geometry\l}" ];
+
+"public.catalogue_worldborders" [shape = record, label = "{<col0> \N| id:  serial\liso2:  character varying(2)\liso3:  character varying(3)\lname:  character varying(100)\lgeometry:  geometry\l}" ];
+
+
+"public.catalogue_acquisitionmode" -> "public.catalogue_sensortype" [label="catalogue_acquisitionmode_sensor_type_id_fkey"];
+"public.catalogue_clip" -> "public.auth_user" [label="catalogue_clip_owner_id_fkey"];
+"public.catalogue_continuousproduct" -> "public.catalogue_genericproduct" [label="catalogue_continuousproduct_genericproduct_ptr_id_fkey"];
+"public.catalogue_continuousproduct" -> "public.catalogue_unit" [label="catalogue_continuousproduct_unit_id_fkey"];
+"public.catalogue_deliverydetail" -> "public.auth_user" [label="catalogue_deliverydetail__auth_user_id_fk"];
+"public.catalogue_deliverydetail" -> "public.catalogue_processinglevel" [label="catalogue_deliverydetail__catalogue_processinglevel_id_fk"];
+"public.catalogue_deliverydetail" -> "public.catalogue_projection" [label="catalogue_deliverydetail__catalogue_projection_id_fk"];
+"public.catalogue_deliverydetail" -> "public.catalogue_datum" [label="catalogue_deliverydetail__catalogue_datum_id_fk"];
+"public.catalogue_deliverydetail" -> "public.catalogue_resamplingmethod" [label="catalogue_deliverydetail__catalogue_resamplingmethod_id_fk"];
+"public.catalogue_deliverydetail" -> "public.catalogue_fileformat" [label="catalogue_deliverydetail__catalogue_fileformat_id_fk"];
+"public.catalogue_genericproduct" -> "public.catalogue_processinglevel" [label="catalogue_genericproduct_processing_level_id_fkey"];
+"public.catalogue_genericproduct" -> "public.catalogue_institution" [label="catalogue_genericproduct_owner_id_fkey"];
+"public.catalogue_genericproduct" -> "public.catalogue_license" [label="catalogue_genericproduct_license_id_fkey"];
+"public.catalogue_genericproduct" -> "public.catalogue_projection" [label="catalogue_genericproduct_projection_id_fkey"];
+"public.catalogue_genericproduct" -> "public.catalogue_quality" [label="catalogue_genericproduct_quality_id_fkey"];
+"public.catalogue_genericproduct" -> "public.catalogue_creatingsoftware" [label="catalogue_genericproduct_creating_software_id_fkey"];
+"public.catalogue_genericsensorproduct" -> "public.catalogue_genericproduct" [label="catalogue_genericsensorproduct_genericproduct_ptr_id_fkey"];
+"public.catalogue_genericsensorproduct" -> "public.catalogue_acquisitionmode" [label="catalogue_genericsensorproduct_acquisition_mode_id_fkey"];
+"public.catalogue_geospatialproduct" -> "public.catalogue_genericproduct" [label="catalogue_geospatialproduct_genericproduct_ptr_id_fkey"];
+"public.catalogue_geospatialproduct" -> "public.catalogue_placetype" [label="catalogue_geospatialproduct_place_type_id_fkey"];
+"public.catalogue_geospatialproduct" -> "public.catalogue_place" [label="catalogue_geospatialproduct_place_id_fkey"];
+"public.catalogue_geospatialproduct" -> "public.catalogue_topic" [label="catalogue_geospatialproduct_primary_topic_id_fkey"];
+"public.catalogue_mission" -> "public.catalogue_missiongroup" [label="catalogue_mission_mission_group_id_fkey"];
+"public.catalogue_missionsensor" -> "public.catalogue_mission" [label="catalogue_missionsensor_mission_id_fkey"];
+"public.catalogue_opticalproduct" -> "public.catalogue_genericsensorproduct" [label="catalogue_opticalproduct_genericsensorproduct_ptr_id_fkey"];
+"public.catalogue_order" -> "public.auth_user" [label="catalogue_order_user_id_fkey"];
+"public.catalogue_order" -> "public.catalogue_orderstatus" [label="catalogue_order_order_status_id_fkey"];
+"public.catalogue_order" -> "public.catalogue_deliverymethod" [label="catalogue_order_delivery_method_id_fkey"];
+"public.catalogue_order" -> "public.catalogue_deliverydetail" [label="catalogue_order__catalogue_deliverydetail_id_fk"];
+"public.catalogue_order" -> "public.catalogue_marketsector" [label="catalogue_order_market_sector_id_fkey"];
+"public.catalogue_ordernotificationrecipients" -> "public.auth_user" [label="catalogue_ordernotificationrecipients_user_id_fkey"];
+"public.catalogue_ordernotificationrecipients_classes" -> "public.catalogue_ordernotificationrecipients" [label="ordernotificationrecipients_id_refs_id_2af58da6"];
+"public.catalogue_ordernotificationrecipients_classes" -> "public.django_content_type" [label="catalogue_ordernotificationrecipients_class_contenttype_id_fkey"];
+"public.catalogue_ordernotificationrecipients_sensors" -> "public.catalogue_ordernotificationrecipients" [label="ordernotificationrecipients_id_refs_id_d0f5fced"];
+"public.catalogue_ordernotificationrecipients_sensors" -> "public.catalogue_missionsensor" [label="catalogue_ordernotificationrecipients_sen_missionsensor_id_fkey"];
+"public.catalogue_orderstatushistory" -> "public.auth_user" [label="catalogue_orderstatushistory_user_id_fkey"];
+"public.catalogue_orderstatushistory" -> "public.catalogue_order" [label="catalogue_orderstatushistory_order_id_fkey"];
+"public.catalogue_orderstatushistory" -> "public.catalogue_orderstatus" [label="catalogue_orderstatushistory_old_order_status_id_fkey"];
+"public.catalogue_orderstatushistory" -> "public.catalogue_orderstatus" [label="catalogue_orderstatushistory_new_order_status_id_fkey"];
+"public.catalogue_ordinalproduct" -> "public.catalogue_genericproduct" [label="catalogue_ordinalproduct_genericproduct_ptr_id_fkey"];
+"public.catalogue_place" -> "public.catalogue_placetype" [label="catalogue_place_place_type_id_fkey"];
+"public.catalogue_productlink" -> "public.catalogue_genericproduct" [label="catalogue_productlink_parent_id_fkey"];
+"public.catalogue_productlink" -> "public.catalogue_genericproduct" [label="catalogue_productlink_child_id_fkey"];
+"public.catalogue_radarproduct" -> "public.catalogue_genericsensorproduct" [label="catalogue_radarproduct_genericsensorproduct_ptr_id_fkey"];
+"public.catalogue_sacuserprofile" -> "public.auth_user" [label="catalogue_sacuserprofile_user_id_fkey"];
+"public.catalogue_search" -> "public.auth_user" [label="catalogue_search_user_id_fkey"];
+"public.catalogue_search" -> "public.catalogue_acquisitionmode" [label="catalogue_search_acquisition_mode_id_fkey"];
+"public.catalogue_search" -> "public.catalogue_mission" [label="catalogue_search_mission_id_fkey"];
+"public.catalogue_search" -> "public.catalogue_sensortype" [label="catalogue_search_sensortype_id_fkey"];
+"public.catalogue_search_processing_level" -> "public.catalogue_search" [label="search_id_refs_id_d5a61dd3"];
+"public.catalogue_search_processing_level" -> "public.catalogue_processinglevel" [label="catalogue_search_processing_level_processinglevel_id_fkey"];
+"public.catalogue_search_sensors" -> "public.catalogue_search" [label="search_id_refs_id_6ee6d8f3"];
+"public.catalogue_search_sensors" -> "public.catalogue_missionsensor" [label="catalogue_search_sensors_missionsensor_id_fkey"];
+"public.catalogue_searchdaterange" -> "public.catalogue_search" [label="catalogue_searchdaterange_search_id_fkey"];
+"public.catalogue_searchrecord" -> "public.auth_user" [label="catalogue_searchrecord_user_id_fkey"];
+"public.catalogue_searchrecord" -> "public.catalogue_order" [label="catalogue_searchrecord_order_id_fkey"];
+"public.catalogue_searchrecord" -> "public.catalogue_genericproduct" [label="catalogue_searchrecord_product_id_fkey"];
+"public.catalogue_searchrecord" -> "public.catalogue_deliverydetail" [label="catalogue_searchrecord__catalogue_deliverydetail_id_fk"];
+"public.catalogue_sensortype" -> "public.catalogue_missionsensor" [label="catalogue_sensortype_mission_sensor_id_fkey"];
+"public.catalogue_taskingrequest" -> "public.catalogue_order" [label="catalogue_taskingrequest_order_ptr_id_fkey"];
+"public.catalogue_taskingrequest" -> "public.catalogue_missionsensor" [label="catalogue_taskingrequest_mission_sensor_id_fkey"];
+"public.catalogue_visit" -> "public.auth_user" [label="catalogue_visit_user_id_fkey"];
+}
+
+

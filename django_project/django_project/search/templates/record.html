@@ -1,0 +1,93 @@
+      {% load staticfiles %}
+      <tr id="record-{{ myRecord.product.id }}" class="result-row">{#result-row used for row click callback - do not remove #}
+        {% if myShowDetailFlag %}
+        <td class="show-record-detail-cell"><span class="small" onclick="$('#record-detail-table-{{myRecord.product.id}}').load('{% url 'metadata' myRecord.product.id %}','', $('#record-detail-row-{{myRecord.product.id}}').toggle('slow'));">more</span></td>
+        {% endif %}
+        {% if myShowSensorFlag %}
+        <td>{{ myRecord.product.sensor.name }}</td>
+        {% endif %}
+        {% if myShowIdFlag %}
+        <td>{{ myRecord.product.id }}</td>
+        {% endif %}
+        {% if myShowSceneIdFlag %}
+        <td>{{ myRecord.product.tidySacId }}</td>
+        {% endif %}
+        {% if myShowDateFlag %}
+        <td>{{ myRecord.product.product_date }}</td>
+        {% endif %}
+        {% if myShowRowFlag %}
+        <td>
+          {{ myRecord.product.row }}
+        </td>
+        {% endif %}
+        {% if myShowPathFlag %}
+        <td>
+          {{ myRecord.product.path }}
+        </td>
+        {% endif %}
+        {% if myShowCloudCoverFlag %}
+        <td class="center">
+          {% if myRecord.product.cloud_cover < 0 %}
+          Unknown
+          {% else %}
+          {{ myRecord.product.cloud_cover }}%
+          {% endif %}
+        </td>
+        {% endif %}
+        {% if myShowMetadataFlag %}
+        <td>
+          <img src="{% static 'images/info_16.png'%}"
+               alt="View Metadata"
+               style="cursor: pointer;"
+               class="metadata-icon"
+               longdesc="{{ myRecord.product.id }}"
+          />
+        </td>
+        {% endif %}
+        {% if myShowCartFlag %}
+        <td>
+          <img src="{% static 'images/buy_16.png'%}"
+               alt="Add to Cart"
+               style='cursor: pointer;'
+               onclick='addToCart("{{ myRecord.product.id }}");' />
+        </td>
+        {% endif %}
+        {% if myShowRemoveIconFlag %}
+        <td class="center">
+          <a href="#" {% if myShowMiniCartFlag %}onClick='removeFromMiniCart({{myRecord.id}}, $(this));'{% else %}onClick='removeFromCart({{myRecord.id}}, $(this));'{% endif %}>
+            <i class="icon-remove"></i>
+          </a>
+        </td>
+        {% endif %}
+        {% if myShowPreviewFlag %}
+        <td class="center">
+          <img src="/thumbnail/{{ myRecord.product.id }}/small/"
+                 class='mini-icon'
+                 alt="Thumbnail"
+                 id="miniPreview{{ myRecord.product.id }}"
+                 style="cursor: pointer;"
+                 longdesc="{{ myRecord.product.id }}"
+                 />
+        </td>
+        {% endif %}
+  {# show deliveryDetails if they exist #}
+  {% if myShowDeliveryDetailsFlag %}
+  <td>
+    {% if myRecord.delivery_detail %}
+    <!-- <button  ref_id="{{ myRecord.delivery_detail.id }}" onclick='location="{{ myRecord.delivery_detail.id }}" class="show_delivery button-link"'>Show details</button> -->
+    <a href="#" ref_id="{{ myRecord.delivery_detail.id }}" class="show_delivery button-link">Show details</a>
+    {% endif %}
+  </td>
+  {% endif %}
+  {% if myShowDeliveryDetailsFormFlag %}
+  <td>
+    <!-- <button onclick='show_form button-link" ref_id="{{myRecord.id}}"'>Delivery details</button> -->
+    <a href="#" class="show_form button-link" ref_id="{{ myRecord.id}}">Delivery details</a>
+  </td>
+  {% endif %}
+
+      </tr>
+      {% if myShowDetailFlag %}{# colspan below shamelessly hard coded for now#}
+      <tr class="hidden" id="record-detail-row-{{myRecord.product.id}}"><td class="record-detail-cell-{{myRecord.product.id}}" colspan="6"><table id="record-detail-table-{{myRecord.product.id}}"></table></td></tr>
+      {% endif %}
+

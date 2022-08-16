@@ -1,0 +1,67 @@
+NameVirtualHost *
+<VirtualHost *>
+  ServerAdmin tim@linfiniti.com 
+  ServerName maps.sansa.org.za
+  DocumentRoot /var/www/
+  
+  Include /opt/webmapping/apache-include/mapserver.conf
+  <Directory /var/www/>
+    Options Indexes FollowSymLinks MultiViews
+    AllowOverride None
+    Order allow,deny
+    allow from all
+  </Directory>
+
+  Alias /ss1 /mnt/cataloguestorage/sumbandilasat/SS1
+  <Directory /mnt/cataloguestorage/sumbandilasat/SS1>
+    Options Indexes FollowSymLinks MultiViews
+    AllowOverride None
+    Order allow,deny
+    allow from all
+  </Directory>
+
+  # Options for fastcgi support:
+  # FastCgiConfig -appConnTimeout 60 -idle-timeout 60 -init-start-delay 1 -minProcesses 2 -maxClassProcesses 20 -startDelay 5
+
+  ScriptAlias /cgi-bin/ /usr/lib/cgi-bin/
+  <Directory "/usr/lib/cgi-bin">
+    #Next two lines added by Tim for PyWPS
+    SetEnv PYWPS_CFG /etc/pywps.cfg
+    SetEnv PYWPS_PROCESSES /opt/wps-processes/sac
+    PythonPath "['/opt/','/opt/wps-processes/sac'] + sys.path"
+    AllowOverride None
+    #Options +ExecCGI -MultiViews +SymLinksIfOwnerMatch
+    #changed from above for pywps
+    Options +ExecCGI -MultiViews +FollowSymLinks
+    Order allow,deny
+    Allow from all
+  </Directory>
+
+  #Alias and dir below added for pywps
+  Alias /wps_outputs/ "/tmp/wps_outputs"
+  <Directory "/tmp/wps_outputs/">
+      Options Indexes MultiViews FollowSymLinks
+      AllowOverride None
+  </Directory>
+
+  <Location "/sarmes2">
+    AuthType Basic
+    AuthName "sac"
+    AuthUserFile /etc/apache2/dims.passwd
+    Require valid-user
+  </Location>
+
+
+  ErrorLog /var/log/apache2/error.log
+
+  # Possible values include: debug, info, notice, warn, error, crit,
+  # alert, emerg.
+  LogLevel warn
+
+  CustomLog /var/log/apache2/access.log combined
+  ServerSignature On
+
+  # For munin server monitoring
+  Alias /munin/ "/var/www/munin/"
+
+</VirtualHost>

@@ -1,0 +1,48 @@
+A sac product id adheres to the following format:
+
+SAT_SEN_TYP_MOD_KKKK_KS_JJJJ_JS_YYMMDD_HHMMSS_LEVL       
+
+Where:
+SAT    Satellite or mission          mandatory
+SEN    Sensor                        mandatory
+MOD    Acquisition mode              mandatory?
+TYP    Type                          mandatory?
+KKKK   Orbit path reference          optional?
+KS     Path shift                    optional?
+JJJJ   Orbit row reference           optional?
+JS     Row shift                     optional?
+YYMMDD Acquisition date              mandatory
+HHMMSS Scene centre acquisition time mandatory
+LEVL   Processing level              mandatory
+PROJTN Projection                    mandatory
+
+Examples:
+
+S5-_HRG_J--_CAM2_0118-_00_0418-_00_090403_085811_L1A-_ORBIT-
+S5-_HRG_J--_CAM2_0118-_00_0418-_00_090403_085811_L3Aa_UTM34S
+
+
+Notes:
+Char strings are right padded with hyphens
+Numeric fields are right padded with hyphens
+Field separators are underscores
+
+@note this is a read only property
+@note this is the new id scheme and replaces with productId
+@see productId
+Spot 1-4 : Sensor = HRV,
+           MOD = XI (four bands) XS (three bands)
+           TYP = satelliteSensorNumber
+Spot 5   : Sensor = HRG,
+           MOD = X or A (pan 5m) or B (pan 5m) or J (4 band) or T (pan 2.5m)   
+           Note: l3 products may give composite MOD e.g. JT
+           TYP = satelliteSensorNumber
+@note: in orbit data that has not been georeferenced will have a
+           PROJTN = ORBIT 
+@note: mode examples:
+           J = Multispectral 10m 
+           P/M = Panchromatic 10m 
+           A/B = Panchromatic 5m 
+           T = Panchromatic 2.5m 
+           X = Multispectral 20m
+           JT = Pansharpened 2.5m Multispectral

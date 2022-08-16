@@ -1,0 +1,142 @@
+Summary for DIMS package ingestion
+==================================
+
+SAC products that have to be ingested are SPOT products (OpticalProducts) only.
+
+Write a python module to read XML metadata and extract the thumbnail
+and optionally the imagery product file from a zipped SAC package file.
+
+A compressed SAC package can contain more that one product, distributed
+in one or more processing level directories.
+
+A separate XML file exists for each product in any case.
+
+Implementation
+--------------
+
++ read the SAC package zip contents
++ get a list of the products contained in the zip, the list must contain
+  all data needed to create a catalogue record
++ get pointers (or blobs) for the thumbnails and imagery files in case
+  we need to store them on the filesystem
+
+
+The package will be done through a python module and a Django
+management command.
+
+
+Problems
+--------
+
+
+**Note**: ORD_420882_20110124_20110124_SPOT-_V01_1 is the reference
+          example for the following data
+
+This is a list of *required* fields for OpticalProducts:
+
+
+------------------------------  --------------  ---------------
+field                           in product id   in metadata
+------------------------------  --------------  ---------------
+product_date                    n               y
+processing_level                y               y
+owner                           n               n
+license                         n               n
+spatial_coverage                n               n
+projection                      y               y
+quality                         n               y [1]
+creating_software               n               n
+product_id                      -               y [1a]
+remote_thumbnail_url            n               n
+mission                         y               y [2]
+mission_sensor                  y               y [2]
+sensor_type                     y               n
+acquisition_mode                y [3]           n
+product_acquisition_start       y               y
+geometric_resolution_x          n               n
+geometric_resolution_y          n               n
+------------------------------  --------------  ---------------
+
+
+[1] garbage in the examples
+[1a] there is a FileIdentifier string which seems like a product ID
+    but the spect require that the product ID can be built from other
+    data contained in the metadata XML file
+[2] there is no dedicates field for mission, mission code appears
+    as a part of identificationInfo/citation string : "SPOT5.HRG.L1A"
+[3] optional! Unreliable for product ingestion
+
+
+Optional fields:
+
+----------------------------------  --------------  -------------
+field                               in product id   In metadata
+----------------------------------  --------------  -------------
+original_product_id                 n               n
+product_revision                    n               n [4]
+local_storage_path                  -               -
+product_acquisition_end             n               n
+geometric_accuracy_mean             n               n
+geometric_accuracy_1sigma           n               n
+geometric_accuracy_2sigma           n               n
+radiometric_signal_to_noise_ratio   n               n
+radiometric_percentage_error        n               n
+spectral_accuracy                   n               n
+orbit_number                        n               n
+path                                y               n
+path_offset                         y               n
+row                                 y               n
+row_offset                          y               n
+offline_storage_medium_id           n               n
+online_storage_medium_id            n               n
+cloud_cover                         n               y
+sensor_inclination_angle            n               y [5]
+sensor_viewing_angle                n               y [5]
+gain_name                           n               n
+gain_value_per_channel              n               n
+gain_change_per_channel             n               n
+bias_per_channel                    n               n
+solar_zenith_angle                  n               n
+solar_azimuth_angle                 n               n
+earth_sun_distance                  n               n
+radiometric_resolution              n               n
+spectral_resolution                 n               n
+----------------------------------  --------------  -------------
+
+[4] there is something that resembles a revision, appended to the
+    product identification string, it seems unreliable though
+[5] there are illuminationElevationAngle (line 421 in the example)
+    and a probably broken XSL $illuminationAzimuthAngle_v at line
+    426
+
+
+A sac product id adheres to the following format:
+
+SAT_SEN_TYP_MOD_KKKK_KS_JJJJ_JS_YYMMDD_HHMMSS_LEVL
+
+Where:
+SAT    Satellite or mission          mandatory
+SEN    Sensor                        mandatory
+MOD    Acquisition mode              mandatory?
+TYP    Type                          mandatory?
+KKKK   Orbit path reference          optional?
+KS     Path shift                    optional?
+JJJJ   Orbit row reference           optional?
+JS     Row shift                     optional?
+YYMMDD Acquisition date              mandatory
+HHMMSS Scene centre acquisition time mandatory
+LEVL   Processing level              mandatory
+PROJTN Projection                    mandatory
+
+
+Models modifications
+--------------------
+
+The following NULL constraints will be dropped:
+
++ remote_thumbnail_url
++ radiometric_resolution
++ spectral_resolution
+
+
+

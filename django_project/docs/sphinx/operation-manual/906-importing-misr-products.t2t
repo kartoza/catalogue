@@ -1,0 +1,182 @@
+
+
+% Leave the blank space above here
+
+== Procedures for importing data from MISR packages into the catalogue ==
+
+""Note:"" This document should be considered compulsory reading before you
+attempt to import any data into the catalogue.
+
+""Note2:"" This document //must// be kept up to date when you make changes to
+import scripts etc.
+
+=== Importing the packages from a local folder ===
+
+The import process is done by a Django management command that can be called
+by a cron job.
+
+To see all available options you can call the command with `-h` or `help`
+parameter:
+
+```
+$ python manage.py misr_ingest -h
+Usage: manage.py misr_ingest [options]
+
+Imports MISR packages into the SAC catalogue
+
+Options:
+  -v VERBOSITY, --verbosity=VERBOSITY
+                        Verbosity level; 0=minimal output, 1=normal output,
+                        2=all output
+  --settings=SETTINGS   The Python path to a settings module, e.g.
+                        "myproject.settings.main". If this isn't provided, the
+                        DJANGO_SETTINGS_MODULE environment variable will be
+                        used.
+  --pythonpath=PYTHONPATH
+                        A directory to add to the Python path, e.g.
+                        "/home/djangoprojects/myproject".
+  --traceback           Print traceback on exception
+  -b BASE_PATH, --base_path=BASE_PATH
+                        Base catalogue path. Default is read from settings.py.
+  -i, --store_image     Store the original image data extracted from the
+                        package.
+  -m MAXPRODUCTS, --maxproducts=MAXPRODUCTS
+                        Import at most n products.
+  -t, --test_only       Just test, nothing will be written into the DB.
+  -k, --rcfileskip      Do not read or write the run control file.
+  -o OWNER, --owner=OWNER
+                        Name of the Institution package owner. Defaults to:
+                        MISR.
+  -s CREATING_SOFTWARE, --creating_software=CREATING_SOFTWARE
+                        Name of the creating software. Defaults to: Unknown.
+  -l LICENSE, --license=LICENSE
+                        Name of the license. Defaults to: SAC Commercial
+                        License
+  -q QUALITY, --quality=QUALITY
+                        Quality code (will be created if does not exists).
+                        Defaults to: Unknown
+  -r PROCESSING_LEVEL, --processing_level=PROCESSING_LEVEL
+                        Processing level code (will be created if does not
+                        exists). Defaults to: 1B2
+  --version             show program's version number and exit
+  -h, --help            show this help message and exit
+```
+
+Running the command:
+```
+$ python manage.py misr_ingest
+```
+
+The packages are searched in three folders :
+
+'MB2LME.002', 'MB2LMT.002', 'MI1B2E.003'
+
+  - MB2LME MISR Level 1B2 Local Mode Ellipsoid Radiance Data Ellipsoid projected TOA parameters for the single local mode scene, resampled to WGS84 ellipsoid. HDF-EOS Grid
+  - MB2LMT MISR Level 1B2 Local Mode Terrain Radiance Data Terrain-projected TOA radiance for the single local mode scene, resampled at the surface and topographically corrected. HDF-EOS Grid
+  - MI1B2E MISR Level 1B2 Ellipsoid Data Contains the ellipsoid projected TOA radiance, resampled to WGS84 ellipsoid corrected.
+
+
+**Note:** MI1B2E.003 import is untested
+
+
+=== Global settings ===
+
+The following parameters in settings.py control the process:
+
+```
+# MISR catalogue ingesting settings
+MISR_ROOT= '/path/to/MISR'
+```
+
+The KML file containing the blocks footprints for the different paths is
+located in the 'resources' folder immediately under the project folder.
+
+=== Implementation details ===
+
+Details on the implementation, mainly regarding the source of
+the data used to populate the catalogue database.
+
+Pseudocode:
+
+  + scan the three folders:
+    +  MB2LME MISR Level 1B2 Local Mode Ellipsoid Radiance Data Ellipsoid projected TOA parameters for the single local mode scene, resampled to WGS84 ellipsoid. HDF-EOS Grid
+    +  MB2LMT MISR Level 1B2 Local Mode Terrain Radiance Data Terrain-projected TOA radiance for the single local mode scene, resampled at the surface and topographically corrected. HDF-EOS Grid
+    +  MI1B2E MISR Level 1B2 Ellipsoid Data Contains the ellipsoid projected TOA radiance, resampled to WGS84 ellipsoid corrected.
+  + sort the list of dated ascending
+  +  if the last scanned date for the folder is set, start from the next date
+  + opens nadir AN image
+  + create thumbnail for AN (will be used for all other images)
+  + parse metadata to get the footprint from KML file
+  + transform footprint from EPSG:9001
+  + get row and path from metadata
+  + creates the tarball with all other camera images
+  +
+
+
+Assumptions:
+
+Main folders are fixed:
+
+  - MB2LME MISR Level 1B2 Local Mode Ellipsoid Radiance Data Ellipsoid projected TOA parameters for the single local mode scene, resampled to WGS84 ellipsoid. HDF-EOS Grid
+  - MB2LMT MISR Level 1B2 Local Mode Terrain Radiance Data Terrain-projected TOA radiance for the single local mode scene, resampled at the surface and topographically corrected. HDF-EOS Grid
+  - MI1B2E MISR Level 1B2 Ellipsoid Data Contains the ellipsoid projected TOA radiance, resampled to WGS84 ellipsoid corrected.
+
+
+
+==== Data and metadata extraction ====
+
+
+The following metadata are hardcoded constants and can be changed at the top of the script `catalogue/management/commands/rapideye_harvest.py`:
+
+|| Parameter            | Value                |
+| band_count            | 4 |
+| radiometric_resolution | 16 |
+| mission | TER |
+| mission_sensor | MIS |
+| sensor_type | VNI |
+| projection | ORBIT |
+
+**Note:** Real projection is SOM (Space Oblique Mercator: http://en.wikipedia.org/wiki/Space-oblique_Mercator_projection)
+
+The following metadata are passed to the script as option parameters:
+
+|| Parameter            | Default                |
+| license               | SAC Commercial License |
+| owner                 | MISR |
+| processing_level      | 1B2                     |
+| creating_software     | Unknown                |
+
+
+The following metadata are read from the imagery metadata of the nadir image:
+
+|| Parameter              | From |
+| geometric_resolution_x  | Block_size.resolution_x |
+| geometric_resolution_y  | Block_size.resolution_y |
+| path                    | Path_number             |
+| acquisition_mode        | Cam_mode  (LM or GM)    |
+| metadata                | metadata (the whole)    |
+
+The following metadata are read from imagery core metadata of the nadir image:
+
+
+|| Parameter              | From |
+| product_acquisition_end | RANGEENDINGDATE + RANGEENDINGTIME |
+| product_acquisition_start | RANGEBEGINNINGDATE + RANGEBEGINNINGTIME|
+| row                     | ORBITNUMBER |
+
+
+==== Thumbnail creation ====
+
+The thumbnail is created extracting the blocks containing valid
+informations when in local mode. Those block number are stored in metadata
+as "Start_block" and "End block" (note the missing undescore in the lattest).
+
+From the extracted blocks, individual GeoTiff georeferenced images are created,
+georeferencing is done through the a.m. KML path/blocks shape file.
+
+BGR bands come from the first three band of the block image.
+
+The three images are then resampled and merged with gdal_merge.py, there is still an unresolved
+alignment problem in this procedure.
+
+

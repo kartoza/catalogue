@@ -1,0 +1,32 @@
+{% extends "pdf_base.html" %}
+
+{% block title %}
+    Monthly orders report for {{ myCurrentDate|date:'F Y' }}
+{% endblock %}
+{% block content %}
+{% if myRecords %}
+  <table width="100%" class="table table-striped">
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Date</th>
+        <th>Status</th>
+        <th>Placed by</th>
+      </tr>
+    </thead>               
+    <tbody>
+    {% for myOrder in myRecords %}
+      <tr>
+        <td>{{myOrder.id }}</td>
+        <td>{{myOrder.order_date|date:"D, d M Y, H:m" }}</td>
+        <td>{{myOrder.order_status}}</td>
+        <td>{{myOrder.user.get_profile.firstname}} {{myOrder.user.get_profile.surname}}</td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+{% else %}
+<p>No reports to generate.</p> 
+{% endif %}
+
+{% endblock %}

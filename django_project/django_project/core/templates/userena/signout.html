@@ -1,0 +1,17 @@
+{% extends 'userena/base_userena.html' %}
+{% load staticfiles %}
+{% load i18n %}
+
+{% block title %}{% trans "Signed out" %}{% endblock %}
+{% block content_title %}<h2>{% trans "Successfully Signed Out" %}.</h2>{% endblock %}
+
+{% block content %}
+<div id="content" class="row-fluid center">
+  <img src="{% static 'sansa-logos/SANSA-logo.png' %}" class="gap-bottom"/>
+  <p class="lead">{% trans "You have been successfully signed out. We look forward to seeing you again." %}</p>
+</div>
+<div id="buttons" class="row-fluid center">
+  <a href="/" class="btn">Home</a>
+  <a href="/accounts/signin/" class="btn btn-primary">Login Again</a>
+</div>
+{% endblock %}

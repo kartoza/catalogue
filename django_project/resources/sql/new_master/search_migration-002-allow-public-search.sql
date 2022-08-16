@@ -1,0 +1,5 @@
+BEGIN;
+
+ALTER TABLE "search_search" ALTER COLUMN "user_id" DROP NOT NULL;
+
+COMMIT;

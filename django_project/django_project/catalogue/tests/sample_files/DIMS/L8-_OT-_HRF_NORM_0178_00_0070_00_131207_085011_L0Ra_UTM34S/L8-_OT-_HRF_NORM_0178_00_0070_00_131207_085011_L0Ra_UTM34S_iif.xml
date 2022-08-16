@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?><IIF>
+
+ <item>
+   <administration>
+     <id xmlns="http://www.caf.dlr.de/dims/pl/iif">(rid://eods_hb_pl_eods_XXXXB00000000342469139979)</id>
+     
+     <type xmlns="http://www.caf.dlr.de/dims/pl/iif">LANDSAT8.OT.Scene</type>
+     <keys xmlns="http://www.caf.dlr.de/dims/pl/iif">
+<feature key="productID">L8-_OT-_HRF_NORM_0178_00_0070_00_131207_085011_L0Ra_UTM34S</feature>
+<feature key="eowebProductId">LANDSAT8.OT.Scene:/eods_hb_pl_eods_XXXXB00000000342469139979/eods_hb_pl_eods_//LANDSAT8.OT.L0Ra.Scene</feature>
+<feature key="eowebProductType">LANDSAT8.OT.Scene</feature>
+</keys>
+   <owner>DIMS</owner> <group>DIMS</group> <permission>
+  <ownerRights>VIEW</ownerRights>
+  <ownerRights>READ</ownerRights>
+  <ownerRights>WRITE</ownerRights>
+  <ownerRights>DELETE</ownerRights>
+  <groupRights>VIEW</groupRights>
+  <groupRights>READ</groupRights>
+  <worldRights>VIEW</worldRights>
+  <worldRights>READ</worldRights>
+ </permission> <location>OP</location> <permanency>PERMANENT</permanency>
+</administration>
+   <commandOption xmlns="http://www.caf.dlr.de/dims/pl/iif">
+<action>INSERT</action>
+</commandOption> <fileInformation xmlns="http://www.caf.dlr.de/dims/pl/iif"/> <components>
+  <component>
+   <type>LANDSAT8.OT.L0Ra.Scene-BROWSE</type>
+   <name>BROWSE</name>
+   <role>BROWSE</role>
+   <ref xmlns="http://www.caf.dlr.de/dims/pl/iif">$((rid://eods_hb_pl_eods_XXXXB00000000342469139980))</ref>
+  </component>
+ </components> <parameters>
+  <availability>EXISTING</availability>
+  <reliability>REAL</reliability>
+  <quality>APPROVED</quality>
+  <revision>1.0</revision>
+  <spatialCoverage>
+   <boundingPolygon xmlns="http://www.caf.dlr.de/dims/pl/iif">
+<point>
+     <latitude>-13.43499</latitude>
+     <longitude>17.79317</longitude>
+    </point>
+<point>
+     <latitude>-15.40655</latitude>
+     <longitude>17.76482</longitude>
+    </point>
+<point>
+     <latitude>-15.42719</latitude>
+     <longitude>19.86018</longitude>
+    </point>
+<point>
+     <latitude>-13.45288</latitude>
+     <longitude>19.87018</longitude>
+    </point>
+<point>
+<latitude>-13.43499</latitude>
+<longitude>17.79317</longitude>
+</point>
+</boundingPolygon>
+  </spatialCoverage>
+  <temporalCoverage>
+   <startTime>2013-12-07T08:49:56.000</startTime>
+   <centerTime>2013-12-07T08:50:11.000</centerTime>
+   <stopTime>2013-12-07T08:50:25.000</stopTime>
+  </temporalCoverage>
+ </parameters> <specificParameters>
+     <feature key="insertionTime">2013-12-09T09:00:41.011</feature>
+    
+    
+    
+    
+    
+    
+     <feature key="fileFormatVersion">x.x</feature>
+     <feature key="fileFormat">GEOTIFF</feature>
+     <feature key="trackNumber">178</feature>
+     <feature key="orbitNumber">216</feature>
+     <feature key="productName">LC81780702013341JSA00</feature>
+     <feature key="resolution">
+       <feature key="numberOfBands">12</feature>
+       <feature key="groundSamplingDistance">
+         <feature key="x">30.0</feature>
+         <feature key="y">30.0</feature>
+      </feature>
+       <feature key="quantitisation">
+         <feature key="min">0</feature>
+         <feature key="max">65535</feature>
+      </feature>
+       <feature key="swathWidth">185000</feature>
+    </feature>
+     <feature key="qualityInfo">
+       <feature key="spectralAccuracy">0.05</feature>
+    </feature>
+     <feature key="projectionName">UTM</feature>
+     <feature key="imageCentreCoordinates">-14.430402500000001,18.822087500000002</feature>
+     <feature key="license">USGS free distribution license</feature>
+     <feature key="projectName">LC81780702013341JSA00</feature>
+     <feature key="owner">USGS</feature>
+     <feature key="processingLevel">L0Ra</feature>
+     <feature key="mode">NORM</feature>
+     <feature key="type">HRF</feature>
+     <feature key="sensor">OLI_TIRS</feature>
+     <feature key="mission">LANDSAT8</feature>
+     <feature key="row">70</feature>
+     <feature key="path">178</feature>
+     <feature key="earthSunDistance">1.0041473183067684</feature>
+     <feature key="solarAzimuthAngle">112.24421817</feature>
+     <feature key="solarZenithAngle">26.300328630000003</feature>
+     <feature key="sensorViewingAngle">90</feature>
+     <feature key="sensorInclinationAngle">98.2</feature>
+     <feature key="cloudCoverPercentage">58</feature>
+     
+     <feature key="dayAcquisition">true</feature>
+     <feature key="partialScenes">0</feature>
+     <feature key="endRow">70</feature>
+     <feature key="startRow">70</feature>
+     
+    
+    
+     
+     <feature key="bandScaling">
+       <feature key="band">QUALITY</feature>
+    </feature>
+     <feature key="bandScaling">
+       <feature key="band">11</feature>
+       <feature key="gainValue">0.0003342001098666341</feature>
+       <feature key="biasValue">0.09999579989013337</feature>
+    </feature>
+     <feature key="bandScaling">
+       <feature key="band">10</feature>
+       <feature key="gainValue">0.0003342001098666341</feature>
+       <feature key="biasValue">0.09999579989013337</feature>
+    </feature>
+     <feature key="bandScaling">
+       <feature key="band">9</feature>
+       <feature key="gainValue">0.002621639912106693</feature>
+       <feature key="biasValue">-13.108201639912107</feature>
+    </feature>
+     <feature key="bandScaling">
+       <feature key="band">8</feature>
+       <feature key="gainValue">0.011842579729606006</feature>
+       <feature key="biasValue">-59.2129025797296</feature>
+    </feature>
+     <feature key="bandScaling">
+       <feature key="band">7</feature>
+       <feature key="gainValue">0.0005228644672994171</feature>
+       <feature key="biasValue">-2.614322864467299</feature>
+    </feature>
+     <feature key="bandScaling">
+       <feature key="band">6</feature>
+       <feature key="gainValue">0.0016073392437513353</feature>
+       <feature key="biasValue">-8.036697339243752</feature>
+    </feature>
+     <feature key="bandScaling">
+       <feature key="band">5</feature>
+       <feature key="gainValue">0.006379593951231422</feature>
+       <feature key="biasValue">-31.89796959395123</feature>
+    </feature>
+     <feature key="bandScaling">
+       <feature key="band">4</feature>
+       <feature key="gainValue">0.010513310953093052</feature>
+       <feature key="biasValue">-52.5665533109531</feature>
+    </feature>
+     <feature key="bandScaling">
+       <feature key="band">3</feature>
+       <feature key="gainValue">0.012413306527909177</feature>
+       <feature key="biasValue">-62.06653330652791</feature>
+    </feature>
+     <feature key="bandScaling">
+       <feature key="band">2</feature>
+       <feature key="gainValue">0.013556637623218482</feature>
+       <feature key="biasValue">-67.78318663762323</feature>
+    </feature>
+     <feature key="bandScaling">
+       <feature key="band">1</feature>
+       <feature key="gainValue">0.013294250617999817</feature>
+       <feature key="biasValue">-66.471254250618</feature>
+    </feature>
+  </specificParameters>
+</item>
+
+ <item>
+   <administration>
+     <id xmlns="http://www.caf.dlr.de/dims/pl/iif">(rid://eods_hb_pl_eods_XXXXB00000000342469139980)</id>
+     
+     <type xmlns="http://www.caf.dlr.de/dims/pl/iif">LANDSAT8.OT.Scene-BROWSE</type>
+     <keys xmlns="http://www.caf.dlr.de/dims/pl/iif">
+<feature key="productID">L8-_OT-_HRF_NORM_0178_00_0070_00_131207_085011_L0Ra_UTM34S</feature>
+<feature key="mission">LANDSAT8</feature>
+</keys>
+   <owner>DIMS</owner> <group>DIMS</group> <permission>
+  <ownerRights>VIEW</ownerRights>
+  <ownerRights>READ</ownerRights>
+  <ownerRights>WRITE</ownerRights>
+  <ownerRights>DELETE</ownerRights>
+  <groupRights>VIEW</groupRights>
+  <groupRights>READ</groupRights>
+  <worldRights>VIEW</worldRights>
+  <worldRights>READ</worldRights>
+ </permission> <location>OP</location> <permanency>PERMANENT</permanency>
+</administration>
+   <commandOption xmlns="http://www.caf.dlr.de/dims/pl/iif">
+<action>INSERT</action>
+</commandOption> <fileInformation xmlns="http://www.caf.dlr.de/dims/pl/iif">
+<file>
+<location>
+<host>.</host>
+<path>.</path>
+<name>L8_BROWSE_ASLPGS_B6-_B5-_B3.jpeg</name>
+<account>.</account>
+<password/>
+</location>
+<size>
+<value>41227</value>
+<unit>Byte</unit>
+<bytesPerUnit>1</bytesPerUnit>
+</size>
+</file>
+</fileInformation> <components/> <parameters>
+  <temporalCoverage>
+   <startTime>2013-12-07T08:49:56.000</startTime>
+   <centerTime>2013-12-07T08:50:11.000</centerTime>
+   <stopTime>2013-12-07T08:50:25.000</stopTime>
+  </temporalCoverage>
+ </parameters> <specificParameters>
+     <feature key="insertionTime">2013-12-09T09:00:40.529</feature>
+    
+  </specificParameters>
+</item>
+</IIF>

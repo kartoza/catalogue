@@ -1,0 +1,212 @@
+
+
+% Leave the blank space above here
+
+""Note:"" This document should be considered compulsory reading before you
+attempt to import any data into the catalogue.
+
+""Note2:"" This document //must// be kept up to date when you make changes to
+import scripts etc.
+
+The catalogue system provides search access to metadata describing acquisitions 
+that have taken place from a variety of sensors. This metadata needs to be
+lodged in the database in one way or another. Different sensors have different
+entry points into the system - and this document tries to cover the various
+permutations and procedures for lodging data into the database.
+
+=== SPOT Image Data ===
+
+=== Sumbandilasat ===
+
+For sumbandilasat the procedure for import at the moment boils down to this:
+
+- Wolfgang / other SAC staffer performs initial L1Ab processing of imagery
+- Products are placed on the SAC storage array and an email is sent to Tim 
+  detailing the names of the new product directories.
+  (Typically they will be under ``/cxfs/SARMES/S/INT/RI/SS1/``
+- The products are copied over to LION into
+  ``/mnt/cataloguestorage/imagery_processing/sumbandilasat``
+  e.g. ``rsync -ave ssh cheetah:/cxfs/SARMES/S/INT/RI/SS1/2* .``
+- Before rsyncing, it would be worth noting which products are already processed e.g.
+  ``20100409-20100712  20100801_20100830  20100901_20100910  20100901_20100922  
+   20100927_20101014  20101018_20101108  20101109_20101112  20101116_20101119``
+- The .shp project file is then imported into the sac database in the import
+  schema to the 'sumb' table
+- The scripts/sort_sumb_imagery.py script is then run. This converts the sumb
+  pix images to tif and then files them under imagery master copies in the L1Ab
+  folder as shown below.
+-
+
+```
+imagery_mastercopies
++-- C2B      <-- CBERS
+|   +-- 1Aa
+|   +-- 1Ab
++-- S-C      <-- SACC
+|   +-- 1Ab
++-- ZA2      <-- sumbandilasat
+    +-- 1Aa
+    +-- 1Ab
+```
+ - The scripts/sort_sumb_raw_imagery.py script is then run. This archives the
+   raw folder and files it into the L1Aa folder as shown above. 
+   ""Note:"" This step will be merged with the above step for convenience.
+ -
+
+After this process the new data should be searchable in the catalogue,
+thumbnails should be available, and the raw products should be downloadable.
+
+==== Copying the product folder over to LION ====
+
+Currently we ""pull"" the data over from the storage array to LION. This is
+carried out using rsync. Here is an example of copying a DIMS project folder
+over:
+
+```
+cd /mnt/cataloguestorage/imagery_processing/sumbandilasat
+rsync -ave ssh cheetah:/S/INT/RI/SS1/20100901_20100910 .
+```
+
+The copied over project file should have a structure something like this:
+
+```
+20100801_20100830
++-- imp
+|   +-- ThNl
++-- raw
+    +-- I0049
+    +-- I0085
+    ...etc
+```
+
+So the data in imp will be converted from pix into tif and made available as
+L1Ab products.  The data in Thnl will be imported as prodct thumbnails or
+'quicklooks'.  The folders under raw will be archved using a filename that
+matches their sac product ID and made available as downloads.
+
+==== Importing the report file ====
+
+Once the project folder has been carried over to LION, you need to import the
+report file into the database. To do this the report file needs to be copied
+over to ELEPHANT (the database server), the temporary sumb import table cleared
+and the new report file brought in to populate that table.
+
+There is a django model called 'Sumb' which maps to this temporary import table
+- it is not used for anything besides data import and can be safely removed if
+you do not use Sumbandilasat on your catalogue deployment.
+
+The report file comes in two forms, a Geomatica 'PIX' file and a 'Shapefile'
+(which is actually a collection of a number of files).
+
+```
+SARMES_SS1_20100409-20100712_rep.dbf
+SARMES_SS1_20100409-20100712_rep.pix
+SARMES_SS1_20100409-20100712_rep.prj
+SARMES_SS1_20100409-20100712_rep.shp
+SARMES_SS1_20100409-20100712_rep.shx
+```
+
+To move these files (the name will differ by product folder so this is just an
+example) to elephant we do:
+
+```
+scp -P 8697 SARMES_SS1_20100409-20100712_rep.* elephant:/tmp/
+```
+
+You will need login credentials for elephant of course. Once the files are
+transferred, you need to log in to elephant (196.35.94.197), clear the
+import.sumb temporary table and import the report file:
+
+```
+ssh -p 8697 elephant
+cd /tmp
+```
+
+Now open a db session and clear the sumb temporary table:
+
+```
+psql sac
+delete from import.sumb;
+\q
+```
+
+Now load the report shapefile into the temporary table (lines wrapped for
+readability):
+
+
+```
+shp2pgsql -a -s 4326 -S \
+  /tmp/SARMES_SS1_20100409-20100712_rep.shp \
+  import.sumb | psql sac
+
+```
+
+If you have a batch of report files to import in one go you can do it with a
+bash one liner like this:
+
+```
+for FILE in *.shp; do shp2pgsql -a -s 4326 -S $FILE import.sumb | psql sac; done
+```
+
+After importing, you can verify that all product records were loaded in the metadata table like this:
+
+```
+psql sac
+sac=# select count(*) from import.sumb;
+\q
+```
+
+Which should output something like this:
+
+```
+ count 
+ -------
+  352
+ (1 row)
+```
+
+Now log out of elephant and we will continue with the import on LION.
+
+==== Unified product migration ====
+
+Our goal here is to convert the Sumbandilasat data into the SAC Unified Product
+Model (UPM). The purpose of the UPM is to use a common product table for all
+sensor types - it includes only cross cutting attributes and does not try to
+model sensor specific attributes of a product. There are a few UPM
+specialisations - UPM-O for optical products, UPM-R for radar products and
+UPM-A for atmospheric products. Since Sumbandilasat is an optical product,
+metadata records will be lodged as UPM-O.
+
+```
+cd /opt/sac_catalogue/sac_live
+```
+
+now edit ```scripts/sumb_importer.py``` and at the bottom of the file populate the 
+list of project folders to process. e.g.
+
+```
+def run():
+  myProjectsList = [
+      "20101122_20101201",
+      "20101206_20101213",
+      "20110125_20110214",
+      "20110215_20110228",
+                    ]
+```
+
+
+
+Also make sure that ```mSourcePath``` at the top 
+of the file is correct (you would typically not need to change it).
+
+Now run the script by typing:
+
+```
+cd <path to catalogue dir>
+source ../python/bin/activate
+python manage.py runscript sumb_importer
+```
+
+To achieve this we will run a python script that will do the work for us.
+
+

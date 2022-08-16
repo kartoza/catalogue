@@ -1,0 +1,51 @@
+<div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        {% block header %}
+            <h5 class="modal-title" id="staticBackdropLabel">Generic Product details for
+            <span class="centered">{{myObject.product_id}}</span></h5>
+        {% endblock %}
+      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+    <div class="modal-body">
+
+<p>
+ <center>
+   {% if myImageIsLocalFlag %}
+   <img src="{{ myObject.product_id }}.jpg"
+                 class='mini-icon'
+                 alt="Thumbnail"
+                 id="miniPreview{{ myObject.id }}"
+                 longdesc="{{ myObject.id }}"
+                 />
+   <br/>
+   Note: This thumbnail is georeferenced, you can open it in your GIS application.
+   {% else %}
+   <img src="{% url 'showThumb' myObject.id 'medium' %}"
+                 class='mini-icon'
+                 alt="Thumbnail"
+                 id="miniPreview{{ myObject.id }}"
+                 longdesc="{{ myObject.id }}"
+                 />
+   {% endif %}
+  </center>
+</p>
+<table class="table table-striped">
+{% block tableBody %}
+<tr><th colspan="2">Generic Properties</th></tr>
+<tr><td class="loud">Product Date</td><td class="quiet">{{ myObject.product_date }}</td></tr>
+<tr><td class="loud">Processing Level</td><td class="quiet">{{ myObject.product_profile.baseProcessingLevel.abbreviation }}</td></tr>
+<tr><td class="loud">Owner</td><td class="quiet">{{ myObject.owner }}</td></tr>
+<tr><td class="loud">License</td><td class="quiet">{{ myObject.license }}</td></tr>
+<tr><td class="loud">Spatial Coverage</td><td class="quiet">{{ myObject.spatial_coverage }}</td></tr>
+<tr><td class="loud">Projection</td><td class="quiet">{{ myObject.projection }}</td></tr>
+<tr><td class="loud">Quality</td><td class="quiet">{{ myObject.quality }}</td></tr>
+<tr><td class="loud">Original Product ID</td><td class="quiet">{{ myObject.original_product_id }}</td></tr>
+<tr><td class="loud">Product ID</td><td class="quiet">{{ myObject.product_id }}</td></tr>
+<tr><td class="loud">Product Revision</td><td class="quiet">{{ myObject.product_revision }}</td></tr>
+{% endblock %}
+</table>
+    </div>
+    </div>
+{% block footer %}
+{% endblock %}

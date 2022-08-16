@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" 
+    "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<style type="text/css">
+@page {
+
+-pdf-page-orientation: portrait;
+-pdf-page-size: a4;
+/* usefull for debugging
+-pdf-frame-border: 1;
+*/
+
+top: 4cm;
+left: 1.5cm;
+right: 1.5cm;
+bottom: 2.5cm;
+
+
+@frame header {
+-pdf-frame-content: header;
+height: 1cm;
+top: 1.5cm;
+left: 1.5cm;
+right: 1.5cm;
+}
+
+@frame footer {
+-pdf-frame-content: footer;
+bottom: 1.5cm;
+left: 1.5cm;
+right: 1.5cm;
+height: 1cm;
+}
+
+} /* closes page */
+
+#header {
+padding:5px;
+}
+
+#content {
+padding:5px;
+}
+
+
+#footer {
+text-align: right;
+padding:5px;
+}
+
+table {
+border:1px solid black;
+padding:2px;
+}
+
+/* for some reason, templating works better if we use classes and not
+h1,h2,.. selectors */
+
+.h1 {
+font-size:2em;
+margin:0px;
+padding:2px;
+}
+
+.h2 {
+font-size:1.5em;
+margin:0px;
+padding:2px;
+}
+
+</style>
+</head>
+<body>
+<div id="header">
+<div class='h1'>SANSA Earth Observation - Online Catalogue</div>
+<div class='h2'>Report</div>
+</div>
+
+<div id="content">
+{% block content %}
+
+TEST PAGE!
+
+{% endblock %}
+</div>
+
+<div id="footer">
+
+Page <pdf:pagenumber>
+
+</div>
+</body>
+</html>

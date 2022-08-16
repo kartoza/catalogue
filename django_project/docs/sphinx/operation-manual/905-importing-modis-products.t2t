@@ -1,0 +1,163 @@
+
+
+% Leave the blank space above here
+
+== Procedures for importing data from MODIS packages into the catalogue ==
+
+""Note:"" This document should be considered compulsory reading before you
+attempt to import any data into the catalogue.
+
+""Note2:"" This document //must// be kept up to date when you make changes to
+import scripts etc.
+
+=== Importing the packages from a the remote catalogue ===
+
+The import process is done by a Django management command that can be called
+by a cron job.
+
+To see all available options you can call the command with `-h` or `help`
+parameter:
+
+```
+$ python manage.py modis_harvest  -h
+Usage: manage.py modis_harvest [options]
+
+Imports mdois packages into the SAC catalogue
+
+Options:
+  -v VERBOSITY, --verbosity=VERBOSITY
+                        Verbosity level; 0=minimal output, 1=normal output,
+                        2=all output
+  --settings=SETTINGS   The Python path to a settings module, e.g.
+                        "myproject.settings.main". If this isn't provided, the
+                        DJANGO_SETTINGS_MODULE environment variable will be
+                        used.
+  --pythonpath=PYTHONPATH
+                        A directory to add to the Python path, e.g.
+                        "/home/djangoprojects/myproject".
+  --traceback           Print traceback on exception
+  -i, --store_image     Store the original image data extracted from the
+                        package.
+  -m MAXPRODUCTS, --maxproducts=MAXPRODUCTS
+                        Import at most n products.
+  -t, --test_only       Just test, nothing will be written into the DB.
+  -s, --rcfileskip      Do not read or write the run control file.
+  -o OWNER, --owner=OWNER
+                        Name of the Institution package owner. Defaults to:
+                        MODIS.
+  -l LICENSE, --license=LICENSE
+                        Name of the license. Defaults to: SAC Free
+                        License
+  -q QUALITY, --quality=QUALITY
+                        Quality code (will be created if does not exists).
+                        Defaults to: Unknown
+  -r PROCESSING_LEVEL, --processing_level=PROCESSING_LEVEL
+                        Processing level code (will be created if does not
+                        exists). Defaults to: 1B
+  --version             show program's version number and exit
+  -h, --help            show this help message and exit
+```
+
+Running the command:
+
+```
+$ python manage.py modis_harvest
+```
+
+
+=== Run control ===
+
+An rc file is created or updated after every single successful import.
+
+The rc file is located in the project's main folder and named modis_harvest.rc
+
+The rc file contains the following informations:
+
++ last_folder
++ last_package
++
+
+Example:
+
+```
+last_folder=2000.02.18
+last_package=2000.02.18/MCD43A2.A2000049.h19v12.005.2006269115820.hdf
+```
+
+=== Implementation details ===
+
+Details on the implementation, mainly regarding the source of
+the data used to populate the catalogue database.
+
+Pseudocode:
+
++ get the list of dates from remote FTP
++ sort the dates
++ read from the .ini file the last date examined and the last package imported
++ seek the list to the date next to the last imported one (if any)
++ loop for all dates
+  + scan the date folder and get the list of packages
+  + sort the list
+  + seek the list to the package next to the last imported one (if any)
+  + loop for all packages
+    + download image
+    + read metadata
+    + calculate product_id
+    + search in catalogue
+    + skip if already in catalogue
+    + creates the thumbnail
+    + ingest in catalogue
+    +
+
+
+=== Data and metadata extraction ===
+
+
+The following metadata are hardcoded constants and can be changed at the top of the script `catalogue/management/commands/rapideye_harvest.py`:
+
+|| Parameter            | Value                |
+| band_count            | 5 |
+| radiometric_resolution | 16 |
+| geometric_resolution_x | 500 |
+| geometric_resolution_y | 500 |
+| mission | maps Terra/Aqua to AQA and TER |
+| mission_sensor | maps Terra/Aqua to MYD and MOD |
+| sensor_type | VNS |
+| acquisition_mode | VIT |
+| projection | ORBIT |
+
+The following metadata are passed to the script as option parameters:
+
+|| Parameter            | Default                |
+| license               | SAC Commercial License |
+| owner                 | MODIS |
+| processing_level      | 1B                     |
+
+
+The following metadata are read from the metadata in the HDF image:
+
+|| Parameter            | From |
+| original_product_id   | LOCALGRANULEID |
+| product_acquisition_start | RANGEBEGINNINGDATE RANGEBEGINNINGTIME |
+| product_acquisition_end | RANGEENDINGDATE RANGEENDINGTIME |
+| row/path informations | footprint centroid |
+| mission | CRAFT_ID |
+| creating_software | HDFEOSVersion |
+
+
+=== Thumbnail image generation ===
+
+The thumbnail is built using external gdal calls in three steps:
+
++ gdal_translate extracts sub dataset from hdf image (creates 4 tiffs, one for each sub dataset)
++ gdal_merge.py merge bands 1 4 3 into RGB tiff
++ gdal_translate creates a JPEG 400x400 px thumbnail with a world file
++
+
+=== External programs required ===
+
+
++ gdal_translate
++ gdal_merge
++ bzip2
++

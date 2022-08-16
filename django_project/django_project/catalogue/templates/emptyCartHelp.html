@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content%}
+    <div class="main-content">
+    <div id="layoutSidenav_content">
+    <main>
+        <div class="container-xl px-4 mt-4">
+            <div class="card mb-4">
+            <div class="card-header">
+                <i class="fas fa-table me-1"></i>
+                Your cart is empty
+            </div>
+            <div class="card-body">
+          <div id="content" class="row-fluid">
+            <p class="lead">
+              Your cart is still empty. You need to add some items to the cart before you can place your order. To do this, use the <a href="/search">search</a> form to search for some data. Then from the search results, choose which items interest you and add them to your cart using the green cart icon.
+            </p>
+          </div>
+            </div>
+    </div>
+    </main>
+    </div>
+    </div>
+{% endblock %}
+{% block footer %}
+{% endblock %}

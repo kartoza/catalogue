@@ -1,0 +1,6 @@
+(15:11:40) jbronn: timlinux: data = blob.read(); return HttpResponse(data, mimetype='image/png')
+(15:16:52) digi604 [n=patrickl@84-226-127-220.static.adslpremium.ch] entered the room.
+(15:19:24) timlinux: jbronn: ah excellent! exactly what I was looking for...I just wonder if there is some way to display that as a georeferenced image without needing to put it out to disk first
+(15:26:38) chiwawa_42 [n=jerome@can59-3-82-233-175-214.fbx.proxad.net] entered the room.
+(15:33:46) jbronn: timlinux: if you have GDAL's Python bindings installed, you could create an in-memory datasource that would then have georeferenced info
+(15:33:55) jbronn: s/datasource/dataset

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://earth.google.com/kml/{% block kml_version %}2.2{% endblock %}">
+  <Document>
+    {% block name %}
+    {% endblock %}
+    {% if transparentStyle %}
+  <Style id="transparentPolyStyle">
+    <LineStyle>
+      <width>2</width>
+    </LineStyle>
+    <PolyStyle>
+      <color>550000ff</color>
+    </PolyStyle>
+  </Style>
+    {% endif %}
+    {% block records %}
+    {% endblock %}
+</Document>
+</kml>

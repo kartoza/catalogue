@@ -1,0 +1,25 @@
+<p>A SAC product id adheres to the following format:</p>
+
+<pre>
+SAT SEN TYP MOD KKKK KS JJJJ JS YYMMDD HHMMSS
+</pre>
+
+<p>Where:</p>
+<pre>
+SAT    Satellite or mission          mandatory
+SEN    Sensor                        mandatory
+TYP    Type                          mandatory
+MODE    Acquisition mode             mandatory
+KKKK   Orbit path reference          optional
+KS     Path shift                    optional
+JJJJ   Orbit row reference           optional
+JS     Row shift                     optional
+YYMMDD Acquisition date              mandatory
+HHMMSS Scene acquisition time        mandatory
+</pre>
+
+<p>Example:</p>
+
+<pre>
+S5 HRG J CAM2 0118 00 0418 00 090403 085811
+</pre>

@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block header %}
+
+ <!-- About section one-->
+            <section class="py-5 bg-dark id="scroll-target">
+                <div class="container px-5 my-5">
+                    <div class="row gx-5 align-items-center">
+                        <div class="col-lg-6"><img class="img-fluid rounded mb-5 mb-lg-0" src={% static 'images/sansa_image_1.png' %} alt="..." /></div>
+                        <div class="col-lg-6">
+                            <h2 class="fw-bolder text-light">SANSA Earth Observation & SANSA Space Operations</h2>
+                            <p class="lead fw-normal text-light mb-0">are key components of SANSA's efforts to maximise the benefit of information, communications and space technology for industry and society. SANSA Space Operations at Hartebeeshoek is located some 70 km west of Pretoria in the Magaliesberg mountain range and is ideally positioned to provide tracking, telemetry and command (TT&C) services for geo-synchronous and polar orbiting spacecraft to the manufacturers, operators and users of satellites and launch vehicles. It is also ideally situated for satellite data acquisition and as such, delivers world-class earth observation data relayed from satellites to a range of stakeholders. </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+    <!-- About section two-->
+            <section class="py-5">
+                <div class="container px-5 my-5">
+                    <div class="row gx-5 align-items-center">
+                        <div class="col-lg-6 order-first order-lg-last"><img class="img-fluid rounded mb-5 mb-lg-0" src={% static 'images/sansa_image.png' %} alt="..." width="600px" /></div>
+                        <div class="col-lg-6">
+                            <h2 class="fw-bolder">SANSA Earth Observation</h2>
+                            <p class="lead fw-normal text-muted mb-0">is located at Hartebeeshoek and drives and coordinates space based earth observation activities to sustainably benefit all South Africans in an earth-friendly manner. Our objectives are to collect, process and distribute earth observation data to support South Africa's policy, decision-making, planning, resource & environmental management,  economic growth and sustainable development.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+{% endblock %}

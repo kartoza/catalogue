@@ -1,0 +1,8564 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- $Header: /cvsroot/autodoc/autodoc/xml.tmpl,v 1.2 2006/05/16 19:01:27 rbt Exp $ -->
+
+<book id="database.sac" xreflabel="sac database schema"><title>sac Model</title>
+
+
+
+
+  <chapter id="import.schema"
+           xreflabel="import">
+    <title>Schema import</title>
+    <para></para>
+
+
+
+
+  </chapter>
+
+  <chapter id="public.schema"
+           xreflabel="public">
+    <title>Schema public</title>
+    <para>standard public schema</para>
+
+
+      <section id="public.table.catalogue-acquisitionmode"
+               xreflabel="public.catalogue_acquisitionmode">
+        <title id="public.table.catalogue-acquisitionmode-title">
+         Table:
+         
+         <structname>catalogue_acquisitionmode</structname>
+        </title>
+ 
+
+
+        <para>
+          <variablelist>
+            <title>
+              Structure of <structname>catalogue_acquisitionmode</structname>
+            </title>
+
+
+            <varlistentry>
+              <term><structfield>id</structfield></term>
+              <listitem><para>
+                <type>serial</type>
+
+
+                <literal>PRIMARY KEY</literal>
+
+
+
+
+
+
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>abbreviation</structfield></term>
+              <listitem><para>
+                <type>character varying(4)</type>
+
+
+
+
+                      <literal>UNIQUE#1</literal>
+
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>name</structfield></term>
+              <listitem><para>
+                <type>character varying(255)</type>
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>geometric_resolution</structfield></term>
+              <listitem><para>
+                <type>integer</type>
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>band_count</structfield></term>
+              <listitem><para>
+                <type>integer</type>
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>sensor_type_id</structfield></term>
+              <listitem><para>
+                <type>integer</type>
+
+
+
+
+                      <literal>UNIQUE#1</literal>
+
+
+
+
+
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+
+
+
+                <literal>REFERENCES</literal> <xref linkend="public.table.catalogue-sensortype"/>
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>is_grayscale</structfield></term>
+              <listitem><para>
+                <type>boolean</type>
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>operator_abbreviation</structfield></term>
+              <listitem><para>
+                <type>character varying(255)</type>
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+        </variablelist>
+
+
+
+
+
+        <variablelist>
+          <title>Indexes on catalogue_acquisitionmode</title>
+
+          <varlistentry>
+            <term>catalogue_acquisitionmode_sensor_type_id_idx</term>
+            <listitem><para>sensor_type_id</para></listitem>
+          </varlistentry>
+
+        </variablelist>
+
+
+
+
+
+        <itemizedlist>
+          <title>
+            Tables referencing public.catalogue_genericsensorproduct via Foreign Key Constraints
+          </title>
+
+          <listitem>
+            <para>
+              <xref linkend="public.table.catalogue-genericsensorproduct"/>
+            </para>
+          </listitem>
+
+
+
+          <listitem>
+            <para>
+              <xref linkend="public.table.catalogue-search"/>
+            </para>
+          </listitem>
+
+        </itemizedlist>
+
+
+
+
+
+
+      </para>
+    </section>
+
+      <section id="public.table.catalogue-clip"
+               xreflabel="public.catalogue_clip">
+        <title id="public.table.catalogue-clip-title">
+         Table:
+         
+         <structname>catalogue_clip</structname>
+        </title>
+ 
+
+
+        <para>
+          <variablelist>
+            <title>
+              Structure of <structname>catalogue_clip</structname>
+            </title>
+
+
+            <varlistentry>
+              <term><structfield>id</structfield></term>
+              <listitem><para>
+                <type>serial</type>
+
+
+                <literal>PRIMARY KEY</literal>
+
+
+
+
+
+
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>guid</structfield></term>
+              <listitem><para>
+                <type>character varying(40)</type>
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>owner_id</structfield></term>
+              <listitem><para>
+                <type>integer</type>
+
+
+
+
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+
+                <literal>REFERENCES</literal> <xref linkend="public.table.auth-user"/>
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>date</structfield></term>
+              <listitem><para>
+                <type>timestamp with time zone</type>
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>image</structfield></term>
+              <listitem><para>
+                <type>character varying(20)</type>
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>status</structfield></term>
+              <listitem><para>
+                <type>character varying(20)</type>
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>result_url</structfield></term>
+              <listitem><para>
+                <type>character varying(1024)</type>
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>polygon</structfield></term>
+              <listitem><para>
+                <type>geometry</type>
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+        </variablelist>
+
+
+
+        <variablelist>
+          <title>Constraints on catalogue_clip</title>
+
+          <varlistentry>
+            <term>enforce_dims_polygon</term>
+            <listitem><para>CHECK ((ndims(polygon) = 2))</para></listitem>
+          </varlistentry>
+
+
+
+          <varlistentry>
+            <term>enforce_geotype_polygon</term>
+            <listitem><para>CHECK (((geometrytype(polygon) = &apos;POLYGON&apos;::text) OR (polygon IS NULL)))</para></listitem>
+          </varlistentry>
+
+
+
+          <varlistentry>
+            <term>enforce_srid_polygon</term>
+            <listitem><para>CHECK ((srid(polygon) = 4326))</para></listitem>
+          </varlistentry>
+
+        </variablelist>
+
+
+
+
+
+        <variablelist>
+          <title>Indexes on catalogue_clip</title>
+
+          <varlistentry>
+            <term>catalogue_clip_owner_id</term>
+            <listitem><para>owner_id</para></listitem>
+          </varlistentry>
+
+
+
+          <varlistentry>
+            <term>catalogue_clip_polygon_id</term>
+            <listitem><para>polygon</para></listitem>
+          </varlistentry>
+
+        </variablelist>
+
+
+
+
+
+
+
+
+      </para>
+    </section>
+
+      <section id="public.table.catalogue-continuousproduct"
+               xreflabel="public.catalogue_continuousproduct">
+        <title id="public.table.catalogue-continuousproduct-title">
+         Table:
+         
+         <structname>catalogue_continuousproduct</structname>
+        </title>
+ 
+
+
+        <para>
+          <variablelist>
+            <title>
+              Structure of <structname>catalogue_continuousproduct</structname>
+            </title>
+
+
+            <varlistentry>
+              <term><structfield>genericproduct_ptr_id</structfield></term>
+              <listitem><para>
+                <type>integer</type>
+
+
+
+
+
+
+                <literal>PRIMARY KEY</literal>
+
+
+
+
+
+
+
+
+
+
+
+
+                <literal>REFERENCES</literal> <xref linkend="public.table.catalogue-genericproduct"/>
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>range_min</structfield></term>
+              <listitem><para>
+                <type>double precision</type>
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>range_max</structfield></term>
+              <listitem><para>
+                <type>double precision</type>
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>unit_id</structfield></term>
+              <listitem><para>
+                <type>integer</type>
+
+
+
+
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+
+                <literal>REFERENCES</literal> <xref linkend="public.table.catalogue-unit"/>
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+        </variablelist>
+
+
+
+
+
+
+
+
+
+
+      </para>
+    </section>
+
+      <section id="public.table.catalogue-creatingsoftware"
+               xreflabel="public.catalogue_creatingsoftware">
+        <title id="public.table.catalogue-creatingsoftware-title">
+         Table:
+         
+         <structname>catalogue_creatingsoftware</structname>
+        </title>
+ 
+
+
+        <para>
+          <variablelist>
+            <title>
+              Structure of <structname>catalogue_creatingsoftware</structname>
+            </title>
+
+
+            <varlistentry>
+              <term><structfield>id</structfield></term>
+              <listitem><para>
+                <type>serial</type>
+
+
+                <literal>PRIMARY KEY</literal>
+
+
+
+
+
+
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>name</structfield></term>
+              <listitem><para>
+                <type>character varying(255)</type>
+
+
+
+
+                      <literal>UNIQUE</literal>
+
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>version</structfield></term>
+              <listitem><para>
+                <type>character varying(100)</type>
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+        </variablelist>
+
+
+
+
+
+
+
+        <itemizedlist>
+          <title>
+            Tables referencing public.catalogue_genericproduct via Foreign Key Constraints
+          </title>
+
+          <listitem>
+            <para>
+              <xref linkend="public.table.catalogue-genericproduct"/>
+            </para>
+          </listitem>
+
+        </itemizedlist>
+
+
+
+
+
+
+      </para>
+    </section>
+
+      <section id="public.table.catalogue-datum"
+               xreflabel="public.catalogue_datum">
+        <title id="public.table.catalogue-datum-title">
+         Table:
+         
+         <structname>catalogue_datum</structname>
+        </title>
+ 
+
+
+        <para>
+          <variablelist>
+            <title>
+              Structure of <structname>catalogue_datum</structname>
+            </title>
+
+
+            <varlistentry>
+              <term><structfield>id</structfield></term>
+              <listitem><para>
+                <type>serial</type>
+
+
+                <literal>PRIMARY KEY</literal>
+
+
+
+
+
+
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>name</structfield></term>
+              <listitem><para>
+                <type>character varying(128)</type>
+
+
+
+
+                      <literal>UNIQUE</literal>
+
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+        </variablelist>
+
+
+
+
+
+
+
+        <itemizedlist>
+          <title>
+            Tables referencing public.catalogue_deliverydetail via Foreign Key Constraints
+          </title>
+
+          <listitem>
+            <para>
+              <xref linkend="public.table.catalogue-deliverydetail"/>
+            </para>
+          </listitem>
+
+        </itemizedlist>
+
+
+
+
+
+
+      </para>
+    </section>
+
+      <section id="public.table.catalogue-deliverydetail"
+               xreflabel="public.catalogue_deliverydetail">
+        <title id="public.table.catalogue-deliverydetail-title">
+         Table:
+         
+         <structname>catalogue_deliverydetail</structname>
+        </title>
+ 
+
+
+        <para>
+          <variablelist>
+            <title>
+              Structure of <structname>catalogue_deliverydetail</structname>
+            </title>
+
+
+            <varlistentry>
+              <term><structfield>id</structfield></term>
+              <listitem><para>
+                <type>serial</type>
+
+
+                <literal>PRIMARY KEY</literal>
+
+
+
+
+
+
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>user_id</structfield></term>
+              <listitem><para>
+                <type>integer</type>
+
+
+
+
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+
+                <literal>REFERENCES</literal> <xref linkend="public.table.auth-user"/>
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>processing_level_id</structfield></term>
+              <listitem><para>
+                <type>integer</type>
+
+
+
+
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+
+                <literal>REFERENCES</literal> <xref linkend="public.table.catalogue-processinglevel"/>
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>projection_id</structfield></term>
+              <listitem><para>
+                <type>integer</type>
+
+
+
+
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+
+                <literal>REFERENCES</literal> <xref linkend="public.table.catalogue-projection"/>
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>datum_id</structfield></term>
+              <listitem><para>
+                <type>integer</type>
+
+
+
+
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+
+                <literal>REFERENCES</literal> <xref linkend="public.table.catalogue-datum"/>
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>resampling_method_id</structfield></term>
+              <listitem><para>
+                <type>integer</type>
+
+
+
+
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+
+                <literal>REFERENCES</literal> <xref linkend="public.table.catalogue-resamplingmethod"/>
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>file_format_id</structfield></term>
+              <listitem><para>
+                <type>integer</type>
+
+
+
+
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+
+                <literal>REFERENCES</literal> <xref linkend="public.table.catalogue-fileformat"/>
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>geometry</structfield></term>
+              <listitem><para>
+                <type>geometry</type>
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+        </variablelist>
+
+
+
+        <variablelist>
+          <title>Constraints on catalogue_deliverydetail</title>
+
+          <varlistentry>
+            <term>enforce_dims_geometry</term>
+            <listitem><para>CHECK ((ndims(geometry) = 2))</para></listitem>
+          </varlistentry>
+
+
+
+          <varlistentry>
+            <term>enforce_geotype_geometry</term>
+            <listitem><para>CHECK (((geometrytype(geometry) = &apos;POLYGON&apos;::text) OR (geometry IS NULL)))</para></listitem>
+          </varlistentry>
+
+
+
+          <varlistentry>
+            <term>enforce_srid_geometry</term>
+            <listitem><para>CHECK ((srid(geometry) = 4326))</para></listitem>
+          </varlistentry>
+
+        </variablelist>
+
+
+
+
+
+        <variablelist>
+          <title>Indexes on catalogue_deliverydetail</title>
+
+          <varlistentry>
+            <term>catalogue_deliverydetail_geometry_id</term>
+            <listitem><para>geometry</para></listitem>
+          </varlistentry>
+
+        </variablelist>
+
+
+
+
+
+        <itemizedlist>
+          <title>
+            Tables referencing public.catalogue_order via Foreign Key Constraints
+          </title>
+
+          <listitem>
+            <para>
+              <xref linkend="public.table.catalogue-order"/>
+            </para>
+          </listitem>
+
+
+
+          <listitem>
+            <para>
+              <xref linkend="public.table.catalogue-searchrecord"/>
+            </para>
+          </listitem>
+
+        </itemizedlist>
+
+
+
+
+
+
+      </para>
+    </section>
+
+      <section id="public.table.catalogue-deliverymethod"
+               xreflabel="public.catalogue_deliverymethod">
+        <title id="public.table.catalogue-deliverymethod-title">
+         Table:
+         
+         <structname>catalogue_deliverymethod</structname>
+        </title>
+ 
+
+
+        <para>
+          <variablelist>
+            <title>
+              Structure of <structname>catalogue_deliverymethod</structname>
+            </title>
+
+
+            <varlistentry>
+              <term><structfield>id</structfield></term>
+              <listitem><para>
+                <type>serial</type>
+
+
+                <literal>PRIMARY KEY</literal>
+
+
+
+
+
+
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>name</structfield></term>
+              <listitem><para>
+                <type>character varying(128)</type>
+
+
+
+
+                      <literal>UNIQUE</literal>
+
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+        </variablelist>
+
+
+
+
+
+
+
+        <itemizedlist>
+          <title>
+            Tables referencing public.catalogue_order via Foreign Key Constraints
+          </title>
+
+          <listitem>
+            <para>
+              <xref linkend="public.table.catalogue-order"/>
+            </para>
+          </listitem>
+
+        </itemizedlist>
+
+
+
+
+
+
+      </para>
+    </section>
+
+      <section id="public.table.catalogue-fileformat"
+               xreflabel="public.catalogue_fileformat">
+        <title id="public.table.catalogue-fileformat-title">
+         Table:
+         
+         <structname>catalogue_fileformat</structname>
+        </title>
+ 
+
+
+        <para>
+          <variablelist>
+            <title>
+              Structure of <structname>catalogue_fileformat</structname>
+            </title>
+
+
+            <varlistentry>
+              <term><structfield>id</structfield></term>
+              <listitem><para>
+                <type>serial</type>
+
+
+                <literal>PRIMARY KEY</literal>
+
+
+
+
+
+
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>name</structfield></term>
+              <listitem><para>
+                <type>character varying(128)</type>
+
+
+
+
+                      <literal>UNIQUE</literal>
+
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+        </variablelist>
+
+
+
+
+
+
+
+        <itemizedlist>
+          <title>
+            Tables referencing public.catalogue_deliverydetail via Foreign Key Constraints
+          </title>
+
+          <listitem>
+            <para>
+              <xref linkend="public.table.catalogue-deliverydetail"/>
+            </para>
+          </listitem>
+
+        </itemizedlist>
+
+
+
+
+
+
+      </para>
+    </section>
+
+      <section id="public.table.catalogue-genericimageryproduct"
+               xreflabel="public.catalogue_genericimageryproduct">
+        <title id="public.table.catalogue-genericimageryproduct-title">
+         Table:
+         
+         <structname>catalogue_genericimageryproduct</structname>
+        </title>
+ 
+
+
+        <para>
+          <variablelist>
+            <title>
+              Structure of <structname>catalogue_genericimageryproduct</structname>
+            </title>
+
+
+            <varlistentry>
+              <term><structfield>genericproduct_ptr_id</structfield></term>
+              <listitem><para>
+                <type>integer</type>
+
+
+                <literal>PRIMARY KEY</literal>
+
+
+
+
+
+
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>geometric_resolution</structfield></term>
+              <listitem><para>
+                <type>double precision</type>
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>geometric_resolution_x</structfield></term>
+              <listitem><para>
+                <type>double precision</type>
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>geometric_resolution_y</structfield></term>
+              <listitem><para>
+                <type>double precision</type>
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>radiometric_resolution</structfield></term>
+              <listitem><para>
+                <type>integer</type>
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>band_count</structfield></term>
+              <listitem><para>
+                <type>integer</type>
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+        </variablelist>
+
+
+
+
+
+
+
+
+
+
+      </para>
+    </section>
+
+      <section id="public.table.catalogue-genericproduct"
+               xreflabel="public.catalogue_genericproduct">
+        <title id="public.table.catalogue-genericproduct-title">
+         Table:
+         
+         <structname>catalogue_genericproduct</structname>
+        </title>
+ 
+
+
+        <para>
+          <variablelist>
+            <title>
+              Structure of <structname>catalogue_genericproduct</structname>
+            </title>
+
+
+            <varlistentry>
+              <term><structfield>id</structfield></term>
+              <listitem><para>
+                <type>serial</type>
+
+
+                <literal>PRIMARY KEY</literal>
+
+
+
+
+
+
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>processing_level_id</structfield></term>
+              <listitem><para>
+                <type>integer</type>
+
+
+
+
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+
+                <literal>REFERENCES</literal> <xref linkend="public.table.catalogue-processinglevel"/>
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>owner_id</structfield></term>
+              <listitem><para>
+                <type>integer</type>
+
+
+
+
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+
+                <literal>REFERENCES</literal> <xref linkend="public.table.catalogue-institution"/>
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>license_id</structfield></term>
+              <listitem><para>
+                <type>integer</type>
+
+
+
+
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+
+                <literal>REFERENCES</literal> <xref linkend="public.table.catalogue-license"/>
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>product_date</structfield></term>
+              <listitem><para>
+                <type>timestamp with time zone</type>
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>projection_id</structfield></term>
+              <listitem><para>
+                <type>integer</type>
+
+
+
+
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+
+                <literal>REFERENCES</literal> <xref linkend="public.table.catalogue-projection"/>
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>quality_id</structfield></term>
+              <listitem><para>
+                <type>integer</type>
+
+
+
+
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+
+                <literal>REFERENCES</literal> <xref linkend="public.table.catalogue-quality"/>
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>creating_software_id</structfield></term>
+              <listitem><para>
+                <type>integer</type>
+
+
+
+
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+
+                <literal>REFERENCES</literal> <xref linkend="public.table.catalogue-creatingsoftware"/>
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>original_product_id</structfield></term>
+              <listitem><para>
+                <type>character varying(255)</type>
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>product_id</structfield></term>
+              <listitem><para>
+                <type>character varying(255)</type>
+
+
+
+
+                      <literal>UNIQUE</literal>
+
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>product_revision</structfield></term>
+              <listitem><para>
+                <type>character varying(255)</type>
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>metadata</structfield></term>
+              <listitem><para>
+                <type>text</type>
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>spatial_coverage</structfield></term>
+              <listitem><para>
+                <type>geometry</type>
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>local_storage_path</structfield></term>
+              <listitem><para>
+                <type>character varying(255)</type>
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>remote_thumbnail_url</structfield></term>
+              <listitem><para>
+                <type>character varying(255)</type>
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+        </variablelist>
+
+
+
+        <variablelist>
+          <title>Constraints on catalogue_genericproduct</title>
+
+          <varlistentry>
+            <term>enforce_dims_spatial_coverage</term>
+            <listitem><para>CHECK ((ndims(spatial_coverage) = 2))</para></listitem>
+          </varlistentry>
+
+
+
+          <varlistentry>
+            <term>enforce_geotype_spatial_coverage</term>
+            <listitem><para>CHECK (((geometrytype(spatial_coverage) = &apos;POLYGON&apos;::text) OR (spatial_coverage IS NULL)))</para></listitem>
+          </varlistentry>
+
+
+
+          <varlistentry>
+            <term>enforce_srid_spatial_coverage</term>
+            <listitem><para>CHECK ((srid(spatial_coverage) = 4326))</para></listitem>
+          </varlistentry>
+
+        </variablelist>
+
+
+
+
+
+        <variablelist>
+          <title>Indexes on catalogue_genericproduct</title>
+
+          <varlistentry>
+            <term>catalogue_genericproduct_creating_software_id</term>
+            <listitem><para>creating_software_id</para></listitem>
+          </varlistentry>
+
+
+
+          <varlistentry>
+            <term>catalogue_genericproduct_license_id</term>
+            <listitem><para>license_id</para></listitem>
+          </varlistentry>
+
+
+
+          <varlistentry>
+            <term>catalogue_genericproduct_original_product_id</term>
+            <listitem><para>original_product_id</para></listitem>
+          </varlistentry>
+
+
+
+          <varlistentry>
+            <term>catalogue_genericproduct_owner_id</term>
+            <listitem><para>owner_id</para></listitem>
+          </varlistentry>
+
+
+
+          <varlistentry>
+            <term>catalogue_genericproduct_processing_level_id</term>
+            <listitem><para>processing_level_id</para></listitem>
+          </varlistentry>
+
+
+
+          <varlistentry>
+            <term>catalogue_genericproduct_product_acquisition_start</term>
+            <listitem><para>product_date</para></listitem>
+          </varlistentry>
+
+
+
+          <varlistentry>
+            <term>catalogue_genericproduct_product_date</term>
+            <listitem><para>product_date</para></listitem>
+          </varlistentry>
+
+
+
+          <varlistentry>
+            <term>catalogue_genericproduct_projection_id</term>
+            <listitem><para>projection_id</para></listitem>
+          </varlistentry>
+
+
+
+          <varlistentry>
+            <term>catalogue_genericproduct_quality_id</term>
+            <listitem><para>quality_id</para></listitem>
+          </varlistentry>
+
+
+
+          <varlistentry>
+            <term>catalogue_genericproduct_spatial_coverage_id</term>
+            <listitem><para>spatial_coverage</para></listitem>
+          </varlistentry>
+
+        </variablelist>
+
+
+
+
+
+        <itemizedlist>
+          <title>
+            Tables referencing public.catalogue_continuousproduct via Foreign Key Constraints
+          </title>
+
+          <listitem>
+            <para>
+              <xref linkend="public.table.catalogue-continuousproduct"/>
+            </para>
+          </listitem>
+
+
+
+          <listitem>
+            <para>
+              <xref linkend="public.table.catalogue-genericsensorproduct"/>
+            </para>
+          </listitem>
+
+
+
+          <listitem>
+            <para>
+              <xref linkend="public.table.catalogue-geospatialproduct"/>
+            </para>
+          </listitem>
+
+
+
+          <listitem>
+            <para>
+              <xref linkend="public.table.catalogue-ordinalproduct"/>
+            </para>
+          </listitem>
+
+
+
+          <listitem>
+            <para>
+              <xref linkend="public.table.catalogue-productlink"/>
+            </para>
+          </listitem>
+
+
+
+          <listitem>
+            <para>
+              <xref linkend="public.table.catalogue-searchrecord"/>
+            </para>
+          </listitem>
+
+        </itemizedlist>
+
+
+
+
+
+
+      </para>
+    </section>
+
+      <section id="public.table.catalogue-genericsensorproduct"
+               xreflabel="public.catalogue_genericsensorproduct">
+        <title id="public.table.catalogue-genericsensorproduct-title">
+         Table:
+         
+         <structname>catalogue_genericsensorproduct</structname>
+        </title>
+ 
+
+
+        <para>
+          <variablelist>
+            <title>
+              Structure of <structname>catalogue_genericsensorproduct</structname>
+            </title>
+
+
+            <varlistentry>
+              <term><structfield>genericimageryproduct_ptr_id</structfield></term>
+              <listitem><para>
+                <type>integer</type>
+
+
+
+
+
+
+                <literal>PRIMARY KEY</literal>
+
+
+
+
+
+
+
+
+
+
+
+
+                <literal>REFERENCES</literal> <xref linkend="public.table.catalogue-genericproduct"/>
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>acquisition_mode_id</structfield></term>
+              <listitem><para>
+                <type>integer</type>
+
+
+
+
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+
+                <literal>REFERENCES</literal> <xref linkend="public.table.catalogue-acquisitionmode"/>
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>product_acquisition_start</structfield></term>
+              <listitem><para>
+                <type>timestamp with time zone</type>
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>product_acquisition_end</structfield></term>
+              <listitem><para>
+                <type>timestamp with time zone</type>
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>geometric_accuracy_mean</structfield></term>
+              <listitem><para>
+                <type>double precision</type>
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>geometric_accuracy_1sigma</structfield></term>
+              <listitem><para>
+                <type>double precision</type>
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>geometric_accuracy_2sigma</structfield></term>
+              <listitem><para>
+                <type>double precision</type>
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>radiometric_signal_to_noise_ratio</structfield></term>
+              <listitem><para>
+                <type>double precision</type>
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>radiometric_percentage_error</structfield></term>
+              <listitem><para>
+                <type>double precision</type>
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>spectral_accuracy</structfield></term>
+              <listitem><para>
+                <type>double precision</type>
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>orbit_number</structfield></term>
+              <listitem><para>
+                <type>integer</type>
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>path</structfield></term>
+              <listitem><para>
+                <type>integer</type>
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>path_offset</structfield></term>
+              <listitem><para>
+                <type>integer</type>
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>row</structfield></term>
+              <listitem><para>
+                <type>integer</type>
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>row_offset</structfield></term>
+              <listitem><para>
+                <type>integer</type>
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>offline_storage_medium_id</structfield></term>
+              <listitem><para>
+                <type>character varying(12)</type>
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>online_storage_medium_id</structfield></term>
+              <listitem><para>
+                <type>character varying(36)</type>
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+        </variablelist>
+
+
+
+
+
+        <variablelist>
+          <title>Indexes on catalogue_genericsensorproduct</title>
+
+          <varlistentry>
+            <term>catalogue_genericsensorproduct_acquisition_mode_id</term>
+            <listitem><para>acquisition_mode_id</para></listitem>
+          </varlistentry>
+
+
+
+          <varlistentry>
+            <term>catalogue_genericsensorproduct_geometric_accuracy_mean</term>
+            <listitem><para>geometric_accuracy_mean</para></listitem>
+          </varlistentry>
+
+
+
+          <varlistentry>
+            <term>catalogue_genericsensorproduct_path</term>
+            <listitem><para>path</para></listitem>
+          </varlistentry>
+
+
+
+          <varlistentry>
+            <term>catalogue_genericsensorproduct_product_acquisition_end</term>
+            <listitem><para>product_acquisition_end</para></listitem>
+          </varlistentry>
+
+
+
+          <varlistentry>
+            <term>catalogue_genericsensorproduct_product_acquisition_start</term>
+            <listitem><para>product_acquisition_start</para></listitem>
+          </varlistentry>
+
+
+
+          <varlistentry>
+            <term>catalogue_genericsensorproduct_row</term>
+            <listitem><para>&quot;row&quot;</para></listitem>
+          </varlistentry>
+
+        </variablelist>
+
+
+
+
+
+        <itemizedlist>
+          <title>
+            Tables referencing public.catalogue_opticalproduct via Foreign Key Constraints
+          </title>
+
+          <listitem>
+            <para>
+              <xref linkend="public.table.catalogue-opticalproduct"/>
+            </para>
+          </listitem>
+
+
+
+          <listitem>
+            <para>
+              <xref linkend="public.table.catalogue-radarproduct"/>
+            </para>
+          </listitem>
+
+        </itemizedlist>
+
+
+
+
+
+
+      </para>
+    </section>
+
+      <section id="public.table.catalogue-geospatialproduct"
+               xreflabel="public.catalogue_geospatialproduct">
+        <title id="public.table.catalogue-geospatialproduct-title">
+         Table:
+         
+         <structname>catalogue_geospatialproduct</structname>
+        </title>
+ 
+
+
+        <para>
+          <variablelist>
+            <title>
+              Structure of <structname>catalogue_geospatialproduct</structname>
+            </title>
+
+
+            <varlistentry>
+              <term><structfield>genericproduct_ptr_id</structfield></term>
+              <listitem><para>
+                <type>integer</type>
+
+
+
+
+
+
+                <literal>PRIMARY KEY</literal>
+
+
+
+
+
+
+
+
+
+
+
+
+                <literal>REFERENCES</literal> <xref linkend="public.table.catalogue-genericproduct"/>
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>name</structfield></term>
+              <listitem><para>
+                <type>character varying(255)</type>
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>description</structfield></term>
+              <listitem><para>
+                <type>text</type>
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>processing_notes</structfield></term>
+              <listitem><para>
+                <type>text</type>
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>equivalent_scale</structfield></term>
+              <listitem><para>
+                <type>integer</type>
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>data_type</structfield></term>
+              <listitem><para>
+                <type>character varying(1)</type>
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>temporal_extent_start</structfield></term>
+              <listitem><para>
+                <type>timestamp with time zone</type>
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>temporal_extent_end</structfield></term>
+              <listitem><para>
+                <type>timestamp with time zone</type>
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>place_type_id</structfield></term>
+              <listitem><para>
+                <type>integer</type>
+
+
+
+
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+
+                <literal>REFERENCES</literal> <xref linkend="public.table.catalogue-placetype"/>
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>place_id</structfield></term>
+              <listitem><para>
+                <type>integer</type>
+
+
+
+
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+
+                <literal>REFERENCES</literal> <xref linkend="public.table.catalogue-place"/>
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>primary_topic_id</structfield></term>
+              <listitem><para>
+                <type>integer</type>
+
+
+
+
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+
+                <literal>REFERENCES</literal> <xref linkend="public.table.catalogue-topic"/>
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+        </variablelist>
+
+
+
+
+
+
+
+
+
+
+      </para>
+    </section>
+
+      <section id="public.table.catalogue-institution"
+               xreflabel="public.catalogue_institution">
+        <title id="public.table.catalogue-institution-title">
+         Table:
+         
+         <structname>catalogue_institution</structname>
+        </title>
+ 
+
+
+        <para>
+          <variablelist>
+            <title>
+              Structure of <structname>catalogue_institution</structname>
+            </title>
+
+
+            <varlistentry>
+              <term><structfield>id</structfield></term>
+              <listitem><para>
+                <type>serial</type>
+
+
+                <literal>PRIMARY KEY</literal>
+
+
+
+
+
+
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>name</structfield></term>
+              <listitem><para>
+                <type>character varying(255)</type>
+
+
+
+
+                      <literal>UNIQUE</literal>
+
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>address1</structfield></term>
+              <listitem><para>
+                <type>character varying(255)</type>
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>address2</structfield></term>
+              <listitem><para>
+                <type>character varying(255)</type>
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>address3</structfield></term>
+              <listitem><para>
+                <type>character varying(255)</type>
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>post_code</structfield></term>
+              <listitem><para>
+                <type>character varying(255)</type>
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+        </variablelist>
+
+
+
+
+
+
+
+        <itemizedlist>
+          <title>
+            Tables referencing public.catalogue_genericproduct via Foreign Key Constraints
+          </title>
+
+          <listitem>
+            <para>
+              <xref linkend="public.table.catalogue-genericproduct"/>
+            </para>
+          </listitem>
+
+        </itemizedlist>
+
+
+
+
+
+
+      </para>
+    </section>
+
+      <section id="public.table.catalogue-license"
+               xreflabel="public.catalogue_license">
+        <title id="public.table.catalogue-license-title">
+         Table:
+         
+         <structname>catalogue_license</structname>
+        </title>
+ 
+
+
+        <para>
+          <variablelist>
+            <title>
+              Structure of <structname>catalogue_license</structname>
+            </title>
+
+
+            <varlistentry>
+              <term><structfield>id</structfield></term>
+              <listitem><para>
+                <type>serial</type>
+
+
+                <literal>PRIMARY KEY</literal>
+
+
+
+
+
+
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>name</structfield></term>
+              <listitem><para>
+                <type>character varying(255)</type>
+
+
+
+
+                      <literal>UNIQUE</literal>
+
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>details</structfield></term>
+              <listitem><para>
+                <type>text</type>
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>type</structfield></term>
+              <listitem><para>
+                <type>integer</type>
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+        </variablelist>
+
+
+
+
+
+
+
+        <itemizedlist>
+          <title>
+            Tables referencing public.catalogue_genericproduct via Foreign Key Constraints
+          </title>
+
+          <listitem>
+            <para>
+              <xref linkend="public.table.catalogue-genericproduct"/>
+            </para>
+          </listitem>
+
+        </itemizedlist>
+
+
+
+
+
+
+      </para>
+    </section>
+
+      <section id="public.table.catalogue-marketsector"
+               xreflabel="public.catalogue_marketsector">
+        <title id="public.table.catalogue-marketsector-title">
+         Table:
+         
+         <structname>catalogue_marketsector</structname>
+        </title>
+ 
+
+
+        <para>
+          <variablelist>
+            <title>
+              Structure of <structname>catalogue_marketsector</structname>
+            </title>
+
+
+            <varlistentry>
+              <term><structfield>id</structfield></term>
+              <listitem><para>
+                <type>serial</type>
+
+
+                <literal>PRIMARY KEY</literal>
+
+
+
+
+
+
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>name</structfield></term>
+              <listitem><para>
+                <type>character varying(80)</type>
+
+
+
+
+                      <literal>UNIQUE</literal>
+
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+        </variablelist>
+
+
+
+
+
+
+
+        <itemizedlist>
+          <title>
+            Tables referencing public.catalogue_order via Foreign Key Constraints
+          </title>
+
+          <listitem>
+            <para>
+              <xref linkend="public.table.catalogue-order"/>
+            </para>
+          </listitem>
+
+        </itemizedlist>
+
+
+
+
+
+
+      </para>
+    </section>
+
+      <section id="public.table.catalogue-mission"
+               xreflabel="public.catalogue_mission">
+        <title id="public.table.catalogue-mission-title">
+         Table:
+         
+         <structname>catalogue_mission</structname>
+        </title>
+ 
+
+
+        <para>
+          <variablelist>
+            <title>
+              Structure of <structname>catalogue_mission</structname>
+            </title>
+
+
+            <varlistentry>
+              <term><structfield>id</structfield></term>
+              <listitem><para>
+                <type>serial</type>
+
+
+                <literal>PRIMARY KEY</literal>
+
+
+
+
+
+
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>abbreviation</structfield></term>
+              <listitem><para>
+                <type>character varying(3)</type>
+
+
+
+
+                      <literal>UNIQUE</literal>
+
+
+
+
+
+                      <literal>UNIQUE</literal>
+
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>name</structfield></term>
+              <listitem><para>
+                <type>character varying(255)</type>
+
+
+
+
+                      <literal>UNIQUE</literal>
+
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>mission_group_id</structfield></term>
+              <listitem><para>
+                <type>integer</type>
+
+
+
+
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+
+                <literal>REFERENCES</literal> <xref linkend="public.table.catalogue-missiongroup"/>
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>owner</structfield></term>
+              <listitem><para>
+                <type>character varying(255)</type>
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>operator_abbreviation</structfield></term>
+              <listitem><para>
+                <type>character varying(255)</type>
+
+
+
+
+                      <literal>UNIQUE</literal>
+
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+        </variablelist>
+
+
+
+
+
+        <variablelist>
+          <title>Indexes on catalogue_mission</title>
+
+          <varlistentry>
+            <term>catalogue_mission_mission_group_id_idx</term>
+            <listitem><para>mission_group_id</para></listitem>
+          </varlistentry>
+
+        </variablelist>
+
+
+
+
+
+        <itemizedlist>
+          <title>
+            Tables referencing public.catalogue_missionsensor via Foreign Key Constraints
+          </title>
+
+          <listitem>
+            <para>
+              <xref linkend="public.table.catalogue-missionsensor"/>
+            </para>
+          </listitem>
+
+
+
+          <listitem>
+            <para>
+              <xref linkend="public.table.catalogue-search"/>
+            </para>
+          </listitem>
+
+        </itemizedlist>
+
+
+
+
+
+
+      </para>
+    </section>
+
+      <section id="public.table.catalogue-missiongroup"
+               xreflabel="public.catalogue_missiongroup">
+        <title id="public.table.catalogue-missiongroup-title">
+         Table:
+         
+         <structname>catalogue_missiongroup</structname>
+        </title>
+ 
+
+
+        <para>
+          <variablelist>
+            <title>
+              Structure of <structname>catalogue_missiongroup</structname>
+            </title>
+
+
+            <varlistentry>
+              <term><structfield>id</structfield></term>
+              <listitem><para>
+                <type>serial</type>
+
+
+                <literal>PRIMARY KEY</literal>
+
+
+
+
+
+
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>name</structfield></term>
+              <listitem><para>
+                <type>character varying(255)</type>
+
+
+
+
+                      <literal>UNIQUE</literal>
+
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+        </variablelist>
+
+
+
+
+
+
+
+        <itemizedlist>
+          <title>
+            Tables referencing public.catalogue_mission via Foreign Key Constraints
+          </title>
+
+          <listitem>
+            <para>
+              <xref linkend="public.table.catalogue-mission"/>
+            </para>
+          </listitem>
+
+        </itemizedlist>
+
+
+
+
+
+
+      </para>
+    </section>
+
+      <section id="public.table.catalogue-missionsensor"
+               xreflabel="public.catalogue_missionsensor">
+        <title id="public.table.catalogue-missionsensor-title">
+         Table:
+         
+         <structname>catalogue_missionsensor</structname>
+        </title>
+ 
+
+
+        <para>
+          <variablelist>
+            <title>
+              Structure of <structname>catalogue_missionsensor</structname>
+            </title>
+
+
+            <varlistentry>
+              <term><structfield>id</structfield></term>
+              <listitem><para>
+                <type>serial</type>
+
+
+                <literal>PRIMARY KEY</literal>
+
+
+
+
+
+
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>abbreviation</structfield></term>
+              <listitem><para>
+                <type>character varying(3)</type>
+
+
+
+
+                      <literal>UNIQUE#1</literal>
+
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>name</structfield></term>
+              <listitem><para>
+                <type>character varying(255)</type>
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>description</structfield></term>
+              <listitem><para>
+                <type>text</type>
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>has_data</structfield></term>
+              <listitem><para>
+                <type>boolean</type>
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>mission_id</structfield></term>
+              <listitem><para>
+                <type>integer</type>
+
+
+
+
+                      <literal>UNIQUE#1</literal>
+
+
+
+
+
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+
+
+
+                <literal>REFERENCES</literal> <xref linkend="public.table.catalogue-mission"/>
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>is_taskable</structfield></term>
+              <listitem><para>
+                <type>boolean</type>
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>is_radar</structfield></term>
+              <listitem><para>
+                <type>boolean</type>
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>operator_abbreviation</structfield></term>
+              <listitem><para>
+                <type>character varying(255)</type>
+
+
+
+
+                      <literal>UNIQUE</literal>
+
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+        </variablelist>
+
+
+
+
+
+        <variablelist>
+          <title>Indexes on catalogue_missionsensor</title>
+
+          <varlistentry>
+            <term>catalogue_missionsensor_mission_id_idx</term>
+            <listitem><para>mission_id</para></listitem>
+          </varlistentry>
+
+        </variablelist>
+
+
+
+
+
+        <itemizedlist>
+          <title>
+            Tables referencing public.catalogue_ordernotificationrecipients_sensors via Foreign Key Constraints
+          </title>
+
+          <listitem>
+            <para>
+              <xref linkend="public.table.catalogue-ordernotificationrecipients-sensors"/>
+            </para>
+          </listitem>
+
+
+
+          <listitem>
+            <para>
+              <xref linkend="public.table.catalogue-search-sensors"/>
+            </para>
+          </listitem>
+
+
+
+          <listitem>
+            <para>
+              <xref linkend="public.table.catalogue-sensortype"/>
+            </para>
+          </listitem>
+
+
+
+          <listitem>
+            <para>
+              <xref linkend="public.table.catalogue-taskingrequest"/>
+            </para>
+          </listitem>
+
+        </itemizedlist>
+
+
+
+
+
+
+      </para>
+    </section>
+
+      <section id="public.table.catalogue-opticalproduct"
+               xreflabel="public.catalogue_opticalproduct">
+        <title id="public.table.catalogue-opticalproduct-title">
+         Table:
+         
+         <structname>catalogue_opticalproduct</structname>
+        </title>
+ 
+
+
+        <para>
+          <variablelist>
+            <title>
+              Structure of <structname>catalogue_opticalproduct</structname>
+            </title>
+
+
+            <varlistentry>
+              <term><structfield>genericsensorproduct_ptr_id</structfield></term>
+              <listitem><para>
+                <type>integer</type>
+
+
+
+
+
+
+                <literal>PRIMARY KEY</literal>
+
+
+
+
+
+
+
+
+
+
+
+
+                <literal>REFERENCES</literal> <xref linkend="public.table.catalogue-genericsensorproduct"/>
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>cloud_cover</structfield></term>
+              <listitem><para>
+                <type>integer</type>
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>sensor_inclination_angle</structfield></term>
+              <listitem><para>
+                <type>double precision</type>
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>sensor_viewing_angle</structfield></term>
+              <listitem><para>
+                <type>double precision</type>
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>gain_name</structfield></term>
+              <listitem><para>
+                <type>character varying(200)</type>
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>gain_value_per_channel</structfield></term>
+              <listitem><para>
+                <type>character varying(200)</type>
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>gain_change_per_channel</structfield></term>
+              <listitem><para>
+                <type>character varying(200)</type>
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>bias_per_channel</structfield></term>
+              <listitem><para>
+                <type>character varying(200)</type>
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>solar_zenith_angle</structfield></term>
+              <listitem><para>
+                <type>double precision</type>
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>solar_azimuth_angle</structfield></term>
+              <listitem><para>
+                <type>double precision</type>
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>earth_sun_distance</structfield></term>
+              <listitem><para>
+                <type>double precision</type>
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+        </variablelist>
+
+
+
+
+
+
+
+
+
+
+      </para>
+    </section>
+
+      <section id="public.table.catalogue-order"
+               xreflabel="public.catalogue_order">
+        <title id="public.table.catalogue-order-title">
+         Table:
+         
+         <structname>catalogue_order</structname>
+        </title>
+ 
+
+
+        <para>
+          <variablelist>
+            <title>
+              Structure of <structname>catalogue_order</structname>
+            </title>
+
+
+            <varlistentry>
+              <term><structfield>id</structfield></term>
+              <listitem><para>
+                <type>serial</type>
+
+
+                <literal>PRIMARY KEY</literal>
+
+
+
+
+
+
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>user_id</structfield></term>
+              <listitem><para>
+                <type>integer</type>
+
+
+
+
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+
+                <literal>REFERENCES</literal> <xref linkend="public.table.auth-user"/>
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>notes</structfield></term>
+              <listitem><para>
+                <type>text</type>
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>order_status_id</structfield></term>
+              <listitem><para>
+                <type>integer</type>
+
+
+
+
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+
+                <literal>REFERENCES</literal> <xref linkend="public.table.catalogue-orderstatus"/>
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>delivery_method_id</structfield></term>
+              <listitem><para>
+                <type>integer</type>
+
+
+
+
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+
+                <literal>REFERENCES</literal> <xref linkend="public.table.catalogue-deliverymethod"/>
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>order_date</structfield></term>
+              <listitem><para>
+                <type>timestamp with time zone</type>
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>delivery_detail_id</structfield></term>
+              <listitem><para>
+                <type>integer</type>
+
+
+
+
+
+
+
+
+
+
+
+
+                <literal>REFERENCES</literal> <xref linkend="public.table.catalogue-deliverydetail"/>
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>market_sector_id</structfield></term>
+              <listitem><para>
+                <type>integer</type>
+
+
+
+
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+                <literal>DEFAULT 1</literal>
+
+
+
+
+                <literal>REFERENCES</literal> <xref linkend="public.table.catalogue-marketsector"/>
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+        </variablelist>
+
+
+
+
+
+        <variablelist>
+          <title>Indexes on catalogue_order</title>
+
+          <varlistentry>
+            <term>catalogue_order_delivery_method_id</term>
+            <listitem><para>delivery_method_id</para></listitem>
+          </varlistentry>
+
+
+
+          <varlistentry>
+            <term>catalogue_order_order_status_id</term>
+            <listitem><para>order_status_id</para></listitem>
+          </varlistentry>
+
+
+
+          <varlistentry>
+            <term>catalogue_order_user_id</term>
+            <listitem><para>user_id</para></listitem>
+          </varlistentry>
+
+        </variablelist>
+
+
+
+
+
+        <itemizedlist>
+          <title>
+            Tables referencing public.catalogue_orderstatushistory via Foreign Key Constraints
+          </title>
+
+          <listitem>
+            <para>
+              <xref linkend="public.table.catalogue-orderstatushistory"/>
+            </para>
+          </listitem>
+
+
+
+          <listitem>
+            <para>
+              <xref linkend="public.table.catalogue-searchrecord"/>
+            </para>
+          </listitem>
+
+
+
+          <listitem>
+            <para>
+              <xref linkend="public.table.catalogue-taskingrequest"/>
+            </para>
+          </listitem>
+
+        </itemizedlist>
+
+
+
+
+
+
+      </para>
+    </section>
+
+      <section id="public.table.catalogue-ordernotificationrecipients"
+               xreflabel="public.catalogue_ordernotificationrecipients">
+        <title id="public.table.catalogue-ordernotificationrecipients-title">
+         Table:
+         
+         <structname>catalogue_ordernotificationrecipients</structname>
+        </title>
+ 
+
+
+        <para>
+          <variablelist>
+            <title>
+              Structure of <structname>catalogue_ordernotificationrecipients</structname>
+            </title>
+
+
+            <varlistentry>
+              <term><structfield>id</structfield></term>
+              <listitem><para>
+                <type>serial</type>
+
+
+                <literal>PRIMARY KEY</literal>
+
+
+
+
+
+
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>user_id</structfield></term>
+              <listitem><para>
+                <type>integer</type>
+
+
+
+
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+
+                <literal>REFERENCES</literal> <xref linkend="public.table.auth-user"/>
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+        </variablelist>
+
+
+
+
+
+        <variablelist>
+          <title>Indexes on catalogue_ordernotificationrecipients</title>
+
+          <varlistentry>
+            <term>catalogue_ordernotificationrecipients_user_id</term>
+            <listitem><para>user_id</para></listitem>
+          </varlistentry>
+
+        </variablelist>
+
+
+
+
+
+        <itemizedlist>
+          <title>
+            Tables referencing public.catalogue_ordernotificationrecipients_classes via Foreign Key Constraints
+          </title>
+
+          <listitem>
+            <para>
+              <xref linkend="public.table.catalogue-ordernotificationrecipients-classes"/>
+            </para>
+          </listitem>
+
+
+
+          <listitem>
+            <para>
+              <xref linkend="public.table.catalogue-ordernotificationrecipients-sensors"/>
+            </para>
+          </listitem>
+
+        </itemizedlist>
+
+
+
+
+
+
+      </para>
+    </section>
+
+      <section id="public.table.catalogue-ordernotificationrecipients-classes"
+               xreflabel="public.catalogue_ordernotificationrecipients_classes">
+        <title id="public.table.catalogue-ordernotificationrecipients-classes-title">
+         Table:
+         
+         <structname>catalogue_ordernotificationrecipients_classes</structname>
+        </title>
+ 
+
+
+        <para>
+          <variablelist>
+            <title>
+              Structure of <structname>catalogue_ordernotificationrecipients_classes</structname>
+            </title>
+
+
+            <varlistentry>
+              <term><structfield>id</structfield></term>
+              <listitem><para>
+                <type>serial</type>
+
+
+                <literal>PRIMARY KEY</literal>
+
+
+
+
+
+
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>ordernotificationrecipients_id</structfield></term>
+              <listitem><para>
+                <type>integer</type>
+
+
+
+
+                      <literal>UNIQUE#1</literal>
+
+
+
+
+
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+
+
+
+                <literal>REFERENCES</literal> <xref linkend="public.table.catalogue-ordernotificationrecipients"/>
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>contenttype_id</structfield></term>
+              <listitem><para>
+                <type>integer</type>
+
+
+
+
+                      <literal>UNIQUE#1</literal>
+
+
+
+
+
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+
+
+
+                <literal>REFERENCES</literal> <xref linkend="public.table.django-content-type"/>
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+        </variablelist>
+
+
+
+
+
+
+
+
+
+
+      </para>
+    </section>
+
+      <section id="public.table.catalogue-ordernotificationrecipients-sensors"
+               xreflabel="public.catalogue_ordernotificationrecipients_sensors">
+        <title id="public.table.catalogue-ordernotificationrecipients-sensors-title">
+         Table:
+         
+         <structname>catalogue_ordernotificationrecipients_sensors</structname>
+        </title>
+ 
+
+
+        <para>
+          <variablelist>
+            <title>
+              Structure of <structname>catalogue_ordernotificationrecipients_sensors</structname>
+            </title>
+
+
+            <varlistentry>
+              <term><structfield>id</structfield></term>
+              <listitem><para>
+                <type>serial</type>
+
+
+                <literal>PRIMARY KEY</literal>
+
+
+
+
+
+
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>ordernotificationrecipients_id</structfield></term>
+              <listitem><para>
+                <type>integer</type>
+
+
+
+
+                      <literal>UNIQUE#1</literal>
+
+
+
+
+
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+
+
+
+                <literal>REFERENCES</literal> <xref linkend="public.table.catalogue-ordernotificationrecipients"/>
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>missionsensor_id</structfield></term>
+              <listitem><para>
+                <type>integer</type>
+
+
+
+
+                      <literal>UNIQUE#1</literal>
+
+
+
+
+
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+
+
+
+                <literal>REFERENCES</literal> <xref linkend="public.table.catalogue-missionsensor"/>
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+        </variablelist>
+
+
+
+
+
+        <variablelist>
+          <title>Indexes on catalogue_ordernotificationrecipients_sensors</title>
+
+          <varlistentry>
+            <term>catalogue_ordernotificationrecipients_sensors_missionsensor_id</term>
+            <listitem><para>missionsensor_id</para></listitem>
+          </varlistentry>
+
+
+
+          <varlistentry>
+            <term>catalogue_ordernotificationrecipients_sensors_ordernotification</term>
+            <listitem><para>ordernotificationrecipients_id</para></listitem>
+          </varlistentry>
+
+        </variablelist>
+
+
+
+
+
+
+
+
+      </para>
+    </section>
+
+      <section id="public.table.catalogue-orderstatus"
+               xreflabel="public.catalogue_orderstatus">
+        <title id="public.table.catalogue-orderstatus-title">
+         Table:
+         
+         <structname>catalogue_orderstatus</structname>
+        </title>
+ 
+
+
+        <para>
+          <variablelist>
+            <title>
+              Structure of <structname>catalogue_orderstatus</structname>
+            </title>
+
+
+            <varlistentry>
+              <term><structfield>id</structfield></term>
+              <listitem><para>
+                <type>serial</type>
+
+
+                <literal>PRIMARY KEY</literal>
+
+
+
+
+
+
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>name</structfield></term>
+              <listitem><para>
+                <type>character varying(128)</type>
+
+
+
+
+                      <literal>UNIQUE</literal>
+
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+        </variablelist>
+
+
+
+
+
+
+
+        <itemizedlist>
+          <title>
+            Tables referencing public.catalogue_order via Foreign Key Constraints
+          </title>
+
+          <listitem>
+            <para>
+              <xref linkend="public.table.catalogue-order"/>
+            </para>
+          </listitem>
+
+
+
+          <listitem>
+            <para>
+              <xref linkend="public.table.catalogue-orderstatushistory"/>
+            </para>
+          </listitem>
+
+        </itemizedlist>
+
+
+
+
+
+
+      </para>
+    </section>
+
+      <section id="public.table.catalogue-orderstatushistory"
+               xreflabel="public.catalogue_orderstatushistory">
+        <title id="public.table.catalogue-orderstatushistory-title">
+         Table:
+         
+         <structname>catalogue_orderstatushistory</structname>
+        </title>
+ 
+
+
+        <para>
+          <variablelist>
+            <title>
+              Structure of <structname>catalogue_orderstatushistory</structname>
+            </title>
+
+
+            <varlistentry>
+              <term><structfield>id</structfield></term>
+              <listitem><para>
+                <type>serial</type>
+
+
+                <literal>PRIMARY KEY</literal>
+
+
+
+
+
+
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>user_id</structfield></term>
+              <listitem><para>
+                <type>integer</type>
+
+
+
+
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+
+                <literal>REFERENCES</literal> <xref linkend="public.table.auth-user"/>
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>order_id</structfield></term>
+              <listitem><para>
+                <type>integer</type>
+
+
+
+
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+
+                <literal>REFERENCES</literal> <xref linkend="public.table.catalogue-order"/>
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>order_change_date</structfield></term>
+              <listitem><para>
+                <type>timestamp with time zone</type>
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>notes</structfield></term>
+              <listitem><para>
+                <type>text</type>
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>old_order_status_id</structfield></term>
+              <listitem><para>
+                <type>integer</type>
+
+
+
+
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+
+                <literal>REFERENCES</literal> <xref linkend="public.table.catalogue-orderstatus"/>
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>new_order_status_id</structfield></term>
+              <listitem><para>
+                <type>integer</type>
+
+
+
+
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+
+                <literal>REFERENCES</literal> <xref linkend="public.table.catalogue-orderstatus"/>
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+        </variablelist>
+
+
+
+
+
+        <variablelist>
+          <title>Indexes on catalogue_orderstatushistory</title>
+
+          <varlistentry>
+            <term>catalogue_orderstatushistory_new_order_status_id</term>
+            <listitem><para>new_order_status_id</para></listitem>
+          </varlistentry>
+
+
+
+          <varlistentry>
+            <term>catalogue_orderstatushistory_old_order_status_id</term>
+            <listitem><para>old_order_status_id</para></listitem>
+          </varlistentry>
+
+
+
+          <varlistentry>
+            <term>catalogue_orderstatushistory_order_id</term>
+            <listitem><para>order_id</para></listitem>
+          </varlistentry>
+
+
+
+          <varlistentry>
+            <term>catalogue_orderstatushistory_user_id</term>
+            <listitem><para>user_id</para></listitem>
+          </varlistentry>
+
+        </variablelist>
+
+
+
+
+
+
+
+
+      </para>
+    </section>
+
+      <section id="public.table.catalogue-ordinalproduct"
+               xreflabel="public.catalogue_ordinalproduct">
+        <title id="public.table.catalogue-ordinalproduct-title">
+         Table:
+         
+         <structname>catalogue_ordinalproduct</structname>
+        </title>
+ 
+
+
+        <para>
+          <variablelist>
+            <title>
+              Structure of <structname>catalogue_ordinalproduct</structname>
+            </title>
+
+
+            <varlistentry>
+              <term><structfield>genericproduct_ptr_id</structfield></term>
+              <listitem><para>
+                <type>integer</type>
+
+
+
+
+
+
+                <literal>PRIMARY KEY</literal>
+
+
+
+
+
+
+
+
+
+
+
+
+                <literal>REFERENCES</literal> <xref linkend="public.table.catalogue-genericproduct"/>
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>class_count</structfield></term>
+              <listitem><para>
+                <type>integer</type>
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>confusion_matrix</structfield></term>
+              <listitem><para>
+                <type>character varying(80)</type>
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>kappa_score</structfield></term>
+              <listitem><para>
+                <type>double precision</type>
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+        </variablelist>
+
+
+
+
+
+
+
+
+
+
+      </para>
+    </section>
+
+      <section id="public.table.catalogue-place"
+               xreflabel="public.catalogue_place">
+        <title id="public.table.catalogue-place-title">
+         Table:
+         
+         <structname>catalogue_place</structname>
+        </title>
+ 
+
+
+        <para>
+          <variablelist>
+            <title>
+              Structure of <structname>catalogue_place</structname>
+            </title>
+
+
+            <varlistentry>
+              <term><structfield>id</structfield></term>
+              <listitem><para>
+                <type>serial</type>
+
+
+                <literal>PRIMARY KEY</literal>
+
+
+
+
+
+
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>name</structfield></term>
+              <listitem><para>
+                <type>character varying(255)</type>
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>place_type_id</structfield></term>
+              <listitem><para>
+                <type>integer</type>
+
+
+
+
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+
+                <literal>REFERENCES</literal> <xref linkend="public.table.catalogue-placetype"/>
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+        </variablelist>
+
+
+
+
+
+
+
+        <itemizedlist>
+          <title>
+            Tables referencing public.catalogue_geospatialproduct via Foreign Key Constraints
+          </title>
+
+          <listitem>
+            <para>
+              <xref linkend="public.table.catalogue-geospatialproduct"/>
+            </para>
+          </listitem>
+
+        </itemizedlist>
+
+
+
+
+
+
+      </para>
+    </section>
+
+      <section id="public.table.catalogue-placetype"
+               xreflabel="public.catalogue_placetype">
+        <title id="public.table.catalogue-placetype-title">
+         Table:
+         
+         <structname>catalogue_placetype</structname>
+        </title>
+ 
+
+
+        <para>
+          <variablelist>
+            <title>
+              Structure of <structname>catalogue_placetype</structname>
+            </title>
+
+
+            <varlistentry>
+              <term><structfield>id</structfield></term>
+              <listitem><para>
+                <type>serial</type>
+
+
+                <literal>PRIMARY KEY</literal>
+
+
+
+
+
+
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>name</structfield></term>
+              <listitem><para>
+                <type>character varying(255)</type>
+
+
+
+
+                      <literal>UNIQUE</literal>
+
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+        </variablelist>
+
+
+
+
+
+
+
+        <itemizedlist>
+          <title>
+            Tables referencing public.catalogue_geospatialproduct via Foreign Key Constraints
+          </title>
+
+          <listitem>
+            <para>
+              <xref linkend="public.table.catalogue-geospatialproduct"/>
+            </para>
+          </listitem>
+
+
+
+          <listitem>
+            <para>
+              <xref linkend="public.table.catalogue-place"/>
+            </para>
+          </listitem>
+
+        </itemizedlist>
+
+
+
+
+
+
+      </para>
+    </section>
+
+      <section id="public.table.catalogue-processinglevel"
+               xreflabel="public.catalogue_processinglevel">
+        <title id="public.table.catalogue-processinglevel-title">
+         Table:
+         
+         <structname>catalogue_processinglevel</structname>
+        </title>
+ 
+
+
+        <para>
+          <variablelist>
+            <title>
+              Structure of <structname>catalogue_processinglevel</structname>
+            </title>
+
+
+            <varlistentry>
+              <term><structfield>id</structfield></term>
+              <listitem><para>
+                <type>serial</type>
+
+
+                <literal>PRIMARY KEY</literal>
+
+
+
+
+
+
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>abbreviation</structfield></term>
+              <listitem><para>
+                <type>character varying(4)</type>
+
+
+
+
+                      <literal>UNIQUE</literal>
+
+
+
+
+
+                      <literal>UNIQUE</literal>
+
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>name</structfield></term>
+              <listitem><para>
+                <type>character varying(255)</type>
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+        </variablelist>
+
+
+
+
+
+
+
+        <itemizedlist>
+          <title>
+            Tables referencing public.catalogue_deliverydetail via Foreign Key Constraints
+          </title>
+
+          <listitem>
+            <para>
+              <xref linkend="public.table.catalogue-deliverydetail"/>
+            </para>
+          </listitem>
+
+
+
+          <listitem>
+            <para>
+              <xref linkend="public.table.catalogue-genericproduct"/>
+            </para>
+          </listitem>
+
+
+
+          <listitem>
+            <para>
+              <xref linkend="public.table.catalogue-search-processing-level"/>
+            </para>
+          </listitem>
+
+        </itemizedlist>
+
+
+
+
+
+
+      </para>
+    </section>
+
+      <section id="public.table.catalogue-productlink"
+               xreflabel="public.catalogue_productlink">
+        <title id="public.table.catalogue-productlink-title">
+         Table:
+         
+         <structname>catalogue_productlink</structname>
+        </title>
+ 
+
+
+        <para>
+          <variablelist>
+            <title>
+              Structure of <structname>catalogue_productlink</structname>
+            </title>
+
+
+            <varlistentry>
+              <term><structfield>id</structfield></term>
+              <listitem><para>
+                <type>serial</type>
+
+
+                <literal>PRIMARY KEY</literal>
+
+
+
+
+
+
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>parent_id</structfield></term>
+              <listitem><para>
+                <type>integer</type>
+
+
+
+
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+
+                <literal>REFERENCES</literal> <xref linkend="public.table.catalogue-genericproduct"/>
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>child_id</structfield></term>
+              <listitem><para>
+                <type>integer</type>
+
+
+
+
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+
+                <literal>REFERENCES</literal> <xref linkend="public.table.catalogue-genericproduct"/>
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+        </variablelist>
+
+
+
+
+
+        <variablelist>
+          <title>Indexes on catalogue_productlink</title>
+
+          <varlistentry>
+            <term>catalogue_productlink_child_id</term>
+            <listitem><para>child_id</para></listitem>
+          </varlistentry>
+
+
+
+          <varlistentry>
+            <term>catalogue_productlink_parent_id</term>
+            <listitem><para>parent_id</para></listitem>
+          </varlistentry>
+
+        </variablelist>
+
+
+
+
+
+
+
+
+      </para>
+    </section>
+
+      <section id="public.table.catalogue-projection"
+               xreflabel="public.catalogue_projection">
+        <title id="public.table.catalogue-projection-title">
+         Table:
+         
+         <structname>catalogue_projection</structname>
+        </title>
+ 
+
+
+        <para>
+          <variablelist>
+            <title>
+              Structure of <structname>catalogue_projection</structname>
+            </title>
+
+
+            <varlistentry>
+              <term><structfield>id</structfield></term>
+              <listitem><para>
+                <type>serial</type>
+
+
+                <literal>PRIMARY KEY</literal>
+
+
+
+
+
+
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>epsg_code</structfield></term>
+              <listitem><para>
+                <type>integer</type>
+
+
+
+
+                      <literal>UNIQUE</literal>
+
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>name</structfield></term>
+              <listitem><para>
+                <type>character varying(128)</type>
+
+
+
+
+                      <literal>UNIQUE</literal>
+
+
+
+
+
+                      <literal>UNIQUE</literal>
+
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+        </variablelist>
+
+
+
+
+
+
+
+        <itemizedlist>
+          <title>
+            Tables referencing public.catalogue_deliverydetail via Foreign Key Constraints
+          </title>
+
+          <listitem>
+            <para>
+              <xref linkend="public.table.catalogue-deliverydetail"/>
+            </para>
+          </listitem>
+
+
+
+          <listitem>
+            <para>
+              <xref linkend="public.table.catalogue-genericproduct"/>
+            </para>
+          </listitem>
+
+        </itemizedlist>
+
+
+
+
+
+
+      </para>
+    </section>
+
+      <section id="public.table.catalogue-quality"
+               xreflabel="public.catalogue_quality">
+        <title id="public.table.catalogue-quality-title">
+         Table:
+         
+         <structname>catalogue_quality</structname>
+        </title>
+ 
+
+
+        <para>
+          <variablelist>
+            <title>
+              Structure of <structname>catalogue_quality</structname>
+            </title>
+
+
+            <varlistentry>
+              <term><structfield>id</structfield></term>
+              <listitem><para>
+                <type>serial</type>
+
+
+                <literal>PRIMARY KEY</literal>
+
+
+
+
+
+
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>name</structfield></term>
+              <listitem><para>
+                <type>character varying(255)</type>
+
+
+
+
+                      <literal>UNIQUE</literal>
+
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+        </variablelist>
+
+
+
+
+
+
+
+        <itemizedlist>
+          <title>
+            Tables referencing public.catalogue_genericproduct via Foreign Key Constraints
+          </title>
+
+          <listitem>
+            <para>
+              <xref linkend="public.table.catalogue-genericproduct"/>
+            </para>
+          </listitem>
+
+        </itemizedlist>
+
+
+
+
+
+
+      </para>
+    </section>
+
+      <section id="public.table.catalogue-radarproduct"
+               xreflabel="public.catalogue_radarproduct">
+        <title id="public.table.catalogue-radarproduct-title">
+         Table:
+         
+         <structname>catalogue_radarproduct</structname>
+        </title>
+ 
+
+
+        <para>
+          <variablelist>
+            <title>
+              Structure of <structname>catalogue_radarproduct</structname>
+            </title>
+
+
+            <varlistentry>
+              <term><structfield>genericsensorproduct_ptr_id</structfield></term>
+              <listitem><para>
+                <type>integer</type>
+
+
+
+
+
+
+                <literal>PRIMARY KEY</literal>
+
+
+
+
+
+
+
+
+
+
+
+
+                <literal>REFERENCES</literal> <xref linkend="public.table.catalogue-genericsensorproduct"/>
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>imaging_mode</structfield></term>
+              <listitem><para>
+                <type>character varying(200)</type>
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>look_direction</structfield></term>
+              <listitem><para>
+                <type>character varying(1)</type>
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>antenna_receive_configuration</structfield></term>
+              <listitem><para>
+                <type>character varying(1)</type>
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>polarising_mode</structfield></term>
+              <listitem><para>
+                <type>character varying(1)</type>
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>polarising_list</structfield></term>
+              <listitem><para>
+                <type>character varying(200)</type>
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>slant_range_resolution</structfield></term>
+              <listitem><para>
+                <type>double precision</type>
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>azimuth_range_resolution</structfield></term>
+              <listitem><para>
+                <type>double precision</type>
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>orbit_direction</structfield></term>
+              <listitem><para>
+                <type>character varying(1)</type>
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>calibration</structfield></term>
+              <listitem><para>
+                <type>character varying(255)</type>
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>incidence_angle</structfield></term>
+              <listitem><para>
+                <type>double precision</type>
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+        </variablelist>
+
+
+
+
+
+
+
+
+
+
+      </para>
+    </section>
+
+      <section id="public.table.catalogue-resamplingmethod"
+               xreflabel="public.catalogue_resamplingmethod">
+        <title id="public.table.catalogue-resamplingmethod-title">
+         Table:
+         
+         <structname>catalogue_resamplingmethod</structname>
+        </title>
+ 
+
+
+        <para>
+          <variablelist>
+            <title>
+              Structure of <structname>catalogue_resamplingmethod</structname>
+            </title>
+
+
+            <varlistentry>
+              <term><structfield>id</structfield></term>
+              <listitem><para>
+                <type>serial</type>
+
+
+                <literal>PRIMARY KEY</literal>
+
+
+
+
+
+
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>name</structfield></term>
+              <listitem><para>
+                <type>character varying(128)</type>
+
+
+
+
+                      <literal>UNIQUE</literal>
+
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+        </variablelist>
+
+
+
+
+
+
+
+        <itemizedlist>
+          <title>
+            Tables referencing public.catalogue_deliverydetail via Foreign Key Constraints
+          </title>
+
+          <listitem>
+            <para>
+              <xref linkend="public.table.catalogue-deliverydetail"/>
+            </para>
+          </listitem>
+
+        </itemizedlist>
+
+
+
+
+
+
+      </para>
+    </section>
+
+      <section id="public.table.catalogue-sacuserprofile"
+               xreflabel="public.catalogue_sacuserprofile">
+        <title id="public.table.catalogue-sacuserprofile-title">
+         Table:
+         
+         <structname>catalogue_sacuserprofile</structname>
+        </title>
+ 
+
+
+        <para>
+          <variablelist>
+            <title>
+              Structure of <structname>catalogue_sacuserprofile</structname>
+            </title>
+
+
+            <varlistentry>
+              <term><structfield>id</structfield></term>
+              <listitem><para>
+                <type>serial</type>
+
+
+                <literal>PRIMARY KEY</literal>
+
+
+
+
+
+
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>user_id</structfield></term>
+              <listitem><para>
+                <type>integer</type>
+
+
+
+
+
+
+
+
+                      <literal>UNIQUE</literal>
+
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+
+                <literal>REFERENCES</literal> <xref linkend="public.table.auth-user"/>
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>date</structfield></term>
+              <listitem><para>
+                <type>timestamp with time zone</type>
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>country</structfield></term>
+              <listitem><para>
+                <type>character varying(2)</type>
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>latitude</structfield></term>
+              <listitem><para>
+                <type>numeric(10,6)</type>
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>longitude</structfield></term>
+              <listitem><para>
+                <type>numeric(10,6)</type>
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>location</structfield></term>
+              <listitem><para>
+                <type>character varying(255)</type>
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>strategic_partner</structfield></term>
+              <listitem><para>
+                <type>boolean</type>
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>firstname</structfield></term>
+              <listitem><para>
+                <type>character varying(255)</type>
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>surname</structfield></term>
+              <listitem><para>
+                <type>character varying(255)</type>
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>url</structfield></term>
+              <listitem><para>
+                <type>character varying(200)</type>
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>about</structfield></term>
+              <listitem><para>
+                <type>text</type>
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>address1</structfield></term>
+              <listitem><para>
+                <type>character varying(255)</type>
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>address2</structfield></term>
+              <listitem><para>
+                <type>character varying(255)</type>
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>address3</structfield></term>
+              <listitem><para>
+                <type>character varying(255)</type>
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>address4</structfield></term>
+              <listitem><para>
+                <type>character varying(255)</type>
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>post_code</structfield></term>
+              <listitem><para>
+                <type>character varying(25)</type>
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>organisation</structfield></term>
+              <listitem><para>
+                <type>character varying(255)</type>
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>contact_no</structfield></term>
+              <listitem><para>
+                <type>character varying(16)</type>
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+        </variablelist>
+
+
+
+
+
+
+
+
+
+
+      </para>
+    </section>
+
+      <section id="public.table.catalogue-search"
+               xreflabel="public.catalogue_search">
+        <title id="public.table.catalogue-search-title">
+         Table:
+         
+         <structname>catalogue_search</structname>
+        </title>
+ 
+
+
+        <para>
+          <variablelist>
+            <title>
+              Structure of <structname>catalogue_search</structname>
+            </title>
+
+
+            <varlistentry>
+              <term><structfield>id</structfield></term>
+              <listitem><para>
+                <type>serial</type>
+
+
+                <literal>PRIMARY KEY</literal>
+
+
+
+
+
+
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>user_id</structfield></term>
+              <listitem><para>
+                <type>integer</type>
+
+
+
+
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+
+                <literal>REFERENCES</literal> <xref linkend="public.table.auth-user"/>
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>keywords</structfield></term>
+              <listitem><para>
+                <type>character varying(255)</type>
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>search_date</structfield></term>
+              <listitem><para>
+                <type>timestamp with time zone</type>
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>guid</structfield></term>
+              <listitem><para>
+                <type>character varying(40)</type>
+
+
+
+
+                      <literal>UNIQUE</literal>
+
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>deleted</structfield></term>
+              <listitem><para>
+                <type>boolean</type>
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>use_cloud_cover</structfield></term>
+              <listitem><para>
+                <type>boolean</type>
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>cloud_mean</structfield></term>
+              <listitem><para>
+                <type>integer</type>
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>geometry</structfield></term>
+              <listitem><para>
+                <type>geometry</type>
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>ip_position</structfield></term>
+              <listitem><para>
+                <type>geometry</type>
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>search_type</structfield></term>
+              <listitem><para>
+                <type>integer</type>
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>acquisition_mode_id</structfield></term>
+              <listitem><para>
+                <type>integer</type>
+
+
+
+
+
+
+
+
+
+
+
+
+                <literal>REFERENCES</literal> <xref linkend="public.table.catalogue-acquisitionmode"/>
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>mission_id</structfield></term>
+              <listitem><para>
+                <type>integer</type>
+
+
+
+
+
+
+
+
+
+
+
+
+                <literal>REFERENCES</literal> <xref linkend="public.table.catalogue-mission"/>
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>sensor_type_id</structfield></term>
+              <listitem><para>
+                <type>integer</type>
+
+
+
+
+
+
+
+
+
+
+
+
+                <literal>REFERENCES</literal> <xref linkend="public.table.catalogue-sensortype"/>
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>geometric_accuracy_mean</structfield></term>
+              <listitem><para>
+                <type>integer</type>
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>band_count</structfield></term>
+              <listitem><para>
+                <type>integer</type>
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>sensor_inclination_angle_start</structfield></term>
+              <listitem><para>
+                <type>double precision</type>
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>sensor_inclination_angle_end</structfield></term>
+              <listitem><para>
+                <type>double precision</type>
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>k_orbit_path</structfield></term>
+              <listitem><para>
+                <type>character varying(255)</type>
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>j_frame_row</structfield></term>
+              <listitem><para>
+                <type>character varying(255)</type>
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>license_type</structfield></term>
+              <listitem><para>
+                <type>integer</type>
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>polarising_mode</structfield></term>
+              <listitem><para>
+                <type>character varying(1)</type>
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>record_count</structfield></term>
+              <listitem><para>
+                <type>integer</type>
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+        </variablelist>
+
+
+
+        <variablelist>
+          <title>Constraints on catalogue_search</title>
+
+          <varlistentry>
+            <term>enforce_dims_geometry</term>
+            <listitem><para>CHECK ((ndims(geometry) = 2))</para></listitem>
+          </varlistentry>
+
+
+
+          <varlistentry>
+            <term>enforce_dims_ip_position</term>
+            <listitem><para>CHECK ((ndims(ip_position) = 2))</para></listitem>
+          </varlistentry>
+
+
+
+          <varlistentry>
+            <term>enforce_geotype_geometry</term>
+            <listitem><para>CHECK (((geometrytype(geometry) = &apos;POLYGON&apos;::text) OR (geometry IS NULL)))</para></listitem>
+          </varlistentry>
+
+
+
+          <varlistentry>
+            <term>enforce_geotype_ip_position</term>
+            <listitem><para>CHECK (((geometrytype(ip_position) = &apos;POINT&apos;::text) OR (ip_position IS NULL)))</para></listitem>
+          </varlistentry>
+
+
+
+          <varlistentry>
+            <term>enforce_srid_geometry</term>
+            <listitem><para>CHECK ((srid(geometry) = 4326))</para></listitem>
+          </varlistentry>
+
+
+
+          <varlistentry>
+            <term>enforce_srid_ip_position</term>
+            <listitem><para>CHECK ((srid(ip_position) = 4326))</para></listitem>
+          </varlistentry>
+
+        </variablelist>
+
+
+
+
+
+        <variablelist>
+          <title>Indexes on catalogue_search</title>
+
+          <varlistentry>
+            <term>catalogue_search_acquisition_mode_id</term>
+            <listitem><para>acquisition_mode_id</para></listitem>
+          </varlistentry>
+
+
+
+          <varlistentry>
+            <term>catalogue_search_geometry_id</term>
+            <listitem><para>geometry</para></listitem>
+          </varlistentry>
+
+
+
+          <varlistentry>
+            <term>catalogue_search_ip_position_id</term>
+            <listitem><para>ip_position</para></listitem>
+          </varlistentry>
+
+
+
+          <varlistentry>
+            <term>catalogue_search_mission_id</term>
+            <listitem><para>mission_id</para></listitem>
+          </varlistentry>
+
+
+
+          <varlistentry>
+            <term>catalogue_search_search_type</term>
+            <listitem><para>search_type</para></listitem>
+          </varlistentry>
+
+
+
+          <varlistentry>
+            <term>catalogue_search_sensortype_id</term>
+            <listitem><para>sensor_type_id</para></listitem>
+          </varlistentry>
+
+
+
+          <varlistentry>
+            <term>catalogue_search_user_id</term>
+            <listitem><para>user_id</para></listitem>
+          </varlistentry>
+
+        </variablelist>
+
+
+
+
+
+        <itemizedlist>
+          <title>
+            Tables referencing public.catalogue_search_processing_level via Foreign Key Constraints
+          </title>
+
+          <listitem>
+            <para>
+              <xref linkend="public.table.catalogue-search-processing-level"/>
+            </para>
+          </listitem>
+
+
+
+          <listitem>
+            <para>
+              <xref linkend="public.table.catalogue-search-sensors"/>
+            </para>
+          </listitem>
+
+
+
+          <listitem>
+            <para>
+              <xref linkend="public.table.catalogue-searchdaterange"/>
+            </para>
+          </listitem>
+
+        </itemizedlist>
+
+
+
+
+
+
+      </para>
+    </section>
+
+      <section id="public.table.catalogue-search-processing-level"
+               xreflabel="public.catalogue_search_processing_level">
+        <title id="public.table.catalogue-search-processing-level-title">
+         Table:
+         
+         <structname>catalogue_search_processing_level</structname>
+        </title>
+ 
+
+
+        <para>
+          <variablelist>
+            <title>
+              Structure of <structname>catalogue_search_processing_level</structname>
+            </title>
+
+
+            <varlistentry>
+              <term><structfield>id</structfield></term>
+              <listitem><para>
+                <type>serial</type>
+
+
+                <literal>PRIMARY KEY</literal>
+
+
+
+
+
+
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>search_id</structfield></term>
+              <listitem><para>
+                <type>integer</type>
+
+
+
+
+                      <literal>UNIQUE#1</literal>
+
+
+
+
+
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+
+
+
+                <literal>REFERENCES</literal> <xref linkend="public.table.catalogue-search"/>
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>processinglevel_id</structfield></term>
+              <listitem><para>
+                <type>integer</type>
+
+
+
+
+
+
+
+
+                      <literal>UNIQUE#1</literal>
+
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+
+                <literal>REFERENCES</literal> <xref linkend="public.table.catalogue-processinglevel"/>
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+        </variablelist>
+
+
+
+
+
+
+
+
+
+
+      </para>
+    </section>
+
+      <section id="public.table.catalogue-search-sensors"
+               xreflabel="public.catalogue_search_sensors">
+        <title id="public.table.catalogue-search-sensors-title">
+         Table:
+         
+         <structname>catalogue_search_sensors</structname>
+        </title>
+ 
+
+
+        <para>
+          <variablelist>
+            <title>
+              Structure of <structname>catalogue_search_sensors</structname>
+            </title>
+
+
+            <varlistentry>
+              <term><structfield>id</structfield></term>
+              <listitem><para>
+                <type>serial</type>
+
+
+                <literal>PRIMARY KEY</literal>
+
+
+
+
+
+
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>search_id</structfield></term>
+              <listitem><para>
+                <type>integer</type>
+
+
+
+
+                      <literal>UNIQUE#1</literal>
+
+
+
+
+
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+
+
+
+                <literal>REFERENCES</literal> <xref linkend="public.table.catalogue-search"/>
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>missionsensor_id</structfield></term>
+              <listitem><para>
+                <type>integer</type>
+
+
+
+
+
+
+
+
+                      <literal>UNIQUE#1</literal>
+
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+
+                <literal>REFERENCES</literal> <xref linkend="public.table.catalogue-missionsensor"/>
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+        </variablelist>
+
+
+
+
+
+        <variablelist>
+          <title>Indexes on catalogue_search_sensors</title>
+
+          <varlistentry>
+            <term>catalogue_search_sensors_missionsensor_id</term>
+            <listitem><para>missionsensor_id</para></listitem>
+          </varlistentry>
+
+
+
+          <varlistentry>
+            <term>catalogue_search_sensors_search_id</term>
+            <listitem><para>search_id</para></listitem>
+          </varlistentry>
+
+        </variablelist>
+
+
+
+
+
+
+
+
+      </para>
+    </section>
+
+      <section id="public.table.catalogue-searchdaterange"
+               xreflabel="public.catalogue_searchdaterange">
+        <title id="public.table.catalogue-searchdaterange-title">
+         Table:
+         
+         <structname>catalogue_searchdaterange</structname>
+        </title>
+ 
+
+
+        <para>
+          <variablelist>
+            <title>
+              Structure of <structname>catalogue_searchdaterange</structname>
+            </title>
+
+
+            <varlistentry>
+              <term><structfield>id</structfield></term>
+              <listitem><para>
+                <type>serial</type>
+
+
+                <literal>PRIMARY KEY</literal>
+
+
+
+
+
+
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>start_date</structfield></term>
+              <listitem><para>
+                <type>date</type>
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>end_date</structfield></term>
+              <listitem><para>
+                <type>date</type>
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>search_id</structfield></term>
+              <listitem><para>
+                <type>integer</type>
+
+
+
+
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+
+                <literal>REFERENCES</literal> <xref linkend="public.table.catalogue-search"/>
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+        </variablelist>
+
+
+
+
+
+        <variablelist>
+          <title>Indexes on catalogue_searchdaterange</title>
+
+          <varlistentry>
+            <term>catalogue_searchdaterange_search_id</term>
+            <listitem><para>search_id</para></listitem>
+          </varlistentry>
+
+        </variablelist>
+
+
+
+
+
+
+
+
+      </para>
+    </section>
+
+      <section id="public.table.catalogue-searchrecord"
+               xreflabel="public.catalogue_searchrecord">
+        <title id="public.table.catalogue-searchrecord-title">
+         Table:
+         
+         <structname>catalogue_searchrecord</structname>
+        </title>
+ 
+
+
+        <para>
+          <variablelist>
+            <title>
+              Structure of <structname>catalogue_searchrecord</structname>
+            </title>
+
+
+            <varlistentry>
+              <term><structfield>id</structfield></term>
+              <listitem><para>
+                <type>serial</type>
+
+
+                <literal>PRIMARY KEY</literal>
+
+
+
+
+
+
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>user_id</structfield></term>
+              <listitem><para>
+                <type>integer</type>
+
+
+
+
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+
+                <literal>REFERENCES</literal> <xref linkend="public.table.auth-user"/>
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>order_id</structfield></term>
+              <listitem><para>
+                <type>integer</type>
+
+
+
+
+
+
+
+
+
+
+
+
+                <literal>REFERENCES</literal> <xref linkend="public.table.catalogue-order"/>
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>product_id</structfield></term>
+              <listitem><para>
+                <type>integer</type>
+
+
+
+
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+
+                <literal>REFERENCES</literal> <xref linkend="public.table.catalogue-genericproduct"/>
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>product_ready</structfield></term>
+              <listitem><para>
+                <type>boolean</type>
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>internal_order_id</structfield></term>
+              <listitem><para>
+                <type>integer</type>
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>download_path</structfield></term>
+              <listitem><para>
+                <type>character varying(512)</type>
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>delivery_detail_id</structfield></term>
+              <listitem><para>
+                <type>integer</type>
+
+
+
+
+
+
+
+
+
+
+
+
+                <literal>REFERENCES</literal> <xref linkend="public.table.catalogue-deliverydetail"/>
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+        </variablelist>
+
+
+
+
+
+        <variablelist>
+          <title>Indexes on catalogue_searchrecord</title>
+
+          <varlistentry>
+            <term>catalogue_searchrecord_order_id</term>
+            <listitem><para>order_id</para></listitem>
+          </varlistentry>
+
+
+
+          <varlistentry>
+            <term>catalogue_searchrecord_product_id</term>
+            <listitem><para>product_id</para></listitem>
+          </varlistentry>
+
+
+
+          <varlistentry>
+            <term>catalogue_searchrecord_user_id</term>
+            <listitem><para>user_id</para></listitem>
+          </varlistentry>
+
+        </variablelist>
+
+
+
+
+
+
+
+
+      </para>
+    </section>
+
+      <section id="public.table.catalogue-sensortype"
+               xreflabel="public.catalogue_sensortype">
+        <title id="public.table.catalogue-sensortype-title">
+         Table:
+         
+         <structname>catalogue_sensortype</structname>
+        </title>
+ 
+
+
+        <para>
+          <variablelist>
+            <title>
+              Structure of <structname>catalogue_sensortype</structname>
+            </title>
+
+
+            <varlistentry>
+              <term><structfield>id</structfield></term>
+              <listitem><para>
+                <type>serial</type>
+
+
+                <literal>PRIMARY KEY</literal>
+
+
+
+
+
+
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>abbreviation</structfield></term>
+              <listitem><para>
+                <type>character varying(4)</type>
+
+
+
+
+                      <literal>UNIQUE#1</literal>
+
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>name</structfield></term>
+              <listitem><para>
+                <type>character varying(255)</type>
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>mission_sensor_id</structfield></term>
+              <listitem><para>
+                <type>integer</type>
+
+
+
+
+                      <literal>UNIQUE#1</literal>
+
+
+
+
+
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+
+
+
+                <literal>REFERENCES</literal> <xref linkend="public.table.catalogue-missionsensor"/>
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>operator_abbreviation</structfield></term>
+              <listitem><para>
+                <type>character varying(255)</type>
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+        </variablelist>
+
+
+
+
+
+        <variablelist>
+          <title>Indexes on catalogue_sensortype</title>
+
+          <varlistentry>
+            <term>catalogue_sensortype_mission_sensor_id_idx</term>
+            <listitem><para>mission_sensor_id</para></listitem>
+          </varlistentry>
+
+        </variablelist>
+
+
+
+
+
+        <itemizedlist>
+          <title>
+            Tables referencing public.catalogue_acquisitionmode via Foreign Key Constraints
+          </title>
+
+          <listitem>
+            <para>
+              <xref linkend="public.table.catalogue-acquisitionmode"/>
+            </para>
+          </listitem>
+
+
+
+          <listitem>
+            <para>
+              <xref linkend="public.table.catalogue-search"/>
+            </para>
+          </listitem>
+
+        </itemizedlist>
+
+
+
+
+
+
+      </para>
+    </section>
+
+      <section id="public.table.catalogue-taskingrequest"
+               xreflabel="public.catalogue_taskingrequest">
+        <title id="public.table.catalogue-taskingrequest-title">
+         Table:
+         
+         <structname>catalogue_taskingrequest</structname>
+        </title>
+ 
+
+
+        <para>
+          <variablelist>
+            <title>
+              Structure of <structname>catalogue_taskingrequest</structname>
+            </title>
+
+
+            <varlistentry>
+              <term><structfield>order_ptr_id</structfield></term>
+              <listitem><para>
+                <type>integer</type>
+
+
+
+
+
+
+                <literal>PRIMARY KEY</literal>
+
+
+
+
+
+
+
+
+
+
+
+
+                <literal>REFERENCES</literal> <xref linkend="public.table.catalogue-order"/>
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>target_date</structfield></term>
+              <listitem><para>
+                <type>timestamp with time zone</type>
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>mission_sensor_id</structfield></term>
+              <listitem><para>
+                <type>integer</type>
+
+
+
+
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+
+                <literal>REFERENCES</literal> <xref linkend="public.table.catalogue-missionsensor"/>
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+        </variablelist>
+
+
+
+
+
+        <variablelist>
+          <title>Indexes on catalogue_taskingrequest</title>
+
+          <varlistentry>
+            <term>catalogue_taskingrequest_mission_sensor_id</term>
+            <listitem><para>mission_sensor_id</para></listitem>
+          </varlistentry>
+
+        </variablelist>
+
+
+
+
+
+
+
+
+      </para>
+    </section>
+
+      <section id="public.table.catalogue-topic"
+               xreflabel="public.catalogue_topic">
+        <title id="public.table.catalogue-topic-title">
+         Table:
+         
+         <structname>catalogue_topic</structname>
+        </title>
+ 
+
+
+        <para>
+          <variablelist>
+            <title>
+              Structure of <structname>catalogue_topic</structname>
+            </title>
+
+
+            <varlistentry>
+              <term><structfield>id</structfield></term>
+              <listitem><para>
+                <type>serial</type>
+
+
+                <literal>PRIMARY KEY</literal>
+
+
+
+
+
+
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>abbreviation</structfield></term>
+              <listitem><para>
+                <type>character varying(10)</type>
+
+
+
+
+                      <literal>UNIQUE</literal>
+
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>name</structfield></term>
+              <listitem><para>
+                <type>character varying(255)</type>
+
+
+
+
+                      <literal>UNIQUE</literal>
+
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+        </variablelist>
+
+
+
+
+
+
+
+        <itemizedlist>
+          <title>
+            Tables referencing public.catalogue_geospatialproduct via Foreign Key Constraints
+          </title>
+
+          <listitem>
+            <para>
+              <xref linkend="public.table.catalogue-geospatialproduct"/>
+            </para>
+          </listitem>
+
+        </itemizedlist>
+
+
+
+
+
+
+      </para>
+    </section>
+
+      <section id="public.table.catalogue-unit"
+               xreflabel="public.catalogue_unit">
+        <title id="public.table.catalogue-unit-title">
+         Table:
+         
+         <structname>catalogue_unit</structname>
+        </title>
+ 
+
+
+        <para>
+          <variablelist>
+            <title>
+              Structure of <structname>catalogue_unit</structname>
+            </title>
+
+
+            <varlistentry>
+              <term><structfield>id</structfield></term>
+              <listitem><para>
+                <type>serial</type>
+
+
+                <literal>PRIMARY KEY</literal>
+
+
+
+
+
+
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>abbreviation</structfield></term>
+              <listitem><para>
+                <type>character varying(10)</type>
+
+
+
+
+                      <literal>UNIQUE</literal>
+
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>name</structfield></term>
+              <listitem><para>
+                <type>character varying(255)</type>
+
+
+
+
+                      <literal>UNIQUE</literal>
+
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+        </variablelist>
+
+
+
+
+
+
+
+        <itemizedlist>
+          <title>
+            Tables referencing public.catalogue_continuousproduct via Foreign Key Constraints
+          </title>
+
+          <listitem>
+            <para>
+              <xref linkend="public.table.catalogue-continuousproduct"/>
+            </para>
+          </listitem>
+
+        </itemizedlist>
+
+
+
+
+
+
+      </para>
+    </section>
+
+      <section id="public.table.catalogue-visit"
+               xreflabel="public.catalogue_visit">
+        <title id="public.table.catalogue-visit-title">
+         Table:
+         
+         <structname>catalogue_visit</structname>
+        </title>
+ 
+
+
+        <para>
+          <variablelist>
+            <title>
+              Structure of <structname>catalogue_visit</structname>
+            </title>
+
+
+            <varlistentry>
+              <term><structfield>id</structfield></term>
+              <listitem><para>
+                <type>serial</type>
+
+
+                <literal>PRIMARY KEY</literal>
+
+
+
+
+
+
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>city</structfield></term>
+              <listitem><para>
+                <type>character varying(255)</type>
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>country</structfield></term>
+              <listitem><para>
+                <type>character varying(255)</type>
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>ip_address</structfield></term>
+              <listitem><para>
+                <type>inet</type>
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>visit_date</structfield></term>
+              <listitem><para>
+                <type>timestamp with time zone</type>
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>user_id</structfield></term>
+              <listitem><para>
+                <type>integer</type>
+
+
+
+
+
+
+
+
+
+
+
+
+                <literal>REFERENCES</literal> <xref linkend="public.table.auth-user"/>
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>ip_position</structfield></term>
+              <listitem><para>
+                <type>geometry</type>
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+        </variablelist>
+
+
+
+        <variablelist>
+          <title>Constraints on catalogue_visit</title>
+
+          <varlistentry>
+            <term>enforce_dims_ip_position</term>
+            <listitem><para>CHECK ((ndims(ip_position) = 2))</para></listitem>
+          </varlistentry>
+
+
+
+          <varlistentry>
+            <term>enforce_geotype_ip_position</term>
+            <listitem><para>CHECK (((geometrytype(ip_position) = &apos;POINT&apos;::text) OR (ip_position IS NULL)))</para></listitem>
+          </varlistentry>
+
+
+
+          <varlistentry>
+            <term>enforce_srid_ip_position</term>
+            <listitem><para>CHECK ((srid(ip_position) = 4326))</para></listitem>
+          </varlistentry>
+
+        </variablelist>
+
+
+
+
+
+        <variablelist>
+          <title>Indexes on catalogue_visit</title>
+
+          <varlistentry>
+            <term>catalogue_visit_ip_position_id</term>
+            <listitem><para>ip_position</para></listitem>
+          </varlistentry>
+
+
+
+          <varlistentry>
+            <term>catalogue_visit_user_id</term>
+            <listitem><para>user_id</para></listitem>
+          </varlistentry>
+
+        </variablelist>
+
+
+
+
+
+
+
+
+      </para>
+    </section>
+
+      <section id="public.table.catalogue-worldborders"
+               xreflabel="public.catalogue_worldborders">
+        <title id="public.table.catalogue-worldborders-title">
+         Table:
+         
+         <structname>catalogue_worldborders</structname>
+        </title>
+ 
+
+
+        <para>
+          <variablelist>
+            <title>
+              Structure of <structname>catalogue_worldborders</structname>
+            </title>
+
+
+            <varlistentry>
+              <term><structfield>id</structfield></term>
+              <listitem><para>
+                <type>serial</type>
+
+
+                <literal>PRIMARY KEY</literal>
+
+
+
+
+
+
+
+
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>iso2</structfield></term>
+              <listitem><para>
+                <type>character varying(2)</type>
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>iso3</structfield></term>
+              <listitem><para>
+                <type>character varying(3)</type>
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>name</structfield></term>
+              <listitem><para>
+                <type>character varying(100)</type>
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+            <varlistentry>
+              <term><structfield>geometry</structfield></term>
+              <listitem><para>
+                <type>geometry</type>
+
+
+
+                <literal>NOT NULL</literal>
+
+
+
+
+
+              </para>
+
+            </listitem>
+          </varlistentry>
+
+        </variablelist>
+
+
+
+        <variablelist>
+          <title>Constraints on catalogue_worldborders</title>
+
+          <varlistentry>
+            <term>enforce_dims_geometry</term>
+            <listitem><para>CHECK ((ndims(geometry) = 2))</para></listitem>
+          </varlistentry>
+
+
+
+          <varlistentry>
+            <term>enforce_geotype_geometry</term>
+            <listitem><para>CHECK (((geometrytype(geometry) = &apos;MULTIPOLYGON&apos;::text) OR (geometry IS NULL)))</para></listitem>
+          </varlistentry>
+
+
+
+          <varlistentry>
+            <term>enforce_srid_geometry</term>
+            <listitem><para>CHECK ((srid(geometry) = 4326))</para></listitem>
+          </varlistentry>
+
+        </variablelist>
+
+
+
+
+
+        <variablelist>
+          <title>Indexes on catalogue_worldborders</title>
+
+          <varlistentry>
+            <term>catalogue_worldborders_geometry_id</term>
+            <listitem><para>geometry</para></listitem>
+          </varlistentry>
+
+        </variablelist>
+
+
+
+
+
+
+
+
+      </para>
+    </section>
+
+
+
+  </chapter>
+
+</book>
+

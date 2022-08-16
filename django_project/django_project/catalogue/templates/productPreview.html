@@ -1,0 +1,17 @@
+<center>
+<img src="/thumbnail/{{theId}}/{{theSize}}/">
+<div class="btn-group">
+    <button class="btn btn-info" onclick='showMetadata({{theId}});' alt="Click to view metadata for this image"
+        title="Click to view metadata for this image"><i class=" icon-list"></i>
+    </button>
+    {% if user.is_anonymous %}
+    <button class="btn btn-success disabled" alt="Click to add to your cart"
+        title="You must be logged in to access cart" ><i class="icon-shopping-cart"></i></button>
+    {% else %}
+    <button class="btn btn-success" onclick='addToCart({{theId}});' alt="Click to add to your cart"
+        title="Click to add this image to your cart" ><i class="icon-shopping-cart"></i></button>
+    {% endif %}
+
+    <button class="btn btn-success" data-toggle="modal" data-target="#myModal" id="large_preview" href="/thumbnailpage/{{theId}}/">
+    <i class="icon-zoom-in"></i></button></div>
+</center>

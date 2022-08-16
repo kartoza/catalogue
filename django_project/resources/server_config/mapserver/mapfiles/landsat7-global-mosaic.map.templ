@@ -1,0 +1,2815 @@
+MAP
+  CONFIG "MS_ENCRYPTION_KEY" "[CODEBASE]/resources/server_config/mapserver/mapfiles/mapserver-key.txt"
+  DEBUG 5 #debugging level between 1 and 5, 5 is the most detailed
+  CONFIG "MS_ERRORFILE" "/tmp/ms.log"
+  NAME "MOSAIC-MAP"
+  # Map image size
+  SIZE 900 900
+  UNITS meters
+
+  EXTENT -20037508.342789244 -20037508.342789244 20037508.342789244 20037508.342789244
+
+  PROJECTION
+    "init=epsg:900913"
+  END
+
+  # Background color for the map canvas -- change as desired
+  IMAGECOLOR 255 255 255
+  IMAGEQUALITY 95
+  IMAGETYPE agg
+
+  OUTPUTFORMAT
+    NAME agg
+    DRIVER AGG/PNG
+    IMAGEMODE RGB
+  END
+  # Legend
+  LEGEND
+      IMAGECOLOR 255 255 255
+    STATUS ON
+    KEYSIZE 18 12
+    LABEL
+      TYPE BITMAP
+      SIZE MEDIUM
+      COLOR 0 0 89
+    END
+  END
+
+  # Web interface definition. Only the template parameter
+  # is required to display a map. See MapServer documentation
+  WEB
+    # Set IMAGEPATH to the path where MapServer should
+    # write its output.
+    IMAGEPATH '/tmp/'
+
+    # Set IMAGEURL to the url that points to IMAGEPATH
+    # as defined in your web server configuration
+    IMAGEURL '/tmp/'
+
+    # WMS server settings
+    METADATA
+      'ows_title'           'QGIS-MAP'
+      'ows_onlineresource'  'http://maps.sansa.org.za/cgi-bin/mapserv?map=L7_MOSAIC'
+      'wms_srs'             'EPSG:4326 EPSG:900913'
+    END
+
+    #Scale range at which web interface will operate
+    # Template and header/footer settings
+    # Only the template parameter is required to display a map. See MapServer documentation
+    TEMPLATE 'fooOnlyForWMSGetFeatureInfo'
+  END
+
+ LAYER
+    NAME 'N-10-30_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/N-10-30_2000proj.tif'
+    METADATA
+      'ows_title' 'N-10-30_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=10'
+    'north'
+    'no_defs'
+   END
+ END
+
+ LAYER
+    NAME 'N-17-25_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/N-17-25_2000proj.tif'
+    METADATA
+      'ows_title' 'N-17-25_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=17'
+    'north'
+    'no_defs'
+   END
+ END
+
+ LAYER
+    NAME 'N-34-25_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/N-34-25_2000proj.tif'
+    METADATA
+      'ows_title' 'N-34-25_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=34'
+    'north'
+    'no_defs'
+   END
+ END
+
+ LAYER
+    NAME 'N-39-25_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/N-39-25_2000proj.tif'
+    METADATA
+      'ows_title' 'N-39-25_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=39'
+    'north'
+    'no_defs'
+   END
+ END
+
+ LAYER
+    NAME 'N-51-35_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/N-51-35_2000proj.tif'
+    METADATA
+      'ows_title' 'N-51-35_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=51'
+    'north'
+    'no_defs'
+   END
+ END
+  
+ LAYER
+    NAME 'S-32-10_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/S-32-10_2000proj.tif'
+    METADATA
+      'ows_title' 'S-32-10_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=32'
+    'south'
+    'no_defs'
+   END
+ END
+
+ LAYER
+    NAME 'S-40-20_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/S-40-20_2000proj.tif'
+    METADATA
+      'ows_title' 'S-40-20_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=40'
+    'south'
+    'no_defs'
+   END
+ END
+  
+ LAYER
+    NAME 'N-10-35_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/N-10-35_2000proj.tif'
+    METADATA
+      'ows_title' 'N-10-35_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=10'
+    'north'
+    'no_defs'
+   END
+ END
+
+   LAYER
+    NAME 'N-18-15_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/N-18-15_2000proj.tif'
+    METADATA
+      'ows_title' 'N-18-15_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=18'
+    'north'
+    'no_defs'
+   END
+ END
+
+   LAYER
+    NAME 'N-34-30_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/N-34-30_2000proj.tif'
+    METADATA
+      'ows_title' 'N-34-30_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=34'
+    'north'
+    'no_defs'
+   END
+ END
+
+ LAYER
+    NAME 'N-40-20_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/N-40-20_2000proj.tif'
+    METADATA
+      'ows_title' 'N-40-20_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=40'
+    'north'
+    'no_defs'
+   END
+ END
+
+ LAYER
+    NAME 'N-52-35_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/N-52-35_2000proj.tif'
+    METADATA
+      'ows_title' 'N-52-35_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=52'
+    'north'
+    'no_defs'
+   END
+ END
+
+ LAYER
+    NAME 'S-32-15_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/S-32-15_2000proj.tif'
+    METADATA
+      'ows_title' 'S-32-15_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=32'
+    'south'
+    'no_defs'
+   END
+ END
+
+ LAYER
+    NAME 'S-48-00_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/S-48-00_2000proj.tif'
+    METADATA
+      'ows_title' 'S-48-00_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=48'
+    'south'
+    'no_defs'
+   END
+ END
+
+ LAYER
+    NAME 'N-11-30_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/N-11-30_2000proj.tif'
+    METADATA
+      'ows_title' 'N-11-30_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=11'
+    'north'
+    'no_defs'
+   END
+ END
+
+
+ LAYER
+    NAME 'N-18-20_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/N-18-20_2000proj.tif'
+    METADATA
+      'ows_title' 'N-18-20_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=18'
+    'north'
+    'no_defs'
+   END
+ END
+
+ LAYER
+    NAME 'N-34-50_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/N-34-50_2000proj.tif'
+    METADATA
+      'ows_title' 'N-34-50_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=34'
+    'north'
+    'no_defs'
+   END
+ END
+
+ LAYER
+    NAME 'N-40-25_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/N-40-25_2000proj.tif'
+    METADATA
+      'ows_title' 'N-40-25_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=40'
+    'north'
+    'no_defs'
+   END
+ END
+
+ LAYER
+    NAME 'N-53-30_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/N-53-30_2000proj.tif'
+    METADATA
+      'ows_title' 'N-53-30_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=53'
+    'north'
+    'no_defs'
+   END
+ END
+
+ LAYER
+    NAME 'S-33-00_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/S-33-00_2000proj.tif'
+    METADATA
+      'ows_title' 'S-33-00_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=33'
+    'south'
+    'no_defs'
+   END
+ END
+
+ LAYER
+    NAME 'S-48-05_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/S-48-05_2000proj.tif'
+    METADATA
+      'ows_title' 'S-48-05_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=48'
+    'south'
+    'no_defs'
+   END
+ END
+
+ LAYER
+    NAME 'N-11-35_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/N-11-35_2000proj.tif'
+    METADATA
+      'ows_title' 'N-11-35_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=11'
+    'north'
+    'no_defs'
+   END
+ END
+
+ LAYER
+    NAME 'N-18-25_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/N-18-25_2000proj.tif'
+    METADATA
+      'ows_title' 'N-18-25_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=18'
+    'north'
+    'no_defs'
+   END
+ END
+
+ LAYER
+    NAME 'N-35-05_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/N-35-05_2000proj.tif'
+    METADATA
+      'ows_title' 'N-35-05_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=35'
+    'north'
+    'no_defs'
+   END
+ END
+
+ LAYER
+    NAME 'N-40-65_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/N-40-65_2000proj.tif'
+    METADATA
+      'ows_title' 'N-40-65_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=40'
+    'north'
+    'no_defs'
+   END
+ END
+
+ LAYER
+    NAME 'N-53-35_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/N-53-35_2000proj.tif'
+    METADATA
+      'ows_title' 'N-53-35_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=53'
+    'north'
+    'no_defs'
+   END
+ END
+
+ LAYER
+    NAME 'S-33-10_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/S-33-10_2000proj.tif'
+    METADATA
+      'ows_title' 'S-33-10_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=33'
+    'south'
+    'no_defs'
+   END
+ END
+
+ LAYER
+    NAME 'S-53-30_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/S-53-30_2000proj.tif'
+    METADATA
+      'ows_title' 'S-53-30_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=53'
+    'south'
+    'no_defs'
+   END
+ END
+
+ LAYER
+    NAME 'N-12-20_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/N-12-20_2000proj.tif'
+    METADATA
+      'ows_title' 'N-12-20_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=12'
+    'north'
+    'no_defs'
+   END
+ END
+ 
+ LAYER
+    NAME 'N-19-10_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/N-19-10_2000proj.tif'
+    METADATA
+      'ows_title' 'N-19-10_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=19'
+    'north'
+    'no_defs'
+   END
+ END
+
+ LAYER
+    NAME 'N-35-20_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/N-35-20_2000proj.tif'
+    METADATA
+      'ows_title' 'N-35-20_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=35'
+    'north'
+    'no_defs'
+   END
+ END
+
+ LAYER
+    NAME 'N-42-20_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/N-42-20_2000proj.tif'
+    METADATA
+      'ows_title' 'N-42-20_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=42'
+    'north'
+    'no_defs'
+   END
+ END
+
+ LAYER
+    NAME 'S-17-00_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/S-17-00_2000proj.tif'
+    METADATA
+      'ows_title' 'S-17-00_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=17'
+    'south'
+    'no_defs'
+   END
+ END
+
+ LAYER
+    NAME 'S-33-15_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/S-33-15_2000proj.tif'
+    METADATA
+      'ows_title' 'S-33-15_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=33'
+    'south'
+    'no_defs'
+   END
+ END
+
+ LAYER
+    NAME 'S-53-35_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/S-53-35_2000proj.tif'
+    METADATA
+      'ows_title' 'S-53-35_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=53'
+    'south'
+    'no_defs'
+   END
+ END
+
+ LAYER
+    NAME 'N-12-25_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/N-12-25_2000proj.tif'
+    METADATA
+      'ows_title' 'N-12-25_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=12'
+    'north'
+    'no_defs'
+   END
+ END
+
+ LAYER
+    NAME 'N-19-15_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/N-19-15_2000proj.tif'
+    METADATA
+      'ows_title' 'N-19-15_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=19'
+    'north'
+    'no_defs'
+   END
+ END
+
+ LAYER
+    NAME 'N-35-25_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/N-35-25_2000proj.tif'
+    METADATA
+      'ows_title' 'N-35-25_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=35'
+    'north'
+    'no_defs'
+   END
+ END
+
+ LAYER
+    NAME 'N-42-25_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/N-42-25_2000proj.tif'
+    METADATA
+      'ows_title' 'N-42-25_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=42'
+    'north'
+    'no_defs'
+   END
+ END
+
+ LAYER
+    NAME 'S-17-05_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/S-17-05_2000proj.tif'
+    METADATA
+      'ows_title' 'S-17-05_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=17'
+    'south'
+    'no_defs'
+   END
+ END
+
+ LAYER
+    NAME 'S-33-20_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/S-33-20_2000proj.tif'
+    METADATA
+      'ows_title' 'S-33-20_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=33'
+    'south'
+    'no_defs'
+   END
+ END
+
+ LAYER
+    NAME 'S-54-30_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/S-54-30_2000proj.tif'
+    METADATA
+      'ows_title' 'S-54-30_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=54'
+    'south'
+    'no_defs'
+   END
+ END
+
+ LAYER
+    NAME 'N-12-40_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/N-12-40_2000proj.tif'
+    METADATA
+      'ows_title' 'N-12-40_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=12'
+    'north'
+    'no_defs'
+   END
+ END
+  
+ LAYER
+    NAME 'N-19-20_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/N-19-20_2000proj.tif'
+    METADATA
+      'ows_title' 'N-19-20_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=19'
+    'north'
+    'no_defs'
+   END
+ END
+
+ LAYER
+    NAME 'N-35-30_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/N-35-30_2000proj.tif'
+    METADATA
+      'ows_title' 'N-35-30_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=35'
+    'north'
+    'no_defs'
+   END
+ END
+
+ LAYER
+    NAME 'N-42-65_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/N-42-65_2000proj.tif'
+    METADATA
+      'ows_title' 'N-42-65_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=42'
+    'north'
+    'no_defs'
+   END
+ END
+
+ LAYER
+    NAME 'S-18-30_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/S-18-30_2000proj.tif'
+    METADATA
+      'ows_title' 'S-18-30_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=18'
+    'south'
+    'no_defs'
+   END
+ END
+
+ LAYER
+    NAME 'S-33-25_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/S-33-25_2000proj.tif'
+    METADATA
+      'ows_title' 'S-33-25_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=33'
+    'south'
+    'no_defs'
+   END
+ END
+
+ LAYER
+    NAME 'S-54-35_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/S-54-35_2000proj.tif'
+    METADATA
+      'ows_title' 'S-54-35_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=54'
+    'south'
+    'no_defs'
+   END
+ END
+
+ LAYER
+    NAME 'N-14-15_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/N-14-15_2000proj.tif'
+    METADATA
+      'ows_title' 'N-14-15_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=14'
+    'north'
+    'no_defs'
+   END
+ END
+  
+ LAYER
+    NAME 'N-29-40_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/N-29-40_2000proj.tif'
+    METADATA
+      'ows_title' 'N-29-40_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=29'
+    'north'
+    'no_defs'
+   END
+ END
+ 
+ LAYER
+    NAME 'N-36-05_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/N-36-05_2000proj.tif'
+    METADATA
+      'ows_title' 'N-36-05_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=36'
+    'north'
+    'no_defs'
+   END
+ END
+
+ LAYER
+    NAME 'N-43-15_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/N-43-15_2000proj.tif'
+    METADATA
+      'ows_title' 'N-43-15_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=43'
+    'north'
+    'no_defs'
+   END
+ END
+
+ LAYER
+    NAME 'S-18-35_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/S-18-35_2000proj.tif'
+    METADATA
+      'ows_title' 'S-18-35_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=18'
+    'south'
+    'no_defs'
+   END
+ END
+
+ LAYER
+    NAME 'S-33-30_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/S-33-30_2000proj.tif'
+    METADATA
+      'ows_title' 'S-33-30_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=33'
+    'south'
+    'no_defs'
+   END
+ END
+
+ LAYER
+    NAME 'S-54-40_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/S-54-40_2000proj.tif'
+    METADATA
+      'ows_title' 'S-54-40_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=54'
+    'south'
+    'no_defs'
+   END
+ END
+ LAYER
+    NAME 'N-14-20_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/N-14-20_2000proj.tif'
+    METADATA
+      'ows_title' 'N-14-20_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=14'
+    'north'
+    'no_defs'
+   END
+ END
+
+ LAYER
+    NAME 'N-30-10_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/N-30-10_2000proj.tif'
+    METADATA
+      'ows_title' 'N-30-10_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=30'
+    'north'
+    'no_defs'
+   END
+ END
+
+ LAYER
+    NAME 'N-36-20_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/N-36-20_2000proj.tif'
+    METADATA
+      'ows_title' 'N-36-20_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=36'
+    'north'
+    'no_defs'
+   END
+ END
+
+ LAYER
+    NAME 'N-43-20_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/N-43-20_2000proj.tif'
+    METADATA
+      'ows_title' 'N-43-20_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=43'
+    'north'
+    'no_defs'
+   END
+ END
+
+ LAYER
+    NAME 'S-19-30_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/S-19-30_2000proj.tif'
+    METADATA
+      'ows_title' 'S-19-30_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=19'
+    'south'
+    'no_defs'
+   END
+ END
+
+ LAYER
+    NAME 'S-34-25_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/S-34-25_2000proj.tif'
+    METADATA
+      'ows_title' 'S-34-25_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=34'
+    'south'
+    'no_defs'
+   END
+ END
+
+ LAYER
+    NAME 'S-55-35_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/S-55-35_2000proj.tif'
+    METADATA
+      'ows_title' 'S-55-35_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=55'
+    'south'
+    'no_defs'
+   END
+ END
+ 
+ LAYER
+    NAME 'N-15-15_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/N-15-15_2000proj.tif'
+    METADATA
+      'ows_title' 'N-15-15_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=15'
+    'north'
+    'no_defs'
+   END
+ END
+ 
+ LAYER
+    NAME 'N-30-40_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/N-30-40_2000proj.tif'
+    METADATA
+      'ows_title' 'N-30-40_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=30'
+    'north'
+    'no_defs'
+   END
+ END
+ 
+ LAYER
+    NAME 'N-36-25_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/N-36-25_2000proj.tif'
+    METADATA
+      'ows_title' 'N-36-25_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=36'
+    'north'
+    'no_defs'
+   END
+ END
+
+ LAYER
+    NAME 'N-44-05_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/N-44-05_2000proj.tif'
+    METADATA
+      'ows_title' 'N-44-05_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=44'
+    'north'
+    'no_defs'
+   END
+ END
+
+ LAYER
+    NAME 'S-19-35_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/S-19-35_2000proj.tif'
+    METADATA
+      'ows_title' 'S-19-35_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=19'
+    'south'
+    'no_defs'
+   END
+ END
+
+ LAYER
+    NAME 'S-34-30_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/S-34-30_2000proj.tif'
+    METADATA
+      'ows_title' 'S-34-30_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=34'
+    'south'
+    'no_defs'
+   END
+ END
+
+ LAYER
+    NAME 'S-55-40_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/S-55-40_2000proj.tif'
+    METADATA
+      'ows_title' 'S-55-40_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=55'
+    'south'
+    'no_defs'
+   END
+ END
+
+ LAYER
+    NAME 'N-15-35_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/N-15-35_2000proj.tif'
+    METADATA
+      'ows_title' 'N-15-35_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=15'
+    'north'
+    'no_defs'
+   END
+ END
+
+ LAYER
+    NAME 'N-31-05_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/N-31-05_2000proj.tif'
+    METADATA
+      'ows_title' 'N-31-05_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=31'
+    'north'
+    'no_defs'
+   END
+ END
+
+ LAYER
+    NAME 'N-36-30_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/N-36-30_2000proj.tif'
+    METADATA
+      'ows_title' 'N-36-30_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=36'
+    'north'
+    'no_defs'
+   END
+ END
+
+ LAYER
+    NAME 'N-46-20_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/N-46-20_2000proj.tif'
+    METADATA
+      'ows_title' 'N-46-20_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=46'
+    'north'
+    'no_defs'
+   END
+ END
+
+ LAYER
+    NAME 'S-20-30_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/S-20-30_2000proj.tif'
+    METADATA
+      'ows_title' 'S-20-30_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=20'
+    'south'
+    'no_defs'
+   END
+ END
+
+ LAYER
+    NAME 'S-35-25_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/S-35-25_2000proj.tif'
+    METADATA
+      'ows_title' 'S-35-25_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=35'
+    'south'
+    'no_defs'
+   END
+ END
+
+ LAYER
+    NAME 'S-56-35_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/S-56-35_2000proj.tif'
+    METADATA
+      'ows_title' 'S-56-35_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=56'
+    'south'
+    'no_defs'
+   END
+ END
+
+ LAYER
+    NAME 'N-15-40_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/N-15-40_2000proj.tif'
+    METADATA
+      'ows_title' 'N-15-40_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=15'
+    'north'
+    'no_defs'
+   END
+ END
+
+ LAYER
+    NAME 'N-32-05_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/N-32-05_2000proj.tif'
+    METADATA
+      'ows_title' 'N-32-05_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=32'
+    'north'
+    'no_defs'
+   END
+ END
+
+ LAYER
+    NAME 'N-36-35_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/N-36-35_2000proj.tif'
+    METADATA
+      'ows_title' 'N-36-35_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=36'
+    'north'
+    'no_defs'
+   END
+ END
+
+ LAYER
+    NAME 'N-48-00_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/N-48-00_2000proj.tif'
+    METADATA
+      'ows_title' 'N-48-00_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=48'
+    'north'
+    'no_defs'
+   END
+ END
+
+ LAYER
+    NAME 'S-21-30_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/S-21-30_2000proj.tif'
+    METADATA
+      'ows_title' 'S-21-30_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=21'
+    'south'
+    'no_defs'
+   END
+ END
+
+ LAYER
+    NAME 'S-35-30_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/S-35-30_2000proj.tif'
+    METADATA
+      'ows_title' 'S-35-30_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=35'
+    'south'
+    'no_defs'
+   END
+ END
+
+ LAYER
+    NAME 'S-58-40_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/S-58-40_2000proj.tif'
+    METADATA
+      'ows_title' 'S-58-40_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=58'
+    'south'
+    'no_defs'
+   END
+ END
+
+
+
+ LAYER
+    NAME 'N-15-45_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/N-15-45_2000proj.tif'
+    METADATA
+      'ows_title' 'N-15-45_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=15'
+    'north'
+    'no_defs'
+   END
+ END
+
+ LAYER
+    NAME 'N-32-10_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/N-32-10_2000proj.tif'
+    METADATA
+      'ows_title' 'N-32-10_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=32'
+    'north'
+    'no_defs'
+   END
+ END
+ 
+ LAYER
+    NAME 'N-37-15_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/N-37-15_2000proj.tif'
+    METADATA
+      'ows_title' 'N-37-15_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=37'
+    'north'
+    'no_defs'
+   END
+ END
+
+ LAYER
+    NAME 'N-48-05_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/N-48-05_2000proj.tif'
+    METADATA
+      'ows_title' 'N-48-05_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=48'
+    'north'
+    'no_defs'
+   END
+ END
+
+ LAYER
+    NAME 'S-21-35_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/S-21-35_2000proj.tif'
+    METADATA
+      'ows_title' 'S-21-35_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=21'
+    'south'
+    'no_defs'
+   END
+ END
+
+ LAYER
+    NAME 'S-36-25_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/S-36-25_2000proj.tif'
+    METADATA
+      'ows_title' 'S-36-25_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=36'
+    'south'
+    'no_defs'
+   END
+ END
+
+ LAYER
+    NAME 'S-58-45_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/S-58-45_2000proj.tif'
+    METADATA
+      'ows_title' 'S-58-45_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=58'
+    'south'
+    'no_defs'
+   END
+ END
+
+ LAYER
+    NAME 'N-16-15_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/N-16-15_2000proj.tif'
+    METADATA
+      'ows_title' 'N-16-15_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=16'
+    'north'
+    'no_defs'
+   END
+ END
+
+ LAYER
+    NAME 'N-32-35_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/N-32-35_2000proj.tif'
+    METADATA
+      'ows_title' 'N-32-35_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=32'
+    'north'
+    'no_defs'
+   END
+ END
+ 
+ LAYER
+    NAME 'N-37-20_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/N-37-20_2000proj.tif'
+    METADATA
+      'ows_title' 'N-37-20_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=37'
+    'north'
+    'no_defs'
+   END
+ END
+
+ LAYER
+    NAME 'N-49-15_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/N-49-15_2000proj.tif'
+    METADATA
+      'ows_title' 'N-49-15_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=49'
+    'north'
+    'no_defs'
+   END
+ END
+ 
+
+ LAYER
+    NAME 'S-22-15_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/S-22-15_2000proj.tif'
+    METADATA
+      'ows_title' 'S-22-15_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=22'
+    'south'
+    'no_defs'
+   END
+ END
+
+ LAYER
+    NAME 'S-36-30_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/S-36-30_2000proj.tif'
+    METADATA
+      'ows_title' 'S-36-30_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=36'
+    'south'
+    'no_defs'
+   END
+ END
+
+
+ LAYER
+    NAME 'S-59-40_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/S-59-40_2000proj.tif'
+    METADATA
+      'ows_title' 'S-59-40_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=59'
+    'south'
+    'no_defs'
+   END
+ END
+
+ LAYER
+    NAME 'N-16-20_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/N-16-20_2000proj.tif'
+    METADATA
+      'ows_title' 'N-16-20_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=16'
+    'north'
+    'no_defs'
+   END
+ END
+ 
+ LAYER
+    NAME 'N-32-50_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/N-32-50_2000proj.tif'
+    METADATA
+      'ows_title' 'N-32-50_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=32'
+    'north'
+    'no_defs'
+   END
+ END
+
+ LAYER
+    NAME 'N-37-25_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/N-37-25_2000proj.tif'
+    METADATA
+      'ows_title' 'N-37-25_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=37'
+    'north'
+    'no_defs'
+   END
+ END
+
+ LAYER
+    NAME 'N-49-20_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/N-49-20_2000proj.tif'
+    METADATA
+      'ows_title' 'N-49-20_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=49'
+    'north'
+    'no_defs'
+   END
+ END
+
+ LAYER
+    NAME 'S-22-30_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/S-22-30_2000proj.tif'
+    METADATA
+      'ows_title' 'S-22-30_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=22'
+    'south'
+    'no_defs'
+   END
+ END
+
+
+ LAYER
+    NAME 'S-38-15_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/S-38-15_2000proj.tif'
+    METADATA
+      'ows_title' 'S-38-15_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=38'
+    'south'
+    'no_defs'
+   END
+ END
+
+ LAYER
+    NAME 'S-59-45_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/S-59-45_2000proj.tif'
+    METADATA
+      'ows_title' 'S-59-45_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=59'
+    'south'
+    'no_defs'
+   END
+ END
+
+ LAYER
+    NAME 'N-16-30_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/N-16-30_2000proj.tif'
+    METADATA
+      'ows_title' 'N-16-30_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=16'
+    'north'
+    'no_defs'
+   END
+ END
+ 
+ LAYER
+    NAME 'N-33-05_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/N-33-05_2000proj.tif'
+    METADATA
+      'ows_title' 'N-33-05_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=33'
+    'north'
+    'no_defs'
+   END
+ END
+
+ LAYER
+    NAME 'N-37-30_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/N-37-30_2000proj.tif'
+    METADATA
+      'ows_title' 'N-37-30_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=37'
+    'north'
+    'no_defs'
+   END
+ END
+
+ LAYER
+    NAME 'N-49-25_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/N-49-25_2000proj.tif'
+    METADATA
+      'ows_title' 'N-49-25_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=49'
+    'north'
+    'no_defs'
+   END
+ END
+ 
+ LAYER
+    NAME 'S-23-15_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/S-23-15_2000proj.tif'
+    METADATA
+      'ows_title' 'S-23-15_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=23'
+    'south'
+    'no_defs'
+   END
+ END
+ 
+
+ LAYER
+    NAME 'S-38-20_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/S-38-20_2000proj.tif'
+    METADATA
+      'ows_title' 'S-38-20_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=38'
+    'south'
+    'no_defs'
+   END
+ END
+
+
+ LAYER
+    NAME 'S-60-35_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/S-60-35_2000proj.tif'
+    METADATA
+      'ows_title' 'S-60-35_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=60'
+    'south'
+    'no_defs'
+   END
+ END
+ 
+ LAYER
+    NAME 'N-16-35_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/N-16-35_2000proj.tif'
+    METADATA
+      'ows_title' 'N-16-35_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=16'
+    'north'
+    'no_defs'
+   END
+ END
+ 
+ LAYER
+    NAME 'N-33-25_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/N-33-25_2000proj.tif'
+    METADATA
+      'ows_title' 'N-33-25_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=33'
+    'north'
+    'no_defs'
+   END
+ END
+
+ LAYER
+    NAME 'N-37-35_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/N-37-35_2000proj.tif'
+    METADATA
+      'ows_title' 'N-37-35_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=37'
+    'north'
+    'no_defs'
+   END
+ END
+
+ LAYER
+    NAME 'N-50-15_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/N-50-15_2000proj.tif'
+    METADATA
+      'ows_title' 'N-50-15_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=50'
+    'north'
+    'no_defs'
+   END
+ END
+
+ LAYER
+    NAME 'S-23-20_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/S-23-20_2000proj.tif'
+    METADATA
+      'ows_title' 'S-23-20_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=23'
+    'south'
+    'no_defs'
+   END
+ END 
+
+ LAYER
+    NAME 'S-38-25_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/S-38-25_2000proj.tif'
+    METADATA
+      'ows_title' 'S-38-25_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=38'
+    'south'
+    'no_defs'
+   END
+ END
+
+
+ LAYER
+    NAME 'S-60-40_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/S-60-40_2000proj.tif'
+    METADATA
+      'ows_title' 'S-60-40_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=60'
+    'south'
+    'no_defs'
+   END
+ END
+ 
+ LAYER
+    NAME 'N-16-45_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/N-16-45_2000proj.tif'
+    METADATA
+      'ows_title' 'N-16-45_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=16'
+    'north'
+    'no_defs'
+   END
+ END
+
+ LAYER
+    NAME 'N-33-50_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/N-33-50_2000proj.tif'
+    METADATA
+      'ows_title' 'N-33-50_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=33'
+    'north'
+    'no_defs'
+   END
+ END
+
+ LAYER
+    NAME 'N-38-25_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/N-38-25_2000proj.tif'
+    METADATA
+      'ows_title' 'N-38-25_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=38'
+    'north'
+    'no_defs'
+   END
+ END
+
+ LAYER
+    NAME 'N-50-20_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/N-50-20_2000proj.tif'
+    METADATA
+      'ows_title' 'N-50-20_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=50'
+    'north'
+    'no_defs'
+   END
+ END
+
+
+ LAYER
+    NAME 'S-24-15_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/S-24-15_2000proj.tif'
+    METADATA
+      'ows_title' 'S-24-15_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=24'
+    'south'
+    'no_defs'
+   END
+ END
+
+ LAYER
+    NAME 'S-39-15_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/S-39-15_2000proj.tif'
+    METADATA
+      'ows_title' 'S-39-15_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=39'
+    'south'
+    'no_defs'
+   END
+ END 
+
+ LAYER
+    NAME 'N-17-15_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/N-17-15_2000proj.tif'
+    METADATA
+      'ows_title' 'N-17-15_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=17'
+    'north'
+    'no_defs'
+   END
+ END
+
+ LAYER
+    NAME 'N-34-00_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/N-34-00_2000proj.tif'
+    METADATA
+      'ows_title' 'N-34-00_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=34'
+    'north'
+    'no_defs'
+   END
+ END
+
+ LAYER
+    NAME 'N-38-50_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/N-38-50_2000proj.tif'
+    METADATA
+      'ows_title' 'N-38-50_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=38'
+    'north'
+    'no_defs'
+   END
+ END
+
+ LAYER
+    NAME 'N-50-25_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/N-50-25_2000proj.tif'
+    METADATA
+      'ows_title' 'N-50-25_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=50'
+    'north'
+    'no_defs'
+   END
+ END
+
+ LAYER
+    NAME 'S-24-20_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/S-24-20_2000proj.tif'
+    METADATA
+      'ows_title' 'S-24-20_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=24'
+    'south'
+    'no_defs'
+   END
+ END
+
+
+ LAYER
+    NAME 'S-39-20_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/S-39-20_2000proj.tif'
+    METADATA
+      'ows_title' 'S-39-20_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=39'
+    'south'
+    'no_defs'
+   END
+ END
+
+
+ LAYER
+    NAME 'N-17-20_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/N-17-20_2000proj.tif'
+    METADATA
+      'ows_title' 'N-17-20_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=17'
+    'north'
+    'no_defs'
+   END
+ END
+
+
+ LAYER
+    NAME 'N-34-05_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/N-34-05_2000proj.tif'
+    METADATA
+      'ows_title' 'N-34-05_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=34'
+    'south'
+    'no_defs'
+   END
+ END
+
+ LAYER
+    NAME 'N-39-20_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/N-39-20_2000proj.tif'
+    METADATA
+      'ows_title' 'N-39-20_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=39'
+    'north'
+    'no_defs'
+   END
+ END
+
+ LAYER
+    NAME 'N-51-15_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/N-51-15_2000proj.tif'
+    METADATA
+      'ows_title' 'N-51-15_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=51'
+    'north'
+    'no_defs'
+   END
+ END
+
+
+ LAYER
+    NAME 'S-32-00_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/S-32-00_2000proj.tif'
+    METADATA
+      'ows_title' 'S-32-00_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=32'
+    'south'
+    'no_defs'
+   END
+ END
+
+ LAYER
+    NAME 'S-39-25_2000'
+    TYPE RASTER
+    DUMP true
+    DATA '/mnt/cataloguestorage/data/world/l7_mosaic/ecw/S-39-25_2000proj.tif'
+    METADATA
+      'ows_title' 'S-39-25_2000'
+    END
+    STATUS ON
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=utm'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'zone=39'
+    'south'
+    'no_defs'
+   END
+ END
+
+END

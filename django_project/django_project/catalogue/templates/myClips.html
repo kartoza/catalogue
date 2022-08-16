@@ -1,0 +1,59 @@
+{# Original code from Tim's SABIO project and copyright is retained by the original author #}
+{# Borrowed entirely from sibling mySearches.html #}
+{% load staticfiles %}
+{% load boxtag %} {# Custom tag defined in templatetags/ #}
+{% box_start %}
+  <h2>My Clip View</h2>
+  <table width="100%" style="border-bottom: solid 1px; border-top: solid 1px; margin-top: 3px;">
+    <tr>
+      <th>
+        <b>Searched on</b>
+      </th>
+      <th>
+        <b>Source</b>
+      </th>
+      <th>
+        <b>Status</b>
+      </th>
+      <th>
+        <b>Download</b>
+      </th>
+      <th>
+      </th>
+    </tr>
+    {% for myClip in myClips %}
+    <tr>
+      <td>
+        {{ myClip.date|date:"D, d M Y, H:m" }} 
+      </td>
+      <td>
+        {{ myClip.image }}
+      </td>
+      <td>
+        {{ myClip.status }} 
+      </td>
+      <td>
+        {# To be tested #}
+        <a href="/clips/{{ myClip.guid }}/"
+          >Link
+          </a>
+      </td>
+      <td>
+        {# To be DONE #}
+        <a href=
+        "#"
+        {% comment %}
+        "{% url 'deleteSearch' mySearch.id %}"
+          onclick='
+          $.get("{% url 'deleteSearch' mySearch.id %}?xhr");
+          $("#content").load("/mysearches/","", zebraTables);
+          return false;'
+        {% endcomment %}
+          >
+          <img src="{% static 'images/delete_16.png' %}">
+          </a>
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+{% box_end %}

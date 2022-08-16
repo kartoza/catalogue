@@ -1,0 +1,115 @@
+#
+# Notes:
+# 
+# Tim Sutton 2009
+#
+# By using status default for all layers, mapserver will render them 
+# all based on their scale dependent ranges when open layers 
+# makes a request. This is a good thing since It will allow us 
+# to create complex maps without having to add many layer definitions to 
+# OpenLayers.
+#
+
+MAP
+  CONFIG "MS_ENCRYPTION_KEY" "[CODEBASE]/resources/server_config/mapserver/mapfiles/mapserver-key.txt"
+  NAME "Visits"
+  # Map image size
+  SIZE 400 400
+  UNITS dd
+
+  EXTENT 15.256693 -35.325000 33.743307 -21.675000
+  PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    ''
+  END
+
+  SYMBOLSET "../symbols/symbols.sym"
+  FONTSET "../fonts/fonts.list"
+  IMAGEQUALITY 95
+  # Background color for the map canvas -- change as desired
+  IMAGECOLOR -1 -1 -1 
+  IMAGEQUALITY 95
+
+  #IMAGETYPE png24
+  #OUTPUTFORMAT
+  #  # use the new rendering backend from MapServer 5
+  #  NAME 'AGGA'
+  #  DRIVER AGG/PNG
+  #  IMAGEMODE RGBA
+  #END
+
+  #OUTPUTFORMAT
+  #  NAME png 
+  #  DRIVER 'GD/PNG'
+  #  MIMETYPE 'image/png'
+  #  IMAGEMODE PC256
+  #  EXTENSION 'png'
+  #END
+
+  IMAGETYPE jpeg
+  OUTPUTFORMAT
+    # use the new rendering backend from MapServer 5
+    NAME 'AGG_JPEG'
+    DRIVER AGG/JPEG
+    IMAGEMODE RGB
+  END
+
+  # Web interface definition. Only the template parameter
+  # is required to display a map. See MapServer documentation
+  WEB
+    # Set IMAGEPATH to the path where MapServer should
+    # write its output.
+    IMAGEPATH '/tmp/'
+
+    # Set IMAGEURL to the url that points to IMAGEPATH
+    # as defined in your web server configuration
+    IMAGEURL '/tmp/'
+
+    # WMS server settings
+    METADATA
+      'wms_title'           'Vistors'
+      'wms_onlineresource'  'http://maps.sansa.org.za/cgi-bin/mapserv?map=VISITORS&'
+      'wms_srs'             'EPSG:4326 EPSG:900913'
+    END
+  END
+
+  SYMBOL
+   NAME 'CIRCLE'
+   TYPE ELLIPSE
+   FILLED TRUE
+   POINTS 1 1 END
+  END
+
+  INCLUDE 'vector_layers.map.include'
+
+  LAYER
+    NAME 'Visitors'
+    TYPE POINT
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='sac' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'ip_position FROM catalogue_visit using unique id using SRID=4326'
+    METADATA
+      'wms_title' 'Visits'
+    END
+    STATUS DEFAULT
+    TRANSPARENCY ALPHA
+    PROJECTION
+      'proj=longlat'
+      'ellps=WGS84'
+      'datum=WGS84'
+      'no_defs'
+      ''
+    END
+    CLASS
+      STYLE
+        COLOR 210 50 100
+        OUTLINECOLOR 200 200 200
+        SIZE 10
+        SYMBOL "CIRCLE"
+      END
+    END
+  END
+END

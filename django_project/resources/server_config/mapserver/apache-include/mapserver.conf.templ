@@ -1,0 +1,29 @@
+  # THIS IS A TEMPLATE FILE - ONLY EDIT THE .templ VERSION
+  # IF YOU EDIT THE .conf FILE YOUR CHANGES WILL BE LOST!!!
+  #set to anything to ensure only explicitly named mapfiles are used
+  SetEnv MS_MAP_NO_PATH "foo"
+  #set the ZA_VECTOR e.g. http://localhost/cgi-bin/mapserv?map=ZA_VECTOR&mode=...
+  SetEnv ZA_VECTOR "[CODEBASE]/resources/server_config/mapserver/mapfiles/za_vector.map"
+  SetEnv GEONAMES "[CODEBASE]/resources/server_config/mapserver/mapfiles/geonames.map"
+  SetEnv ZA_VECTOR_TEST "[CODEBASE]/resources/server_config/mapserver/mapfiles/za_vector_test.map"
+  SetEnv ZA_SPOT2007 "[CODEBASE]/resources/server_config/mapserver/mapfiles/za_vector_spot2007_2_5m_ecw.map"
+  SetEnv ZA_SPOT2008 "[CODEBASE]/resources/server_config/mapserver/mapfiles/za_vector_spot2008_2_5m_ecw.map"
+  SetEnv ZA_SPOT2009 "[CODEBASE]/resources/server_config/mapserver/mapfiles/za_vector_spot2009_2_5m_ecw.map"
+  SetEnv ZA_SPOT2010 "[CODEBASE]/resources/server_config/mapserver/mapfiles/za_vector_spot2010_2_5m_ecw.map"
+  SetEnv ZA_SPOT10m2007 "[CODEBASE]/resources/server_config/mapserver/mapfiles/za_vector_spot2007_10m_ecw.map"
+  SetEnv ZA_SPOT10m2008 "[CODEBASE]/resources/server_config/mapserver/mapfiles/za_vector_spot2008_10m_ecw.map"
+  SetEnv ZA_SPOT10m2009 "[CODEBASE]/resources/server_config/mapserver/mapfiles/za_vector_spot2009_10m_ecw.map"
+  SetEnv ZA_SPOT10m2010 "[CODEBASE]/resources/server_config/mapserver/mapfiles/za_vector_spot2010_10m_ecw.map"
+  SetEnv ZA_SPOT10m2010_NOVECTORS "[CODEBASE]/resources/server_config/mapserver/mapfiles/za_vector_spot2010_10m__noroads_ecw.map"
+  SetEnv ZA_DEGREE_SQUARES "[CODEBASE]/resources/server_config/mapserver/mapfiles/za_degree_squares.map"
+  SetEnv L7_MOSAIC "[CODEBASE]/resources/server_config/mapserver/mapfiles/landsat7-global-mosaic.map"
+  SetEnv ZA_NBI "[CODEBASE]/resources/server_config/mapserver/mapfiles/za_nbi.map"
+  SetEnv WORLD "[CODEBASE]/resources/server_config/mapserver/mapfiles/world.map"
+  SetEnv SEARCHES "[CODEBASE]/resources/server_config/mapserver/mapfiles/searches.map"
+  SetEnv CART "[CODEBASE]/resources/server_config/mapserver/mapfiles/cart.map"
+  SetEnv CART_TEST "[CODEBASE]/resources/server_config/mapserver/mapfiles/cart-test-server.map"
+  SetEnv VISITORS "[CODEBASE]/resources/server_config/mapserver/mapfiles/visitors.map"
+  SetEnv SANSAFARM "[CODEBASE]/resources/server_config/mapserver/mapfiles/sansafarm.map"
+  # For webmapping
+  Alias /tmp/ "/tmp/ms_tmp/"
+

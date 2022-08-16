@@ -1,0 +1,15 @@
+<h2 class="text-center">Summary of Sensor Dictionaries</h2>
+<h3 class="text-center">This report is for mission - sensor - type</h3>
+<table>
+  <thead>
+  </thead>
+  <tbody>
+    <tr><th>Satellite Instrument</th></tr>
+    {% for myRecord in myResults %}
+    <tr>
+    <td>{{myRecord}}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+

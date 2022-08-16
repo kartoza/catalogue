@@ -1,0 +1,13 @@
+{% extends "kml/base.kml" %}
+{% block records %}
+  {% if search %}
+    <name>Search Polygon Test</name>
+    <Placemark>
+      <name>{{ search.guid }}</name>
+      <description></description>
+      {{ search.kml|safe }}
+    </Placemark>
+  {% else %}
+    <name>Search Polygon Test</name>
+  {% endif %}
+{% endblock %}

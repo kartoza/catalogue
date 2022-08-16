@@ -1,0 +1,190 @@
+
+
+% Leave the blank space above here
+
+== Procedures for importing data from DIMS packages into the catalogue ==
+
+""Note:"" This document should be considered compulsory reading before you
+attempt to import any data into the catalogue.
+
+""Note2:"" This document //must// be kept up to date when you make changes to
+import scripts etc.
+
+""Note3:"" The most important missing piece in this import procedure is the
+DIMS identification id (to be used in OS4EO ordering process): this id is
+still missing from the ISOMetadata.xml file and hence it is not possible
+to import DIMS packages that can be ordered via OS4EO. The DIMS id should
+be available and stored into GenericSensorProduct.online_storage_medium_id.
+This id must be the same that we can use to usbmit an order with OS4EO
+"Submit" method
+
+=== Importing the packages from a pickup folder ===
+
+The import process is done by a Django management command that can be called
+by a cron job.
+
+When a package is successfully imported it is deleted from the filesystem
+(a command flag can be used to avoid this behaviour).
+
+To see all available options you can call the command with `-h` or `help`
+parameter:
+
+```
+$ python manage.py dims_ingest -h
+Usage: manage.py dims_ingest [options]
+
+Import into the catalogue all DIMS packages in a given folder, SPOT-5 OpticalProduct only
+
+Options:
+  -v VERBOSITY, --verbosity=VERBOSITY
+                        Verbosity level; 0=minimal output, 1=normal output,
+                        2=all output
+  --settings=SETTINGS   The Python path to a settings module, e.g.
+                        "myproject.settings.main". If this isn't provided, the
+                        DJANGO_SETTINGS_MODULE environment variable will be
+                        used.
+  --pythonpath=PYTHONPATH
+                        A directory to add to the Python path, e.g.
+                        "/home/djangoprojects/myproject".
+  --traceback           Print traceback on exception
+  -f FOLDER, --folder=FOLDER
+                        Scan the given folder, defaults to current.
+  -i, --store_image     Store the original image data extracted from the
+                        package.
+  -g GLOB, --glob=GLOB  A shell glob pattern for files to ingest.
+  -t, --test_only       Just test, nothing will be written into the DB.
+  -o OWNER, --owner=OWNER
+                        Name of the Institution package owner. Metadata will
+                        be used if available, the program will fail if no
+                        metadata are available and no name is provided.
+  -s CREATING_SOFTWARE, --creating_software=CREATING_SOFTWARE
+                        Name of the creating software. Defaults to: SARMES1
+  -l LICENSE, --license=LICENSE
+                        Name of the license. Defaults to: SAC Commercial
+                        License
+  -k, --keep            Do not delete the package after a successful import.
+  --version             show program's version number and exit
+  -h, --help            show this help message and exit
+```
+
+
+==== Options in detail ====
+
+: -f FOLDER, --folder=FOLDER
+This is the folder in which the packages to ingest are searched, defaults to the
+current working directory.
+Example: `-f /var/dims_packages`
+: -i, --store_image
+Store the original image data extracted from the package.
+This flag indicates to the program that the original image
+must be stored locally. The destination folder is calculated
+by chaining ``settings.IMAGERY_ROOT`` and the result from
+the function call ``GenericSensorProduct.productDirectory()``, the image
+is compressed with ``bzip2`` and added a ".bz2" suffix.
+: -g GLOB, --glob=GLOB
+A shell glob pattern for files to ingest. Defaults to "*.tar.gz".
+Example: ``-g "*.tgz"``
+: -t, --test_only
+Just test, nothing will be written into the DB or copied to
+the filesystem.
+: -o OWNER, --owner=OWNER
+Name of the institution, as a string.
+Defaults to: None.
+Example: ``-o "Satellite Applications Centre"``
+Note: the institution will be created if it does not exist.
+Note: the institution will be read from metadata if not
+specified in the options.
+: -s CREATING_SOFTWARE, --creating_software=CREATING_SOFTWARE
+Name of the creating software. Defaults to: //SARMES1//
+Example: ``-s "SARMES1"``
+Note: the software will be created if it does not exists.
+Version of the software will be set to a blank string.
+: -l LICENSE, --license=LICENSE
+Name of the license. Defaults to: //SAC Commercial License//
+Example: ``-l "SAC Free License"``
+Note: will be created if it does not exists. License type
+will be automatically set to //LICENSE_TYPE_ANY// (4)
+
+
+=== Implementation details ===
+
+Details on the implementation, mainly regarding the source of
+the data used to populate the catalogue database.
+
+==== Data and metadata extraction ====
+
+The ingestion process uses the ``dims_lib`` package to extract
+informations from the packages, the following data are extracted
+and made available for the catalogue:
+
++ original metadata, is the package's ISOMetadata.xml file
++ thumbnail, read from SacPackage Product folder
++ image, the original SacPackage Product tif image
++ spatial_coverage, this is read from the metadata or directly from the image
+  if it is not found
++
+
+The following information is read from the ISOMetadata:
+
+: product_date
+'//{xmlns}dateStamp/{xmlns_gco}Date', # Product date
+: file_identifier
+'//{xmlns}fileIdentifier/{xmlns_gco}CharacterString',
+: processing_level_code
+'//{xmlns}processingLevelCode//{xmlns}code/{xmlns_gco}CharacterString',
+: cloud_cover_percentage
+'//{xmlns}cloudCoverPercentage/{xmlns_gco}Real',
+: image_quality_code
+'//{xmlns}imageQualityCode//{xmlns}code/{xmlns_gco}CharacterString',
+: spatial_coverage
+'//{xmlns}EX_BoundingPolygon//{xmlns_gml}coordinates',
+: institution_name
+'//{xmlns}CI_ResponsibleParty/{xmlns}organisationName/{xmlns_gco}CharacterString',
+: institution_address
+'//{xmlns}CI_Address/{xmlns}deliveryPoint/{xmlns_gco}CharacterString',
+: institution_city
+'//{xmlns}CI_Address/{xmlns}city/{xmlns_gco}CharacterString',
+: institution_region
+'//{xmlns}CI_Address/{xmlns}administrativeArea/{xmlns_gco}CharacterString',
+: institution_postcode
+'//{xmlns}CI_Address/{xmlns}postalCode/{xmlns_gco}CharacterString',
+: institution_country
+'//{xmlns}CI_Address/{xmlns}country/{xmlns_gco}CharacterString',
+
+""Note:"" The spatial_coverage is first read from //EX_BoundingPolygon// parameter
+in ISOMetadata.xml, and then read from the geotiff image if not found.
+
+
+The following information is read from the main image using **GDAL** library:
+
++ radiometric_resolution
++ band_count
++ spatial_coverage
++
+
+
+The following information are reverse-engineered from the **file_identifier**,
+the process is handled from the function call ``GenericSensorProduct.productIdReverse()``
+
++ acquisition_mode
++ projection
++ path
++ row
++ path shift
++ row shift
++
+
+""Note:"" The acquisition_mode is a foreign key to the sensors dictionaries, the
+ingestion process will take care of creating all the necessary entries when
+they are missing. The mission_group value is not present in **file_identifier** and
+is hence set to the first type existing in the catalogue, should a new Mission
+record need to be created during the ingestion process. In practice the Mission
+dictionary entries should pre-exist and this situation should not arise.
+
+""Note:"" If a new license is created during the ingestion process, the type is
+defaulted to License.LICENSE_TYPE_ANY
+
+
+
+""Note:"" The projection is created if it does not exists, the epsg code is
+set to 0 by default.

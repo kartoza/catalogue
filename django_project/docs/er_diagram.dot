@@ -1,0 +1,97 @@
+//To generate the graph use:
+//cat er_diagram.dot | dot -Tpng -o er_diagram.png ; display er_diagram.png
+
+
+digraph G {
+  //
+  // General Diagram Setup (global props)
+  //
+  concentrate=true;
+  ratio=fill;
+  size="12,12";
+  node [shape=box fontsize=14 fontname="Arial"];
+  edge  [arrowtail=inv, arrowhead=none];
+  SegmentCommon [color=black, fontcolor=white, style=filled, weight=8];
+  FrameCommon [color=black, fontcolor=white, style=filled, weight=8];
+  // If the name begins with cluster, the nodes and edges within the subgraphs
+  // are drawn together (within a bounding rectangle). 
+  // Only specify the nodes in the cluster, not the relationships for better results
+  subgraph clusterSegments {
+    label="Segments";
+    SpotSegment [label="Spot\nSegment"];
+    LandsatSegment [label="Landsat\nSegment"];
+    ErsSegment [label="Ers\nSegment"];
+    NoaaSegment [label="Noaa\nSegment"];
+    OrbviewSegment [label="Orbview\nSegment"];
+  }
+  subgraph clusterFrames{
+    label="Frames";
+    SpotFrame [label="Spot\nFrame"];
+    LandsatFrame [label="Landsat\nFrame"];
+    ErsFrame [label="Ers\nFrame"];
+    NoaaFrame [label="Noaa\nFrame"];
+    OrbviewFrame [label="Orbview\nFrame"];
+    OtherFrame [label="Other\nFrame"];
+  }
+  subgraph clusterDataMode {
+    label="Data Mode";
+    NoaaSegment;
+    OrbviewSegment;
+    OtherFrame;
+  }
+  subgraph clusterErs {
+    label="Ers Properties";
+    ErsCalNoise;
+    ErsDopCent;
+    ErsQuality;
+    ErsSampTime;
+    ErsStateVector;
+  }
+  subgraph clusterFile {
+    label="File Properties";
+    FileType;
+    AuxFile;
+  }
+  SegmentCommon -> SpotSegment ;
+  SegmentCommon -> LandsatSegment;
+  SegmentCommon -> ErsSegment;
+  SegmentCommon -> NoaaSegment;
+  SegmentCommon -> OrbviewSegment;
+  Localization -> SpotFrame;
+  Localization -> LandsatFrame;
+  Localization -> ErsFrame;
+  Localization -> NoaaFrame;
+  Localization -> OrbviewFrame;
+  Localization -> OtherFrame;
+  SegmentCommon -> SpotFrame;
+  SegmentCommon -> LandsatFrame;
+  SegmentCommon -> ErsFrame;
+  SegmentCommon -> NoaaFrame;
+  SegmentCommon -> OrbviewFrame;
+  SegmentCommon -> OtherFrame;
+  DataMode -> NoaaSegment;
+  DataMode -> OrbviewSegment;
+  DataMode -> OtherFrame;
+  EllipsoidType -> ErsSegment;
+  Localization -> OtherFrame;
+  Station  ->  SegmentCommon ;
+  Sensor   ->  SegmentCommon ;
+  Medium   ->  SegmentCommon ;
+  HeaderType -> Medium ;
+  Satellite -> SegmentCommon ;
+  Sensor -> Scene ;
+  SegmentCommon -> AuxFile;
+  FileType -> AuxFile;
+  SuperClass -> Localization;
+  SuperClass -> AuxFile;
+  Localization -> FrameCommon;
+  SegmentCommon -> FrameCommon;
+  SegmentCommon -> ErsCalNoise;
+  SegmentCommon -> ErsDopCent;
+  SegmentCommon -> ErsQuality;
+  SegmentCommon -> ErsSampTime;
+  SegmentCommon -> ErsStateVector;
+  CompMode -> ErsSegment;
+  Satellite -> SatRelation;
+  Sensor -> SatRelation;
+}

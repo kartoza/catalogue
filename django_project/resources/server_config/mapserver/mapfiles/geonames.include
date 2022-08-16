@@ -1,0 +1,4929 @@
+#This is meant to be included in another map file using the include directive.
+
+  LAYER
+    NAME 'AgricFacility'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    EXTENT -189.017776 -147.268250 189.015782 147.246266
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'AGRF' )
+    METADATA
+      'ows_title' 'AgricFacility'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 10000    
+    CLASS
+       NAME 'AgricFacility' 
+       STYLE
+         SYMBOL "square" 
+         SIZE 7.0 
+         OUTLINECOLOR 85 170 0
+         COLOR 85 170 0
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+  LAYER
+    NAME 'Airfield'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    EXTENT -189.017776 -147.268250 189.015782 147.246266
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'AIRF' )
+    METADATA
+      'ows_title' 'Airfield'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 10000
+    CLASS
+       NAME 'Airfield' 
+       STYLE
+         SYMBOL "../symbols/aerodrome.png" 
+         SIZE 7.0 
+         OUTLINECOLOR 0 0 0
+         COLOR 170 170 127
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+LAYER
+    NAME 'Community'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    EXTENT -189.017776 -147.268250 189.015782 147.246266
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'ADM3' )
+    METADATA
+      'ows_title' 'Community'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 500000
+    CLASS
+       NAME 'Community' 
+       STYLE
+         SYMBOL "circle" 
+         SIZE 7
+         OUTLINECOLOR 0 132 97
+         COLOR 136 136 136
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+  LAYER
+    NAME 'SeaPlaneLanding'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    EXTENT -189.017776 -147.268250 189.015782 147.246266
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'AIRS' )
+    METADATA
+      'ows_title' 'SeaPlaneLanding'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 10000
+    CLASS
+       NAME 'SeaPlaneLanding' 
+       STYLE
+         SYMBOL "circle" 
+         SIZE 7.0
+         OUTLINECOLOR 0 0 0
+         COLOR 145 45 153
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+  LAYER
+    NAME 'Area'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    EXTENT -189.017776 -147.268250 189.015782 147.246266
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'AREA' )
+    METADATA
+      'ows_title' 'Area'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 10000
+    CLASS
+       NAME 'Area' 
+       STYLE
+         SYMBOL "circle" 
+         SIZE 7.0 
+         OUTLINECOLOR 49 24 0
+         COLOR 0 85 0
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+  LAYER
+    NAME 'AbandonedAirfield'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    EXTENT -189.017776 -147.268250 189.015782 147.246266
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'AIRQ' )
+    METADATA
+      'ows_title' 'AbandonedAirfield'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 10000
+    CLASS
+       NAME 'AbandonedAirfield' 
+       STYLE
+         SYMBOL "../symbols/airport2.png" 
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+  LAYER
+    NAME 'Airport'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    EXTENT -189.017776 -147.268250 189.015782 147.246266
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'AIRP' )
+    METADATA
+      'ows_title' 'Airport'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 10000
+    CLASS
+       NAME 'Airport' 
+       STYLE
+         SYMBOL "../symbols/transport_airport_blue.png" 
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+  LAYER
+    NAME 'Building'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    EXTENT -189.017776 -147.268250 189.015782 147.246266
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'BDG' )
+    METADATA
+      'ows_title' 'Building'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 10000
+    CLASS
+       NAME 'Building' 
+       STYLE
+         SYMBOL "circle" 
+         SIZE 7.0 
+         OUTLINECOLOR 0 0 0
+         COLOR 170 85 127
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+  LAYER
+    NAME 'Bar'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    EXTENT -189.017776 -147.268250 189.015782 147.246266
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'BAR' )
+    METADATA
+      'ows_title' 'Bar'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 10000
+    CLASS
+       NAME 'Bar' 
+       STYLE
+         SYMBOL "circle" 
+         SIZE 7.0 
+         OUTLINECOLOR 0 0 0
+         COLOR 166 77 145
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+  LAYER
+    NAME 'Bay'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    EXTENT -189.017776 -147.268250 189.015782 147.246266
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'BAY' )
+    METADATA
+      'ows_title' 'Bay'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 500000
+    CLASS
+       NAME 'Bay' 
+       STYLE
+         SYMBOL "circle" 
+         SIZE 7 
+         OUTLINECOLOR 92 92 69
+         COLOR 250 250 187
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+  LAYER
+    NAME 'Battlefield'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    EXTENT -189.017776 -147.268250 189.015782 147.246266
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'BTL' )
+    METADATA
+      'ows_title' 'Battlefield'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 10000
+    CLASS
+       NAME 'Battlefield' 
+       STYLE
+         SYMBOL "../symbols/poi_battlefield_brown.png" 
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+  LAYER
+    NAME 'Bush'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    EXTENT -189.017776 -147.268250 189.015782 147.246266
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'BUSH' )
+    METADATA
+      'ows_title' 'Bush'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 10000
+    CLASS
+       NAME 'Bush' 
+       STYLE
+         SYMBOL "../symbols/coniferous_and_deciduous_brown.png" 
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+  LAYER
+    NAME 'Beach'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    EXTENT -189.017776 -147.268250 189.015782 147.246266
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'BCH' )
+    METADATA
+      'ows_title' 'Beach'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 10000
+    CLASS
+       NAME 'Beach' 
+       STYLE
+         SYMBOL "../symbols/tourist_beach_brown_bg.png" 
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+  LAYER
+    NAME 'BusStation'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    EXTENT -189.017776 -147.268250 189.015782 147.246266
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'BUSTN' )
+    METADATA
+      'ows_title' 'BusStation'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 10000
+    CLASS
+       NAME 'BusStation' 
+       STYLE
+         SYMBOL "../symbols/transport_bus_station.png" 
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+  LAYER
+    NAME 'Cape'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    EXTENT -189.017776 -147.268250 189.015782 147.246266
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'CAPE' )
+    METADATA
+      'ows_title' 'Cape'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 10000
+    CLASS
+       NAME 'Cape' 
+       STYLE
+         SYMBOL "circle" 
+         SIZE 7.0 
+         OUTLINECOLOR 105 52 0
+         COLOR 248 255 171
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+  LAYER
+    NAME 'Church'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    EXTENT -189.017776 -147.268250 189.015782 147.246266
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'CH' )
+    METADATA
+      'ows_title' 'Church'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 10000    
+    CLASS
+       NAME 'Church' 
+       STYLE
+         SYMBOL "../symbols/church.png" 
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+  LAYER
+    NAME 'Cave'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    EXTENT -189.017776 -147.268250 189.015782 147.246266
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'CAVE' )
+    METADATA
+      'ows_title' 'Cave'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 10000
+    CLASS
+       NAME 'Cave' 
+       STYLE
+         SYMBOL "../symbols/poi_cave.png" 
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+  LAYER
+    NAME 'Cliff'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    EXTENT -189.017776 -147.268250 189.015782 147.246266
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'CLF' )
+    METADATA
+      'ows_title' 'Cliff'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 10000
+    CLASS
+       NAME 'Cliff' 
+       STYLE
+         SYMBOL "circle" 
+         SIZE 7.0 
+         OUTLINECOLOR 0 0 0
+         COLOR 12 216 63
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+  LAYER
+    NAME 'NavigationChannel'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    EXTENT -189.017776 -147.268250 189.015782 147.246266
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'CHNN' )
+    METADATA
+      'ows_title' 'NavigationChannel'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 10000
+    CLASS
+       NAME 'NavigationChannel' 
+       STYLE
+         SYMBOL "circle" 
+         SIZE 7.0 
+         OUTLINECOLOR 0 0 0
+         COLOR 169 183 145
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+  LAYER
+    NAME 'MarineChannel'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    EXTENT -189.017776 -147.268250 189.015782 147.246266
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'CHNM' )
+    METADATA
+      'ows_title' 'MarineChannel'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 10000
+    CLASS
+       NAME 'MarineChannel' 
+       STYLE
+         SYMBOL "circle" 
+         SIZE 7.0 
+         OUTLINECOLOR 85 85 255
+         COLOR 0 170 255
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+    LAYER
+    NAME 'Camping'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+  EXTENT 17.373614 -34.736722 31.404494 -27.464171
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'CMP' )
+    METADATA
+      'ows_title' 'Camping'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 10000
+    CLASS
+       NAME 'Camping' 
+       STYLE
+         SYMBOL "../symbols/camping_blue.png" 
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+  LAYER
+    NAME 'MiningCamp'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+  EXTENT 17.373614 -34.736722 31.404494 -27.464171
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'CMPMN' )
+    METADATA
+      'ows_title' 'MiningCamp'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 10000
+    CLASS
+       NAME 'MiningCamp' 
+       STYLE
+         SYMBOL "../symbols/camping.png" 
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+  LAYER
+    NAME 'Cemetary'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+  EXTENT 17.373614 -34.736722 31.404494 -27.464171
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'CMTY' )
+    METADATA
+      'ows_title' 'Cemetary'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 10000
+    CLASS
+       NAME 'Cemetary' 
+       STYLE
+         SYMBOL "../symbols/cemetary.png" 
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+  LAYER
+    NAME 'Canal'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+  EXTENT 17.373614 -34.736722 31.404494 -27.464171
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'CNL' )
+    METADATA
+      'ows_title' 'Canal'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 10000
+    CLASS
+       NAME 'Canal' 
+       STYLE
+         SYMBOL "circle" 
+         SIZE 7 
+         OUTLINECOLOR 0 0 0
+         COLOR 67 197 229
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+  LAYER
+    NAME 'Aqueduct'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+  EXTENT 17.373614 -34.736722 31.404494 -27.464171
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'CNLA' )
+    METADATA
+      'ows_title' 'Aqueduct'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 10000
+    CLASS
+       NAME 'Aqueduct' 
+       STYLE
+         SYMBOL "circle" 
+         SIZE 7 
+         OUTLINECOLOR 0 0 0
+         COLOR 67 197 229
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+  LAYER
+    NAME 'Canyon'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+  EXTENT 17.373614 -34.736722 31.404494 -27.464171
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'CNYN' )
+    METADATA
+      'ows_title' 'Canyon'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 10000
+    CLASS
+       NAME 'canyon' 
+       STYLE
+         SYMBOL "circle" 
+         SIZE 7 
+         OUTLINECOLOR 0 0 0
+         COLOR 67 197 229
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+
+  END
+
+  LAYER
+    NAME 'Cove'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+  EXTENT 17.373614 -34.736722 31.404494 -27.464171
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'COVE' )
+    METADATA
+      'ows_title' 'Cove'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 10000
+    CLASS
+       NAME 'Cove' 
+       STYLE
+         SYMBOL "circle" 
+         SIZE 7 
+         OUTLINECOLOR 0 0 0
+         COLOR 67 197 229
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+
+  END
+
+  LAYER
+    NAME 'Corral'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+  EXTENT 17.373614 -34.736722 31.404494 -27.464171
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'CRRL' )
+    METADATA
+      'ows_title' 'Corral'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 10000
+    CLASS
+       NAME 'Corral' 
+       STYLE
+         SYMBOL "circle" 
+         SIZE 7 
+         OUTLINECOLOR 0 0 0
+         COLOR 67 197 229
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+  LAYER
+    NAME 'Casino'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+  EXTENT 17.373614 -34.736722 31.404494 -27.464171
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'CSNO' )
+    METADATA
+      'ows_title' 'Casino'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 10000
+    CLASS
+       NAME 'Casino' 
+       STYLE
+         SYMBOL "circle" 
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+  LAYER
+    NAME 'Coast'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+  EXTENT 17.373614 -34.736722 31.404494 -27.464171
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'CST' )
+    METADATA
+      'ows_title' 'Coast'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 10000
+    CLASS
+       NAME 'Coast' 
+       STYLE
+         SYMBOL "circle" 
+         SIZE 7 
+         OUTLINECOLOR 0 0 0
+         COLOR 67 197 229
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+
+  LAYER
+    NAME 'BusinessCentre'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+  EXTENT 17.373614 -34.736722 31.404494 -27.464171
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'CTRB' )
+    METADATA
+      'ows_title' 'BusinessCentre'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 10000
+    CLASS
+       NAME 'BusinessCentre' 
+       STYLE
+         SYMBOL "circle" 
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+  LAYER
+    NAME 'Convent'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+  EXTENT 17.373614 -34.736722 31.404494 -27.464171
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'CVNT' )
+    METADATA
+      'ows_title' 'Convent'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 10000
+    CLASS
+       NAME 'Convent' 
+       STYLE
+         SYMBOL "../symbols/hostel_blue.png" 
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+
+  LAYER
+    NAME 'Depression'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    EXTENT -189.017776 -147.268250 189.015782 147.246266
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'DPR' )
+    METADATA
+      'ows_title' 'Depression'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 10000
+    CLASS
+       NAME 'Depression' 
+       STYLE
+         SYMBOL "circle" 
+         SIZE 7 
+         OUTLINECOLOR 0 0 0
+         COLOR 67 197 229
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+  LAYER
+    NAME 'Dune'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    EXTENT -189.017776 -147.268250 189.015782 147.246266
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'DUNE' )
+    METADATA
+      'ows_title' 'Dune'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 10000
+    CLASS
+       NAME 'Dune' 
+       STYLE
+         SYMBOL "circle" 
+         SIZE 7 
+         OUTLINECOLOR 0 0 0
+         COLOR 129 7 52
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+  LAYER
+    NAME 'Estate'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    EXTENT -189.017776 -147.268250 189.015782 147.246266
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'EST' )
+    METADATA
+      'ows_title' 'Estate'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 10000
+    CLASS
+       NAME 'Estate' 
+       STYLE
+         SYMBOL "circle" 
+         SIZE 7 
+         OUTLINECOLOR 0 0 0
+         COLOR 252 177 116
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+  LAYER
+    NAME 'Estuary'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    EXTENT -189.017776 -147.268250 189.015782 147.246266
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'ESTY' )
+    METADATA
+      'ows_title' 'Estuary'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 10000
+    CLASS
+       NAME 'Estuary' 
+       STYLE
+         SYMBOL "circle" 
+         SIZE 7 
+         OUTLINECOLOR 0 0 0
+         COLOR 245 176 27
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+  LAYER
+    NAME 'Facility'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    EXTENT -189.017776 -147.268250 189.015782 147.246266
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'FCL' )
+    METADATA
+      'ows_title' 'Facility'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 10000
+    CLASS
+       NAME 'Facility' 
+       STYLE
+         SYMBOL "circle" 
+         SIZE 7 
+         OUTLINECOLOR 0 0 0
+         COLOR 151 146 67
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+  LAYER
+    NAME 'FishingArea'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    EXTENT -189.017776 -147.268250 189.015782 147.246266
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'FISH' )
+    METADATA
+      'ows_title' 'FishingArea'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 10000
+    CLASS
+       NAME 'FishingArea' 
+       STYLE
+         SYMBOL "circle" 
+         SIZE 7.0 
+         OUTLINECOLOR 0 0 0
+         COLOR 239 115 126
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+  LAYER
+    NAME 'Waterfall'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    EXTENT -189.017776 -147.268250 189.015782 147.246266
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'FLLS' )
+    METADATA
+      'ows_title' 'Waterfall'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 10000
+    CLASS
+       NAME 'Waterfall' 
+       STYLE
+         SYMBOL "circle" 
+         SIZE 7.0 
+         OUTLINECOLOR 0 0 0
+         COLOR 138 215 55
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+  LAYER
+    NAME 'Ford'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    EXTENT -189.017776 -147.268250 189.015782 147.246266
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'FORD' )
+    METADATA
+      'ows_title' 'Ford'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 10000
+    CLASS
+       NAME 'Ford' 
+       STYLE
+         SYMBOL "circle" 
+         SIZE 7.0 
+         OUTLINECOLOR 0 0 0
+         COLOR 136 14 41
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+  LAYER
+    NAME 'Farm'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    EXTENT -189.017776 -147.268250 189.015782 147.246266
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'FRM' )
+    METADATA
+      'ows_title' 'Farm'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 10000
+    CLASS
+       NAME 'Farm' 
+       STYLE
+         SYMBOL "../symbols/farmyard.png" 
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+  LAYER
+    NAME 'Farmstead'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    EXTENT -189.017776 -147.268250 189.015782 147.246266
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'FRMT' )
+    METADATA
+      'ows_title' 'Farmstead'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 10000
+    CLASS
+       NAME 'Farmstead' 
+       STYLE
+         SYMBOL "../symbols/farmyard.png" 
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+  LAYER
+    NAME 'Forest'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    EXTENT -189.017776 -147.268250 189.015782 147.246266
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'FRST' )
+    METADATA
+      'ows_title' 'Forest'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 10000
+    CLASS
+       NAME 'Forest' 
+       STYLE
+         SYMBOL "../symbols/coniferous_and_deciduous_green.png" 
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+  LAYER
+    NAME 'Fort'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    EXTENT -189.017776 -147.268250 189.015782 147.246266
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'FT' )
+    METADATA
+      'ows_title' 'Fort'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 10000
+    CLASS
+       NAME 'Fort' 
+       STYLE
+         SYMBOL "circle" 
+         SIZE 7.0 
+         OUTLINECOLOR 0 0 0
+         COLOR 97 131 133
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+  LAYER
+    NAME 'Gap'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    EXTENT -189.017776 -147.268250 189.015782 147.246266
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'GAP' )
+    METADATA
+      'ows_title' 'Gap'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 10000
+    CLASS
+       NAME 'Gap' 
+       STYLE
+         SYMBOL "circle" 
+         SIZE 7.0 
+         OUTLINECOLOR 0 0 0
+         COLOR 144 191 100
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+  LAYER
+    NAME 'Garden'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    EXTENT -189.017776 -147.268250 189.015782 147.246266
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'GDN' )
+    METADATA
+      'ows_title' 'Garden'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 10000
+    CLASS
+       NAME 'Garden' 
+       STYLE
+         SYMBOL "circle" 
+         SIZE 7.0 
+         OUTLINECOLOR 0 0 0
+         COLOR 169 124 107
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+  LAYER
+    NAME 'GuestHouse'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    EXTENT -189.017776 -147.268250 189.015782 147.246266
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'GHSE' )
+    METADATA
+      'ows_title' 'GuestHouse'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 10000
+    CLASS
+       NAME 'GuestHouse' 
+       STYLE
+         SYMBOL "../symbols/bed_and_breakfast_blue.png" 
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+  LAYER
+    NAME 'Gorge'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    EXTENT -189.017776 -147.268250 189.015782 147.246266
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'GRGE' )
+    METADATA
+      'ows_title' 'Gorge'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 10000
+    CLASS
+       NAME 'Gorge' 
+       STYLE
+         SYMBOL "circle" 
+         SIZE 7.0 
+         OUTLINECOLOR 0 0 0
+         COLOR 154 76 8
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+  LAYER
+    NAME 'Harbor'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    EXTENT -189.017776 -147.268250 189.015782 147.246266
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'HBR' )
+    METADATA
+      'ows_title' 'Harbor'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 10000
+    CLASS
+       NAME 'Harbor' 
+       STYLE
+         SYMBOL "circle" 
+         SIZE 7 
+         OUTLINECOLOR 0 0 0
+         COLOR 126 213 138
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+  LAYER
+    NAME 'Headland'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    EXTENT -189.017776 -147.268250 189.015782 147.246266
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'HDLD' )
+    METADATA
+      'ows_title' 'Headland'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 10000
+    CLASS
+       NAME 'Headland' 
+       STYLE
+         SYMBOL "circle" 
+         SIZE 7.0 
+         OUTLINECOLOR 0 0 0
+         COLOR 212 31 0
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+  LAYER
+    NAME 'Hill'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    EXTENT -189.017776 -147.268250 189.015782 147.246266
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'HLL' )
+    METADATA
+      'ows_title' 'Hill'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 10000
+    CLASS
+       NAME 'Hill' 
+       STYLE
+         SYMBOL "../symbols/hills.png" 
+         SIZE 7.0 
+         OUTLINECOLOR 0 0 0
+         COLOR 225 134 143
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+  LAYER
+    NAME 'Hills'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    EXTENT -189.017776 -147.268250 189.015782 147.246266
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'HLLS' )
+    METADATA
+      'ows_title' 'Hills'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 10000
+    CLASS
+       NAME 'Hills' 
+       STYLE
+         SYMBOL "../symbols/hills.png" 
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+  LAYER
+    NAME 'House'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    EXTENT -189.017776 -147.268250 189.015782 147.246266
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'HSE' )
+    METADATA
+      'ows_title' 'House'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 10000
+    CLASS
+       NAME 'House' 
+       STYLE
+         SYMBOL "../symbols/house.png" 
+         SIZE 7.0 
+         OUTLINECOLOR 0 0 0
+         COLOR 53 79 173
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+  LAYER
+    NAME 'Hospital'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    EXTENT -189.017776 -147.268250 189.015782 147.246266
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'HSP' )
+    METADATA
+      'ows_title' 'Hospital'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 10000
+    CLASS
+       NAME 'Hospital' 
+       STYLE
+         SYMBOL "../symbols/hospital_pink.png" 
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+  LAYER
+    NAME 'Clinic'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    EXTENT -189.017776 -147.268250 189.015782 147.246266
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'HSPC' )
+    METADATA
+      'ows_title' 'Clinic'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 10000
+    CLASS
+       NAME 'Clinic' 
+       STYLE
+         SYMBOL "../symbols/clinic_pink.png" 
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+  LAYER
+    NAME 'Hotel'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    EXTENT -189.017776 -147.268250 189.015782 147.246266
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'HTL' )
+    METADATA
+      'ows_title' 'Hotel'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 10000
+    CLASS
+       NAME 'Hotel' 
+       STYLE
+         SYMBOL "../symbols/hotel.png" 
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+  LAYER
+    NAME 'HistoricalSite'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    EXTENT -189.017776 -147.268250 189.015782 147.246266
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'HSTS' )
+    METADATA
+      'ows_title' 'HistoricalSite'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 10000
+    CLASS
+       NAME 'HistoricalSite' 
+       STYLE
+         SYMBOL "circle" 
+         SIZE 7.0 
+         OUTLINECOLOR 0 0 0
+         COLOR 26 149 147
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+  LAYER
+    NAME 'Hut'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    EXTENT -189.017776 -147.268250 189.015782 147.246266
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'HUT' )
+    METADATA
+      'ows_title' 'Hut'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 10000
+    CLASS
+       NAME 'Hut' 
+       STYLE
+         SYMBOL "circle" 
+         SIZE 7.0 
+         OUTLINECOLOR 0 0 0
+         COLOR 22 117 181
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+  LAYER
+    NAME 'IndustrailArea'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    EXTENT -189.017776 -147.268250 189.015782 147.246266
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'INDS' )
+    METADATA
+      'ows_title' 'IndustrailArea'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 10000
+    CLASS
+       NAME 'IndustrailArea' 
+       STYLE
+         SYMBOL "circle" 
+         SIZE 7.0 
+         OUTLINECOLOR 0 0 0
+         COLOR 168 239 68
+
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+  LAYER
+    NAME 'Island'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    EXTENT -189.017776 -147.268250 189.015782 147.246266
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'ISL' )
+    METADATA
+      'ows_title' 'Island'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 10000
+    CLASS
+       NAME 'Island' 
+       STYLE
+         SYMBOL "circle" 
+         SIZE 7.0 
+         OUTLINECOLOR 0 0 0
+         COLOR 211 217 87
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+  LAYER
+    NAME 'Islands'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    EXTENT -189.017776 -147.268250 189.015782 147.246266
+    CONNECTIONTYPE postgis
+
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'ISLS' )
+    METADATA
+      'ows_title' 'Islands'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 10000
+    CLASS
+       NAME 'Islands' 
+       STYLE
+         SYMBOL "circle" 
+         SIZE 7.0 
+         OUTLINECOLOR 0 0 0
+         COLOR 166 43 101
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+  LAYER
+    NAME 'LandTiedIsland'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    EXTENT -189.017776 -147.268250 189.015782 147.246266
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'ISLT' )
+    METADATA
+      'ows_title' 'LandTiedIsland'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 10000
+    CLASS
+       NAME 'LandTiedIsland' 
+       STYLE
+         SYMBOL "circle" 
+         SIZE 7.0 
+         OUTLINECOLOR 0 0 0
+         COLOR 130 98 29
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+  LAYER
+    NAME 'Isthmus'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    EXTENT -189.017776 -147.268250 189.015782 147.246266
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'ISTH' )
+    METADATA
+      'ows_title' 'Isthmus'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 10000
+    CLASS
+       NAME 'Isthmus' 
+       STYLE
+         SYMBOL "circle" 
+         SIZE 7.0 
+         OUTLINECOLOR 0 0 0
+         COLOR 77 129 10
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+  LAYER
+    NAME 'ResearchInstitute'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    EXTENT -189.017776 -147.268250 189.015782 147.246266
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'ITTR' )
+    METADATA
+      'ows_title' 'ResearchInstitute'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 10000
+    CLASS
+       NAME 'ResearchInstitute' 
+       STYLE
+         SYMBOL "circle" 
+         SIZE 7.0 
+         OUTLINECOLOR 0 0 0
+         COLOR 231 172 171
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+  LAYER
+    NAME 'Locality'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    EXTENT -189.017776 -147.268250 189.015782 147.246266
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'LCTY' )
+    METADATA
+      'ows_title' 'Locality'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 50000
+    CLASS
+       NAME 'Locality' 
+       STYLE
+         SYMBOL "circle" 
+         SIZE 7.0 
+         OUTLINECOLOR 0 0 0
+         COLOR 200 186 92
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+  LAYER
+    NAME 'Lagoons'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    EXTENT -189.017776 -147.268250 189.015782 147.246266
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'LGN' )
+    METADATA
+      'ows_title' 'Lagoons'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 10000
+    CLASS
+       NAME 'Lagoons' 
+       STYLE
+         SYMBOL "circle" 
+         SIZE 7.0 
+         OUTLINECOLOR 0 0 0
+         COLOR 80 130 129
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+  LAYER
+    NAME 'Library'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    EXTENT -189.017776 -147.268250 189.015782 147.246266
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'LIBR' )
+    METADATA
+      'ows_title' 'Library'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 10000
+    CLASS
+       NAME 'Library' 
+       STYLE
+         SYMBOL "../symbols/library_brown.png" 
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+  LAYER
+    NAME 'Lakes'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    EXTENT -189.017776 -147.268250 189.015782 147.246266
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'LK' OR "fcode" = 'LKS' OR "fcode" = 'LKX' )
+    METADATA
+      'ows_title' 'Lakes'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 10000
+    CLASS
+       NAME 'Lakes' 
+       STYLE
+         SYMBOL "circle" 
+         SIZE 7.0 
+         OUTLINECOLOR 0 0 0
+         COLOR 137 194 184
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+  LAYER
+    NAME 'IntermittentLake'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    EXTENT -189.017776 -147.268250 189.015782 147.246266
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'LKI' )
+    METADATA
+      'ows_title' 'IntermittentLake'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 10000
+    CLASS
+       NAME 'IntermittentLake' 
+       STYLE
+         SYMBOL "circle" 
+         SIZE 7.0 
+         OUTLINECOLOR 0 0 0
+         COLOR 95 132 2
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+  LAYER
+    NAME 'Lighthouse'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    EXTENT -189.017776 -147.268250 189.015782 147.246266
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'LTHSE' )
+    METADATA
+      'ows_title' 'Lighthouse'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 10000
+    CLASS
+       NAME 'Lighthouse' 
+       STYLE
+         SYMBOL "circle" 
+         SIZE 7.0 
+         OUTLINECOLOR 0 0 0
+         COLOR 124 79 207
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+  LAYER
+    NAME 'Mall'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    EXTENT -189.017776 -147.268250 189.015782 147.246266
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'MALL' )
+    METADATA
+      'ows_title' 'Mall'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 10000
+    CLASS
+       NAME 'Mall' 
+       STYLE
+         SYMBOL "../symbols/mall_pink2.png" 
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END  
+
+  LAYER
+    NAME 'Factory'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    EXTENT -189.017776 -147.268250 189.015782 147.246266
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'MFG' )
+    METADATA
+      'ows_title' 'Factory'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 10000
+    CLASS
+       NAME 'Factory' 
+       STYLE
+         SYMBOL "circle" 
+         SIZE 7.0 
+         OUTLINECOLOR 0 0 0
+         COLOR 19 255 7
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+  LAYER
+    NAME 'Brewery'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    EXTENT -189.017776 -147.268250 189.015782 147.246266
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'MFGB' )
+    METADATA
+      'ows_title' 'Brewery'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 10000
+    CLASS
+       NAME 'Brewery' 
+       STYLE
+         SYMBOL "circle" 
+         SIZE 7.0 
+         OUTLINECOLOR 0 0 0
+         COLOR 201 174 234
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+  LAYER
+    NAME 'Limekiln'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    EXTENT -189.017776 -147.268250 189.015782 147.246266
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'MFGLM' )
+    METADATA
+      'ows_title' 'Limekiln'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 10000
+    CLASS
+       NAME 'Limekiln' 
+       STYLE
+         SYMBOL "circle" 
+         SIZE 7.0 
+         OUTLINECOLOR 0 0 0
+         COLOR 18 158 135
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+  LAYER
+    NAME 'Market'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    EXTENT -189.017776 -147.268250 189.015782 147.246266
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'MKT' )
+    METADATA
+      'ows_title' 'Market'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 10000
+    CLASS
+       NAME 'Market' 
+       STYLE
+         SYMBOL "../symbols/mall_pink2.png" 
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+  LAYER
+    NAME 'Mill'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    EXTENT -189.017776 -147.268250 189.015782 147.246266
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'ML' OR "fcode" = 'MLSW'   )
+    METADATA
+      'ows_title' 'Mill'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 10000
+    CLASS
+       NAME 'Mill' 
+       STYLE
+         SYMBOL "circle" 
+         SIZE 7.0 
+         OUTLINECOLOR 0 0 0
+         COLOR 36 17 160
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+  LAYER
+    NAME 'Mine'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    EXTENT -189.017776 -147.268250 189.015782 147.246266
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'MN' )
+    METADATA
+      'ows_title' 'Mine'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 10000
+    CLASS
+       NAME 'Mine' 
+       STYLE
+         SYMBOL "../symbols/poi_mine.png"  
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+  LAYER
+    NAME 'GoldMine'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    EXTENT -189.017776 -147.268250 189.015782 147.246266
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'MNAU' )
+    METADATA
+      'ows_title' 'GoldMine'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 10000
+    CLASS
+       NAME 'GoldMine' 
+       STYLE
+         SYMBOL "../symbols/poi_mine.png"
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+  LAYER
+    NAME 'CoalMine'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    EXTENT -189.017776 -147.268250 189.015782 147.246266
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'MNC' )
+    METADATA
+      'ows_title' 'CoalMine'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 10000
+    CLASS
+       NAME 'CoalMine' 
+       STYLE
+         SYMBOL "../symbols/poi_mine.png"
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+  LAYER
+    NAME 'ChromeMine'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    EXTENT -189.017776 -147.268250 189.015782 147.246266
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'MNCR' )
+    METADATA
+      'ows_title' 'ChromeMine'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 10000
+    CLASS
+       NAME 'ChromeMine' 
+       STYLE
+         SYMBOL "../symbols/poi_mine.png"
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+  LAYER
+    NAME 'Mound'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    EXTENT -189.017776 -147.268250 189.015782 147.246266
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'MND' )
+    METADATA
+      'ows_title' 'Mound'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 10000
+    CLASS
+       NAME 'Mound' 
+       STYLE
+         SYMBOL "circle" 
+         SIZE 7.0 
+         OUTLINECOLOR 0 0 0
+         COLOR 110 204 146
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+  LAYER
+    NAME 'IronMine'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    EXTENT -189.017776 -147.268250 189.015782 147.246266
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'MNFE' )
+    METADATA
+      'ows_title' 'IronMine'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 10000
+    CLASS
+       NAME 'IronMine' 
+       STYLE
+         SYMBOL "../symbols/poi_mine.png"
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+  LAYER
+    NAME 'Monument'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    EXTENT -189.017776 -147.268250 189.015782 147.246266
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'MNMT' )
+    METADATA
+      'ows_title' 'Monument'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 10000
+    CLASS
+       NAME 'Monument' 
+       STYLE
+         SYMBOL "../symbols/monument.png" 
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+  LAYER
+    NAME 'AbandonedMine'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    EXTENT -189.017776 -147.268250 189.015782 147.246266
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'MNQ' )
+    METADATA
+      'ows_title' 'AbandonedMine'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 10000
+    CLASS
+       NAME 'AbandonedMine' 
+       STYLE
+         SYMBOL "../symbols/poi_mine_abandoned.png" 
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+  LAYER
+    NAME 'Marshes'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    EXTENT -189.017776 -147.268250 189.015782 147.246266
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'MRSH' )
+    METADATA
+      'ows_title' 'Marshes'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 10000
+    CLASS
+       NAME 'Marshes' 
+       STYLE
+         SYMBOL "../symbols/marshes.png" 
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+  LAYER
+    NAME 'Mission'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    EXTENT -189.017776 -147.268250 189.015782 147.246266
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'MSSN' )
+    METADATA
+      'ows_title' 'Mission'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 10000
+    CLASS
+       NAME 'Mission' 
+       STYLE
+         SYMBOL "circle" 
+         SIZE 7.0 
+         OUTLINECOLOR 0 0 0
+         COLOR 104 87 215
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+  LAYER
+    NAME 'Mountains'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    EXTENT -189.017776 -147.268250 189.015782 147.246266
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'MT' OR "fcode" = 'MTS' )
+    METADATA
+      'ows_title' 'Mountains'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 10000
+    CLASS
+       NAME 'Mountains' 
+       STYLE
+         SYMBOL "circle" 
+         SIZE 7.0 
+         OUTLINECOLOR 0 0 0
+         COLOR 139 166 1
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+  LAYER
+    NAME 'Museum'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    EXTENT -189.017776 -147.268250 189.015782 147.246266
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'MUS' )
+    METADATA
+      'ows_title' 'Museum'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 10000
+    CLASS
+       NAME 'Museum' 
+       STYLE
+         SYMBOL "../symbols/museum.png" 
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+  LAYER
+    NAME 'ObservationPoint'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    EXTENT -189.017776 -147.268250 189.015782 147.246266
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'OBPT' )
+    METADATA
+      'ows_title' 'ObservationPoint'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 10000
+    CLASS
+       NAME 'ObservationPoint' 
+       STYLE
+         SYMBOL "circle" 
+         SIZE 7.0 
+         OUTLINECOLOR 0 0 0
+         COLOR 45 40 197
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+  LAYER
+    NAME 'Observatory'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    EXTENT -189.017776 -147.268250 189.015782 147.246266
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'OBS' )
+    METADATA
+      'ows_title' 'Observatory'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 10000
+    CLASS
+       NAME 'Observatory' 
+       STYLE
+         SYMBOL "circle" 
+         SIZE 7 
+         OUTLINECOLOR 0 79 58
+         COLOR 170 170 127
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+  LAYER
+    NAME 'Orchard'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    EXTENT -189.017776 -147.268250 189.015782 147.246266
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'OCH' )
+    METADATA
+      'ows_title' 'Orchard'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 10000
+    CLASS
+       NAME 'Orchard' 
+       STYLE
+         SYMBOL "circle" 
+         SIZE 7.0 
+         OUTLINECOLOR 0 0 0
+         COLOR 229 245 101
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+
+  LAYER
+    NAME 'Pans'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    EXTENT -189.017776 -147.268250 189.015782 147.246266
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'PAN' OR "fcode" = 'PANS' )
+    METADATA
+      'ows_title' 'Pans'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 10000
+    CLASS
+       NAME 'Pans' 
+       STYLE
+         SYMBOL "circle" 
+         SIZE 7.0 
+         OUTLINECOLOR 0 0 0
+         COLOR 243 134 88
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+  LAYER
+    NAME 'Pass'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    EXTENT -189.017776 -147.268250 189.015782 147.246266
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'PASS' )
+    METADATA
+      'ows_title' 'Pass'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 10000
+    CLASS
+       NAME 'Pass' 
+       STYLE
+         SYMBOL "../symbols/mountain_pass_black.png" 
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+  LAYER
+    NAME 'IndependentPoliticalEntity'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    EXTENT -189.017776 -147.268250 189.015782 147.246266
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'PCLI' )
+    METADATA
+      'ows_title' 'IndependentPoliticalEntity'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 10000
+    CLASS
+       NAME 'IndependentPoliticalEntity' 
+       STYLE
+         SYMBOL "circle" 
+         SIZE 7.0 
+         OUTLINECOLOR 0 0 0
+         COLOR 140 92 148
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+  LAYER
+    NAME 'Peninsula'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    EXTENT -189.017776 -147.268250 189.015782 147.246266
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'PEN' )
+    METADATA
+      'ows_title' 'Peninsula'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 10000
+    CLASS
+       NAME 'Peninsula' 
+       STYLE
+         SYMBOL "circle" 
+         SIZE 7.0 
+         OUTLINECOLOR 0 0 0
+         COLOR 103 109 138
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+  LAYER
+    NAME 'Peaks'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    EXTENT -189.017776 -147.268250 189.015782 147.246266
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'PK' OR "fcode" = 'PKS' )
+    METADATA
+      'ows_title' 'Peaks'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 10000
+    CLASS
+       NAME 'Peaks' 
+       STYLE
+         SYMBOL "../symbols/poi_peak_black.png" 
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+  LAYER
+    NAME 'Plateu'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    EXTENT -189.017776 -147.268250 189.015782 147.246266
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'PLAT' )
+    METADATA
+      'ows_title' 'Plateu'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 10000
+    CLASS
+       NAME 'Plateu' 
+       STYLE
+         SYMBOL "circle" 
+         SIZE 7 
+         OUTLINECOLOR 85 0 0
+         COLOR 158 0 0
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+  LAYER
+    NAME 'Plain'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    EXTENT -189.017776 -147.268250 189.015782 147.246266
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'PLN' )
+    METADATA
+      'ows_title' 'Plain'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 10000
+    CLASS
+       NAME 'Plain' 
+       STYLE
+         SYMBOL "circle" 
+         SIZE 7 
+         OUTLINECOLOR 90 90 45
+         COLOR 255 255 200
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+  LAYER
+    NAME 'WaterPumpingStation'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    EXTENT -189.017776 -147.268250 189.015782 147.246266
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'PMPW' )
+    METADATA
+      'ows_title' 'WaterPumpingStation'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 10000
+    CLASS
+       NAME 'WaterPumpingStation' 
+       STYLE
+         SYMBOL "../symbols/water_tower.png" 
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+  LAYER
+    NAME 'Pond'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    EXTENT -189.017776 -147.268250 189.015782 147.246266
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'PND' OR "fcode" = 'PNDI' )
+    METADATA
+      'ows_title' 'Pond'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 10000
+    CLASS
+       NAME 'Pond' 
+       STYLE
+         SYMBOL "circle" 
+         SIZE 7 
+         OUTLINECOLOR 0 147 221
+         COLOR 75 200 255
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+  LAYER
+    NAME 'PostOffice'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    EXTENT -189.017776 -147.268250 189.015782 147.246266
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'PO' )
+    METADATA
+      'ows_title' 'PostOffice'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 10000
+    CLASS
+       NAME 'PostOffice' 
+       STYLE
+         SYMBOL "../symbols/post_office_brown.png" 
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+  LAYER
+    NAME 'Pool'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    EXTENT -189.017776 -147.268250 189.015782 147.246266
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'POOL' )
+    METADATA
+      'ows_title' 'Pool'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 10000
+    CLASS
+       NAME 'Pool' 
+       STYLE
+         SYMBOL "circle" 
+         SIZE 7 
+         OUTLINECOLOR 0 170 255
+         COLOR 153 230 230
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+  LAYER
+    NAME 'PolicePost'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    EXTENT -189.017776 -147.268250 189.015782 147.246266
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'PP' )
+    METADATA
+      'ows_title' 'PolicePost'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 10000
+    CLASS
+       NAME 'PolicePost' 
+       STYLE
+         SYMBOL "../symbols/police_2_brown.png"
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+  LAYER
+    NAME 'Political_Capital'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    EXTENT -189.017776 -147.268250 189.015782 147.246266
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'PPLC' )
+    METADATA
+      'ows_title' 'Political_Capital'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    CLASS
+       NAME 'Political Capital' 
+       STYLE
+         SYMBOL "circle" 
+         SIZE 8 
+         OUTLINECOLOR 85 170 127
+         COLOR 255 170 127
+       END
+       LABEL
+         COLOR 0 0 0
+         OUTLINECOLOR 255 255 255
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+  LAYER
+    NAME 'FirstAdminDivision'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    EXTENT -189.017776 -147.268250 189.015782 147.246266
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'PPLA' )
+    METADATA
+      'ows_title' 'FirstAdminDivision'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 4e+07
+    CLASS
+       NAME 'FirstAdminDivision' 
+       STYLE
+         SYMBOL "circle" 
+         SIZE 7 
+         OUTLINECOLOR 14 21 21
+         COLOR 171 171 171
+       END
+       LABEL
+         COLOR 0 0 0
+         OUTLINECOLOR 255 255 255
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+  LAYER
+    NAME 'PopolatedLocality'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    EXTENT -189.017776 -147.268250 189.015782 147.246266
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'PPLL' )
+    METADATA
+      'ows_title' 'PopolatedLocality'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 150000
+    CLASS
+       NAME 'PopolatedLocality' 
+       STYLE
+         SYMBOL "circle" 
+         SIZE 5.95 
+         OUTLINECOLOR 98 147 147
+         COLOR 200 200 200
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+  LAYER
+    NAME 'Point'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    EXTENT -189.017776 -147.268250 189.015782 147.246266
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'PT' )
+    METADATA
+      'ows_title' 'Point'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 500000
+    CLASS
+       NAME 'Point' 
+       STYLE
+         SYMBOL "circle" 
+         SIZE 7 
+         OUTLINECOLOR 103 51 0
+         COLOR 255 255 127
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+  LAYER
+    NAME 'Upland'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    EXTENT -189.017776 -147.268250 189.015782 147.246266
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'UPLD' )
+    METADATA
+      'ows_title' 'Upland'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 10000
+    CLASS
+       NAME 'Upland' 
+       STYLE
+         SYMBOL "circle" 
+         SIZE 7.0 
+         OUTLINECOLOR 0 0 0
+         COLOR 150 65 52
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+  LAYER
+    NAME 'Port'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    EXTENT -189.017776 -147.268250 189.015782 147.246266
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'PRT' )
+    METADATA
+      'ows_title' 'Port'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 10000
+    CLASS
+       NAME 'Port' 
+       STYLE
+         SYMBOL "circle" 
+         SIZE 7.0 
+         OUTLINECOLOR 0 0 0
+         COLOR 187 65 227
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+  LAYER
+    NAME 'Vineyards'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    EXTENT -189.017776 -147.268250 189.015782 147.246266
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'VINS' )
+    METADATA
+      'ows_title' 'Vineyards'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 10000
+    CLASS
+       NAME 'Vineyards' 
+       STYLE
+         SYMBOL "circle" 
+         SIZE 7 
+         OUTLINECOLOR 170 85 255
+         COLOR 151 151 226
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+  LAYER
+    NAME 'Prison'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    EXTENT -189.017776 -147.268250 189.015782 147.246266
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'PRN' )
+    METADATA
+      'ows_title' 'Prison'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 10000
+    CLASS
+       NAME 'Prison' 
+       STYLE
+         SYMBOL "../symbols/prison_brown.png" 
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+  LAYER
+    NAME 'Wreck'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    EXTENT -189.017776 -147.268250 189.015782 147.246266
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'WRCK' )
+    METADATA
+      'ows_title' 'Wreck'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 10000       
+    CLASS
+      NAME 'Wreck' 
+      STYLE
+       SYMBOL "../symbols/shipwreck.png"  
+     END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+   END
+  END
+
+  LAYER
+    NAME 'ParkingGate'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    EXTENT -189.017776 -147.268250 189.015782 147.246266
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'PRKGT' )
+    METADATA
+      'ows_title' 'ParkingGate'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 10000
+    CLASS
+       NAME 'ParkingGate' 
+       STYLE
+         SYMBOL "circle" 
+         SIZE 7 
+         OUTLINECOLOR 0 0 0
+         COLOR 164 56 32
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+  LAYER
+    NAME 'Trail'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    EXTENT -189.017776 -147.268250 189.015782 147.246266
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'TRL' )
+    METADATA
+      'ows_title' 'Trail'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 10000
+    CLASS
+       NAME 'Trail' 
+       STYLE
+         SYMBOL "circle" 
+         SIZE 7 
+         OUTLINECOLOR 66 33 0
+         COLOR 134 67 0
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+  LAYER
+    NAME 'Waterhole'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    EXTENT -189.017776 -147.268250 189.015782 147.246266
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'WTRH' )
+    METADATA
+      'ows_title' 'Waterhole'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 10000
+    CLASS
+       NAME 'Waterhole' 
+       STYLE
+         SYMBOL "circle" 
+         SIZE 7.0 
+         OUTLINECOLOR 0 0 0
+         COLOR 154 139 99
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+  LAYER
+    NAME 'Promontory'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    EXTENT -189.017776 -147.268250 189.015782 147.246266
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'PROM' )
+    METADATA
+      'ows_title' 'Promontory'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 10000
+    CLASS
+       NAME 'Promontory' 
+       STYLE
+         SYMBOL "circle" 
+         SIZE 7.0 
+         OUTLINECOLOR 0 0 0
+         COLOR 108 219 63
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+  LAYER
+    NAME 'Well'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    EXTENT -189.017776 -147.268250 189.015782 147.246266
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'WLL' )
+    METADATA
+      'ows_title' 'Well'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 10000
+    CLASS
+       NAME 'Well' 
+       STYLE
+         SYMBOL "circle" 
+         SIZE 7 
+         OUTLINECOLOR 85 170 255
+         COLOR 0 170 255
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+  LAYER
+    NAME 'University'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    EXTENT -189.017776 -147.268250 189.015782 147.246266
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'UNIV' )
+    METADATA
+      'ows_title' 'University'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 10000
+    CLASS
+       NAME 'University' 
+       STYLE
+         SYMBOL "../symbols/university.png" 
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+  LAYER
+    NAME 'Valley'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    EXTENT -189.017776 -147.268250 189.015782 147.246266
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'VAL' )
+    METADATA
+      'ows_title' 'Valley'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 10000
+    CLASS
+       NAME 'Valley' 
+       STYLE
+         SYMBOL "circle" 
+         SIZE 7 
+         OUTLINECOLOR 144 72 0
+         COLOR 0 170 255
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+  LAYER
+    NAME 'PopulatedPlaceSection'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    EXTENT -189.017776 -147.268250 189.015782 147.246266
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'PPLX' )
+    METADATA
+      'ows_title' 'PopulatedPlaceSection'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 150000
+    CLASS
+       NAME 'PopulatedPlaceSection' 
+       STYLE
+         SYMBOL "circle" 
+         SIZE 7 
+         OUTLINECOLOR 98 147 147
+         COLOR 200 200 200
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+  LAYER
+    NAME 'Park'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    EXTENT -189.017776 -147.268250 189.015782 147.246266
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'PRK' )
+    METADATA
+      'ows_title' 'Park'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 10000
+    CLASS
+       NAME 'Park' 
+       STYLE
+         SYMBOL "circle" 
+         SIZE 7.0 
+         OUTLINECOLOR 0 0 0
+         COLOR 0 170 127
+       END
+       LABEL
+         COLOR 0 0 0
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+  LAYER
+    NAME 'PPL300th'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    EXTENT -189.017776 -147.268250 189.015782 147.246266
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'PPL' AND "population"  >= '300000' )
+    METADATA
+      'ows_title' 'PPL300th'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 1e+07
+    MAXSCALE 2e+07
+    CLASS
+       NAME 'PPL300th' 
+       STYLE
+         SYMBOL "circle" 
+         SIZE 7 
+         OUTLINECOLOR 80 121 121
+         COLOR 202 202 202
+       END
+       LABEL
+         COLOR 0 0 0
+         OUTLINECOLOR 255 255 255
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+  LAYER
+    NAME 'PPL70th'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    EXTENT -189.017776 -147.268250 189.015782 147.246266
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'PPL' AND "population"    >=  '70000' )
+    METADATA
+      'ows_title' 'PPL70th'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 5e+06
+    MAXSCALE 1e+07
+    CLASS
+       NAME 'PPL70th' 
+       STYLE
+         SYMBOL "circle" 
+         SIZE 7 
+         OUTLINECOLOR 80 121 121
+         COLOR 200 200 200
+       END
+       LABEL
+         COLOR 0 0 0
+         OUTLINECOLOR 255 255 255
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+  LAYER
+    NAME 'PPL20th'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    EXTENT -189.017776 -147.268250 189.015782 147.246266
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'PPL'  AND "population" >=  '10000' )
+    METADATA
+      'ows_title' 'PPL20th'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 2.5e+06
+    MAXSCALE 5e+06
+    CLASS
+       NAME 'PPL20th' 
+       STYLE
+         SYMBOL "circle" 
+         SIZE 7 
+         OUTLINECOLOR 80 121 121
+         COLOR 200 200 200
+       END
+       LABEL
+         COLOR 0 0 0
+         OUTLINECOLOR 255 255 255
+         POSITION Auto
+         SIZE small
+       END # label       
+    END
+  END
+
+  LAYER
+    NAME 'PPL5th'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    EXTENT -189.017776 -147.268250 189.015782 147.246266
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'PPL' AND "population" >= '5000' )
+    METADATA
+      'ows_title' 'PPL5th'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 500001
+    MAXSCALE 2.5e+06
+    CLASS
+       NAME 'PPL5th' 
+       STYLE
+         SYMBOL "circle" 
+         SIZE 7 
+         OUTLINECOLOR 80 121 121
+         COLOR 200 200 200
+       END
+       LABEL
+         COLOR 0 0 0
+         OUTLINECOLOR 255 255 255
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+
+  LAYER
+    NAME 'PPL'
+    TYPE POINT
+    DUMP true
+    TEMPLATE fooOnlyForWMSGetFeatureInfo
+    EXTENT -189.017776 -147.268250 189.015782 147.246266
+    CONNECTIONTYPE postgis
+    CONNECTION "dbname='gis' host=elephant port=5432 user='{688477225F5ABDFA}' password='{688477225F5ABDFA}' sslmode=disable"
+    DATA 'the_geom FROM "world"."geoname" USING UNIQUE id USING srid=4326'
+    FILTER ( "fcode" = 'PPL'  )
+    METADATA
+      'ows_title' 'PPL'
+    END
+    STATUS DEFAULT
+    LABELITEM 'name'
+    TRANSPARENCY 100
+    PROJECTION
+    'proj=longlat'
+    'ellps=WGS84'
+    'datum=WGS84'
+    'no_defs'
+    END
+    MINSCALE 0
+    MAXSCALE 500000
+    CLASS
+       NAME 'PPL' 
+       STYLE
+         SYMBOL "circle" 
+         SIZE 7 
+         OUTLINECOLOR 80 121 121
+         COLOR 200 200 200
+       END
+       LABEL
+         COLOR 0 0 0
+         OUTLINECOLOR 255 255 255
+         POSITION Auto
+         SIZE small
+       END # label
+    END
+  END
+

@@ -1,0 +1,179 @@
+.tabs {
+    position: relative;
+    margin: auto;
+    width: 448px;
+}
+
+.tabs .chk-hide {
+    position: absolute;
+    z-index: 1000;
+    width: 49px;
+    height: 25px;
+    left: 0;
+    top: 0;
+    opacity: 0;
+    -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    filter: alpha(opacity=0);
+    cursor: pointer;
+}
+.tabs input#tab-2{
+    left: 100px;
+}
+.tabs input#tab-3{
+    left: 200px;
+}
+.tabs input#tab-4{
+    left: 300px;
+}
+
+.tabs input#tab-5{
+    left: 400px;
+}
+
+.tabs input#tab-6{
+    left: 500px;
+}
+
+.tab-label-1,  .tab-label-5{
+    line-height: 25px !important;
+}
+
+.tabs > label {
+    background: #EDF1FC;
+    font-size: 11px;
+    line-height: 12px;
+    height: 25px;
+    position: relative;
+    padding: 1px 10px;
+    float: left;
+    display: block;
+    width: 67px;
+    color: #385c5b;
+    top: 0;
+    letter-spacing: 1px;
+    font-weight: bold;
+    text-align: center;
+    border-radius: 3px 3px 0 0;
+    margin-right: 2px;
+
+}
+
+.tabs > label:after {
+    content: '';
+    background: #f5f5f5;
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    display: block;
+}
+
+.tabs > input:hover + label {
+    background: #fff;
+}
+
+.tab-label-1 {
+    z-index: 6;
+}
+
+.tab-label-2 {
+    z-index: 5;
+}
+
+.tab-label-3 {
+    z-index: 4;
+}
+
+.tab-label-4 {
+    z-index: 3;
+}
+
+.tab-label-5 {
+    z-index: 2;
+}
+.tab-label-6 {
+    z-index: 1;
+}
+
+.tabs > input:checked + label {
+    background: #f5f5f5;
+    z-index: 7;
+}
+
+.clear-shadow {
+    position: relative;
+    top: 0;
+    height: 10px;
+    margin-bottom: -10px;
+    clear: both;
+    z-index: -2;
+}
+
+.content {
+    position: relative;
+    height: 435px;
+    z-index: 5;
+    overflow: hidden;
+}
+
+.content_div {
+    width: 440px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 100%;
+    padding: 5px;
+    overflow: hidden;
+    z-index: 1;
+    opacity: 0;
+    -webkit-transition: all linear 0.1s;
+    -moz-transition: all linear 0.1s;
+    -o-transition: all linear 0.1s;
+    -ms-transition: all linear 0.1s;
+    transition: all linear 0.1s;
+}
+
+.tabs input.tab-selector-1:checked ~ .content .content-1,
+.tabs input.tab-selector-2:checked ~ .content .content-2,
+.tabs input.tab-selector-3:checked ~ .content .content-3,
+.tabs input.tab-selector-5:checked ~ .content .content-5,
+.tabs input.tab-selector-6:checked ~ .content .content-6,
+.tabs input.tab-selector-4:checked ~ .content .content-4 {
+    bottom: 0px;
+    z-index: 100;
+    -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+    filter: alpha(opacity=100);
+    opacity: 1;
+    -webkit-transition: all ease-out 0.2s 0.2s;
+    -moz-transition: all ease-out 0.2s 0.2s;
+    -o-transition: all ease-out 0.2s 0.2s;
+    -ms-transition: all ease-out 0.2s 0.2s;
+    transition: all ease-out 0.2s 0.2s;
+}
+
+.content div h2 {
+    font-size: 14px;
+    line-height: 16px;
+    color: #000;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-weight: normal;
+    margin: 0px;
+}
+
+.content div h3 {
+    font-size: 12px;
+    line-height: 14px;
+    color: #000;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-weight: normal;
+    margin: 0px;
+    text-align: left;
+    display: block;
+    background: #EDF1FC;
+    padding: 5px;
+}
+
+.content div hr {
+    margin: 2px;
+}

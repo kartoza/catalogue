@@ -1,0 +1,43 @@
+{% extends 'userena/base_userena.html' %}
+{% load staticfiles %}
+{% load i18n %}
+
+
+{% block title %}{% trans "Sign Up" %}{% endblock %}
+
+<div class="content">
+    {% block content %}
+    <div class="container">
+    <div class="custom-form-container" style="margin-top: 40px;">
+        <h1>{% trans "SIGN UP" %}</h1>
+        <form class="form-horizontal span6" action="" method="post" accept-charset="utf-8">
+      {% csrf_token %}
+      <fieldset>
+        {{ form.non_field_errors }}
+        {% for field in form %}
+        {{ field.errors }}
+        {% comment %} Displaying checkboxes differently {% endcomment %}
+        {% if field.name == 'tos' %}
+        <p class="checkbox">
+        <label for="id_{{ field.name }}">{{ field }} {{ field.label }}</label>
+        </p>
+        {% else %}
+        <p>
+        {{ field.label_tag }}
+        {{ field }}
+        </p>
+        {% endif %}
+        {% endfor %}
+      </fieldset>
+      <div class="controls" style="text-align: center">
+      <input class="btn custom-form-submit btn-primary" style="width: 50%" type="submit" value="{% trans "SIGN UP"%}" />
+      </div>
+    </form>
+    <div class="login-help">
+        <a href="{% url 'userena_signin' %}">{% trans "Log In" %}</a> -
+        <a href="{% url "userena_password_reset" %}">{% trans "Forgot Password" %}</a>
+    </div>
+    </div>
+    </div>
+
+    {% endblock %}

@@ -1,0 +1,18 @@
+This is used to include all our map file directives in apache and still have
+them managed in GIT. To use, add a line like this to your apache configuration:
+
+```
+Include /opt/webmapping/apache-include/mapserver.conf
+```
+
+After editing mapserver you should test apache:
+
+```
+sudo apache2ctl -t
+```
+
+It the test passes, reload it:
+
+```
+sudo /etc/init.d/apache2 reload
+```

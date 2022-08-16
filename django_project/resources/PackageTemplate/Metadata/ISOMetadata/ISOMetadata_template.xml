@@ -1,0 +1,502 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MD_Metadata xmlns:gco="http://www.isotc211.org/2005/gco"
+             xmlns:gts="http://www.isotc211.org/2005/gts"
+             xmlns:gss="http://www.isotc211.org/2005/gss"
+             xmlns:gsr="http://www.isotc211.org/2005/gsr"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:xlink="http://www.w3.org/1999/xlink"
+             xmlns:gml="http://www.opengis.net/gml"
+             xmlns="http://www.isotc211.org/2005/gmd">
+   <fileIdentifier>
+      <gco:CharacterString>S5-_HRG_B--_CAM2_0094_00_0367_00_110122_092557_L1A-_ORBIT--Vers.0.01</gco:CharacterString>
+   </fileIdentifier>
+   <contact>
+      <CI_ResponsibleParty>
+         <individualName>
+            <gco:CharacterString>Natasha Nickau</gco:CharacterString>
+         </individualName>
+         <organisationName>
+            <gco:CharacterString>CSIR Satellite Applications Centre</gco:CharacterString>
+         </organisationName>
+         <positionName>
+            <gco:CharacterString>Customer Services</gco:CharacterString>
+         </positionName>
+         <contactInfo>
+            <CI_Contact>
+               <phone>
+                  <CI_Telephone>
+                     <voice>
+                        <gco:CharacterString>+27 12 334 5000</gco:CharacterString>
+                     </voice>
+                     <facsimile>
+                        <gco:CharacterString>+27 12 334 5001</gco:CharacterString>
+                     </facsimile>
+                  </CI_Telephone>
+               </phone>
+               <address>
+                  <CI_Address>
+                     <deliveryPoint>
+                        <gco:CharacterString>PO Box 395</gco:CharacterString>
+                     </deliveryPoint>
+                     <city>
+                        <gco:CharacterString>Pretoria</gco:CharacterString>
+                     </city>
+                     <administrativeArea>
+                        <gco:CharacterString>Gauteng</gco:CharacterString>
+                     </administrativeArea>
+                     <postalCode>
+                        <gco:CharacterString>0001</gco:CharacterString>
+                     </postalCode>
+                     <country>
+                        <gco:CharacterString>South Africa</gco:CharacterString>
+                     </country>
+                     <electronicMailAddress>
+                        <gco:CharacterString>customer-sac@csir.co.za</gco:CharacterString>
+                     </electronicMailAddress>
+                  </CI_Address>
+               </address>
+               <onlineResource>
+                  <CI_OnlineResource>
+                     <linkage>
+                        <URL>http://www.csir.co.za/SAC/eo.html</URL>
+                     </linkage>
+                     <protocol>
+                        <gco:CharacterString>http://</gco:CharacterString>
+                     </protocol>
+                     <name>
+                        <gco:CharacterString>Satellite Applications Centre Website</gco:CharacterString>
+                     </name>
+                     <description>
+                        <gco:CharacterString>Satellite Applications Centre Website</gco:CharacterString>
+                     </description>
+                  </CI_OnlineResource>
+               </onlineResource>
+               <hoursOfService>
+                  <gco:CharacterString>08h30 to 16h30 GMT +2 Weekdays Only</gco:CharacterString>
+               </hoursOfService>
+               <contactInstructions>
+                  <gco:CharacterString>Please contact via phone, fax or email</gco:CharacterString>
+               </contactInstructions>
+            </CI_Contact>
+         </contactInfo>
+         <role>
+            <CI_RoleCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml#CI_RoleCode"
+                         codeListValue="resourceProvider">resourceProvider</CI_RoleCode>
+         </role>
+      </CI_ResponsibleParty>
+   </contact>
+   <dateStamp>
+      <gco:Date>2011-01-24T14:29:43.278</gco:Date>
+   </dateStamp>
+   <dataSetURI>
+      <gco:CharacterString>/</gco:CharacterString>
+   </dataSetURI>
+   <locale>
+      <PT_Locale>
+         <language>
+            <LanguageCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml#LanguageCode"
+                          codeListValue="EN">EN</LanguageCode>
+         </language>
+         <country>
+            <CountryCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml#CountryCode"
+                         codeListValue="ZA">ZA</CountryCode>
+         </country>
+         <characterEncoding>
+            <MD_CharacterSetCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml#MD_CharacterSetCode"
+                                 codeListValue="utf8">utf8</MD_CharacterSetCode>
+         </characterEncoding>
+      </PT_Locale>
+   </locale>
+   <spatialRepresentationInfo>
+      <MD_GridSpatialRepresentation>
+         <numberOfDimensions>
+            <gco:Integer>2</gco:Integer>
+         </numberOfDimensions>
+         <cellGeometry>
+            <MD_CellGeometryCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml#MD_CellGeometryCode"
+                                 codeListValue="area">area</MD_CellGeometryCode>
+         </cellGeometry>
+         <transformationParameterAvailability>
+            <gco:Boolean>true</gco:Boolean>
+         </transformationParameterAvailability>
+      </MD_GridSpatialRepresentation>
+      <MD_Georeferenceable>
+         <numberOfDimensions>
+            <gco:Integer>2</gco:Integer>
+         </numberOfDimensions>
+         <axisDimensionProperties gco:nilReason="missing"/>
+         <cellGeometry>
+            <MD_CellGeometryCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml#MD_CellGeometryCode"
+                                 codeListValue="point">point</MD_CellGeometryCode>
+         </cellGeometry>
+         <transformationParameterAvailability gco:nilReason="missing"/>
+         <controlPointAvailability gco:nilReason="missing"/>
+         <orientationParameterAvailability gco:nilReason="missing"/>
+         <georeferencedParameters gco:nilReason="missing"/>
+      </MD_Georeferenceable>
+   </spatialRepresentationInfo>
+   <identificationInfo>
+      <MD_DataIdentification>
+         <citation>
+            <CI_Citation>
+               <title>
+                  <gco:CharacterString>SPOT5.HRG.L1A</gco:CharacterString>
+               </title>
+               <date>
+                  <CI_Date>
+                     <date>
+                        <gco:Date>2011-01-22T09:25:57.000</gco:Date>
+                     </date>
+                     <dateType>
+                        <CI_DateTypeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml#CI_DateTypeCode"
+                                         codeListValue="creation">creation</CI_DateTypeCode>
+                     </dateType>
+                  </CI_Date>
+               </date>
+            </CI_Citation>
+         </citation>
+         <abstract>
+            <gco:CharacterString>
+The SPOT high resolution optical instruments (HRG - High Geometric Resolution on SPOT 5) offer an oblique viewing capability, the viewing angle being adjustable through +/- 27 degrees relative to the vertical. The ground stations can steer each instrument's strip-selection mirror remotely to view regions of interest not vertically below the satellite.
+    </gco:CharacterString>
+         </abstract>
+         <language>
+            <gco:CharacterString>english</gco:CharacterString>
+         </language>
+         <topicCategory>
+            <MD_TopicCategoryCode>farming</MD_TopicCategoryCode>
+         </topicCategory>
+         <extent>
+            <EX_Extent>
+              <!-- Add EX_BoundingPolygon instead of the bounding box: we do need precise coordinates to show the footprint on the map -->
+               <geographicElement>
+                 <EX_BoundingPolygon>
+                    <polygon>
+                       <gml:outerBoundaryIs>
+                         <gml:LinearRing>
+                           <gml:coordinates cs="," decimal="." ts=""></gml:coordinates>
+                         </gml:LinearRing>
+                        </gml:outerBoundaryIs>
+                      </polygon>
+                   </EX_BoundingPolygon>
+               </geographicElement>
+               <verticalElement>
+                  <EX_VerticalExtent>
+                     <minimumValue>
+                        <gco:Real>TO FILL IN (from GCPs or DEM)</gco:Real>
+                     </minimumValue>
+                     <maximumValue>
+                        <gco:Real>TO FILL IN (from GCPs or DEM)</gco:Real>
+                     </maximumValue>
+                     <verticalCRS>
+                        <gml:VerticalCRS gml:id="id61">
+                           <gml:description>WGS 84</gml:description>
+                           <gml:identifier codeSpace="value_codeSpace">epsg:4326</gml:identifier>
+                           <gml:name>WGS 84</gml:name>
+                           <gml:scope>global</gml:scope>
+                           <gml:verticalCS>
+                              <gml:VerticalCS gml:id="id7">
+                                 <gml:description>ORBIT</gml:description>
+                                 <gml:identifier codeSpace="notyetdefined"/>
+                                 <gml:name>ORBIT</gml:name>
+                                 <gml:axis>
+                                    <gml:CoordinateSystemAxis gml:uom="uom" gml:id="id142">
+                                       <gml:description>TO FILL IN</gml:description>
+                                       <gml:identifier codeSpace="value_codeSpace">TO FILL IN</gml:identifier>
+                                       <gml:name>TO FILL IN</gml:name>
+                                       <gml:axisAbbrev>TO FILL IN</gml:axisAbbrev>
+                                       <gml:axisDirection codeSpace="value_codeSpace">TO FILL IN</gml:axisDirection>
+                                       <gml:minimumValue>0.0</gml:minimumValue>
+                                       <gml:maximumValue>0.0</gml:maximumValue>
+                                       <gml:rangeMeaning codeSpace="value_codeSpace">0.0</gml:rangeMeaning>
+                                    </gml:CoordinateSystemAxis>
+                                 </gml:axis>
+                              </gml:VerticalCS>
+                           </gml:verticalCS>
+                           <gml:verticalDatum>
+                              <gml:VerticalDatum gml:id="id641">
+                                 <gml:description>WGS 84</gml:description>
+                                 <gml:identifier codeSpace="value_codeSpace">TO FILL IN</gml:identifier>
+                                 <gml:name>WGS 84</gml:name>
+                                 <gml:scope>global</gml:scope>
+                              </gml:VerticalDatum>
+                           </gml:verticalDatum>
+                        </gml:VerticalCRS>
+                     </verticalCRS>
+                  </EX_VerticalExtent>
+               </verticalElement>
+            </EX_Extent>
+         </extent>
+      </MD_DataIdentification>
+   </identificationInfo>
+   <contentInfo>
+      <MD_ImageDescription>
+         <attributeDescription>
+            <gco:RecordType xlink:href="value_href">
+      relative radiance
+    </gco:RecordType>
+         </attributeDescription>
+         <contentType>
+            <MD_CoverageContentTypeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml#MD_CoverageContentTypeCode"
+                                        codeListValue="image">image</MD_CoverageContentTypeCode>
+         </contentType>
+         <dimension>
+            <MD_Band>
+               <sequenceIdentifier>
+                  <gco:MemberName>
+                     <gco:aName>
+                        <gco:CharacterString>BAND 1: green</gco:CharacterString>
+                     </gco:aName>
+                     <gco:attributeType>
+                        <gco:TypeName>
+                           <gco:aName>
+                              <gco:CharacterString>Real</gco:CharacterString>
+                           </gco:aName>
+                        </gco:TypeName>
+                     </gco:attributeType>
+                  </gco:MemberName>
+               </sequenceIdentifier>
+               <descriptor>
+                  <gco:CharacterString>green</gco:CharacterString>
+               </descriptor>
+               <maxValue>
+                  <gco:Real>0.59</gco:Real>
+               </maxValue>
+               <minValue>
+                  <gco:Real>0.50</gco:Real>
+               </minValue>
+               <units>
+                  <gml:UnitDefinition gml:id="id852">
+                     <gml:description>wavelength in micrometer</gml:description>
+                     <gml:identifier codeSpace="http://www.bipm.fr/en/3_SI">Âµm</gml:identifier>
+                     <gml:name>micrometer</gml:name>
+                     <gml:quantityType>wavelength</gml:quantityType>
+                     <gml:catalogSymbol codeSpace="http://www.bipm.fr/en/3_SI">Âµm</gml:catalogSymbol>
+                  </gml:UnitDefinition>
+               </units>
+               <peakResponse>
+                  <gco:Real>TO FILL IN (@most sensitive wavelength)</gco:Real>
+               </peakResponse>
+               <bitsPerValue>
+                  <gco:Integer>8</gco:Integer>
+               </bitsPerValue>
+               <toneGradation>
+                  <gco:Integer>TO FILL IN (GDAL Info/QCALMAX?)</gco:Integer>
+               </toneGradation>
+            </MD_Band>
+            <MD_Band>
+               <sequenceIdentifier>
+                  <gco:MemberName>
+                     <gco:aName>
+                        <gco:CharacterString>BAND 2: red</gco:CharacterString>
+                     </gco:aName>
+                     <gco:attributeType>
+                        <gco:TypeName>
+                           <gco:aName>
+                              <gco:CharacterString>Real</gco:CharacterString>
+                           </gco:aName>
+                        </gco:TypeName>
+                     </gco:attributeType>
+                  </gco:MemberName>
+               </sequenceIdentifier>
+               <descriptor>
+                  <gco:CharacterString>red</gco:CharacterString>
+               </descriptor>
+               <maxValue>
+                  <gco:Real>0.68</gco:Real>
+               </maxValue>
+               <minValue>
+                  <gco:Real>0.61</gco:Real>
+               </minValue>
+               <units>
+                  <gml:UnitDefinition gml:id="id568">
+                     <gml:description>wavelength in micrometer</gml:description>
+                     <gml:identifier codeSpace="http://www.bipm.fr/en/3_SI">Âµm</gml:identifier>
+                     <gml:name>micrometer</gml:name>
+                     <gml:quantityType>wavelength</gml:quantityType>
+                     <gml:catalogSymbol codeSpace="http://www.bipm.fr/en/3_SI">Âµm</gml:catalogSymbol>
+                  </gml:UnitDefinition>
+               </units>
+               <peakResponse>
+                  <gco:Real>TO FILL IN (@most sensitive wavelength)</gco:Real>
+               </peakResponse>
+               <bitsPerValue>
+                  <gco:Integer>8</gco:Integer>
+               </bitsPerValue>
+               <toneGradation>
+                  <gco:Integer>TO FILL IN (GDAL Info/QCALMAX?)</gco:Integer>
+               </toneGradation>
+            </MD_Band>
+            <MD_Band>
+               <sequenceIdentifier>
+                  <gco:MemberName>
+                     <gco:aName>
+                        <gco:CharacterString>BAND 3: NIR</gco:CharacterString>
+                     </gco:aName>
+                     <gco:attributeType>
+                        <gco:TypeName>
+                           <gco:aName>
+                              <gco:CharacterString>Real</gco:CharacterString>
+                           </gco:aName>
+                        </gco:TypeName>
+                     </gco:attributeType>
+                  </gco:MemberName>
+               </sequenceIdentifier>
+               <descriptor>
+                  <gco:CharacterString>nir</gco:CharacterString>
+               </descriptor>
+               <maxValue>
+                  <gco:Real>0.89</gco:Real>
+               </maxValue>
+               <minValue>
+                  <gco:Real>0.78</gco:Real>
+               </minValue>
+               <units>
+                  <gml:UnitDefinition gml:id="id439">
+                     <gml:description>wavelength in micrometer</gml:description>
+                     <gml:identifier codeSpace="http://www.bipm.fr/en/3_SI">Âµm</gml:identifier>
+                     <gml:name>micrometer</gml:name>
+                     <gml:quantityType>wavelength</gml:quantityType>
+                     <gml:catalogSymbol codeSpace="http://www.bipm.fr/en/3_SI">Âµm</gml:catalogSymbol>
+                  </gml:UnitDefinition>
+               </units>
+               <peakResponse>
+                  <gco:Real>TO FILL IN (@most sensitive wavelength)</gco:Real>
+               </peakResponse>
+               <bitsPerValue>
+                  <gco:Integer>8</gco:Integer>
+               </bitsPerValue>
+               <toneGradation>
+                  <gco:Integer>TO FILL IN (GDAL Info/QCALMAX?)</gco:Integer>
+               </toneGradation>
+            </MD_Band>
+            <MD_Band>
+               <sequenceIdentifier>
+                  <gco:MemberName>
+                     <gco:aName>
+                        <gco:CharacterString>Band 4: SWIR</gco:CharacterString>
+                     </gco:aName>
+                     <gco:attributeType>
+                        <gco:TypeName>
+                           <gco:aName>
+                              <gco:CharacterString>Real</gco:CharacterString>
+                           </gco:aName>
+                        </gco:TypeName>
+                     </gco:attributeType>
+                  </gco:MemberName>
+               </sequenceIdentifier>
+               <descriptor>
+                  <gco:CharacterString>swir</gco:CharacterString>
+               </descriptor>
+               <maxValue>
+                  <gco:Real>1.75</gco:Real>
+               </maxValue>
+               <minValue>
+                  <gco:Real>1.58</gco:Real>
+               </minValue>
+               <units>
+                  <gml:UnitDefinition gml:id="id255">
+                     <gml:description>wavelength in micrometer</gml:description>
+                     <gml:identifier codeSpace="http://www.bipm.fr/en/3_SI">Âµm</gml:identifier>
+                     <gml:name>micrometer</gml:name>
+                     <gml:quantityType>wavelength</gml:quantityType>
+                     <gml:catalogSymbol codeSpace="http://www.bipm.fr/en/3_SI">Âµm</gml:catalogSymbol>
+                  </gml:UnitDefinition>
+               </units>
+               <peakResponse>
+                  <gco:Real>TO FILL IN (@most sensitive wavelength)</gco:Real>
+               </peakResponse>
+               <bitsPerValue>
+                  <gco:Integer>8</gco:Integer>
+               </bitsPerValue>
+               <toneGradation>
+                  <gco:Integer>TO FILL IN (GDAL Info/QCALMAX?)</gco:Integer>
+               </toneGradation>
+            </MD_Band>
+         </dimension>
+         <illuminationElevationAngle>
+            <gco:Real>60.814394</gco:Real>
+         </illuminationElevationAngle>
+         <illuminationAzimuthAngle>
+            <gco:Real>
+               <xsl-value-of select="$illuminationAzimuthAngle_v"/>
+            </gco:Real>
+         </illuminationAzimuthAngle>
+         <imagingCondition>
+            <MD_ImagingConditionCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml#MD_ImagingConditionCode"
+                                     codeListValue=""/>
+         </imagingCondition>
+         <imageQualityCode>
+            <MD_Identifier>
+               <authority>
+                  <CI_Citation>
+                     <title>
+                        <gco:CharacterString>TO FILL IN</gco:CharacterString>
+                     </title>
+                     <date>
+                        <CI_Date>
+                           <date>
+                              <gco:Date>TO FILL IN</gco:Date>
+                           </date>
+                           <dateType>
+                              <CI_DateTypeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml#CI_DateTypeCode"
+                                               codeListValue="creation">creation</CI_DateTypeCode>
+                           </dateType>
+                        </CI_Date>
+                     </date>
+                  </CI_Citation>
+               </authority>
+               <code>
+                  <gco:CharacterString>aaaabaaaaaaaaa</gco:CharacterString>
+               </code>
+            </MD_Identifier>
+         </imageQualityCode>
+         <cloudCoverPercentage>
+            <gco:Real/>
+         </cloudCoverPercentage>
+         <processingLevelCode>
+            <MD_Identifier>
+               <authority>
+                  <CI_Citation>
+                     <title>
+                        <gco:CharacterString>CSIR SAC</gco:CharacterString>
+                     </title>
+                     <date>
+                        <CI_Date>
+                           <date>
+                              <gco:Date>TO FILL IN (@prod. generation date?)</gco:Date>
+                           </date>
+                           <dateType>
+                              <CI_DateTypeCode codeList="http://www.tc211.org/ISO19139/resources/codeList.xml#CI_DateTypeCode"
+                                               codeListValue="creation">creation</CI_DateTypeCode>
+                           </dateType>
+                        </CI_Date>
+                     </date>
+                  </CI_Citation>
+               </authority>
+               <code>
+                  <gco:CharacterString>L1A</gco:CharacterString>
+               </code>
+            </MD_Identifier>
+         </processingLevelCode>
+         <compressionGenerationQuantity>
+            <gco:Integer>0</gco:Integer>
+         </compressionGenerationQuantity>
+         <triangulationIndicator>
+            <gco:Boolean>true</gco:Boolean>
+         </triangulationIndicator>
+         <radiometricCalibrationDataAvailability>
+            <gco:Boolean>true</gco:Boolean>
+         </radiometricCalibrationDataAvailability>
+         <cameraCalibrationInformationAvailability>
+            <gco:Boolean>true</gco:Boolean>
+         </cameraCalibrationInformationAvailability>
+         <filmDistortionInformationAvailability>
+            <gco:Boolean>true</gco:Boolean>
+         </filmDistortionInformationAvailability>
+         <lensDistortionInformationAvailability>
+            <gco:Boolean>true</gco:Boolean>
+         </lensDistortionInformationAvailability>
+      </MD_ImageDescription>
+   </contentInfo>
+</MD_Metadata>

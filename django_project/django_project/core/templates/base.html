@@ -1,0 +1,70 @@
+{% load pipeline %}
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+{% load boxtag %}
+<head>
+  <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>{% block title %}SANSA-EO Catalogue{% endblock %}</title>
+    <meta name="keywords" content="sansa south african national space agency earth observation south africa" />
+    <meta name="description" content="This web site provides a catalogue of remote sensing data (satellite imagery) available from the SANSA-EO (South African National Space Agency), Hartebeeshoek, South Africa. The catalogue includes data for South Africa and the rest of Africa. This web site was developed by Linfiniti Consulting under contract to SANSA-EO." />
+    <meta name="robots" content="NONE,NOARCHIVE" />
+    {# for Bootstrap responsive layout #}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+     <script src="{% static "js/libs/bootstrap-5.0.2/js/bootstrap.bundle.min.js" %}"></script>
+    <link href="{% static "js/libs/font-awesome/css/font-awesome.min.css" %}" rel="stylesheet">
+    {% block extracss %}{% endblock %}
+    {# Be very careful about changing the order of these css includes as it can have unintended side effects #}
+    <link href="{% url 'logVisit' %}" rel="stylesheet" type="text/css" />
+
+    {% stylesheet 'catalogue' %}
+
+    {% block extraHeaders %}
+    {% endblock %}
+    <link href="{% static "css/styles.css" %}" rel="stylesheet">
+    <link href="{% static "css/navbar.css" %}" rel="stylesheet">
+    <link href="{% static "css/landing_page.css" %}" rel="stylesheet">
+    <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}"/>
+    <link rel="icon" href="{% static 'images/animated_favicon.gif' %}" type="image/gif" />
+
+  </head>
+
+    {% block navigation %}
+    <!-- Navigation -->
+        {% include "navigation_bar.html" %}
+    {% endblock %}
+    <body {% block body_load %}{% endblock %}>
+    {% block header %}
+    {% endblock %}
+
+    {% block content %}
+    {% endblock %}
+
+{% block footer %}
+     <!-- Footer-->
+        <footer class="bg-dark py-4 mt-auto" style="bottom: 0;margin-bottom: 0px; left: 0;right: 0">
+            <div class="container px-5">
+                <div class="row align-items-center justify-content-between flex-column flex-sm-row">
+                    <div class="col-auto"><div class="small m-0 text-light">Copyright &copy; SANSA, Earth Observation. 2022 | This catalogue was developed by Kartoza (Pty) Ltd</div></div>
+                    <div class="col-auto">
+                        <a class="link-light small" href="{% url 'about' %}">About</a>
+                        <span class="text-light mx-1">&middot;</span>
+                        <a class="link-light small" href="{% url 'contact' %}">Contact</a>
+                         {% if user.is_authenticated %}
+                            <span class="text-light mx-1">&middot;</span>
+                            <a class="link-light small" href="{% url "userena_profile_detail" user%}">Logged in as {{ user.username }}</a>
+                             {% else %}
+                             <span class="text-light mx-1">&middot;</span>
+                            <a class="link-light small" href="{% url 'userena_signin' %}">Login</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </footer>
+{% endblock %}
+
+    </body>
+  </html>

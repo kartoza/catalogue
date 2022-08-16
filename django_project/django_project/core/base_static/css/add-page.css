@@ -1,0 +1,121 @@
+/*
+ * Map size
+ */
+
+#map {
+  /* width defined by blueprint.css */
+  height: 500px;
+}
+
+#map-controls2 {
+    width: 200px;
+    height: 53px;
+    z-index: 750;
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    color: #ffffff;
+    font-size: 10px;
+}
+
+#map-control-position {
+    position: relative;
+    float:left;
+    clear:left;
+    margin-left: 20px;
+    margin-bottom: 3px;
+}
+
+#map-control-scalebar {
+    position: relative;
+    float:left;
+    clear:left;
+}
+
+#map-controls {
+    /* width: 277px; */
+    height: 40px;
+    z-index: 750;
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    color: #ffffff;
+    padding-top: 12px;
+    padding-left: 3px;
+}
+
+.blackalpha60 {
+    /* Fallback for web browsers that doesn't support RGBa */
+    background: rgb(0, 0, 0);
+    /* RGBa with 0.6 opacity */
+    background: rgba(0, 0, 0, 0.6);
+    /* For IE 5.5 - 7*/
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000);
+    /* For IE 8*/
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000)";
+}
+
+#map-navigation {
+    /* width: 230px; */
+    height: 50px;
+    z-index: 101;
+    position: relative;
+    float: left;
+    color: #ffffff;
+    margin-left: 12px;
+    /*background: #ffffff;*/
+}
+
+#map-layerswitcher {
+    width: 905px;
+    height: 110px;
+    z-index: 750;
+    position: absolute;
+    bottom: 65px;
+    left: 10px;
+    color: #000;
+    background: #ffffff;
+    display: none;
+    padding-top: 2px;
+}
+
+#map-layerswitcher-control {
+    width: 35px;
+    height: 50px;
+    z-index: 101;
+    position: relative;
+    float: left;
+    color: #ffffff;
+    cursor: pointer; cursor: hand;
+    /*background: #ffffff;*/
+}
+
+#map-layerswitcher .layer-control {
+    width: 80px;
+    height: 108px;
+    position: relative;
+    float: left;
+    margin: 0 0 0 2px;
+}
+
+#map-layerswitcher .layer-control:hover {
+    cursor: pointer;
+    cursor: hand;
+    text-shadow: 0 0 10px #c61a1a;
+}
+
+#map-layerswitcher img {
+    width: 80px;
+    height: 80px;
+}
+
+#map-layerswitcher p {
+    font-size: 12px;
+    line-height: 12px;
+    margin-left: 5px;
+}
+
+#map-layerswitcher .visible  {
+    background-color: LightGray;
+    font-weight: bold;
+}

@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content%}
+    <!-- Page content-->
+            <section class="py-5">
+                <div class="bg-light container px-5">
+                    <!-- Contact form-->
+                    <div class="bg-light rounded-3 py-5 px-4 px-md-5 mb-5" >
+                        <div class="text-center mb-5">
+                            <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-envelope"></i></div>
+                            <h1 class="fw-bolder">Contact Us</h1>
+                        </div>
+                        <div class="row gx-5 justify-content-center">
+                             {% if data %}
+                    {% for myItem in data %}
+                        <div class="col text-center">
+                            <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"></div>
+                            <div class="h5">Earth Observation</div>
+                            <p class="text-muted mb-0">{{myItem.people_earth_obeservation}}</p>
+                            <p class="text-muted mb-0">Email: <a href="mailto:{{myItem.email_earth_observation}}">{{myItem.email_earth_observation}}</a></p>
+                            <p class="text-muted mb-0">Tel: {{myItem.phone_earth_observation}}</p>
+                        </div>
+
+                        <div class="col text-center">
+                            <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"></div>
+                            <div class="h5">Data enquiries, quotes and sales</div>
+                            <p class="text-muted mb-0">Email: <a href="mailto:{{myItem.catalogue_email_enqueries}}">{{myItem.catalogue_email_enqueries}}</a></p>
+                            <p class="text-muted mb-0">Tel: {{myItem.catalogue_phone}}</p>
+
+                        </div>
+                    </div>
+                   {% endfor %}
+                   {% endif %}
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+{% endblock %}
+

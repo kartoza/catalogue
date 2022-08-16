@@ -1,0 +1,18 @@
+{% load i18n %}
+    <li class="nav-item  dropdown" class="dropdown">
+     <a class="dropdown-toggle nav-link" href="#"  id="dropdownMenuLink"
+           data-bs-toggle="dropdown" aria-expanded="false">{{ user.username }}</a>
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+      {% if user.is_authenticated %}
+
+          <a class="dropdown-item" href="{% url "userena_profile_detail" user %}">{% trans "Profile" %}</a>
+        {% if not validated and email %}
+          <a class="dropdown-item" href="{% url "userena_email_confirm" %}">{% trans "Resend validation e-mail" %}</a>
+        {% endif %}
+        <hr>
+           <a class="dropdown-item" href="{% url "userena_signout" %}">Logout</a>
+      {% else %}
+          <a class="dropdown-item" href="{% url 'userena_signin' %}">Login</a>
+      {% endif %}
+      </div>
+    </li>

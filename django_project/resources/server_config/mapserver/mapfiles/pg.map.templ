@@ -1,0 +1,53 @@
+MAP
+  CONFIG "MS_ENCRYPTION_KEY" "[CODEBASE]/resources/server_config/mapserver/mapfiles/mapserver-key.txt"
+  NAME "South Africa PG"
+  SIZE 200 200
+  STATUS ON
+  SYMBOLSET "[CODEBASE]/resources/server_config/mapserver/symbols/symbols.sym"
+  #IMAGETYPE PNG24
+  IMAGETYPE JPEG
+
+  
+  # zoom in close for spot display
+  #EXTENT 500000 6890000 510000 6895000
+  #zoomed in to one qds
+  #EXTENT 439377 6898439 512781 6959525
+  #EXTENT 387902 6800000 598941 6977589
+  #medium zoom
+  #EXTENT 387902 6800000 598941 6977589
+  #zoomed out
+  EXTENT -47404 6043497 1811148 7590140
+  UNITS METERS
+  SHAPEPATH "[CODEBASE]/resources/server_config/mapserver/data/za/"
+
+  PROJECTION
+    # South Africa UTM 34S
+    "init=epsg:32734"
+  END
+
+  WEB
+    IMAGEPATH "/tmp/ms_tmp/"
+    IMAGEURL "/tmp/"
+  END
+
+  LAYER
+    NAME "ZA"
+    TYPE POLYGON
+    STATUS ON
+    CONNECTIONTYPE postgis
+    CONNECTION "user={688477225F5ABDFA} password={688477225F5ABDFA} dbname=sac host=localhost"
+    DATA "the_geom from provinces"
+    CLASS
+      STYLE
+        ANTIALIAS TRUE
+        COLOR 240 240 240
+        OUTLINECOLOR 0 0 0
+        SYMBOL 0
+      END
+    END
+  END
+
+END
+
+
+
