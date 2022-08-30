@@ -10,8 +10,7 @@
 {% block content %}
 <div class="main-content">
 <div id="layoutSidenav_content">
-    <main>
-    <div class="container-fluid px-4">
+    <div class="container-xl px-4 mt-4">
     <h1 class="mt-4">Visits by Country</h1>
      <div class="card mb-4">
          <div class="card-header">
@@ -24,30 +23,31 @@
     <div class="card mb-4">
     <div class="card-header">
         <i class="fas fa-table me-1"></i>
-                                Visits by Country Excluding SA
-                                <div id="order-list-buttonset" class="btn-group pull-right">
-                                    <a href="?pdf" download="proposed_file_name"><button class="btn btn-primary" id="download-btn"> <i class="icon-download"></i> Download as PDF</button></a>
-                                    <button onclick='location="{% url 'visitor-monthly-report' myCurrentMonth|date:'Y' myCurrentMonth|date:'m' %}"' class="btn" id="monthly-reports-btn"><i class="icon-calendar"></i> View Monthly Reports</button>                                </div>
-                            </div>
+        Visits by Country Excluding SA
+        <div id="order-list-buttonset" class="btn-group pull-right">
+            <a href="?pdf" download="proposed_file_name"><button class="btn btn-primary" id="download-btn"> <i class="icon-download"></i> Download as PDF</button></a>
+            <button onclick='location="{% url 'visitor-monthly-report' myCurrentMonth|date:'Y' myCurrentMonth|date:'m' %}"' class="btn" id="monthly-reports-btn"><i class="icon-calendar"></i> View Monthly Reports</button>
+        </div>
+    </div>
     <div class="card-body">
         {% if table %}
             {% render_table table 'django_tables2/custom-table.html' %}
         {% else %}
-            <div class="text-center" id="list-order-table">
-                                    <p class="lead">
-                                      No Report to Generate
-                                    </p>
-                                  </div>
+            <div class="row-fluid center">
+               <p class="lead">No Report to Generate</p>
             </div>
+        {% endif %}
+    </div>
+    </div>
+    </div>
             </div>
-            </div>
-            </main>
-            </div>
-            </div>
+</div>
+</div>
 
-  {% endif %}
+
 {% endblock %}
 {% block footer %}
+
     <script src="{% static "js/libs/jquery/jquery-3.6.0.min.js" %}"></script>
     <script src="{% static "js/libs/highcharts/highcharts.js" %}"></script>
     <script src="{% static "js/libs/highcharts/modules/data.js" %}"></script>
@@ -110,4 +110,5 @@
             }]
         });
 </script>
+    {{ block.super }}
 {% endblock %}

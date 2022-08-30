@@ -11,6 +11,23 @@
     <script src="{% static "js/libs/underscore-1.13.1/underscore-min.js" %}"></script>
     <script src="{% static "js/libs/jquery-ui-1.12.1/jquery-ui.min.js" %}"></script>
     <script src="{% static "js/widget.nonSearchRecordsTable.js" %}"></script>
+    <script>
+  	{% autoescape  off %}
+  		var currencies = $.parseJSON('{{ myCurrency }}');
+  	{% endautoescape %}
+  	$( document ).ready(function() {
+  		$('#nonsearchWidget').nonSearchRecordsTable({ 'currency': currencies });
+
+  		$('#submitForm').click(function() {
+  			if ($('#id_user').val() == "") {
+  				$('#user_div').addClass('error');
+  				return
+  			}
+  			$('#order-form').submit();
+  		});
+
+  	});
+  </script>
 {% endblock %}
 
 {% block content%}
@@ -82,22 +99,4 @@
 </div>
 {% endblock %}
 
-{% block footer %}
-  <script>
-  	{% autoescape  off %}
-  		var currencies = $.parseJSON('{{ myCurrency }}');
-  	{% endautoescape %}
-  	$( document ).ready(function() {
-  		$('#nonsearchWidget').nonSearchRecordsTable({ 'currency': currencies });
 
-  		$('#submitForm').click(function() {
-  			if ($('#id_user').val() == "") {
-  				$('#user_div').addClass('error');
-  				return
-  			}
-  			$('#order-form').submit();
-  		});
-
-  	});
-  </script>
-{% endblock %}
