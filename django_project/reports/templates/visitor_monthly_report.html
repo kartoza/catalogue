@@ -7,8 +7,7 @@
 {% block content %}
 <div class="main-content">
 <div id="layoutSidenav_content">
-    <main>
-    <div class="container-fluid px-4">
+    <div class="container-xl px-4 mt-4">
     <h1 class="mt-4">Visits by Country For {{ myCurrentDate|date:'F Y' }}</h1>
     {% if table %}
      <div class="card mb-4">
@@ -46,13 +45,13 @@
             </div>
             </div>
             </div>
-            </main>
             </div>
             </div>
 
   {% endif %}
 {% endblock %}
 {% block footer %}
+    {{ block.super }}
     <script src="{% static "js/libs/jquery/jquery-3.6.0.min.js" %}"></script>
     <script src="{% static "js/libs/highcharts/highcharts.js" %}"></script>
     <script src="{% static "js/libs/highcharts/modules/data.js" %}"></script>
