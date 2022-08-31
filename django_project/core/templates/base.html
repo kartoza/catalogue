@@ -31,7 +31,7 @@
     <link rel="icon" href="{% static 'images/animated_favicon.gif' %}" type="image/gif" />
 
   </head>
-
+    <main>
     {% block navigation %}
     <!-- Navigation -->
         {% include "navigation_bar.html" %}
@@ -42,24 +42,23 @@
 
     {% block content %}
     {% endblock %}
-
+    </main>
 {% block footer %}
      <!-- Footer-->
-        <footer class="bg-dark py-4 mt-auto" style="position: fixed; bottom: 0;margin-bottom: 0px; left: 0;right: 0">
+        <footer class="bg-dark py-4 mt-auto">
             <div class="container px-5">
                 <div class="row align-items-center justify-content-between flex-column flex-sm-row">
                     <div class="col-auto"><div class="small m-0 text-light">Copyright &copy; SANSA, Earth Observation. 2022 | This catalogue was developed by Kartoza (Pty) Ltd</div></div>
                     <div class="col-auto">
+                        {% if user.is_authenticated %}
+                            <a class="link-light small" href="{% url "userena_profile_detail" user%}">Logged in as {{ user.username }}</a>
+                             {% else %}
+                        {% endif %}
+                    </div>
+                    <div class="col-auto">
                         <a class="link-light small" href="{% url 'about' %}">About</a>
                         <span class="text-light mx-1">&middot;</span>
                         <a class="link-light small" href="{% url 'contact' %}">Contact</a>
-                         {% if user.is_authenticated %}
-                            <span class="text-light mx-1">&middot;</span>
-                            <a class="link-light small" href="{% url "userena_profile_detail" user%}">Logged in as {{ user.username }}</a>
-                             {% else %}
-                             <span class="text-light mx-1">&middot;</span>
-                            <a class="link-light small" href="{% url 'userena_signin' %}">Login</a>
-                        {% endif %}
                     </div>
                 </div>
             </div>

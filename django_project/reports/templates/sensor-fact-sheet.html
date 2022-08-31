@@ -5,8 +5,7 @@
 {% endblock %}{% block content %}
     <div class="main-content">
     <div id="layoutSidenav_content">
-    <main>
-        <div class="container-fluid px-4">
+        <div class="container-xl px-4 mt-4">
             <h1 class="mt-4">Sensor Summary Fact Sheet for {{ sat_group.satellite.name }} {{ sat_group.instrument_type.name }}</h1>
             <div class="card mb-4">
                 <div class="card-header">Collection: {{ sat_group.satellite.collection.name }}</div>
@@ -152,9 +151,6 @@
                 </div>
         </div>
         </div>
-    </main>
     </div>
     </div>
-{% endblock %}
-{% block footer %}
 {% endblock %}
