@@ -45,10 +45,10 @@ body {
     top: 0;
     right: 0;
     position: absolute;
-    height: 100%;
-    max-width: 600px;
-    width: 500px;
-    min-width: 422px;
+    height: 85%;
+    max-width: 500px;
+    width: 400px;
+    min-width: 322px;
     padding-top: 60px;
 }
 
@@ -804,23 +804,21 @@ body {
 }
 
 .result-img {
-    width: 16px;
-    height: 16px;
-    position: absolute;
-    top: 6px;
-    right: 428px;
+    vertical-align: middle;
 }
 
 .result-item {
-        width: 99%;
-        border: 1px solid rgb(210, 208, 206);
-        margin-bottom: 6px;
-        display: flex;
+    width: 99%;
+    border: 1px solid rgb(210, 208, 206);
+    margin-bottom: 6px;
+    display: flex;
 }
 
 .result-image-thumb {
-    min-width: 100px;
-    min-height: 50px;
+    min-width: 60px;
+    height: 60px;
+    line-height: 60px;
+    text-align: center;
     border-right: 1px solid rgb(243, 242, 241);
     border-radius: 5px 0px 0px 3px;
 }
@@ -841,9 +839,14 @@ body {
     float: left;
 }
 
+
+.result-item-info-date p{
+    margin-bottom: 0.5rem;
+}
+
 .button-action {
     height: 50px;
-    margin-left: 50px;
+    margin-left: 25px;
 }
 
 .result-panel {
