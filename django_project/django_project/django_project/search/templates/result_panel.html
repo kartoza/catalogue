@@ -1,0 +1,165 @@
+<script type='text/html' id='side-result-panel'>
+    <div class="sidebar-result" style="top:100px;">
+            <i class="fa fa-bars" aria-hidden="true"></i>
+    </div>
+    <div class="result-panel row" style="--bs-gutter-x:0;--bs-gutter-y: 0;">
+
+        <div class="well well-small">
+{#          <div class="navigation">#}
+{#            <div id="searchPrev" class="btn searchPrev"#}
+{#                 style="float:left; display: none;"#}
+{#                 data-toggle="tooltip"#}
+{#                 data-title="Previous Page"#}
+{#                 data-placement="top">#}
+{#              <i class="icon-chevron-left"></i>#}
+{#            </div>#}
+{#            <div style="float:left;" data-toggle="tooltip"#}
+{#                 data-title="Toggle Polygons">#}
+{#              <input type="checkbox" checked data-on="success" data-off="info" class="switch-small" id="switchSearchLayer">#}
+{#            </div>#}
+{#            <button id="resetZoom" style="float:left; display: none;"#}
+{#                 class="btn btn-info resetZoom"#}
+{#                 data-toggle="tooltip" data-title="Reset Zoom"#}
+{#                 data-placement="top">#}
+{#              <i class="icon-zoom-out"></i>#}
+{#            </button>#}
+{#            <div class="position" id="resultsPosition"></div>#}
+{#            <div id="searchNext" class="btn searchNext"#}
+{#                 style="float:right; display: none;"#}
+{#                 data-toggle="tooltip" data-title="Next Page"#}
+{#                 data-placement="top">#}
+{#              <i class="icon-chevron-right"></i>#}
+{#            </div>#}
+{#          </div>#}
+            <div id="results-container" style="margin-top: 25px"></div>
+        </div>
+        <div id="result-sub-panel" class="well row" style="width:100%; background-color: #272f3b">
+          <div class="col">
+          <div class="btn-group">
+              <button id="result-panel-download-button" type="button" style="width: 100%; color: rgba(255, 255, 255, 0.5);  border: 1px solid rgba(255, 255, 255, 0.25);"
+                  class="btn sansa-white-btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                   Download Results Data
+              </button>
+              <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="#" id="result-panel-download-button-shp" onclick="window.open(
+                        '/downloadsearchresults/' + guid + '/?shp', '_self'
+                      );">SHP</a></li>
+                  <li><a class="dropdown-item" href="#" id="result-panel-download-button-kml" onclick="window.open(
+                        '/downloadsearchresults/' + guid + '/?kml',
+                        '_self'
+                      )" >KML</a></li>
+                  <li><a class="dropdown-item" href="#" id="result-panel-download-button-kmz" onclick="window.open(
+                        '/downloadsearchresults/' + guid + '/?kmz',
+                        '_self'
+                      )">KMZ</a></li>
+                  <li><a class="dropdown-item" href="#" id="result-panel-download-button-xml" onclick="window.open(
+                    '/downloadsearchmetadata/' + guid + '/',
+                    '_self'
+                  )">XML</a></li>
+                  <li><a class="dropdown-item" href="#" id="result-panel-download-button-htm" onclick="window.open(
+                    '/downloadcartmetadata/?html',
+                    '_self'
+                  )">HTML</a></li>
+              </ul>
+          </div>
+          </div>
+          <div class="col">
+          <a class="btn sansa-blue-btn" style="width: 100%; color: rgba(255, 255, 255, 0.5);  border: 1px solid rgba(255, 255, 255, 0.25);" onclick="addOrderClicked(); return false;" href="/add-order/">
+             Order Now
+          </a>
+          </div>
+        </div>
+      </div>
+</script>
+
+<script type='text/html' id='panel-toggles'>
+<div id="panel-toggles" class="btn-group">
+          <button id="search-panel-toggle"
+                  class="btn btn-info btn-large btn-left-panel active"
+                  onclick="toggleSearchPanel();"
+                  data-toggle="tooltip" title="Toggle Search Panel"
+                  data-placement="bottom">
+            <i class="icon-search"></i>
+          </button>
+          <button id="cart-panel-toggle"
+                  class="btn btn-info btn-large btn-left-panel"
+                  onclick="toggleCartPanel();"
+                  data-toggle="tooltip" data-title="Toggle Cart Panel"
+                  data-placement="bottom">
+            <i class="icon-shopping-cart"></i>
+          </button>
+          <button id="map-help-button"
+                  class="btn btn-info btn-large"
+                  data-toggle="tooltip" title="Map Help"
+                  data-placement="bottom">
+            <i class="icon-question-sign"></i>
+          </button>
+        </div>
+          <div id="SearchShare-content">
+            <hr/>
+            <p class="text-center">
+              This is a permalink to these search results. The search will also
+              be recorded in your Search History for future reference.
+            </p>
+            <div id="SearchShare-input-container" class="text-center"></div>
+          </div>
+        </div>
+      </div>
+      <div id="cart-panel">
+        <div id="cart-container" class="well well-small"></div>
+        <div id="cart-sub-panel" class="well well-small text-center">
+          <button id="cart-show-map" class="btn btn-info"
+                  data-state="hidden"
+                  data-toggle="tooltip"
+                  data-title="Show on Map">
+            <i class="icon-globe"></i>
+          </button>
+          <button id="place_order" class="btn btn-success">
+            <i class="icon-ok"></i> Place Order
+          </button>
+          <button id="cart-panel-download-button"
+                  onclick="showCartDownloadOptions();"
+                  class="btn btn-info"
+                  data-toggle="tooltip"
+                  data-title="Download Order">
+            <i class="icon-download"></i>
+          </button>
+          <div id="cart-panel-btns">
+            <hr />
+            <p>Please choose your download format</p>
+            <div class="btn-group">
+              <button id="cart-panel-download-button-shp"
+                      class="btn btn-info"
+                      data-toggle="tooltip"
+                      data-title="Download as SHP"
+                      data-placement="top">SHP
+              </button>
+              <button id="cart-panel-download-button-kml"
+                      class="btn btn-info"
+                      data-toggle="tooltip"
+                      data-title="Download as KML"
+                      data-placement="top">KML
+              </button>
+              <button id="cart-panel-download-button-kmz"
+                      class="btn btn-info"
+                      data-toggle="tooltip"
+                      data-title="Download as KMZ"
+                      data-placement="top">KMZ
+              </button>
+              <button id="cart-panel-download-button-xml"
+                      class="btn btn-info"
+                      data-toggle="tooltip"
+                      data-title="Download as XML"
+                      data-placement="top">XML
+              </button>
+              <button id="cart-panel-download-button-htm"
+                      class="btn btn-info"
+                      data-toggle="tooltip"
+                      data-title="Download as HTM"
+                      data-placement="top">HTM
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+</script>

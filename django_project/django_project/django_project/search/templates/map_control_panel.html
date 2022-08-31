@@ -1,0 +1,119 @@
+<script type="text/html" id="map-search-container">
+    <nav class="sidenav shadow-right sidenav-dark" id="search-panel">
+        <div class="sidenav-menu" style=" overflow-y: auto;">
+        <div class="nav accordion" id="accordionSidenav">
+        <div id="search-panel-content" class="well well-small" style="margin-bottom: 10px">
+          <form id="catalogueSearch" action="{% url 'submitSearch' %}" class="accordion">
+            {% csrf_token %}
+            {{ searchform.geometry }}
+            {{ searchform.selected_sensors }}
+              <div class="sidenav-menu-heading">Satellites</div>
+              <div class="listTree" id="listTree"></div>
+
+              <div class="sidenav-menu-heading" id="date-range-content">Date Ranges</div>
+              <!-- Sidenav Accordion (Pages)-->
+              {% include 'search_form/date-range-content.html' %}
+              <div class="sidenav-menu-heading">Other</div>
+              <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseArea" aria-expanded="false" aria-controls="collapseArea">
+                  <div class="nav-link-icon"><i data-feather="repeat"></i></div>
+                  Define Search Area
+                  <div class="sidenav-collapse-arrow"><i class="fa fa-angle-down"></i></div>
+              </a>
+              <div class="collapse" id="collapseArea" data-bs-parent="#accordionSidenav">
+                  <nav class="sidenav-menu-nested nav">
+                      {% include 'search_form/area-content.html' %}
+                  </nav>
+              </div>
+              <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseCloudCover" aria-expanded="false" aria-controls="collapseCloudCover">
+                  <div class="nav-link-icon"><i data-feather="activity"></i></div>
+                  Set Cloud Cover Range
+                  <div class="sidenav-collapse-arrow"><i class="fa fa-angle-down"></i></div>
+              </a>
+              <div class="collapse" id="collapseCloudCover" data-bs-parent="#accordionSidenav">
+                  <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
+                      {% include 'search_form/cloud-cover-content.html' %}
+                  </nav>
+              </div>
+
+              <a class="nav-link collapsed" href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#collapseOtherOption" aria-expanded="false" aria-controls="collapseOtherOption">
+                  <div class="nav-link-icon"><i data-feather="activity"></i></div>
+                    Other Options
+                  <div class="sidenav-collapse-arrow"><i class="fa fa-angle-down"></i></div>
+              </a>
+              <div class="collapse" id="collapseOtherOption" data-bs-parent="#accordionSidenav">
+                  <nav class="sidenav-menu-nested nav accordion" id="accordionSidenavPages">
+                      {% include 'search_form/other-option-content.html' %}
+
+                  </nav>
+              </div>
+          </form>
+        </div>
+        </div>
+        </div>
+        <!-- Sidenav Footer-->
+        <div class="sidenav-footer">
+            <div class="sidenav-footer-content" style="width: 100%">
+                <div id="search-summary-container" class="well well-small" style="margin-bottom: 10px; width: 100%">
+                    <div id="search-buttons" class="search-buttons row">
+                        <div class="col">
+                        <button id="reset-search-form" class="btn btn-search"
+                                data-toggle="tooltip" title="Reset Search Parameters"
+                                onclick="resetSearchForm()" data-placement="top" style="width:100%;  color: #EDF1FC;  border: 1px solid #EDF1FC;">
+                            <i class="icon-refresh"></i> RESET
+                        </button>
+                        </div>
+                        <div class="col">
+                        <button id="search_button" class="btn btn-search"
+                                data-toggle="tooltip" title="Run Search"
+                                data-placement="top" style="width:100%; color: #EDF1FC;  border: 1px solid #EDF1FC;">
+                            <i class="icon-play"></i> APPLY
+                        </button>
+                        </div>
+          </div>
+        </div>
+            </div>
+        </div>
+
+    </nav>
+</script>
+
+<script type="text/html" id="map-control-panel">
+    <div id="map-control-panel-element" class="map-control-panel">
+        <div class="sidebar-toggle">
+        <div class="sub-control-panel sidebarToggle" data-bs-content="Hide parameters" data-bs-trigger="hover focus"
+             data-bs-toggle="popover" data-bs-placement="right" id="sidebarToggle"><i data-feather="menu" class="fa fa-compress"></i></div>
+            </div>
+        <div id="zoom-control" class="zoom-control">
+            <div class="sub-control-panel sub-zoom-control zoom-out" data-bs-toggle="popover"
+             data-bs-placement="right"  data-bs-trigger="hover focus"
+             data-bs-content="Zoom In"><i class="fa fa-plus" aria-hidden="false"></i>
+            </div>
+            <div class="sub-control-panel sub-zoom-control zoom-in" data-bs-toggle="popover"
+             data-bs-placement="right"  data-bs-trigger="hover focus"
+             data-bs-content="Zoom Out"><i class="fa fa-minus" aria-hidden="false"></i>
+            </div>
+        </div>
+        <div id="lasso-control" class="lasso-control sub-control-panel polygonal-lasso-tool" data-bs-toggle="popover"
+             data-bs-placement="right"  data-bs-trigger="hover focus"
+             data-bs-content="Draw Polygon">
+            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+        </div>
+         <div id="delete-polygon" class="delete-polygon sub-control-panel hide-delete-polygon" data-bs-toggle="popover"
+             data-bs-placement="right"  data-bs-trigger="hover focus" data-bs-content="Delete Polygon" >
+            <i class="fa fa-minus-square-o" aria-hidden="true"></i>
+        </div>
+        <div id="print-control" class="print-map-control sub-control-panel"
+             data-bs-toggle="popover"
+             data-bs-placement="right"  data-bs-trigger="hover focus"
+             data-bs-content="Print Map">
+            <i class="fa fa-print" aria-hidden="true"></i>
+        </div>
+        <div id="permalink-control" class="permalink-control permalink-disabled" tabindex="0"
+             data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="right"
+             data-bs-content="No link to copy" style="cursor: default;">
+            <i class="fa fa-link" aria-hidden="true"></i>
+        </div>
+
+    </div>
+</script>
+
