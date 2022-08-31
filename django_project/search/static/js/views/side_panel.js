@@ -33,7 +33,6 @@ define(['shared', 'backbone', 'underscore', 'jqueryUi', 'jquery'], function (Sha
 
             Shared.SidePanelOpen = true;
             this.rightPanel.show('slide', {direction: 'right'}, 200);
-            this.sideBar.css('transform', 'translate(0px)');
              this.isResultPanelOpen = true;
 
         },
@@ -41,7 +40,6 @@ define(['shared', 'backbone', 'underscore', 'jqueryUi', 'jquery'], function (Sha
         closeSidePanelAnimation: function () {
             this.rightPanel.hide('slide', {direction: 'right'}, 200, function () {
             });
-            this.sideBar.css('transform', 'translate(500px)');
         },
 
         closeSidePanel: function (e) {

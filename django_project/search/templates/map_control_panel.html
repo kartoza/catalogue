@@ -54,17 +54,21 @@
         <div class="sidenav-footer">
             <div class="sidenav-footer-content" style="width: 100%">
                 <div id="search-summary-container" class="well well-small" style="margin-bottom: 10px; width: 100%">
-                    <div id="search-buttons" class="align-content-center">
+                    <div id="search-buttons" class="search-buttons row">
+                        <div class="col">
                         <button id="reset-search-form" class="btn btn-search"
                                 data-toggle="tooltip" title="Reset Search Parameters"
-                                onclick="resetSearchForm()" data-placement="top" style="width: 45%; color: #EDF1FC;  border: 1px solid #EDF1FC;">
+                                onclick="resetSearchForm()" data-placement="top" style="width:100%;  color: #EDF1FC;  border: 1px solid #EDF1FC;">
                             <i class="icon-refresh"></i> RESET
                         </button>
+                        </div>
+                        <div class="col">
                         <button id="search_button" class="btn btn-search"
                                 data-toggle="tooltip" title="Run Search"
-                                data-placement="top" style="width: 45%; color: #EDF1FC;  border: 1px solid #EDF1FC;">
+                                data-placement="top" style="width:100%; color: #EDF1FC;  border: 1px solid #EDF1FC;">
                             <i class="icon-play"></i> APPLY
                         </button>
+                        </div>
           </div>
         </div>
             </div>
@@ -112,4 +116,3 @@
 
     </div>
 </script>
-
