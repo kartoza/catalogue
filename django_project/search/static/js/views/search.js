@@ -150,18 +150,20 @@ define([
                 beforeSubmit: function(formData, jqForm, options) {
                     if (self.validate_form()) {
                         // process data if needed... before submit
-                        var selected_sensors = [];
+                        const selected_sensors = [];
                         _.each($('.listTree').data('listTree').selected, function(parent) {
                           _.each(parent.values, function(sensor) {
                             selected_sensors.push(sensor.val);
                           });
                         });
+
                         _.each(formData, function (element, index) {
                           if (element.name === 'selected_sensors') {
                             // update selected sensors value
                             formData[index].value = selected_sensors;
                           }
                         });
+
                     } else {
                         // don't submit the form, there is an error in JS form validation
                         return false;
