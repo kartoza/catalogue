@@ -52,7 +52,7 @@ from catalogue.render_decorator import RenderWithContext
 
 # SHP and KML readers
 from catalogue.featureReaders import (
-    getGeometryFromUploadedFile, )
+    get_geometry_from_uploaded_file, )
 
 # View Helper classes
 from catalogue.views.geoiputils import GeoIpUtils
@@ -261,7 +261,7 @@ def clip(request):
             myObject.owner = request.user
             myGeometry = None
             try:
-                myGeometry = getGeometryFromUploadedFile(
+                myGeometry = get_geometry_from_uploaded_file(
                     request, myForm, 'geometry_file')
                 if myGeometry:
                     myObject.geometry = myGeometry

@@ -824,7 +824,7 @@ body {
 }
 
 .result-item-info {
-    width: 50%;
+    width: 60%;
     flex-flow: column nowrap;
     justify-content: space-evenly;
     margin-left: 10px;
@@ -846,7 +846,6 @@ body {
 
 .button-action {
     height: 50px;
-    margin-left: 25px;
 }
 
 .result-panel {
@@ -854,7 +853,7 @@ body {
     width: 100%;
     background-color: #fff;
     position: relative;
-    min-width: 422px;
+    min-width: 400px;
     color: #4e4e4e;
     -webkit-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.2); /* Safari 3-4, iOS 4.0.2 - 4.2, Android 2.3+ */
     -moz-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.2); /* Firefox 3.5 - 3.6 */

@@ -27,6 +27,7 @@ define([
             'click #search_button': 'submitSearchForm',
             'click #reset-search-form': 'resetSearchForm',
             'click #logIn': 'login',
+            'change #id_geometry_file': 'upload_image',
         },
         initialize: function (options) {
             _.bindAll(this, 'render');
@@ -239,6 +240,33 @@ define([
             // reset search summary widget
             // searchSummary.reset();
             self.resetSearchFromErrors();
+        },
+
+        upload_image: function() {
+            const field = $('#id_geometry_file');
+            const upload_url = '/upload_geo/'
+            if (field.get(0).files.length === 0) {
+                return;
+            }
+            let file = field.get(0).files[0];
+            console.log(file);
+            const formdata = new FormData();
+            formdata.append('file_upload', file);
+            $.ajax({
+                url: upload_url,
+                headers: {"X-CSRFToken": csrfToken},
+                type: 'POST',
+                data: formdata,
+                processData: false,
+                contentType: false,
+                success: function(data) {
+                    $APP.trigger('clearAoiBounds');
+                    $APP.trigger('drawWKT', {'wkt': data.wkt});
+                },
+                error: function(data, text) {
+                    alert($.parseJSON(data.responseText).error);
+                }
+            });
         },
 
 
