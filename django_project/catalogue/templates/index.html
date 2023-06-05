@@ -4,11 +4,8 @@
 {% block content %}
 <!-- Header - set the background image for the header in the line below-->
     <header class="bg-image-full masthead">
-        <div style="height: 500px; overflow: hidden">
         <div class="header-video-content">
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/jL--9yWaQb0?smart=true&rel=0&wmode=opaque&html5=1&enablejsapi=1&version=3&rel=0&showinfo=0&controls=0&autoplay=1&mute=1&loop=1&playlist=jL--9yWaQb0"
-                    title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-        </div>
+            <video playsinline autoplay muted loop style="width: 100%"><source src="{% static 'video/SANSA-HomePageVideo.mp4' %}" type="video/mp4"></video>
         </div>
         <div class="text-center header-text-content">
             <h1 class="text-white fs-3 fw-bolder" >SANSA Earth Observation Online Catalogue</h1>
@@ -20,19 +17,25 @@
         <section class="py-5" id="features" style="position: relative; background-color:#FFFFFF; width: 100%; padding-top: 56.25%;">
             <div class="container px-5">
                 <div class="row gx-5">
-                    <div class="col-lg-4 mb-5 mb-lg-0">
-                        <div class="feature bg-gradient text-white rounded-3 mb-3"><br><img class="img-fluid rounded" src={% static 'images/qgis-icon64.png' %} alt="..." /><br></div>
-                        <p>Download a special SANSA-branded version of the free, open-source Quantum GIS</p>
+                    <div class="col-lg-4 landing-page-link">
+                         <a href="https://desa.sansa.org.za/" target="_blank">
+                        <div class="feature bg-gradient text-white rounded-3 mb-3" style="margin-top: -2.4em;"><br><img class="img-fluid rounded" src={% static 'sansa-logos/desa_side@2x.png' %} alt="..." /><br></div>
+                        <p>DESA turns raw high resolution satellite Earth observation data into actionable ready to use data.</p>
+                    </a>
                     </div>
-                    <div class="col-lg-4 mb-5 mb-lg-0">
-                        <div class="feature bg-gradient text-white rounded-3 mb-3"><br><h2 class="h4 fw-bolder">Fundisa Student Portal</h2><br></div>
+                    <div class="col-lg-4 landing-page-link">
+                        <a href="http://fundisa.sansa.org.za/" target="_blank">
+                        <div class="feature bg-gradient text-white rounded-3 mb-3"><br><h2 class="h4 fw-bolder mt-2">Fundisa Student Portal</h2><br></div>
                         <p>Be inspired by Earth Observation - Resources and a Student Forum for all your remote sensing questions.</p>
-
+                        </a>
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-4 landing-page-link">
+                        <a href="https://www.dst.gov.za/" target="_blank">
                         <div class="feature bg-gradient text-white rounded-3 mb-3"><img class="img-fluid rounded" src={% static 'images/Approved_Science_and_Innovation.jpg' %} alt="..." width="250px"/></div>
                         <p>This catalogue was funded by the Department of Science and Innovation</p>
+                        </a>
                     </div>
+
                 </div>
             </div>
         </section>
