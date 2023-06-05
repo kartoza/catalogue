@@ -5,8 +5,8 @@
         <div id="search-panel-content" class="well well-small" style="margin-bottom: 10px">
           <form id="catalogueSearch" action="{% url 'submitSearch' %}" class="accordion">
             {% csrf_token %}
-            {{ searchform.geometry }}
-            {{ searchform.selected_sensors }}
+            {{ search_form.geometry }}
+            {{ search_form.selected_sensors }}
               <div class="sidenav-menu-heading">Satellites</div>
               <div class="listTree" id="listTree"></div>
 

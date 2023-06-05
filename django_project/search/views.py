@@ -54,10 +54,10 @@ from catalogue.views.helpers import (
 
 # SHP and KML readers
 from catalogue.featureReaders import (
-    getGeometryFromUploadedFile,
-    getFeaturesFromZipFile,
-    getFeaturesFromKMLFile,
-    processGeometriesType)
+    get_geometry_from_uploaded_file,
+    get_features_from_zip_file,
+    get_features_from_kml_file,
+    process_geometries_type)
 
 from catalogue.views.geoiputils import GeoIpUtils
 
@@ -299,7 +299,7 @@ def submitSearch(request):
                     search.user = request.user
                 search.deleted = False
                 try:
-                    geometry = getGeometryFromUploadedFile(
+                    geometry = get_geometry_from_uploaded_file(
                         request, form, 'geometry_file')
                     if geometry:
                         search.geometry = geometry
@@ -394,10 +394,10 @@ def upload_geo(request):
         extension = (f.name.split('.')[-1].lower())
 
         if extension == 'zip':
-            extracted_geometries = getFeaturesFromZipFile(
+            extracted_geometries = get_features_from_zip_file(
                 out_file, 'Polygon', 1)
         else:
-            extracted_geometries = getFeaturesFromKMLFile(
+            extracted_geometries = get_features_from_kml_file(
                 out_file, 'Polygon', 1)
         if len(extracted_geometries) == 0:
             return HttpResponse(
@@ -406,5 +406,5 @@ def upload_geo(request):
         else:
             return HttpResponse(
                 simplejson.dumps({
-                    "wkt": processGeometriesType(extracted_geometries).wkt}),
+                    "wkt": process_geometries_type(extracted_geometries).wkt}),
                 content_type='application/json', status=200)

@@ -27,6 +27,7 @@ define([
             'click #search_button': 'submitSearchForm',
             'click #reset-search-form': 'resetSearchForm',
             'click #logIn': 'login',
+            'change #id_geometry_file': 'upload_image',
         },
         initialize: function (options) {
             _.bindAll(this, 'render');
@@ -150,18 +151,20 @@ define([
                 beforeSubmit: function(formData, jqForm, options) {
                     if (self.validate_form()) {
                         // process data if needed... before submit
-                        var selected_sensors = [];
+                        const selected_sensors = [];
                         _.each($('.listTree').data('listTree').selected, function(parent) {
                           _.each(parent.values, function(sensor) {
                             selected_sensors.push(sensor.val);
                           });
                         });
+
                         _.each(formData, function (element, index) {
                           if (element.name === 'selected_sensors') {
                             // update selected sensors value
                             formData[index].value = selected_sensors;
                           }
                         });
+
                     } else {
                         // don't submit the form, there is an error in JS form validation
                         return false;
@@ -237,6 +240,33 @@ define([
             // reset search summary widget
             // searchSummary.reset();
             self.resetSearchFromErrors();
+        },
+
+        upload_image: function() {
+            const field = $('#id_geometry_file');
+            const upload_url = '/upload_geo/'
+            if (field.get(0).files.length === 0) {
+                return;
+            }
+            let file = field.get(0).files[0];
+            const formdata = new FormData();
+            formdata.append('file_upload', file);
+            console.log(formdata);
+            $.ajax({
+                url: upload_url,
+                headers: {"X-CSRFToken": csrfToken},
+                type: 'POST',
+                data: formdata,
+                processData: false,
+                contentType: false,
+                success: function(data) {
+                    $APP.trigger('clearAoiBounds');
+                    $APP.trigger('drawWKT', {'wkt': data.wkt});
+                },
+                error: function(data, text) {
+                    alert($.parseJSON(data.responseText).error);
+                }
+            });
         },
 
 
