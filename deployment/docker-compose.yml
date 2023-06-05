@@ -213,7 +213,7 @@ services:
       - CHECK_PORT=5432
   pycsw:
     container_name: catalogue-pycsw
-    image: geopython/pycsw:latest
+    image: geopython/pycsw@sha256:84382cbbd18e9788e9b1bb75299ce24b31403f3b3a4afc036c55c4a96a78cdae
     environment:
       PYCSW_SERVER_URL: http://localhost:8000
     volumes:

@@ -810,14 +810,14 @@ body {
 .result-item {
     width: 99%;
     border: 1px solid rgb(210, 208, 206);
-    margin-bottom: 6px;
+    margin-bottom: 3px;
     display: flex;
 }
 
 .result-image-thumb {
-    min-width: 60px;
-    height: 60px;
-    line-height: 60px;
+    min-width: 40px;
+    height: 40px;
+    line-height: 40px;
     text-align: center;
     border-right: 1px solid rgb(243, 242, 241);
     border-radius: 5px 0px 0px 3px;
@@ -835,13 +835,15 @@ body {
 }
 
 .result-item-info-date {
-    margin-right: 50px;
+    margin-right: 40px;
     float: left;
+    font-size: 13px;
+    margin-top: -3px;
 }
 
-
-.result-item-info-date p{
-    margin-bottom: 0.5rem;
+.result-item-info-cloud-cover{
+    font-size: 13px;
+    margin-top: -3px;
 }
 
 .button-action {
@@ -854,7 +856,7 @@ body {
     width: 100%;
     background-color: #fff;
     position: relative;
-    min-width: 422px;
+    min-width: 400px;
     color: #4e4e4e;
     -webkit-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.2); /* Safari 3-4, iOS 4.0.2 - 4.2, Android 2.3+ */
     -moz-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.2); /* Firefox 3.5 - 3.6 */
