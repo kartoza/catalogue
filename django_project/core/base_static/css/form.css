@@ -88,7 +88,6 @@
 .login-help{
     font-size: 12px;
     color: #3a3a3a;
-    padding-top: 10px;
     display: inline-block;
 }
 
@@ -222,4 +221,8 @@ h1 {
 
 .btn-verification a {
     text-decoration: none !important;
+}
+
+fieldset p:last-child {
+  margin-bottom: 0;
 }

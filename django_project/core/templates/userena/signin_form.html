@@ -28,7 +28,7 @@ $(function() {
 {% block content %}
 <div id="content" class="row-fluid center">
 
-    <div class="custom-form-container" style="margin-top: 40px;">
+    <div class="custom-form-container" style="margin-top: 20px;">
         <h1>{% trans "LOG IN" %}</h1>
         <form class="form-horizontal span6" action="" method="post" accept-charset="utf-8">
       {% csrf_token %}
@@ -57,14 +57,17 @@ $(function() {
       </ul>
       {% endif %}
     </fieldset>
-    <div class="control-group">
+        <div class="login-help float-end">
+        <a href="{% url "userena_password_reset" %}">{% trans "Forgot Password" %}</a>
+      </div>
+    <div class="control-group mt-4">
       <div class="controls" style="text-align: center; margin-top: 15px">
         <input class="btn btn-primary"  type="submit" value="{% trans 'Login' %}" style="width: 50%" />
       </div>
     </div>
     {% if next %}<input type="hidden" name="next" value="{{ next }}" />{% endif %}
 </form>
-<div class="login-help" style="padding-top: 30px">
+<div class="login-help" style="padding-top: 20px">
                             <p>If you have not created an account yet, then please
                                 <a href="{% url 'userena_signup' %}">sign up</a> first.</p>
 
