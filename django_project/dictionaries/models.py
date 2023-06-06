@@ -272,6 +272,7 @@ class Collection(models.Model):
         # NOTE: when referencing models in another application we need ti
         # specify a model with the full application label
         'Institution',
+        on_delete=models.CASCADE,
         help_text='Organisation that owns this satellite collection.')
 
     def __unicode__(self):
