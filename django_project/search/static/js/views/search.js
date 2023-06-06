@@ -110,6 +110,7 @@ define([
         validate_form: function(){
             let form_ok = false;
             const myDateRange = $('#date_range .date_range_row');
+            console.log(myDateRange)
             if (myDateRange.length === 0) {
                 const helpElem = '<div id="error-date-range" class="alert alert-danger" role="alert">You have to select at least 1 date range!</div>';
                 $('#search-panel').animate({ scrollTop: $('#date-range-content').position().top}, 400);
@@ -117,6 +118,9 @@ define([
                      $('#date_range').parent().prepend(helpElem);
                 }
               } else {
+                if(this.$el.find('#error-date-range').length > 0){
+                     $('#error-date-range').remove();
+                }
                 form_ok = true;
             }
               return form_ok;
