@@ -154,8 +154,8 @@ admin.site.register(SatelliteInstrument, SatelliteInstrumentAdmin)
 
 
 class SatelliteInstrumentGroupAdmin(admin.ModelAdmin):
-    list_filter = ['satellite', 'instrument_type']
-    list_display = ['satellite', 'instrument_type']
+    list_filter = ['satellite', 'instrument_type', 'is_searchable']
+    list_display = ['satellite', 'instrument_type', 'is_searchable', 'start_date', 'end_date']
 admin.site.register(SatelliteInstrumentGroup, SatelliteInstrumentGroupAdmin)
 
 

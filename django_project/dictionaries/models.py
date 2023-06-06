@@ -271,14 +271,10 @@ class Collection(models.Model):
     institution = models.ForeignKey(
         # NOTE: when referencing models in another application we need ti
         # specify a model with the full application label
-        Institution,
-        on_delete=models.CASCADE,
+        'Institution',
         help_text='Organisation that owns this satellite collection.')
 
     def __unicode__(self):
-        return self.name
-
-    def __str__(self):
         return self.name
 
     class Meta:
@@ -628,6 +624,13 @@ class SatelliteInstrumentGroup(models.Model):
         InstrumentType,
         on_delete=models.CASCADE
         )
+    is_searchable = models.BooleanField(default=True)
+    start_date = models.DateField(
+        blank=True, null=True,
+        help_text='The beginning date to hide the data from the user in the search page')
+    end_date = models.DateField(
+        blank=True, null=True,
+        help_text = 'The end date to hide the data from the user in the search page')
 
     class Meta:
         unique_together = (
