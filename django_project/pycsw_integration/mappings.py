@@ -1,6 +1,5 @@
 from sqlalchemy.schema import PrimaryKeyConstraint
 
-
 MD_CORE_MODEL = {
     "column_constraints": (PrimaryKeyConstraint("identifier"),),
     "typename": "pycsw:CoreMetadata",
@@ -77,5 +76,6 @@ MD_CORE_MODEL = {
         "pycsw:CloudCover": "cloudcover",
         "pycsw:Bands": "bands",
         "pycsw:Links": "links",
+        "pycsw:Edition": "edition",
     },
 }

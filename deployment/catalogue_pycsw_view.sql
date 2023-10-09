@@ -50,7 +50,6 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS catalogue_pycsw_view AS
 	c.title as title,
 	c.date_creation as date_creation,
 	c.abstract as abstract,
-	NULL as links,
 	'http://purl.org/dc/dcmitype/Dataset' as type,
 	c.license as license,
 	concat_ws('', 'EPSG:', c.projection) AS crs,
@@ -63,12 +62,13 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS catalogue_pycsw_view AS
 	concat_ws(' ', c.title, c.identifier) AS title_alternate,
 	NULL AS date_modified,
 	NULL AS edition,
+	NULL AS topicategory,
     NULL as date_revision,
     NULL AS date_publication,
     'SANSA' AS organization,
     NULL AS securityconstraints,
     NULL AS parentidentifier,
-    NULL AS topiccategory,
+    NULL AS contacts,
     'EN' AS resourcelanguage,
     NULL AS geodescode,
     NULL AS denominator,
@@ -96,6 +96,8 @@ CREATE MATERIALIZED VIEW IF NOT EXISTS catalogue_pycsw_view AS
     NULL AS contributor,
     NULL AS relation,
     NULL AS platform,
+    NULL AS themes,
+    NULL AS links,
     c.band AS bands
 	FROM catalogue_extras AS c
 	WITH DATA;
