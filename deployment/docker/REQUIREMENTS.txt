@@ -37,7 +37,6 @@ jslint
 mercurial
 nose-exclude
 pep8
-pisa
 psycopg2-binary
 pyflakes
 pylint
