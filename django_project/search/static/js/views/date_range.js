@@ -2,6 +2,9 @@ define(['jquery'],function ($) {
 
   // BUTTON PUBLIC CLASS DEFINITION
   // ==============================
+    function delete_date() {
+      return console.log('testtts');
+    }
 
     const DateRange = function (element, options) {
         this.$element = $(element);
@@ -89,10 +92,9 @@ define(['jquery'],function ($) {
         return false;
       }
 
-
       // get the dates from datepickers and parse them
-      var myStartDate = self._parse_date($("#start-datepicker").val(),'dd/mm/yy');
-      var myEndDate = self._parse_date($("#end-datepicker").val(),'dd/mm/yy');
+      var myStartDate = self._parse_date($("#start-date").val(),'dd/mm/yy');
+      var myEndDate = self._parse_date($("#end-date").val(),'dd/mm/yy');
 
 
       if(myStartDate && myEndDate) {
@@ -127,16 +129,20 @@ define(['jquery'],function ($) {
       return false;
     });
 
-    //handle remove events...
-    $('.delete-date-range').on('click', function () {
-        console.log('testtts')
+
+         //handle remove events...
+    console.log($('.del_daterange'))
+    $('.del_daterange').on('click', function () {
+        alert("herrrre")
       //remove the date range
       $(this).closest('.date_range_row').remove();
       self._resliver_dateranges();
       self._notify();
     }
     );
-  };
+
+
+    };
 
     DateRange.prototype._cloneMore = function(theStartDate, theEndDate){
       var total = $('#id_searchdaterange_set-TOTAL_FORMS').val();
@@ -155,15 +161,16 @@ define(['jquery'],function ($) {
     };
 
     DateRange.prototype._dr_input_template = function (total, theStartDate, theEndDate) {
-      var tpl=[
+        var tpl=[
           '<input type="hidden" id="id_searchdaterange_set-'+total+'-start_date" name="searchdaterange_set-'+total+'-start_date" value="'+this._format_date(theStartDate)+'">',
           '<input type="hidden" id="id_searchdaterange_set-'+total+'-end_date" name="searchdaterange_set-'+total+'-end_date" value="'+this._format_date(theEndDate)+'">',
           '<td class="date_from">', this._format_date(theStartDate, 'dd/mm/yy'), '</td>',
           '<td class="date_to">', this._format_date(theEndDate, 'dd/mm/yy'), '</td>',
-          '<td><a type="button" class="delete-date-range"><i class="icon-remove"></i></a></td>'
+          '<td><a href="#" type="button" class="del_daterange" onclick=delete_date()><i class="icon-remove"></i></a></td>'
       ].join('');
       return tpl;
     };
+
 
     DateRange.prototype._format_date = function(theDate, theFormat) {
       if (theFormat===undefined) {
@@ -185,6 +192,7 @@ define(['jquery'],function ($) {
         dates: this._get_json_dates()
       });
     };
+
 
     DateRange.prototype._get_json_dates = function() {
       var self = this;
