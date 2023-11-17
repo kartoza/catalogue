@@ -199,7 +199,7 @@ def searchguid(request, guid_id):
     } for col in collections
     ]
 
-    list_tree_options = simplejson.dumps(data)
+    list_tree_options = simplejson.dumps([col for col in data if len(col['values']) > 0])
     list_tree_selected = simplejson.dumps(selected_data)
 
     return {
@@ -233,7 +233,7 @@ def searchView(request):
     } for col in collections
     ]
 
-    list_tree_options = simplejson.dumps(data)
+    list_tree_options = simplejson.dumps([col for col in data if len(col['values']) > 0])
 
     # add forms
     form = AdvancedSearchForm()
