@@ -103,7 +103,6 @@ define([
             permalink.css('cursor', 'pointer');
             permalink.removeClass('permalink-disabled');
             permalink.attr('data-bs-content', 'Copy the link for this map');
-
             $('#results-container').append(view_item.render().$el);
             // check if result item if is in cart
             const id = view_item.model.get('id');
@@ -171,15 +170,13 @@ define([
                 $('.sidebar-result').show();
                 Shared.Dispatcher.trigger('sidePanel:openSidePanel', this.collection.models);
                 Shared.Dispatcher.trigger('layers:addSearch', this.collection.models);
-                this.cont.empty();
-                // $('#results-container').perfectScrollbar('destroy');
                 const record_html = '<div class="result-items-header">' +
                     '<div class="result-item-info" style="float: left">' +
                     'Product</div><div class="result-item-info-date" style="float: left">Date' +
                     '</div><div class="cloud-cover">Cloud cover</div>' +
                     '</div>'
-                // $('#results-container').append(record_html);
                 const self = this;
+                $('#results-container').html('');
                 _(this.collection.models).each(function(item){
                     self.renderItem(item);
                 },this);
