@@ -66,6 +66,8 @@ define([
             Shared.Dispatcher.on('map:downloadMap', this.downloadMap, this);
             Shared.Dispatcher.on('map:toggleMapInteraction', this.toggleMapInteraction, this);
             Shared.Dispatcher.on('map:setPolygonDrawn', this.setPolygonDrawn, this);
+            Shared.Dispatcher.on('map:clearAoiBounds', this.clearAoiBounds, this);
+            Shared.Dispatcher.on('map:drawWKT', this.drawWKT, this);
 
             new ResultGridView({
                 'collection': new ResultItemCollection()
@@ -86,9 +88,19 @@ define([
                         })
                     })]
             });
-            this.layerSearchSource = new ol.source.Vector({})
+            this.layerSearchSource = new ol.source.Vector({});
             this.pointLayer.setZIndex(1000);
             this.map.addLayer(this.pointLayer);
+            const boundsStyle = new ol.style.Style({
+                stroke: new ol.style.Stroke({
+                  'color': '#FF0000',
+                  'width': 3
+                })
+              });
+            this.layerBounds = new ol.layer.Vector({
+                  'className': "Search bounds",
+                  'style': boundsStyle
+            });
 
         },
         zoomInMap: function (e) {
@@ -144,6 +156,15 @@ define([
         },
         setPolygonDrawn: function (polygon) {
            this.polygonDrawn = polygon
+        },
+
+        clearAoiBounds: function (){
+            // this.layerBounds.removeLayer()
+            console.log(this.layerBounds)
+        },
+
+        drawWKT: function (wkt){
+            console.log(wkt)
         },
 
         showFeature: function (features, lon, lat, siteExist = false) {

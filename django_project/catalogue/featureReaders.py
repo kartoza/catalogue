@@ -127,7 +127,7 @@ def get_features_from_zip_file(zip_file, geometry, features="all"):
     for each in zipped_shape.namelist():
         destination_file = os.path.join(settings.SHP_UPLOAD_DIR, each)
         data = zipped_shape.read(each)
-        f = open(destination_file, 'w')
+        f = open(destination_file, 'wb')
         f.write(data)
         f.close()
     zipped_shape.close()

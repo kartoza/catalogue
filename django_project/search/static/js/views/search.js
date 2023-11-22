@@ -264,8 +264,8 @@ define([
                 processData: false,
                 contentType: false,
                 success: function(data) {
-                    $APP.trigger('clearAoiBounds');
-                    $APP.trigger('drawWKT', {'wkt': data.wkt});
+                    Shared.Dispatcher.trigger('map:clearAoiBounds')
+                    Shared.Dispatcher.trigger('map:drawWKT', {'wkt': data.wkt})
                 },
                 error: function(data, text) {
                     alert($.parseJSON(data.responseText).error);
