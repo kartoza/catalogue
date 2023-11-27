@@ -89,10 +89,9 @@ define([
                         })
                     })]
             });
-            this.layerSearchSource = new ol.source.Vector({});
+            this.layerSearchSource = new ol.source.Vector({})
             this.pointLayer.setZIndex(1000);
             this.map.addLayer(this.pointLayer);
-
 
         },
         zoomInMap: function (e) {
@@ -192,6 +191,7 @@ define([
                         poiFound = featuresClickedResponseData[0];
                         featuresData = featuresClickedResponseData[1];
                         self.zoomToCoordinates(geometry.getCoordinates());
+                        // increase zoom level if it is clusters
                         if (feature.getProperties()['count'] &&
                             feature.getProperties()['count'] > 1) {
                             self.map.getView().setZoom(self.getCurrentZoom() + 1);
