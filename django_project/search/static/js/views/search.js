@@ -255,7 +255,6 @@ define([
             let file = field.get(0).files[0];
             const formdata = new FormData();
             formdata.append('file_upload', file);
-            console.log(formdata);
             $.ajax({
                 url: upload_url,
                 headers: {"X-CSRFToken": csrfToken},
@@ -265,7 +264,7 @@ define([
                 contentType: false,
                 success: function(data) {
                     Shared.Dispatcher.trigger('map:clearAoiBounds')
-                    Shared.Dispatcher.trigger('map:drawWKT', {'wkt': data.wkt})
+                    Shared.Dispatcher.trigger('map:drawWKT', data)
                 },
                 error: function(data, text) {
                     alert($.parseJSON(data.responseText).error);

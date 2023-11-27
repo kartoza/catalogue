@@ -23,6 +23,7 @@ define([
         map: null,
         polygonDraw: null,
         layerSearchSource: null,
+        layerBounds: null,
         sidePanelView: null,
         searchView: null,
         // attributes
@@ -91,16 +92,7 @@ define([
             this.layerSearchSource = new ol.source.Vector({});
             this.pointLayer.setZIndex(1000);
             this.map.addLayer(this.pointLayer);
-            const boundsStyle = new ol.style.Style({
-                stroke: new ol.style.Stroke({
-                  'color': '#FF0000',
-                  'width': 3
-                })
-              });
-            this.layerBounds = new ol.layer.Vector({
-                  'className': "Search bounds",
-                  'style': boundsStyle
-            });
+
 
         },
         zoomInMap: function (e) {
@@ -159,12 +151,28 @@ define([
         },
 
         clearAoiBounds: function (){
-            // this.layerBounds.removeLayer()
-            console.log(this.layerBounds)
+            this.map.removeLayer(this.layerBounds)
         },
 
-        drawWKT: function (wkt){
-            console.log(wkt)
+        drawWKT: function (data){
+            const featurebox = new ol.format.WKT();
+            const feat = featurebox.readFeature(data.wkt, {
+                    dataProjection: 'EPSG:4326',
+                    featureProjection: 'EPSG:3857',
+            });
+            const boundsStyle = new ol.style.Style({
+                stroke: new ol.style.Stroke({
+                  'color': '#FF0000',
+                  'width': 3
+                })
+              });
+            feat.setStyle(boundsStyle)
+            const boundsVector = new ol.source.Vector({});
+            boundsVector.addFeatures([feat]);
+            this.layerBounds = new ol.layer.Vector({
+                source: boundsVector
+            });
+            this.map.addLayer(this.layerBounds)
         },
 
         showFeature: function (features, lon, lat, siteExist = false) {
@@ -184,7 +192,6 @@ define([
                         poiFound = featuresClickedResponseData[0];
                         featuresData = featuresClickedResponseData[1];
                         self.zoomToCoordinates(geometry.getCoordinates());
-                        // increase zoom level if it is clusters
                         if (feature.getProperties()['count'] &&
                             feature.getProperties()['count'] > 1) {
                             self.map.getView().setZoom(self.getCurrentZoom() + 1);

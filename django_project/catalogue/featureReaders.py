@@ -234,9 +234,7 @@ def get_features_from_kml_file(zip_file, geometry, features='all'):
     logger.debug('Datasource loaded ok')
 
     # find polygon layers (polygon or polygon25d)
-    poly_layer = [layer for layer in data_source if (
-            layer.geom_type.name == 'Polygon' or
-            layer.geom_type.name == 'Polygon25D')]
+    poly_layer = [layer for layer in data_source]
 
     first_layer = None
     if poly_layer:
