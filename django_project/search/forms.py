@@ -140,7 +140,7 @@ class AdvancedSearchForm(forms.ModelForm):
     geometry_file = forms.FileField(
         widget=forms.FileInput(attrs={'class': 'file form-control',
                                       'type': 'file',
-                                      'accept': '.kml,.zip,.kmz'
+                                      'accept': '.kml,.zip'
                                       }),
         required=False,
         help_text=(
