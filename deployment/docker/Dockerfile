@@ -3,6 +3,14 @@
 FROM python:3.8-buster AS base_image
 MAINTAINER Tim Sutton<tim@kartoza.com>
 
+RUN apt-get update -y && \
+    apt-get install -y openjdk-11-jre-headless
+    
+ENV JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
+
+RUN rm -rf $JAVA_HOME/lib/security && \
+    ln -s $JAVA_HOME/conf/security $JAVA_HOME/lib/security
+
 # Pandoc needed to generate rst dumps
 RUN apt-get update -y && \
       apt-get -y install \

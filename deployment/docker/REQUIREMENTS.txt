@@ -45,7 +45,7 @@ pytz
 raven
 reportlab
 selenium
-django-tables2
+django-tables2==2.4.1
 jsmin
 celery==4.4.6
 geoip2==4.1.0

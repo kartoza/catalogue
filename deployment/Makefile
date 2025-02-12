@@ -20,18 +20,18 @@ build:
 	@echo "------------------------------------------------------------------"
 	@echo "Building in production mode"
 	@echo "------------------------------------------------------------------"
-	@docker-compose -p $(PROJECT_ID) build uwsgi
+	@docker compose -p $(PROJECT_ID) build uwsgi
 
 web:
 	@echo
 	@echo "------------------------------------------------------------------"
 	@echo "Running in production mode"
 	@echo "------------------------------------------------------------------"
-	@docker-compose -p $(PROJECT_ID) up -d web
+	@docker compose -p $(PROJECT_ID) up -d web
 	@# Dont confuse this with the dbbackup make command below
 	@# This one runs the postgis-backup cron container
 	@# We add --no-recreate so that it does not destroy & recreate the db container
-	@docker-compose -p $(PROJECT_ID) up --no-recreate --no-deps -d dbbackups
+	@docker compose -p $(PROJECT_ID) up --no-recreate --no-deps -d dbbackups
 
 permissions:
 	# Probably we want something more granular here....
@@ -52,7 +52,7 @@ db:
 	@echo "------------------------------------------------------------------"
 	@echo "Running db in production mode"
 	@echo "------------------------------------------------------------------"
-	@docker-compose -p $(PROJECT_ID) up -d db
+	@docker compose -p $(PROJECT_ID) up -d db
 
 nginx:
 	@echo
@@ -62,7 +62,7 @@ nginx:
 	@echo "In a production environment you will typically use nginx running"
 	@echo "on the host rather if you have a multi-site host."
 	@echo "------------------------------------------------------------------"
-	@docker-compose -p $(PROJECT_ID) up -d nginx
+	@docker compose -p $(PROJECT_ID) up -d nginx
 	@echo "Site should now be available at http://localhost"
 
 migrate:
@@ -76,22 +76,22 @@ migrate:
 	@# We add the '-' prefix to the next line as the migration may fail
 	@# but we want to continue anyway.
 	@#We need to migrate accounts first as it has a reference to user model
-	-@docker-compose -p $(PROJECT_ID) run uwsgi python manage.py migrate auth
-	@docker-compose -p $(PROJECT_ID) run uwsgi python manage.py migrate
+	-@docker compose -p $(PROJECT_ID) run uwsgi python manage.py migrate auth
+	@docker compose -p $(PROJECT_ID) run uwsgi python manage.py migrate
 
 update-migrations:
 	@echo
 	@echo "------------------------------------------------------------------"
 	@echo "Running update migrations in production mode"
 	@echo "------------------------------------------------------------------"
-	@docker-compose -p $(PROJECT_ID) run uwsgi python manage.py makemigrations
+	@docker compose -p $(PROJECT_ID) run uwsgi python manage.py makemigrations
 
 collectstatic:
 	@echo
 	@echo "------------------------------------------------------------------"
 	@echo "Collecting static in production mode"
 	@echo "------------------------------------------------------------------"
-	#@docker-compose -p $(PROJECT_ID) run uwsgi python manage.py collectstatic --noinput
+	#@docker compose -p $(PROJECT_ID) run uwsgi python manage.py collectstatic --noinput
 	#We need to run collect static in the same context as the running
 	# uwsgi container it seems so I use docker exec here
 	@docker exec -t -i $(PROJECT_ID)-uwsgi python manage.py collectstatic --noinput
@@ -108,49 +108,49 @@ kill:
 	@echo "------------------------------------------------------------------"
 	@echo "Killing in production mode"
 	@echo "------------------------------------------------------------------"
-	@docker-compose -p $(PROJECT_ID) kill
+	@docker compose -p $(PROJECT_ID) kill
 
 rm: kill
 	@echo
 	@echo "------------------------------------------------------------------"
 	@echo "Removing production instance!!! "
 	@echo "------------------------------------------------------------------"
-	@docker-compose -p $(PROJECT_ID) rm
+	@docker compose -p $(PROJECT_ID) rm
 
 logs:
 	@echo
 	@echo "------------------------------------------------------------------"
 	@echo "Showing uwsgi logs in production mode"
 	@echo "------------------------------------------------------------------"
-	@docker-compose -p $(PROJECT_ID) logs uwsgi
+	@docker compose -p $(PROJECT_ID) logs uwsgi
 
 dblogs:
 	@echo
 	@echo "------------------------------------------------------------------"
 	@echo "Showing db logs in production mode"
 	@echo "------------------------------------------------------------------"
-	@docker-compose -p $(PROJECT_ID) logs db
+	@docker compose -p $(PROJECT_ID) logs db
 
 nginxlogs:
 	@echo
 	@echo "------------------------------------------------------------------"
 	@echo "Showing nginx logs in production mode"
 	@echo "------------------------------------------------------------------"
-	@docker-compose -p $(PROJECT_ID) logs web
+	@docker compose -p $(PROJECT_ID) logs web
 
 shell:
 	@echo
 	@echo "------------------------------------------------------------------"
 	@echo "Shelling in in production mode"
 	@echo "------------------------------------------------------------------"
-	@docker-compose -p $(PROJECT_ID) run uwsgi /bin/bash
+	@docker compose -p $(PROJECT_ID) run uwsgi /bin/bash
 
 superuser:
 	@echo
 	@echo "------------------------------------------------------------------"
 	@echo "Creating a superuser in production mode"
 	@echo "------------------------------------------------------------------"
-	@docker-compose -p $(PROJECT_ID) run uwsgi python manage.py createsuperuser
+	@docker compose -p $(PROJECT_ID) run uwsgi python manage.py createsuperuser
 
 dbshell:
 	@echo
@@ -198,7 +198,7 @@ sentry:
 	@echo "--------------------------"
 	@echo "Running sentry production mode"
 	@echo "--------------------------"
-	@docker-compose  -p $(PROJECT_ID) up -d sentry
+	@docker compose  -p $(PROJECT_ID) up -d sentry
 
 maillogs:
 	@echo
@@ -234,14 +234,14 @@ worker:
 	@echo "------------------------------------------------------------------"
 	@echo "Running worker production mode"
 	@echo "------------------------------------------------------------------"
-	@docker-compose -p $(PROJECT_ID) up -d worker
+	@docker compose -p $(PROJECT_ID) up -d worker
 
 workerlogs:
 	@echo
 	@echo "------------------------------------------------------------------"
 	@echo "Showing celery worker logs in production mode"
 	@echo "------------------------------------------------------------------"
-	@docker-compose -p $(PROJECT_ID) logs worker
+	@docker compose -p $(PROJECT_ID) logs worker
 
 # ----------------------------------------------------------------------------
 #    DEVELOPMENT C O M M A N D S
@@ -257,7 +257,7 @@ devweb: db
 	@echo "------------------------------------------------------------------"
 	@echo "Running in DEVELOPMENT mode"
 	@echo "------------------------------------------------------------------"
-	@docker-compose -p $(PROJECT_ID) up --no-deps -d devweb
+	@docker compose -p $(PROJECT_ID) up --no-deps -d devweb
 
 check-permission:
 	@echo
@@ -265,4 +265,4 @@ check-permission:
 	@echo "Fix permission query error. "
 	@echo "Happens when userena get’s implemented in an already existing project"
 	@echo "------------------------------------------------------------------"
-	@docker-compose -p $(PROJECT_ID) run uwsgi python manage.py check_permissions
+	@docker compose -p $(PROJECT_ID) run uwsgi python manage.py check_permissions
