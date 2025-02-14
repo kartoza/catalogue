@@ -171,10 +171,14 @@ dbrestore:
 	@echo "------------------------------------------------------------------"
 	@echo "Restore dump from backups/latest.dmp in production mode"
 	@echo "------------------------------------------------------------------"
-	@# - prefix causes command to continue even if it fails
-	-@docker exec -t -i $(PROJECT_ID)-db su - postgres -c "dropdb gis"
-	@docker exec -t -i $(PROJECT_ID)-db su - postgres -c "createdb -O docker -T template_postgis gis"
-	@docker exec -t -i $(PROJECT_ID)-db pg_restore /backups/latest.dmp | docker exec -i $(PROJECT_ID)-db su - postgres -c "psql gis"
+	@echo "Terminating active connections to database 'gis'..."
+	@docker exec -t -i $(PROJECT_ID)-db su - postgres -c "psql -c \"SELECT pg_terminate_backend(pid) FROM pg_stat_activity WHERE datname='gis' AND pid <> pg_backend_pid();\""
+	@echo "Dropping database 'gis'..."
+	@docker exec -t -i $(PROJECT_ID)-db su - postgres -c "dropdb gis"
+	@echo "Creating database 'gis'..."
+	@docker exec -t -i $(PROJECT_ID)-db su - postgres -c "createdb -O docker gis"
+	@echo "Restoring database 'gis'..."
+	@docker exec -t -i $(PROJECT_ID)-db su - postgres -c "pg_restore -d gis /backups/latest.dmp"
 
 dbbackup:
 	@echo
@@ -257,7 +261,7 @@ devweb: db
 	@echo "------------------------------------------------------------------"
 	@echo "Running in DEVELOPMENT mode"
 	@echo "------------------------------------------------------------------"
-	@docker compose -p $(PROJECT_ID) up --no-deps -d devweb
+	@docker compose -p $(PROJECT_ID) up --no-deps -d devweb pycsw
 
 check-permission:
 	@echo

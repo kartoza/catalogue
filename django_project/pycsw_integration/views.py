@@ -23,12 +23,15 @@ CONFIGURATION = {
         'transactions': 'false'
     },
     'repository': {
-        'database': 'postgresql+psycopg2://%s:@/%s' % (
-            settings.DATABASES['default']['USER'],
-            settings.DATABASES['default']['NAME'],
-        ),
-        'mappings': os.path.join(os.path.dirname(__file__), 'mappings.py'),
-        'table': 'pycsw_catalogue'
+      'database': 'postgresql+psycopg2://{user}:{password}@{host}:{port}/{name}'.format(
+          user=settings.DATABASES['default']['USER'],
+          password=settings.DATABASES['default'].get('PASSWORD', ''),
+          host=settings.DATABASES['default'].get('HOST', 'localhost'),
+          port=settings.DATABASES['default'].get('PORT', '5432'),
+          name=settings.DATABASES['default']['NAME'],
+      ),
+      'mappings': os.path.join(os.path.dirname(__file__), 'mappings.py'),
+      'table': 'pycsw_catalogue'
     },
 }
 
@@ -41,7 +44,7 @@ CSW = {
         'identification_fees': 'None',
         'identification_accessconstraints': 'None',
         'provider_name': 'South African National Space Agency (SANSA)',
-        'provider_url': 'http://41.74.158.4/csw',
+        'provider_url': 'http://192.168.0.183:6565/csw',
         'contact_name': 'Unknown',
         'contact_position': 'Unknown',
         'contact_address': 'Unknown',
@@ -67,6 +70,7 @@ def csw(request):
     """CSW WSGI wrapper"""
     # serialize settings.CSW into SafeConfigParser
     # object for interaction with pycsw
+
     mdict = dict(CSW, **CONFIGURATION)
 
     # TODO: pass just dict when pycsw supports it
@@ -89,6 +93,7 @@ def csw(request):
         'local.app_root': os.path.dirname(__file__),
         'REQUEST_URI': request.build_absolute_uri(),
     })
+
     csw = server.Csw(config, env)
-    content = csw.dispatch_wsgi()
-    return HttpResponse(content, content_type=csw.contenttype)
+    http_status_code, response = csw.dispatch_wsgi()
+    return HttpResponse(response, content_type=csw.contenttype)
