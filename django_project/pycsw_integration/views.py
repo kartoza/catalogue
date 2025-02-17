@@ -1,13 +1,9 @@
 import os.path
-from configparser import SafeConfigParser
-
-# from django.conf import settings
+from io import BytesIO
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.conf import settings
-
 from pycsw import server
-
 
 CONFIGURATION = {
     'server': {
@@ -31,7 +27,22 @@ CONFIGURATION = {
           name=settings.DATABASES['default']['NAME'],
       ),
       'mappings': os.path.join(os.path.dirname(__file__), 'mappings.py'),
-      'table': 'pycsw_catalogue'
+      'table': 'pycsw_catalogue_view'
+    },
+     'logging': {
+        'level': 'DEBUG',
+    },
+    'operations': {
+         'GetRecordById': {
+             'parameters': {
+                 'outputSchema': {
+                     'values': [
+                         'http://www.opengis.net/cat/csw/2.0.2',
+                         'http://www.isotc211.org/2005/gmd'
+                     ]
+                 }
+             }
+         }
     },
 }
 
@@ -44,7 +55,7 @@ CSW = {
         'identification_fees': 'None',
         'identification_accessconstraints': 'None',
         'provider_name': 'South African National Space Agency (SANSA)',
-        'provider_url': 'http://192.168.0.183:6565/csw',
+        'provider_url': 'http://catalogue.sansa.org.za/csw',
         'contact_name': 'Unknown',
         'contact_position': 'Unknown',
         'contact_address': 'Unknown',
@@ -55,9 +66,7 @@ CSW = {
         'contact_phone': 'Unknown',
         'contact_fax': 'Unknown',
         'contact_email': 'Unknown',
-        'contact_url': (
-            'http://www.sansa.org.za/contact-us/sansa-earth-observation'
-        ),
+        'contact_url': 'http://www.sansa.org.za/contact-us/sansa-earth-observation',
         'contact_hours': 'Unknown',
         'contact_instructions': 'Unknown',
         'contact_role': 'pointOfContact',
@@ -68,32 +77,27 @@ CSW = {
 @csrf_exempt
 def csw(request):
     """CSW WSGI wrapper"""
-    # serialize settings.CSW into SafeConfigParser
-    # object for interaction with pycsw
 
+    # Combine CSW and CONFIGURATION dictionaries
     mdict = dict(CSW, **CONFIGURATION)
-
-    # TODO: pass just dict when pycsw supports it
-    config = SafeConfigParser()
-    for section, options in mdict.items():
-        config.add_section(section)
-        for k, v in options.items():
-            config.set(section, k, v)
-
-    # update server.url
-    server_url = '%s://%s%s' % \
-        (request.META['wsgi.url_scheme'],
-         request.META['HTTP_HOST'],
-         request.META['PATH_INFO'])
-
-    config.set('server', 'url', server_url)
+    
+    # Update the server URL dynamically
+    server_url = '%s://%s%s' % (
+        request.META['wsgi.url_scheme'],
+        request.META['HTTP_HOST'],
+        request.META['PATH_INFO'],
+    )
+    mdict['server']['url'] = server_url
 
     env = request.META.copy()
     env.update({
         'local.app_root': os.path.dirname(__file__),
         'REQUEST_URI': request.build_absolute_uri(),
+        'wsgi.input': BytesIO(request.body),
     })
 
-    csw = server.Csw(config, env)
-    http_status_code, response = csw.dispatch_wsgi()
-    return HttpResponse(response, content_type=csw.contenttype)
+    csw_instance = server.Csw(mdict, env)
+    http_status_code, response = csw_instance.dispatch_wsgi()
+    return HttpResponse(
+        response, 
+        content_type=csw_instance.contenttype)

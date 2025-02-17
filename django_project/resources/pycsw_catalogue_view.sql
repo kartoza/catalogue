@@ -4,12 +4,13 @@ RETURNS text AS
 $$
 DECLARE
     t_text text;
+    t_date date;
     l_corner text;
     u_corner text;
     o_xml text;
 BEGIN
-    SELECT Box2D(spatial_coverage)::text 
-      INTO t_text 
+    SELECT Box2D(spatial_coverage)::text, product_date
+      INTO t_text, t_date 
       FROM catalogue_genericproduct 
      WHERE original_product_id = i_pid;
 
@@ -21,6 +22,7 @@ BEGIN
     <csw:Record>
         <dc:identifier>' || i_pid || '</dc:identifier>
         <dc:title>' || i_pid || '</dc:title>
+        <dc:date>' || to_char(t_date, 'YYYY-MM-DD') || '</dc:date>
         <dc:type>dataset</dc:type>
         <dc:subject>image</dc:subject>
         <dct:references scheme="http">http://catalogue.sansa.org.za/showProduct/' || i_pid || '</dct:references>
