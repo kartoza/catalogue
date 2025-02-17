@@ -11,12 +11,12 @@ CONFIGURATION = {
         'mimetype': 'application/xml; charset=UTF-8',
         'encoding': 'UTF-8',
         'language': 'en-US',
-        'maxrecords': '10',
+        'maxrecords': '1',
         'pretty_print': 'true',
-        'profiles': 'apiso'
     },
+    'profiles': ['apiso', 'ebrim'],
     'manager': {
-        'transactions': 'false'
+        'transactions': True
     },
     'repository': {
       'database': 'postgresql+psycopg2://{user}:{password}@{host}:{port}/{name}'.format(
@@ -27,49 +27,57 @@ CONFIGURATION = {
           name=settings.DATABASES['default']['NAME'],
       ),
       'mappings': os.path.join(os.path.dirname(__file__), 'mappings.py'),
-      'table': 'pycsw_catalogue_view'
+      'table': 'pycsw_catalogue_view_test'
     },
      'logging': {
         'level': 'DEBUG',
     },
-    'operations': {
-         'GetRecordById': {
-             'parameters': {
-                 'outputSchema': {
-                     'values': [
-                         'http://www.opengis.net/cat/csw/2.0.2',
-                         'http://www.isotc211.org/2005/gmd'
-                     ]
-                 }
-             }
-         }
-    },
 }
 
 CSW = {
-    'metadata:main': {
-        'identification_title': 'SANSA PyCSW Catalogue',
-        'identification_abstract': '',
-        'identification_keywords': 'sansa, pycsw, catalogue',
-        'identification_keywords_type': 'theme',
-        'identification_fees': 'None',
-        'identification_accessconstraints': 'None',
-        'provider_name': 'South African National Space Agency (SANSA)',
-        'provider_url': 'http://catalogue.sansa.org.za/csw',
-        'contact_name': 'Unknown',
-        'contact_position': 'Unknown',
-        'contact_address': 'Unknown',
-        'contact_city': 'Unknown',
-        'contact_stateorprovince': 'Unknown',
-        'contact_postalcode': 'Unknown',
-        'contact_country': 'South Africa',
-        'contact_phone': 'Unknown',
-        'contact_fax': 'Unknown',
-        'contact_email': 'Unknown',
-        'contact_url': 'http://www.sansa.org.za/contact-us/sansa-earth-observation',
-        'contact_hours': 'Unknown',
-        'contact_instructions': 'Unknown',
-        'contact_role': 'pointOfContact',
+    'metadata': {
+        'inspire': {
+          'enabled': True,
+          'languages_supported': ['eng'],
+          'default_language': 'eng',
+          'date': 'YYYY-MM-DD',
+          'gemet_keywords': [],
+          'conformity_service': 'notEvaluated',
+          'contact_name': 'Organization Name',
+          'contact_email': 'Email Address',
+          'temp_extent': {
+            'begin': 'YYYY-MM-DD',
+            'end': 'YYYY-MM-DD'
+          }
+        },
+        'identification': {
+            'title': 'SANSA PyCSW Catalogue',
+            'abstract': '',
+            'keywords': ['sansa', 'pycsw', 'catalogue'],
+            'keywords_type': 'theme',
+            'fees': 'None',
+            'accessconstraints': 'None',
+        },
+        'provider': {
+          'name': 'South African National Space Agency (SANSA)',
+          'url': 'http://catalogue.sansa.org.za/csw',
+        },
+        'contact': {
+            'name': 'Unknown',
+            'position': 'Unknown',
+            'address': 'Unknown',
+            'city': 'Unknown',
+            'stateorprovince': 'Unknown',
+            'postal': 'Unknown',
+            'country': 'South Africa',
+            'phone': 'Unknown',
+            'fax': 'Unknown',
+            'email': 'Unknown',
+            'url': 'http://www.sansa.org.za/contact-us/sansa-earth-observation',
+            'hours': 'Unknown',
+            'instructions': 'Unknown',
+            'role': 'pointOfContact',
+        }
     }
 }
 
