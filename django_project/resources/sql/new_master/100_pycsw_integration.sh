@@ -9,5 +9,5 @@ fi
 for script in $(ls pycsw_integration*.sql|sort)
 do
     echo "Executing script:", $script
-    psql -f $script -d $1
+    psql -h db -U postgres -d gis -f "$script"
 done

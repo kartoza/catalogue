@@ -11,7 +11,7 @@ CONFIGURATION = {
         'mimetype': 'application/xml; charset=UTF-8',
         'encoding': 'UTF-8',
         'language': 'en-US',
-        'maxrecords': '1',
+        'maxrecords': '10',
         'pretty_print': 'true',
     },
     'profiles': ['apiso', 'ebrim'],
@@ -27,7 +27,7 @@ CONFIGURATION = {
           name=settings.DATABASES['default']['NAME'],
       ),
       'mappings': os.path.join(os.path.dirname(__file__), 'mappings.py'),
-      'table': 'pycsw_catalogue_view_test'
+      'table': 'pycsw_catalogue_view'
     },
      'logging': {
         'level': 'DEBUG',
