@@ -29,7 +29,8 @@ gdata
 # git+https://github.com/timlinux/python-dateutils.git@c67ee1932d678b82d65aa69ee35b07791d1c0364
 /libs/Backbone-tastypie-0.2.tar.gz
 git+https://github.com/cmheisel/nose-xcover.git#egg=nosexcover
-pycsw
+# pycsw 3
+git+https://github.com/geopython/pycsw.git@3.0.0-beta1
 git+https://github.com/gak/pygooglechart.git
 django-jenkins
 html5lib
