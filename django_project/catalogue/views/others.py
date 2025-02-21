@@ -80,53 +80,58 @@ def log_visit(request):
     method is by adding it as a fake css reference at the top of your template
     e.g.: <link rel="stylesheet" href="/visit" type="text/css">
     """
-    if settings.USE_GEOIP:
-        myGeoIpUtils = GeoIpUtils()
-        myIp = myGeoIpUtils.getMyIp(request)
-        if myIp:
+    try:
+        if settings.USE_GEOIP:
+            myGeoIpUtils = GeoIpUtils()
+            myIp = myGeoIpUtils.getMyIp(request)
+
+            if not myIp:
+                # logger.error("GEOIP capture failed to retrieve valid IP address.")
+                return HttpResponse('/** No valid IP address */', content_type='text/css')
+
             myLatLong = myGeoIpUtils.getMyLatLong(request)
             myVisit = Visit()
-            try:
-                if myLatLong['city']:
-                    myVisit.city = myLatLong['city']
-                else:
-                    myVisit.city = 'Unknown'
-            except:
-                myVisit.city = 'Unknown'
+
+            # Handle missing city
+            myVisit.city = myLatLong.get('city', 'Unknown')
+
+            # Try to assign geo location details
             try:
                 myVisit.country = myLatLong['country_name']
                 myVisit.ip_position = Point(
-                    myLatLong['longitude'], myLatLong['latitude'])
+                    myLatLong['longitude'], myLatLong['latitude']
+                )
                 myVisit.ip_address = myIp
-                # User is optional - we can see anonymous visits as they will
-                # have a null user
-                if request.user:
+
+                if request.user.is_authenticated:
                     myVisit.user = request.user
-            except:
-                return HttpResponse(
-                    '/** Error in geoip */', content_type='text/css')
-            myVisit.save()
-            # If user is logged in, store their IP lat lon to their profile
+
+                myVisit.save()
+
+            except Exception as e:
+                logger.error(f"Error saving visit: {e}")
+                return HttpResponse('/** Error saving visit */', content_type='text/css')
+
+            # Store user IP lat/lon in their profile if authenticated
             try:
-                if request.user:
-                    myProfile = request.user.get_profile()
+                if request.user.is_authenticated:
+                    myProfile = request.user.profile  # Use the correct way to access profile
                     myProfile.latitude = str(myLatLong['latitude'])
                     myProfile.longitude = str(myLatLong['longitude'])
                     myProfile.save()
-            except:
-                # user has no profile ...
+            except Exception as e:
+                logger.warning(f"User has no profile: {e}")
                 return HttpResponse('/** No Profile */', content_type='text/css')
-        else:
-            logger.info(
-                'GEOIP capture failed to retrieve valid position info')
-            return HttpResponse(
-                '/** No valid position */', content_type='text/css')
-    else:
-        logger.info('GEOIP capture disabled in settings')
-        return HttpResponse(
-            '/** Geoip disabled in settings */', content_type='text/css')
-    return HttpResponse('', content_type='text/css')
 
+        else:
+            logger.info('GEOIP capture disabled in settings')
+            return HttpResponse('/** GeoIP disabled in settings */', content_type='text/css')
+
+    except Exception as e:
+        logger.error(f"Unhandled error in log_visit: {e}", exc_info=True)
+        return HttpResponse('/** Internal Server Error */', content_type='text/css')
+
+    return HttpResponse('', content_type='text/css')
 
 @login_required
 # RenderWithContext is explained in renderWith.py

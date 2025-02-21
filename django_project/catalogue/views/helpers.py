@@ -306,6 +306,8 @@ def notify_sales_staff(theUser, theOrderId, theContext=None):
                     CATALOGUE_DEFAULT_NOTIFICATION_RECIPIENTS)
         recipients.update(list(CATALOGUE_DEFAULT_NOTIFICATION_RECIPIENTS))
 
+    recipients.add(settings.EMAIL_CUSTOMER_SUPPORT)
+
     for recipient in recipients:
         # txt email template
         email_message_txt = render_to_string(
@@ -325,7 +327,7 @@ def notify_sales_staff(theUser, theOrderId, theContext=None):
                 'myRecipient': recipient,
                 'domain': settings.DOMAIN
             }, theContext)
-        address = recipient.email
+        address = recipient.email if hasattr(recipient, 'email') else recipient
         msg = EmailMultiRelated(
             email_subject,
             email_message_txt,

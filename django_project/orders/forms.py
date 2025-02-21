@@ -88,7 +88,7 @@ class OrderForm(forms.ModelForm):
         # label='User'
         empty_label='Select user'
     )
-    uses_of_the_data = forms.CharField(widget=forms.Select(choices=uses_option))
+    uses_of_the_data = forms.CharField(widget=forms.Select(choices=uses_option), required=True)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

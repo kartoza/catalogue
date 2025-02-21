@@ -48,3 +48,4 @@ reportlab==2.5
 selenium==2.28.0
 django-exchange==0.7.1
 django-tables2
+whitenoise

@@ -5,6 +5,7 @@
     <link href="{% static "css/table.css" %}" rel="stylesheet">
 {% endblock %}
 {% block content %}
+
 <div class="main-content">
 <div id="layoutSidenav_content">
     <!-- Main page content-->
@@ -31,7 +32,7 @@
           <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
         </div>
       </div>
-
+      <script src="{% static "js/catalogue.js" %}?"></script>
       <script>
 $(document).ready(function(){
     setupPreviewDialogCart();
