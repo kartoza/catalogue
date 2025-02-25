@@ -4,7 +4,7 @@
 {% block title %}{% trans "Edit Profile" %}{% endblock %}
 
 {% block content_title %}<h2>{% blocktrans with profile.user.username as username %}Account &raquo; {{ username }}{% endblocktrans %}</h2>{% endblock %}
-
+{% load staticfiles %}
 {% block content %}
 <div class="main-content">
 <div id="layoutSidenav_content">
@@ -38,6 +38,9 @@
     <!-- Edit Your Profile-->
     <div class="card mb-4">
     <div class="card-header">Edit Profile</div>
+    <div id="error-msg" class="alert alert-warning alert-dismissible fade show" role="alert" style="display: none;">
+        Please fill out the form below before continuing 
+      </div>
     <div class="card-body">
         <form action="" enctype="multipart/form-data" method="post">
             {% csrf_token %}
@@ -71,4 +74,5 @@
 
 </div>
 </div>
+<script src="{% static "js/error_messages.js" %}?"></script>
 {% endblock %}
