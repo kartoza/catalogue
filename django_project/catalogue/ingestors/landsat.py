@@ -343,231 +343,135 @@ def get_quality():
 
 def ingest(
         test_only_flag=True,
-        source_path=(
-            '/home/web/catalogue/django_project/catalogue/tests/sample_files/'
-            'landsat/'),
+        source_path='/home/web/catalogue/django_project/catalogue/tests/sample_files/landsat/',
         verbosity_level=2,
         halt_on_error_flag=True,
         ignore_missing_thumbs=False):
     """
     Ingest a collection of Landsat metadata folders.
-
-    :param test_only_flag: Whether to do a dummy run ( database will not be
-        updated. Default False.
-    :type test_only_flag: bool
-
-    :param source_path: A Landsat created Landsat6 metadata xml file and thumbnail.
-    :type source_path: str
-
-    :param verbosity_level: How verbose the logging output should be. 0-2
-        where 2 is very very very very verbose! Default is 1.
-    :type verbosity_level: int
-
-    :param halt_on_error_flag: Whather we should stop processing when the first
-        error is encountered. Default is True.
-    :type halt_on_error_flag: bool
-
-    :param ignore_missing_thumbs: Whether we should raise an error
-        if we find we are missing a thumbnails. Default is False.
-    :type ignore_missing_thumbs: bool
     """
-    def log_message(log_message_content, level=1):
-        """Log a message for a given level.
 
-        :param log_message_content: A message.
-        :param level: A log level.
-        """
+    def log_message(message, level=1):
         if verbosity_level >= level:
-            print(log_message_content)
+            print(message)
 
-    log_message((
-        'Running Landsat 7/8 Importer with these options:\n'
-        'Test Only Flag: %s\n'
-        'Source Dir: %s\n'
-        'Verbosity Level: %s\n'
-        'Halt on error: %s\n'
-        '------------------')
-        % (test_only_flag, source_path, verbosity_level,
-           halt_on_error_flag), 2)
+    log_message(f'Running Landsat 7/8 Importer with options:\n'
+                f'Test Only: {test_only_flag}\n'
+                f'Source Dir: {source_path}\n'
+                f'Verbosity: {verbosity_level}\n'
+                f'Halt on Error: {halt_on_error_flag}\n'
+                f'Ignore Missing Thumbs: {ignore_missing_thumbs}\n'
+                '------------------', 2)
 
-    # Scan the source folder and look for any sub-folders
-    # The sub-folder names should be e.g.
-    # L5-_TM-_HRF_SAM-_0176_00_0078_00_920606_080254_L0Ra_UTM34S
-    log_message('Scanning folders in %s' % source_path, 1)
-    # Loop through each folder found
+    log_message(f'Scanning folders in {source_path}', 1)
 
     ingestor_version = 'Landsat7/8 ingestor version 1.1'
     record_count = 0
     updated_record_count = 0
     created_record_count = 0
     failed_record_count = 0
-    log_message('Starting directory scan...', 2)
 
-    for myFolder in glob.glob(os.path.join(source_path, '*')):
+    for folder in glob.glob(os.path.join(source_path, '*')):
         record_count += 1
         try:
-            log_message('', 2)
-            log_message('---------------', 2)
-            # Get the folder name
-            product_folder = os.path.split(myFolder)[-1]
-            log_message(product_folder, 2)
+            product_folder = os.path.basename(folder)
+            log_message(f'Processing folder: {product_folder}', 2)
 
-            # Find the first and only xml file in the folder
-            search_path = os.path.join(str(myFolder), '*.xml')
-            log_message(search_path, 2)
-            xml_file = glob.glob(search_path)[0]
-            log_message(xml_file, 2)
-            file_path = os.path.basename(xml_file)
-            filename = os.path.splitext(file_path)[0]
+            xml_files = glob.glob(os.path.join(folder, '*.xml'))
+            if not xml_files:
+                log_message(f'No XML file found in {folder}', 1)
+                continue
 
-            # Create a DOM document from the file
-            dom = parse(xml_file)
-            #
-            # First grab all the generic properties that any
-            # Landsat will have...
-            geometry = get_geometry(dom)
-            start_date_time, center_date_time = get_dates(
-                log_message, dom)
-            # projection for GenericProduct
-            projection = get_projection(dom)
-            original_product_id = get_original_product_id(dom, filename)
-            # Band count for GenericImageryProduct
-            band_count = get_band_count()
-            # orbit_number = get_orbit_number(dom) -- NOT SPECIFIED IN METADATA
-            # # Spatial resolution x for GenericImageryProduct
-            spatial_resolution_x = float(get_spatial_resolution_x(filename))
-            # # Spatial resolution y for GenericImageryProduct
-            spatial_resolution_y = float(
-                get_spatial_resolution_y(filename))
-            log_message('Spatial resolution y: %s' % spatial_resolution_y, 2)
-            # Spatial resolution for GenericImageryProduct calculated as (x+y)/2
-            spatial_resolution = (
-                spatial_resolution_x + spatial_resolution_y) / 2
-            log_message('Spatial resolution: %s' % spatial_resolution, 2)
-            radiometric_resolution = get_radiometric_resolution(dom)
-            log_message(
-                'Radiometric resolution: %s' % radiometric_resolution, 2)
-            quality = get_quality()
-            # ProductProfile for OpticalProduct
-            product_profile = get_product_profile(log_message, dom)
-            # Get the original text file metadata
-            metadata_file = open(xml_file, 'rt')
-            metadata = metadata_file.readlines()
-            metadata_file.close()
-            log_message('Metadata retrieved', 2)
+            xml_file = xml_files[0]
+            log_message(f'Found XML: {xml_file}', 2)
 
-            unique_product_id = original_product_id
-            # Check if there is already a matching product based
-            # on original_product_id
-
-            # Other data
-            cloud_cover = get_cloud_cover(dom)
-            solar_zenith_angle = get_solar_zenith_angle(dom)
-            solar_azimuth_angle = get_solar_azimuth_angle(dom)
-
-            # Do the ingestion here...
-            data = {
-                'metadata': metadata,
-                'spatial_coverage': geometry,
-                'radiometric_resolution': radiometric_resolution,
-                'band_count': band_count,
-                'original_product_id': original_product_id,
-                'unique_product_id': unique_product_id,
-                'spatial_resolution_x': spatial_resolution_x,
-                'spatial_resolution_y': spatial_resolution_y,
-                'spatial_resolution': spatial_resolution,
-                'product_profile': product_profile,
-                'product_acquisition_start': start_date_time,
-                'product_date': center_date_time,
-                # 'orbit_number': orbit_number,  # Not in current metadata
-                'cloud_cover': cloud_cover,
-                'projection': projection,
-                'quality': quality,
-                'solar_zenith_angle': solar_zenith_angle,
-                'solar_azimuth_angle': solar_azimuth_angle
-            }
-            log_message(data, 3)
-            # Check if it's already in catalogue:
             try:
-                today = datetime.today()
-                time_stamp = today.strftime("%Y-%m-%d")
-                log_message('Time Stamp: %s' % time_stamp, 2)
+                dom = parse(xml_file)
+                geometry = get_geometry(dom)
+                start_date_time, center_date_time = get_dates(log_message, dom)
+                projection = get_projection(dom)
+                original_product_id = get_original_product_id(dom, os.path.splitext(os.path.basename(xml_file))[0])
+                band_count = get_band_count()
+                spatial_resolution_x = float(get_spatial_resolution_x(original_product_id))
+                spatial_resolution_y = float(get_spatial_resolution_y(original_product_id))
+                spatial_resolution = (spatial_resolution_x + spatial_resolution_y) / 2
+                radiometric_resolution = get_radiometric_resolution(dom)
+                quality = get_quality()
+                product_profile = get_product_profile(log_message, dom)
+                cloud_cover = get_cloud_cover(dom)
+                solar_zenith_angle = get_solar_zenith_angle(dom)
+                solar_azimuth_angle = get_solar_azimuth_angle(dom)
+
+                with open(xml_file, 'rt') as metadata_file:
+                    metadata = metadata_file.readlines()
+
+                data = {
+                    'metadata': metadata,
+                    'spatial_coverage': geometry,
+                    'radiometric_resolution': radiometric_resolution,
+                    'band_count': band_count,
+                    'original_product_id': original_product_id,
+                    'spatial_resolution_x': spatial_resolution_x,
+                    'spatial_resolution_y': spatial_resolution_y,
+                    'spatial_resolution': spatial_resolution,
+                    'product_profile': product_profile,
+                    'product_acquisition_start': start_date_time,
+                    'product_date': center_date_time,
+                    'cloud_cover': cloud_cover,
+                    'projection': projection,
+                    'quality': quality,
+                    'solar_zenith_angle': solar_zenith_angle,
+                    'solar_azimuth_angle': solar_azimuth_angle
+                }
             except Exception as e:
-                print(e.message)
+                log_message(f'Error parsing XML file {xml_file}: {e}', 1)
+                failed_record_count += 1
+                continue
 
-            update_mode = True
             try:
-                log_message('Trying to update')
-                # original_product_id is not necessarily unique
-                # so we use product_id
-                product = OpticalProduct.objects.get(
-                    original_product_id=original_product_id
-                ).getConcreteInstance()
-                log_message(('Already in catalogue: updating %s.'
-                            % original_product_id), 2)
-                new_record_flag = False
-                message = product.ingestion_log
-                message += '\n'
-                message += '%s : %s - updating record' % (
-                    time_stamp, ingestor_version)
-                data['ingestion_log'] = message
+                product = OpticalProduct.objects.get(original_product_id=original_product_id).getConcreteInstance()
+                log_message(f'Updating existing product: {original_product_id}', 2)
+                update_mode = True
                 product.__dict__.update(data)
             except ObjectDoesNotExist:
-                log_message('Not in catalogue: creating.', 2)
+                log_message(f'Creating new product: {original_product_id}', 2)
                 update_mode = False
-                message = '%s : %s - creating record' % (
-                    time_stamp, ingestor_version)
-                data['ingestion_log'] = message
-                try:
-                    product = OpticalProduct(**data)
-                    log_message('Product: %s' % product)
-
-                except Exception as e:
-                    log_message(e.message, 2)
-
-                new_record_flag = True
+                product = OpticalProduct(**data)
             except Exception as e:
-                print(e.message)
+                log_message(f'Error checking existing product: {e}', 1)
+                failed_record_count += 1
+                continue
 
-            log_message('Saving product and setting thumb', 2)
             try:
                 product.save()
                 if update_mode:
                     updated_record_count += 1
                 else:
                     created_record_count += 1
-                if new_record_flag:
-                    log_message('Product %s imported.' % record_count, 2)
-                    pass
-                else:
-                    log_message('Product %s updated.' % updated_record_count, 2)
-                    pass
+                log_message(f'Product {original_product_id} successfully saved.', 2)
             except Exception as e:
-                traceback.print_exc(file=sys.stdout)
-                raise CommandError('Cannot import: %s' % e)
+                log_message(f'Error saving product {original_product_id}: {e}', 1)
+                failed_record_count += 1
+                continue
 
             if test_only_flag:
                 transaction.rollback()
-                log_message('Imported scene : %s' % product_folder, 1)
-                log_message('Testing only: transaction rollback.', 1)
+                log_message(f'Testing mode enabled: transaction rollback for {product_folder}', 1)
             else:
                 transaction.commit()
-                log_message('Imported scene : %s' % product_folder, 1)
+                log_message(f'Imported scene: {product_folder}', 1)
+
         except Exception as e:
-            log_message('Record import failed. AAAAAAARGH! : %s' %
-                        product_folder, 1)
+            log_message(f'Error processing folder {product_folder}: {e}', 1)
             failed_record_count += 1
+            traceback.print_exc()
             if halt_on_error_flag:
-                print(e.message)
                 break
-            else:
-                continue
-
-    # To decide: should we remove ingested product folders?
 
     print('===============================')
-    print('Products processed : %s ' % record_count)
-    print('Products updated : %s ' % updated_record_count)
-    print('Products imported : %s ' % created_record_count)
-    print('Products failed to import : %s ' % failed_record_count)
+    print(f'Products processed: {record_count}')
+    print(f'Products updated: {updated_record_count}')
+    print(f'Products imported: {created_record_count}')
+    print(f'Products failed: {failed_record_count}')
     print('===============================')
+
