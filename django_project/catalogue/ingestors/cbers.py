@@ -27,7 +27,10 @@ from dictionaries.models import (
     Quality
 )
 from catalogue.models import OpticalProduct
+import logging
 
+logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
+logger = logging.getLogger(__name__)
 
 def parse_date_time(date_stamp):
     """A helper method to create a date object from a CBERS time stamp.
@@ -40,6 +43,9 @@ def parse_date_time(date_stamp):
     :returns: A python datetime object.
     :rtype: datetime
     """
+
+    
+
     # print 'Parsing Date: %s\n' % date_stamp
     start_year = date_stamp[0:4]
     start_month = date_stamp[5:7]
@@ -62,52 +68,41 @@ def parse_date_time(date_stamp):
     return parsed_date_time
 
 
+
 def get_geometry(log_message, dom):
-    """Extract the bounding box as a geometry from the xml file.
+    """Extract the bounding box as a geometry from the XML file.
 
     :param log_message: A log_message function used for user feedback.
-    :type log_message: log_message
+    :type log_message: function
 
     :param dom: DOM Document containing the bounds of the scene.
-    :type dom: DOM document.
+    :type dom: Document
 
-    :return: geoemtry
+    :return: Geometry or None if elements are missing.
     """
-    up_left_lat_value = dom.getElementsByTagName('productUpperLeftLat')[0]
-    up_left_lat = up_left_lat_value.firstChild.nodeValue
+    required_tags = [
+        'TopLeftLatitude', 'TopLeftLongitude',
+        'TopRightLatitude', 'TopRightLongitude',
+        'BottomLeftLatitude', 'BottomLeftLongitude',
+        'BottomRightLatitude', 'BottomRightLongitude'
+    ]
 
-    up_left_long_value = dom.getElementsByTagName('productUpperLeftLong')[0]
-    up_left_long = up_left_long_value.firstChild.nodeValue
+    # Extract values and return None if any tag is missing
+    try:
+        values = {tag: dom.getElementsByTagName(tag)[0].firstChild.nodeValue for tag in required_tags}
+    except (IndexError, AttributeError):
+        log_message("Error: One or more required elements are missing in the XML.", 2)
+        return None
+    
+    polygon = f"POLYGON(({values['TopLeftLongitude']} {values['TopLeftLatitude']}, " \
+              f"{values['TopRightLongitude']} {values['TopRightLatitude']}, " \
+              f"{values['BottomRightLongitude']} {values['BottomRightLatitude']}, " \
+              f"{values['BottomLeftLongitude']} {values['BottomLeftLatitude']}, " \
+              f"{values['TopLeftLongitude']} {values['TopLeftLatitude']}))"
 
-    up_right_lat_value = dom.getElementsByTagName('productUpperRightLat')[0]
-    up_right_lat = up_right_lat_value.firstChild.nodeValue
-
-    up_right_long_value = dom.getElementsByTagName('productUpperRightLong')[0]
-    up_right_long = up_right_long_value.firstChild.nodeValue
-
-    low_left_lat_value = dom.getElementsByTagName('productLowerLeftLat')[0]
-    low_left_lat = low_left_lat_value.firstChild.nodeValue
-
-    low_left_long_value = dom.getElementsByTagName('productLowerLeftLong')[0]
-    low_left_long = low_left_long_value.firstChild.nodeValue
-
-    low_right_lat_value = dom.getElementsByTagName('productLowerRightLat')[0]
-    low_right_lat = low_right_lat_value.firstChild.nodeValue
-
-    low_right_long_value = dom.getElementsByTagName('productLowerRightLong')[0]
-    low_right_long = low_right_long_value.firstChild.nodeValue
-
-    polygon = 'POLYGON((' '%s %s, ' \
-              '%s %s, %s %s, %s %s, %s %s' '))' % (
-                  up_left_long, up_left_lat,
-                  up_right_long, up_right_lat,
-                  low_right_long, low_right_lat,
-                  low_left_long, low_left_lat,
-                  up_left_long, up_left_lat)
-
-    myReader = WKTReader()
-    myGeometry = myReader.read(polygon)
-    log_message('Geometry: %s' % myGeometry, 2)
+    # myGeometry = WKTReader(polygon)
+    reader = WKTReader()
+    myGeometry = reader.read(polygon)
     return myGeometry
 
 
@@ -124,12 +119,12 @@ def get_dates(log_message, dom):
         respectively.
     :rtype: (datetime, datetime)
     """
-    start_element = dom.getElementsByTagName('imagingStartTime')[0]
+    start_element = dom.getElementsByTagName('StartTime')[0]
     start_date = start_element.firstChild.nodeValue
     start_date = parse_date_time(start_date)
     log_message('Product Start Date: %s' % start_date, 2)
 
-    product_date = dom.getElementsByTagName('productDate')[0]
+    product_date = dom.getElementsByTagName('ProduceTime')[0]
     center_date = product_date.firstChild.nodeValue
     center_date = parse_date_time(center_date)
     log_message('Product Date: %s' % center_date, 2)
@@ -146,31 +141,43 @@ def get_original_product_id(filename):
 
 
 def get_band_count(dom):
-    band_count_data = dom.getElementsByTagName('bands')[0]
-    band_count = band_count_data.firstChild.nodeValue
-    if len(band_count) == 1:
+    try:
+        band_count_data = dom.getElementsByTagName('bands')[0]
+        band_count = band_count_data.firstChild.nodeValue
+    except (IndexError, AttributeError):
+        band_count = 0
+    if band_count == 0:
+        return 0
+    elif len(band_count) == 1:
         return 1
     else:
         return len(eval(band_count))
 
 
 def get_solar_azimuth_angle(dom):
-    sun_azimuth = dom.getElementsByTagName('sunAzimuthElevation')[0]
-    solar_azimuth = sun_azimuth.firstChild.nodeValue
-    return solar_azimuth
-
+    try:
+        sun_azimuth = dom.getElementsByTagName('sunAzimuthElevation')[0]
+        solar_azimuth = sun_azimuth.firstChild.nodeValue
+        return solar_azimuth
+    except (IndexError, AttributeError):
+        return None
 
 def get_scene_row(dom):
-    scene_row = dom.getElementsByTagName('sceneRow')[0]
-    row = scene_row.firstChild.nodeValue
-    return row
+    try:
+        scene_row = dom.getElementsByTagName('sceneRow')[0]
+        row = scene_row.firstChild.nodeValue
+        return row
+    except (IndexError, AttributeError):
+        return None
 
 
 def get_scene_path(dom):
-    scene_path = dom.getElementsByTagName('scenePath')[0]
-    path = scene_path.firstChild.nodeValue
-    return path
-
+    try:
+        scene_path = dom.getElementsByTagName('scenePath')[0]
+        path = scene_path.firstChild.nodeValue
+        return path
+    except (IndexError, AttributeError):
+        return None
 
 def get_sensor_inclination():
     # The static value of sensor inclination angle
@@ -179,15 +186,20 @@ def get_sensor_inclination():
 
 
 def get_spatial_resolution_x(dom):
-    spatial_resolution_data = dom.getElementsByTagName('pixelSpacing')[0]
-    spatial_resolution = spatial_resolution_data.firstChild.nodeValue
-    return spatial_resolution
-
+    try:
+        spatial_resolution_data = dom.getElementsByTagName('pixelSpacing')[0]
+        spatial_resolution = spatial_resolution_data.firstChild.nodeValue
+        return spatial_resolution
+    except (IndexError, AttributeError):
+        return 0
 
 def get_spatial_resolution_y(dom):
-    spatial_resolution_data = dom.getElementsByTagName('pixelSpacing')[0]
-    spatial_resolution = spatial_resolution_data.firstChild.nodeValue
-    return spatial_resolution
+    try:
+        spatial_resolution_data = dom.getElementsByTagName('pixelSpacing')[0]
+        spatial_resolution = spatial_resolution_data.firstChild.nodeValue
+        return spatial_resolution
+    except (IndexError, AttributeError):
+        return 0
 
 
 def get_product_profile(log_message, product_id):
@@ -202,19 +214,22 @@ def get_product_profile(log_message, product_id):
     :return: A product profile for the given product.
     :rtype: OpticalProductProfile
     """
+
+    print(f"PRODUCT ID {product_id}")
     # We need type, sensor and mission so that we can look up the
     # OpticalProductProfile that applies to this product
     sensor_value = product_id[4:7]
     mission_index = product_id[0:4]
-
+    print(f"sensor_value {sensor_value}")
+    print(f"mission_index {mission_index}")
+    instrument_type = ""
     try:
         instrument_type = InstrumentType.objects.get(
             operator_abbreviation=sensor_value)  # e.g. MUX, P10
     except Exception as e:
         # print e.message
-        raise e
-    log_message('Instrument Type %s' % instrument_type, 2)
-
+        raise Exception(f'ERROR: {e}')
+    
     if mission_index == 'CB04':
         mission_value = 'CB04'
     elif mission_index == 'CB05':
@@ -277,20 +292,22 @@ def get_radiometric_resolution(dom):
     :returns: The bit depth for the image.
     :rtype: int
     """
-    get_sensor_id = dom.getElementsByTagName('sensorId')[0]
-    sensor_id = get_sensor_id.firstChild.nodeValue
-    # sensor_id : MUX, P10, P5M, WFI
-    if sensor_id == 'MUX':
-        return 8
-    elif sensor_id == 'P10':
-        return 8
-    elif sensor_id == 'P5M':
-        return 8
-    elif sensor_id == 'WFI':
-        return 10
-    else:
+    try:
+        get_sensor_id = dom.getElementsByTagName('sensorId')[0]
+        sensor_id = get_sensor_id.firstChild.nodeValue
+        # sensor_id : MUX, P10, P5M, WFI
+        if sensor_id == 'MUX':
+            return 8
+        elif sensor_id == 'P10':
+            return 8
+        elif sensor_id == 'P5M':
+            return 8
+        elif sensor_id == 'WFI':
+            return 10
+        else:
+            return 0
+    except (IndexError, AttributeError):
         return 0
-
 
 def get_projection(dom):
     """Get the projection for this product record.
@@ -305,15 +322,27 @@ def get_projection(dom):
     :rtype: Projection
     """
     epsg_default_code = '32'
-    get_zone = dom.getElementsByTagName('zone')[0]
-    zone_value = get_zone.firstChild.nodeValue
-    zone = zone_value[0:2]
+    default_zone = '1'  # Set your default zone value here (e.g., '01')
     location_code = '7'  # 6 for north and 7 for south
+
+    try:
+        get_zone = dom.getElementsByTagName('zone')[0]
+        zone_value = get_zone.firstChild.nodeValue
+        zone = zone_value[0:2]  # Extract the first two characters
+    except (IndexError, AttributeError):
+        # If the 'zone' tag is missing or has no value, use the default zone
+        zone = default_zone
+
     epsg_code = epsg_default_code + location_code + zone
 
-    projection = Projection.objects.get(epsg_code=epsg_code)
-    return projection
+    try:
+        projection = Projection.objects.get(epsg_code=epsg_code)
+    except ObjectDoesNotExist:
+        # Handle the case where the EPSG code is not found in the database
+        print(f"Projection with EPSG code {epsg_code} does not exist.")
+        return None  # Or provide a default projection if applicable
 
+    return projection
 
 def get_quality(dom):
     """Get the quality for this record - currently hard coded to unknown.
@@ -321,263 +350,171 @@ def get_quality(dom):
     :returns: A quality object fixed to 'unknown'.
     :rtype: Quality
     """
-    overall_quality = dom.getElementsByTagName('overallQuality')[0]
-    quality_xml = str(overall_quality.firstChild.nodeValue)
-    quality = Quality.objects.get(name=quality_xml)
-    return quality
-
+    try:
+        overall_quality = dom.getElementsByTagName('overallQuality')[0]
+        quality_xml = str(overall_quality.firstChild.nodeValue)
+        quality = Quality.objects.get(name=quality_xml)
+        return quality
+    except (IndexError, AttributeError):
+        return None
 
 def ingest(
-        test_only_flag=True,
-        source_path=(
-                '/home/web/catalogue/django_project/catalogue/tests/sample_files/'
-                'CBERS/'),
-        verbosity_level=2,
-        halt_on_error_flag=True,
-        ignore_missing_thumbs=False):
+    test_only_flag=True,
+    source_path="/home/web/catalogue/django_project/catalogue/tests/sample_files/CBERS/",
+    verbosity_level=2,
+    halt_on_error_flag=True,
+    ignore_missing_thumbs=False
+):
     """
     Ingest a collection of CBERS metadata folders.
-
-    :param test_only_flag: Whether to do a dummy run ( database will not be
-        updated. Default False.
-    :type test_only_flag: bool
-
-    :param source_path: A CBERS created CBERS 04 metadata xml file and thumbnail.
-    :type source_path: str
-
-    :param verbosity_level: How verbose the logging output should be. 0-2
-        where 2 is very very very very verbose! Default is 1.
-    :type verbosity_level: int
-
-    :param halt_on_error_flag: Whather we should stop processing when the first
-        error is encountered. Default is True.
-    :type halt_on_error_flag: bool
-
-    :param ignore_missing_thumbs: Whether we should raise an error
-        if we find we are missing a thumbnails. Default is False.
-    :type ignore_missing_thumbs: bool
     """
 
-    def log_message(message, level=1):
-        """Log a message for a given leven.
-
-        :param message: A message.
-        :param level: A log level.
-        """
+    def print_message(message, level=1):
+        """Prints a message if verbosity level allows."""
         if verbosity_level >= level:
             print(message)
 
-    log_message((
-                    'Running CBERS 04 Importer with these options:\n'
-                    'Test Only Flag: %s\n'
-                    'Source Dir: %s\n'
-                    'Verbosity Level: %s\n'
-                    'Halt on error: %s\n'
-                    '------------------')
-                % (test_only_flag, source_path, verbosity_level,
-                   halt_on_error_flag), 2)
+    print_message(f"""
+    Running CBERS 04 Importer with options:
+    Test Only Flag: {test_only_flag}
+    Source Dir: {source_path}
+    Verbosity Level: {verbosity_level}
+    Halt on Error: {halt_on_error_flag}
+    ------------------
+    """, 2)
 
-    # Scan the source folder and look for any sub-folders
-    # The sub-folder names should be e.g.
-    # L5-_TM-_HRF_SAM-_0176_00_0078_00_920606_080254_L0Ra_UTM34S
-    log_message('Scanning folders in %s' % source_path, 1)
-    # Loop through each folder found
+    # Track counts
+    record_count, updated_record_count, created_record_count, failed_record_count = 0, 0, 0, 0
+    ingestor_version = "CBERS 04 ingestor version 1.1"
 
-    ingestor_version = 'CBERS 04 ingestor version 1.1'
-    record_count = 0
-    updated_record_count = 0
-    created_record_count = 0
-    failed_record_count = 0
-    log_message('Starting directory scan...', 2)
+    print_message(f"Scanning folders in {source_path}", 1)
 
-    for myFolder in glob.glob(os.path.join(source_path, '*.XML')):
+    for xml_file in glob.glob(os.path.join(source_path, "*.[Xx][Mm][Ll]")):
         record_count += 1
         try:
-            log_message('', 2)
-            log_message('---------------', 2)
-            # Get the folder name
-            product_folder = os.path.split(myFolder)[-1]
-            log_message(product_folder, 2)
+            print_message("\n---------------", 2)
+            print_message(f"Processing: {xml_file}", 2)
 
-            # Find the first and only xml file in the folder
-            # search_path = os.path.join(str(myFolder), '*.XML')
-            log_message(myFolder, 2)
-            xml_file = glob.glob(myFolder)[0]
-            file = os.path.basename(xml_file)
-            file_name = os.path.splitext(file)[0]
+            file_name = os.path.splitext(os.path.basename(xml_file))[0]
             original_product_id = get_original_product_id(file_name)
 
             # Create a DOM document from the file
             dom = parse(xml_file)
 
-            # First grab all the generic properties that any CBERS will have...
-            geometry = get_geometry(log_message, dom)
-            start_date_time, center_date_time = get_dates(
-                log_message, dom)
-            # projection for GenericProduct
+            # Extract metadata
+            geometry = get_geometry(print_message, dom)
+            if geometry is None:
+                print(f"Geometry Tags are missing in file {xml_file}")
+                break
+            start_date_time, center_date_time = get_dates(print_message, dom)
             projection = get_projection(dom)
-
-            # Band count for GenericImageryProduct
             band_count = get_band_count(dom)
             row = get_scene_row(dom)
             path = get_scene_path(dom)
             solar_azimuth_angle = get_solar_azimuth_angle(dom)
             sensor_inclination = get_sensor_inclination()
-            # # Spatial resolution x for GenericImageryProduct
             spatial_resolution_x = float(get_spatial_resolution_x(dom))
-            # # Spatial resolution y for GenericImageryProduct
-            spatial_resolution_y = float(
-                get_spatial_resolution_y(dom))
-            log_message('Spatial resolution y: %s' % spatial_resolution_y, 2)
-
-            # # Spatial resolution for GenericImageryProduct calculated as (x+y)/2
+            spatial_resolution_y = float(get_spatial_resolution_y(dom))
             spatial_resolution = (spatial_resolution_x + spatial_resolution_y) / 2
-            log_message('Spatial resolution: %s' % spatial_resolution, 2)
             radiometric_resolution = get_radiometric_resolution(dom)
-            log_message('Radiometric resolution: %s' % radiometric_resolution, 2)
             quality = get_quality(dom)
-            # ProductProfile for OpticalProduct
-            product_profile = get_product_profile(log_message, original_product_id)
+            product_profile = get_product_profile(print_message, original_product_id)
 
-            # Do the ingestion here...
             data = {
-                'spatial_coverage': geometry,
-                'radiometric_resolution': radiometric_resolution,
-                'band_count': band_count,
-                'original_product_id': original_product_id,
-                'unique_product_id': original_product_id,
-                'spatial_resolution_x': spatial_resolution_x,
-                'spatial_resolution_y': spatial_resolution_y,
-                'spatial_resolution': spatial_resolution,
-                'product_profile': product_profile,
-                'product_acquisition_start': start_date_time,
-                'product_date': center_date_time,
-                'sensor_inclination_angle': sensor_inclination,
-                'solar_azimuth_angle': solar_azimuth_angle,
-                'row': row,
-                'path': path,
-                'projection': projection,
-                'quality': quality
+                "spatial_coverage": geometry,
+                "radiometric_resolution": radiometric_resolution,
+                "band_count": band_count,
+                "original_product_id": original_product_id,
+                "unique_product_id": original_product_id,
+                "spatial_resolution_x": spatial_resolution_x,
+                "spatial_resolution_y": spatial_resolution_y,
+                "spatial_resolution": spatial_resolution,
+                "product_profile": product_profile,
+                "product_acquisition_start": start_date_time,
+                "product_date": center_date_time,
+                "sensor_inclination_angle": sensor_inclination,
+                "solar_azimuth_angle": solar_azimuth_angle,
+                "row": row,
+                "path": path,
+                "projection": projection,
+                "quality": quality,
             }
-            log_message(data, 3)
-            # Check if it's already in catalogue:
-            try:
-                today = datetime.today()
-                time_stamp = today.strftime("%Y-%m-%d")
-                log_message('Time Stamp: %s' % time_stamp, 2)
-            except Exception as e:
-                print(e.message)
+            print_message(f"Extracted Data: {data}", 3)
 
+            # Try to update or create record
+            time_stamp = datetime.today().strftime("%Y-%m-%d")
+            new_record_flag = False
             update_mode = True
+
             try:
-                log_message('Trying to update')
-                # original_product_id is not necessarily unique
-                # so we use product_id
-                product = OpticalProduct.objects.get(
-                    original_product_id=original_product_id
-                ).getConcreteInstance()
-                log_message(('Already in catalogue: updating %s.'
-                             % original_product_id), 2)
-                new_record_flag = False
-                message = product.ingestion_log
-                message += '\n'
-                message += '%s : %s - updating record' % (
-                    time_stamp, ingestor_version)
-                data['ingestion_log'] = message
+                product = OpticalProduct.objects.get(original_product_id=original_product_id).getConcreteInstance()
+                print_message(f"Already in catalogue: updating {original_product_id}.", 2)
+                message = product.ingestion_log + f"\n{time_stamp} : {ingestor_version} - updating record"
+                data["ingestion_log"] = message
                 product.__dict__.update(data)
-            except ObjectDoesNotExist:
-                log_message('Not in catalogue: creating.', 2)
+            except OpticalProduct.DoesNotExist:
+                print_message("Not in catalogue: creating.", 2)
                 update_mode = False
-                message = '%s : %s - creating record' % (
-                    time_stamp, ingestor_version)
-                data['ingestion_log'] = message
-                try:
-                    product = OpticalProduct(**data)
-                    log_message('Product: %s' % product)
-
-                except Exception as e:
-                    log_message(e.message, 2)
-
+                message = f"{time_stamp} : {ingestor_version} - creating record"
+                data["ingestion_log"] = message
+                product = OpticalProduct(**data)
                 new_record_flag = True
             except Exception as e:
-                print(e.message)
+                print("Unexpected error while checking record existence:", getattr(e, "message", str(e)))
+                traceback.print_exc()
+                continue
 
-            log_message('Saving product and setting thumb', 2)
+            # Save product and handle thumbnails
+            print_message("Saving product and setting thumbnail", 2)
             try:
                 product.save()
                 if update_mode:
                     updated_record_count += 1
                 else:
                     created_record_count += 1
-                if test_only_flag:
-                    log_message('Testing: image not saved.', 2)
-                    pass
-                else:
-                    # Store thumbnail
-                    thumbs_folder = os.path.join(
-                        settings.THUMBS_ROOT,
-                        product.thumbnailDirectory())
-                    try:
-                        os.makedirs(thumbs_folder)
-                    except OSError:
-                        # TODO: check for creation failure rather than
-                        # attempt to  recreate an existing dir
-                        pass
 
-                    jpeg_path = os.path.join(str(myFolder))
-                    # log_message(jpeg_path, 2)
-                    jpeg_path = jpeg_path.replace(".XML", "-THUMB.JPG")
+                if not test_only_flag:
+                    thumbs_folder = os.path.join(settings.THUMBS_ROOT, product.thumbnailDirectory())
+                    os.makedirs(thumbs_folder, exist_ok=True)
 
-                    if jpeg_path:
-                        print(jpeg_path)
-                        new_name = '%s.JPG' % product.original_product_id
-                        shutil.copyfile(
-                            jpeg_path,
-                            os.path.join(thumbs_folder, new_name))
-                        print(new_name)
-                        # Transform and store .wld file
-                    #     log_message('Referencing thumb', 2)
-                    #     try:
-                    #         path = product.georeferencedThumbnail()
-                    #         log_message('Georeferenced Thumb: %s' % path, 2)
-                    #     except:
-                    #         traceback.print_exc(file=sys.stdout)
-                    # elif ignore_missing_thumbs:
-                    #         log_message('IGNORING missing thumb:')
-                    else:
-                        raise Exception('Missing thumbnail in %s' % jpeg_path)
+                    jpeg_path = xml_file.replace(".XML", "-THUMB.JPG")
+                    if os.path.exists(jpeg_path):
+                        new_name = f"{product.original_product_id}.JPG"
+                        shutil.copyfile(jpeg_path, os.path.join(thumbs_folder, new_name))
+                        print_message(f"Thumbnail saved: {new_name}", 2)
+                    elif not ignore_missing_thumbs:
+                        raise FileNotFoundError(f"Missing thumbnail: {jpeg_path}")
+
                 if new_record_flag:
-                    log_message('Product %s imported.' % record_count, 2)
-                    pass
+                    print_message(f"Product {record_count} imported.", 2)
                 else:
-                    log_message('Product %s updated.' % updated_record_count, 2)
-                    pass
+                    print_message(f"Product {updated_record_count} updated.", 2)
             except Exception as e:
-                traceback.print_exc(file=sys.stdout)
-                raise CommandError('Cannot import: %s' % e)
+                print("Error saving product:", getattr(e, "message", str(e)))
+                traceback.print_exc()
+                raise CommandError(f"Cannot import: {e}")
 
+            # Commit or rollback
             if test_only_flag:
                 transaction.rollback()
-                log_message('Imported scene : %s' % product_folder, 1)
-                log_message('Testing only: transaction rollback.', 1)
+                print_message(f"Testing only: Transaction rollback for {file_name}.", 1)
             else:
                 transaction.commit()
-                log_message('Imported scene : %s' % product_folder, 1)
+                print_message(f"Imported scene: {file_name}", 1)
+
         except Exception as e:
-            log_message('Record import failed. AAAAAAARGH! : %s' %
-                        product_folder, 1)
+            print_message(f"Record import failed: {file_name}", 1)
+            print("Error details:", getattr(e, "message", str(e)))
+            traceback.print_exc()
             failed_record_count += 1
             if halt_on_error_flag:
-                print(e.message)
                 break
-            else:
-                continue
+            continue
 
-    # To decide: should we remove ingested product folders?
-
-    print('===============================')
-    print('Products processed : %s ' % record_count)
-    print('Products updated : %s ' % updated_record_count)
-    print('Products imported : %s ' % created_record_count)
-    print('Products failed to import : %s ' % failed_record_count)
-    print('===============================')
+    # Summary
+    print("\n===============================")
+    print(f"Products Processed: {record_count}")
+    print(f"Products Updated: {updated_record_count}")
+    print(f"Products Imported: {created_record_count}")
+    print(f"Products Failed: {failed_record_count}")
+    print("===============================")
