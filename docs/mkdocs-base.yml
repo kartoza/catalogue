@@ -50,17 +50,21 @@ nav:
                   - Guide:
                           - user/guide/index.md
                           - Sign Up: user/guide/sign-up.md
-                          - Data Summary Page: user/guide/data-summary-page.md
                           - Login: user/guide/login.md
                           - Search Page: user/guide/search-page.md
+                          - Data Summary Page: user/guide/data-summary-page.md
+                          - Contact Page: user/guide/contact-page.md
+                          - Links: user/guide/links.md
                           - Profile Page: user/guide/profile-page.md
                   - Manual :
                           - user/manual/index.md
                           - Sign Up: user/manual/sign-up.md
                           - Login: user/manual/login.md
-                          - Search Page: user/manual/search-page.md
                           - Landing Page: user/manual/landing-page.md
+                          - Search Page: user/manual/search-page.md
                           - Data Summary Page: user/manual/data-summary-page.md
+                          - Contact Page: user/manual/contact-page.md
+                          - Links: user/manual/links.md
                           - Profile Page: user/manual/profile-page.md
         - Administrators:
                 - administrator/index.md

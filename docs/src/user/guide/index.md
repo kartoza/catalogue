@@ -17,8 +17,14 @@ license: This program is free software; you can redistribute it and/or modify it
 
 * **[Login](./login.md):** You can use this page to walk through the login process.
 
+* **[Search](./search-page.md):** You can use this page as a walkthrough to learn how to access the search page.
+
 * **[Data Summary Page](./data-summary-page.md):** You can use this page to walk through the data summary page.
 
-* **[Search](./search-page.md):** You can use this page as a walkthrough to learn how to access the search page.
+* **[Contact Page](./contact-page.md):** You can use this page to walk through the contact-us page.
+
+* **[Order Page](./order-page.md):** You can use this page to walk through the order page.
+
+* **[Links](./links.md):** You can use this page to navigate through the various available links.
 
 * **[Profile Page](./profile-page.md):** You can use this page as a walkthrough to learn how to access the user profile.

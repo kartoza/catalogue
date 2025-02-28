@@ -22,8 +22,14 @@ you may prefer to work through our [user guide](../guide/index.md).
 
 * **[Login](./login.md):** Users can use this page to walk through the login process.
 
-* **[Data Summary Page](./data-summary-page.md):** Users can use this page to walk through the `Data Summary` page. 
+* **[Landing Page](./landing-page.md):** This is the first page users see when they visit the website.
 
 * **[Search Page](./search-page.md):** Users can use this page as a walkthrough to learn how to access the search page.
+
+* **[Data Summary Page](./data-summary-page.md):** Users can use this page to walk through the `Data Summary` page. 
+
+* **[Order Page](./order-page.md):** Users can use this page as a walkthrough to learn how to access the order page.
+
+* **[links](./links.md):** Users can use this page as a walkthrough to learn how to access the various links.
 
 * **[Profile Page](./profile-page.md):** Users can use this page as a walkthrough to learn how to access the user profile.
