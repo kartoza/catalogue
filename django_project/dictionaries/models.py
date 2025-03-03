@@ -300,7 +300,8 @@ class Satellite(models.Model):
     # image = models.ImageField()
     collection = models.ForeignKey(
         Collection,
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
+        null=True,
     )
     launch_date = models.DateField(
         blank=True, null=True,
@@ -323,7 +324,9 @@ class Satellite(models.Model):
     license_type = models.ForeignKey(
         License,
         on_delete=models.CASCADE,
-        help_text='Satellite product license type'
+        help_text='Satellite product license type',
+        null=True,
+        blank=True
     )
 
     def __unicode__(self):
@@ -408,7 +411,9 @@ class InstrumentType(models.Model):
     )
     scanner_type = models.ForeignKey(
         ScannerType,
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True
     )
     base_processing_level = models.ForeignKey(
         ProcessingLevel,
@@ -962,7 +967,9 @@ class OpticalProductProfile(models.Model):
     )
     spectral_mode = models.ForeignKey(
         SpectralMode,
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True
     )
 
     # define model passthrough manager

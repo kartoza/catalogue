@@ -208,14 +208,16 @@ class GenericProduct(models.Model):
         srid=4326, help_text='Image footprint')
     projection = models.ForeignKey(
         'dictionaries.Projection',
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
+        null=True
     )
     quality = models.ForeignKey(
         'dictionaries.Quality',
         help_text=(
             'A quality assessment describing the amount of dropouts etc.'
             'and how usable the entire scene is.'),
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
+        null=True
     )
     original_product_id = models.CharField(
         help_text='Original id assigned to the product by the vendor/operator',

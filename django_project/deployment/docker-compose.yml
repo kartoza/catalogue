@@ -81,6 +81,7 @@ services:
       - EMAIL_CUSTOMER_SUPPORT=${EMAIL_CUSTOMER_SUPPORT:-customers-eo@sansa.org.za}
     volumes:
       - ../django_project:/home/web/django_project
+      - ../logs:/home/web/logs
       - ./static:/home/web/static
       - ./media:/home/web/media
       - ./reports:/home/web/reports
@@ -122,7 +123,7 @@ services:
       - ./logs:/var/log/
       - ./data:/home/web/django_project/data
       - /dmz/CATALOGUE/thumbnails_cat3:/home/web/django_project/thumbs_out
-      - ../logs:/home/web/logs/
+      - ../logs:/home/web/logs
       - ../resources:/home/web/resources
 
     links:
