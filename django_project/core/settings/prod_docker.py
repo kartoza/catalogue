@@ -26,15 +26,14 @@ STATIC_ROOT = '/home/web/static'
 
 # See docker-compose.yml file for postfix container definition
 #
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 # Host for sending e-mail.
-EMAIL_HOST = 'smtp'
+EMAIL_HOST = os.getenv('EMAIL_HOST', 'smtp')
 # Port for sending e-mail.
-EMAIL_PORT = 25
+EMAIL_PORT = int(os.getenv('EMAIL_PORT', 25))
 # SMTP authentication information for EMAIL_HOST.
-# See docker-compose.yml for where these are defined
-EMAIL_HOST_USER = 'noreply@kartoza.com'
-EMAIL_HOST_PASSWORD = 'docker'
-EMAIL_USE_TLS = False
-EMAIL_SUBJECT_PREFIX = '[sansa-catalogue]'
-EMAIL_CUSTOMER_SUPPORT = 'customers-eo@sansa.org.za'
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER', 'noreply@kartoza.com')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD', 'docker')
+EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS', 'False').lower() in ['true', '1']
+EMAIL_SUBJECT_PREFIX = os.getenv('EMAIL_SUBJECT_PREFIX', '[sansa-catalogue]')
+EMAIL_CUSTOMER_SUPPORT = os.getenv('EMAIL_CUSTOMER_SUPPORT', 'customers-eo@sansa.org.za')

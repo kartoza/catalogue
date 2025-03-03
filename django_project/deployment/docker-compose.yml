@@ -64,15 +64,21 @@ services:
     hostname: worker
     command: celery worker -A catalogue.celery -l info  --beat
     environment:
-      - DATABASE_NAME=gis
-      - DATABASE_USERNAME=docker
-      - DATABASE_PASSWORD=docker
-      - DATABASE_HOST=db
-      - RABBITMQ_HOST=rabbitmq
-      - DJANGO_SETTINGS_MODULE=core.settings.prod_docker
-      - VIRTUAL_HOST=catalogue.kartoza.org
-      - VIRTUAL_PORT=8080
-      - C_FORCE_ROOT=true
+      - DATABASE_NAME=${DATABASE_NAME:-gis}
+      - DATABASE_USERNAME=${DATABASE_USERNAME:-docker}
+      - DATABASE_PASSWORD=${DATABASE_PASSWORD:-docker}
+      - DATABASE_HOST=${DATABASE_HOST:-db}
+      - RABBITMQ_HOST=${RABBITMQ_HOST:-rabbitmq}
+      - DJANGO_SETTINGS_MODULE=${DJANGO_SETTINGS_MODULE:-core.settings.prod_docker}
+      - VIRTUAL_HOST=${VIRTUAL_HOST:-catalogue.kartoza.com}
+      - VIRTUAL_PORT=${VIRTUAL_PORT:-8080}
+      - EMAIL_HOST=${EMAIL_HOST:-smtp}
+      - EMAIL_PORT=${EMAIL_PORT:-25}
+      - EMAIL_HOST_USER=${EMAIL_HOST_USER:-noreply@kartoza.com}
+      - EMAIL_HOST_PASSWORD=${EMAIL_HOST_PASSWORD:-docker}
+      - EMAIL_USE_TLS=${EMAIL_USE_TLS:-False}
+      - EMAIL_SUBJECT_PREFIX=${EMAIL_SUBJECT_PREFIX:-[sansa-catalogue]}
+      - EMAIL_CUSTOMER_SUPPORT=${EMAIL_CUSTOMER_SUPPORT:-customers-eo@sansa.org.za}
     volumes:
       - ../django_project:/home/web/django_project
       - ./static:/home/web/static
@@ -93,14 +99,21 @@ services:
       target: base_image
     hostname: uwsgi
     environment:
-      - DATABASE_NAME=gis
-      - DATABASE_USERNAME=docker
-      - DATABASE_PASSWORD=docker
-      - DATABASE_HOST=db
-      - RABBITMQ_HOST=rabbitmq
-      - DJANGO_SETTINGS_MODULE=core.settings.prod_docker
-      - VIRTUAL_HOST=catalogue.kartoza.com
-      - VIRTUAL_PORT=8080
+      - DATABASE_NAME=${DATABASE_NAME:-gis}
+      - DATABASE_USERNAME=${DATABASE_USERNAME:-docker}
+      - DATABASE_PASSWORD=${DATABASE_PASSWORD:-docker}
+      - DATABASE_HOST=${DATABASE_HOST:-db}
+      - RABBITMQ_HOST=${RABBITMQ_HOST:-rabbitmq}
+      - DJANGO_SETTINGS_MODULE=${DJANGO_SETTINGS_MODULE:-core.settings.prod_docker}
+      - VIRTUAL_HOST=${VIRTUAL_HOST:-catalogue.kartoza.com}
+      - VIRTUAL_PORT=${VIRTUAL_PORT:-8080}
+      - EMAIL_HOST=${EMAIL_HOST:-smtp}
+      - EMAIL_PORT=${EMAIL_PORT:-25}
+      - EMAIL_HOST_USER=${EMAIL_HOST_USER:-noreply@kartoza.com}
+      - EMAIL_HOST_PASSWORD=${EMAIL_HOST_PASSWORD:-docker}
+      - EMAIL_USE_TLS=${EMAIL_USE_TLS:-False}
+      - EMAIL_SUBJECT_PREFIX=${EMAIL_SUBJECT_PREFIX:-[sansa-catalogue]}
+      - EMAIL_CUSTOMER_SUPPORT=${EMAIL_CUSTOMER_SUPPORT:-customers-eo@sansa.org.za}
     volumes:
       - ../django_project:/home/web/django_project
       - ./static:/home/web/static
@@ -183,11 +196,22 @@ services:
       target: dev_image
     hostname: uwsgi
     environment:
-      - RABBITMQ_HOST=rabbitmq
-      - DJANGO_SETTINGS_MODULE=core.settings.dev_docker
-      - PYTHONPATH=/home/web/django_project
-      - VIRTUAL_HOST=catalogue.kartoza.com
-      - VIRTUAL_PORT=8080
+      - DATABASE_NAME=${DATABASE_NAME:-gis}
+      - DATABASE_USERNAME=${DATABASE_USERNAME:-docker}
+      - DATABASE_PASSWORD=${DATABASE_PASSWORD:-docker}
+      - DATABASE_HOST=${DATABASE_HOST:-db}
+      - RABBITMQ_HOST=${RABBITMQ_HOST:-rabbitmq}
+      - DJANGO_SETTINGS_MODULE=${DJANGO_SETTINGS_MODULE:-core.settings.dev_docker}
+      - VIRTUAL_HOST=${VIRTUAL_HOST:-catalogue.kartoza.com}
+      - VIRTUAL_PORT=${VIRTUAL_PORT:-8080}
+      # Email Configuration with default values
+      - EMAIL_HOST=${EMAIL_HOST:-smtp}
+      - EMAIL_PORT=${EMAIL_PORT:-25}
+      - EMAIL_HOST_USER=${EMAIL_HOST_USER:-noreply@kartoza.com}
+      - EMAIL_HOST_PASSWORD=${EMAIL_HOST_PASSWORD:-docker}
+      - EMAIL_USE_TLS=${EMAIL_USE_TLS:-False}
+      - EMAIL_SUBJECT_PREFIX=${EMAIL_SUBJECT_PREFIX:-[sansa-catalogue]}
+      - EMAIL_CUSTOMER_SUPPORT=${EMAIL_CUSTOMER_SUPPORT:-customers-eo@sansa.org.za}
     volumes:
       - ../django_project:/home/web/django_project
       - ./static:/home/web/static

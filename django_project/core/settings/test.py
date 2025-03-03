@@ -25,8 +25,6 @@ NOSE_ARGS = (
     #  default test settings don't include any specific tests (see jenkins.py)
 )
 
-
-EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
 # change this to a proper location
 EMAIL_FILE_PATH = '/tmp/'
 

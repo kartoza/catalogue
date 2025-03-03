@@ -80,3 +80,4 @@ deployment/sites-enabled
 latest.sql.gz
 django_project/core/settings/secret.py
 django_project/celerybeat-schedule
+.env
