@@ -1,8 +1,7 @@
-{% extends "base-fluid.html" %}
+{% extends "base.html" %}
 {% load staticfiles %}
-{% block body_load %}{% endblock %}
 
-{% block content%}
+{% block content %}
       <div id="map" class="search-map"></div>
       <div id="map-controls">
         <div id="map-layerswitcher-control">
@@ -17,7 +16,7 @@
         <div id="map-control-scalebar"></div>
       </div>
       <div id="map-layerswitcher" class="drop-shadow"></div>
-{% endblock%}
+{% endblock %}
 
 {% block extrajs %}
   {{ block.super }}
@@ -28,7 +27,7 @@
       var UserLoged = false;
     {% endif %}
   </script>
-  <script type="text/javascript" src="{% static 'js/backbone-pagination.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/libs/backbone-pagination.js' %}"></script>
   <script type="text/javascript" src="{% static 'js/search.js' %}"></script>
   <script>
   $( document ).ready(function() {

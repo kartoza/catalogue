@@ -1,77 +1,77 @@
 from .project import *
 
-# Sentry config
-if 'raven.contrib.django.raven_compat' in INSTALLED_APPS:
-    # noinspection PyUnresolvedReferences
-    import raven  # noqa
+LOGGING_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'logs')
+if not os.path.exists(LOGGING_DIR):
+    os.makedirs(LOGGING_DIR)
 
-    RAVEN_CONFIG = {
-    'dsn': 'http://840958b39a464c88aa9b3751891a6b4b:d8abb7bca77d49c0a24a08ea4fba4988@sentry.kartoza.com/9',
-    }
-
-    MIDDLEWARE = (
-        # We recommend putting this as high in the chain as possible
-        # see http://raven.readthedocs.org/en/latest/integrations/  ...
-        # ... django.html#message-references
-        # This will add a client unique id in messages
-        'raven.contrib.django.raven_compat.middleware.'
-        'SentryResponseErrorIdMiddleware',
-    ) + MIDDLEWARE
-
-    #
-    # Sentry settings - logs exceptions to a database
-    LOGGING = {
-        # internal dictConfig version - DON'T CHANGE
-        'version': 1,
-        'disable_existing_loggers': True,
-        # default root logger - handle with sentry
-        'root': {
+# Logs exceptions to a database
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '[{levelname}] {asctime} {name} {message}',
+            'style': '{',
+        },
+        'simple': {
+            'format': '[{levelname}] {message}',
+            'style': '{',
+        },
+    },
+    'handlers': {
+        # Console output for debugging
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+            'formatter': 'verbose',
+        },
+        # Log errors to a file
+        'file': {
             'level': 'ERROR',
-            'handlers': ['sentry', 'file'],
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(LOGGING_DIR, 'django_errors.log'),
+            'formatter': 'verbose',
         },
-        'handlers': {
-            # send email to mail_admins, if DEBUG=False
-            'mail_admins': {
-                'level': 'ERROR',
-                'class': 'django.utils.log.AdminEmailHandler'
-            },
-            # sentry logger
-            'sentry': {
-                'level': 'WARNING',
-                'class': (
-                    'raven.contrib.django.raven_compat.'
-                    'handlers.SentryHandler'),
-            },
-            # output file
-            'file': {
-                'level': 'DEBUG',
-                'class': 'logging.FileHandler',
-                'filename': '/home/web/logs/django.log',
-            }
+        # Email admins on critical errors
+        'mail_admins': {
+            'level': 'ERROR',
+            'class': 'django.utils.log.AdminEmailHandler',
         },
-        'loggers': {
-            'django.db.backends': {
-                'level': 'ERROR',
-                'handlers': ['sentry'],
-                'propagate': False
-            },
-            'raven': {
-                'level': 'ERROR',
-                'handlers': ['mail_admins'],
-                'propagate': False
-            },
-            'sentry.errors': {
-                'level': 'ERROR',
-                'handlers': ['mail_admins'],
-                'propagate': False
-            },
-            'django': {
-                'handlers': ['mail_admins', 'file'],
-                'level': 'ERROR',
-                'propagate': True
-            }
-        }
-    }
+        # Sentry error tracking
+        'sentry': {
+            'level': 'WARNING',
+            'class': 'raven.contrib.django.raven_compat.handlers.SentryHandler',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console', 'file', 'mail_admins'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+        'django.request': {
+            'handlers': ['console', 'file', 'mail_admins'],
+            'level': 'ERROR',
+            'propagate': False,
+        },
+        'django.db.backends': {
+            'handlers': ['console', 'file'],
+            'level': 'ERROR',
+            'propagate': False,
+        },
+        'raven': {
+            'handlers': ['console', 'mail_admins'],
+            'level': 'ERROR',
+            'propagate': False,
+        },
+        'sentry.errors': {
+            'handlers': ['console', 'mail_admins'],
+            'level': 'ERROR',
+            'propagate': False,
+        },
+    },
+}
+
 # django 1.5 ALLOWED_HOSTS - protects against host-poisoning attacks
 # change to the real service name
 # https://docs.djangoproject.com/en/1.5/ref/settings/#std:setting-ALLOWED_HOSTS

@@ -40,8 +40,8 @@ WEBODT_DEFAULT_FORMAT = 'pdf'
 
 # Added by Tim for registration app
 ACCOUNT_ACTIVATION_DAYS = 2
-EMAIL_HOST = 'localhost'
-DEFAULT_FROM_EMAIL = 'noreply@catalogue.sansa.org.za'
+# DEFAULT_FROM_EMAIL = 'noreply@catalogue.sansa.org.za'
+DEFAULT_FROM_EMAIL = 'noreply@noreply.kartoza.com'
 # define organisation acronym, used in filenaming schemes
 ORGANISATION_ACRONYM = 'SANSA'
 
