@@ -28,6 +28,9 @@ from catalogue.models.products import (
     RadarProduct,
     GenericImageryProduct,
 )
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from django.contrib.auth import get_user_model
 
 
 def setGenericProductDate(sender, instance, **kwargs):
@@ -70,3 +73,18 @@ models.signals.pre_save.connect(
 models.signals.pre_save.connect(
     setGenericProductDate,
     sender=RadarProduct)
+
+User = get_user_model()
+
+
+@receiver(post_save, sender=User)
+def create_userena_signup(sender, instance, created, **kwargs):
+    from userena.models import UserenaSignup
+    if created:
+        UserenaSignup.objects.create(user=instance)
+    else:
+        try:
+            instance.userena_signup
+        except UserenaSignup.DoesNotExist:
+            UserenaSignup.objects.create(
+              user=instance)
