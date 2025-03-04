@@ -81,3 +81,4 @@ latest.sql.gz
 django_project/core/settings/secret.py
 django_project/celerybeat-schedule
 .env
+django_errors.log
