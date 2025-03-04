@@ -80,8 +80,15 @@ User = get_user_model()
 @receiver(post_save, sender=User)
 def create_userena_signup(sender, instance, created, **kwargs):
     from userena.models import UserenaSignup
+    from userena.utils import generate_nonce
+
     if created:
-        UserenaSignup.objects.create(user=instance)
+      try:
+        instance.userena_signup
+      except:
+        UserenaSignup.objects.create(
+          user=instance,
+          activation_key=generate_nonce())
     else:
         try:
             instance.userena_signup
