@@ -1,5 +1,5 @@
 ---
-title: PROJECT_TITLE
+title: SANSA Catalogue
 summary: PROJECT_SUMMARY
     - Ketan Bamniya
 date: 28-03-2024
@@ -16,8 +16,7 @@ DevOps guide provides structured documentation on DevOps practices, tools, and w
 
 # Deploying with docker
 
-This document explains how to do various sysadmin related tasks when your
-site has been deployed under docker. These deployment modes are supported:
+This document explains how to do various sysadmin related tasks when your site has been deployed under docker. These deployment modes are supported:
 
 * **production**: no debug etc is enabled, has its own discrete database. Configure
   your production environment in core.settings.prod_docker - this

@@ -1,5 +1,5 @@
 ---
-title: PROJECT_TITLE
+title: SANSA Catalogue
 summary: PROJECT_SUMMARY
     - Ketan Bamniya
 date: 28-03-2024
