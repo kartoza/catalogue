@@ -11,4 +11,14 @@ license: This program is free software; you can redistribute it and/or modify it
 ---
 
 # Administrator manual
-<!-- Replace all of the titles with relevant titles -->
+
+Welcome to the SANSA Catalogue administrator manual. This section of the documentation describes every administrator page in the application and what the various components of that page do. Here is a brief overview of the content provided here:
+
+## Access Admin Page
+
+
+* **[Add Record in Table](./django-add-record.md):** This section explains the addition of record on the Django administration site.
+
+* **[Update Record](./django-update-record.md):** This section explains the update of record on the Django administration site.
+
+* **[Remove Record](./django-remove-record.md):** This section explains the removal of record from the Django administration site.
