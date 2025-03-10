@@ -11,7 +11,7 @@
 <link href="../../about/" rel="next"/>
 <link href="../../assets/logo.png" rel="icon"/>
 <meta content="mkdocs-1.6.1, mkdocs-material-9.5.39" name="generator"/>
-<title>PROJECT_TITLE - SANSA Catalogue</title>
+<title>SANSA Catalogue - SANSA Catalogue</title>
 <link href="../../assets/stylesheets/main.8c3ca2c6.min.css" rel="stylesheet"/>
 <link href="../../assets/stylesheets/palette.06af60db.min.css" rel="stylesheet"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
@@ -50,7 +50,7 @@
 <div class="md-header__topic" data-md-component="header-topic">
 <span class="md-ellipsis">
             
-              PROJECT_TITLE
+              SANSA Catalogue
             
           </span>
 </div>
@@ -828,57 +828,82 @@
     </label>
 <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#containers-used">70.1 
+<a class="md-nav__link" href="#deploying-with-docker">70.1 
 <span class="md-ellipsis">
-      Containers used
+      Deploying with Docker
     </span>
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#sdlc">70.2 
+<a class="md-nav__link" href="#build-docker-images-and-run-them">70.2 
 <span class="md-ellipsis">
-      SDLC
+      Build Docker Images and Run Them
     </span>
 </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#continuous-integration">70.3 
-<span class="md-ellipsis">
-      Continuous integration
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#testing-deployments">70.4 
-<span class="md-ellipsis">
-      Testing deployments
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#backend-orchestration">70.5 
-<span class="md-ellipsis">
-      Backend orchestration
-    </span>
-</a>
-<nav aria-label="Backend orchestration" class="md-nav">
+<nav aria-label="Build Docker Images and Run Them" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#deployments">70.5.1 
+<a class="md-nav__link" href="#production">70.2.1 
 <span class="md-ellipsis">
-      Deployments
+      Production
     </span>
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#kubernetes">70.5.2 
+<a class="md-nav__link" href="#running-in-development-mode">70.2.2 
 <span class="md-ellipsis">
-      Kubernetes
+      Running in Development Mode
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#staging">70.2.3 
+<span class="md-ellipsis">
+      Staging
     </span>
 </a>
 </li>
 </ul>
 </nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#using-make">70.3 
+<span class="md-ellipsis">
+      Using Make
+    </span>
+</a>
+<nav aria-label="Using Make" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#running-arbitrary-commands">70.3.1 
+<span class="md-ellipsis">
+      Running Arbitrary Commands
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#setting-up-an-nginx-reverse-proxy">70.4 
+<span class="md-ellipsis">
+      Setting Up an Nginx Reverse Proxy
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#managing-containers">70.5 
+<span class="md-ellipsis">
+      Managing Containers
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#configuration-options">70.6 
+<span class="md-ellipsis">
+      Configuration Options
+    </span>
+</a>
 </li>
 </ul>
 </nav>
@@ -943,57 +968,82 @@
     </label>
 <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#containers-used">70.1 
+<a class="md-nav__link" href="#deploying-with-docker">70.1 
 <span class="md-ellipsis">
-      Containers used
+      Deploying with Docker
     </span>
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#sdlc">70.2 
+<a class="md-nav__link" href="#build-docker-images-and-run-them">70.2 
 <span class="md-ellipsis">
-      SDLC
+      Build Docker Images and Run Them
     </span>
 </a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#continuous-integration">70.3 
-<span class="md-ellipsis">
-      Continuous integration
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#testing-deployments">70.4 
-<span class="md-ellipsis">
-      Testing deployments
-    </span>
-</a>
-</li>
-<li class="md-nav__item">
-<a class="md-nav__link" href="#backend-orchestration">70.5 
-<span class="md-ellipsis">
-      Backend orchestration
-    </span>
-</a>
-<nav aria-label="Backend orchestration" class="md-nav">
+<nav aria-label="Build Docker Images and Run Them" class="md-nav">
 <ul class="md-nav__list">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#deployments">70.5.1 
+<a class="md-nav__link" href="#production">70.2.1 
 <span class="md-ellipsis">
-      Deployments
+      Production
     </span>
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#kubernetes">70.5.2 
+<a class="md-nav__link" href="#running-in-development-mode">70.2.2 
 <span class="md-ellipsis">
-      Kubernetes
+      Running in Development Mode
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#staging">70.2.3 
+<span class="md-ellipsis">
+      Staging
     </span>
 </a>
 </li>
 </ul>
 </nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#using-make">70.3 
+<span class="md-ellipsis">
+      Using Make
+    </span>
+</a>
+<nav aria-label="Using Make" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#running-arbitrary-commands">70.3.1 
+<span class="md-ellipsis">
+      Running Arbitrary Commands
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#setting-up-an-nginx-reverse-proxy">70.4 
+<span class="md-ellipsis">
+      Setting Up an Nginx Reverse Proxy
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#managing-containers">70.5 
+<span class="md-ellipsis">
+      Managing Containers
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#configuration-options">70.6 
+<span class="md-ellipsis">
+      Configuration Options
+    </span>
+</a>
 </li>
 </ul>
 </nav>
@@ -1002,15 +1052,74 @@
 </div>
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
-<div><h1 id="devops-documentation"><span class="enumerate-headings-plugin enumerate-heading-plugin">70.</span> DevOps documentation<a class="headerlink" href="#devops-documentation" title="Permanent link">¶</a></h1>
-<!-- Replace all of the titles with relevant titles -->
-<h2 id="containers-used"><span class="enumerate-headings-plugin enumerate-heading-plugin">70.1</span> Containers used<a class="headerlink" href="#containers-used" title="Permanent link">¶</a></h2>
-<h2 id="sdlc"><span class="enumerate-headings-plugin enumerate-heading-plugin">70.2</span> SDLC<a class="headerlink" href="#sdlc" title="Permanent link">¶</a></h2>
-<h2 id="continuous-integration"><span class="enumerate-headings-plugin enumerate-heading-plugin">70.3</span> Continuous integration<a class="headerlink" href="#continuous-integration" title="Permanent link">¶</a></h2>
-<h2 id="testing-deployments"><span class="enumerate-headings-plugin enumerate-heading-plugin">70.4</span> Testing deployments<a class="headerlink" href="#testing-deployments" title="Permanent link">¶</a></h2>
-<h2 id="backend-orchestration"><span class="enumerate-headings-plugin enumerate-heading-plugin">70.5</span> Backend orchestration<a class="headerlink" href="#backend-orchestration" title="Permanent link">¶</a></h2>
-<h3 id="deployments"><span class="enumerate-headings-plugin enumerate-heading-plugin">70.5.1</span> Deployments<a class="headerlink" href="#deployments" title="Permanent link">¶</a></h3>
-<h3 id="kubernetes"><span class="enumerate-headings-plugin enumerate-heading-plugin">70.5.2</span> Kubernetes<a class="headerlink" href="#kubernetes" title="Permanent link">¶</a></h3></div>
+<div><h1 id="devops-documentation"><span class="enumerate-headings-plugin enumerate-heading-plugin">70.</span> DevOps Documentation<a class="headerlink" href="#devops-documentation" title="Permanent link">¶</a></h1>
+<p>The DevOps guide provides structured documentation on DevOps practices, tools, and workflows used in software development and deployment.  </p>
+<h2 id="deploying-with-docker"><span class="enumerate-headings-plugin enumerate-heading-plugin">70.1</span> Deploying with Docker<a class="headerlink" href="#deploying-with-docker" title="Permanent link">¶</a></h2>
+<p>This document explains how users can perform various system administration tasks when deploying a site using Docker. The following deployment modes are supported:  </p>
+<ul>
+<li><strong>Production</strong>: Debugging is disabled, and a discrete database is used. Users should configure the production environment in <code>core.settings.prod_docker</code>. This <code>DJANGO_SETTINGS_MODULE</code> is used when running in production mode.  </li>
+<li><strong>Staging</strong>: Users should configure the staging environment in <code>core.settings.staging_docker</code>. This <code>DJANGO_SETTINGS_MODULE</code> is used when running in staging mode.  </li>
+</ul>
+<h2 id="build-docker-images-and-run-them"><span class="enumerate-headings-plugin enumerate-heading-plugin">70.2</span> Build Docker Images and Run Them<a class="headerlink" href="#build-docker-images-and-run-them" title="Permanent link">¶</a></h2>
+<h3 id="production"><span class="enumerate-headings-plugin enumerate-heading-plugin">70.2.1</span> Production<a class="headerlink" href="#production" title="Permanent link">¶</a></h3>
+<p>Users can run the provided script to build and deploy Docker images in <code>production mode</code>:  </p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-0-1" id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="nb">cd</span><span class="w"> </span>deployment
+<a href="#__codelineno-0-2" id="__codelineno-0-2" name="__codelineno-0-2"></a><span class="c1"># Allow PostgreSQL volume to be written to</span>
+<a href="#__codelineno-0-3" id="__codelineno-0-3" name="__codelineno-0-3"></a>sudo<span class="w"> </span>chmod<span class="w"> </span>-R<span class="w"> </span>a+rwX<span class="w"> </span>pg/postgres_data/
+<a href="#__codelineno-0-4" id="__codelineno-0-4" name="__codelineno-0-4"></a>make<span class="w"> </span>deploy
+<a href="#__codelineno-0-5" id="__codelineno-0-5" name="__codelineno-0-5"></a>sudo<span class="w"> </span>chmod<span class="w"> </span>-R<span class="w"> </span>a+rwX<span class="w"> </span>static
+</code></pre></div>
+<h3 id="running-in-development-mode"><span class="enumerate-headings-plugin enumerate-heading-plugin">70.2.2</span> Running in Development Mode<a class="headerlink" href="#running-in-development-mode" title="Permanent link">¶</a></h3>
+<p>Users can run <code>makedev</code> in the terminal.  </p>
+<p>Then, connect to the Django container and run:  </p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-1-1" id="__codelineno-1-1" name="__codelineno-1-1"></a>python<span class="w"> </span>manage.py<span class="w"> </span>runserver<span class="w"> </span><span class="m">0</span>.0.0.0:8080
+</code></pre></div>
+<ul>
+<li><code>Pycsw</code> runs on port <code>8000</code>.  </li>
+<li>Users can access the web container via port <code>8080</code> or as defined in the <code>fig.yml</code> file.  </li>
+</ul>
+<p>To create a superuser account, run:  </p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-2-1" id="__codelineno-2-1" name="__codelineno-2-1"></a>make<span class="w"> </span>shell
+<a href="#__codelineno-2-2" id="__codelineno-2-2" name="__codelineno-2-2"></a>python<span class="w"> </span>manage.py<span class="w"> </span>createsuperuser
+<a href="#__codelineno-2-3" id="__codelineno-2-3" name="__codelineno-2-3"></a><span class="nb">exit</span>
+</code></pre></div>
+<h3 id="staging"><span class="enumerate-headings-plugin enumerate-heading-plugin">70.2.3</span> Staging<a class="headerlink" href="#staging" title="Permanent link">¶</a></h3>
+<p>The staging deployment follows the same process as production, but users should precede each command with <code>staging</code>, e.g.,  </p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-3-1" id="__codelineno-3-1" name="__codelineno-3-1"></a>make<span class="w"> </span>staging-deploy
+</code></pre></div>
+<blockquote>
+<p>Note: For staging deployment, users should use a <code>separate Git checkout</code> from the production checkout, as the Git checkout code is shared into the source tree.  </p>
+</blockquote>
+<h2 id="using-make"><span class="enumerate-headings-plugin enumerate-heading-plugin">70.3</span> Using Make<a class="headerlink" href="#using-make" title="Permanent link">¶</a></h2>
+<p>Key <code>make</code> commands for production include:  </p>
+<ul>
+<li><strong>build</strong> – Builds production containers.  </li>
+<li><strong>run</strong> – Builds and runs database and <code>uwsgi</code> services.  </li>
+<li><strong>collectstatic</strong> – Collects static files for production.  </li>
+<li><strong>migrate</strong> – Runs Django migrations in production.  </li>
+</ul>
+<p>Additional <code>make</code> commands are available in the <code>Makefile</code>.  </p>
+<h3 id="running-arbitrary-commands"><span class="enumerate-headings-plugin enumerate-heading-plugin">70.3.1</span> Running Arbitrary Commands<a class="headerlink" href="#running-arbitrary-commands" title="Permanent link">¶</a></h3>
+<p>Users can execute arbitrary management commands easily within the container.  </p>
+<h2 id="setting-up-an-nginx-reverse-proxy"><span class="enumerate-headings-plugin enumerate-heading-plugin">70.4</span> Setting Up an Nginx Reverse Proxy<a class="headerlink" href="#setting-up-an-nginx-reverse-proxy" title="Permanent link">¶</a></h2>
+<p>Users should create a new <code>Nginx virtual host</code>. Example configurations are available in <code>*-nginx.conf</code> in the <code>deployment</code> directory, with separate configurations for <code>production</code> and <code>staging</code>.  </p>
+<p>To apply these configurations:  </p>
+<ol>
+<li>Copy the example file (renaming if necessary) to <code>/etc/nginx/sites-enabled/</code>.  </li>
+<li>Modify the contents to match the local file system paths.  </li>
+<li>Verify the configuration:  </li>
+</ol>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-4-1" id="__codelineno-4-1" name="__codelineno-4-1"></a>sudo<span class="w"> </span>nginx<span class="w"> </span>-t
+</code></pre></div>
+<ol start="4">
+<li>Reload or restart Nginx:  </li>
+</ol>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-5-1" id="__codelineno-5-1" name="__codelineno-5-1"></a>sudo<span class="w"> </span>/etc/init.d/nginx<span class="w"> </span>restart
+</code></pre></div>
+<h2 id="managing-containers"><span class="enumerate-headings-plugin enumerate-heading-plugin">70.5</span> Managing Containers<a class="headerlink" href="#managing-containers" title="Permanent link">¶</a></h2>
+<p>For managing infrastructure, refer to the <a href="http://www.fig.sh/cli.html">Fig documentation</a>.  </p>
+<h2 id="configuration-options"><span class="enumerate-headings-plugin enumerate-heading-plugin">70.6</span> Configuration Options<a class="headerlink" href="#configuration-options" title="Permanent link">¶</a></h2>
+<p>Users can configure the <code>base port</code>, <code>image organisation namespace</code>, <code>PostGIS user/password</code>, and other settings by modifying the <code>fig*.yml</code> files.  </p></div>
 </article>
 </div>
 <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
