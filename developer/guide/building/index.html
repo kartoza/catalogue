@@ -26,7 +26,7 @@
 <input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
 <label class="md-overlay" for="__drawer"></label>
 <div data-md-component="skip">
-<a class="md-skip" href="#building-the-dev-environment">56. 
+<a class="md-skip" href="#building-the-dev-environment">59. 
           Skip to content
         </a>
 </div>
@@ -544,6 +544,9 @@
     Guide
   </span>
 </a>
+<label class="md-nav__link" for="__nav_3_2" id="__nav_3_2_label" tabindex="0">
+<span class="md-nav__icon md-icon"></span>
+</label>
 </div>
 <nav aria-expanded="false" aria-labelledby="__nav_3_2_label" class="md-nav" data-md-level="2">
 <label class="md-nav__title" for="__nav_3_2">
@@ -551,6 +554,27 @@
             Guide
           </label>
 <ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../administrator/guide/django-add-record/">
+<span class="md-ellipsis">
+    Add Record
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../administrator/guide/django-remove-record/">
+<span class="md-ellipsis">
+    Remove Record
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../../administrator/guide/django-update-record/">
+<span class="md-ellipsis">
+    Update Record
+  </span>
+</a>
+</li>
 </ul>
 </nav>
 </li>
@@ -690,35 +714,35 @@
     </label>
 <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#open-a-dev-container-terminal">56.1 
+<a class="md-nav__link" href="#open-a-dev-container-terminal">59.1 
 <span class="md-ellipsis">
       Open a dev container terminal
     </span>
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#install-frontend-libraries">56.2 
+<a class="md-nav__link" href="#install-frontend-libraries">59.2 
 <span class="md-ellipsis">
       Install FrontEnd libraries
     </span>
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#run-django-migration">56.3 
+<a class="md-nav__link" href="#run-django-migration">59.3 
 <span class="md-ellipsis">
       Run django migration
     </span>
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#create-super-user">56.4 
+<a class="md-nav__link" href="#create-super-user">59.4 
 <span class="md-ellipsis">
       Create super user
     </span>
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#viewing-your-test-instance">56.5 
+<a class="md-nav__link" href="#viewing-your-test-instance">59.5 
 <span class="md-ellipsis">
       Viewing your test instance
     </span>
@@ -949,35 +973,35 @@
     </label>
 <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
 <li class="md-nav__item">
-<a class="md-nav__link" href="#open-a-dev-container-terminal">56.1 
+<a class="md-nav__link" href="#open-a-dev-container-terminal">59.1 
 <span class="md-ellipsis">
       Open a dev container terminal
     </span>
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#install-frontend-libraries">56.2 
+<a class="md-nav__link" href="#install-frontend-libraries">59.2 
 <span class="md-ellipsis">
       Install FrontEnd libraries
     </span>
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#run-django-migration">56.3 
+<a class="md-nav__link" href="#run-django-migration">59.3 
 <span class="md-ellipsis">
       Run django migration
     </span>
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#create-super-user">56.4 
+<a class="md-nav__link" href="#create-super-user">59.4 
 <span class="md-ellipsis">
       Create super user
     </span>
 </a>
 </li>
 <li class="md-nav__item">
-<a class="md-nav__link" href="#viewing-your-test-instance">56.5 
+<a class="md-nav__link" href="#viewing-your-test-instance">59.5 
 <span class="md-ellipsis">
       Viewing your test instance
     </span>
@@ -990,30 +1014,30 @@
 </div>
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
-<div><h1 id="building-the-dev-environment"><span class="enumerate-headings-plugin enumerate-heading-plugin">56.</span> Building the dev environment<a class="headerlink" href="#building-the-dev-environment" title="Permanent link">¶</a></h1>
+<div><h1 id="building-the-dev-environment"><span class="enumerate-headings-plugin enumerate-heading-plugin">59.</span> Building the dev environment<a class="headerlink" href="#building-the-dev-environment" title="Permanent link">¶</a></h1>
 <p>This section covers the process of building and running the application from your IDE.</p>
 <p>🚩 Make sure you have gone through the <a href="../ide-setup/">IDE Setup Process</a> before following these notes.</p>
 <p>Press <code>Ctrl -&gt; P</code> 1️⃣ and then <code>&gt;</code>and search for <code>Rebuild</code>. Select <code>Dev Containers: Rebuild and Reopen in Container</code>2️⃣. This will essentially mount your code tree inside a docker container and switch the development context of VSCode to be inside the container where all of the python etc. dependencies will be installed.</p>
 <p><img alt="image.png" src="../img/building-1.png"/></p>
 <p>Once the task is running, a notification 1️⃣ will be shown in the bottom right of the VSCode window. Clicking in the notification will show you the setup progress 2️⃣. Note that this make take quite a while depending on the internet bandwidth you have and the CPU power of your machine.</p>
 <p><img alt="image.png" src="../img/building-2.png"/></p>
-<h2 id="open-a-dev-container-terminal"><span class="enumerate-headings-plugin enumerate-heading-plugin">56.1</span> Open a dev container terminal<a class="headerlink" href="#open-a-dev-container-terminal" title="Permanent link">¶</a></h2>
+<h2 id="open-a-dev-container-terminal"><span class="enumerate-headings-plugin enumerate-heading-plugin">59.1</span> Open a dev container terminal<a class="headerlink" href="#open-a-dev-container-terminal" title="Permanent link">¶</a></h2>
 <p>Open  terminal within the dev container context by clicking the <code>+</code>icon in the terminal pane 1️⃣. The new terminal 2️⃣ will show up in the list of running terminals 3️⃣</p>
 <p><img alt="image.png" src="../img/building-3.png"/></p>
-<h2 id="install-frontend-libraries"><span class="enumerate-headings-plugin enumerate-heading-plugin">56.2</span> Install FrontEnd libraries<a class="headerlink" href="#install-frontend-libraries" title="Permanent link">¶</a></h2>
+<h2 id="install-frontend-libraries"><span class="enumerate-headings-plugin enumerate-heading-plugin">59.2</span> Install FrontEnd libraries<a class="headerlink" href="#install-frontend-libraries" title="Permanent link">¶</a></h2>
 <div class="highlight"><pre><span></span><code><a href="#__codelineno-0-1" id="__codelineno-0-1" name="__codelineno-0-1"></a>make frontend-dev
 </code></pre></div>
 <p><img alt="image.png" src="../img/building-4.png"/></p>
-<h2 id="run-django-migration"><span class="enumerate-headings-plugin enumerate-heading-plugin">56.3</span> Run django migration<a class="headerlink" href="#run-django-migration" title="Permanent link">¶</a></h2>
+<h2 id="run-django-migration"><span class="enumerate-headings-plugin enumerate-heading-plugin">59.3</span> Run django migration<a class="headerlink" href="#run-django-migration" title="Permanent link">¶</a></h2>
 <div class="highlight"><pre><span></span><code><a href="#__codelineno-1-1" id="__codelineno-1-1" name="__codelineno-1-1"></a>cd /home/web/project/django_project
 <a href="#__codelineno-1-2" id="__codelineno-1-2" name="__codelineno-1-2"></a>python manage.py migrate
 </code></pre></div>
-<h2 id="create-super-user"><span class="enumerate-headings-plugin enumerate-heading-plugin">56.4</span> Create super user<a class="headerlink" href="#create-super-user" title="Permanent link">¶</a></h2>
+<h2 id="create-super-user"><span class="enumerate-headings-plugin enumerate-heading-plugin">59.4</span> Create super user<a class="headerlink" href="#create-super-user" title="Permanent link">¶</a></h2>
 <div class="highlight"><pre><span></span><code><a href="#__codelineno-2-1" id="__codelineno-2-1" name="__codelineno-2-1"></a>cd /home/web/project/django_project
 <a href="#__codelineno-2-2" id="__codelineno-2-2" name="__codelineno-2-2"></a>python manage.py createsuperuser
 </code></pre></div>
 <p>During this process you will be prompted for your user name (defaults to root), email address and a password (which you need to confirm). Complete these as needed.</p>
-<h2 id="viewing-your-test-instance"><span class="enumerate-headings-plugin enumerate-heading-plugin">56.5</span> Viewing your test instance<a class="headerlink" href="#viewing-your-test-instance" title="Permanent link">¶</a></h2>
+<h2 id="viewing-your-test-instance"><span class="enumerate-headings-plugin enumerate-heading-plugin">59.5</span> Viewing your test instance<a class="headerlink" href="#viewing-your-test-instance" title="Permanent link">¶</a></h2>
 <p>After completing the steps above, you should have the development server available on port 2000 of your local host:</p>
 <div class="highlight"><pre><span></span><code><a href="#__codelineno-3-1" id="__codelineno-3-1" name="__codelineno-3-1"></a>http://localhost:2000
 </code></pre></div>

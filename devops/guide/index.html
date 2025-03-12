@@ -26,7 +26,7 @@
 <input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
 <label class="md-overlay" for="__drawer"></label>
 <div data-md-component="skip">
-<a class="md-skip" href="#devops-guide">69. 
+<a class="md-skip" href="#devops-guide">72. 
           Skip to content
         </a>
 </div>
@@ -544,6 +544,9 @@
     Guide
   </span>
 </a>
+<label class="md-nav__link" for="__nav_3_2" id="__nav_3_2_label" tabindex="0">
+<span class="md-nav__icon md-icon"></span>
+</label>
 </div>
 <nav aria-expanded="false" aria-labelledby="__nav_3_2_label" class="md-nav" data-md-level="2">
 <label class="md-nav__title" for="__nav_3_2">
@@ -551,6 +554,27 @@
             Guide
           </label>
 <ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../administrator/guide/django-add-record/">
+<span class="md-ellipsis">
+    Add Record
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../administrator/guide/django-remove-record/">
+<span class="md-ellipsis">
+    Remove Record
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../administrator/guide/django-update-record/">
+<span class="md-ellipsis">
+    Update Record
+  </span>
+</a>
+</li>
 </ul>
 </nav>
 </li>
@@ -900,9 +924,9 @@
 </div>
 <div class="md-content" data-md-component="content">
 <article class="md-content__inner md-typeset">
-<div><h1 id="devops-guide"><span class="enumerate-headings-plugin enumerate-heading-plugin">69.</span> DevOps guide<a class="headerlink" href="#devops-guide" title="Permanent link">¶</a></h1>
+<div><h1 id="devops-guide"><span class="enumerate-headings-plugin enumerate-heading-plugin">72.</span> DevOps guide<a class="headerlink" href="#devops-guide" title="Permanent link">¶</a></h1>
 <p>DevOps guide provides structured documentation on DevOps practices, tools, and workflows used in software development and deployment.</p>
-<h1 id="deploying-with-docker"><span class="enumerate-headings-plugin enumerate-heading-plugin">70.</span> Deploying with docker<a class="headerlink" href="#deploying-with-docker" title="Permanent link">¶</a></h1>
+<h1 id="deploying-with-docker"><span class="enumerate-headings-plugin enumerate-heading-plugin">73.</span> Deploying with docker<a class="headerlink" href="#deploying-with-docker" title="Permanent link">¶</a></h1>
 <p>This document explains how to do various sysadmin related tasks when your site has been deployed under docker. These deployment modes are supported:</p>
 <ul>
 <li><strong>production</strong>: no debug etc is enabled, has its own discrete database. Configure
@@ -911,8 +935,8 @@
 <li><strong>staging</strong>: Configure your staging environment in core.settings.staging_docker -
   this DJANGO_SETTINGS_MODULE is used when running in production mode.</li>
 </ul>
-<h1 id="build-your-docker-images-and-run-them"><span class="enumerate-headings-plugin enumerate-heading-plugin">71.</span> Build your docker images and run them<a class="headerlink" href="#build-your-docker-images-and-run-them" title="Permanent link">¶</a></h1>
-<h2 id="production"><span class="enumerate-headings-plugin enumerate-heading-plugin">71.1</span> Production<a class="headerlink" href="#production" title="Permanent link">¶</a></h2>
+<h1 id="build-your-docker-images-and-run-them"><span class="enumerate-headings-plugin enumerate-heading-plugin">74.</span> Build your docker images and run them<a class="headerlink" href="#build-your-docker-images-and-run-them" title="Permanent link">¶</a></h1>
+<h2 id="production"><span class="enumerate-headings-plugin enumerate-heading-plugin">74.1</span> Production<a class="headerlink" href="#production" title="Permanent link">¶</a></h2>
 <p>You can simply run the provided script and it will build and deploy the docker
 images for you in <strong>production mode</strong>.</p>
 <div class="highlight"><pre><span></span><code><a href="#__codelineno-0-1" id="__codelineno-0-1" name="__codelineno-0-1"></a>cd deployment
@@ -921,7 +945,7 @@ images for you in <strong>production mode</strong>.</p>
 <a href="#__codelineno-0-4" id="__codelineno-0-4" name="__codelineno-0-4"></a>make deploy
 <a href="#__codelineno-0-5" id="__codelineno-0-5" name="__codelineno-0-5"></a>sudo chmod -R a+rwX static
 </code></pre></div>
-<h2 id="run-in-development-mode"><span class="enumerate-headings-plugin enumerate-heading-plugin">71.2</span> Run in development mode<a class="headerlink" href="#run-in-development-mode" title="Permanent link">¶</a></h2>
+<h2 id="run-in-development-mode"><span class="enumerate-headings-plugin enumerate-heading-plugin">74.2</span> Run in development mode<a class="headerlink" href="#run-in-development-mode" title="Permanent link">¶</a></h2>
 <p>run <code>makedev</code> in the terminal. </p>
 <p>Then connect to the django container and run <code>python manage.py runserver 0.0.0.0:8080</code></p>
 <p><code>Pycsw runs on port 8000</code></p>
@@ -932,13 +956,13 @@ host port mapping as defined in the fig.yml file.</p>
 <a href="#__codelineno-1-2" id="__codelineno-1-2" name="__codelineno-1-2"></a>python manage.py createsuperuser
 <a href="#__codelineno-1-3" id="__codelineno-1-3" name="__codelineno-1-3"></a>exit
 </code></pre></div>
-<h2 id="staging"><span class="enumerate-headings-plugin enumerate-heading-plugin">71.3</span> Staging<a class="headerlink" href="#staging" title="Permanent link">¶</a></h2>
+<h2 id="staging"><span class="enumerate-headings-plugin enumerate-heading-plugin">74.3</span> Staging<a class="headerlink" href="#staging" title="Permanent link">¶</a></h2>
 <p>The procedure is exactly the same as production, but you should preceed 
 each command with 'staging' e.g. <code>make staging-deploy</code>.</p>
 <p><strong>Note:</strong> VERY IMPORTANT - for staging deployment you should use a <strong>separate
 git checkout</strong>  from the production checkout as the code from the git checkout
 is shared into the source tree.</p>
-<h2 id="using-make"><span class="enumerate-headings-plugin enumerate-heading-plugin">71.4</span> Using make<a class="headerlink" href="#using-make" title="Permanent link">¶</a></h2>
+<h2 id="using-make"><span class="enumerate-headings-plugin enumerate-heading-plugin">74.4</span> Using make<a class="headerlink" href="#using-make" title="Permanent link">¶</a></h2>
 <p>The following key make commands are provided for production:</p>
 <ul>
 <li><strong>build</strong> - build production containers</li>
@@ -948,9 +972,9 @@ is shared into the source tree.</p>
 </ul>
 <p>Additional make commands are provided in the Makefile - please see there
 for details.</p>
-<h4 id="arbitrary-commands"><span class="enumerate-headings-plugin enumerate-heading-plugin">71.4.0.1</span> Arbitrary commands<a class="headerlink" href="#arbitrary-commands" title="Permanent link">¶</a></h4>
+<h4 id="arbitrary-commands"><span class="enumerate-headings-plugin enumerate-heading-plugin">74.4.0.1</span> Arbitrary commands<a class="headerlink" href="#arbitrary-commands" title="Permanent link">¶</a></h4>
 <p>Running arbitrary management commands is easy </p>
-<h2 id="setup-nginx-reverse-proxy"><span class="enumerate-headings-plugin enumerate-heading-plugin">71.5</span> Setup nginx reverse proxy<a class="headerlink" href="#setup-nginx-reverse-proxy" title="Permanent link">¶</a></h2>
+<h2 id="setup-nginx-reverse-proxy"><span class="enumerate-headings-plugin enumerate-heading-plugin">74.5</span> Setup nginx reverse proxy<a class="headerlink" href="#setup-nginx-reverse-proxy" title="Permanent link">¶</a></h2>
 <p>You should create a new nginx virtual host - please see
 <code>*-nginx.conf</code> in the deployment directory for examples. There is
 one provided for production and one for staging.</p>
@@ -963,10 +987,10 @@ match your local filesystem paths. Then use</p>
 e.g.</p>
 <div class="highlight"><pre><span></span><code><a href="#__codelineno-3-1" id="__codelineno-3-1" name="__codelineno-3-1"></a>sudo /etc/init.d/nginx restart
 </code></pre></div>
-<h3 id="managing-containers"><span class="enumerate-headings-plugin enumerate-heading-plugin">71.5.1</span> Managing containers<a class="headerlink" href="#managing-containers" title="Permanent link">¶</a></h3>
+<h3 id="managing-containers"><span class="enumerate-headings-plugin enumerate-heading-plugin">74.5.1</span> Managing containers<a class="headerlink" href="#managing-containers" title="Permanent link">¶</a></h3>
 <p>Please refer to the general <a href="http://www.fig.sh/cli.hyml">fig documentation</a>
 for further notes on how to manage the infrastructure using fig.</p>
-<h1 id="configuration-options"><span class="enumerate-headings-plugin enumerate-heading-plugin">72.</span> Configuration options<a class="headerlink" href="#configuration-options" title="Permanent link">¶</a></h1>
+<h1 id="configuration-options"><span class="enumerate-headings-plugin enumerate-heading-plugin">75.</span> Configuration options<a class="headerlink" href="#configuration-options" title="Permanent link">¶</a></h1>
 <p>You can configure the base port used and various other options like the
 image organisation namespace and postgis user/pass by editing the <code>fig*.yml</code> files.</p></div>
 </article>
