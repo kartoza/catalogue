@@ -22,15 +22,12 @@ services:
     restart: on-failure:5
 
   smtp:
-    # Note you cannot scale if you use conteiner_name
+    image: namshi/smtp
     container_name: catalogue-smtp
-    image: catatnight/postfix
-    hostname: postfix
+    restart: always
     environment:
-      # You could change this to something more suitable
-      - maildomain=kartoza.com
-      - smtp_user=noreply:docker
-    restart: on-failure:5
+        - MAILNAME=kartoza.com
+        - SMTP_USER=noreply:docker
 
   db:
     # Note you cannot scale if you use conteiner_name
