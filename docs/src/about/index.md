@@ -21,12 +21,17 @@ Published under AGPL-3. See the [full license](license.md) text.
 
 | Contributor | GitHub Handle | |
 | ----------- | ------------- |-|
-| Ketan Bamniya | [ketankartoza](https://github.com/ketankartoza) | <img src="https://github.com/ketankartoza.png" alt="" width="64" height="64"> |
 | Tim Sutton | [timlinux](https://github.com/timlinux) | <img src="https://github.com/timlinux.png" alt= “” width="64" height="64"> |
+| Gavin Fleming | [gubuntu](https://github.com/gubuntu) | <img src="https://github.com/gubuntu.png" alt="" width="64" height="64"> |
+| Irwan Fathurrahman | [meomancer](https://github.com/meomancer) | <img src="https://github.com/meomancer.png" alt="" width="64" height="64"> |
+| Faneva Andriamiadantsoa | [fanevanjanahary](https://github.com/fanevanjanahary) | <img src="https://github.com/fanevanjanahary.png" alt="" width="64" height="64"> |
 | Jeremy Prior | [Jeremy-Prior](https://github.com/Jeremy-Prior) | <img src="https://github.com/Jeremy-Prior.png" alt= “” width="64" height="64"> |
 | Juanique Voogt | [voogt](https://github.com/voogt) | <img src="https://github.com/voogt.png" alt= “” width="64" height="64"> |
 | Eli Volschenk | [EliVolsch](https://github.com/EliVolsch) | <img src="https://github.com/EliVolsch.png" alt= “” width="64" height="64"> |
 | Dimas Ciputra | [dimasciput](https://github.com/dimasciput) | <img src="https://github.com/dimasciput.png" alt="" width="64" height="64"> |
+| Rischan Mafrur | [rischanlab](https://github.com/rischanlab) | <img src="https://github.com/rischanlab.png" alt="" width="64" height="64"> |
+| Ketan Bamniya | [ketankartoza](https://github.com/ketankartoza) | <img src="https://github.com/ketankartoza.png" alt="" width="64" height="64"> |
+
 
 ## Project funders/backers
 
