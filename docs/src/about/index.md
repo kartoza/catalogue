@@ -30,7 +30,9 @@ Published under AGPL-3. See the [full license](license.md) text.
 
 ## Project funders/backers
 
-This project was conceptualized and initially funded by [FUNDER_1]().
+This project was conceptualized and initially funded by [The department of science and innovation](https://www.dsti.gov.za/) f South Africa.
+
+![department_of_science_&_innovation_logo](https://nationalgovernment.co.za/img/logos/thumb_department_of_science_and_innovation_%28dsi%29.jpg)
 
 ## Logos
 
