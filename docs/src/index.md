@@ -67,8 +67,8 @@ By partnering up with SANSA (South African National Space Agency), SAEON (South 
 
 | | **Project Badges** | |
 | ----------------------- | ----------------------- | ----------------------- |
-| ![License](https://img.shields.io/github/license/{username}/{repo-name}.svg) | ![Version](https://img.shields.io/github/release/{username}/{repo-name}.svg) | ![Commits](https://img.shields.io/github/commits-since/{username}/{repo-name}/{version}.svg) |
-| ![Issue Tracker](https://img.shields.io/github/issues/{username}/{repo-name}.svg) | ![Closed Issues](https://img.shields.io/github/issues-closed/{username}/{repo-name}.svg) | ![Pull requests](https://img.shields.io/github/issues-pr/{username}/{repo-name}.svg) |
+| ![License](https://img.shields.io/github/license/kartoza/catalogue.svg) | ![Version](https://img.shields.io/github/release/kartoza/catalogue.svg) | ![Commits](https://img.shields.io/github/commits-since/kartoza/catalogue/v3.0.1.svg) |
+| ![Issue Tracker](https://img.shields.io/github/issues/kartoza/catalogue.svg) | ![Closed Issues](https://img.shields.io/github/issues-closed/kartoza/catalogue.svg) | ![Pull requests](https://img.shields.io/github/issues-pr/kartoza/catalogue.svg) |
 
 #### Contributor License Agreement (CLA)
 <!-- Insert links to CLA -->
