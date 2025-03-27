@@ -1,0 +1,1231 @@
+*** Starting uWSGI 2.0.28 (64bit) on [Thu Mar 27 10:03:26 2025] ***
+compiled with version: 8.3.0 on 27 March 2025 09:55:08
+os: Linux-6.11.0-19-generic #19~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Mon Feb 17 11:51:52 UTC 2
+nodename: uwsgi
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 8
+current working directory: /home/web/django_project
+writing pidfile to /tmp/flood_mapper.pid
+detected binary path: /usr/local/bin/uwsgi
+uWSGI running as root, you can use --uid/--gid/--chroot options
+*** WARNING: you are running uWSGI as root !!! (use the --uid flag) *** 
+chdir() to /home/web/django_project
+your memory page size is 4096 bytes
+ *** WARNING: you have enabled harakiri without post buffering. Slow upload could be rejected on post-unbuffered webservers *** 
+detected max file descriptor number: 1048576
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+uwsgi socket 0 bound to TCP address 0.0.0.0:8080 fd 6
+uWSGI running as root, you can use --uid/--gid/--chroot options
+*** WARNING: you are running uWSGI as root !!! (use the --uid flag) *** 
+Python version: 3.8.17 (default, Jun 13 2023, 16:14:12)  [GCC 8.3.0]
+Python main interpreter initialized at 0x5ee0518eaa60
+uWSGI running as root, you can use --uid/--gid/--chroot options
+*** WARNING: you are running uWSGI as root !!! (use the --uid flag) *** 
+python threads support enabled
+your server socket listen backlog is limited to 100 connections
+your mercy for graceful operations on workers is 60 seconds
+mapped 364600 bytes (356 KB) for 4 cores
+*** Operational MODE: preforking ***
+environ({'PATH': '/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin', 'HOSTNAME': 'uwsgi', 'EMAIL_USE_TLS': 'False', 'EMAIL_SUBJECT_PREFIX': '[sansa-catalogue]', 'VIRTUAL_PORT': '8080', 'DATABASE_HOST': 'db', 'DATABASE_NAME': 'gis', 'EMAIL_HOST_USER': 'noreply@kartoza.com', 'EMAIL_PORT': '25', 'VIRTUAL_HOST': 'catalogue.kartoza.com', 'RABBITMQ_HOST': 'rabbitmq', 'DATABASE_PASSWORD': 'docker', 'DATABASE_USERNAME': 'docker', 'EMAIL_HOST': 'smtp', 'EMAIL_CUSTOMER_SUPPORT': 'customers-eo@sansa.org.za', 'EMAIL_HOST_PASSWORD': 'docker', 'DJANGO_SETTINGS_MODULE': 'core.settings.prod_docker', 'LANG': 'C.UTF-8', 'GPG_KEY': 'E3FF2839C048B25C084DEBE9B26995E310250568', 'PYTHON_VERSION': '3.8.17', 'PYTHON_PIP_VERSION': '23.0.1', 'PYTHON_SETUPTOOLS_VERSION': '57.5.0', 'PYTHON_GET_PIP_URL': 'https://github.com/pypa/get-pip/raw/0d8570dc44796f4369b652222cf176b3db6ac70e/public/get-pip.py', 'PYTHON_GET_PIP_SHA256': '96461deced5c2a487ddc65207ec5a9cffeca0d34e7af7ea1afc470ff0d746207', 'JAVA_HOME': '/usr/lib/jvm/java-11-openjdk-amd64', 'HOME': '/root', 'UWSGI_RELOADS': '0', 'UWSGI_ORIGINAL_PROC_NAME': 'uwsgi'})
+WSGI app 0 (mountpoint='') ready in 3 seconds on interpreter 0x5ee0518eaa60 pid: 1 (default app)
+uWSGI running as root, you can use --uid/--gid/--chroot options
+*** WARNING: you are running uWSGI as root !!! (use the --uid flag) *** 
+*** uWSGI is running in multiple interpreter mode ***
+spawned uWSGI master process (pid: 1)
+spawned uWSGI worker 1 (pid: 17, cores: 1)
+spawned uWSGI worker 2 (pid: 18, cores: 1)
+unable to stat() /tmp/touch-me-to-reload, events will be triggered as soon as the file is created
+ERROR:root:True
+[DEBUG] 2025-03-27 12:06:46,613 django.template Exception while resolving variable 'title' in template 'pipeline/css.html'.
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/django/template/base.py", line 829, in _resolve_lookup
+    current = current[bit]
+  File "/usr/local/lib/python3.8/site-packages/django/template/context.py", line 83, in __getitem__
+    raise KeyError(key)
+KeyError: 'title'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/django/template/base.py", line 835, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(type(current), bit):
+AttributeError: type object 'Context' has no attribute 'title'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/django/template/base.py", line 843, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'title'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/django/template/base.py", line 848, in _resolve_lookup
+    raise VariableDoesNotExist("Failed lookup for key "
+django.template.base.VariableDoesNotExist: Failed lookup for key [title] in [{'True': True, 'False': False, 'None': None}, {'media': 'screen, projection', 'type': 'text/css', 'url': '/static/css/catalogue.55a8f8ac5aa5.css'}]
+DEBUG:django.template:Exception while resolving variable 'title' in template 'pipeline/css.html'.
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/django/template/base.py", line 829, in _resolve_lookup
+    current = current[bit]
+  File "/usr/local/lib/python3.8/site-packages/django/template/context.py", line 83, in __getitem__
+    raise KeyError(key)
+KeyError: 'title'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/django/template/base.py", line 835, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(type(current), bit):
+AttributeError: type object 'Context' has no attribute 'title'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/django/template/base.py", line 843, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'title'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/django/template/base.py", line 848, in _resolve_lookup
+    raise VariableDoesNotExist("Failed lookup for key "
+django.template.base.VariableDoesNotExist: Failed lookup for key [title] in [{'True': True, 'False': False, 'None': None}, {'media': 'screen, projection', 'type': 'text/css', 'url': '/static/css/catalogue.55a8f8ac5aa5.css'}]
+[DEBUG] 2025-03-27 12:06:46,614 django.template Exception while resolving variable 'charset' in template 'pipeline/css.html'.
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/django/template/base.py", line 829, in _resolve_lookup
+    current = current[bit]
+  File "/usr/local/lib/python3.8/site-packages/django/template/context.py", line 83, in __getitem__
+    raise KeyError(key)
+KeyError: 'charset'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/django/template/base.py", line 835, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(type(current), bit):
+AttributeError: type object 'Context' has no attribute 'charset'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/django/template/base.py", line 843, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'charset'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/django/template/base.py", line 848, in _resolve_lookup
+    raise VariableDoesNotExist("Failed lookup for key "
+django.template.base.VariableDoesNotExist: Failed lookup for key [charset] in [{'True': True, 'False': False, 'None': None}, {'media': 'screen, projection', 'type': 'text/css', 'url': '/static/css/catalogue.55a8f8ac5aa5.css'}]
+DEBUG:django.template:Exception while resolving variable 'charset' in template 'pipeline/css.html'.
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/django/template/base.py", line 829, in _resolve_lookup
+    current = current[bit]
+  File "/usr/local/lib/python3.8/site-packages/django/template/context.py", line 83, in __getitem__
+    raise KeyError(key)
+KeyError: 'charset'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/django/template/base.py", line 835, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(type(current), bit):
+AttributeError: type object 'Context' has no attribute 'charset'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/django/template/base.py", line 843, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'charset'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/django/template/base.py", line 848, in _resolve_lookup
+    raise VariableDoesNotExist("Failed lookup for key "
+django.template.base.VariableDoesNotExist: Failed lookup for key [charset] in [{'True': True, 'False': False, 'None': None}, {'media': 'screen, projection', 'type': 'text/css', 'url': '/static/css/catalogue.55a8f8ac5aa5.css'}]
+172.22.0.1 GET / => generated 200 in 848 ms
+ERROR:catalogue.views.geoiputils:Remote ip is: 172.22.0.1
+ERROR:catalogue.views.others:Unhandled error in log_visit: Could not load a database from /home/web/django_project/core/geoip_data.
+Traceback (most recent call last):
+  File "/home/web/django_project/./catalogue/views/others.py", line 92, in log_visit
+    myLatLong = myGeoIpUtils.getMyLatLong(request)
+  File "/home/web/django_project/./catalogue/views/geoiputils.py", line 60, in getMyLatLong
+    g = GeoIP2()
+  File "/usr/local/lib/python3.8/site-packages/django/contrib/gis/geoip2/base.py", line 97, in __init__
+    raise GeoIP2Exception('Could not load a database from %s.' % path)
+django.contrib.gis.geoip2.base.GeoIP2Exception: Could not load a database from /home/web/django_project/core/geoip_data.
+172.22.0.1 GET /visit/ => generated 200 in 2 ms
+File not found
+ERROR:root:True
+[DEBUG] 2025-03-27 12:07:54,482 django.template Exception while resolving variable 'title' in template 'pipeline/css.html'.
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/django/template/base.py", line 829, in _resolve_lookup
+    current = current[bit]
+  File "/usr/local/lib/python3.8/site-packages/django/template/context.py", line 83, in __getitem__
+    raise KeyError(key)
+KeyError: 'title'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/django/template/base.py", line 835, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(type(current), bit):
+AttributeError: type object 'Context' has no attribute 'title'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/django/template/base.py", line 843, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'title'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/django/template/base.py", line 848, in _resolve_lookup
+    raise VariableDoesNotExist("Failed lookup for key "
+django.template.base.VariableDoesNotExist: Failed lookup for key [title] in [{'True': True, 'False': False, 'None': None}, {'media': 'screen, projection', 'type': 'text/css', 'url': '/static/css/catalogue.55a8f8ac5aa5.css'}]
+DEBUG:django.template:Exception while resolving variable 'title' in template 'pipeline/css.html'.
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/django/template/base.py", line 829, in _resolve_lookup
+    current = current[bit]
+  File "/usr/local/lib/python3.8/site-packages/django/template/context.py", line 83, in __getitem__
+    raise KeyError(key)
+KeyError: 'title'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/django/template/base.py", line 835, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(type(current), bit):
+AttributeError: type object 'Context' has no attribute 'title'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/django/template/base.py", line 843, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'title'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/django/template/base.py", line 848, in _resolve_lookup
+    raise VariableDoesNotExist("Failed lookup for key "
+django.template.base.VariableDoesNotExist: Failed lookup for key [title] in [{'True': True, 'False': False, 'None': None}, {'media': 'screen, projection', 'type': 'text/css', 'url': '/static/css/catalogue.55a8f8ac5aa5.css'}]
+[DEBUG] 2025-03-27 12:07:54,483 django.template Exception while resolving variable 'charset' in template 'pipeline/css.html'.
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/django/template/base.py", line 829, in _resolve_lookup
+    current = current[bit]
+  File "/usr/local/lib/python3.8/site-packages/django/template/context.py", line 83, in __getitem__
+    raise KeyError(key)
+KeyError: 'charset'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/django/template/base.py", line 835, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(type(current), bit):
+AttributeError: type object 'Context' has no attribute 'charset'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/django/template/base.py", line 843, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'charset'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/django/template/base.py", line 848, in _resolve_lookup
+    raise VariableDoesNotExist("Failed lookup for key "
+django.template.base.VariableDoesNotExist: Failed lookup for key [charset] in [{'True': True, 'False': False, 'None': None}, {'media': 'screen, projection', 'type': 'text/css', 'url': '/static/css/catalogue.55a8f8ac5aa5.css'}]
+DEBUG:django.template:Exception while resolving variable 'charset' in template 'pipeline/css.html'.
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/django/template/base.py", line 829, in _resolve_lookup
+    current = current[bit]
+  File "/usr/local/lib/python3.8/site-packages/django/template/context.py", line 83, in __getitem__
+    raise KeyError(key)
+KeyError: 'charset'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/django/template/base.py", line 835, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(type(current), bit):
+AttributeError: type object 'Context' has no attribute 'charset'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/django/template/base.py", line 843, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'charset'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/django/template/base.py", line 848, in _resolve_lookup
+    raise VariableDoesNotExist("Failed lookup for key "
+django.template.base.VariableDoesNotExist: Failed lookup for key [charset] in [{'True': True, 'False': False, 'None': None}, {'media': 'screen, projection', 'type': 'text/css', 'url': '/static/css/catalogue.55a8f8ac5aa5.css'}]
+[DEBUG] 2025-03-27 12:07:54,489 django.template Exception while resolving variable 'sort_link' in template 'django_tables2/custom-table.html'.
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/django/template/base.py", line 829, in _resolve_lookup
+    current = current[bit]
+  File "/usr/local/lib/python3.8/site-packages/django/template/context.py", line 83, in __getitem__
+    raise KeyError(key)
+KeyError: 'sort_link'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/django/template/base.py", line 835, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(type(current), bit):
+AttributeError: type object 'RequestContext' has no attribute 'sort_link'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/django/template/base.py", line 843, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'sort_link'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/django/template/base.py", line 848, in _resolve_lookup
+    raise VariableDoesNotExist("Failed lookup for key "
+django.template.base.VariableDoesNotExist: Failed lookup for key [sort_link] in [{'True': True, 'False': False, 'None': None}, {'csrf_token': <SimpleLazyObject: <function csrf.<locals>._get_val at 0x737e4e1618b0>>, 'request': <WSGIRequest: GET '/data-summary-table/'>, 'user': <SimpleLazyObject: <django.contrib.auth.models.AnonymousUser object at 0x737e4e1b4af0>>, 'perms': <django.contrib.auth.context_processors.PermWrapper object at 0x737e4e10c310>, 'messages': <django.contrib.messages.storage.fallback.FallbackStorage object at 0x737e6205fd60>, 'DEFAULT_MESSAGE_LEVELS': {'DEBUG': 10, 'INFO': 20, 'SUCCESS': 25, 'WARNING': 30, 'ERROR': 40}}, {}, {'table': <reports.tables.SatelliteInstrumentTableJSON object at 0x737e4ea61fd0>}, {'block': <Block Node: table. Contents: [<TextNode: '\n    <div class="table-re'>, <IfNode>, <TextNode: ' id="datatablesSimple" cl'>, <Block Node: table.thead. Contents: [<TextNode: '\n    <thead>\n        <tr>'>, <ForNode: for column in table.columns, tail_len: 3>, <TextNode: '\n        </tr>\n    </thea'>]>, <TextNode: '\n    '>, <Block Node: table.tbody. Contents: [<TextNode: '\n    <tbody>\n        '>, <ForNode: for row in table.page.object_list|default:table.rows, tail_len: 4>, <TextNode: '\n    </tbody>\n    '>]>, <TextNode: '\n    '>, <Block Node: table.tfoot. Contents: [<TextNode: '\n    <tfoot></tfoot>\n    '>]>, <TextNode: '\n\n</table>\n    </div>\n'>]>}, {'block': <Block Node: table.thead. Contents: [<TextNode: '\n    <thead>\n        <tr>'>, <ForNode: for column in table.columns, tail_len: 3>, <TextNode: '\n        </tr>\n    </thea'>]>}, {'forloop': {'parentloop': {}, 'counter0': 0, 'counter': 1, 'revcounter': 7, 'revcounter0': 6, 'first': True, 'last': False}, 'column': <django_tables2.columns.base.BoundColumn object at 0x737e4ea01460>}]
+DEBUG:django.template:Exception while resolving variable 'sort_link' in template 'django_tables2/custom-table.html'.
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/django/template/base.py", line 829, in _resolve_lookup
+    current = current[bit]
+  File "/usr/local/lib/python3.8/site-packages/django/template/context.py", line 83, in __getitem__
+    raise KeyError(key)
+KeyError: 'sort_link'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/django/template/base.py", line 835, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(type(current), bit):
+AttributeError: type object 'RequestContext' has no attribute 'sort_link'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/django/template/base.py", line 843, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'sort_link'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/django/template/base.py", line 848, in _resolve_lookup
+    raise VariableDoesNotExist("Failed lookup for key "
+django.template.base.VariableDoesNotExist: Failed lookup for key [sort_link] in [{'True': True, 'False': False, 'None': None}, {'csrf_token': <SimpleLazyObject: <function csrf.<locals>._get_val at 0x737e4e1618b0>>, 'request': <WSGIRequest: GET '/data-summary-table/'>, 'user': <SimpleLazyObject: <django.contrib.auth.models.AnonymousUser object at 0x737e4e1b4af0>>, 'perms': <django.contrib.auth.context_processors.PermWrapper object at 0x737e4e10c310>, 'messages': <django.contrib.messages.storage.fallback.FallbackStorage object at 0x737e6205fd60>, 'DEFAULT_MESSAGE_LEVELS': {'DEBUG': 10, 'INFO': 20, 'SUCCESS': 25, 'WARNING': 30, 'ERROR': 40}}, {}, {'table': <reports.tables.SatelliteInstrumentTableJSON object at 0x737e4ea61fd0>}, {'block': <Block Node: table. Contents: [<TextNode: '\n    <div class="table-re'>, <IfNode>, <TextNode: ' id="datatablesSimple" cl'>, <Block Node: table.thead. Contents: [<TextNode: '\n    <thead>\n        <tr>'>, <ForNode: for column in table.columns, tail_len: 3>, <TextNode: '\n        </tr>\n    </thea'>]>, <TextNode: '\n    '>, <Block Node: table.tbody. Contents: [<TextNode: '\n    <tbody>\n        '>, <ForNode: for row in table.page.object_list|default:table.rows, tail_len: 4>, <TextNode: '\n    </tbody>\n    '>]>, <TextNode: '\n    '>, <Block Node: table.tfoot. Contents: [<TextNode: '\n    <tfoot></tfoot>\n    '>]>, <TextNode: '\n\n</table>\n    </div>\n'>]>}, {'block': <Block Node: table.thead. Contents: [<TextNode: '\n    <thead>\n        <tr>'>, <ForNode: for column in table.columns, tail_len: 3>, <TextNode: '\n        </tr>\n    </thea'>]>}, {'forloop': {'parentloop': {}, 'counter0': 0, 'counter': 1, 'revcounter': 7, 'revcounter0': 6, 'first': True, 'last': False}, 'column': <django_tables2.columns.base.BoundColumn object at 0x737e4ea01460>}]
+[DEBUG] 2025-03-27 12:07:54,490 django.template Exception while resolving variable 'sort_link' in template 'django_tables2/custom-table.html'.
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/django/template/base.py", line 829, in _resolve_lookup
+    current = current[bit]
+  File "/usr/local/lib/python3.8/site-packages/django/template/context.py", line 83, in __getitem__
+    raise KeyError(key)
+KeyError: 'sort_link'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/django/template/base.py", line 835, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(type(current), bit):
+AttributeError: type object 'RequestContext' has no attribute 'sort_link'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/django/template/base.py", line 843, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'sort_link'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/django/template/base.py", line 848, in _resolve_lookup
+    raise VariableDoesNotExist("Failed lookup for key "
+django.template.base.VariableDoesNotExist: Failed lookup for key [sort_link] in [{'True': True, 'False': False, 'None': None}, {'csrf_token': <SimpleLazyObject: <function csrf.<locals>._get_val at 0x737e4e1618b0>>, 'request': <WSGIRequest: GET '/data-summary-table/'>, 'user': <SimpleLazyObject: <django.contrib.auth.models.AnonymousUser object at 0x737e4e1b4af0>>, 'perms': <django.contrib.auth.context_processors.PermWrapper object at 0x737e4e10c310>, 'messages': <django.contrib.messages.storage.fallback.FallbackStorage object at 0x737e6205fd60>, 'DEFAULT_MESSAGE_LEVELS': {'DEBUG': 10, 'INFO': 20, 'SUCCESS': 25, 'WARNING': 30, 'ERROR': 40}}, {}, {'table': <reports.tables.SatelliteInstrumentTableJSON object at 0x737e4ea61fd0>}, {'block': <Block Node: table. Contents: [<TextNode: '\n    <div class="table-re'>, <IfNode>, <TextNode: ' id="datatablesSimple" cl'>, <Block Node: table.thead. Contents: [<TextNode: '\n    <thead>\n        <tr>'>, <ForNode: for column in table.columns, tail_len: 3>, <TextNode: '\n        </tr>\n    </thea'>]>, <TextNode: '\n    '>, <Block Node: table.tbody. Contents: [<TextNode: '\n    <tbody>\n        '>, <ForNode: for row in table.page.object_list|default:table.rows, tail_len: 4>, <TextNode: '\n    </tbody>\n    '>]>, <TextNode: '\n    '>, <Block Node: table.tfoot. Contents: [<TextNode: '\n    <tfoot></tfoot>\n    '>]>, <TextNode: '\n\n</table>\n    </div>\n'>]>}, {'block': <Block Node: table.thead. Contents: [<TextNode: '\n    <thead>\n        <tr>'>, <ForNode: for column in table.columns, tail_len: 3>, <TextNode: '\n        </tr>\n    </thea'>]>}, {'forloop': {'parentloop': {}, 'counter0': 1, 'counter': 2, 'revcounter': 6, 'revcounter0': 5, 'first': False, 'last': False}, 'column': <django_tables2.columns.base.BoundColumn object at 0x737e4ea015b0>}]
+DEBUG:django.template:Exception while resolving variable 'sort_link' in template 'django_tables2/custom-table.html'.
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/django/template/base.py", line 829, in _resolve_lookup
+    current = current[bit]
+  File "/usr/local/lib/python3.8/site-packages/django/template/context.py", line 83, in __getitem__
+    raise KeyError(key)
+KeyError: 'sort_link'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/django/template/base.py", line 835, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(type(current), bit):
+AttributeError: type object 'RequestContext' has no attribute 'sort_link'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/django/template/base.py", line 843, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'sort_link'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/django/template/base.py", line 848, in _resolve_lookup
+    raise VariableDoesNotExist("Failed lookup for key "
+django.template.base.VariableDoesNotExist: Failed lookup for key [sort_link] in [{'True': True, 'False': False, 'None': None}, {'csrf_token': <SimpleLazyObject: <function csrf.<locals>._get_val at 0x737e4e1618b0>>, 'request': <WSGIRequest: GET '/data-summary-table/'>, 'user': <SimpleLazyObject: <django.contrib.auth.models.AnonymousUser object at 0x737e4e1b4af0>>, 'perms': <django.contrib.auth.context_processors.PermWrapper object at 0x737e4e10c310>, 'messages': <django.contrib.messages.storage.fallback.FallbackStorage object at 0x737e6205fd60>, 'DEFAULT_MESSAGE_LEVELS': {'DEBUG': 10, 'INFO': 20, 'SUCCESS': 25, 'WARNING': 30, 'ERROR': 40}}, {}, {'table': <reports.tables.SatelliteInstrumentTableJSON object at 0x737e4ea61fd0>}, {'block': <Block Node: table. Contents: [<TextNode: '\n    <div class="table-re'>, <IfNode>, <TextNode: ' id="datatablesSimple" cl'>, <Block Node: table.thead. Contents: [<TextNode: '\n    <thead>\n        <tr>'>, <ForNode: for column in table.columns, tail_len: 3>, <TextNode: '\n        </tr>\n    </thea'>]>, <TextNode: '\n    '>, <Block Node: table.tbody. Contents: [<TextNode: '\n    <tbody>\n        '>, <ForNode: for row in table.page.object_list|default:table.rows, tail_len: 4>, <TextNode: '\n    </tbody>\n    '>]>, <TextNode: '\n    '>, <Block Node: table.tfoot. Contents: [<TextNode: '\n    <tfoot></tfoot>\n    '>]>, <TextNode: '\n\n</table>\n    </div>\n'>]>}, {'block': <Block Node: table.thead. Contents: [<TextNode: '\n    <thead>\n        <tr>'>, <ForNode: for column in table.columns, tail_len: 3>, <TextNode: '\n        </tr>\n    </thea'>]>}, {'forloop': {'parentloop': {}, 'counter0': 1, 'counter': 2, 'revcounter': 6, 'revcounter0': 5, 'first': False, 'last': False}, 'column': <django_tables2.columns.base.BoundColumn object at 0x737e4ea015b0>}]
+[DEBUG] 2025-03-27 12:07:54,490 django.template Exception while resolving variable 'sort_link' in template 'django_tables2/custom-table.html'.
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/django/template/base.py", line 829, in _resolve_lookup
+    current = current[bit]
+  File "/usr/local/lib/python3.8/site-packages/django/template/context.py", line 83, in __getitem__
+    raise KeyError(key)
+KeyError: 'sort_link'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/django/template/base.py", line 835, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(type(current), bit):
+AttributeError: type object 'RequestContext' has no attribute 'sort_link'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/django/template/base.py", line 843, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'sort_link'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/django/template/base.py", line 848, in _resolve_lookup
+    raise VariableDoesNotExist("Failed lookup for key "
+django.template.base.VariableDoesNotExist: Failed lookup for key [sort_link] in [{'True': True, 'False': False, 'None': None}, {'csrf_token': <SimpleLazyObject: <function csrf.<locals>._get_val at 0x737e4e1618b0>>, 'request': <WSGIRequest: GET '/data-summary-table/'>, 'user': <SimpleLazyObject: <django.contrib.auth.models.AnonymousUser object at 0x737e4e1b4af0>>, 'perms': <django.contrib.auth.context_processors.PermWrapper object at 0x737e4e10c310>, 'messages': <django.contrib.messages.storage.fallback.FallbackStorage object at 0x737e6205fd60>, 'DEFAULT_MESSAGE_LEVELS': {'DEBUG': 10, 'INFO': 20, 'SUCCESS': 25, 'WARNING': 30, 'ERROR': 40}}, {}, {'table': <reports.tables.SatelliteInstrumentTableJSON object at 0x737e4ea61fd0>}, {'block': <Block Node: table. Contents: [<TextNode: '\n    <div class="table-re'>, <IfNode>, <TextNode: ' id="datatablesSimple" cl'>, <Block Node: table.thead. Contents: [<TextNode: '\n    <thead>\n        <tr>'>, <ForNode: for column in table.columns, tail_len: 3>, <TextNode: '\n        </tr>\n    </thea'>]>, <TextNode: '\n    '>, <Block Node: table.tbody. Contents: [<TextNode: '\n    <tbody>\n        '>, <ForNode: for row in table.page.object_list|default:table.rows, tail_len: 4>, <TextNode: '\n    </tbody>\n    '>]>, <TextNode: '\n    '>, <Block Node: table.tfoot. Contents: [<TextNode: '\n    <tfoot></tfoot>\n    '>]>, <TextNode: '\n\n</table>\n    </div>\n'>]>}, {'block': <Block Node: table.thead. Contents: [<TextNode: '\n    <thead>\n        <tr>'>, <ForNode: for column in table.columns, tail_len: 3>, <TextNode: '\n        </tr>\n    </thea'>]>}, {'forloop': {'parentloop': {}, 'counter0': 2, 'counter': 3, 'revcounter': 5, 'revcounter0': 4, 'first': False, 'last': False}, 'column': <django_tables2.columns.base.BoundColumn object at 0x737e4ea9bf70>}]
+DEBUG:django.template:Exception while resolving variable 'sort_link' in template 'django_tables2/custom-table.html'.
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/django/template/base.py", line 829, in _resolve_lookup
+    current = current[bit]
+  File "/usr/local/lib/python3.8/site-packages/django/template/context.py", line 83, in __getitem__
+    raise KeyError(key)
+KeyError: 'sort_link'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/django/template/base.py", line 835, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(type(current), bit):
+AttributeError: type object 'RequestContext' has no attribute 'sort_link'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/django/template/base.py", line 843, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'sort_link'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/django/template/base.py", line 848, in _resolve_lookup
+    raise VariableDoesNotExist("Failed lookup for key "
+django.template.base.VariableDoesNotExist: Failed lookup for key [sort_link] in [{'True': True, 'False': False, 'None': None}, {'csrf_token': <SimpleLazyObject: <function csrf.<locals>._get_val at 0x737e4e1618b0>>, 'request': <WSGIRequest: GET '/data-summary-table/'>, 'user': <SimpleLazyObject: <django.contrib.auth.models.AnonymousUser object at 0x737e4e1b4af0>>, 'perms': <django.contrib.auth.context_processors.PermWrapper object at 0x737e4e10c310>, 'messages': <django.contrib.messages.storage.fallback.FallbackStorage object at 0x737e6205fd60>, 'DEFAULT_MESSAGE_LEVELS': {'DEBUG': 10, 'INFO': 20, 'SUCCESS': 25, 'WARNING': 30, 'ERROR': 40}}, {}, {'table': <reports.tables.SatelliteInstrumentTableJSON object at 0x737e4ea61fd0>}, {'block': <Block Node: table. Contents: [<TextNode: '\n    <div class="table-re'>, <IfNode>, <TextNode: ' id="datatablesSimple" cl'>, <Block Node: table.thead. Contents: [<TextNode: '\n    <thead>\n        <tr>'>, <ForNode: for column in table.columns, tail_len: 3>, <TextNode: '\n        </tr>\n    </thea'>]>, <TextNode: '\n    '>, <Block Node: table.tbody. Contents: [<TextNode: '\n    <tbody>\n        '>, <ForNode: for row in table.page.object_list|default:table.rows, tail_len: 4>, <TextNode: '\n    </tbody>\n    '>]>, <TextNode: '\n    '>, <Block Node: table.tfoot. Contents: [<TextNode: '\n    <tfoot></tfoot>\n    '>]>, <TextNode: '\n\n</table>\n    </div>\n'>]>}, {'block': <Block Node: table.thead. Contents: [<TextNode: '\n    <thead>\n        <tr>'>, <ForNode: for column in table.columns, tail_len: 3>, <TextNode: '\n        </tr>\n    </thea'>]>}, {'forloop': {'parentloop': {}, 'counter0': 2, 'counter': 3, 'revcounter': 5, 'revcounter0': 4, 'first': False, 'last': False}, 'column': <django_tables2.columns.base.BoundColumn object at 0x737e4ea9bf70>}]
+[DEBUG] 2025-03-27 12:07:54,490 django.template Exception while resolving variable 'sort_link' in template 'django_tables2/custom-table.html'.
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/django/template/base.py", line 829, in _resolve_lookup
+    current = current[bit]
+  File "/usr/local/lib/python3.8/site-packages/django/template/context.py", line 83, in __getitem__
+    raise KeyError(key)
+KeyError: 'sort_link'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/django/template/base.py", line 835, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(type(current), bit):
+AttributeError: type object 'RequestContext' has no attribute 'sort_link'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/django/template/base.py", line 843, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'sort_link'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/django/template/base.py", line 848, in _resolve_lookup
+    raise VariableDoesNotExist("Failed lookup for key "
+django.template.base.VariableDoesNotExist: Failed lookup for key [sort_link] in [{'True': True, 'False': False, 'None': None}, {'csrf_token': <SimpleLazyObject: <function csrf.<locals>._get_val at 0x737e4e1618b0>>, 'request': <WSGIRequest: GET '/data-summary-table/'>, 'user': <SimpleLazyObject: <django.contrib.auth.models.AnonymousUser object at 0x737e4e1b4af0>>, 'perms': <django.contrib.auth.context_processors.PermWrapper object at 0x737e4e10c310>, 'messages': <django.contrib.messages.storage.fallback.FallbackStorage object at 0x737e6205fd60>, 'DEFAULT_MESSAGE_LEVELS': {'DEBUG': 10, 'INFO': 20, 'SUCCESS': 25, 'WARNING': 30, 'ERROR': 40}}, {}, {'table': <reports.tables.SatelliteInstrumentTableJSON object at 0x737e4ea61fd0>}, {'block': <Block Node: table. Contents: [<TextNode: '\n    <div class="table-re'>, <IfNode>, <TextNode: ' id="datatablesSimple" cl'>, <Block Node: table.thead. Contents: [<TextNode: '\n    <thead>\n        <tr>'>, <ForNode: for column in table.columns, tail_len: 3>, <TextNode: '\n        </tr>\n    </thea'>]>, <TextNode: '\n    '>, <Block Node: table.tbody. Contents: [<TextNode: '\n    <tbody>\n        '>, <ForNode: for row in table.page.object_list|default:table.rows, tail_len: 4>, <TextNode: '\n    </tbody>\n    '>]>, <TextNode: '\n    '>, <Block Node: table.tfoot. Contents: [<TextNode: '\n    <tfoot></tfoot>\n    '>]>, <TextNode: '\n\n</table>\n    </div>\n'>]>}, {'block': <Block Node: table.thead. Contents: [<TextNode: '\n    <thead>\n        <tr>'>, <ForNode: for column in table.columns, tail_len: 3>, <TextNode: '\n        </tr>\n    </thea'>]>}, {'forloop': {'parentloop': {}, 'counter0': 3, 'counter': 4, 'revcounter': 4, 'revcounter0': 3, 'first': False, 'last': False}, 'column': <django_tables2.columns.base.BoundColumn object at 0x737e4ea9b8b0>}]
+DEBUG:django.template:Exception while resolving variable 'sort_link' in template 'django_tables2/custom-table.html'.
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/django/template/base.py", line 829, in _resolve_lookup
+    current = current[bit]
+  File "/usr/local/lib/python3.8/site-packages/django/template/context.py", line 83, in __getitem__
+    raise KeyError(key)
+KeyError: 'sort_link'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/django/template/base.py", line 835, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(type(current), bit):
+AttributeError: type object 'RequestContext' has no attribute 'sort_link'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/django/template/base.py", line 843, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'sort_link'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/django/template/base.py", line 848, in _resolve_lookup
+    raise VariableDoesNotExist("Failed lookup for key "
+django.template.base.VariableDoesNotExist: Failed lookup for key [sort_link] in [{'True': True, 'False': False, 'None': None}, {'csrf_token': <SimpleLazyObject: <function csrf.<locals>._get_val at 0x737e4e1618b0>>, 'request': <WSGIRequest: GET '/data-summary-table/'>, 'user': <SimpleLazyObject: <django.contrib.auth.models.AnonymousUser object at 0x737e4e1b4af0>>, 'perms': <django.contrib.auth.context_processors.PermWrapper object at 0x737e4e10c310>, 'messages': <django.contrib.messages.storage.fallback.FallbackStorage object at 0x737e6205fd60>, 'DEFAULT_MESSAGE_LEVELS': {'DEBUG': 10, 'INFO': 20, 'SUCCESS': 25, 'WARNING': 30, 'ERROR': 40}}, {}, {'table': <reports.tables.SatelliteInstrumentTableJSON object at 0x737e4ea61fd0>}, {'block': <Block Node: table. Contents: [<TextNode: '\n    <div class="table-re'>, <IfNode>, <TextNode: ' id="datatablesSimple" cl'>, <Block Node: table.thead. Contents: [<TextNode: '\n    <thead>\n        <tr>'>, <ForNode: for column in table.columns, tail_len: 3>, <TextNode: '\n        </tr>\n    </thea'>]>, <TextNode: '\n    '>, <Block Node: table.tbody. Contents: [<TextNode: '\n    <tbody>\n        '>, <ForNode: for row in table.page.object_list|default:table.rows, tail_len: 4>, <TextNode: '\n    </tbody>\n    '>]>, <TextNode: '\n    '>, <Block Node: table.tfoot. Contents: [<TextNode: '\n    <tfoot></tfoot>\n    '>]>, <TextNode: '\n\n</table>\n    </div>\n'>]>}, {'block': <Block Node: table.thead. Contents: [<TextNode: '\n    <thead>\n        <tr>'>, <ForNode: for column in table.columns, tail_len: 3>, <TextNode: '\n        </tr>\n    </thea'>]>}, {'forloop': {'parentloop': {}, 'counter0': 3, 'counter': 4, 'revcounter': 4, 'revcounter0': 3, 'first': False, 'last': False}, 'column': <django_tables2.columns.base.BoundColumn object at 0x737e4ea9b8b0>}]
+172.22.0.1 GET /data-summary-table/ => generated 200 in 832 ms
+ERROR:catalogue.views.geoiputils:Remote ip is: 172.22.0.1
+ERROR:catalogue.views.others:Unhandled error in log_visit: Could not load a database from /home/web/django_project/core/geoip_data.
+Traceback (most recent call last):
+  File "/home/web/django_project/./catalogue/views/others.py", line 92, in log_visit
+    myLatLong = myGeoIpUtils.getMyLatLong(request)
+  File "/home/web/django_project/./catalogue/views/geoiputils.py", line 60, in getMyLatLong
+    g = GeoIP2()
+  File "/usr/local/lib/python3.8/site-packages/django/contrib/gis/geoip2/base.py", line 97, in __init__
+    raise GeoIP2Exception('Could not load a database from %s.' % path)
+django.contrib.gis.geoip2.base.GeoIP2Exception: Could not load a database from /home/web/django_project/core/geoip_data.
+172.22.0.1 GET /visit/ => generated 200 in 1 ms
+ERROR:root:True
+[DEBUG] 2025-03-27 12:07:55,612 django.template Exception while resolving variable 'title' in template 'pipeline/css.html'.
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/django/template/base.py", line 829, in _resolve_lookup
+    current = current[bit]
+  File "/usr/local/lib/python3.8/site-packages/django/template/context.py", line 83, in __getitem__
+    raise KeyError(key)
+KeyError: 'title'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/django/template/base.py", line 835, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(type(current), bit):
+AttributeError: type object 'Context' has no attribute 'title'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/django/template/base.py", line 843, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'title'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/django/template/base.py", line 848, in _resolve_lookup
+    raise VariableDoesNotExist("Failed lookup for key "
+django.template.base.VariableDoesNotExist: Failed lookup for key [title] in [{'True': True, 'False': False, 'None': None}, {'media': 'screen, projection', 'type': 'text/css', 'url': '/static/css/catalogue.55a8f8ac5aa5.css'}]
+DEBUG:django.template:Exception while resolving variable 'title' in template 'pipeline/css.html'.
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/django/template/base.py", line 829, in _resolve_lookup
+    current = current[bit]
+  File "/usr/local/lib/python3.8/site-packages/django/template/context.py", line 83, in __getitem__
+    raise KeyError(key)
+KeyError: 'title'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/django/template/base.py", line 835, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(type(current), bit):
+AttributeError: type object 'Context' has no attribute 'title'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/django/template/base.py", line 843, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'title'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/django/template/base.py", line 848, in _resolve_lookup
+    raise VariableDoesNotExist("Failed lookup for key "
+django.template.base.VariableDoesNotExist: Failed lookup for key [title] in [{'True': True, 'False': False, 'None': None}, {'media': 'screen, projection', 'type': 'text/css', 'url': '/static/css/catalogue.55a8f8ac5aa5.css'}]
+[DEBUG] 2025-03-27 12:07:55,612 django.template Exception while resolving variable 'charset' in template 'pipeline/css.html'.
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/django/template/base.py", line 829, in _resolve_lookup
+    current = current[bit]
+  File "/usr/local/lib/python3.8/site-packages/django/template/context.py", line 83, in __getitem__
+    raise KeyError(key)
+KeyError: 'charset'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/django/template/base.py", line 835, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(type(current), bit):
+AttributeError: type object 'Context' has no attribute 'charset'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/django/template/base.py", line 843, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'charset'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/django/template/base.py", line 848, in _resolve_lookup
+    raise VariableDoesNotExist("Failed lookup for key "
+django.template.base.VariableDoesNotExist: Failed lookup for key [charset] in [{'True': True, 'False': False, 'None': None}, {'media': 'screen, projection', 'type': 'text/css', 'url': '/static/css/catalogue.55a8f8ac5aa5.css'}]
+DEBUG:django.template:Exception while resolving variable 'charset' in template 'pipeline/css.html'.
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/django/template/base.py", line 829, in _resolve_lookup
+    current = current[bit]
+  File "/usr/local/lib/python3.8/site-packages/django/template/context.py", line 83, in __getitem__
+    raise KeyError(key)
+KeyError: 'charset'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/django/template/base.py", line 835, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(type(current), bit):
+AttributeError: type object 'Context' has no attribute 'charset'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/django/template/base.py", line 843, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'charset'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/django/template/base.py", line 848, in _resolve_lookup
+    raise VariableDoesNotExist("Failed lookup for key "
+django.template.base.VariableDoesNotExist: Failed lookup for key [charset] in [{'True': True, 'False': False, 'None': None}, {'media': 'screen, projection', 'type': 'text/css', 'url': '/static/css/catalogue.55a8f8ac5aa5.css'}]
+[DEBUG] 2025-03-27 12:07:55,614 django.template Exception while resolving variable 'mysearch' in template 'page.html'.
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/django/template/base.py", line 829, in _resolve_lookup
+    current = current[bit]
+  File "/usr/local/lib/python3.8/site-packages/django/template/context.py", line 83, in __getitem__
+    raise KeyError(key)
+KeyError: 'mysearch'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/django/template/base.py", line 835, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(type(current), bit):
+AttributeError: type object 'RequestContext' has no attribute 'mysearch'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/django/template/base.py", line 843, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'mysearch'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/django/template/base.py", line 848, in _resolve_lookup
+    raise VariableDoesNotExist("Failed lookup for key "
+django.template.base.VariableDoesNotExist: Failed lookup for key [mysearch] in [{'True': True, 'False': False, 'None': None}, {'csrf_token': <SimpleLazyObject: 'tUkB7SfJhWxKdjWjBXvcI4FiJMoSFf4F7xCUjlYkVsGrNK8nltFozDaXEIyXz2Af'>, 'request': <WSGIRequest: GET '/search/'>, 'user': <SimpleLazyObject: <django.contrib.auth.models.AnonymousUser object at 0x737e5038bdf0>>, 'perms': <django.contrib.auth.context_processors.PermWrapper object at 0x737e5fa378b0>, 'messages': <django.contrib.messages.storage.fallback.FallbackStorage object at 0x737e4e119760>, 'DEFAULT_MESSAGE_LEVELS': {'DEBUG': 10, 'INFO': 20, 'SUCCESS': 25, 'WARNING': 30, 'ERROR': 40}}, {}, {'search_form': <AdvancedSearchForm bound=False, valid=Unknown, fields=(geometry;instrument_type;satellite;k_orbit_path;j_frame_row;use_cloud_cover;cloud_max;cloud_min;license_type;band_count;spatial_resolution;sensor_inclination_angle_start;sensor_inclination_angle_end;spectral_group;collection;start_datepicker;end_datepicker;geometry_file;aoi_geometry;selected_sensors;free_imagery;panchromatic_imagery)>, 'dateformset': <django.forms.formsets.SearchDateRangeFormFormSet object at 0x737e5fa5de50>, 'listreeoptions': '[{"key": "CBERS", "val": "cc4", "values": [{"key": "CBERS-04 P10", "val": "22|16"}]}, {"key": "Landsat", "val": "cc2", "values": [{"key": "Landsat 1 MSS", "val": "2|3"}, {"key": "Landsat 2 MSS", "val": "3|3"}, {"key": "Landsat 3 MSS", "val": "4|3"}, {"key": "Landsat 4 MSS", "val": "5|3"}, {"key": "Landsat 5 MSS", "val": "6|3"}, {"key": "Landsat 5 TM", "val": "6|4"}, {"key": "Landsat 7 ETM+", "val": "7|5"}, {"key": "Landsat 8 OLI", "val": "17|11"}, {"key": "Landsat 8 OLI/TIRS", "val": "17|13"}, {"key": "Landsat 8 TIRS", "val": "17|12"}]}, {"key": "RADARSAT", "val": "cc7", "values": [{"key": "RADARSAT-2 SAR", "val": "27|19"}]}, {"key": "SAC", "val": "cc5", "values": [{"key": "SAC-C MMRS", "val": "14|10"}]}, {"key": "SPOT", "val": "cc1", "values": [{"key": "SPOT 1 HRV", "val": "8|6"}, {"key": "SPOT 2 HRV", "val": "9|6"}, {"key": "SPOT 3 HRV", "val": "10|6"}, {"key": "SPOT 4 HRVIR", "val": "11|7"}, {"key": "SPOT 5 HRG", "val": "12|8"}, {"key": "SPOT 6 NAOMI", "val": "18|14"}, {"key": "SPOT 7 NAOMI", "val": "19|14"}]}]', 'selected_options': [], 'searchlistnumber': 50}, {'block': <Block Node: extrajs. Contents: [<TextNode: '\n    <script type="text/j'>, <Variable Node: csrf_token>, <TextNode: "';\n        const listTree">, <Variable Node: listreeoptions|safe>, <TextNode: ';\n        const selectedO'>, <Variable Node: selected_options|safe>, <TextNode: ';\n        const searchres'>, <Variable Node: searchlistnumber|safe>, <TextNode: ";\n        let guid = ''\n ">, <IfNode>, <TextNode: '\n      let history = fals'>, <IfNode>, <TextNode: '\n\n    '>, <TextNode: '\n    '>, <TextNode: '\n    '>, <TextNode: '\n    '>, <TextNode: '\n\n    </script>\n  <script'>, <TextNode: '\n    // initialize search'>, <TextNode: '\n    // initialize layer '>, <TextNode: '\n    // initialize layer '>, <TextNode: '\n    // check if we are o'>, <TextNode: '\n'>]>}]
+DEBUG:django.template:Exception while resolving variable 'mysearch' in template 'page.html'.
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/django/template/base.py", line 829, in _resolve_lookup
+    current = current[bit]
+  File "/usr/local/lib/python3.8/site-packages/django/template/context.py", line 83, in __getitem__
+    raise KeyError(key)
+KeyError: 'mysearch'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/django/template/base.py", line 835, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(type(current), bit):
+AttributeError: type object 'RequestContext' has no attribute 'mysearch'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/django/template/base.py", line 843, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'mysearch'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/django/template/base.py", line 848, in _resolve_lookup
+    raise VariableDoesNotExist("Failed lookup for key "
+django.template.base.VariableDoesNotExist: Failed lookup for key [mysearch] in [{'True': True, 'False': False, 'None': None}, {'csrf_token': <SimpleLazyObject: 'tUkB7SfJhWxKdjWjBXvcI4FiJMoSFf4F7xCUjlYkVsGrNK8nltFozDaXEIyXz2Af'>, 'request': <WSGIRequest: GET '/search/'>, 'user': <SimpleLazyObject: <django.contrib.auth.models.AnonymousUser object at 0x737e5038bdf0>>, 'perms': <django.contrib.auth.context_processors.PermWrapper object at 0x737e5fa378b0>, 'messages': <django.contrib.messages.storage.fallback.FallbackStorage object at 0x737e4e119760>, 'DEFAULT_MESSAGE_LEVELS': {'DEBUG': 10, 'INFO': 20, 'SUCCESS': 25, 'WARNING': 30, 'ERROR': 40}}, {}, {'search_form': <AdvancedSearchForm bound=False, valid=Unknown, fields=(geometry;instrument_type;satellite;k_orbit_path;j_frame_row;use_cloud_cover;cloud_max;cloud_min;license_type;band_count;spatial_resolution;sensor_inclination_angle_start;sensor_inclination_angle_end;spectral_group;collection;start_datepicker;end_datepicker;geometry_file;aoi_geometry;selected_sensors;free_imagery;panchromatic_imagery)>, 'dateformset': <django.forms.formsets.SearchDateRangeFormFormSet object at 0x737e5fa5de50>, 'listreeoptions': '[{"key": "CBERS", "val": "cc4", "values": [{"key": "CBERS-04 P10", "val": "22|16"}]}, {"key": "Landsat", "val": "cc2", "values": [{"key": "Landsat 1 MSS", "val": "2|3"}, {"key": "Landsat 2 MSS", "val": "3|3"}, {"key": "Landsat 3 MSS", "val": "4|3"}, {"key": "Landsat 4 MSS", "val": "5|3"}, {"key": "Landsat 5 MSS", "val": "6|3"}, {"key": "Landsat 5 TM", "val": "6|4"}, {"key": "Landsat 7 ETM+", "val": "7|5"}, {"key": "Landsat 8 OLI", "val": "17|11"}, {"key": "Landsat 8 OLI/TIRS", "val": "17|13"}, {"key": "Landsat 8 TIRS", "val": "17|12"}]}, {"key": "RADARSAT", "val": "cc7", "values": [{"key": "RADARSAT-2 SAR", "val": "27|19"}]}, {"key": "SAC", "val": "cc5", "values": [{"key": "SAC-C MMRS", "val": "14|10"}]}, {"key": "SPOT", "val": "cc1", "values": [{"key": "SPOT 1 HRV", "val": "8|6"}, {"key": "SPOT 2 HRV", "val": "9|6"}, {"key": "SPOT 3 HRV", "val": "10|6"}, {"key": "SPOT 4 HRVIR", "val": "11|7"}, {"key": "SPOT 5 HRG", "val": "12|8"}, {"key": "SPOT 6 NAOMI", "val": "18|14"}, {"key": "SPOT 7 NAOMI", "val": "19|14"}]}]', 'selected_options': [], 'searchlistnumber': 50}, {'block': <Block Node: extrajs. Contents: [<TextNode: '\n    <script type="text/j'>, <Variable Node: csrf_token>, <TextNode: "';\n        const listTree">, <Variable Node: listreeoptions|safe>, <TextNode: ';\n        const selectedO'>, <Variable Node: selected_options|safe>, <TextNode: ';\n        const searchres'>, <Variable Node: searchlistnumber|safe>, <TextNode: ";\n        let guid = ''\n ">, <IfNode>, <TextNode: '\n      let history = fals'>, <IfNode>, <TextNode: '\n\n    '>, <TextNode: '\n    '>, <TextNode: '\n    '>, <TextNode: '\n    '>, <TextNode: '\n\n    </script>\n  <script'>, <TextNode: '\n    // initialize search'>, <TextNode: '\n    // initialize layer '>, <TextNode: '\n    // initialize layer '>, <TextNode: '\n    // check if we are o'>, <TextNode: '\n'>]>}]
+[DEBUG] 2025-03-27 12:07:55,629 django.template Exception while resolving variable 'searchform' in template 'page.html'.
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/django/template/base.py", line 829, in _resolve_lookup
+    current = current[bit]
+  File "/usr/local/lib/python3.8/site-packages/django/template/context.py", line 83, in __getitem__
+    raise KeyError(key)
+KeyError: 'searchform'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/django/template/base.py", line 835, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(type(current), bit):
+AttributeError: type object 'RequestContext' has no attribute 'searchform'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/django/template/base.py", line 843, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'searchform'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/django/template/base.py", line 848, in _resolve_lookup
+    raise VariableDoesNotExist("Failed lookup for key "
+django.template.base.VariableDoesNotExist: Failed lookup for key [searchform] in [{'True': True, 'False': False, 'None': None}, {'csrf_token': <SimpleLazyObject: 'tUkB7SfJhWxKdjWjBXvcI4FiJMoSFf4F7xCUjlYkVsGrNK8nltFozDaXEIyXz2Af'>, 'request': <WSGIRequest: GET '/search/'>, 'user': <SimpleLazyObject: <django.contrib.auth.models.AnonymousUser object at 0x737e5038bdf0>>, 'perms': <django.contrib.auth.context_processors.PermWrapper object at 0x737e5fa378b0>, 'messages': <django.contrib.messages.storage.fallback.FallbackStorage object at 0x737e4e119760>, 'DEFAULT_MESSAGE_LEVELS': {'DEBUG': 10, 'INFO': 20, 'SUCCESS': 25, 'WARNING': 30, 'ERROR': 40}}, {}, {'search_form': <AdvancedSearchForm bound=False, valid=Unknown, fields=(geometry;instrument_type;satellite;k_orbit_path;j_frame_row;use_cloud_cover;cloud_max;cloud_min;license_type;band_count;spatial_resolution;sensor_inclination_angle_start;sensor_inclination_angle_end;spectral_group;collection;start_datepicker;end_datepicker;geometry_file;aoi_geometry;selected_sensors;free_imagery;panchromatic_imagery)>, 'dateformset': <django.forms.formsets.SearchDateRangeFormFormSet object at 0x737e5fa5de50>, 'listreeoptions': '[{"key": "CBERS", "val": "cc4", "values": [{"key": "CBERS-04 P10", "val": "22|16"}]}, {"key": "Landsat", "val": "cc2", "values": [{"key": "Landsat 1 MSS", "val": "2|3"}, {"key": "Landsat 2 MSS", "val": "3|3"}, {"key": "Landsat 3 MSS", "val": "4|3"}, {"key": "Landsat 4 MSS", "val": "5|3"}, {"key": "Landsat 5 MSS", "val": "6|3"}, {"key": "Landsat 5 TM", "val": "6|4"}, {"key": "Landsat 7 ETM+", "val": "7|5"}, {"key": "Landsat 8 OLI", "val": "17|11"}, {"key": "Landsat 8 OLI/TIRS", "val": "17|13"}, {"key": "Landsat 8 TIRS", "val": "17|12"}]}, {"key": "RADARSAT", "val": "cc7", "values": [{"key": "RADARSAT-2 SAR", "val": "27|19"}]}, {"key": "SAC", "val": "cc5", "values": [{"key": "SAC-C MMRS", "val": "14|10"}]}, {"key": "SPOT", "val": "cc1", "values": [{"key": "SPOT 1 HRV", "val": "8|6"}, {"key": "SPOT 2 HRV", "val": "9|6"}, {"key": "SPOT 3 HRV", "val": "10|6"}, {"key": "SPOT 4 HRVIR", "val": "11|7"}, {"key": "SPOT 5 HRG", "val": "12|8"}, {"key": "SPOT 6 NAOMI", "val": "18|14"}, {"key": "SPOT 7 NAOMI", "val": "19|14"}]}]', 'selected_options': [], 'searchlistnumber': 50}, {'block': <Block Node: footer. Contents: [<TextNode: '\n    '>, <django.template.loader_tags.IncludeNode object at 0x737e50469a60>, <TextNode: '\n    '>, <django.template.loader_tags.IncludeNode object at 0x737e50469bb0>, <TextNode: '\n    '>, <django.template.loader_tags.IncludeNode object at 0x737e50469cd0>, <TextNode: '\n\n'>]>}, {}, {}]
+DEBUG:django.template:Exception while resolving variable 'searchform' in template 'page.html'.
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/django/template/base.py", line 829, in _resolve_lookup
+    current = current[bit]
+  File "/usr/local/lib/python3.8/site-packages/django/template/context.py", line 83, in __getitem__
+    raise KeyError(key)
+KeyError: 'searchform'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/django/template/base.py", line 835, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(type(current), bit):
+AttributeError: type object 'RequestContext' has no attribute 'searchform'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/django/template/base.py", line 843, in _resolve_lookup
+    current = current[int(bit)]
+ValueError: invalid literal for int() with base 10: 'searchform'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.8/site-packages/django/template/base.py", line 848, in _resolve_lookup
+    raise VariableDoesNotExist("Failed lookup for key "
+django.template.base.VariableDoesNotExist: Failed lookup for key [searchform] in [{'True': True, 'False': False, 'None': None}, {'csrf_token': <SimpleLazyObject: 'tUkB7SfJhWxKdjWjBXvcI4FiJMoSFf4F7xCUjlYkVsGrNK8nltFozDaXEIyXz2Af'>, 'request': <WSGIRequest: GET '/search/'>, 'user': <SimpleLazyObject: <django.contrib.auth.models.AnonymousUser object at 0x737e5038bdf0>>, 'perms': <django.contrib.auth.context_processors.PermWrapper object at 0x737e5fa378b0>, 'messages': <django.contrib.messages.storage.fallback.FallbackStorage object at 0x737e4e119760>, 'DEFAULT_MESSAGE_LEVELS': {'DEBUG': 10, 'INFO': 20, 'SUCCESS': 25, 'WARNING': 30, 'ERROR': 40}}, {}, {'search_form': <AdvancedSearchForm bound=False, valid=Unknown, fields=(geometry;instrument_type;satellite;k_orbit_path;j_frame_row;use_cloud_cover;cloud_max;cloud_min;license_type;band_count;spatial_resolution;sensor_inclination_angle_start;sensor_inclination_angle_end;spectral_group;collection;start_datepicker;end_datepicker;geometry_file;aoi_geometry;selected_sensors;free_imagery;panchromatic_imagery)>, 'dateformset': <django.forms.formsets.SearchDateRangeFormFormSet object at 0x737e5fa5de50>, 'listreeoptions': '[{"key": "CBERS", "val": "cc4", "values": [{"key": "CBERS-04 P10", "val": "22|16"}]}, {"key": "Landsat", "val": "cc2", "values": [{"key": "Landsat 1 MSS", "val": "2|3"}, {"key": "Landsat 2 MSS", "val": "3|3"}, {"key": "Landsat 3 MSS", "val": "4|3"}, {"key": "Landsat 4 MSS", "val": "5|3"}, {"key": "Landsat 5 MSS", "val": "6|3"}, {"key": "Landsat 5 TM", "val": "6|4"}, {"key": "Landsat 7 ETM+", "val": "7|5"}, {"key": "Landsat 8 OLI", "val": "17|11"}, {"key": "Landsat 8 OLI/TIRS", "val": "17|13"}, {"key": "Landsat 8 TIRS", "val": "17|12"}]}, {"key": "RADARSAT", "val": "cc7", "values": [{"key": "RADARSAT-2 SAR", "val": "27|19"}]}, {"key": "SAC", "val": "cc5", "values": [{"key": "SAC-C MMRS", "val": "14|10"}]}, {"key": "SPOT", "val": "cc1", "values": [{"key": "SPOT 1 HRV", "val": "8|6"}, {"key": "SPOT 2 HRV", "val": "9|6"}, {"key": "SPOT 3 HRV", "val": "10|6"}, {"key": "SPOT 4 HRVIR", "val": "11|7"}, {"key": "SPOT 5 HRG", "val": "12|8"}, {"key": "SPOT 6 NAOMI", "val": "18|14"}, {"key": "SPOT 7 NAOMI", "val": "19|14"}]}]', 'selected_options': [], 'searchlistnumber': 50}, {'block': <Block Node: footer. Contents: [<TextNode: '\n    '>, <django.template.loader_tags.IncludeNode object at 0x737e50469a60>, <TextNode: '\n    '>, <django.template.loader_tags.IncludeNode object at 0x737e50469bb0>, <TextNode: '\n    '>, <django.template.loader_tags.IncludeNode object at 0x737e50469cd0>, <TextNode: '\n\n'>]>}, {}, {}]
+172.22.0.1 GET /search/ => generated 200 in 104 ms
+ERROR:catalogue.views.geoiputils:Remote ip is: 172.22.0.1
+ERROR:catalogue.views.others:Unhandled error in log_visit: Could not load a database from /home/web/django_project/core/geoip_data.
+Traceback (most recent call last):
+  File "/home/web/django_project/./catalogue/views/others.py", line 92, in log_visit
+    myLatLong = myGeoIpUtils.getMyLatLong(request)
+  File "/home/web/django_project/./catalogue/views/geoiputils.py", line 60, in getMyLatLong
+    g = GeoIP2()
+  File "/usr/local/lib/python3.8/site-packages/django/contrib/gis/geoip2/base.py", line 97, in __init__
+    raise GeoIP2Exception('Could not load a database from %s.' % path)
+django.contrib.gis.geoip2.base.GeoIP2Exception: Could not load a database from /home/web/django_project/core/geoip_data.
+172.22.0.1 GET /visit/ => generated 200 in 2 ms
+172.22.0.1 POST /submitsearch/ => generated 200 in 98 ms
+172.22.0.1 GET /api/search-results/126a5a78-1285-4f2b-bf62-697c21afb630/?offset=0&limit=50 => generated 200 in 3359 ms
+172.22.0.1 GET /thumbnail/6314073/mini/ => generated 200 in 44 ms
+172.22.0.1 GET /thumbnail/6314074/mini/ => generated 200 in 46 ms
+172.22.0.1 GET /thumbnail/6314077/mini/ => generated 200 in 31 ms
+172.22.0.1 GET /thumbnail/6314076/mini/ => generated 200 in 32 ms
+172.22.0.1 GET /thumbnail/6314075/mini/ => generated 200 in 32 ms
+172.22.0.1 GET /thumbnail/6314078/mini/ => generated 200 in 31 ms
+172.22.0.1 GET /thumbnail/6314079/mini/ => generated 200 in 38 ms
+172.22.0.1 GET /thumbnail/6314080/mini/ => generated 200 in 42 ms
+172.22.0.1 GET /thumbnail/6314090/mini/ => generated 200 in 37 ms
+172.22.0.1 GET /thumbnail/6314084/mini/ => generated 200 in 42 ms
+172.22.0.1 GET /thumbnail/6314089/mini/ => generated 200 in 48 ms
+172.22.0.1 GET /thumbnail/6314087/mini/ => generated 200 in 53 ms
+172.22.0.1 GET /thumbnail/6314083/mini/ => generated 200 in 40 ms
+172.22.0.1 GET /thumbnail/6314088/mini/ => generated 200 in 43 ms
+172.22.0.1 GET /thumbnail/6314092/mini/ => generated 200 in 40 ms
+172.22.0.1 GET /thumbnail/6314082/mini/ => generated 200 in 36 ms
+172.22.0.1 GET /thumbnail/6314086/mini/ => generated 200 in 33 ms
+172.22.0.1 GET /thumbnail/6314091/mini/ => generated 200 in 37 ms
+172.22.0.1 GET /thumbnail/6314072/mini/ => generated 200 in 35 ms
+172.22.0.1 GET /thumbnail/6314055/mini/ => generated 200 in 39 ms
+172.22.0.1 GET /thumbnail/6314070/mini/ => generated 200 in 41 ms
+172.22.0.1 GET /thumbnail/6314058/mini/ => generated 200 in 44 ms
+172.22.0.1 GET /thumbnail/6314061/mini/ => generated 200 in 40 ms
+172.22.0.1 GET /thumbnail/6314068/mini/ => generated 200 in 34 ms
+172.22.0.1 GET /thumbnail/6314059/mini/ => generated 200 in 30 ms
+172.22.0.1 GET /thumbnail/6314071/mini/ => generated 200 in 32 ms
+172.22.0.1 GET /thumbnail/6314056/mini/ => generated 200 in 27 ms
+172.22.0.1 GET /thumbnail/6314052/mini/ => generated 200 in 30 ms
+172.22.0.1 GET /thumbnail/6314066/mini/ => generated 200 in 27 ms
+172.22.0.1 GET /thumbnail/6314054/mini/ => generated 200 in 25 ms
+172.22.0.1 GET /thumbnail/6314065/mini/ => generated 200 in 31 ms
+172.22.0.1 GET /thumbnail/6314069/mini/ => generated 200 in 28 ms
+172.22.0.1 GET /thumbnail/6314064/mini/ => generated 200 in 32 ms
+172.22.0.1 GET /thumbnail/6314062/mini/ => generated 200 in 28 ms
+172.22.0.1 GET /thumbnail/6314053/mini/ => generated 200 in 32 ms
+172.22.0.1 GET /thumbnail/6314085/mini/ => generated 200 in 28 ms
+172.22.0.1 GET /thumbnail/6314067/mini/ => generated 200 in 32 ms
+172.22.0.1 GET /thumbnail/6314060/mini/ => generated 200 in 28 ms
+172.22.0.1 GET /thumbnail/6314057/mini/ => generated 200 in 33 ms
+172.22.0.1 GET /thumbnail/6314063/mini/ => generated 200 in 25 ms
+172.22.0.1 GET /thumbnail/6314081/mini/ => generated 200 in 25 ms
+172.22.0.1 GET /thumbnail/6314036/mini/ => generated 200 in 31 ms
+172.22.0.1 GET /thumbnail/6314038/mini/ => generated 200 in 28 ms
+172.22.0.1 GET /thumbnail/6314047/mini/ => generated 200 in 26 ms
+172.22.0.1 GET /thumbnail/6314051/mini/ => generated 200 in 27 ms
+172.22.0.1 GET /thumbnail/6314035/mini/ => generated 200 in 25 ms
+172.22.0.1 GET /thumbnail/6314039/mini/ => generated 200 in 27 ms
+172.22.0.1 GET /thumbnail/6314050/mini/ => generated 200 in 28 ms
+172.22.0.1 GET /thumbnail/6314043/mini/ => generated 200 in 28 ms
+172.22.0.1 GET /thumbnail/6314049/mini/ => generated 200 in 27 ms
+*** Starting uWSGI 2.0.28 (64bit) on [Thu Mar 27 12:56:33 2025] ***
+compiled with version: 8.3.0 on 27 March 2025 09:55:08
+os: Linux-6.11.0-19-generic #19~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Mon Feb 17 11:51:52 UTC 2
+nodename: uwsgi
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 8
+current working directory: /home/web/django_project
+writing pidfile to /tmp/flood_mapper.pid
+detected binary path: /usr/local/bin/uwsgi
+uWSGI running as root, you can use --uid/--gid/--chroot options
+*** WARNING: you are running uWSGI as root !!! (use the --uid flag) *** 
+chdir() to /home/web/django_project
+your memory page size is 4096 bytes
+ *** WARNING: you have enabled harakiri without post buffering. Slow upload could be rejected on post-unbuffered webservers *** 
+detected max file descriptor number: 1048576
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+uwsgi socket 0 bound to TCP address 0.0.0.0:8080 fd 6
+uWSGI running as root, you can use --uid/--gid/--chroot options
+*** WARNING: you are running uWSGI as root !!! (use the --uid flag) *** 
+Python version: 3.8.17 (default, Jun 13 2023, 16:14:12)  [GCC 8.3.0]
+Python main interpreter initialized at 0x623affbe0a60
+uWSGI running as root, you can use --uid/--gid/--chroot options
+*** WARNING: you are running uWSGI as root !!! (use the --uid flag) *** 
+python threads support enabled
+your server socket listen backlog is limited to 100 connections
+your mercy for graceful operations on workers is 60 seconds
+mapped 364600 bytes (356 KB) for 4 cores
+*** Operational MODE: preforking ***
+environ({'PATH': '/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin', 'HOSTNAME': 'uwsgi', 'DATABASE_NAME': 'gis', 'RABBITMQ_HOST': 'rabbitmq', 'VIRTUAL_PORT': '8080', 'EMAIL_HOST_USER': 'noreply@kartoza.com', 'EMAIL_CUSTOMER_SUPPORT': 'customers-eo@sansa.org.za', 'EMAIL_SUBJECT_PREFIX': '[sansa-catalogue]', 'EMAIL_HOST_PASSWORD': 'docker', 'DJANGO_SETTINGS_MODULE': 'core.settings.prod_docker', 'EMAIL_HOST': 'smtp', 'VIRTUAL_HOST': 'catalogue.kartoza.com', 'DATABASE_USERNAME': 'docker', 'DATABASE_PASSWORD': 'docker', 'EMAIL_PORT': '25', 'EMAIL_USE_TLS': 'False', 'DATABASE_HOST': 'db', 'LANG': 'C.UTF-8', 'GPG_KEY': 'E3FF2839C048B25C084DEBE9B26995E310250568', 'PYTHON_VERSION': '3.8.17', 'PYTHON_PIP_VERSION': '23.0.1', 'PYTHON_SETUPTOOLS_VERSION': '57.5.0', 'PYTHON_GET_PIP_URL': 'https://github.com/pypa/get-pip/raw/0d8570dc44796f4369b652222cf176b3db6ac70e/public/get-pip.py', 'PYTHON_GET_PIP_SHA256': '96461deced5c2a487ddc65207ec5a9cffeca0d34e7af7ea1afc470ff0d746207', 'JAVA_HOME': '/usr/lib/jvm/java-11-openjdk-amd64', 'HOME': '/root', 'UWSGI_RELOADS': '0', 'UWSGI_ORIGINAL_PROC_NAME': 'uwsgi'})
+WSGI app 0 (mountpoint='') ready in 2 seconds on interpreter 0x623affbe0a60 pid: 1 (default app)
+uWSGI running as root, you can use --uid/--gid/--chroot options
+*** WARNING: you are running uWSGI as root !!! (use the --uid flag) *** 
+*** uWSGI is running in multiple interpreter mode ***
+spawned uWSGI master process (pid: 1)
+spawned uWSGI worker 1 (pid: 17, cores: 1)
+spawned uWSGI worker 2 (pid: 18, cores: 1)
+unable to stat() /tmp/touch-me-to-reload, events will be triggered as soon as the file is created
+...brutally killing workers...
+worker 1 buried after 1 seconds
+worker 2 buried after 1 seconds
+binary reloading uWSGI...
+chdir() to /home/web/django_project
+closing all non-uwsgi socket fds > 2 (max_fd = 1048576)...
+found fd 6 mapped to socket 0 (0.0.0.0:8080)
+running /usr/local/bin/uwsgi
+[uWSGI] getting INI configuration from /uwsgi.conf
+[log-req-encoder] registered json   # JSON-formatted logs
+*** Starting uWSGI 2.0.28 (64bit) on [Thu Mar 27 14:57:57 2025] ***
+compiled with version: 8.3.0 on 27 March 2025 09:55:08
+os: Linux-6.11.0-19-generic #19~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Mon Feb 17 11:51:52 UTC 2
+nodename: uwsgi
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 8
+current working directory: /home/web/django_project
+detected binary path: /usr/local/bin/uwsgi
+uWSGI running as root, you can use --uid/--gid/--chroot options
+*** WARNING: you are running uWSGI as root !!! (use the --uid flag) *** 
+chdir() to /home/web/django_project
+your memory page size is 4096 bytes
+ *** WARNING: you have enabled harakiri without post buffering. Slow upload could be rejected on post-unbuffered webservers *** 
+detected max file descriptor number: 1048576
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+uwsgi socket 0 inherited INET address 0.0.0.0:8080 fd 6
+uWSGI running as root, you can use --uid/--gid/--chroot options
+*** WARNING: you are running uWSGI as root !!! (use the --uid flag) *** 
+Python version: 3.8.17 (default, Jun 13 2023, 16:14:12)  [GCC 8.3.0]
+Python main interpreter initialized at 0x56ce8231f4e0
+uWSGI running as root, you can use --uid/--gid/--chroot options
+*** WARNING: you are running uWSGI as root !!! (use the --uid flag) *** 
+python threads support enabled
+your server socket listen backlog is limited to 100 connections
+your mercy for graceful operations on workers is 60 seconds
+mapped 364600 bytes (356 KB) for 4 cores
+*** Operational MODE: preforking ***
+environ({'PATH': '/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin', 'HOSTNAME': 'uwsgi', 'DATABASE_NAME': 'gis', 'RABBITMQ_HOST': 'rabbitmq', 'VIRTUAL_PORT': '8080', 'EMAIL_HOST_USER': 'noreply@kartoza.com', 'EMAIL_CUSTOMER_SUPPORT': 'customers-eo@sansa.org.za', 'EMAIL_SUBJECT_PREFIX': '[sansa-catalogue]', 'EMAIL_HOST_PASSWORD': 'docker', 'DJANGO_SETTINGS_MODULE': 'core.settings.prod_docker', 'EMAIL_HOST': 'smtp', 'VIRTUAL_HOST': 'catalogue.kartoza.com', 'DATABASE_USERNAME': 'docker', 'DATABASE_PASSWORD': 'docker', 'EMAIL_PORT': '25', 'EMAIL_USE_TLS': 'False', 'DATABASE_HOST': 'db', 'LANG': 'C.UTF-8', 'GPG_KEY': 'E3FF2839C048B25C084DEBE9B26995E310250568', 'PYTHON_VERSION': '3.8.17', 'PYTHON_PIP_VERSION': '23.0.1', 'PYTHON_SETUPTOOLS_VERSION': '57.5.0', 'PYTHON_GET_PIP_URL': 'https://github.com/pypa/get-pip/raw/0d8570dc44796f4369b652222cf176b3db6ac70e/public/get-pip.py', 'PYTHON_GET_PIP_SHA256': '96461deced5c2a487ddc65207ec5a9cffeca0d34e7af7ea1afc470ff0d746207', 'JAVA_HOME': '/usr/lib/jvm/java-11-openjdk-amd64', 'HOME': '/root', 'UWSGI_RELOADS': '1', 'UWSGI_ORIGINAL_PROC_NAME': 'uwsgi', 'TZ': 'Africa/Johannesburg'})
+WSGI app 0 (mountpoint='') ready in 1 seconds on interpreter 0x56ce8231f4e0 pid: 1 (default app)
+uWSGI running as root, you can use --uid/--gid/--chroot options
+*** WARNING: you are running uWSGI as root !!! (use the --uid flag) *** 
+*** uWSGI is running in multiple interpreter mode ***
+gracefully (RE)spawned uWSGI master process (pid: 1)
+spawned uWSGI worker 1 (pid: 54, cores: 1)
+spawned uWSGI worker 2 (pid: 55, cores: 1)
+unable to stat() /tmp/touch-me-to-reload, events will be triggered as soon as the file is created
+*** Starting uWSGI 2.0.28 (64bit) on [Thu Mar 27 13:17:15 2025] ***
+compiled with version: 8.3.0 on 27 March 2025 09:55:08
+os: Linux-6.11.0-19-generic #19~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Mon Feb 17 11:51:52 UTC 2
+nodename: uwsgi
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 8
+current working directory: /home/web/django_project
+writing pidfile to /tmp/flood_mapper.pid
+detected binary path: /usr/local/bin/uwsgi
+uWSGI running as root, you can use --uid/--gid/--chroot options
+*** WARNING: you are running uWSGI as root !!! (use the --uid flag) *** 
+chdir() to /home/web/django_project
+your memory page size is 4096 bytes
+ *** WARNING: you have enabled harakiri without post buffering. Slow upload could be rejected on post-unbuffered webservers *** 
+detected max file descriptor number: 1048576
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+uwsgi socket 0 bound to TCP address 0.0.0.0:8080 fd 6
+uWSGI running as root, you can use --uid/--gid/--chroot options
+*** WARNING: you are running uWSGI as root !!! (use the --uid flag) *** 
+Python version: 3.8.17 (default, Jun 13 2023, 16:14:12)  [GCC 8.3.0]
+Python main interpreter initialized at 0x580c3573da60
+uWSGI running as root, you can use --uid/--gid/--chroot options
+*** WARNING: you are running uWSGI as root !!! (use the --uid flag) *** 
+python threads support enabled
+your server socket listen backlog is limited to 100 connections
+your mercy for graceful operations on workers is 60 seconds
+mapped 364600 bytes (356 KB) for 4 cores
+*** Operational MODE: preforking ***
+environ({'PATH': '/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin', 'HOSTNAME': 'uwsgi', 'DATABASE_USERNAME': 'docker', 'DJANGO_SETTINGS_MODULE': 'core.settings.prod_docker', 'DATABASE_HOST': 'db', 'DATABASE_NAME': 'gis', 'DATABASE_PASSWORD': 'docker', 'EMAIL_USE_TLS': 'False', 'VIRTUAL_PORT': '8080', 'EMAIL_PORT': '25', 'EMAIL_HOST_USER': 'noreply@kartoza.com', 'EMAIL_HOST': 'test', 'EMAIL_HOST_PASSWORD': 'docker', 'RABBITMQ_HOST': 'rabbitmq', 'VIRTUAL_HOST': 'catalogue.kartoza.com', 'EMAIL_CUSTOMER_SUPPORT': 'customers-eo@sansa.org.za', 'EMAIL_SUBJECT_PREFIX': '[sansa-catalogue]', 'LANG': 'C.UTF-8', 'GPG_KEY': 'E3FF2839C048B25C084DEBE9B26995E310250568', 'PYTHON_VERSION': '3.8.17', 'PYTHON_PIP_VERSION': '23.0.1', 'PYTHON_SETUPTOOLS_VERSION': '57.5.0', 'PYTHON_GET_PIP_URL': 'https://github.com/pypa/get-pip/raw/0d8570dc44796f4369b652222cf176b3db6ac70e/public/get-pip.py', 'PYTHON_GET_PIP_SHA256': '96461deced5c2a487ddc65207ec5a9cffeca0d34e7af7ea1afc470ff0d746207', 'JAVA_HOME': '/usr/lib/jvm/java-11-openjdk-amd64', 'HOME': '/root', 'UWSGI_RELOADS': '0', 'UWSGI_ORIGINAL_PROC_NAME': 'uwsgi'})
+WSGI app 0 (mountpoint='') ready in 3 seconds on interpreter 0x580c3573da60 pid: 1 (default app)
+uWSGI running as root, you can use --uid/--gid/--chroot options
+*** WARNING: you are running uWSGI as root !!! (use the --uid flag) *** 
+*** uWSGI is running in multiple interpreter mode ***
+spawned uWSGI master process (pid: 1)
+spawned uWSGI worker 1 (pid: 17, cores: 1)
+spawned uWSGI worker 2 (pid: 18, cores: 1)
+unable to stat() /tmp/touch-me-to-reload, events will be triggered as soon as the file is created
+*** Starting uWSGI 2.0.28 (64bit) on [Thu Mar 27 14:04:07 2025] ***
+compiled with version: 8.3.0 on 27 March 2025 13:42:48
+os: Linux-6.11.0-19-generic #19~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Mon Feb 17 11:51:52 UTC 2
+nodename: uwsgi
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 8
+current working directory: /home/web/django_project
+writing pidfile to /tmp/flood_mapper.pid
+detected binary path: /usr/local/bin/uwsgi
+uWSGI running as root, you can use --uid/--gid/--chroot options
+*** WARNING: you are running uWSGI as root !!! (use the --uid flag) *** 
+chdir() to /home/web/django_project
+your memory page size is 4096 bytes
+ *** WARNING: you have enabled harakiri without post buffering. Slow upload could be rejected on post-unbuffered webservers *** 
+detected max file descriptor number: 1048576
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+uwsgi socket 0 bound to TCP address 0.0.0.0:8080 fd 6
+uWSGI running as root, you can use --uid/--gid/--chroot options
+*** WARNING: you are running uWSGI as root !!! (use the --uid flag) *** 
+Python version: 3.8.17 (default, Jun 13 2023, 16:14:12)  [GCC 8.3.0]
+Python main interpreter initialized at 0x62e8bc503a60
+uWSGI running as root, you can use --uid/--gid/--chroot options
+*** WARNING: you are running uWSGI as root !!! (use the --uid flag) *** 
+python threads support enabled
+your server socket listen backlog is limited to 100 connections
+your mercy for graceful operations on workers is 60 seconds
+mapped 364600 bytes (356 KB) for 4 cores
+*** Operational MODE: preforking ***
+environ({'PATH': '/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin', 'HOSTNAME': 'uwsgi', 'EMAIL_HOST_USER': 'noreply@kartoza.com', 'EMAIL_PORT': '25', 'DATABASE_PASSWORD': 'docker', 'DATABASE_HOST': 'db', 'EMAIL_HOST_PASSWORD': 'docker', 'EMAIL_HOST': 'test', 'VIRTUAL_HOST': 'catalogue.kartoza.com', 'EMAIL_CUSTOMER_SUPPORT': 'customers-eo@sansa.org.za', 'VIRTUAL_PORT': '8080', 'DATABASE_USERNAME': 'docker', 'EMAIL_USE_TLS': 'False', 'DATABASE_NAME': 'gis', 'RABBITMQ_HOST': 'rabbitmq', 'EMAIL_SUBJECT_PREFIX': '[sansa-catalogue]', 'DJANGO_SETTINGS_MODULE': 'core.settings.prod_docker', 'LANG': 'C.UTF-8', 'GPG_KEY': 'E3FF2839C048B25C084DEBE9B26995E310250568', 'PYTHON_VERSION': '3.8.17', 'PYTHON_PIP_VERSION': '23.0.1', 'PYTHON_SETUPTOOLS_VERSION': '57.5.0', 'PYTHON_GET_PIP_URL': 'https://github.com/pypa/get-pip/raw/0d8570dc44796f4369b652222cf176b3db6ac70e/public/get-pip.py', 'PYTHON_GET_PIP_SHA256': '96461deced5c2a487ddc65207ec5a9cffeca0d34e7af7ea1afc470ff0d746207', 'JAVA_HOME': '/usr/lib/jvm/java-11-openjdk-amd64', 'HOME': '/root', 'UWSGI_RELOADS': '0', 'UWSGI_ORIGINAL_PROC_NAME': 'uwsgi'})
+WSGI app 0 (mountpoint='') ready in 3 seconds on interpreter 0x62e8bc503a60 pid: 1 (default app)
+uWSGI running as root, you can use --uid/--gid/--chroot options
+*** WARNING: you are running uWSGI as root !!! (use the --uid flag) *** 
+*** uWSGI is running in multiple interpreter mode ***
+spawned uWSGI master process (pid: 1)
+spawned uWSGI worker 1 (pid: 17, cores: 1)
+spawned uWSGI worker 2 (pid: 18, cores: 1)
+unable to stat() /tmp/touch-me-to-reload, events will be triggered as soon as the file is created
+*** Starting uWSGI 2.0.28 (64bit) on [Thu Mar 27 14:26:04 2025] ***
+compiled with version: 8.3.0 on 27 March 2025 13:42:48
+os: Linux-6.11.0-19-generic #19~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Mon Feb 17 11:51:52 UTC 2
+nodename: uwsgi
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 8
+current working directory: /home/web/django_project
+writing pidfile to /tmp/flood_mapper.pid
+detected binary path: /usr/local/bin/uwsgi
+uWSGI running as root, you can use --uid/--gid/--chroot options
+*** WARNING: you are running uWSGI as root !!! (use the --uid flag) *** 
+chdir() to /home/web/django_project
+your memory page size is 4096 bytes
+ *** WARNING: you have enabled harakiri without post buffering. Slow upload could be rejected on post-unbuffered webservers *** 
+detected max file descriptor number: 1048576
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+uwsgi socket 0 bound to TCP address 0.0.0.0:8080 fd 6
+uWSGI running as root, you can use --uid/--gid/--chroot options
+*** WARNING: you are running uWSGI as root !!! (use the --uid flag) *** 
+Python version: 3.8.17 (default, Jun 13 2023, 16:14:12)  [GCC 8.3.0]
+Python main interpreter initialized at 0x60df0a6a8a60
+uWSGI running as root, you can use --uid/--gid/--chroot options
+*** WARNING: you are running uWSGI as root !!! (use the --uid flag) *** 
+python threads support enabled
+your server socket listen backlog is limited to 100 connections
+your mercy for graceful operations on workers is 60 seconds
+mapped 364600 bytes (356 KB) for 4 cores
+*** Operational MODE: preforking ***
+environ({'PATH': '/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin', 'HOSTNAME': 'uwsgi', 'EMAIL_SUBJECT_PREFIX': '[sansa-catalogue]', 'EMAIL_HOST': 'test', 'EMAIL_CUSTOMER_SUPPORT': 'customers-eo@sansa.org.za', 'DJANGO_SETTINGS_MODULE': 'core.settings.prod_docker', 'EMAIL_HOST_PASSWORD': 'docker', 'EMAIL_USE_TLS': 'False', 'DATABASE_HOST': 'db', 'DATABASE_USERNAME': 'docker', 'VIRTUAL_HOST': 'catalogue.kartoza.com', 'RABBITMQ_HOST': 'rabbitmq', 'EMAIL_HOST_USER': 'noreply@kartoza.com', 'DATABASE_PASSWORD': 'docker', 'VIRTUAL_PORT': '8080', 'EMAIL_PORT': '25', 'DATABASE_NAME': 'gis', 'LANG': 'C.UTF-8', 'GPG_KEY': 'E3FF2839C048B25C084DEBE9B26995E310250568', 'PYTHON_VERSION': '3.8.17', 'PYTHON_PIP_VERSION': '23.0.1', 'PYTHON_SETUPTOOLS_VERSION': '57.5.0', 'PYTHON_GET_PIP_URL': 'https://github.com/pypa/get-pip/raw/0d8570dc44796f4369b652222cf176b3db6ac70e/public/get-pip.py', 'PYTHON_GET_PIP_SHA256': '96461deced5c2a487ddc65207ec5a9cffeca0d34e7af7ea1afc470ff0d746207', 'JAVA_HOME': '/usr/lib/jvm/java-11-openjdk-amd64', 'HOME': '/root', 'UWSGI_RELOADS': '0', 'UWSGI_ORIGINAL_PROC_NAME': 'uwsgi'})
+WSGI app 0 (mountpoint='') ready in 2 seconds on interpreter 0x60df0a6a8a60 pid: 1 (default app)
+uWSGI running as root, you can use --uid/--gid/--chroot options
+*** WARNING: you are running uWSGI as root !!! (use the --uid flag) *** 
+*** uWSGI is running in multiple interpreter mode ***
+spawned uWSGI master process (pid: 1)
+spawned uWSGI worker 1 (pid: 17, cores: 1)
+spawned uWSGI worker 2 (pid: 18, cores: 1)
+unable to stat() /tmp/touch-me-to-reload, events will be triggered as soon as the file is created
+*** Starting uWSGI 2.0.28 (64bit) on [Thu Mar 27 14:31:29 2025] ***
+compiled with version: 8.3.0 on 27 March 2025 13:42:48
+os: Linux-6.11.0-21-generic #21~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Mon Feb 24 16:52:15 UTC 2
+nodename: uwsgi
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 8
+current working directory: /home/web/django_project
+writing pidfile to /tmp/flood_mapper.pid
+detected binary path: /usr/local/bin/uwsgi
+uWSGI running as root, you can use --uid/--gid/--chroot options
+*** WARNING: you are running uWSGI as root !!! (use the --uid flag) *** 
+chdir() to /home/web/django_project
+your memory page size is 4096 bytes
+ *** WARNING: you have enabled harakiri without post buffering. Slow upload could be rejected on post-unbuffered webservers *** 
+detected max file descriptor number: 1048576
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+uwsgi socket 0 bound to TCP address 0.0.0.0:8080 fd 6
+uWSGI running as root, you can use --uid/--gid/--chroot options
+*** WARNING: you are running uWSGI as root !!! (use the --uid flag) *** 
+Python version: 3.8.17 (default, Jun 13 2023, 16:14:12)  [GCC 8.3.0]
+Python main interpreter initialized at 0x5d6a907c6a60
+uWSGI running as root, you can use --uid/--gid/--chroot options
+*** WARNING: you are running uWSGI as root !!! (use the --uid flag) *** 
+python threads support enabled
+your server socket listen backlog is limited to 100 connections
+your mercy for graceful operations on workers is 60 seconds
+mapped 364600 bytes (356 KB) for 4 cores
+*** Operational MODE: preforking ***
+environ({'PATH': '/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin', 'HOSTNAME': 'uwsgi', 'EMAIL_SUBJECT_PREFIX': '[sansa-catalogue]', 'EMAIL_HOST': 'test', 'EMAIL_CUSTOMER_SUPPORT': 'customers-eo@sansa.org.za', 'DJANGO_SETTINGS_MODULE': 'core.settings.prod_docker', 'EMAIL_HOST_PASSWORD': 'docker', 'EMAIL_USE_TLS': 'False', 'DATABASE_HOST': 'db', 'DATABASE_USERNAME': 'docker', 'VIRTUAL_HOST': 'catalogue.kartoza.com', 'RABBITMQ_HOST': 'rabbitmq', 'EMAIL_HOST_USER': 'noreply@kartoza.com', 'DATABASE_PASSWORD': 'docker', 'VIRTUAL_PORT': '8080', 'EMAIL_PORT': '25', 'DATABASE_NAME': 'gis', 'LANG': 'C.UTF-8', 'GPG_KEY': 'E3FF2839C048B25C084DEBE9B26995E310250568', 'PYTHON_VERSION': '3.8.17', 'PYTHON_PIP_VERSION': '23.0.1', 'PYTHON_SETUPTOOLS_VERSION': '57.5.0', 'PYTHON_GET_PIP_URL': 'https://github.com/pypa/get-pip/raw/0d8570dc44796f4369b652222cf176b3db6ac70e/public/get-pip.py', 'PYTHON_GET_PIP_SHA256': '96461deced5c2a487ddc65207ec5a9cffeca0d34e7af7ea1afc470ff0d746207', 'JAVA_HOME': '/usr/lib/jvm/java-11-openjdk-amd64', 'HOME': '/root', 'UWSGI_RELOADS': '0', 'UWSGI_ORIGINAL_PROC_NAME': 'uwsgi'})
+WSGI app 0 (mountpoint='') ready in 2 seconds on interpreter 0x5d6a907c6a60 pid: 1 (default app)
+uWSGI running as root, you can use --uid/--gid/--chroot options
+*** WARNING: you are running uWSGI as root !!! (use the --uid flag) *** 
+*** uWSGI is running in multiple interpreter mode ***
+spawned uWSGI master process (pid: 1)
+spawned uWSGI worker 1 (pid: 17, cores: 1)
+spawned uWSGI worker 2 (pid: 18, cores: 1)
+unable to stat() /tmp/touch-me-to-reload, events will be triggered as soon as the file is created
+...brutally killing workers...
+worker 1 buried after 1 seconds
+worker 2 buried after 1 seconds
+binary reloading uWSGI...
+chdir() to /home/web/django_project
+closing all non-uwsgi socket fds > 2 (max_fd = 1048576)...
+found fd 6 mapped to socket 0 (0.0.0.0:8080)
+running /usr/local/bin/uwsgi
+[uWSGI] getting INI configuration from /uwsgi.conf
+[log-req-encoder] registered json   # JSON-formatted logs
+*** Starting uWSGI 2.0.28 (64bit) on [Thu Mar 27 16:33:16 2025] ***
+compiled with version: 8.3.0 on 27 March 2025 13:42:48
+os: Linux-6.11.0-21-generic #21~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Mon Feb 24 16:52:15 UTC 2
+nodename: uwsgi
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 8
+current working directory: /home/web/django_project
+detected binary path: /usr/local/bin/uwsgi
+uWSGI running as root, you can use --uid/--gid/--chroot options
+*** WARNING: you are running uWSGI as root !!! (use the --uid flag) *** 
+chdir() to /home/web/django_project
+your memory page size is 4096 bytes
+ *** WARNING: you have enabled harakiri without post buffering. Slow upload could be rejected on post-unbuffered webservers *** 
+detected max file descriptor number: 1048576
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+uwsgi socket 0 inherited INET address 0.0.0.0:8080 fd 6
+uWSGI running as root, you can use --uid/--gid/--chroot options
+*** WARNING: you are running uWSGI as root !!! (use the --uid flag) *** 
+Python version: 3.8.17 (default, Jun 13 2023, 16:14:12)  [GCC 8.3.0]
+Python main interpreter initialized at 0x6232c87e54e0
+uWSGI running as root, you can use --uid/--gid/--chroot options
+*** WARNING: you are running uWSGI as root !!! (use the --uid flag) *** 
+python threads support enabled
+your server socket listen backlog is limited to 100 connections
+your mercy for graceful operations on workers is 60 seconds
+mapped 364600 bytes (356 KB) for 4 cores
+*** Operational MODE: preforking ***
+environ({'PATH': '/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin', 'HOSTNAME': 'uwsgi', 'EMAIL_SUBJECT_PREFIX': '[sansa-catalogue]', 'EMAIL_HOST': 'test', 'EMAIL_CUSTOMER_SUPPORT': 'customers-eo@sansa.org.za', 'DJANGO_SETTINGS_MODULE': 'core.settings.prod_docker', 'EMAIL_HOST_PASSWORD': 'docker', 'EMAIL_USE_TLS': 'False', 'DATABASE_HOST': 'db', 'DATABASE_USERNAME': 'docker', 'VIRTUAL_HOST': 'catalogue.kartoza.com', 'RABBITMQ_HOST': 'rabbitmq', 'EMAIL_HOST_USER': 'noreply@kartoza.com', 'DATABASE_PASSWORD': 'docker', 'VIRTUAL_PORT': '8080', 'EMAIL_PORT': '25', 'DATABASE_NAME': 'gis', 'LANG': 'C.UTF-8', 'GPG_KEY': 'E3FF2839C048B25C084DEBE9B26995E310250568', 'PYTHON_VERSION': '3.8.17', 'PYTHON_PIP_VERSION': '23.0.1', 'PYTHON_SETUPTOOLS_VERSION': '57.5.0', 'PYTHON_GET_PIP_URL': 'https://github.com/pypa/get-pip/raw/0d8570dc44796f4369b652222cf176b3db6ac70e/public/get-pip.py', 'PYTHON_GET_PIP_SHA256': '96461deced5c2a487ddc65207ec5a9cffeca0d34e7af7ea1afc470ff0d746207', 'JAVA_HOME': '/usr/lib/jvm/java-11-openjdk-amd64', 'HOME': '/root', 'UWSGI_RELOADS': '1', 'UWSGI_ORIGINAL_PROC_NAME': 'uwsgi', 'TZ': 'Africa/Johannesburg'})
+WSGI app 0 (mountpoint='') ready in 1 seconds on interpreter 0x6232c87e54e0 pid: 1 (default app)
+uWSGI running as root, you can use --uid/--gid/--chroot options
+*** WARNING: you are running uWSGI as root !!! (use the --uid flag) *** 
+*** uWSGI is running in multiple interpreter mode ***
+gracefully (RE)spawned uWSGI master process (pid: 1)
+spawned uWSGI worker 1 (pid: 29, cores: 1)
+spawned uWSGI worker 2 (pid: 30, cores: 1)
+unable to stat() /tmp/touch-me-to-reload, events will be triggered as soon as the file is created
+*** Starting uWSGI 2.0.28 (64bit) on [Thu Mar 27 14:37:17 2025] ***
+compiled with version: 8.3.0 on 27 March 2025 13:42:48
+os: Linux-6.11.0-21-generic #21~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Mon Feb 24 16:52:15 UTC 2
+nodename: uwsgi
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 8
+current working directory: /home/web/django_project
+writing pidfile to /tmp/flood_mapper.pid
+detected binary path: /usr/local/bin/uwsgi
+uWSGI running as root, you can use --uid/--gid/--chroot options
+*** WARNING: you are running uWSGI as root !!! (use the --uid flag) *** 
+chdir() to /home/web/django_project
+your memory page size is 4096 bytes
+ *** WARNING: you have enabled harakiri without post buffering. Slow upload could be rejected on post-unbuffered webservers *** 
+detected max file descriptor number: 1048576
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+uwsgi socket 0 bound to TCP address 0.0.0.0:8080 fd 6
+uWSGI running as root, you can use --uid/--gid/--chroot options
+*** WARNING: you are running uWSGI as root !!! (use the --uid flag) *** 
+Python version: 3.8.17 (default, Jun 13 2023, 16:14:12)  [GCC 8.3.0]
+Python main interpreter initialized at 0x654c2149ba60
+uWSGI running as root, you can use --uid/--gid/--chroot options
+*** WARNING: you are running uWSGI as root !!! (use the --uid flag) *** 
+python threads support enabled
+your server socket listen backlog is limited to 100 connections
+your mercy for graceful operations on workers is 60 seconds
+mapped 364600 bytes (356 KB) for 4 cores
+*** Operational MODE: preforking ***
+environ({'PATH': '/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin', 'HOSTNAME': 'uwsgi', 'DATABASE_USERNAME': 'docker', 'VIRTUAL_HOST': 'catalogue.kartoza.com', 'EMAIL_CUSTOMER_SUPPORT': 'customers-eo@sansa.org.za', 'EMAIL_PORT': '25', 'EMAIL_HOST': 'test', 'EMAIL_HOST_PASSWORD': 'docker', 'EMAIL_SUBJECT_PREFIX': '[sansa-catalogue]', 'DJANGO_SETTINGS_MODULE': 'core.settings.prod_docker', 'EMAIL_HOST_USER': 'noreply@kartoza.com', 'VIRTUAL_PORT': '8080', 'DATABASE_PASSWORD': 'docker', 'DATABASE_NAME': 'gis', 'EMAIL_USE_TLS': 'False', 'DATABASE_HOST': 'db', 'RABBITMQ_HOST': 'rabbitmq', 'LANG': 'C.UTF-8', 'GPG_KEY': 'E3FF2839C048B25C084DEBE9B26995E310250568', 'PYTHON_VERSION': '3.8.17', 'PYTHON_PIP_VERSION': '23.0.1', 'PYTHON_SETUPTOOLS_VERSION': '57.5.0', 'PYTHON_GET_PIP_URL': 'https://github.com/pypa/get-pip/raw/0d8570dc44796f4369b652222cf176b3db6ac70e/public/get-pip.py', 'PYTHON_GET_PIP_SHA256': '96461deced5c2a487ddc65207ec5a9cffeca0d34e7af7ea1afc470ff0d746207', 'JAVA_HOME': '/usr/lib/jvm/java-11-openjdk-amd64', 'HOME': '/root', 'UWSGI_RELOADS': '0', 'UWSGI_ORIGINAL_PROC_NAME': 'uwsgi'})
+WSGI app 0 (mountpoint='') ready in 2 seconds on interpreter 0x654c2149ba60 pid: 1 (default app)
+uWSGI running as root, you can use --uid/--gid/--chroot options
+*** WARNING: you are running uWSGI as root !!! (use the --uid flag) *** 
+*** uWSGI is running in multiple interpreter mode ***
+spawned uWSGI master process (pid: 1)
+spawned uWSGI worker 1 (pid: 17, cores: 1)
+spawned uWSGI worker 2 (pid: 18, cores: 1)
+unable to stat() /tmp/touch-me-to-reload, events will be triggered as soon as the file is created
+...brutally killing workers...
+worker 1 buried after 1 seconds
+worker 2 buried after 1 seconds
+binary reloading uWSGI...
+chdir() to /home/web/django_project
+closing all non-uwsgi socket fds > 2 (max_fd = 1048576)...
+found fd 6 mapped to socket 0 (0.0.0.0:8080)
+running /usr/local/bin/uwsgi
+[uWSGI] getting INI configuration from /uwsgi.conf
+[log-req-encoder] registered json   # JSON-formatted logs
+*** Starting uWSGI 2.0.28 (64bit) on [Thu Mar 27 16:41:25 2025] ***
+compiled with version: 8.3.0 on 27 March 2025 13:42:48
+os: Linux-6.11.0-21-generic #21~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Mon Feb 24 16:52:15 UTC 2
+nodename: uwsgi
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 8
+current working directory: /home/web/django_project
+detected binary path: /usr/local/bin/uwsgi
+uWSGI running as root, you can use --uid/--gid/--chroot options
+*** WARNING: you are running uWSGI as root !!! (use the --uid flag) *** 
+chdir() to /home/web/django_project
+your memory page size is 4096 bytes
+ *** WARNING: you have enabled harakiri without post buffering. Slow upload could be rejected on post-unbuffered webservers *** 
+detected max file descriptor number: 1048576
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+uwsgi socket 0 inherited INET address 0.0.0.0:8080 fd 6
+uWSGI running as root, you can use --uid/--gid/--chroot options
+*** WARNING: you are running uWSGI as root !!! (use the --uid flag) *** 
+Python version: 3.8.17 (default, Jun 13 2023, 16:14:12)  [GCC 8.3.0]
+Python main interpreter initialized at 0x59d97441e4e0
+uWSGI running as root, you can use --uid/--gid/--chroot options
+*** WARNING: you are running uWSGI as root !!! (use the --uid flag) *** 
+python threads support enabled
+your server socket listen backlog is limited to 100 connections
+your mercy for graceful operations on workers is 60 seconds
+mapped 364600 bytes (356 KB) for 4 cores
+*** Operational MODE: preforking ***
+environ({'PATH': '/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin', 'HOSTNAME': 'uwsgi', 'DATABASE_USERNAME': 'docker', 'VIRTUAL_HOST': 'catalogue.kartoza.com', 'EMAIL_CUSTOMER_SUPPORT': 'customers-eo@sansa.org.za', 'EMAIL_PORT': '25', 'EMAIL_HOST': 'test', 'EMAIL_HOST_PASSWORD': 'docker', 'EMAIL_SUBJECT_PREFIX': '[sansa-catalogue]', 'DJANGO_SETTINGS_MODULE': 'core.settings.prod_docker', 'EMAIL_HOST_USER': 'noreply@kartoza.com', 'VIRTUAL_PORT': '8080', 'DATABASE_PASSWORD': 'docker', 'DATABASE_NAME': 'gis', 'EMAIL_USE_TLS': 'False', 'DATABASE_HOST': 'db', 'RABBITMQ_HOST': 'rabbitmq', 'LANG': 'C.UTF-8', 'GPG_KEY': 'E3FF2839C048B25C084DEBE9B26995E310250568', 'PYTHON_VERSION': '3.8.17', 'PYTHON_PIP_VERSION': '23.0.1', 'PYTHON_SETUPTOOLS_VERSION': '57.5.0', 'PYTHON_GET_PIP_URL': 'https://github.com/pypa/get-pip/raw/0d8570dc44796f4369b652222cf176b3db6ac70e/public/get-pip.py', 'PYTHON_GET_PIP_SHA256': '96461deced5c2a487ddc65207ec5a9cffeca0d34e7af7ea1afc470ff0d746207', 'JAVA_HOME': '/usr/lib/jvm/java-11-openjdk-amd64', 'HOME': '/root', 'UWSGI_RELOADS': '1', 'UWSGI_ORIGINAL_PROC_NAME': 'uwsgi', 'TZ': 'Africa/Johannesburg'})
+WSGI app 0 (mountpoint='') ready in 1 seconds on interpreter 0x59d97441e4e0 pid: 1 (default app)
+uWSGI running as root, you can use --uid/--gid/--chroot options
+*** WARNING: you are running uWSGI as root !!! (use the --uid flag) *** 
+*** uWSGI is running in multiple interpreter mode ***
+gracefully (RE)spawned uWSGI master process (pid: 1)
+spawned uWSGI worker 1 (pid: 29, cores: 1)
+spawned uWSGI worker 2 (pid: 30, cores: 1)
+unable to stat() /tmp/touch-me-to-reload, events will be triggered as soon as the file is created
+*** Starting uWSGI 2.0.28 (64bit) on [Thu Mar 27 14:41:34 2025] ***
+compiled with version: 8.3.0 on 27 March 2025 13:42:48
+os: Linux-6.11.0-21-generic #21~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Mon Feb 24 16:52:15 UTC 2
+nodename: uwsgi
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 8
+current working directory: /home/web/django_project
+writing pidfile to /tmp/flood_mapper.pid
+detected binary path: /usr/local/bin/uwsgi
+uWSGI running as root, you can use --uid/--gid/--chroot options
+*** WARNING: you are running uWSGI as root !!! (use the --uid flag) *** 
+chdir() to /home/web/django_project
+your memory page size is 4096 bytes
+ *** WARNING: you have enabled harakiri without post buffering. Slow upload could be rejected on post-unbuffered webservers *** 
+detected max file descriptor number: 1048576
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+uwsgi socket 0 bound to TCP address 0.0.0.0:8080 fd 6
+uWSGI running as root, you can use --uid/--gid/--chroot options
+*** WARNING: you are running uWSGI as root !!! (use the --uid flag) *** 
+Python version: 3.8.17 (default, Jun 13 2023, 16:14:12)  [GCC 8.3.0]
+Python main interpreter initialized at 0x5d1f74466a60
+uWSGI running as root, you can use --uid/--gid/--chroot options
+*** WARNING: you are running uWSGI as root !!! (use the --uid flag) *** 
+python threads support enabled
+your server socket listen backlog is limited to 100 connections
+your mercy for graceful operations on workers is 60 seconds
+mapped 364600 bytes (356 KB) for 4 cores
+*** Operational MODE: preforking ***
+environ({'PATH': '/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin', 'HOSTNAME': 'uwsgi', 'EMAIL_HOST_USER': 'noreply@kartoza.com', 'EMAIL_HOST_PASSWORD': 'docker', 'EMAIL_SUBJECT_PREFIX': '[sansa-catalogue]', 'RABBITMQ_HOST': 'rabbitmq', 'EMAIL_HOST': 'test', 'DATABASE_USERNAME': 'docker', 'DATABASE_HOST': 'db', 'EMAIL_CUSTOMER_SUPPORT': 'customers-eo@sansa.org.za', 'DATABASE_PASSWORD': 'docker', 'EMAIL_PORT': '25', 'VIRTUAL_HOST': 'catalogue.kartoza.com', 'VIRTUAL_PORT': '8080', 'DJANGO_SETTINGS_MODULE': 'core.settings.prod_docker', 'EMAIL_USE_TLS': 'False', 'DATABASE_NAME': 'gis', 'LANG': 'C.UTF-8', 'GPG_KEY': 'E3FF2839C048B25C084DEBE9B26995E310250568', 'PYTHON_VERSION': '3.8.17', 'PYTHON_PIP_VERSION': '23.0.1', 'PYTHON_SETUPTOOLS_VERSION': '57.5.0', 'PYTHON_GET_PIP_URL': 'https://github.com/pypa/get-pip/raw/0d8570dc44796f4369b652222cf176b3db6ac70e/public/get-pip.py', 'PYTHON_GET_PIP_SHA256': '96461deced5c2a487ddc65207ec5a9cffeca0d34e7af7ea1afc470ff0d746207', 'JAVA_HOME': '/usr/lib/jvm/java-11-openjdk-amd64', 'HOME': '/root', 'UWSGI_RELOADS': '0', 'UWSGI_ORIGINAL_PROC_NAME': 'uwsgi'})
+WSGI app 0 (mountpoint='') ready in 1 seconds on interpreter 0x5d1f74466a60 pid: 1 (default app)
+uWSGI running as root, you can use --uid/--gid/--chroot options
+*** WARNING: you are running uWSGI as root !!! (use the --uid flag) *** 
+*** uWSGI is running in multiple interpreter mode ***
+spawned uWSGI master process (pid: 1)
+spawned uWSGI worker 1 (pid: 17, cores: 1)
+spawned uWSGI worker 2 (pid: 18, cores: 1)
+unable to stat() /tmp/touch-me-to-reload, events will be triggered as soon as the file is created
