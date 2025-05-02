@@ -507,3 +507,8 @@ import settings
 ```
 
 The error you obtain there (if any) will be more descriptive.
+
+# Resend activation emails
+
+1. Run `docker exec -it catalogue-uwgsi bash`
+2. Run `python manage.py resend_activation_emails`

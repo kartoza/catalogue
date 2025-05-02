@@ -26,7 +26,7 @@ STATIC_ROOT = '/home/web/static'
 
 # See docker-compose.yml file for postfix container definition
 #
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 # Host for sending e-mail.
 EMAIL_HOST = os.getenv('EMAIL_HOST', 'smtp')
 # Port for sending e-mail.
