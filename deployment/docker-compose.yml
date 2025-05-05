@@ -111,6 +111,7 @@ services:
       - EMAIL_SUBJECT_PREFIX=${EMAIL_SUBJECT_PREFIX:-[sansa-catalogue]}
       - EMAIL_CUSTOMER_SUPPORT=${EMAIL_CUSTOMER_SUPPORT:-customers-eo@sansa.org.za}
     volumes:
+      - ./uwsgi/flood_mapper.log:/var/log/uwsgi/flood_mapper.log
       - ../django_project:/home/web/django_project
       - ./static:/home/web/static
       - ./media:/home/web/media
@@ -238,6 +239,8 @@ services:
       PYCSW_SERVER_URL: http://localhost:8000
     volumes:
       - ./docker/pycsw.cfg:/etc/pycsw/pycsw.cfg
+      - ./docker/pycsw.yml:/etc/pycsw/pycsw.yml
       - ../django_project/pycsw_integration/mappings.py:/etc/pycsw/mappings.py
+      
     ports:
       - "8000:8000"
