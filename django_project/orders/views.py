@@ -543,7 +543,6 @@ def update_order_history(request):
 @login_required
 # @require_profile('add_order')
 def add_order(request):
-    print("USER",request.user)
     logger.debug('Order called')
     logger.info('Preparing order for user ' + str(request.user))
 
@@ -557,7 +556,6 @@ def add_order(request):
         logger.debug('User NOT anonymous')
         my_records = SearchRecord.objects.all().filter(
             user=request.user).filter(order__isnull=True)
-        print("MY RECORDS", my_records)
         if my_records.count() < 1:
             logger.debug('Cart has no records')
             logger.info('User has no items in their cart')
@@ -573,9 +571,6 @@ def add_order(request):
         logger.debug('Order posted')
 
         my_order_form = OrderForm(request.POST, request.FILES)
-
-        print("FORM VALID?", my_order_form.is_valid())
-        print("FORM ERRORS:", my_order_form.errors)
 
         context = {
             'myOrderForm': my_order_form,
@@ -609,7 +604,6 @@ def add_order(request):
                 context
             )
     else:  # new order
-        print("USER ID", request.user.id)
         my_order_form = OrderForm(
             initial={
                 'market_sector': None,
