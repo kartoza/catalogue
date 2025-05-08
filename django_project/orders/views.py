@@ -541,7 +541,7 @@ def update_order_history(request):
 
 
 @login_required
-@require_profile('add_order')
+# @require_profile('add_order')
 def add_order(request):
     logger.debug('Order called')
     logger.info('Preparing order for user ' + str(request.user))
