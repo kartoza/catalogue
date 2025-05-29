@@ -2,7 +2,7 @@
     <div class="sidebar-result" style="top:100px;">
             <i class="fa fa-bars" aria-hidden="true"></i>
     </div>
-    <div class="result-panel row" style="--bs-gutter-x:0;--bs-gutter-y: 0;">
+    <div class="result-panel row" id="result-panel" style="--bs-gutter-x:0;--bs-gutter-y: 0;">
         <div class="navigation">
             <div id="searchPrev" class="btn searchPrev"
                  style="float:left; display: none;"
@@ -44,10 +44,10 @@
                   <li><a class="dropdown-item" href="#" id="result-panel-download-button-shp" onclick="window.open(
                         '/downloadsearchresults/' + guid + '/?shp', '_self'
                       );">SHP</a></li>
-                  <li><a class="dropdown-item" href="#" id="result-panel-download-button-kml" onclick="window.open(
+                  <!-- <li><a class="dropdown-item" href="#" id="result-panel-download-button-kml" onclick="window.open(
                         '/downloadsearchresults/' + guid + '/?kml',
                         '_self'
-                      )" >KML</a></li>
+                      )" >KML</a></li> -->
                   <li><a class="dropdown-item" href="#" id="result-panel-download-button-kmz" onclick="window.open(
                         '/downloadsearchresults/' + guid + '/?kmz',
                         '_self'
@@ -134,12 +134,12 @@
                       data-title="Download as SHP"
                       data-placement="top">SHP
               </button>
-              <button id="cart-panel-download-button-kml"
+              <!-- <button id="cart-panel-download-button-kml"
                       class="btn btn-info"
                       data-toggle="tooltip"
                       data-title="Download as KML"
                       data-placement="top">KML
-              </button>
+              </button> -->
               <button id="cart-panel-download-button-kmz"
                       class="btn btn-info"
                       data-toggle="tooltip"

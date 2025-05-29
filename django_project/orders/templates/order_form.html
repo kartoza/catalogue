@@ -196,11 +196,13 @@
 			    	elem.parent().parent().remove();
 			        cartRecords.removeFeature(cartRecords.getFeatureById(id));
 			        setTotalCost();
+                    modal.modal('hide');
 			    })
 			    .fail(function () {
 			      console.log('There has been a problem!');
 			    });
             }
+            
         )
 		// initial setup of total cost across all products
 		{#setTotalCost();#}
