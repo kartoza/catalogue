@@ -484,9 +484,9 @@ APP.ResultGridView = Backbone.View.extend({
     el: $("#result-panel"),
 
     events: {
-        'click div.searchPrev': 'previous',
-        'click div.searchNext': 'next',
-        'click button.resetZoom': 'resetZoom'
+        // 'click div.searchPrev': 'previous',
+        // 'click div.searchNext': 'next',
+        // 'click button.resetZoom': 'resetZoom'
     },
 
     resetZoom: function() {

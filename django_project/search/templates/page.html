@@ -2,6 +2,8 @@
 {% load staticfiles %}
 {% block extracss %}
     <link href="{% static "css/styles.css" %}" rel="stylesheet">
+    <link href="{% static "css/bootstrap-switch.min.css" %}" rel="stylesheet" type="text/css">
+    <link href="{% static "js/libs/font-awesome/css/font-awesome.min.css" %}" rel="stylesheet">
     <link href="{% static "js/libs/ol-layerswitcher/ol3-layerswitcher.css" %}" rel="stylesheet">
     <link href="{% static "js/libs/jquery-ui-1.12.1/jquery-ui.min.css" %}" rel="stylesheet">
     <link href="{% static "js/libs/noUiSlider.15.2.0/nouislider.css" %}" rel="stylesheet">
@@ -11,9 +13,12 @@
 {% endblock %}
 
 {% block extraHeaders %}
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="{% static "js/libs/bootstrap-5.0.2/js/bootstrap.bundle.min.js" %}"></script>
+
+    <script src="{% static "js/init_project.js" %}"></script>
     <script data-main="/static/js/app" src="/static/js/libs/requirejs-2.3.6/require.js"></script>
     <script src="{% static "js/date_utils.js" %}"></script>
-
 {% endblock %}
 {% block content%}
     <div id="layoutSidenav">
@@ -149,10 +154,8 @@
 
     </script>
   <script>
-  // set control variable for share link window
-  // default false
     const searchShareOpen = false;
-    $( document ).ready(function() {
+    $(function() {
     // activate tooltips on all elements
     $('[data-toggle="tooltip"]').tooltip();
     // activate tooltips on new AJAX-loaded elements
@@ -176,20 +179,20 @@
     // hide search share button and widget
     $('#SearchShare, #SearchShare-content').hide();
     // set panels according to control variables
-    defaultPanelState();
+    // defaultPanelState();
     // initialize listree widget
     // initialize nice scrollbar
-    $('#search-panel-content').perfectScrollbar( {wheelSpeed: 20, wheelPropogation: true } );
+    // $('#search-panel-content').perfectScrollbar( {wheelSpeed: 20, wheelPropogation: true } );
     //$('#results-container').perfectScrollbar( { wheelSpeed: 20, wheelPropogation: true } );
-    $('#cart-container').perfectScrollbar( { wheelSpeed: 20, wheelPropogation: true } );
+    // $('#cart-container').perfectScrollbar( { wheelSpeed: 20, wheelPropogation: true } );
     // if size of #catalogue serch has changes since page load, we need to
     // update nice scroller to new height
-    $('#catalogueSearch').on('show', function(){
-      $('#search-panel-content').perfectScrollbar('update');
-    });
-    $('#catalogueSearch').on('hide', function () {
-      $('#search-panel-content').perfectScrollbar('update');
-    });
+    // $('#catalogueSearch').on('show', function(){
+    //   $('#search-panel-content').perfectScrollbar('update');
+    // });
+    // $('#catalogueSearch').on('hide', function () {
+    //   $('#search-panel-content').perfectScrollbar('update');
+    // });
     $('#result-panel').on('show', function(){
       $('#results-container').perfectScrollbar('update');
     });
@@ -209,10 +212,7 @@
       toggleCartDownloadButton();
     });
 
-    $('#switchSearchLayer').bootstrapSwitch().bootstrapSwitch('setState', true);
-    $('#switchSearchLayer').on('switch-change', function (e, data) {
-        $APP.trigger('toggleSearchLayer', data.value);
-      });
+    // $('#switchSearchLayer').bootstrapSwitch().bootstrapSwitch('setState', true);
     $('#cart-show-map').click(function() {
       // show cart products on map
       var elem  = $(this);
@@ -250,8 +250,5 @@
       });
   });
   });
-  {#</script>#}
+  </script>
 {% endblock %}
-
-
-

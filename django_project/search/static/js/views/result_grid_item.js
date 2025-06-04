@@ -89,7 +89,7 @@ define([
             Shared.Dispatcher.trigger('highlightSearchRecord', {'original_product_id': this.model.get('original_product_id'), 'zoom': true});
             var selectedID = this.model.get('original_product_id');
             $('#resetZoom').show();
-            this.line.remove();
+            // this.line.remove();
         } else {
             var selectedID = data.id;
         }

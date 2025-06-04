@@ -22,10 +22,28 @@ define([
         options.reset = true;
         return Backbone.Collection.prototype.fetch.call(this, options);
     },
-    parse: function(resp) {
-        this.offset = 500;
-        this.limit = 50;
-        this.total = resp.count;
+    parse: function (resp) {
+        this.nextLink = resp.next;
+        this.prevLink = resp.previous;
+        this.total    = resp.count || 0;
+        var limit  = this.limit || 50;
+        var offset = 0;
+
+        if (this.prevLink) {
+            var prevParams = new URL(this.prevLink, window.location.origin).searchParams;
+            limit  = parseInt(prevParams.get('limit'))  || limit;
+            offset = (parseInt(prevParams.get('offset')) || 0) + limit;
+        } else {
+            if (this.nextLink) {
+                var nextParams = new URL(this.nextLink, window.location.origin).searchParams;
+                limit = parseInt(nextParams.get('limit')) || limit;
+            }
+            offset = 0;
+        }
+
+        this.limit  = limit;
+        this.offset = offset;
+
         return resp.results;
     },
     url: function() {
@@ -73,19 +91,15 @@ define([
 
         return info;
     },
-    nextPage: function() {
-        if (!this.pageInfo().next) {
-            return false;
-        }
-        this.offset = this.offset + this.limit;
-        return this.fetch();
+    nextPage: function (options) {
+        if (!this.nextLink) { return false; }
+        options = _.extend({ reset: true, url: this.nextLink }, options || {});
+        return this.fetch(options);
     },
-    previousPage: function() {
-        if (!this.pageInfo().prev) {
-            return false;
-        }
-        this.offset = (this.offset - this.limit) || 0;
-        return this.fetch();
+    previousPage: function (options) {
+        if (!this.prevLink) { return false; }
+        options = _.extend({ reset: true, url: this.prevLink }, options || {});
+        return this.fetch(options);
     },
 
     firstPage: function(){
