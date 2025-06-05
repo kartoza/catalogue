@@ -31,7 +31,7 @@ services:
   db:
     # Note you cannot scale if you use conteiner_name
     container_name: catalogue-db
-    image: kartoza/postgis:13-3.1--v2021.09.08
+    image: kartoza/postgis:16-3
     volumes:
       - ./pg/postgres_data:/var/lib/postgresql
       - ./backups:/backups
@@ -39,8 +39,6 @@ services:
       - POSTGRES_USER=docker
       - POSTGRES_PASS=docker
       - ALLOW_IP_RANGE=0.0.0.0/0
-    links:
-      - pycsw:pycsw
     restart: on-failure:5
     shm_size: 1g
 
@@ -232,15 +230,3 @@ services:
     environment:
       - CHECK_HOST=db
       - CHECK_PORT=5432
-  pycsw:
-    container_name: catalogue-pycsw
-    image: geopython/pycsw:latest
-    environment:
-      PYCSW_SERVER_URL: http://localhost:8000
-    volumes:
-      - ./docker/pycsw.cfg:/etc/pycsw/pycsw.cfg
-      - ./docker/pycsw.yml:/etc/pycsw/pycsw.yml
-      - ../django_project/pycsw_integration/mappings.py:/etc/pycsw/mappings.py
-      
-    ports:
-      - "8000:8000"
