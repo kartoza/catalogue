@@ -10,14 +10,15 @@ define([
     ],
     function ($, _, Backbone, Shared, CartItemCollection, ResultGridViewItem) {
     return Backbone.View.extend({
+        el: 'body',
         template: _.template($("#side-result-panel").html()),
         cont: '',
         events: {
             'click #searchPrev': 'previous',
             'click #searchNext': 'next',
-            'click button.resetZoom': 'resetZoom'
+            'click button.resetZoom': 'resetZoom',
+            'click #switchSearchLayer': 'switchSearchLayer',
         },
-
         blockResultPanel: function() {
             $.blockUI({
                 message: '<div class="wrapperloading"><div class="loading up"></div><div class="loading down"></div></div>',
@@ -31,10 +32,16 @@ define([
         },
         unblockResultPanel: function (){
             $.unblockUI();
+            
         },
 
         resetZoom: function() {
-            $APP.trigger('resetZoom');
+            $(APP).trigger('resetZoom');
+        },
+
+        switchSearchLayer: function (e) {
+            const checked = e.target.checked;
+            Shared.Dispatcher.trigger('toggleSearchLayer', checked);
         },
 
         jumpToPage: function(page) {
@@ -67,8 +74,7 @@ define([
 
         initialize: function() {
             _.bindAll(this, 'render');
-            this.collection.bind('reset', this.render, this);
-            //this.collection.fetch({reset: true});
+            this.listenTo(this.collection, 'reset sync update', this.render);
             this.cont = $('#results-container');
             Shared.Dispatcher.on('collectionSearch', $.proxy(this.collectionSearch, this));
         },
@@ -88,7 +94,8 @@ define([
             _.extend(this.collection, options);
             this.collection.fetch({
                 reset: true,
-                error: this.unblockResultPanel()
+                error: this.unblockResultPanel,
+                success: this.unblockResultPanel
             });
         },
 
@@ -165,7 +172,11 @@ define([
         },
 
         render: function() {
-
+            if ($('.result-panel').length === 0) {
+                this.$el.append(this.template());
+                this.delegateEvents()
+            }
+            this.cont = $('#results-container');
             if (_.size(this.collection.models) != 0) {
                 $('.sidebar-result').show();
                 Shared.Dispatcher.trigger('sidePanel:openSidePanel', this.collection.models);
@@ -188,7 +199,7 @@ define([
                 modal.modal('show');
             }
             // $('#results-container').perfectScrollbar( { wheelSpeed: 20, wheelPropogation: true } );
-            // this.unblockResultPanel();
+            this.unblockResultPanel();
             return this;
         },
 });

@@ -70,8 +70,13 @@ define([
             Shared.Dispatcher.on('map:clearAoiBounds', this.clearAoiBounds, this);
             Shared.Dispatcher.on('map:drawWKT', this.drawWKT, this);
 
-            new ResultGridView({
-                'collection': new ResultItemCollection()
+            var self = this;
+            Shared.Dispatcher.on('toggleSearchLayer', function (visible) {
+                if (visible) {
+                    self.map.addLayer(self.layerSearchVector);
+                } else {
+                    self.map.removeLayer(self.layerSearchVector);
+                }
             });
 
             this.render();
@@ -351,6 +356,10 @@ define([
             this.searchView = new SearchView({
                     parent: this,
             });
+
+            this.resultGridView = new ResultGridView({
+                'collection': new ResultItemCollection()
+            });
             this.sidePanelView = new SidePanelView();
             this.mapControlPanel = new MapControlPanelView({
                 parent: this
@@ -503,8 +512,13 @@ define([
         },
 
         addFeatures: function(features){
+            // Remove existing search layer so we don't stack duplicates
+            if (this.layerSearchVector) {
+                this.map.removeLayer(this.layerSearchVector);
+            }
             const self = this
             self.layerSearchSource.clear();
+            // Start from a clean slate before adding new features
             _.each(features, function (feature) {
                 const format = new ol.format.WKT();
                 const feat = format.readFeature(feature.attributes['spatial_coverage'], {
@@ -542,7 +556,8 @@ define([
                     return self.layerStyle.getPinnedHighlightStyle(geom.getType());
                     }
             });
-            this.map.addLayer(layerSearchVector)
+            this.map.addLayer(layerSearchVector);
+            this.layerSearchVector = layerSearchVector;
         },
 
         downloadMap: function () {
