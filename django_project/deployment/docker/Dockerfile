@@ -1,7 +1,19 @@
 #--------- Generic stuff all our Dockerfiles should start with so we get caching ------------
 # Note this base image is based on debian
 FROM python:3.8-buster AS base_image
-MAINTAINER Tim Sutton<tim@kartoza.com>
+
+RUN sed -i 's|http://deb.debian.org/debian|http://archive.debian.org/debian|g' /etc/apt/sources.list && \
+    sed -i 's|http://security.debian.org/debian-security|http://archive.debian.org/debian-security|g' /etc/apt/sources.list && \
+    echo 'Acquire::Check-Valid-Until "false";' > /etc/apt/apt.conf.d/99no-check-valid-until
+
+
+RUN apt-get update -y && \
+    apt-get install -y openjdk-11-jre-headless
+    
+ENV JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
+
+#RUN rm -rf $JAVA_HOME/lib/security && \
+    #ln -s $JAVA_HOME/conf/security $JAVA_HOME/lib/security
 
 # Pandoc needed to generate rst dumps
 RUN apt-get update -y && \
@@ -51,7 +63,12 @@ MAINTAINER Tim Sutton<tim@kartoza.com>
 # This section taken on 2 July 2015 from
 # https://docs.docker.com/examples/running_ssh_service/
 # Sudo is needed by pycharm when it tries to pip install packages
-RUN apt-get update && apt-get install -y openssh-server sudo
+# RUN apt-get update && apt-get install -y openssh-server sudo
+RUN sed -i 's|http://deb.debian.org/debian|http://archive.debian.org/debian|g' /etc/apt/sources.list && \
+    sed -i 's|http://security.debian.org/debian-security|http://archive.debian.org/debian-security|g' /etc/apt/sources.list && \
+    echo 'Acquire::Check-Valid-Until "false";' > /etc/apt/apt.conf.d/99no-check-valid-until && \
+    apt-get update && apt-get install -y openssh-server sudo
+
 RUN mkdir /var/run/sshd
 RUN echo 'root:docker' | chpasswd
 RUN echo 'PermitRootLogin yes' >> /etc/ssh/sshd_config
