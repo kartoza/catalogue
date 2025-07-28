@@ -59,7 +59,12 @@ MAINTAINER Tim Sutton<tim@kartoza.com>
 # This section taken on 2 July 2015 from
 # https://docs.docker.com/examples/running_ssh_service/
 # Sudo is needed by pycharm when it tries to pip install packages
-RUN apt-get update && apt-get install -y openssh-server sudo
+# RUN apt-get update && apt-get install -y openssh-server sudo
+RUN sed -i 's|http://deb.debian.org/debian|http://archive.debian.org/debian|g' /etc/apt/sources.list && \
+    sed -i 's|http://security.debian.org/debian-security|http://archive.debian.org/debian-security|g' /etc/apt/sources.list && \
+    echo 'Acquire::Check-Valid-Until "false";' > /etc/apt/apt.conf.d/99no-check-valid-until && \
+    apt-get update && apt-get install -y openssh-server sudo
+
 RUN mkdir /var/run/sshd
 RUN echo 'root:docker' | chpasswd
 RUN echo 'PermitRootLogin yes' >> /etc/ssh/sshd_config
