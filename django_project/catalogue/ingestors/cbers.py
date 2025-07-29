@@ -170,8 +170,9 @@ def get_product_profile(product_id):
     """
     # Example:
     # product_id = 'CB04WFI...'
-    sensor_value = product_id[4:7]
+    sensor_value = product_id[6:9]
     mission_index = product_id[:4]
+
 
     # Create or get the instrument type
     instrument_type, _ = InstrumentType.objects.get_or_create(
@@ -205,6 +206,7 @@ def get_product_profile(product_id):
     except Exception as e:
         logger.exception("Error creating or fetching SatelliteInstrument")
         return None
+    
 
     # Try to match spectral modes
     spectral_modes = SpectralMode.objects.filter(instrument_type=instrument_type)
@@ -239,7 +241,7 @@ def get_radiometric_resolution(dom):
 
     Returns int bit depth or 0 if unknown.
     """
-    sensor_id = get_dom_element(dom, 'sensorId')
+    sensor_id = get_dom_element(dom, 'SensorID')
     sensor_bits_map = {
         'MUX': 8,
         'P10': 8,
@@ -260,7 +262,9 @@ def get_projection(dom):
     location_code = '7'  # 6 for north, 7 for south
     default_zone = '01'  # fallback if 'zone' is missing or invalid
 
-    zone_val = get_dom_element(dom, 'zone', default=default_zone)
+    zone_val = get_dom_element(dom, 'zone', default=None)
+    if zone_val is None:
+        zone_val = get_dom_element(dom, 'ZoneNo', default=default_zone)
     zone = zone_val[:2] if len(zone_val) >= 2 else default_zone
 
     epsg_code = epsg_default_code + location_code + zone
@@ -278,7 +282,7 @@ def get_quality(dom):
     """
     quality_name = get_dom_element(dom, 'overallQuality')
     if not quality_name:
-        return None
+        quality_name = 'Unknown'
     try:
         return Quality.objects.get(name=quality_name)
     except ObjectDoesNotExist:
