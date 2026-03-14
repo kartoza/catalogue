@@ -197,28 +197,31 @@ def _resolve_product_profile(satellite_name, sensor_name, beam_mode, acquisition
 		)
 
 	if imaging_mode is None:
-		raise CommandError(
-			'No ImagingMode found for '
-			f'instrument type "{instrument_type}". Add dictionary entries first.'
-		)
-
-	profile = _first_or_none(
-		RadarProductProfile.objects.filter(
-			satellite_instrument=satellite_instrument,
-			imaging_mode=imaging_mode,
-		)
-	)
-	if profile is None:
 		profile = _first_or_none(
 			RadarProductProfile.objects.filter(
 				satellite_instrument=satellite_instrument
 			)
 		)
+	else:
+		profile = _first_or_none(
+			RadarProductProfile.objects.filter(
+				satellite_instrument=satellite_instrument,
+				imaging_mode=imaging_mode,
+			)
+		)
+		if profile is None:
+			profile = _first_or_none(
+				RadarProductProfile.objects.filter(
+					satellite_instrument=satellite_instrument
+				)
+			)
 
 	if profile is None:
 		raise CommandError(
 			'No RadarProductProfile found for '
-			f'satellite instrument "{satellite_instrument}".'
+			f'satellite instrument "{satellite_instrument}" '
+			f'(beam_mode="{beam_mode}", acquisition_type="{acquisition_type}"). '
+			'Add matching dictionary entries first.'
 		)
 
 	return profile
