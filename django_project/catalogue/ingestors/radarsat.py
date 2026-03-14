@@ -7,7 +7,7 @@ from xml.etree import ElementTree as ET
 from django.conf import settings
 from django.contrib.gis.geos import WKTReader
 from django.core.management.base import CommandError
-from django.db import transaction
+from django.db import IntegrityError, connection, transaction
 
 from catalogue.models import RadarProduct
 from dictionaries.models import (
@@ -15,6 +15,7 @@ from dictionaries.models import (
 	InstrumentType,
 	Projection,
 	Quality,
+	RadarBeam,
 	RadarProductProfile,
 	Satellite,
 	SatelliteInstrument,
@@ -117,6 +118,87 @@ def _first_or_none(queryset):
 	return queryset.first()
 
 
+def _repair_pk_sequence(model):
+	table_name = model._meta.db_table
+	pk_column = model._meta.pk.column
+
+	with connection.cursor() as cursor:
+		cursor.execute(
+			'SELECT pg_get_serial_sequence(%s, %s)',
+			[table_name, pk_column],
+		)
+		row = cursor.fetchone()
+		sequence_name = row[0] if row else None
+
+		if not sequence_name:
+			return
+
+		cursor.execute(
+			f'SELECT COALESCE(MAX("{pk_column}"), 0) FROM "{table_name}"'
+		)
+		max_id = cursor.fetchone()[0] or 0
+		next_id = max_id + 1
+
+		cursor.execute(
+			'SELECT setval(%s, %s, false)',
+			[sequence_name, next_id],
+		)
+
+
+def _safe_get_or_create(model, defaults=None, **lookup):
+	try:
+		return model.objects.get_or_create(defaults=defaults, **lookup)
+	except IntegrityError as error:
+		if 'duplicate key value violates unique constraint' not in str(error):
+			raise
+
+		_repair_pk_sequence(model)
+		return model.objects.get_or_create(defaults=defaults, **lookup)
+
+
+def _get_or_create_default_profile(
+	satellite_instrument,
+	instrument_type,
+	beam_mode,
+	acquisition_type,
+):
+	mode_name = (beam_mode or acquisition_type or 'RADARSAT').strip()
+	mode_name = mode_name[:50]
+
+	radarbeam, _ = _safe_get_or_create(
+		RadarBeam,
+		instrument_type=instrument_type,
+		defaults={
+			'band_name': instrument_type.abbreviation[:50] or instrument_type.name[:50],
+			'wavelength_cm': 5,
+			'looking_distance': 'N/A',
+			'azimuth_direction': 'N/A',
+		},
+	)
+
+	imaging_mode, _ = _safe_get_or_create(
+		ImagingMode,
+		radarbeam=radarbeam,
+		name=mode_name,
+		defaults={
+			'incidence_angle_min': 0.0,
+			'incidence_angle_max': 0.0,
+			'approximate_resolution_m': 0.0,
+			'swath_width_km': 0.0,
+			'number_of_looks': 1,
+			'polarization': 'HH',
+		},
+	)
+
+	profile, _ = _safe_get_or_create(
+		RadarProductProfile,
+		satellite_instrument=satellite_instrument,
+		imaging_mode=imaging_mode,
+	)
+
+	return profile
+
+
 def _resolve_product_profile(satellite_name, sensor_name, beam_mode, acquisition_type):
 	satellite = _first_or_none(
 		Satellite.objects.filter(operator_abbreviation__iexact=satellite_name)
@@ -217,11 +299,11 @@ def _resolve_product_profile(satellite_name, sensor_name, beam_mode, acquisition
 			)
 
 	if profile is None:
-		raise CommandError(
-			'No RadarProductProfile found for '
-			f'satellite instrument "{satellite_instrument}" '
-			f'(beam_mode="{beam_mode}", acquisition_type="{acquisition_type}"). '
-			'Add matching dictionary entries first.'
+		profile = _get_or_create_default_profile(
+			satellite_instrument=satellite_instrument,
+			instrument_type=instrument_type,
+			beam_mode=beam_mode,
+			acquisition_type=acquisition_type,
 		)
 
 	return profile
@@ -281,7 +363,7 @@ def ingest(
 	source_path='/home/web/catalogue/django_project/Data_to_ingest/Radarsat2/',
 	verbosity_level=2,
 	halt_on_error_flag=True,
-	ignore_missing_thumbs=False
+	ignore_missing_thumbs=True
 ):
 	def log_message(message, level=1):
 		if verbosity_level >= level:
@@ -484,6 +566,13 @@ def ingest(
 								f'No thumbnail found for {original_product_id} '
 								f'under {os.path.dirname(xml_file)}.'
 							)
+						else:
+							log_message(
+								f'No thumbnail found for {original_product_id} '
+								f'under {os.path.dirname(xml_file)}. '
+								'Continuing without thumbnail.',
+								1,
+							)
 					else:
 						transaction.set_rollback(True)
 
@@ -492,8 +581,9 @@ def ingest(
 				else:
 					created_record_count += 1
 
-			except Exception:
+			except Exception as e:
 				failed_record_count += 1
+				log_message(f'Error processing {xml_file}: {e}', 1)
 				if halt_on_error_flag:
 					raise
 

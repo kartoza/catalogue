@@ -38,7 +38,7 @@ class Command(BaseCommand):
 			dest='ignore_missing_thumbs_flag',
 			action='store',
 			help='Continue with import even if products are missing thumbnails.',
-			default=False)
+			default=True)
 
 	@staticmethod
 	def _parameter_to_bool(parameter):
